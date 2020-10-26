@@ -55,6 +55,9 @@ class Deployment():
     def batch_predict(self, input_location=None, output_location=None, name=None, refresh_schedule=None, global_prediction_args=None, explanations=False):
         return self.client.batch_predict(self.deployment_id, input_location, output_location, name, refresh_schedule, global_prediction_args, explanations)
 
+    def batch_predict_from_database_connector(self, database_connector_id, object_name, name=None, connection_mode='output', columns=None, query_arguments=None, prediction_output_columns=None, refresh_schedule=None, global_prediction_args=None):
+        return self.client.batch_predict_from_database_connector(self.deployment_id, database_connector_id, object_name, name, connection_mode, columns, query_arguments, prediction_output_columns, refresh_schedule, global_prediction_args)
+
     def batch_prediction_from_upload(self, name=None, global_prediction_args=None, explanations=False):
         return self.client.batch_prediction_from_upload(self.deployment_id, name, global_prediction_args, explanations)
 

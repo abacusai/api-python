@@ -31,6 +31,12 @@ class BatchPrediction():
     def to_dict(self):
         return {'batch_prediction_id': self.batch_prediction_id, 'name': self.name, 'status': self.status, 'deployment_id': self.deployment_id, 'input_location': self.input_location, 'output_location': self.output_location, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'connector_output_location': self.connector_output_location, 'upload_id': self.upload_id, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions}
 
+    def get_result(self):
+        return self.client.get_batch_prediction_result(self.batch_prediction_id)
+
+    def get_connector_errors(self):
+        return self.client.get_batch_prediction_connector_errors(self.batch_prediction_id)
+
     def refresh(self):
         self = self.describe()
         return self

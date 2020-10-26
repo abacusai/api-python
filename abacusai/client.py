@@ -9,15 +9,15 @@ from typing import List
 
 from .api_key import ApiKey
 from .batch_prediction import BatchPrediction
-from .bucket_verification import BucketVerification
-from .bucket_verification_instructions import BucketVerificationInstructions
-from .bucket_verification_result import BucketVerificationResult
 from .schema import Schema
+from .database_connector import DatabaseConnector
 from .dataset import Dataset
 from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
-from .external_connection import ExternalConnection
+from .file_connector import FileConnector
+from .file_connector_instructions import FileConnectorInstructions
+from .file_connector_verification import FileConnectorVerification
 from .model import Model
 from .model_metrics import ModelMetrics
 from .model_upload import ModelUpload
@@ -46,7 +46,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.12.2'
+    client_version = '0.13.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -246,25 +246,41 @@ class ApiClient():
         '''Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.    '''
         return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Dataset)
 
-    def get_data_connector_verification(self, bucket: str, write_permission: bool = False):
+    def get_file_connector_instructions(self, bucket: str, write_permission: bool = False):
         '''Retrieves verification information to create a data connector.    '''
-        return self._call_api('getDataConnectorVerification', 'GET', query_params={'bucket': bucket, 'writePermission': write_permission}, parse_type=BucketVerificationInstructions)
+        return self._call_api('getFileConnectorInstructions', 'GET', query_params={'bucket': bucket, 'writePermission': write_permission}, parse_type=FileConnectorInstructions)
 
-    def list_data_connector_verifications(self):
+    def list_database_connectors(self):
+        '''List database Connectors    '''
+        return self._call_api('listDatabaseConnectors', 'GET', query_params={}, parse_type=DatabaseConnector)
+
+    def list_file_connectors(self):
         '''Retrieves a list of all connected services in the organization and their current verification status.    '''
-        return self._call_api('listDataConnectorVerifications', 'GET', query_params={}, parse_type=BucketVerification)
+        return self._call_api('listFileConnectors', 'GET', query_params={}, parse_type=FileConnector)
 
-    def verify_data_connector(self, bucket: str):
-        '''Checks to see if Abacus.AI can access the data connector.    '''
-        return self._call_api('verifyDataConnector', 'POST', query_params={}, body={'bucket': bucket}, parse_type=BucketVerificationResult)
+    def list_database_connector_objects(self, database_connector_id: str):
+        '''Lists querable objects in the database connector.    '''
+        return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id})
 
-    def remove_data_connector(self, bucket: str):
+    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None):
+        '''Get the schema of an object in an database connector.    '''
+        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name})
+
+    def verify_database_connector(self, database_connector_id: str):
+        '''Checks to see if Abacus.AI can access the database.    '''
+        return self._call_api('verifyDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id})
+
+    def verify_file_connector(self, bucket: str):
+        '''Checks to see if Abacus.AI can access the bucket.    '''
+        return self._call_api('verifyFileConnector', 'POST', query_params={}, body={'bucket': bucket}, parse_type=FileConnectorVerification)
+
+    def remove_database_connector(self, database_connector_id: str):
+        '''Disconnect an database connector.    '''
+        return self._call_api('removeDatabaseConnector', 'DELETE', query_params={'databaseConnectorId': database_connector_id})
+
+    def remove_file_connector(self, bucket: str):
         '''Removes a connected service from the specified organization.    '''
-        return self._call_api('removeDataConnector', 'DELETE', query_params={'bucket': bucket})
-
-    def validate_external_connection(self, external_connection_id: str):
-        '''    '''
-        return self._call_api('validateExternalConnection', 'GET', query_params={'externalConnectionId': external_connection_id})
+        return self._call_api('removeFileConnector', 'DELETE', query_params={'bucket': bucket})
 
     def create_streaming_token(self):
         '''Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.    '''
@@ -446,9 +462,21 @@ class ApiClient():
         '''Starts a batch prediction task with the specified deployment ID, input location, output location, and batch prediction job name.    '''
         return self._call_api('batchPredict', 'POST', query_params={'deploymentId': deployment_id}, body={'inputLocation': input_location, 'outputLocation': output_location, 'name': name, 'refreshSchedule': refresh_schedule, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations}, parse_type=BatchPrediction)
 
+    def batch_predict_from_database_connector(self, deployment_id: str, database_connector_id: str, object_name: str, name: str = None, connection_mode: str = 'output', columns: str = None, query_arguments: str = None, prediction_output_columns: str = None, refresh_schedule: str = None, global_prediction_args: dict = None):
+        '''Starts a batch prediction task with the specified deployment ID, input location, output location, and batch prediction job name.    '''
+        return self._call_api('batchPredictFromDatabaseConnector', 'POST', query_params={'deploymentId': deployment_id}, body={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'name': name, 'connectionMode': connection_mode, 'columns': columns, 'queryArguments': query_arguments, 'predictionOutputColumns': prediction_output_columns, 'refreshSchedule': refresh_schedule, 'globalPredictionArgs': global_prediction_args}, parse_type=BatchPrediction)
+
     def batch_prediction_from_upload(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False):
         '''Starts a batch prediction task with the specified deployment ID, file, and batch prediction job name.    '''
         return self._call_api('batchPredictionFromUpload', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations}, parse_type=Upload)
+
+    def get_batch_prediction_result(self, batch_prediction_id: str):
+        '''Returns a stream containing the batch prediction results    '''
+        return self._call_api('getBatchPredictionResult', 'GET', query_params={'batchPredictionId': batch_prediction_id}, streamable_response=True)
+
+    def get_batch_prediction_connector_errors(self, batch_prediction_id: str):
+        '''Returns a stream containing the batch prediction external connection error, if it exists    '''
+        return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionId': batch_prediction_id}, streamable_response=True)
 
     def list_batch_predictions(self, deployment_id: str):
         '''Retrieves a list for the batch prediction jobs for the specified deployment.    '''
