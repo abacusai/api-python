@@ -10,6 +10,7 @@ from typing import List
 from .api_key import ApiKey
 from .batch_prediction import BatchPrediction
 from .schema import Schema
+from .data_filter import DataFilter
 from .database_connector import DatabaseConnector
 from .dataset import Dataset
 from .dataset_version import DatasetVersion
@@ -46,7 +47,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.13.0'
+    client_version = '0.13.1'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -202,6 +203,22 @@ class ApiClient():
         '''Set a column's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column. The model returns a list of all schemas for each column with the reflected changes.    '''
         return self._call_api('setColumnMapping', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'columnMapping': column_mapping}, parse_type=Schema)
 
+    def add_custom_column(self, project_id: str, dataset_id: str, column: str, sql: str):
+        '''Adds a custom column to the dataset    '''
+        return self._call_api('addCustomColumn', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'sql': sql}, parse_type=Schema)
+
+    def edit_custom_column(self, project_id: str, dataset_id: str, column: str, new_column_name: str = None, sql: str = None):
+        '''Edits a custom column    '''
+        return self._call_api('editCustomColumn', 'PATCH', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column, 'newColumnName': new_column_name, 'sql': sql}, parse_type=Schema)
+
+    def delete_custom_column(self, project_id: str, dataset_id: str, column: str):
+        '''Deletes a custom column    '''
+        return self._call_api('deleteCustomColumn', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
+
+    def set_project_dataset_filters(self, project_id: str, dataset_id: str, filters: list):
+        '''Sets the data filters for a Project Dataset    '''
+        return self._call_api('setProjectDatasetFilters', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'filters': filters})
+
     def validate_project(self, project_id: str):
         '''Validates that the specified project has all required datasets for its use case and that all datasets attached to the project have all required columns.    '''
         return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
@@ -285,6 +302,10 @@ class ApiClient():
     def create_streaming_token(self):
         '''Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.    '''
         return self._call_api('createStreamingToken', 'POST', query_params={}, body={}, parse_type=StreamingAuthToken)
+
+    def set_ignore_before(self, dataset_id: str, timestamp: int = None):
+        '''If set, the streaming dataset will ignore all entries sent before the timestamp.    '''
+        return self._call_api('setIgnoreBefore', 'POST', query_params={'datasetId': dataset_id}, body={'timestamp': timestamp})
 
     def list_streaming_tokens(self):
         '''Retrieves a list of all streaming tokens along with their attributes.    '''
@@ -486,7 +507,7 @@ class ApiClient():
         '''Retrieves the status of the specified batch prediction job.    '''
         return self._call_api('describeBatchPrediction', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
 
-    def add_user_item_interaction(self, streaming_token: str, dataset_id: str, timestamp: int, user_id: str, item_id: str, event_type: str, additional_attributes: dict):
+    def add_user_item_interaction(self, streaming_token: str, dataset_id: str, timestamp: int, user_id: str, item_id: list, event_type: str, additional_attributes: dict):
         '''Adds a user-item interaction record (data row) to a streaming dataset.    '''
         return self._call_api('addUserItemInteraction', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'timestamp': timestamp, 'userId': user_id, 'itemId': item_id, 'eventType': event_type, 'additionalAttributes': additional_attributes})
 

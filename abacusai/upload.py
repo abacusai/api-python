@@ -1,5 +1,5 @@
-import io
 from multiprocessing import Pool
+import io
 import time
 
 
