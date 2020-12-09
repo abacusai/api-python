@@ -36,6 +36,9 @@ class Model():
     def describe(self):
         return self.client.describe_model(self.model_id)
 
+    def update_training_config(self, training_config):
+        return self.client.update_model_training_config(self.model_id, training_config)
+
     def get_metrics(self, model_version=None, baseline_metrics=False):
         return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics)
 

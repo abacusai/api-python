@@ -6,7 +6,7 @@ class Dataset():
 
     '''
 
-    def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, refreshSchedules=None, ignoreBefore=None, latestDatasetVersion={}):
+    def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, refreshSchedules=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, latestDatasetVersion={}):
         self.client = client
         self.id = datasetId
         self.dataset_id = datasetId
@@ -16,17 +16,19 @@ class Dataset():
         self.created_at = createdAt
         self.refresh_schedules = refreshSchedules
         self.ignore_before = ignoreBefore
+        self.ephemeral = ephemeral
+        self.lookback_days = lookbackDays
         self.latest_dataset_version = client._build_class(
             DatasetVersion, latestDatasetVersion)
 
     def __repr__(self):
-        return f"Dataset(dataset_id={repr(self.dataset_id)}, name={repr(self.name)}, source_type={repr(self.source_type)}, data_source={repr(self.data_source)}, created_at={repr(self.created_at)}, refresh_schedules={repr(self.refresh_schedules)}, ignore_before={repr(self.ignore_before)}, latest_dataset_version={repr(self.latest_dataset_version)})"
+        return f"Dataset(dataset_id={repr(self.dataset_id)}, name={repr(self.name)}, source_type={repr(self.source_type)}, data_source={repr(self.data_source)}, created_at={repr(self.created_at)}, refresh_schedules={repr(self.refresh_schedules)}, ignore_before={repr(self.ignore_before)}, ephemeral={repr(self.ephemeral)}, lookback_days={repr(self.lookback_days)}, latest_dataset_version={repr(self.latest_dataset_version)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'latest_dataset_version': self.latest_dataset_version.to_dict() if self.latest_dataset_version else None}
+        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'latest_dataset_version': self.latest_dataset_version.to_dict() if self.latest_dataset_version else None}
 
     def create_version(self, location=None, file_format=None):
         return self.client.create_dataset_version(self.dataset_id, location, file_format)
@@ -34,8 +36,17 @@ class Dataset():
     def create_version_from_local_file(self, file_format=None):
         return self.client.create_dataset_version_from_local_file(self.dataset_id, file_format)
 
+    def snapshot_streaming_data(self):
+        return self.client.snapshot_streaming_data(self.dataset_id)
+
+    def set_ephemeral(self, ephemeral=None):
+        return self.client.set_ephemeral(self.dataset_id, ephemeral)
+
     def set_ignore_before(self, timestamp=None):
         return self.client.set_ignore_before(self.dataset_id, timestamp)
+
+    def set_lookback_days(self, lookback_days=None):
+        return self.client.set_lookback_days(self.dataset_id, lookback_days)
 
     def refresh(self):
         self = self.describe()

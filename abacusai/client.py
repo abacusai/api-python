@@ -47,7 +47,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.13.1'
+    client_version = '0.13.2'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -216,7 +216,7 @@ class ApiClient():
         return self._call_api('deleteCustomColumn', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
     def set_project_dataset_filters(self, project_id: str, dataset_id: str, filters: list):
-        '''Sets the data filters for a Project Dataset    '''
+        '''Sets the data filters for a dataset uploaded under a project.    '''
         return self._call_api('setProjectDatasetFilters', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'filters': filters})
 
     def validate_project(self, project_id: str):
@@ -263,6 +263,10 @@ class ApiClient():
         '''Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.    '''
         return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Dataset)
 
+    def snapshot_streaming_data(self, dataset_id: str):
+        '''Snapshots the current data in the streaming dataset for training.    '''
+        return self._call_api('snapshotStreamingData', 'POST', query_params={'datasetId': dataset_id}, body={}, parse_type=DatasetVersion)
+
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False):
         '''Retrieves verification information to create a data connector.    '''
         return self._call_api('getFileConnectorInstructions', 'GET', query_params={'bucket': bucket, 'writePermission': write_permission}, parse_type=FileConnectorInstructions)
@@ -303,9 +307,17 @@ class ApiClient():
         '''Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.    '''
         return self._call_api('createStreamingToken', 'POST', query_params={}, body={}, parse_type=StreamingAuthToken)
 
+    def set_ephemeral(self, dataset_id: str, ephemeral: bool = None):
+        '''If set, the streaming dataset will be ignored during training.    '''
+        return self._call_api('setEphemeral', 'POST', query_params={'datasetId': dataset_id}, body={'ephemeral': ephemeral})
+
     def set_ignore_before(self, dataset_id: str, timestamp: int = None):
         '''If set, the streaming dataset will ignore all entries sent before the timestamp.    '''
         return self._call_api('setIgnoreBefore', 'POST', query_params={'datasetId': dataset_id}, body={'timestamp': timestamp})
+
+    def set_lookback_days(self, dataset_id: str, lookback_days: int = None):
+        '''If set, the streaming dataset will ignore all entries sent before the specified number of days.    '''
+        return self._call_api('setLookbackDays', 'POST', query_params={'datasetId': dataset_id}, body={'lookbackDays': lookback_days})
 
     def list_streaming_tokens(self):
         '''Retrieves a list of all streaming tokens along with their attributes.    '''
@@ -366,6 +378,10 @@ class ApiClient():
     def describe_model(self, model_id: str):
         '''Retrieves a full description of the specified model.    '''
         return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
+
+    def update_model_training_config(self, model_id: str, training_config: dict):
+        '''Edits the model's traning config    '''
+        return self._call_api('updateModelTrainingConfig', 'POST', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
     def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False):
         '''Retrieves a full list of the metrics for the specified model.    '''
