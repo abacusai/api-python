@@ -115,7 +115,7 @@ class ApiClient():
         elif method == 'PUT':
             return requests.put(url, params=query_params, data=body, headers=headers, files=files, timeout=90)
         elif method == 'PATCH':
-            return requests.patch(url, params=query_params, data=body, headers=headers, timeout=90)
+            return requests.patch(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
         elif method == 'DELETE':
             return requests.delete(url, params=query_params, data=body, headers=headers)
         else:
@@ -193,7 +193,7 @@ class ApiClient():
 
     def rename_project(self, project_id: str, name: str):
         '''This method renames a project after it is created. To rename the project, specify its ID and new name.    '''
-        return self._call_api('renameProject', 'PATCH', query_params={'projectId': project_id, 'name': name})
+        return self._call_api('renameProject', 'PATCH', query_params={}, body={'projectId': project_id, 'name': name})
 
     def set_column_data_type(self, project_id: str, dataset_id: str, column: str, data_type: str):
         '''Set a column's type in a specified dataset. Specify the project ID, dataset ID, column name and data type, and the method will return the entire dataset with the resulting changes reflected.    '''
@@ -209,7 +209,7 @@ class ApiClient():
 
     def edit_custom_column(self, project_id: str, dataset_id: str, column: str, new_column_name: str = None, sql: str = None):
         '''Edits a custom column    '''
-        return self._call_api('editCustomColumn', 'PATCH', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column, 'newColumnName': new_column_name, 'sql': sql}, parse_type=Schema)
+        return self._call_api('editCustomColumn', 'PATCH', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'newColumnName': new_column_name, 'sql': sql}, parse_type=Schema)
 
     def delete_custom_column(self, project_id: str, dataset_id: str, column: str):
         '''Deletes a custom column    '''
@@ -357,7 +357,7 @@ class ApiClient():
 
     def rename_dataset(self, dataset_id: str, name: str):
         '''Rename a dataset that has already been defined. Specify the new name and dataset ID, and the model will return the attributes of the renamed dataset.    '''
-        return self._call_api('renameDataset', 'POST', query_params={'datasetId': dataset_id}, body={'name': name})
+        return self._call_api('renameDataset', 'PATCH', query_params={'datasetId': dataset_id}, body={'name': name})
 
     def delete_dataset(self, dataset_id: str):
         '''Deletes the specified dataset from the organization.    '''
@@ -381,7 +381,7 @@ class ApiClient():
 
     def update_model_training_config(self, model_id: str, training_config: dict):
         '''Edits the model's traning config    '''
-        return self._call_api('updateModelTrainingConfig', 'POST', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
+        return self._call_api('updateModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
     def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False):
         '''Retrieves a full list of the metrics for the specified model.    '''
@@ -429,7 +429,7 @@ class ApiClient():
 
     def update_deployment(self, deployment_id: str, name: str = None, description: str = None):
         '''Updates a deployment's name and/or description.    '''
-        return self._call_api('updateDeployment', 'PATCH', query_params={'deploymentId': deployment_id, 'name': name, 'description': description})
+        return self._call_api('updateDeployment', 'PATCH', query_params={'deploymentId': deployment_id}, body={'name': name, 'description': description})
 
     def start_deployment(self, deployment_id: str):
         '''Restarts the specified deployment that was previously suspended.    '''
@@ -437,7 +437,7 @@ class ApiClient():
 
     def set_deployment_model_version(self, deployment_id: str, model_version: str):
         '''Promotes a Model Version to be served in the Deployment    '''
-        return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id, 'modelVersion': model_version})
+        return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version})
 
     def stop_deployment(self, deployment_id: str):
         '''Stops the specified deployment.    '''
