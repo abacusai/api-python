@@ -30,6 +30,9 @@ class DatabaseConnector():
     def get_object_schema(self, object_name=None):
         return self.client.get_database_connector_object_schema(self.database_connector_id, object_name)
 
+    def rename(self, name):
+        return self.client.rename_database_connector(self.database_connector_id, name)
+
     def verify(self):
         return self.client.verify_database_connector(self.database_connector_id)
 

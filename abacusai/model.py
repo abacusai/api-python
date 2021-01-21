@@ -6,7 +6,7 @@ class Model():
 
     '''
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, refreshSchedules=None, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, refreshSchedules=None, location=None, latestModelVersion={}):
         self.client = client
         self.id = modelId
         self.name = name
@@ -17,17 +17,18 @@ class Model():
         self.shared = shared
         self.shared_at = sharedAt
         self.refresh_schedules = refreshSchedules
+        self.location = location
         self.latest_model_version = client._build_class(
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)}, model_id={repr(self.model_id)}, model_config={repr(self.model_config)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, shared={repr(self.shared)}, shared_at={repr(self.shared_at)}, refresh_schedules={repr(self.refresh_schedules)}, latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)}, model_id={repr(self.model_id)}, model_config={repr(self.model_config)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, shared={repr(self.shared)}, shared_at={repr(self.shared_at)}, refresh_schedules={repr(self.refresh_schedules)}, location={repr(self.location)}, latest_model_version={repr(self.latest_model_version)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'refresh_schedules': self.refresh_schedules, 'latest_model_version': self.latest_model_version.to_dict() if self.latest_model_version else None}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'refresh_schedules': self.refresh_schedules, 'location': self.location, 'latest_model_version': self.latest_model_version.to_dict() if self.latest_model_version else None}
 
     def refresh(self):
         self = self.describe()

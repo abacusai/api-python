@@ -8,6 +8,7 @@ from packaging import version
 from typing import List
 
 from .api_key import ApiKey
+from .batch_dataset import BatchDataset
 from .batch_prediction import BatchPrediction
 from .schema import Schema
 from .data_filter import DataFilter
@@ -47,7 +48,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.13.2'
+    client_version = '0.13.5'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -256,8 +257,12 @@ class ApiClient():
         return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Upload)
 
     def create_dataset_version_from_local_file(self, dataset_id: str, file_format: str = None):
-        '''Creates a new version of the specified dataset using a local file upload. The method will return the attributes of the dataset.    '''
+        '''Creates a new version of the specified dataset using a local file upload.    '''
         return self._call_api('createDatasetVersionFromLocalFile', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
+
+    def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None):
+        '''Creates a new version of the specified dataset    '''
+        return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments}, parse_type=DatasetVersion)
 
     def create_streaming_dataset(self, name: str, project_id: str, dataset_type: str):
         '''Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.    '''
@@ -286,6 +291,10 @@ class ApiClient():
     def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None):
         '''Get the schema of an object in an database connector.    '''
         return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name})
+
+    def rename_database_connector(self, database_connector_id: str, name: str):
+        '''Renames a Database Connector    '''
+        return self._call_api('renameDatabaseConnector', 'PATCH', query_params={}, body={'databaseConnectorId': database_connector_id, 'name': name})
 
     def verify_database_connector(self, database_connector_id: str):
         '''Checks to see if Abacus.AI can access the database.    '''
