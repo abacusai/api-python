@@ -1,4 +1,5 @@
 from .model_version import ModelVersion
+from .model_location import ModelLocation
 
 
 class Model():
@@ -6,7 +7,7 @@ class Model():
 
     '''
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, refreshSchedules=None, location=None, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, refreshSchedules=None, location={}, latestModelVersion={}):
         self.client = client
         self.id = modelId
         self.name = name
@@ -17,7 +18,7 @@ class Model():
         self.shared = shared
         self.shared_at = sharedAt
         self.refresh_schedules = refreshSchedules
-        self.location = location
+        self.location = client._build_class(ModelLocation, location)
         self.latest_model_version = client._build_class(
             ModelVersion, latestModelVersion)
 
@@ -28,7 +29,7 @@ class Model():
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'refresh_schedules': self.refresh_schedules, 'location': self.location, 'latest_model_version': self.latest_model_version.to_dict() if self.latest_model_version else None}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'refresh_schedules': self.refresh_schedules, 'location': self.location.to_dict() if self.location else None, 'latest_model_version': self.latest_model_version.to_dict() if self.latest_model_version else None}
 
     def refresh(self):
         self = self.describe()
