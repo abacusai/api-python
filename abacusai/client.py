@@ -17,6 +17,10 @@ from .dataset import Dataset
 from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
+from .feature import Feature
+from .feature_group import FeatureGroup
+from .feature_group_export import FeatureGroupExport
+from .feature_record import FeatureRecord
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
@@ -270,7 +274,7 @@ class ApiClient():
         return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
 
     def create_dataset_from_local_file(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None):
-        '''Creates a dataset from a local file. The model will take in the name of your file and return the dataset's information (its attributes).'''
+        '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
         return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Upload)
 
     def create_dataset_version_from_local_file(self, dataset_id: str, file_format: str = None):
@@ -290,11 +294,11 @@ class ApiClient():
         return self._call_api('snapshotStreamingData', 'POST', query_params={'datasetId': dataset_id}, body={}, parse_type=DatasetVersion)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False):
-        '''Retrieves verification information to create a data connector.'''
+        '''Retrieves verification information to create a data connector to a cloud storage bucket.'''
         return self._call_api('getFileConnectorInstructions', 'GET', query_params={'bucket': bucket, 'writePermission': write_permission}, parse_type=FileConnectorInstructions)
 
     def list_database_connectors(self):
-        '''List database Connectors'''
+        '''Retrieves a list of all of the database connectors along with all their attributes.'''
         return self._call_api('listDatabaseConnectors', 'GET', query_params={}, parse_type=DatabaseConnector)
 
     def list_file_connectors(self):
@@ -332,25 +336,6 @@ class ApiClient():
     def create_streaming_token(self):
         '''Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.'''
         return self._call_api('createStreamingToken', 'POST', query_params={}, body={}, parse_type=StreamingAuthToken)
-
-    def set_ephemeral(self, dataset_id: str, ephemeral: bool = None):
-        '''If set, the streaming dataset will be ignored during training.'''
-        return self._call_api('setEphemeral', 'POST', query_params={'datasetId': dataset_id}, body={'ephemeral': ephemeral})
-
-    def set_ignore_before(self, dataset_id: str, timestamp: int = None):
-        '''If set, the streaming dataset will ignore all entries sent before the timestamp.
-
-        Typically used in conjuction with a batch dataset.
-        '''
-        return self._call_api('setIgnoreBefore', 'POST', query_params={'datasetId': dataset_id}, body={'timestamp': timestamp})
-
-    def set_lookback_days(self, dataset_id: str, lookback_days: int = None):
-        '''If set, the streaming dataset will ignore all entries sent before the specified number of days.
-
-        Allows the use of only the most recent data to be considered for the model training flow. When specified
-        along with Ignore Before, the Ignore Before date has precedence.
-        '''
-        return self._call_api('setLookbackDays', 'POST', query_params={'datasetId': dataset_id}, body={'lookbackDays': lookback_days})
 
     def list_streaming_tokens(self):
         '''Retrieves a list of all streaming tokens along with their attributes.'''

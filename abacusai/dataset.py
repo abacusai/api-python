@@ -44,15 +44,6 @@ class Dataset():
     def snapshot_streaming_data(self):
         return self.client.snapshot_streaming_data(self.dataset_id)
 
-    def set_ephemeral(self, ephemeral=None):
-        return self.client.set_ephemeral(self.dataset_id, ephemeral)
-
-    def set_ignore_before(self, timestamp=None):
-        return self.client.set_ignore_before(self.dataset_id, timestamp)
-
-    def set_lookback_days(self, lookback_days=None):
-        return self.client.set_lookback_days(self.dataset_id, lookback_days)
-
     def refresh(self):
         self = self.describe()
         return self
