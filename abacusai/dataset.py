@@ -30,7 +30,7 @@ class Dataset():
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'latest_dataset_version': self.latest_dataset_version.to_dict() if self.latest_dataset_version else None}
+        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
 
     def create_version(self, location=None, file_format=None):
         return self.client.create_dataset_version(self.dataset_id, location, file_format)

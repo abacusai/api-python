@@ -53,7 +53,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.13.6'
+    client_version = '0.14.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -545,21 +545,9 @@ class ApiClient():
         '''Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).'''
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
 
-    def batch_predict(self, deployment_id: str, input_location: str = None, output_location: str = None, name: str = None, refresh_schedule: str = None, global_prediction_args: dict = None, explanations: bool = False):
-        '''[Deprecated: Use the createBatchPrediction API] Starts a batch prediction task with the specified deployment ID, input location, output location, and batch prediction job name.'''
-        return self._call_api('batchPredict', 'POST', query_params={'deploymentId': deployment_id}, body={'inputLocation': input_location, 'outputLocation': output_location, 'name': name, 'refreshSchedule': refresh_schedule, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations}, parse_type=BatchPrediction)
-
-    def batch_predict_from_database_connector(self, deployment_id: str, database_connector_id: str, object_name: str, name: str = None, connection_mode: str = 'output', columns: str = None, query_arguments: str = None, prediction_output_columns: str = None, refresh_schedule: str = None, global_prediction_args: dict = None):
-        '''[Deprecated: Use the createBatchPrediction API] Starts a batch prediction using a data queried from a database connector'''
-        return self._call_api('batchPredictFromDatabaseConnector', 'POST', query_params={'deploymentId': deployment_id}, body={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'name': name, 'connectionMode': connection_mode, 'columns': columns, 'queryArguments': query_arguments, 'predictionOutputColumns': prediction_output_columns, 'refreshSchedule': refresh_schedule, 'globalPredictionArgs': global_prediction_args}, parse_type=BatchPrediction)
-
-    def batch_prediction_from_upload(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False):
-        '''[Deprecated: Use the createBatchPrediction API] Starts a batch prediction task with the specified deployment ID, file, and batch prediction job name.'''
-        return self._call_api('batchPredictionFromUpload', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations}, parse_type=Upload)
-
-    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_location: str = None):
+    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_location: str = None, database_connector_id: str = None, object_name: str = None, id_column: str = None, value_column: str = None, percentage_column: str = None, explanation_url_column: str = None):
         '''Creates a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputLocation': output_location}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'idColumn': id_column, 'valueColumn': value_column, 'percentageColumn': percentage_column, 'explanationUrlColumn': explanation_url_column}, parse_type=BatchPrediction)
 
     def add_batch_dataset_from_upload(self, batch_prediction_id: str, dataset_id: str, file_format: str = None):
         '''Creates a new version of the specified dataset using a local file upload. This new version will only be used for this batch prediction.'''

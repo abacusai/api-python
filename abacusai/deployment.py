@@ -52,17 +52,8 @@ class Deployment():
     def delete(self):
         return self.client.delete_deployment(self.deployment_id)
 
-    def batch_predict(self, input_location=None, output_location=None, name=None, refresh_schedule=None, global_prediction_args=None, explanations=False):
-        return self.client.batch_predict(self.deployment_id, input_location, output_location, name, refresh_schedule, global_prediction_args, explanations)
-
-    def batch_predict_from_database_connector(self, database_connector_id, object_name, name=None, connection_mode='output', columns=None, query_arguments=None, prediction_output_columns=None, refresh_schedule=None, global_prediction_args=None):
-        return self.client.batch_predict_from_database_connector(self.deployment_id, database_connector_id, object_name, name, connection_mode, columns, query_arguments, prediction_output_columns, refresh_schedule, global_prediction_args)
-
-    def batch_prediction_from_upload(self, name=None, global_prediction_args=None, explanations=False):
-        return self.client.batch_prediction_from_upload(self.deployment_id, name, global_prediction_args, explanations)
-
-    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_location=None):
-        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_location)
+    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_location=None, database_connector_id=None, object_name=None, id_column=None, value_column=None, percentage_column=None, explanation_url_column=None):
+        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_location, database_connector_id, object_name, id_column, value_column, percentage_column, explanation_url_column)
 
     def list_batch_predictions(self):
         return self.client.list_batch_predictions(self.deployment_id)
