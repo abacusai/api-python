@@ -281,6 +281,10 @@ class ApiClient():
         '''Creates a new version of the specified dataset using a local file upload.'''
         return self._call_api('createDatasetVersionFromLocalFile', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
 
+    def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None):
+        '''Creates a dataset from a Database Connector'''
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None):
         '''Creates a new version of the specified dataset'''
         return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments}, parse_type=DatasetVersion)
@@ -542,16 +546,36 @@ class ApiClient():
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
 
     def batch_predict(self, deployment_id: str, input_location: str = None, output_location: str = None, name: str = None, refresh_schedule: str = None, global_prediction_args: dict = None, explanations: bool = False):
-        '''Starts a batch prediction task with the specified deployment ID, input location, output location, and batch prediction job name.'''
+        '''[Deprecated: Use the createBatchPrediction API] Starts a batch prediction task with the specified deployment ID, input location, output location, and batch prediction job name.'''
         return self._call_api('batchPredict', 'POST', query_params={'deploymentId': deployment_id}, body={'inputLocation': input_location, 'outputLocation': output_location, 'name': name, 'refreshSchedule': refresh_schedule, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations}, parse_type=BatchPrediction)
 
     def batch_predict_from_database_connector(self, deployment_id: str, database_connector_id: str, object_name: str, name: str = None, connection_mode: str = 'output', columns: str = None, query_arguments: str = None, prediction_output_columns: str = None, refresh_schedule: str = None, global_prediction_args: dict = None):
-        '''Starts a batch prediction task with the specified deployment ID, input location, output location, and batch prediction job name.'''
+        '''[Deprecated: Use the createBatchPrediction API] Starts a batch prediction using a data queried from a database connector'''
         return self._call_api('batchPredictFromDatabaseConnector', 'POST', query_params={'deploymentId': deployment_id}, body={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'name': name, 'connectionMode': connection_mode, 'columns': columns, 'queryArguments': query_arguments, 'predictionOutputColumns': prediction_output_columns, 'refreshSchedule': refresh_schedule, 'globalPredictionArgs': global_prediction_args}, parse_type=BatchPrediction)
 
     def batch_prediction_from_upload(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False):
-        '''Starts a batch prediction task with the specified deployment ID, file, and batch prediction job name.'''
+        '''[Deprecated: Use the createBatchPrediction API] Starts a batch prediction task with the specified deployment ID, file, and batch prediction job name.'''
         return self._call_api('batchPredictionFromUpload', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations}, parse_type=Upload)
+
+    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_location: str = None):
+        '''Creates a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputLocation': output_location}, parse_type=BatchPrediction)
+
+    def add_batch_dataset_from_upload(self, batch_prediction_id: str, dataset_id: str, file_format: str = None):
+        '''Creates a new version of the specified dataset using a local file upload. This new version will only be used for this batch prediction.'''
+        return self._call_api('addBatchDatasetFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'fileFormat': file_format}, parse_type=Upload)
+
+    def add_batch_dataset_from_database_connector(self, batch_prediction_id: str, dataset_id: str, database_connector_id: str = None, object_name: str = None, columns: str = None, query_arguments: str = None):
+        '''Creates a new version of the specified dataset. This new version will only be used for this batch prediction.'''
+        return self._call_api('addBatchDatasetFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments}, parse_type=DatasetVersion)
+
+    def add_batch_dataset_from_file_connector(self, batch_prediction_id: str, dataset_id: str, location: str = None, file_format: str = None):
+        '''Creates a new version of the specified dataset. This new version will only be used for this batch prediction.'''
+        return self._call_api('addBatchDatasetFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
+
+    def start_batch_prediction(self, batch_prediction_id: str, refresh_schedule: str = None):
+        '''Starts a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
+        return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'refreshSchedule': refresh_schedule}, parse_type=BatchPrediction)
 
     def get_batch_prediction_result(self, batch_prediction_id: str):
         '''Returns a stream containing the batch prediction results'''

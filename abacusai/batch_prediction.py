@@ -6,7 +6,7 @@ class BatchPrediction():
 
     '''
 
-    def __init__(self, client, batchPredictionId=None, name=None, status=None, deploymentId=None, inputLocation=None, outputLocation=None, predictionsStartedAt=None, predictionsCompletedAt=None, connectorOutputLocation=None, uploadId=None, globalPredictionArgs=None, totalPredictions=None, failedPredictions=None, inputDatasets={}):
+    def __init__(self, client, batchPredictionId=None, name=None, status=None, deploymentId=None, inputLocation=None, outputLocation=None, predictionsStartedAt=None, predictionsCompletedAt=None, connectorOutputLocation=None, uploadId=None, globalPredictionArgs=None, totalPredictions=None, failedPredictions=None, outputConfiguration=None, explanations=None, inputDatasets={}):
         self.client = client
         self.id = batchPredictionId
         self.batch_prediction_id = batchPredictionId
@@ -22,16 +22,30 @@ class BatchPrediction():
         self.global_prediction_args = globalPredictionArgs
         self.total_predictions = totalPredictions
         self.failed_predictions = failedPredictions
+        self.output_configuration = outputConfiguration
+        self.explanations = explanations
         self.input_datasets = client._build_class(BatchDataset, inputDatasets)
 
     def __repr__(self):
-        return f"BatchPrediction(batch_prediction_id={repr(self.batch_prediction_id)}, name={repr(self.name)}, status={repr(self.status)}, deployment_id={repr(self.deployment_id)}, input_location={repr(self.input_location)}, output_location={repr(self.output_location)}, predictions_started_at={repr(self.predictions_started_at)}, predictions_completed_at={repr(self.predictions_completed_at)}, connector_output_location={repr(self.connector_output_location)}, upload_id={repr(self.upload_id)}, global_prediction_args={repr(self.global_prediction_args)}, total_predictions={repr(self.total_predictions)}, failed_predictions={repr(self.failed_predictions)}, input_datasets={repr(self.input_datasets)})"
+        return f"BatchPrediction(batch_prediction_id={repr(self.batch_prediction_id)}, name={repr(self.name)}, status={repr(self.status)}, deployment_id={repr(self.deployment_id)}, input_location={repr(self.input_location)}, output_location={repr(self.output_location)}, predictions_started_at={repr(self.predictions_started_at)}, predictions_completed_at={repr(self.predictions_completed_at)}, connector_output_location={repr(self.connector_output_location)}, upload_id={repr(self.upload_id)}, global_prediction_args={repr(self.global_prediction_args)}, total_predictions={repr(self.total_predictions)}, failed_predictions={repr(self.failed_predictions)}, output_configuration={repr(self.output_configuration)}, explanations={repr(self.explanations)}, input_datasets={repr(self.input_datasets)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'batch_prediction_id': self.batch_prediction_id, 'name': self.name, 'status': self.status, 'deployment_id': self.deployment_id, 'input_location': self.input_location, 'output_location': self.output_location, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'connector_output_location': self.connector_output_location, 'upload_id': self.upload_id, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'input_datasets': self.input_datasets.to_dict() if self.input_datasets else None}
+        return {'batch_prediction_id': self.batch_prediction_id, 'name': self.name, 'status': self.status, 'deployment_id': self.deployment_id, 'input_location': self.input_location, 'output_location': self.output_location, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'connector_output_location': self.connector_output_location, 'upload_id': self.upload_id, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'output_configuration': self.output_configuration, 'explanations': self.explanations, 'input_datasets': self.input_datasets.to_dict() if self.input_datasets else None}
+
+    def add_batch_dataset_from_upload(self, dataset_id, file_format=None):
+        return self.client.add_batch_dataset_from_upload(self.batch_prediction_id, dataset_id, file_format)
+
+    def add_batch_dataset_from_database_connector(self, dataset_id, database_connector_id=None, object_name=None, columns=None, query_arguments=None):
+        return self.client.add_batch_dataset_from_database_connector(self.batch_prediction_id, dataset_id, database_connector_id, object_name, columns, query_arguments)
+
+    def add_batch_dataset_from_file_connector(self, dataset_id, location=None, file_format=None):
+        return self.client.add_batch_dataset_from_file_connector(self.batch_prediction_id, dataset_id, location, file_format)
+
+    def start(self, refresh_schedule=None):
+        return self.client.start_batch_prediction(self.batch_prediction_id, refresh_schedule)
 
     def get_result(self):
         return self.client.get_batch_prediction_result(self.batch_prediction_id)

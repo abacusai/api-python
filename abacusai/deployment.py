@@ -61,6 +61,9 @@ class Deployment():
     def batch_prediction_from_upload(self, name=None, global_prediction_args=None, explanations=False):
         return self.client.batch_prediction_from_upload(self.deployment_id, name, global_prediction_args, explanations)
 
+    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_location=None):
+        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_location)
+
     def list_batch_predictions(self):
         return self.client.list_batch_predictions(self.deployment_id)
 
