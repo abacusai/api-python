@@ -1,6 +1,6 @@
+import io
 import time
 from multiprocessing import Pool
-import io
 
 
 class Upload():

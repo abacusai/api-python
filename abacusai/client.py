@@ -153,7 +153,7 @@ class ApiClient():
     def list_organization_users(self):
         '''Retrieves a list of all users in the organization.
 
-        This method will retrieve a list with all the users in the organization and their account information. The list includes both, users who have accepted their invitation and users who have not yet accepted their invitation.
+        This method will retrieve a list containing all the users in the organization and their account information. The list includes both, users who have accepted their invitation and users who have not yet accepted their invitation.
         '''
         return self._call_api('listOrganizationUsers', 'GET', query_params={})
 
@@ -166,11 +166,11 @@ class ApiClient():
         return self._call_api('setUserAsAdmin', 'POST', query_params={}, body={'email': email})
 
     def delete_api_key(self, api_key_id: str):
-        '''Delete a specified API Key. You can use the List API Keys API to find the list API Key IDs.'''
+        '''Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.'''
         return self._call_api('deleteApiKey', 'DELETE', query_params={'apiKeyId': api_key_id})
 
     def remove_user_from_organization(self, email: str):
-        '''Removes the specified user from the organization. You must be an Organization Administrator to use this method, or be removing yourself from the organization.'''
+        '''Removes the specified user from the organization. You can remove yourself or you must be an Organization Administrator to use this method to remove other users from the organization.'''
         return self._call_api('removeUserFromOrganization', 'DELETE', query_params={'email': email})
 
     def create_project(self, name: str, use_case: str):
@@ -186,7 +186,7 @@ class ApiClient():
         return self._call_api('describeUseCaseRequirements', 'GET', query_params={'useCase': use_case}, parse_type=UseCaseRequirements)
 
     def describe_project(self, project_id: str):
-        '''Returns a description of a project with a specified project ID.'''
+        '''Returns a description of a project. The method takes the ID of the project as an input.'''
         return self._call_api('describeProject', 'GET', query_params={'projectId': project_id}, parse_type=Project)
 
     def list_projects(self):
@@ -214,7 +214,7 @@ class ApiClient():
         return self._call_api('setColumnMapping', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'columnMapping': column_mapping}, parse_type=Schema)
 
     def add_custom_column(self, project_id: str, dataset_id: str, column: str, sql: str):
-        '''Adds a custom column to the dataset'''
+        '''Adds a custom column to the dataset. To add a column, the user needs to provide the location of the dataset to add a custom column to. This is performed by providing a project ID and a dataset ID. The method also requires a custom column name and a SQL statement to generate the new column.'''
         return self._call_api('addCustomColumn', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'sql': sql}, parse_type=Schema)
 
     def edit_custom_column(self, project_id: str, dataset_id: str, column: str, new_column_name: str = None, sql: str = None):
@@ -414,7 +414,7 @@ class ApiClient():
         return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
 
     def update_model_training_config(self, model_id: str, training_config: dict):
-        '''Edits the model's traning config'''
+        '''Edits the default model training config'''
         return self._call_api('updateModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
     def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False):
@@ -429,7 +429,7 @@ class ApiClient():
         return self._call_api('listModelVersions', 'GET', query_params={'modelId': model_id}, parse_type=ModelVersion)
 
     def retrain_model(self, model_id: str, deployment_ids: list = []):
-        '''Retrains the specified model.'''
+        '''Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.'''
         return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids}, parse_type=Model)
 
     def cancel_model_training(self, model_id: str):
@@ -545,9 +545,9 @@ class ApiClient():
         '''Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).'''
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
 
-    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_location: str = None, database_connector_id: str = None, object_name: str = None, id_column: str = None, value_column: str = None, percentage_column: str = None, explanation_url_column: str = None):
+    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, object_name: str = None, id_column: str = None, value_column: str = None, percentage_column: str = None, explanation_url_column: str = None):
         '''Creates a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'idColumn': id_column, 'valueColumn': value_column, 'percentageColumn': percentage_column, 'explanationUrlColumn': explanation_url_column}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'idColumn': id_column, 'valueColumn': value_column, 'percentageColumn': percentage_column, 'explanationUrlColumn': explanation_url_column}, parse_type=BatchPrediction)
 
     def add_batch_dataset_from_upload(self, batch_prediction_id: str, dataset_id: str, file_format: str = None):
         '''Creates a new version of the specified dataset using a local file upload. This new version will only be used for this batch prediction.'''
