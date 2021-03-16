@@ -1,5 +1,5 @@
-from .model_version import ModelVersion
 from .model_location import ModelLocation
+from .model_version import ModelVersion
 
 
 class Model():
@@ -56,8 +56,8 @@ class Model():
     def delete(self):
         return self.client.delete_model(self.model_id)
 
-    def create_deployment(self, name=None, description=None, calls_per_second=None):
-        return self.client.create_deployment(self.model_id, name, description, calls_per_second)
+    def create_deployment(self, name=None, description=None, calls_per_second=None, auto_deploy=False):
+        return self.client.create_deployment(self.model_id, name, description, calls_per_second, auto_deploy)
 
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
@@ -65,5 +65,10 @@ class Model():
     def wait_for_evaluation(self, timeout=None):
         return self.wait_for_training()
 
-    def get_status(self):
+    def wait_for_full_automl(self, timeout=None):
+        return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout, poll_args={'get_automl_status': True})
+
+    def get_status(self, get_automl_status: bool = False):
+        if get_automl_status:
+            return self.client._call_api('describeModel', 'GET', query_params={'modelId': self.model_id, 'waitForFullAutoml': True}, parse_type=Model).latest_model_version.status
         return self.describe().latest_model_version.status

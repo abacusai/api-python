@@ -1,11 +1,11 @@
 import inspect
 import io
 import logging
-import requests
 import time
-
-from packaging import version
 from typing import List
+
+import requests
+from packaging import version
 
 from .api_key import ApiKey
 from .batch_dataset import BatchDataset
@@ -18,6 +18,7 @@ from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .feature import Feature
+from .feature_column import FeatureColumn
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
 from .feature_record import FeatureRecord
@@ -53,7 +54,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.14.0'
+    client_version = '0.14.2'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -134,9 +135,9 @@ class ApiClient():
                 'HTTP method must be `GET`, `POST`, `PATCH`, `PUT` or `DELETE`'
             )
 
-    def _poll(self, obj, wait_states, delay=5, timeout=300):
+    def _poll(self, obj, wait_states: set, delay: int = 5, timeout: int = 300, poll_args: dict = {}):
         start_time = time.time()
-        while obj.get_status() in wait_states:
+        while obj.get_status(**poll_args) in wait_states:
             if timeout and time.time() - start_time > timeout:
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
             time.sleep(delay)
@@ -398,7 +399,7 @@ class ApiClient():
         '''
         return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
 
-    def train_model(self, project_id: str, name: None = None, training_config: dict = {}, refresh_schedule: str = None):
+    def train_model(self, project_id: str, name: str = None, training_config: dict = {}, refresh_schedule: str = None):
         '''Trains a model for the specified project.
 
         Use this method to train a model with default training configurations for the specified project. This method also supports user-specified training configurations available by using the getTrainingConfigOptions method.
@@ -447,12 +448,12 @@ class ApiClient():
         '''Deletes the specified model version. Note that models versions are not recoverable after they are deleted.'''
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
-    def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None):
+    def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = False):
         '''Creates a deployment with the specified name and description for the specified model.
 
         A Deployment makes the trained model available for prediction requests.
         '''
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'modelId': model_id, 'name': name, 'description': description, 'callsPerSecond': calls_per_second}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'modelId': model_id, 'name': name, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str):
         '''Creates a deployment token for the specified project.
@@ -477,13 +478,23 @@ class ApiClient():
         '''Updates a deployment's name and/or description.'''
         return self._call_api('updateDeployment', 'PATCH', query_params={'deploymentId': deployment_id}, body={'name': name, 'description': description})
 
-    def start_deployment(self, deployment_id: str):
-        '''Restarts the specified deployment that was previously suspended.'''
-        return self._call_api('startDeployment', 'GET', query_params={'deploymentId': deployment_id})
+    def set_auto_deployment(self, deployment_id: str, enable: bool = None):
+        '''Enable/Disable auto deployment for the specified deployment.
+
+        When a model is scheduled to retrain, deployments with this enabled will be marked to automatically promote the new model
+        version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version
+        will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not,
+        it will be marked as a failed model version promotion with an error indicating poor metrics performance.
+        '''
+        return self._call_api('setAutoDeployment', 'POST', query_params={'deploymentId': deployment_id}, body={'enable': enable})
 
     def set_deployment_model_version(self, deployment_id: str, model_version: str):
         '''Promotes a Model Version to be served in the Deployment'''
         return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version})
+
+    def start_deployment(self, deployment_id: str):
+        '''Restarts the specified deployment that was previously suspended.'''
+        return self._call_api('startDeployment', 'GET', query_params={'deploymentId': deployment_id})
 
     def stop_deployment(self, deployment_id: str):
         '''Stops the specified deployment.'''

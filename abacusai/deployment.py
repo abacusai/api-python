@@ -5,7 +5,7 @@ class Deployment():
 
     '''
 
-    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, refreshSchedules=None, batchPredictionRefreshSchedules=None, callsPerSecond=None):
+    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, refreshSchedules=None, batchPredictionRefreshSchedules=None, callsPerSecond=None, autoDeploy=None):
         self.client = client
         self.id = deploymentId
         self.deployment_id = deploymentId
@@ -20,15 +20,16 @@ class Deployment():
         self.refresh_schedules = refreshSchedules
         self.batch_prediction_refresh_schedules = batchPredictionRefreshSchedules
         self.calls_per_second = callsPerSecond
+        self.auto_deploy = autoDeploy
 
     def __repr__(self):
-        return f"Deployment(deployment_id={repr(self.deployment_id)}, name={repr(self.name)}, status={repr(self.status)}, description={repr(self.description)}, deployed_at={repr(self.deployed_at)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, refresh_schedules={repr(self.refresh_schedules)}, batch_prediction_refresh_schedules={repr(self.batch_prediction_refresh_schedules)}, calls_per_second={repr(self.calls_per_second)})"
+        return f"Deployment(deployment_id={repr(self.deployment_id)}, name={repr(self.name)}, status={repr(self.status)}, description={repr(self.description)}, deployed_at={repr(self.deployed_at)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, refresh_schedules={repr(self.refresh_schedules)}, batch_prediction_refresh_schedules={repr(self.batch_prediction_refresh_schedules)}, calls_per_second={repr(self.calls_per_second)}, auto_deploy={repr(self.auto_deploy)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'refresh_schedules': self.refresh_schedules, 'batch_prediction_refresh_schedules': self.batch_prediction_refresh_schedules, 'calls_per_second': self.calls_per_second}
+        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'refresh_schedules': self.refresh_schedules, 'batch_prediction_refresh_schedules': self.batch_prediction_refresh_schedules, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy}
 
     def refresh(self):
         self = self.describe()
@@ -40,11 +41,14 @@ class Deployment():
     def update(self, name=None, description=None):
         return self.client.update_deployment(self.deployment_id, name, description)
 
-    def start(self):
-        return self.client.start_deployment(self.deployment_id)
+    def set_auto(self, enable=None):
+        return self.client.set_auto_deployment(self.deployment_id, enable)
 
     def set_model_version(self, model_version):
         return self.client.set_deployment_model_version(self.deployment_id, model_version)
+
+    def start(self):
+        return self.client.start_deployment(self.deployment_id)
 
     def stop(self):
         return self.client.stop_deployment(self.deployment_id)

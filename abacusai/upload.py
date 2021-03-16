@@ -1,6 +1,6 @@
-import io
 import time
 from multiprocessing import Pool
+import io
 
 
 class Upload():
@@ -57,6 +57,7 @@ class Upload():
             except Exception:
                 if retries > 2:
                     raise
+                part_data.seek(0, 0)
                 retries += 1
                 time.sleep(retries)
 
@@ -78,11 +79,13 @@ class Upload():
         while True:
             chunk = io.BytesIO() if binary_file else io.StringIO()
             length = chunk.write(file.read(chunksize))
-            if length == 0:
+            if not length:
+                if part_number == 0:
+                    raise Exception('File is empty')
                 break
             chunk.seek(0, 0)
             part_number += 1
-            yield part_number if length else -1, chunk
+            yield part_number, chunk
 
     def wait_for_join(self, timeout=600):
         return self.client._poll(self, {'PENDING', 'JOINING'}, timeout=timeout)
