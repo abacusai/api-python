@@ -32,17 +32,23 @@ class Dataset():
     def to_dict(self):
         return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
 
+    def create_version_from_file_connector(self, location=None, file_format=None):
+        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format)
+
+    def create_version_from_database_connector(self, object_name=None, columns=None, query_arguments=None):
+        return self.client.create_dataset_version_from_database_connector(self.dataset_id, object_name, columns, query_arguments)
+
+    def create_version_from_upload(self, file_format=None):
+        return self.client.create_dataset_version_from_upload(self.dataset_id, file_format)
+
+    def snapshot_streaming_data(self):
+        return self.client.snapshot_streaming_data(self.dataset_id)
+
     def create_version(self, location=None, file_format=None):
         return self.client.create_dataset_version(self.dataset_id, location, file_format)
 
     def create_version_from_local_file(self, file_format=None):
         return self.client.create_dataset_version_from_local_file(self.dataset_id, file_format)
-
-    def create_version_from_database_connector(self, object_name=None, columns=None, query_arguments=None):
-        return self.client.create_dataset_version_from_database_connector(self.dataset_id, object_name, columns, query_arguments)
-
-    def snapshot_streaming_data(self):
-        return self.client.snapshot_streaming_data(self.dataset_id)
 
     def refresh(self):
         self = self.describe()

@@ -54,7 +54,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.14.2'
+    client_version = '0.15.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -214,13 +214,13 @@ class ApiClient():
         '''Set a column's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column. The model returns a list of all schemas for each column with the reflected changes.'''
         return self._call_api('setColumnMapping', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'columnMapping': column_mapping}, parse_type=Schema)
 
-    def add_custom_column(self, project_id: str, dataset_id: str, column: str, sql: str):
-        '''Adds a custom column to the dataset. To add a column, the user needs to provide the location of the dataset to add a custom column to. This is performed by providing a project ID and a dataset ID. The method also requires a custom column name and a SQL statement to generate the new column.'''
-        return self._call_api('addCustomColumn', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'sql': sql}, parse_type=Schema)
+    def add_custom_column(self, project_id: str, dataset_id: str, column: str, select_expression: str):
+        '''Adds a custom column to the dataset. To add a column, the user needs to provide the location of the dataset to add a custom column to. This is performed by providing a project ID and a dataset ID. The method also requires a custom column name and a SELECT SQL statement to generate the new column.'''
+        return self._call_api('addCustomColumn', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'selectExpression': select_expression}, parse_type=Schema)
 
-    def edit_custom_column(self, project_id: str, dataset_id: str, column: str, new_column_name: str = None, sql: str = None):
+    def edit_custom_column(self, project_id: str, dataset_id: str, column: str, new_column_name: str = None, select_expression: str = None):
         '''Edits a custom column'''
-        return self._call_api('editCustomColumn', 'PATCH', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'newColumnName': new_column_name, 'sql': sql}, parse_type=Schema)
+        return self._call_api('editCustomColumn', 'PATCH', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'newColumnName': new_column_name, 'selectExpression': select_expression}, parse_type=Schema)
 
     def delete_custom_column(self, project_id: str, dataset_id: str, column: str):
         '''Deletes a custom column'''
@@ -266,21 +266,13 @@ class ApiClient():
         '''Marks an upload process as complete. This can be used to signify that the upload of the full file on our system is complete as all the parts/chunks associated with the full file are successfully uploaded.'''
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset(self, name: str, location: str, file_format: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None):
+    def create_dataset_from_file_connector(self, name: str, location: str, file_format: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None):
         '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
-        return self._call_api('createDataset', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
-    def create_dataset_version(self, dataset_id: str, location: str = None, file_format: str = None):
+    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None):
         '''Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
-        return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
-
-    def create_dataset_from_local_file(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None):
-        '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
-        return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Upload)
-
-    def create_dataset_version_from_local_file(self, dataset_id: str, file_format: str = None):
-        '''Creates a new version of the specified dataset using a local file upload.'''
-        return self._call_api('createDatasetVersionFromLocalFile', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
+        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
 
     def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None):
         '''Creates a dataset from a Database Connector'''
@@ -290,6 +282,14 @@ class ApiClient():
         '''Creates a new version of the specified dataset'''
         return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments}, parse_type=DatasetVersion)
 
+    def create_dataset_from_upload(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None):
+        '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Upload)
+
+    def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None):
+        '''Creates a new version of the specified dataset using a local file upload.'''
+        return self._call_api('createDatasetVersionFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
+
     def create_streaming_dataset(self, name: str, project_id: str, dataset_type: str):
         '''Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.'''
         return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Dataset)
@@ -297,6 +297,30 @@ class ApiClient():
     def snapshot_streaming_data(self, dataset_id: str):
         '''Snapshots the current data in the streaming dataset for training.'''
         return self._call_api('snapshotStreamingData', 'POST', query_params={'datasetId': dataset_id}, body={}, parse_type=DatasetVersion)
+
+    def create_dataset(self, name: str, location: str, file_format: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None):
+        '''[DEPRECATED] Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_dataset_from_file_connector instead.')
+        return self._call_api('createDataset', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+
+    def create_dataset_version(self, dataset_id: str, location: str = None, file_format: str = None):
+        '''[DEPRECATED] Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_file_connector instead.')
+        return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
+
+    def create_dataset_from_local_file(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None):
+        '''[DEPRECATED] Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_dataset_from_upload instead.')
+        return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Upload)
+
+    def create_dataset_version_from_local_file(self, dataset_id: str, file_format: str = None):
+        '''[DEPRECATED] Creates a new version of the specified dataset using a local file upload.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_upload instead.')
+        return self._call_api('createDatasetVersionFromLocalFile', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False):
         '''Retrieves verification information to create a data connector to a cloud storage bucket.'''

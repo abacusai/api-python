@@ -5,19 +5,20 @@ class ModelMetrics():
 
     '''
 
-    def __init__(self, client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None):
+    def __init__(self, client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None):
         self.client = client
         self.id = None
         self.model_id = modelId
         self.model_version = modelVersion
         self.metrics = metrics
         self.baseline_metrics = baselineMetrics
+        self.target_column = targetColumn
 
     def __repr__(self):
-        return f"ModelMetrics(model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, metrics={repr(self.metrics)}, baseline_metrics={repr(self.baseline_metrics)})"
+        return f"ModelMetrics(model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, metrics={repr(self.metrics)}, baseline_metrics={repr(self.baseline_metrics)}, target_column={repr(self.target_column)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'model_id': self.model_id, 'model_version': self.model_version, 'metrics': self.metrics, 'baseline_metrics': self.baseline_metrics}
+        return {'model_id': self.model_id, 'model_version': self.model_version, 'metrics': self.metrics, 'baseline_metrics': self.baseline_metrics, 'target_column': self.target_column}

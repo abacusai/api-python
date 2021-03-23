@@ -44,11 +44,11 @@ class Project():
     def set_column_mapping(self, dataset_id, column, column_mapping):
         return self.client.set_column_mapping(self.project_id, dataset_id, column, column_mapping)
 
-    def add_custom_column(self, dataset_id, column, sql):
-        return self.client.add_custom_column(self.project_id, dataset_id, column, sql)
+    def add_custom_column(self, dataset_id, column, select_expression):
+        return self.client.add_custom_column(self.project_id, dataset_id, column, select_expression)
 
-    def edit_custom_column(self, dataset_id, column, new_column_name=None, sql=None):
-        return self.client.edit_custom_column(self.project_id, dataset_id, column, new_column_name, sql)
+    def edit_custom_column(self, dataset_id, column, new_column_name=None, select_expression=None):
+        return self.client.edit_custom_column(self.project_id, dataset_id, column, new_column_name, select_expression)
 
     def delete_custom_column(self, dataset_id, column):
         return self.client.delete_custom_column(self.project_id, dataset_id, column)
