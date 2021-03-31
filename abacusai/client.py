@@ -229,9 +229,7 @@ class ApiClient():
     def set_project_dataset_filters(self, project_id: str, dataset_id: str, filters: list):
         '''Sets the data filters for a dataset uploaded under a project.
 
-        Each filter in the filter list must be an object containing the keys 'type' and 'sql'. The type must be either 'INCLUDE', signifying any rows matching the sql statement will be included as part of training, or 'EXCLUDE' signifying that any rows matching the sql statement will be excluded from training.
-
-        Note that filters are ordered by importance, so if a row is included via an include statement, no following statement can exclude it.
+        Each filter in the filter list must be an object containing the keys 'type' and 'whereExpression'. The type must be either 'INCLUDE', signifying any rows matching the sql statement will be included as part of training, or 'EXCLUDE' signifying that any rows matching the sql statement will be excluded from training.
         '''
         return self._call_api('setProjectDatasetFilters', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'filters': filters})
 
@@ -472,7 +470,7 @@ class ApiClient():
         '''Deletes the specified model version. Note that models versions are not recoverable after they are deleted.'''
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
-    def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = False):
+    def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True):
         '''Creates a deployment with the specified name and description for the specified model.
 
         A Deployment makes the trained model available for prediction requests.
@@ -563,6 +561,10 @@ class ApiClient():
     def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: dict = None, num_predictions: int = None, prediction_start: str = None):
         '''Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).'''
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start})
+
+    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = 0.5):
+        '''Returns a list of scored labels from'''
+        return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold})
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = [], score_field: str = '', scaling_factors: list = [], restrict_items: list = [], exclude_items: list = [], explore_fraction: float = 0.0):
         '''Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).'''

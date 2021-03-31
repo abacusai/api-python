@@ -56,7 +56,7 @@ class Model():
     def delete(self):
         return self.client.delete_model(self.model_id)
 
-    def create_deployment(self, name=None, description=None, calls_per_second=None, auto_deploy=False):
+    def create_deployment(self, name=None, description=None, calls_per_second=None, auto_deploy=True):
         return self.client.create_deployment(self.model_id, name, description, calls_per_second, auto_deploy)
 
     def wait_for_training(self, timeout=None):
