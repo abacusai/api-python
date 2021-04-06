@@ -56,8 +56,8 @@ class Deployment():
     def delete(self):
         return self.client.delete_deployment(self.deployment_id)
 
-    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, object_name=None, id_column=None, value_column=None, percentage_column=None, explanation_url_column=None):
-        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, object_name, id_column, value_column, percentage_column, explanation_url_column)
+    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None):
+        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config)
 
     def list_batch_predictions(self):
         return self.client.list_batch_predictions(self.deployment_id)

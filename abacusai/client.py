@@ -54,7 +54,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.15.0'
+    client_version = '0.16.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -550,6 +550,10 @@ class ApiClient():
         '''Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).'''
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
+    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = 0.5, threshold_class: str = None):
+        '''Returns a prediction for regression classification'''
+        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class})
+
     def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False):
         '''Returns a list of anomalies from the training dataset'''
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram})
@@ -582,9 +586,9 @@ class ApiClient():
         '''Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).'''
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
 
-    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, object_name: str = None, id_column: str = None, value_column: str = None, percentage_column: str = None, explanation_url_column: str = None):
+    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None):
         '''Creates a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'idColumn': id_column, 'valueColumn': value_column, 'percentageColumn': percentage_column, 'explanationUrlColumn': explanation_url_column}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config}, parse_type=BatchPrediction)
 
     def add_batch_dataset_from_upload(self, batch_prediction_id: str, dataset_id: str, file_format: str = None):
         '''Creates a new version of the specified dataset using a local file upload. This new version will only be used for this batch prediction.'''
