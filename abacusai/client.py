@@ -8,8 +8,8 @@ import requests
 from packaging import version
 
 from .api_key import ApiKey
-from .batch_dataset import BatchDataset
 from .batch_prediction import BatchPrediction
+from .batch_prediction_version import BatchPredictionVersion
 from .schema import Schema
 from .data_filter import DataFilter
 from .database_connector import DatabaseConnector
@@ -30,6 +30,9 @@ from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
 from .model_upload import ModelUpload
 from .model_version import ModelVersion
+from .prediction_dataset import PredictionDataset
+from .prediction_feature_group import PredictionFeatureGroup
+from .prediction_input import PredictionInput
 from .project import Project
 from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
@@ -54,7 +57,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.16.0'
+    client_version = '0.18.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -550,7 +553,7 @@ class ApiClient():
         '''Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).'''
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = 0.5, threshold_class: str = None):
+    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None):
         '''Returns a prediction for regression classification'''
         return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class})
 
@@ -586,41 +589,65 @@ class ApiClient():
         '''Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).'''
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
 
-    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None):
+    def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None):
         '''Creates a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule}, parse_type=BatchPrediction)
 
-    def add_batch_dataset_from_upload(self, batch_prediction_id: str, dataset_id: str, file_format: str = None):
-        '''Creates a new version of the specified dataset using a local file upload. This new version will only be used for this batch prediction.'''
-        return self._call_api('addBatchDatasetFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'fileFormat': file_format}, parse_type=Upload)
-
-    def add_batch_dataset_from_database_connector(self, batch_prediction_id: str, dataset_id: str, database_connector_id: str = None, object_name: str = None, columns: str = None, query_arguments: str = None):
-        '''Creates a new version of the specified dataset. This new version will only be used for this batch prediction.'''
-        return self._call_api('addBatchDatasetFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments}, parse_type=DatasetVersion)
-
-    def add_batch_dataset_from_file_connector(self, batch_prediction_id: str, dataset_id: str, location: str = None, file_format: str = None):
-        '''Creates a new version of the specified dataset. This new version will only be used for this batch prediction.'''
-        return self._call_api('addBatchDatasetFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
-
-    def start_batch_prediction(self, batch_prediction_id: str, refresh_schedule: str = None):
+    def start_batch_prediction(self, batch_prediction_id: str):
         '''Starts a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
-        return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'refreshSchedule': refresh_schedule}, parse_type=BatchPrediction)
+        return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
 
-    def get_batch_prediction_result(self, batch_prediction_id: str):
+    def get_batch_prediction_result(self, batch_prediction_version: str):
         '''Returns a stream containing the batch prediction results'''
-        return self._call_api('getBatchPredictionResult', 'GET', query_params={'batchPredictionId': batch_prediction_id}, streamable_response=True)
+        return self._call_api('getBatchPredictionResult', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
 
-    def get_batch_prediction_connector_errors(self, batch_prediction_id: str):
+    def get_batch_prediction_connector_errors(self, batch_prediction_version: str):
         '''Returns a stream containing the batch prediction external connection error, if it exists'''
-        return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionId': batch_prediction_id}, streamable_response=True)
+        return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
 
-    def list_batch_predictions(self, deployment_id: str):
+    def list_batch_predictions(self, project_id: str):
         '''Retrieves a list for the batch prediction jobs for the specified deployment.'''
-        return self._call_api('listBatchPredictions', 'GET', query_params={'deploymentId': deployment_id}, parse_type=BatchPrediction)
+        return self._call_api('listBatchPredictions', 'GET', query_params={'projectId': project_id}, parse_type=BatchPrediction)
 
     def describe_batch_prediction(self, batch_prediction_id: str):
-        '''Retrieves the status of the specified batch prediction job.'''
+        '''Describe batch prediction Description'''
         return self._call_api('describeBatchPrediction', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
+
+    def list_batch_prediction_versions(self, batch_prediction_id: str):
+        ''''''
+        return self._call_api('listBatchPredictionVersions', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
+
+    def describe_batch_prediction_version(self, batch_prediction_version: str):
+        ''''''
+        return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
+
+    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None):
+        ''''''
+        return self._call_api('updateBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'batchPredictionId': batch_prediction_id, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format}, parse_type=BatchPrediction)
+
+    def set_batch_prediction_file_connector_output(self, batch_prediction_id: str, output_format: str = None, output_location: str = None):
+        ''''''
+        return self._call_api('setBatchPredictionFileConnectorOutput', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'outputFormat': output_format, 'outputLocation': output_location}, parse_type=BatchPrediction)
+
+    def set_batch_prediction_database_connector_output(self, batch_prediction_id: str, database_connector_id: str = None, database_output_config: dict = None):
+        ''''''
+        return self._call_api('setBatchPredictionDatabaseConnectorOutput', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config}, parse_type=BatchPrediction)
+
+    def set_batch_prediction_output_to_console(self, batch_prediction_id: str):
+        ''''''
+        return self._call_api('setBatchPredictionOutputToConsole', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
+
+    def set_batch_prediction_dataset(self, batch_prediction_id: str, dataset_type: str, dataset_id: str = None):
+        ''''''
+        return self._call_api('setBatchPredictionDataset', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'datasetType': dataset_type}, parse_type=BatchPrediction)
+
+    def set_batch_prediction_feature_group(self, batch_prediction_id: str, dataset_type: str, feature_group_id: str = None):
+        ''''''
+        return self._call_api('setBatchPredictionFeatureGroup', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'datasetType': dataset_type, 'featureGroupId': feature_group_id}, parse_type=BatchPrediction)
+
+    def delete_batch_prediction(self, batch_prediction_id: str):
+        ''''''
+        return self._call_api('deleteBatchPrediction', 'DELETE', query_params={'batchPredictionId': batch_prediction_id})
 
     def add_user_item_interaction(self, streaming_token: str, dataset_id: str, timestamp: int, user_id: str, item_id: list, event_type: str, additional_attributes: dict):
         '''Adds a user-item interaction record (data row) to a streaming dataset.'''
@@ -639,3 +666,21 @@ class ApiClient():
         Either the streaming dataset ID or the project ID is required.
         '''
         return self._call_api('upsertItemAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'itemId': item_id, 'itemAttributes': item_attributes})
+
+    def add_multiple_user_item_interactions(self, streaming_token: str, dataset_id: str, interactions: list):
+        '''Adds a user-item interaction record (data row) to a streaming dataset.'''
+        return self._call_api('addMultipleUserItemInteractions', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'interactions': interactions})
+
+    def upsert_multiple_user_attributes(self, streaming_token: str, dataset_id: str, upserts: list):
+        '''Adds multiple user attributes records (data row) to a streaming dataset.
+
+        The streaming dataset ID is required.
+        '''
+        return self._call_api('upsertMultipleUserAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'upserts': upserts})
+
+    def upsert_multiple_item_attributes(self, streaming_token: str, dataset_id: str, upserts: list):
+        '''Adds multiple item attributes records (data row) to a streaming dataset.
+
+        The streaming dataset ID is required.
+        '''
+        return self._call_api('upsertMultipleItemAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'upserts': upserts})

@@ -56,11 +56,8 @@ class Deployment():
     def delete(self):
         return self.client.delete_deployment(self.deployment_id)
 
-    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None):
-        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config)
-
-    def list_batch_predictions(self):
-        return self.client.list_batch_predictions(self.deployment_id)
+    def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None, refresh_schedule=None):
+        return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule)
 
     def wait_for_deployment(self, timeout=480):
         return self.client._poll(self, {'PENDING', 'DEPLOYING'}, timeout=timeout)

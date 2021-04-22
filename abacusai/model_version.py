@@ -7,7 +7,7 @@ class ModelVersion():
 
     def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None):
         self.client = client
-        self.id = None
+        self.id = modelVersion
         self.model_version = modelVersion
         self.status = status
         self.model_id = modelId

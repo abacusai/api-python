@@ -6,7 +6,7 @@ class Dataset():
 
     '''
 
-    def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, refreshSchedules=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, latestDatasetVersion={}):
+    def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, refreshSchedules=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, latestDatasetVersion={}):
         self.client = client
         self.id = datasetId
         self.dataset_id = datasetId
@@ -20,17 +20,18 @@ class Dataset():
         self.lookback_days = lookbackDays
         self.database_connector_id = databaseConnectorId
         self.database_connector_config = databaseConnectorConfig
+        self.connector_type = connectorType
         self.latest_dataset_version = client._build_class(
             DatasetVersion, latestDatasetVersion)
 
     def __repr__(self):
-        return f"Dataset(dataset_id={repr(self.dataset_id)}, name={repr(self.name)}, source_type={repr(self.source_type)}, data_source={repr(self.data_source)}, created_at={repr(self.created_at)}, refresh_schedules={repr(self.refresh_schedules)}, ignore_before={repr(self.ignore_before)}, ephemeral={repr(self.ephemeral)}, lookback_days={repr(self.lookback_days)}, database_connector_id={repr(self.database_connector_id)}, database_connector_config={repr(self.database_connector_config)}, latest_dataset_version={repr(self.latest_dataset_version)})"
+        return f"Dataset(dataset_id={repr(self.dataset_id)}, name={repr(self.name)}, source_type={repr(self.source_type)}, data_source={repr(self.data_source)}, created_at={repr(self.created_at)}, refresh_schedules={repr(self.refresh_schedules)}, ignore_before={repr(self.ignore_before)}, ephemeral={repr(self.ephemeral)}, lookback_days={repr(self.lookback_days)}, database_connector_id={repr(self.database_connector_id)}, database_connector_config={repr(self.database_connector_config)}, connector_type={repr(self.connector_type)}, latest_dataset_version={repr(self.latest_dataset_version)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
+        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
 
     def create_version_from_file_connector(self, location=None, file_format=None):
         return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format)

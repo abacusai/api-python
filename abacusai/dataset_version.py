@@ -8,7 +8,7 @@ class DatasetVersion():
 
     def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, createdAt=None, error=None):
         self.client = client
-        self.id = None
+        self.id = datasetVersion
         self.dataset_version = datasetVersion
         self.status = status
         self.dataset_id = datasetId

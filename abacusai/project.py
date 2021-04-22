@@ -83,6 +83,9 @@ class Project():
     def list_deployment_tokens(self):
         return self.client.list_deployment_tokens(self.project_id)
 
+    def list_batch_predictions(self):
+        return self.client.list_batch_predictions(self.project_id)
+
     def attach_dataset(self, dataset_id, project_dataset_type):
         return self.client.attach_dataset_to_project(dataset_id, self.project_id, project_dataset_type)
 
