@@ -1,5 +1,5 @@
-from .batch_prediction_version import BatchPredictionVersion
 from .prediction_input import PredictionInput
+from .batch_prediction_version import BatchPredictionVersion
 
 
 class BatchPrediction():
@@ -46,8 +46,8 @@ class BatchPrediction():
     def describe(self):
         return self.client.describe_batch_prediction(self.batch_prediction_id)
 
-    def list_versions(self):
-        return self.client.list_batch_prediction_versions(self.batch_prediction_id)
+    def list_versions(self, limit=100, start_after_version=None):
+        return self.client.list_batch_prediction_versions(self.batch_prediction_id, limit, start_after_version)
 
     def update(self, deployment_id=None, global_prediction_args=None, explanations=None, output_format=None):
         return self.client.update_batch_prediction(self.batch_prediction_id, deployment_id, global_prediction_args, explanations, output_format)

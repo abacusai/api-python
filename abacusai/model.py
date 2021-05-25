@@ -1,5 +1,5 @@
-from .model_location import ModelLocation
 from .model_version import ModelVersion
+from .model_location import ModelLocation
 
 
 class Model():
@@ -44,8 +44,8 @@ class Model():
     def get_metrics(self, model_version=None, baseline_metrics=False):
         return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics)
 
-    def list_versions(self):
-        return self.client.list_model_versions(self.model_id)
+    def list_versions(self, limit=100, start_after_version=None):
+        return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
     def retrain(self, deployment_ids=[]):
         return self.client.retrain_model(self.model_id, deployment_ids)

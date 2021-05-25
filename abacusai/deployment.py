@@ -59,8 +59,8 @@ class Deployment():
     def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None, refresh_schedule=None):
         return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule)
 
-    def wait_for_deployment(self, timeout=480):
-        return self.client._poll(self, {'PENDING', 'DEPLOYING'}, timeout=timeout)
+    def wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480):
+        return self.client._poll(self, wait_states, timeout=timeout)
 
     def get_status(self):
         return self.describe().status
