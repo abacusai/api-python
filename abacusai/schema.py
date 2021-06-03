@@ -1,3 +1,4 @@
+from .nested_column import NestedColumn
 
 
 class Schema():

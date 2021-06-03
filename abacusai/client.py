@@ -30,6 +30,7 @@ from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
 from .model_upload import ModelUpload
 from .model_version import ModelVersion
+from .nested_column import NestedColumn
 from .prediction_dataset import PredictionDataset
 from .prediction_feature_group import PredictionFeatureGroup
 from .prediction_input import PredictionInput
@@ -57,7 +58,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.18.1'
+    client_version = '0.18.2'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -275,13 +276,13 @@ class ApiClient():
         '''Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, sql_query: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query}, parse_type=Dataset)
 
-    def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None) -> DatasetVersion:
+    def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset'''
-        return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
 
     def create_dataset_from_upload(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None, csv_delimiter: str = None) -> Upload:
         '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
@@ -424,7 +425,7 @@ class ApiClient():
     def get_training_config_options(self, project_id: str) -> List[TrainingConfigOptions]:
         '''Retrieves the full description of the model training configuration options available for the specified project.
 
-        The number of configuration options and types of options available is determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[{USE_CASE_URL}] for more information on use cases and use case specific configuration options.
+        The number of configuration options and types of options available is determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
         '''
         return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
 

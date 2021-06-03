@@ -37,8 +37,8 @@ class Dataset():
     def create_version_from_file_connector(self, location=None, file_format=None):
         return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format)
 
-    def create_version_from_database_connector(self, object_name=None, columns=None, query_arguments=None):
-        return self.client.create_dataset_version_from_database_connector(self.dataset_id, object_name, columns, query_arguments)
+    def create_version_from_database_connector(self, object_name=None, columns=None, query_arguments=None, sql_query=None):
+        return self.client.create_dataset_version_from_database_connector(self.dataset_id, object_name, columns, query_arguments, sql_query)
 
     def create_version_from_upload(self, file_format=None):
         return self.client.create_dataset_version_from_upload(self.dataset_id, file_format)
