@@ -71,6 +71,9 @@ class Dataset():
     def rename(self, name):
         return self.client.rename_dataset(self.dataset_id, name)
 
+    def update_table_name(self, dataset_table_name):
+        return self.client.update_dataset_table_name(self.dataset_id, dataset_table_name)
+
     def delete(self):
         return self.client.delete_dataset(self.dataset_id)
 

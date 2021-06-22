@@ -5,22 +5,23 @@ class Project():
 
     '''
 
-    def __init__(self, client, projectId=None, name=None, useCase=None, createdAt=None):
+    def __init__(self, client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None):
         self.client = client
         self.id = projectId
         self.project_id = projectId
         self.name = name
         self.use_case = useCase
         self.created_at = createdAt
+        self.feature_groups_enabled = featureGroupsEnabled
 
     def __repr__(self):
-        return f"Project(project_id={repr(self.project_id)}, name={repr(self.name)}, use_case={repr(self.use_case)}, created_at={repr(self.created_at)})"
+        return f"Project(project_id={repr(self.project_id)}, name={repr(self.name)}, use_case={repr(self.use_case)}, created_at={repr(self.created_at)}, feature_groups_enabled={repr(self.feature_groups_enabled)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'created_at': self.created_at}
+        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled}
 
     def refresh(self):
         self = self.describe()
@@ -44,6 +45,9 @@ class Project():
     def set_column_mapping(self, dataset_id, column, column_mapping):
         return self.client.set_column_mapping(self.project_id, dataset_id, column, column_mapping)
 
+    def set_feature_group_column_mapping(self, feature_group_id, column, column_mapping):
+        return self.client.set_feature_group_column_mapping(self.project_id, feature_group_id, column, column_mapping)
+
     def add_custom_column(self, dataset_id, column, select_expression):
         return self.client.add_custom_column(self.project_id, dataset_id, column, select_expression)
 
@@ -64,6 +68,9 @@ class Project():
 
     def delete(self):
         return self.client.delete_project(self.project_id)
+
+    def list_feature_groups(self, limit=100, start_after_id=None):
+        return self.client.list_feature_groups(self.project_id, limit, start_after_id)
 
     def get_training_config_options(self):
         return self.client.get_training_config_options(self.project_id)
