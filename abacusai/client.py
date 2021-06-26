@@ -8,6 +8,7 @@ import requests
 from packaging import version
 
 from .api_key import ApiKey
+from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .schema import Schema
@@ -21,6 +22,7 @@ from .feature import Feature
 from .feature_column import FeatureColumn
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
+from .feature_group_version import FeatureGroupVersion
 from .feature_record import FeatureRecord
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
@@ -58,7 +60,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.19.0'
+    client_version = '0.19.1'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -332,6 +334,30 @@ class ApiClient():
         ''''''
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
+    def create_feature_group_snapshot(self, project_id: str, feature_group_id: str) -> FeatureGroupVersion:
+        '''Creates a snapshot for a specified feature group.'''
+        return self._call_api('createFeatureGroupSnapshot', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
+
+    def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_instance_id: int = None) -> List[FeatureGroupVersion]:
+        '''Retrieves a list of all feature group versions for the specified feature group.'''
+        return self._call_api('listFeatureGroupVersions', 'GET', query_params={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterInstanceId': start_after_instance_id}, parse_type=FeatureGroupVersion)
+
+    def describe_feature_group_version(self, feature_group_version: str) -> FeatureGroupVersion:
+        '''Get a specific feature group version.'''
+        return self._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': feature_group_version}, parse_type=FeatureGroupVersion)
+
+    def get_feature_group_version_data(self, feature_group_version: str, from_row: int = None, to_row: int = None, from_col: int = None, to_col: int = None, column_filters: dict = {}) -> None:
+        '''Get raw data for a specific feature group version.'''
+        return self._call_api('getFeatureGroupVersionData', 'GET', query_params={'featureGroupVersion': feature_group_version, 'fromRow': from_row, 'toRow': to_row, 'fromCol': from_col, 'toCol': to_col, 'columnFilters': column_filters})
+
+    def get_feature_group_version_metrics_data(self, feature_group_version: str, from_row: int = None, to_row: int = None, from_col: int = None, to_col: int = None) -> None:
+        '''Get metrics for a specific feature group version.'''
+        return self._call_api('getFeatureGroupVersionMetricsData', 'GET', query_params={'featureGroupVersion': feature_group_version, 'fromRow': from_row, 'toRow': to_row, 'fromCol': from_col, 'toCol': to_col})
+
+    def get_feature_group_version_metrics_schema(self, feature_group_version: str) -> None:
+        '''Get metrics schema for a specific feature group version.'''
+        return self._call_api('getFeatureGroupVersionMetricsSchema', 'GET', query_params={'featureGroupVersion': feature_group_version})
+
     def cancel_upload(self, upload_id: str):
         '''Cancels an upload'''
         return self._call_api('cancelUpload', 'DELETE', query_params={'uploadId': upload_id})
@@ -348,17 +374,25 @@ class ApiClient():
         '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
         return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
 
-    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None) -> DatasetVersion:
+    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
-        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
     def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, sql_query: str = None, dataset_table_name: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
         return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
 
+    def create_dataset_from_application_connector(self, name: str, application_connector_id: str, object_id: str = None, start_date: int = None, end_date: int = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, dataset_table_name: str = None) -> Dataset:
+        '''Creates a dataset from a Database Connector'''
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startDate': start_date, 'endDate': end_date, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset'''
         return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
+
+    def create_dataset_version_from_application_connector(self, dataset_id: str, object_id: str = None, start_date: int = None, end_date: int = None) -> DatasetVersion:
+        '''Creates a new version of the specified dataset'''
+        return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startDate': start_date, 'endDate': end_date}, parse_type=DatasetVersion)
 
     def create_dataset_from_upload(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
         '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
@@ -382,11 +416,11 @@ class ApiClient():
             'This function is deprecated and will be removed in a future version. Use create_dataset_from_file_connector instead.')
         return self._call_api('createDataset', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
 
-    def create_dataset_version(self, dataset_id: str, location: str = None, file_format: str = None) -> DatasetVersion:
+    def create_dataset_version(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''[DEPRECATED] Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
         logging.warning(
             'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_file_connector instead.')
-        return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
     def create_dataset_from_local_file(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
         '''[DEPRECATED] Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
@@ -424,6 +458,10 @@ class ApiClient():
         '''Renames a Database Connector'''
         return self._call_api('renameDatabaseConnector', 'PATCH', query_params={}, body={'databaseConnectorId': database_connector_id, 'name': name})
 
+    def rename_application_connector(self, application_connector_id: str, name: str):
+        '''Renames an Application Connector'''
+        return self._call_api('renameApplicationConnector', 'PATCH', query_params={}, body={'applicationConnectorId': application_connector_id, 'name': name})
+
     def verify_database_connector(self, database_connector_id: str):
         '''Checks to see if Abacus.AI can access the database.'''
         return self._call_api('verifyDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id})
@@ -436,9 +474,25 @@ class ApiClient():
         '''Disconnect an database connector.'''
         return self._call_api('removeDatabaseConnector', 'DELETE', query_params={'databaseConnectorId': database_connector_id})
 
+    def remove_application_connector(self, application_connection_id: str):
+        '''Disconnect an application connector.'''
+        return self._call_api('removeApplicationConnector', 'DELETE', query_params={'applicationConnectionId': application_connection_id})
+
     def remove_file_connector(self, bucket: str):
         '''Removes a connected service from the specified organization.'''
         return self._call_api('removeFileConnector', 'DELETE', query_params={'bucket': bucket})
+
+    def list_application_connectors(self) -> ApplicationConnector:
+        '''Retrieves a list of all of the application connectors along with all their attributes.'''
+        return self._call_api('listApplicationConnectors', 'GET', query_params={}, parse_type=ApplicationConnector)
+
+    def list_application_connector_objects(self, application_connector_id: str) -> List[str]:
+        '''Lists querable objects in the application connector.'''
+        return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
+
+    def verify_application_connector(self, application_connector_id: str):
+        '''Checks to see if Abacus.AI can access the database.'''
+        return self._call_api('verifyApplicationConnector', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
     def set_azure_blob_connection_string(self, bucket: str, connection_string: str) -> FileConnectorVerification:
         '''Authenticates specified Azure Blob Storage bucket using an authenticated Connection String.'''
@@ -658,6 +712,10 @@ class ApiClient():
         '''Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).'''
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start})
 
+    def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False) -> Dict:
+        '''Returns the k nearest neighbors to the the provided embedding vector.'''
+        return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score})
+
     def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = 0.5) -> Dict:
         '''Returns a list of scored labels from'''
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold})
@@ -773,3 +831,11 @@ class ApiClient():
         The streaming dataset ID is required.
         '''
         return self._call_api('upsertMultipleItemAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'upserts': upserts})
+
+    def upsert_item_embeddings(self, model_id: str, item_id: str, vector: list):
+        '''Upserts a knn embedding for an item id for a model_id.'''
+        return self._call_api('upsertItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'itemId': item_id, 'vector': vector})
+
+    def delete_item_embeddings(self, model_id: str, item_ids: list):
+        '''Deletes knn embeddings for a list of item ids for a model_id.'''
+        return self._call_api('deleteItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'itemIds': item_ids})

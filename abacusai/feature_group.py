@@ -78,3 +78,6 @@ class FeatureGroup():
 
     def delete(self):
         return self.client.delete_feature_group(self.feature_group_id)
+
+    def list_versions(self, limit=100, start_after_instance_id=None):
+        return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_instance_id)

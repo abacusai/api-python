@@ -1,5 +1,5 @@
-from .model_version import ModelVersion
 from .model_location import ModelLocation
+from .model_version import ModelVersion
 
 
 class Model():
@@ -58,6 +58,12 @@ class Model():
 
     def create_deployment(self, name=None, description=None, calls_per_second=None, auto_deploy=True):
         return self.client.create_deployment(self.model_id, name, description, calls_per_second, auto_deploy)
+
+    def upsert_item_embeddings(self, item_id, vector):
+        return self.client.upsert_item_embeddings(self.model_id, item_id, vector)
+
+    def delete_item_embeddings(self, item_ids):
+        return self.client.delete_item_embeddings(self.model_id, item_ids)
 
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
