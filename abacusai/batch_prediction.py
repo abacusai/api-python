@@ -1,5 +1,5 @@
-from .batch_prediction_version import BatchPredictionVersion
 from .prediction_input import PredictionInput
+from .batch_prediction_version import BatchPredictionVersion
 
 
 class BatchPrediction():

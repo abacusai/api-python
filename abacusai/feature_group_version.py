@@ -25,3 +25,12 @@ class FeatureGroupVersion():
 
     def to_dict(self):
         return {'feature_group_version': self.feature_group_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'instance_info': self.instance_info, 'schema_values': self.schema_values, 'lifecycle': self.lifecycle, 'feature_group': [elem.to_dict() for elem in self.feature_group or []]}
+
+    def wait_for_results(self, timeout=3600):
+        return self.client._poll(self, {'PENDING'}, timeout=timeout)
+
+    def get_status(self):
+        return self.client._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': self.feature_group_version}, parse_type=FeatureGroupVersion).lifecycle
+
+    def describe(self):
+        return self.client._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': self.feature_group_version}, parse_type=FeatureGroupVersion)

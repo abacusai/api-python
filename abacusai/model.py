@@ -65,6 +65,9 @@ class Model():
     def delete_item_embeddings(self, item_ids):
         return self.client.delete_item_embeddings(self.model_id, item_ids)
 
+    def upsert_multiple_item_embeddings(self, upserts):
+        return self.client.upsert_multiple_item_embeddings(self.model_id, upserts)
+
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
 

@@ -60,7 +60,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.19.1'
+    client_version = '0.20.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -314,7 +314,7 @@ class ApiClient():
         ''''''
         return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
 
-    def list_feature_groups(self, project_id: str = None, limit: None = 100, start_after_id: None = None) -> FeatureGroup:
+    def list_feature_groups(self, project_id: str = None, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
         ''''''
         return self._call_api('listFeatureGroups', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
 
@@ -370,21 +370,21 @@ class ApiClient():
         '''Marks an upload process as complete. This can be used to signify that the upload of the full file on our system is complete as all the parts/chunks associated with the full file are successfully uploaded.'''
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, name: str, location: str, file_format: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
+    def create_dataset_from_file_connector(self, name: str, location: str, file_format: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
         '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, sql_query: str = None, dataset_table_name: str = None) -> Dataset:
+    def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, dataset_table_name: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, name: str, application_connector_id: str, object_id: str = None, start_date: int = None, end_date: int = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, dataset_table_name: str = None) -> Dataset:
+    def create_dataset_from_application_connector(self, name: str, application_connector_id: str, object_id: str = None, start_date: int = None, end_date: int = None, refresh_schedule: str = None, dataset_table_name: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
-        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startDate': start_date, 'endDate': end_date, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startDate': start_date, 'endDate': end_date, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
 
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset'''
@@ -394,9 +394,9 @@ class ApiClient():
         '''Creates a new version of the specified dataset'''
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startDate': start_date, 'endDate': end_date}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
+    def create_dataset_from_upload(self, name: str, file_format: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
         '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         '''Creates a new version of the specified dataset using a local file upload.'''
@@ -410,11 +410,11 @@ class ApiClient():
         '''Snapshots the current data in the streaming dataset for training.'''
         return self._call_api('snapshotStreamingData', 'POST', query_params={'datasetId': dataset_id}, body={}, parse_type=DatasetVersion)
 
-    def create_dataset(self, name: str, location: str, file_format: str = None, project_id: str = None, dataset_type: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
+    def create_dataset(self, name: str, location: str, file_format: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
         '''[DEPRECATED] Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
         logging.warning(
             'This function is deprecated and will be removed in a future version. Use create_dataset_from_file_connector instead.')
-        return self._call_api('createDataset', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
+        return self._call_api('createDataset', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
 
     def create_dataset_version(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''[DEPRECATED] Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
@@ -422,11 +422,11 @@ class ApiClient():
             'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_file_connector instead.')
         return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
-    def create_dataset_from_local_file(self, name: str, file_format: str = None, project_id: str = None, dataset_type: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
+    def create_dataset_from_local_file(self, name: str, file_format: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
         '''[DEPRECATED] Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
         logging.warning(
             'This function is deprecated and will be removed in a future version. Use create_dataset_from_upload instead.')
-        return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'projectId': project_id, 'datasetType': dataset_type, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
+        return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
 
     def create_dataset_version_from_local_file(self, dataset_id: str, file_format: str = None) -> Upload:
         '''[DEPRECATED] Creates a new version of the specified dataset using a local file upload.'''
@@ -548,10 +548,6 @@ class ApiClient():
     def rename_dataset(self, dataset_id: str, name: str):
         '''Rename a dataset that has already been defined. Specify the new name and dataset ID, and the model will return the attributes of the renamed dataset.'''
         return self._call_api('renameDataset', 'PATCH', query_params={'datasetId': dataset_id}, body={'name': name})
-
-    def update_dataset_table_name(self, dataset_id: str, dataset_table_name: str):
-        '''Sets/updates a datasets sql-safe table name for use in feature groups. Must be unique across the organization. Will update all feature groups this dataset is referenced in.'''
-        return self._call_api('updateDatasetTableName', 'POST', query_params={'datasetId': dataset_id}, body={'datasetTableName': dataset_table_name})
 
     def delete_dataset(self, dataset_id: str):
         '''Deletes the specified dataset from the organization.
@@ -839,3 +835,7 @@ class ApiClient():
     def delete_item_embeddings(self, model_id: str, item_ids: list):
         '''Deletes knn embeddings for a list of item ids for a model_id.'''
         return self._call_api('deleteItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'itemIds': item_ids})
+
+    def upsert_multiple_item_embeddings(self, model_id: str, upserts: list):
+        '''Upserts a knn embedding for multiple item ids for a model_id.'''
+        return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'upserts': upserts})
