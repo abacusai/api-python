@@ -15,6 +15,7 @@ from .schema import Schema
 from .data_filter import DataFilter
 from .database_connector import DatabaseConnector
 from .dataset import Dataset
+from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
@@ -33,6 +34,7 @@ from .model_metrics import ModelMetrics
 from .model_upload import ModelUpload
 from .model_version import ModelVersion
 from .nested_column import NestedColumn
+from .organization_group import OrganizationGroup
 from .prediction_dataset import PredictionDataset
 from .prediction_feature_group import PredictionFeatureGroup
 from .prediction_input import PredictionInput
@@ -60,7 +62,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.20.0'
+    client_version = '0.20.2'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -168,6 +170,42 @@ class ApiClient():
         '''Get the current user's information, such as their name, email, admin status, etc.'''
         return self._call_api('getUser', 'GET', query_params={})
 
+    def list_organization_groups(self) -> List[OrganizationGroup]:
+        '''List all public Organizations Groups that that the current User has joined'''
+        return self._call_api('listOrganizationGroups', 'GET', query_params={}, parse_type=OrganizationGroup)
+
+    def create_organization_group(self, group_name: str, permissions: list, default_group: bool = None) -> OrganizationGroup:
+        '''Creates a new Organization Group.'''
+        return self._call_api('createOrganizationGroup', 'POST', query_params={}, body={'groupName': group_name, 'permissions': permissions, 'defaultGroup': default_group}, parse_type=OrganizationGroup)
+
+    def describe_organization_group(self, organization_group_id: str) -> OrganizationGroup:
+        '''Returns the specific organization group passes in by the user'''
+        return self._call_api('describeOrganizationGroup', 'GET', query_params={'organizationGroupId': organization_group_id}, parse_type=OrganizationGroup)
+
+    def add_organization_permission(self, organization_group_id: str, permission: str):
+        '''Adds a permission to the specified Organization Group.'''
+        return self._call_api('addOrganizationPermission', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'permission': permission})
+
+    def remove_organization_permission(self, organization_group_id: str, permission: str):
+        '''Removes a permission from the specified Organization Group.'''
+        return self._call_api('removeOrganizationPermission', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'permission': permission})
+
+    def delete_organization_group(self, organization_group_id: str):
+        '''Deletes the specified Organization Group from the organization.'''
+        return self._call_api('deleteOrganizationGroup', 'DELETE', query_params={'organizationGroupId': organization_group_id})
+
+    def remove_user_from_organization_group(self, organization_group_id: str, email: str):
+        '''Removes a user from an Organization Group.'''
+        return self._call_api('removeUserFromOrganizationGroup', 'DELETE', query_params={'organizationGroupId': organization_group_id, 'email': email})
+
+    def add_user_to_organization_group(self, organization_group_id: str, email: str):
+        '''Adds a user to the specified Organization Group.'''
+        return self._call_api('addUserToOrganizationGroup', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'email': email})
+
+    def set_default_organization_group(self, organization_group_id: str):
+        '''Sets the default Organization Group that all new users that join an organization are automatically added to'''
+        return self._call_api('setDefaultOrganizationGroup', 'POST', query_params={}, body={'organizationGroupId': organization_group_id})
+
     def set_user_as_admin(self, email: str):
         '''Sets the specified user as an Organization Administrator. You must be an Organization Administrator to use this method. An Organization Administrator manages billing and the organization's users.'''
         return self._call_api('setUserAsAdmin', 'POST', query_params={}, body={'email': email})
@@ -182,7 +220,7 @@ class ApiClient():
 
     def create_project(self, name: str, use_case: str) -> Project:
         '''Creates a project with your specified project name and use case. Creating a project creates a container for all of the datasets and the models that are associated with a particular problem/project that you would like to work on. For example, if you want to create a model to detect fraud, you have to first create a project, upload the associated datasets, and then create one or more models to get predictions for your use case.'''
-        return self._call_api('createProject', 'GET', query_params={'name': name, 'useCase': use_case}, parse_type=Project)
+        return self._call_api('createProject', 'POST', query_params={}, body={'name': name, 'useCase': use_case}, parse_type=Project)
 
     def list_use_cases(self) -> List[UseCase]:
         '''Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.'''
@@ -290,21 +328,21 @@ class ApiClient():
         ''''''
         return self._call_api('deleteNestedFeature', 'DELETE', query_params={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name}, parse_type=FeatureGroup)
 
-    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, dataset_type: str = None):
+    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         ''''''
-        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'datasetType': dataset_type})
+        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
     def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
         ''''''
         return self._call_api('removeFeatureGroupFromProject', 'DELETE', query_params={'featureGroupId': feature_group_id, 'projectId': project_id})
 
-    def update_feature_group_dataset_type(self, feature_group_id: str, project_id: str, dataset_type: str = None):
-        ''''''
-        return self._call_api('updateFeatureGroupDatasetType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'datasetType': dataset_type})
-
     def use_feature_group_for_training(self, feature_group_id: str, project_id: str):
         ''''''
         return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id})
+
+    def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        ''''''
+        return self._call_api('updateFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
     def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
         ''''''
@@ -334,9 +372,9 @@ class ApiClient():
         ''''''
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
-    def create_feature_group_snapshot(self, project_id: str, feature_group_id: str) -> FeatureGroupVersion:
+    def create_feature_group_version(self, project_id: str, feature_group_id: str) -> FeatureGroupVersion:
         '''Creates a snapshot for a specified feature group.'''
-        return self._call_api('createFeatureGroupSnapshot', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
+        return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
 
     def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_instance_id: int = None) -> List[FeatureGroupVersion]:
         '''Retrieves a list of all feature group versions for the specified feature group.'''
@@ -345,18 +383,6 @@ class ApiClient():
     def describe_feature_group_version(self, feature_group_version: str) -> FeatureGroupVersion:
         '''Get a specific feature group version.'''
         return self._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': feature_group_version}, parse_type=FeatureGroupVersion)
-
-    def get_feature_group_version_data(self, feature_group_version: str, from_row: int = None, to_row: int = None, from_col: int = None, to_col: int = None, column_filters: dict = {}) -> None:
-        '''Get raw data for a specific feature group version.'''
-        return self._call_api('getFeatureGroupVersionData', 'GET', query_params={'featureGroupVersion': feature_group_version, 'fromRow': from_row, 'toRow': to_row, 'fromCol': from_col, 'toCol': to_col, 'columnFilters': column_filters})
-
-    def get_feature_group_version_metrics_data(self, feature_group_version: str, from_row: int = None, to_row: int = None, from_col: int = None, to_col: int = None) -> None:
-        '''Get metrics for a specific feature group version.'''
-        return self._call_api('getFeatureGroupVersionMetricsData', 'GET', query_params={'featureGroupVersion': feature_group_version, 'fromRow': from_row, 'toRow': to_row, 'fromCol': from_col, 'toCol': to_col})
-
-    def get_feature_group_version_metrics_schema(self, feature_group_version: str) -> None:
-        '''Get metrics schema for a specific feature group version.'''
-        return self._call_api('getFeatureGroupVersionMetricsSchema', 'GET', query_params={'featureGroupVersion': feature_group_version})
 
     def cancel_upload(self, upload_id: str):
         '''Cancels an upload'''
@@ -433,6 +459,10 @@ class ApiClient():
         logging.warning(
             'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_upload instead.')
         return self._call_api('createDatasetVersionFromLocalFile', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
+
+    def set_dataset_column_data_type(self, dataset_id: str, column: str, data_type: str) -> Dataset:
+        '''Set a column's type in a specified dataset.'''
+        return self._call_api('setDatasetColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'column': column, 'dataType': data_type}, parse_type=Dataset)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         '''Retrieves verification information to create a data connector to a cloud storage bucket.'''
@@ -597,13 +627,6 @@ class ApiClient():
         '''Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.'''
         return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids}, parse_type=Model)
 
-    def cancel_model_training(self, model_id: str):
-        '''Cancels the training process for the specified model.
-
-        Use this to stop model training.The model status will be set to CANCELLED.
-        '''
-        return self._call_api('cancelModelTraining', 'DELETE', query_params={'modelId': model_id})
-
     def delete_model(self, model_id: str):
         '''Deletes the specified model and all its versions. Note that models are not recoverable after they are deleted.'''
         return self._call_api('deleteModel', 'DELETE', query_params={'modelId': model_id})
@@ -712,6 +735,10 @@ class ApiClient():
         '''Returns the k nearest neighbors to the the provided embedding vector.'''
         return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score})
 
+    def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):
+        '''Returns the k nearest neighbors for the queries provided'''
+        return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries})
+
     def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = 0.5) -> Dict:
         '''Returns a list of scored labels from'''
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold})
@@ -741,8 +768,14 @@ class ApiClient():
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
 
     def get_batch_prediction_result(self, batch_prediction_version: str) -> io.BytesIO:
-        '''Returns a stream containing the batch prediction results'''
+        '''[DEPRECATED] Returns a stream containing the batch prediction results'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use download_batch_prediction_result_chunk instead.')
         return self._call_api('getBatchPredictionResult', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
+
+    def download_batch_prediction_result_chunk(self, batch_prediction_version: str, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
+        '''Returns a stream containing the batch prediction results'''
+        return self._call_api('downloadBatchPredictionResultChunk', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
 
     def get_batch_prediction_connector_errors(self, batch_prediction_version: str) -> io.BytesIO:
         '''Returns a stream containing the batch prediction external connection error, if it exists'''
@@ -784,9 +817,9 @@ class ApiClient():
         ''''''
         return self._call_api('setBatchPredictionDataset', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'datasetType': dataset_type}, parse_type=BatchPrediction)
 
-    def set_batch_prediction_feature_group(self, batch_prediction_id: str, dataset_type: str, feature_group_id: str = None) -> BatchPrediction:
+    def set_batch_prediction_feature_group(self, batch_prediction_id: str, feature_group_type: str, feature_group_id: str = None) -> BatchPrediction:
         ''''''
-        return self._call_api('setBatchPredictionFeatureGroup', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'datasetType': dataset_type, 'featureGroupId': feature_group_id}, parse_type=BatchPrediction)
+        return self._call_api('setBatchPredictionFeatureGroup', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'featureGroupType': feature_group_type, 'featureGroupId': feature_group_id}, parse_type=BatchPrediction)
 
     def delete_batch_prediction(self, batch_prediction_id: str):
         ''''''
@@ -828,14 +861,14 @@ class ApiClient():
         '''
         return self._call_api('upsertMultipleItemAttributes', 'POST', query_params={'streamingToken': streaming_token, 'datasetId': dataset_id}, body={'upserts': upserts})
 
-    def upsert_item_embeddings(self, model_id: str, item_id: str, vector: list):
-        '''Upserts a knn embedding for an item id for a model_id.'''
-        return self._call_api('upsertItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'itemId': item_id, 'vector': vector})
+    def upsert_item_embeddings(self, streaming_token: str, model_id: str, item_id: str, vector: list, catalog_id: str = None):
+        '''Upserts an embedding vector for an item id for a model_id.'''
+        return self._call_api('upsertItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'itemId': item_id, 'vector': vector, 'catalogId': catalog_id})
 
-    def delete_item_embeddings(self, model_id: str, item_ids: list):
+    def delete_item_embeddings(self, streaming_token: str, model_id: str, item_ids: list, catalog_id: str = None):
         '''Deletes knn embeddings for a list of item ids for a model_id.'''
-        return self._call_api('deleteItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'itemIds': item_ids})
+        return self._call_api('deleteItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'itemIds': item_ids, 'catalogId': catalog_id})
 
-    def upsert_multiple_item_embeddings(self, model_id: str, upserts: list):
+    def upsert_multiple_item_embeddings(self, streaming_token: str, model_id: str, upserts: list, catalog_id: str = None):
         '''Upserts a knn embedding for multiple item ids for a model_id.'''
-        return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={}, body={'modelId': model_id, 'upserts': upserts})
+        return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'upserts': upserts, 'catalogId': catalog_id})

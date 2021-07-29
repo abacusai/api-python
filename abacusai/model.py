@@ -1,5 +1,5 @@
-from .model_location import ModelLocation
 from .model_version import ModelVersion
+from .model_location import ModelLocation
 
 
 class Model():
@@ -32,7 +32,7 @@ class Model():
         return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'refresh_schedules': self.refresh_schedules, 'location': [elem.to_dict() for elem in self.location or []], 'latest_model_version': [elem.to_dict() for elem in self.latest_model_version or []]}
 
     def refresh(self):
-        self = self.describe()
+        self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
@@ -50,23 +50,11 @@ class Model():
     def retrain(self, deployment_ids=[]):
         return self.client.retrain_model(self.model_id, deployment_ids)
 
-    def cancel_training(self):
-        return self.client.cancel_model_training(self.model_id)
-
     def delete(self):
         return self.client.delete_model(self.model_id)
 
     def create_deployment(self, name=None, description=None, calls_per_second=None, auto_deploy=True):
         return self.client.create_deployment(self.model_id, name, description, calls_per_second, auto_deploy)
-
-    def upsert_item_embeddings(self, item_id, vector):
-        return self.client.upsert_item_embeddings(self.model_id, item_id, vector)
-
-    def delete_item_embeddings(self, item_ids):
-        return self.client.delete_item_embeddings(self.model_id, item_ids)
-
-    def upsert_multiple_item_embeddings(self, upserts):
-        return self.client.upsert_multiple_item_embeddings(self.model_id, upserts)
 
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)

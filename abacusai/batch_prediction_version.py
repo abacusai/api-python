@@ -36,3 +36,12 @@ class BatchPredictionVersion():
 
     def to_dict(self):
         return {'batch_prediction_version': self.batch_prediction_version, 'batch_prediction_id': self.batch_prediction_id, 'status': self.status, 'deployment_id': self.deployment_id, 'model_version': self.model_version, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_connector_output_location': self.file_connector_output_location, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'batch_inputs': [elem.to_dict() for elem in self.batch_inputs or []]}
+
+    def download_result_to_file(self, file):
+        offset = 0
+        while True:
+            with self.client.download_batch_prediction_result_chunk(self.id, offset) as chunk:
+                bytes_written = file.write(chunk.read())
+            if not bytes_written:
+                break
+            offset += bytes_written

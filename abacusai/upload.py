@@ -40,7 +40,7 @@ class Upload():
         return self.client.mark_upload_complete(self.upload_id)
 
     def refresh(self):
-        self = self.describe()
+        self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):

@@ -1,5 +1,5 @@
-from .prediction_input import PredictionInput
 from .batch_prediction_version import BatchPredictionVersion
+from .prediction_input import PredictionInput
 
 
 class BatchPrediction():
@@ -40,7 +40,7 @@ class BatchPrediction():
         return self.client.start_batch_prediction(self.batch_prediction_id)
 
     def refresh(self):
-        self = self.describe()
+        self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
@@ -64,8 +64,8 @@ class BatchPrediction():
     def set_dataset(self, dataset_type, dataset_id=None):
         return self.client.set_batch_prediction_dataset(self.batch_prediction_id, dataset_type, dataset_id)
 
-    def set_feature_group(self, dataset_type, feature_group_id=None):
-        return self.client.set_batch_prediction_feature_group(self.batch_prediction_id, dataset_type, feature_group_id)
+    def set_feature_group(self, feature_group_type, feature_group_id=None):
+        return self.client.set_batch_prediction_feature_group(self.batch_prediction_id, feature_group_type, feature_group_id)
 
     def delete(self):
         return self.client.delete_batch_prediction(self.batch_prediction_id)
