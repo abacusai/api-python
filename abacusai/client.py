@@ -62,7 +62,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.20.2'
+    client_version = '0.20.3'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -246,6 +246,10 @@ class ApiClient():
         '''Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.'''
         return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
 
+    def get_dataset_schema(self, dataset_id: str) -> Schema:
+        '''Retrieves the column schema of a dataset'''
+        return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=Schema)
+
     def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[FeatureColumn]:
         '''Returns a schema given a specific FeatureGroup in a project.'''
         return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=FeatureColumn)
@@ -336,9 +340,9 @@ class ApiClient():
         ''''''
         return self._call_api('removeFeatureGroupFromProject', 'DELETE', query_params={'featureGroupId': feature_group_id, 'projectId': project_id})
 
-    def use_feature_group_for_training(self, feature_group_id: str, project_id: str):
+    def use_feature_group_for_training(self, feature_group_id: str, project_id: str, use_for_training: bool = True):
         ''''''
-        return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id})
+        return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
 
     def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         ''''''
@@ -607,6 +611,10 @@ class ApiClient():
     def describe_model(self, model_id: str) -> Model:
         '''Retrieves a full description of the specified model.'''
         return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
+
+    def rename_model(self, model_id: str, name: str):
+        '''Renames a model'''
+        return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
 
     def update_model_training_config(self, model_id: str, training_config: dict) -> Model:
         '''Edits the default model training config'''

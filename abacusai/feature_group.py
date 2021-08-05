@@ -55,8 +55,8 @@ class FeatureGroup():
     def remove_from_project(self, project_id):
         return self.client.remove_feature_group_from_project(self.feature_group_id, project_id)
 
-    def use_for_training(self, project_id):
-        return self.client.use_feature_group_for_training(self.feature_group_id, project_id)
+    def use_for_training(self, project_id, use_for_training=True):
+        return self.client.use_feature_group_for_training(self.feature_group_id, project_id, use_for_training)
 
     def update_type(self, project_id, feature_group_type='CUSTOM_TABLE'):
         return self.client.update_feature_group_type(self.feature_group_id, project_id, feature_group_type)

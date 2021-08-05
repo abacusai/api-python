@@ -38,6 +38,9 @@ class Dataset():
     def to_dict(self):
         return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'refresh_schedules': self.refresh_schedules, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'dataset_table_name': self.dataset_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'schema': [elem.to_dict() for elem in self.schema or []], 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
 
+    def get_schema(self):
+        return self.client.get_dataset_schema(self.dataset_id)
+
     def create_version_from_file_connector(self, location=None, file_format=None, csv_delimiter=None):
         return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter)
 

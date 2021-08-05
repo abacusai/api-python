@@ -1,5 +1,5 @@
-from .prediction_feature_group import PredictionFeatureGroup
 from .prediction_dataset import PredictionDataset
+from .prediction_feature_group import PredictionFeatureGroup
 
 
 class PredictionInput():
