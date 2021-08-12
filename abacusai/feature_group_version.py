@@ -29,8 +29,8 @@ class FeatureGroupVersion():
         self.__dict__.update(self.describe().__dict__)
         return self
 
-    def describe(self, feature_group_version):
-        return self.client.describe_feature_group_version(self.feature_group_version_id, feature_group_version)
+    def describe(self):
+        return self.client.describe_feature_group_version(self.feature_group_version, feature_group_version)
 
     def wait_for_results(self, timeout=3600):
         return self.client._poll(self, {'PENDING'}, timeout=timeout)
