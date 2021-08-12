@@ -24,3 +24,12 @@ class DatasetVersion():
 
     def to_dict(self):
         return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'created_at': self.created_at, 'error': self.error}
+
+    def wait_for_import(self, timeout=900):
+        return self.client._poll(self, {'PENDING', 'IMPORTING'}, timeout=timeout)
+
+    def wait_for_inspection(self, timeout=None):
+        return self.client._poll(self, {'PENDING', 'UPLOADING', 'IMPORTING', 'CONVERTING', 'INSPECTING'}, timeout=timeout)
+
+    def get_status(self):
+        return self.describe().status

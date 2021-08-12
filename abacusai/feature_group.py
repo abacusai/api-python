@@ -1,4 +1,5 @@
 from .feature_column import FeatureColumn
+from .feature_group_version import FeatureGroupVersion
 
 
 class FeatureGroup():
@@ -6,7 +7,7 @@ class FeatureGroup():
 
     '''
 
-    def __init__(self, client, featureGroupId=None, name=None, tableName=None, sql=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, columns={}):
+    def __init__(self, client, featureGroupId=None, name=None, tableName=None, sql=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, columns={}, duplicateColumns={}, latestFeatureGroupVersion={}):
         self.client = client
         self.id = featureGroupId
         self.feature_group_id = featureGroupId
@@ -21,15 +22,19 @@ class FeatureGroup():
         self.sql_error = sqlError
         self.latest_version_outdated = latestVersionOutdated
         self.columns = client._build_class(FeatureColumn, columns)
+        self.duplicate_columns = client._build_class(
+            FeatureColumn, duplicateColumns)
+        self.latest_feature_group_version = client._build_class(
+            FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(feature_group_id={repr(self.feature_group_id)}, name={repr(self.name)}, table_name={repr(self.table_name)}, sql={repr(self.sql)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, description={repr(self.description)}, feature_group_type={repr(self.feature_group_type)}, use_for_training={repr(self.use_for_training)}, sql_error={repr(self.sql_error)}, latest_version_outdated={repr(self.latest_version_outdated)}, columns={repr(self.columns)})"
+        return f"FeatureGroup(feature_group_id={repr(self.feature_group_id)}, name={repr(self.name)}, table_name={repr(self.table_name)}, sql={repr(self.sql)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, description={repr(self.description)}, feature_group_type={repr(self.feature_group_type)}, use_for_training={repr(self.use_for_training)}, sql_error={repr(self.sql_error)}, latest_version_outdated={repr(self.latest_version_outdated)}, columns={repr(self.columns)}, duplicate_columns={repr(self.duplicate_columns)}, latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'feature_group_id': self.feature_group_id, 'name': self.name, 'table_name': self.table_name, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'columns': [elem.to_dict() for elem in self.columns or []]}
+        return {'feature_group_id': self.feature_group_id, 'name': self.name, 'table_name': self.table_name, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'columns': [elem.to_dict() for elem in self.columns or []], 'duplicate_columns': [elem.to_dict() for elem in self.duplicate_columns or []], 'latest_feature_group_version': [elem.to_dict() for elem in self.latest_feature_group_version or []]}
 
     def get_schema(self, project_id=None):
         return self.client.get_feature_group_schema(self.feature_group_id, project_id)
@@ -80,5 +85,14 @@ class FeatureGroup():
     def delete(self):
         return self.client.delete_feature_group(self.feature_group_id)
 
+    def create_version(self):
+        return self.client.create_feature_group_version(self.feature_group_id)
+
     def list_versions(self, limit=100, start_after_instance_id=None):
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_instance_id)
+
+    def wait_for_materialization(self, timeout=7200):
+        return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout)
+
+    def get_status(self):
+        return self.describe().latest_feature_group_version.status

@@ -24,3 +24,12 @@ class ModelVersion():
 
     def to_dict(self):
         return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions}
+
+    def delete(self, model_version):
+        return self.client.delete_model_version(self.model_version_id, model_version)
+
+    def wait_for_training(self, timeout=None):
+        return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
+
+    def get_status(self):
+        return self.describe().status

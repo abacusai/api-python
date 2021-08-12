@@ -70,6 +70,9 @@ class BatchPrediction():
     def delete(self):
         return self.client.delete_batch_prediction(self.batch_prediction_id)
 
+    def set_dataset_remap(self, dataset_id_remap):
+        return self.client.set_batch_prediction_dataset_remap(self.batch_prediction_id, dataset_id_remap)
+
     def wait_for_predictions(self, timeout=1200):
         return self.client._poll(self, {'PENDING', 'UPLOADING', 'PREDICTING'}, timeout=timeout)
 

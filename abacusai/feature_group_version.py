@@ -1,4 +1,4 @@
-from .feature_group import FeatureGroup
+from .feature_column import FeatureColumn
 
 
 class FeatureGroupVersion():
@@ -6,31 +6,37 @@ class FeatureGroupVersion():
 
     '''
 
-    def __init__(self, client, featureGroupVersion=None, createdAt=None, updatedAt=None, instanceInfo=None, schemaValues=None, lifecycle=None, featureGroup={}):
+    def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, columns={}):
         self.client = client
         self.id = featureGroupVersion
         self.feature_group_version = featureGroupVersion
+        self.sql = sql
+        self.source_tables = sourceTables
         self.created_at = createdAt
-        self.updated_at = updatedAt
-        self.instance_info = instanceInfo
-        self.schema_values = schemaValues
-        self.lifecycle = lifecycle
-        self.feature_group = client._build_class(FeatureGroup, featureGroup)
+        self.status = status
+        self.columns = client._build_class(FeatureColumn, columns)
 
     def __repr__(self):
-        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)}, created_at={repr(self.created_at)}, updated_at={repr(self.updated_at)}, instance_info={repr(self.instance_info)}, schema_values={repr(self.schema_values)}, lifecycle={repr(self.lifecycle)}, feature_group={repr(self.feature_group)})"
+        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)}, sql={repr(self.sql)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, status={repr(self.status)}, columns={repr(self.columns)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'feature_group_version': self.feature_group_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'instance_info': self.instance_info, 'schema_values': self.schema_values, 'lifecycle': self.lifecycle, 'feature_group': [elem.to_dict() for elem in self.feature_group or []]}
+        return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'columns': [elem.to_dict() for elem in self.columns or []]}
+
+    def refresh(self):
+        self.__dict__.update(self.describe().__dict__)
+        return self
+
+    def describe(self, feature_group_version):
+        return self.client.describe_feature_group_version(self.feature_group_version_id, feature_group_version)
 
     def wait_for_results(self, timeout=3600):
         return self.client._poll(self, {'PENDING'}, timeout=timeout)
 
     def get_status(self):
-        return self.client._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': self.feature_group_version}, parse_type=FeatureGroupVersion).lifecycle
+        return self.client._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': self.feature_group_version}, parse_type=FeatureGroupVersion).status
 
     def describe(self):
         return self.client._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': self.feature_group_version}, parse_type=FeatureGroupVersion)

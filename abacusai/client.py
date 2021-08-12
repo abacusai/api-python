@@ -376,9 +376,9 @@ class ApiClient():
         ''''''
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
-    def create_feature_group_version(self, project_id: str, feature_group_id: str) -> FeatureGroupVersion:
+    def create_feature_group_version(self, feature_group_id: str) -> FeatureGroupVersion:
         '''Creates a snapshot for a specified feature group.'''
-        return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
+        return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
 
     def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_instance_id: int = None) -> List[FeatureGroupVersion]:
         '''Retrieves a list of all feature group versions for the specified feature group.'''
@@ -707,6 +707,14 @@ class ApiClient():
         '''Returns a prediction for Predictive Modeling'''
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
+    def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+        '''Returns a list of predictions for Predictive Modeling'''
+        return self._call_api('predictMultiple', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+
+    def predict_from_datasets(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+        '''Returns a list of predictions for Predictive Modeling'''
+        return self._call_api('predictFromDatasets', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+
     def predict_lead(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         '''Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).'''
         return self._call_api('predictLead', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
@@ -832,6 +840,10 @@ class ApiClient():
     def delete_batch_prediction(self, batch_prediction_id: str):
         ''''''
         return self._call_api('deleteBatchPrediction', 'DELETE', query_params={'batchPredictionId': batch_prediction_id})
+
+    def set_batch_prediction_dataset_remap(self, batch_prediction_id: str, dataset_id_remap: dict) -> BatchPrediction:
+        ''''''
+        return self._call_api('setBatchPredictionDatasetRemap', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'datasetIdRemap': dataset_id_remap}, parse_type=BatchPrediction)
 
     def add_user_item_interaction(self, streaming_token: str, dataset_id: str, timestamp: int, user_id: str, item_id: list, event_type: str, additional_attributes: dict):
         '''Adds a user-item interaction record (data row) to a streaming dataset.'''

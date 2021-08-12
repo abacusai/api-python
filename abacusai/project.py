@@ -72,9 +72,6 @@ class Project():
     def list_feature_groups(self, limit=100, start_after_id=None):
         return self.client.list_feature_groups(self.project_id, limit, start_after_id)
 
-    def create_feature_group_version(self, feature_group_id):
-        return self.client.create_feature_group_version(self.project_id, feature_group_id)
-
     def get_training_config_options(self):
         return self.client.get_training_config_options(self.project_id)
 
