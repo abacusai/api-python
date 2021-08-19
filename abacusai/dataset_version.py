@@ -3,7 +3,7 @@ from .upload import Upload
 
 class DatasetVersion():
     '''
-
+        A specific version of a dataset
     '''
 
     def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, createdAt=None, error=None):

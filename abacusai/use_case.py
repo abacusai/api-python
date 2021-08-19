@@ -2,7 +2,7 @@
 
 class UseCase():
     '''
-        Use Case Description
+        A Project Use Case
     '''
 
     def __init__(self, client, useCase=None, prettyName=None, description=None):

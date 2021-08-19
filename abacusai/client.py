@@ -43,12 +43,14 @@ from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
 from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
+from .refresh_schedule import RefreshSchedule
 from .streaming_auth_token import StreamingAuthToken
 from .training_config_options import TrainingConfigOptions
 from .upload import Upload
 from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
+from .user import User
 
 
 class ApiException(Exception):
@@ -62,7 +64,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.20.3'
+    client_version = '0.21.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -156,70 +158,66 @@ class ApiClient():
         return self._call_api('addUserToOrganization', 'POST', query_params={}, body={'email': email})
 
     def list_api_keys(self) -> List[ApiKey]:
-        '''Lists all of the API keys created by the current member in the user's organization.'''
+        '''Lists all of the user's API keys the user's organization.'''
         return self._call_api('listApiKeys', 'GET', query_params={}, parse_type=ApiKey)
 
-    def list_organization_users(self) -> Dict:
+    def list_organization_users(self) -> List[User]:
         '''Retrieves a list of all users in the organization.
 
-        This method will retrieve a list containing all the users in the organization and their account information. The list includes both, users who have accepted their invitation and users who have not yet accepted their invitation.
+        This method will retrieve a list containing all the users in the organization. The list includes pending users who have been invited to the organization.
         '''
-        return self._call_api('listOrganizationUsers', 'GET', query_params={})
+        return self._call_api('listOrganizationUsers', 'GET', query_params={}, parse_type=User)
 
-    def get_user(self) -> Dict:
+    def describe_user(self) -> User:
         '''Get the current user's information, such as their name, email, admin status, etc.'''
-        return self._call_api('getUser', 'GET', query_params={})
+        return self._call_api('describeUser', 'GET', query_params={}, parse_type=User)
 
     def list_organization_groups(self) -> List[OrganizationGroup]:
-        '''List all public Organizations Groups that that the current User has joined'''
+        '''Lists all Organizations Groups within this Organization'''
         return self._call_api('listOrganizationGroups', 'GET', query_params={}, parse_type=OrganizationGroup)
 
-    def create_organization_group(self, group_name: str, permissions: list, default_group: bool = None) -> OrganizationGroup:
+    def create_organization_group(self, group_name: str, permissions: list, default_group: bool = False) -> OrganizationGroup:
         '''Creates a new Organization Group.'''
         return self._call_api('createOrganizationGroup', 'POST', query_params={}, body={'groupName': group_name, 'permissions': permissions, 'defaultGroup': default_group}, parse_type=OrganizationGroup)
 
     def describe_organization_group(self, organization_group_id: str) -> OrganizationGroup:
-        '''Returns the specific organization group passes in by the user'''
+        '''Returns the specific organization group passes in by the user.'''
         return self._call_api('describeOrganizationGroup', 'GET', query_params={'organizationGroupId': organization_group_id}, parse_type=OrganizationGroup)
 
-    def add_organization_permission(self, organization_group_id: str, permission: str):
-        '''Adds a permission to the specified Organization Group.'''
-        return self._call_api('addOrganizationPermission', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'permission': permission})
+    def add_organization_group_permission(self, organization_group_id: str, permission: str):
+        '''Adds a permission to the specified Organization Group'''
+        return self._call_api('addOrganizationGroupPermission', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'permission': permission})
 
-    def remove_organization_permission(self, organization_group_id: str, permission: str):
-        '''Removes a permission from the specified Organization Group.'''
-        return self._call_api('removeOrganizationPermission', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'permission': permission})
+    def remove_organization_group_permission(self, organization_group_id: str, permission: str):
+        '''Removes a permission from the specified Organization Group'''
+        return self._call_api('removeOrganizationGroupPermission', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'permission': permission})
 
     def delete_organization_group(self, organization_group_id: str):
         '''Deletes the specified Organization Group from the organization.'''
         return self._call_api('deleteOrganizationGroup', 'DELETE', query_params={'organizationGroupId': organization_group_id})
 
-    def remove_user_from_organization_group(self, organization_group_id: str, email: str):
-        '''Removes a user from an Organization Group.'''
-        return self._call_api('removeUserFromOrganizationGroup', 'DELETE', query_params={'organizationGroupId': organization_group_id, 'email': email})
-
     def add_user_to_organization_group(self, organization_group_id: str, email: str):
-        '''Adds a user to the specified Organization Group.'''
+        '''Adds a user to the specified Organization Group'''
         return self._call_api('addUserToOrganizationGroup', 'POST', query_params={}, body={'organizationGroupId': organization_group_id, 'email': email})
+
+    def remove_user_from_organization_group(self, organization_group_id: str, email: str):
+        '''Removes a user from an Organization Group'''
+        return self._call_api('removeUserFromOrganizationGroup', 'DELETE', query_params={'organizationGroupId': organization_group_id, 'email': email})
 
     def set_default_organization_group(self, organization_group_id: str):
         '''Sets the default Organization Group that all new users that join an organization are automatically added to'''
         return self._call_api('setDefaultOrganizationGroup', 'POST', query_params={}, body={'organizationGroupId': organization_group_id})
-
-    def set_user_as_admin(self, email: str):
-        '''Sets the specified user as an Organization Administrator. You must be an Organization Administrator to use this method. An Organization Administrator manages billing and the organization's users.'''
-        return self._call_api('setUserAsAdmin', 'POST', query_params={}, body={'email': email})
 
     def delete_api_key(self, api_key_id: str):
         '''Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.'''
         return self._call_api('deleteApiKey', 'DELETE', query_params={'apiKeyId': api_key_id})
 
     def remove_user_from_organization(self, email: str):
-        '''Removes the specified user from the organization. You can remove yourself or you must be an Organization Administrator to use this method to remove other users from the organization.'''
+        '''Removes the specified user from the Organization. You can remove yourself, Otherwise you must be an Organization Administrator to use this method to remove other users from the organization.'''
         return self._call_api('removeUserFromOrganization', 'DELETE', query_params={'email': email})
 
     def create_project(self, name: str, use_case: str) -> Project:
-        '''Creates a project with your specified project name and use case. Creating a project creates a container for all of the datasets and the models that are associated with a particular problem/project that you would like to work on. For example, if you want to create a model to detect fraud, you have to first create a project, upload the associated datasets, and then create one or more models to get predictions for your use case.'''
+        '''Creates a project with your specified project name and use case. Creating a project creates a container for all of the datasets and the models that are associated with a particular problem/project that you would like to work on. For example, if you want to create a model to detect fraud, you have to first create a project, upload datasets, create feature groups, and then create one or more models to get predictions for your use case.'''
         return self._call_api('createProject', 'POST', query_params={}, body={'name': name, 'useCase': use_case}, parse_type=Project)
 
     def list_use_cases(self) -> List[UseCase]:
@@ -227,11 +225,11 @@ class ApiClient():
         return self._call_api('listUseCases', 'GET', query_params={}, parse_type=UseCase)
 
     def describe_use_case_requirements(self, use_case: str) -> UseCaseRequirements:
-        '''This API call returns the dataset requirements for a specified use case. Use this API if you're unsure about what your dataset needs.'''
+        '''This API call returns the feature requirements for a specified use case'''
         return self._call_api('describeUseCaseRequirements', 'GET', query_params={'useCase': use_case}, parse_type=UseCaseRequirements)
 
     def describe_project(self, project_id: str) -> Project:
-        '''Returns a description of a project. The method takes the ID of the project as an input.'''
+        '''Returns a description of a project.'''
         return self._call_api('describeProject', 'GET', query_params={'projectId': project_id}, parse_type=Project)
 
     def list_projects(self, limit: None = 100, start_after_id: None = None) -> List[Project]:
@@ -243,10 +241,12 @@ class ApiClient():
         return self._call_api('listProjectDatasets', 'GET', query_params={'projectId': project_id}, parse_type=ProjectDataset)
 
     def get_schema(self, project_id: str, dataset_id: str) -> List[Schema]:
-        '''Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.'''
+        '''[DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
         return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
 
-    def get_dataset_schema(self, dataset_id: str) -> Schema:
+    def get_dataset_schema(self, dataset_id: str) -> List[Schema]:
         '''Retrieves the column schema of a dataset'''
         return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=Schema)
 
@@ -255,15 +255,26 @@ class ApiClient():
         return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=FeatureColumn)
 
     def rename_project(self, project_id: str, name: str):
-        '''This method renames a project after it is created. To rename the project, specify its ID and new name.'''
+        '''This method renames a project after it is created.'''
         return self._call_api('renameProject', 'PATCH', query_params={}, body={'projectId': project_id, 'name': name})
 
+    def delete_project(self, project_id: str):
+        '''Deletes a specified project from your organization.
+
+        This method deletes the project, trained models and deployments in the specified project. The datasets attached to the specified project remain available for use with other projects in the organization.
+
+        This method will not delete a project that contains active deployments. Be sure to stop all active deployments before you use the delete option.
+
+        Note: All projects, models, and deployments cannot be recovered once they are deleted.
+        '''
+        return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
+
     def set_column_data_type(self, project_id: str, dataset_id: str, column: str, data_type: str) -> List[Schema]:
-        '''Set a column's type in a specified dataset. Specify the project ID, dataset ID, column name and data type, and the method will return the entire dataset with the resulting changes reflected.'''
+        '''Set a dataset's column type.'''
         return self._call_api('setColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'dataType': data_type}, parse_type=Schema)
 
     def set_column_mapping(self, project_id: str, dataset_id: str, column: str, column_mapping: str) -> List[Schema]:
-        '''Set a column's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column. The model returns a list of all schemas for each column with the reflected changes.'''
+        '''Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.'''
         return self._call_api('setColumnMapping', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'columnMapping': column_mapping}, parse_type=Schema)
 
     def set_feature_group_column_data_type(self, feature_group_id: str, column: str, data_type: str) -> FeatureColumn:
@@ -271,7 +282,7 @@ class ApiClient():
         return self._call_api('setFeatureGroupColumnDataType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'column': column, 'dataType': data_type}, parse_type=FeatureColumn)
 
     def set_feature_group_column_mapping(self, project_id: str, feature_group_id: str, column: str, column_mapping: str) -> List[FeatureColumn]:
-        '''Set a column's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column. The model returns a list of all schemas for each column with the reflected changes.'''
+        '''Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.'''
         return self._call_api('setFeatureGroupColumnMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'column': column, 'columnMapping': column_mapping}, parse_type=FeatureColumn)
 
     def add_custom_column(self, project_id: str, dataset_id: str, column: str, select_expression: str) -> Schema:
@@ -294,95 +305,118 @@ class ApiClient():
         return self._call_api('setProjectDatasetFilters', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'filters': filters})
 
     def validate_project(self, project_id: str) -> ProjectValidation:
-        '''Validates that the specified project has all required datasets for its use case and that all datasets attached to the project have all required columns.'''
+        '''Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.'''
         return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
 
     def remove_column_mapping(self, project_id: str, dataset_id: str, column: str) -> List[Schema]:
-        '''Removes a column mapping from a column in the dataset. The model will display a list of all columns with their mappings once the change is made.'''
+        '''Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.'''
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
-    def delete_project(self, project_id: str):
-        '''Deletes a specified project from your organization.
-
-        This method deletes the project, trained models and deployments in the specified project. The datasets attached to the specified project remain available for use with other projects in the organization.
-
-        This method will not delete a project that contains active deployments. Be sure to stop all active deployments before you use the delete option.
-
-        Note: All projects, models, and deployments cannot be recovered once they are deleted.
-        '''
-        return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
-
     def add_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
-        ''''''
+        '''[DEPRECATED] Creates a new feature group from a SQL statement.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_feature_group instead.')
         return self._call_api('addFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
 
+    def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
+        '''Creates a new feature group from a SQL statement.'''
+        return self._call_api('createFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
+
     def add_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
-        ''''''
+        '''[DEPRECATED] Creates a new feature in a Feature Group from a SQL select statement'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_feature instead.')
         return self._call_api('addFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression}, parse_type=FeatureGroup)
 
+    def create_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
+        '''Creates a new feature in a Feature Group from a SQL select statement'''
+        return self._call_api('createFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression}, parse_type=FeatureGroup)
+
     def add_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
-        ''''''
+        '''[DEPRECATED] Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use create_nested_feature instead.')
         return self._call_api('addNestedFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name, 'tableName': table_name, 'usingClause': using_clause, 'whereClause': where_clause, 'orderClause': order_clause}, parse_type=FeatureGroup)
 
+    def create_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
+        '''Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.'''
+        return self._call_api('createNestedFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name, 'tableName': table_name, 'usingClause': using_clause, 'whereClause': where_clause, 'orderClause': order_clause}, parse_type=FeatureGroup)
+
     def update_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str = None, using_clause: str = None, where_clause: str = None, order_clause: str = None, new_nested_feature_name: str = None) -> FeatureGroup:
-        ''''''
+        '''Updates a previously existing nested feature in a feature group.'''
         return self._call_api('updateNestedFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name, 'tableName': table_name, 'usingClause': using_clause, 'whereClause': where_clause, 'orderClause': order_clause, 'newNestedFeatureName': new_nested_feature_name}, parse_type=FeatureGroup)
 
     def delete_nested_feature(self, feature_group_id: str, nested_feature_name: str) -> FeatureGroup:
-        ''''''
+        '''Delete a nested feature.'''
         return self._call_api('deleteNestedFeature', 'DELETE', query_params={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name}, parse_type=FeatureGroup)
 
     def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        ''''''
+        '''[DEPRECATED] Adds a feature group to a project,'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
         return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
+    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        '''Adds a feature group to a project,'''
+        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+
     def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
-        ''''''
+        '''Removes a feature group from a project.'''
         return self._call_api('removeFeatureGroupFromProject', 'DELETE', query_params={'featureGroupId': feature_group_id, 'projectId': project_id})
 
     def use_feature_group_for_training(self, feature_group_id: str, project_id: str, use_for_training: bool = True):
-        ''''''
+        '''Train the model on the previously created feature group.'''
         return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
 
     def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        ''''''
+        '''[DEPRECATED] Update the feature group type in a project. The feature group must already be added to the project.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use set_feature_group_type instead.')
         return self._call_api('updateFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
+    def set_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        '''Update the feature group type in a project. The feature group must already be added to the project.'''
+        return self._call_api('setFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+
     def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
-        ''''''
+        '''Describe a Feature Group.'''
         return self._call_api('describeFeatureGroup', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
 
     def describe_feature_group_by_table_name(self, table_name: str) -> FeatureGroup:
-        ''''''
+        '''Describe a Feature Group by the feature group's table name'''
         return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
 
-    def list_feature_groups(self, project_id: str = None, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
-        ''''''
-        return self._call_api('listFeatureGroups', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
+    def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
+        '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
+        return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
+
+    def list_project_feature_groups(self, project_id: str) -> FeatureGroup:
+        '''List all the feature groups associated with a project'''
+        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id}, parse_type=FeatureGroup)
 
     def update_feature_group(self, feature_group_id: str, sql: str = None, name: str = None, description: str = None) -> FeatureGroup:
-        ''''''
+        '''Modifies an existing feature group. The user has to specify the feature group to be updated along with at least one parameter: SQL, name or description.'''
         return self._call_api('updateFeatureGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql, 'name': name, 'description': description}, parse_type=FeatureGroup)
 
     def update_feature(self, feature_group_id: str, name: str, select_expression: str = None, new_name: str = None) -> FeatureGroup:
-        ''''''
+        '''Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.'''
         return self._call_api('updateFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression, 'newName': new_name}, parse_type=FeatureGroup)
 
     def delete_feature(self, feature_group_id: str, name: str) -> FeatureGroup:
-        ''''''
+        '''Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.'''
         return self._call_api('deleteFeature', 'DELETE', query_params={'featureGroupId': feature_group_id, 'name': name}, parse_type=FeatureGroup)
 
     def delete_feature_group(self, feature_group_id: str):
-        ''''''
+        '''Removes an existing feature group.'''
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
     def create_feature_group_version(self, feature_group_id: str) -> FeatureGroupVersion:
         '''Creates a snapshot for a specified feature group.'''
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
 
-    def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_instance_id: int = None) -> List[FeatureGroupVersion]:
+    def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_version: str = None) -> List[FeatureGroupVersion]:
         '''Retrieves a list of all feature group versions for the specified feature group.'''
-        return self._call_api('listFeatureGroupVersions', 'GET', query_params={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterInstanceId': start_after_instance_id}, parse_type=FeatureGroupVersion)
+        return self._call_api('listFeatureGroupVersions', 'GET', query_params={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=FeatureGroupVersion)
 
     def describe_feature_group_version(self, feature_group_version: str) -> FeatureGroupVersion:
         '''Get a specific feature group version.'''
@@ -397,35 +431,35 @@ class ApiClient():
         return self._call_api('uploadPart', 'POST', query_params={'uploadId': upload_id, 'partNumber': part_number}, parse_type=UploadPart, files={'partData': part_data})
 
     def mark_upload_complete(self, upload_id: str) -> Upload:
-        '''Marks an upload process as complete. This can be used to signify that the upload of the full file on our system is complete as all the parts/chunks associated with the full file are successfully uploaded.'''
+        '''Marks an upload process as complete.'''
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
     def create_dataset_from_file_connector(self, name: str, location: str, file_format: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
-        '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
+        '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.'''
         return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
-        '''Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
+        '''Creates a new version of the specified dataset.'''
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
     def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, dataset_table_name: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
         return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, name: str, application_connector_id: str, object_id: str = None, start_date: int = None, end_date: int = None, refresh_schedule: str = None, dataset_table_name: str = None) -> Dataset:
+    def create_dataset_from_application_connector(self, name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None, dataset_table_name: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
-        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startDate': start_date, 'endDate': end_date, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
 
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset'''
         return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
 
-    def create_dataset_version_from_application_connector(self, dataset_id: str, object_id: str = None, start_date: int = None, end_date: int = None) -> DatasetVersion:
+    def create_dataset_version_from_application_connector(self, dataset_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset'''
-        return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startDate': start_date, 'endDate': end_date}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp}, parse_type=DatasetVersion)
 
     def create_dataset_from_upload(self, name: str, file_format: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
-        '''Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
+        '''Creates a dataset and return an upload Id that can be used to upload a file.'''
         return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
@@ -439,30 +473,6 @@ class ApiClient():
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         '''Snapshots the current data in the streaming dataset for training.'''
         return self._call_api('snapshotStreamingData', 'POST', query_params={'datasetId': dataset_id}, body={}, parse_type=DatasetVersion)
-
-    def create_dataset(self, name: str, location: str, file_format: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
-        '''[DEPRECATED] Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location. The model will return the dataset's information, such as its ID, name, data source, etc.'''
-        logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_dataset_from_file_connector instead.')
-        return self._call_api('createDataset', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
-
-    def create_dataset_version(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
-        '''[DEPRECATED] Creates a new version of the specified dataset. The model returns the new version of the dataset with its attributes.'''
-        logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_file_connector instead.')
-        return self._call_api('createDatasetVersion', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
-
-    def create_dataset_from_local_file(self, name: str, file_format: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
-        '''[DEPRECATED] Creates a dataset and return an upload Id that can be used to upload a file. The model will take in the name of your file and return the dataset's information (its attributes).'''
-        logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_dataset_from_upload instead.')
-        return self._call_api('createDatasetFromLocalFile', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
-
-    def create_dataset_version_from_local_file(self, dataset_id: str, file_format: str = None) -> Upload:
-        '''[DEPRECATED] Creates a new version of the specified dataset using a local file upload.'''
-        logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_dataset_version_from_upload instead.')
-        return self._call_api('createDatasetVersionFromLocalFile', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
 
     def set_dataset_column_data_type(self, dataset_id: str, column: str, data_type: str) -> Dataset:
         '''Set a column's type in a specified dataset.'''
@@ -504,17 +514,17 @@ class ApiClient():
         '''Checks to see if Abacus.AI can access the bucket.'''
         return self._call_api('verifyFileConnector', 'POST', query_params={}, body={'bucket': bucket}, parse_type=FileConnectorVerification)
 
-    def remove_database_connector(self, database_connector_id: str):
-        '''Disconnect an database connector.'''
-        return self._call_api('removeDatabaseConnector', 'DELETE', query_params={'databaseConnectorId': database_connector_id})
+    def delete_database_connector(self, database_connector_id: str):
+        '''Delete a database connector.'''
+        return self._call_api('deleteDatabaseConnector', 'DELETE', query_params={'databaseConnectorId': database_connector_id})
 
-    def remove_application_connector(self, application_connection_id: str):
-        '''Disconnect an application connector.'''
-        return self._call_api('removeApplicationConnector', 'DELETE', query_params={'applicationConnectionId': application_connection_id})
+    def delete_application_connector(self, application_connection_id: str):
+        '''Delete a application connector.'''
+        return self._call_api('deleteApplicationConnector', 'DELETE', query_params={'applicationConnectionId': application_connection_id})
 
-    def remove_file_connector(self, bucket: str):
+    def delete_file_connector(self, bucket: str):
         '''Removes a connected service from the specified organization.'''
-        return self._call_api('removeFileConnector', 'DELETE', query_params={'bucket': bucket})
+        return self._call_api('deleteFileConnector', 'DELETE', query_params={'bucket': bucket})
 
     def list_application_connectors(self) -> ApplicationConnector:
         '''Retrieves a list of all of the application connectors along with all their attributes.'''
@@ -525,7 +535,7 @@ class ApiClient():
         return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
     def verify_application_connector(self, application_connector_id: str):
-        '''Checks to see if Abacus.AI can access the database.'''
+        '''Checks to see if Abacus.AI can access the Application.'''
         return self._call_api('verifyApplicationConnector', 'GET', query_params={'applicationConnectorId': application_connector_id})
 
     def set_azure_blob_connection_string(self, bucket: str, connection_string: str) -> FileConnectorVerification:
@@ -541,11 +551,11 @@ class ApiClient():
         return self._call_api('listStreamingTokens', 'GET', query_params={}, parse_type=StreamingAuthToken)
 
     def delete_streaming_token(self, streaming_token: str):
-        '''Deletes the specified streaming token. Note that the streaming tokens are not recoverable once they are deleted.'''
+        '''Deletes the specified streaming token.'''
         return self._call_api('deleteStreamingToken', 'DELETE', query_params={'streamingToken': streaming_token})
 
     def list_uploads(self) -> List[Upload]:
-        '''Lists all the details associated with the dataset file upload including the current status of the upload (complete or not). Use this API method to ensure that your dataset is uploaded properly and all the details associated with it are correct. If everything looks fine then you are good to use the dataset you uploaded in parts for your batch predictins and/or model training.'''
+        '''Lists all ongoing uploads in the organization'''
         return self._call_api('listUploads', 'GET', query_params={}, parse_type=Upload)
 
     def describe_upload(self, upload_id: str) -> Upload:
@@ -553,7 +563,7 @@ class ApiClient():
         return self._call_api('describeUpload', 'GET', query_params={'uploadId': upload_id}, parse_type=Upload)
 
     def list_datasets(self, limit: None = 100, start_after_id: None = None) -> List[Dataset]:
-        '''Retrieves a list of all of the datasets in the organization, each with their attributes and IDs.'''
+        '''Retrieves a list of all of the datasets in the organization.'''
         return self._call_api('listDatasets', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Dataset)
 
     def describe_dataset(self, dataset_id: str) -> Dataset:
@@ -561,7 +571,7 @@ class ApiClient():
         return self._call_api('describeDataset', 'GET', query_params={'datasetId': dataset_id}, parse_type=Dataset)
 
     def describe_dataset_by_table_name(self, dataset_table_name: str) -> Dataset:
-        '''Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.'''
+        '''Retrieves a description of the specified dataset using the dataset's table name'''
         return self._call_api('describeDatasetByTableName', 'GET', query_params={'datasetTableName': dataset_table_name}, parse_type=Dataset)
 
     def list_dataset_versions(self, dataset_id: str, limit: None = 100, start_after_version: None = None) -> List[DatasetVersion]:
@@ -569,18 +579,22 @@ class ApiClient():
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
 
     def attach_dataset_to_project(self, dataset_id: str, project_id: str, dataset_type: str) -> List[Schema]:
-        '''Attaches the dataset to the project.
+        '''[DEPRECATED] Attaches the dataset to the project.
 
         Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
         '''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version.')
         return self._call_api('attachDatasetToProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'datasetType': dataset_type}, parse_type=Schema)
 
     def remove_dataset_from_project(self, dataset_id: str, project_id: str):
-        '''Removes a dataset from a project.'''
+        '''[DEPRECATED] Removes a dataset from a project.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version.')
         return self._call_api('removeDatasetFromProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id})
 
     def rename_dataset(self, dataset_id: str, name: str):
-        '''Rename a dataset that has already been defined. Specify the new name and dataset ID, and the model will return the attributes of the renamed dataset.'''
+        '''Rename a dataset.'''
         return self._call_api('renameDataset', 'PATCH', query_params={'datasetId': dataset_id}, body={'name': name})
 
     def delete_dataset(self, dataset_id: str):
@@ -593,14 +607,14 @@ class ApiClient():
     def get_training_config_options(self, project_id: str) -> List[TrainingConfigOptions]:
         '''Retrieves the full description of the model training configuration options available for the specified project.
 
-        The number of configuration options and types of options available is determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
+        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
         '''
         return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
 
     def train_model(self, project_id: str, name: str = None, training_config: dict = {}, refresh_schedule: str = None) -> Model:
         '''Trains a model for the specified project.
 
-        Use this method to train a model with default training configurations for the specified project. This method also supports user-specified training configurations available by using the getTrainingConfigOptions method.
+        Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
         '''
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'refreshSchedule': refresh_schedule}, parse_type=Model)
 
@@ -617,8 +631,14 @@ class ApiClient():
         return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
 
     def update_model_training_config(self, model_id: str, training_config: dict) -> Model:
-        '''Edits the default model training config'''
+        '''[DEPRECATED] Edits the default model training config'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use set_model_training_config instead.')
         return self._call_api('updateModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
+
+    def set_model_training_config(self, model_id: str, training_config: dict) -> Model:
+        '''Edits the default model training config'''
+        return self._call_api('setModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
     def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False) -> ModelMetrics:
         '''Retrieves a full list of the metrics for the specified model.
@@ -628,7 +648,7 @@ class ApiClient():
         return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics}, parse_type=ModelMetrics)
 
     def list_model_versions(self, model_id: str, limit: None = 100, start_after_version: None = None) -> List[ModelVersion]:
-        '''Retrieves a list of all model version for a given model.'''
+        '''Retrieves a list of the version for a given model.'''
         return self._call_api('listModelVersions', 'GET', query_params={'modelId': model_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelVersion)
 
     def retrain_model(self, model_id: str, deployment_ids: list = []) -> Model:
@@ -636,11 +656,11 @@ class ApiClient():
         return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids}, parse_type=Model)
 
     def delete_model(self, model_id: str):
-        '''Deletes the specified model and all its versions. Note that models are not recoverable after they are deleted.'''
+        '''Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.'''
         return self._call_api('deleteModel', 'DELETE', query_params={'modelId': model_id})
 
     def delete_model_version(self, model_version: str):
-        '''Deletes the specified model version. Note that models versions are not recoverable after they are deleted.'''
+        '''Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.'''
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
     def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
@@ -669,9 +689,13 @@ class ApiClient():
         '''Retrieves a list of all deployment tokens in the specified project.'''
         return self._call_api('listDeploymentTokens', 'GET', query_params={'projectId': project_id}, parse_type=DeploymentAuthToken)
 
-    def update_deployment(self, deployment_id: str, name: str = None, description: str = None):
+    def update_deployment(self, deployment_id: str, description: str = None):
+        '''Updates a deployment's description.'''
+        return self._call_api('updateDeployment', 'PATCH', query_params={'deploymentId': deployment_id}, body={'description': description})
+
+    def rename_deployment(self, deployment_id: str, name: str):
         '''Updates a deployment's name and/or description.'''
-        return self._call_api('updateDeployment', 'PATCH', query_params={'deploymentId': deployment_id}, body={'name': name, 'description': description})
+        return self._call_api('renameDeployment', 'PATCH', query_params={'deploymentId': deployment_id}, body={'name': name})
 
     def set_auto_deployment(self, deployment_id: str, enable: bool = None):
         '''Enable/Disable auto deployment for the specified deployment.
@@ -700,7 +724,7 @@ class ApiClient():
         return self._call_api('deleteDeployment', 'DELETE', query_params={'deploymentId': deployment_id})
 
     def delete_deployment_token(self, deployment_token: str):
-        '''Deletes the specified deployment token. Note that the deployment tokens are not recoverable after they are deleted'''
+        '''Deletes the specified deployment token.'''
         return self._call_api('deleteDeploymentToken', 'DELETE', query_params={'deploymentToken': deployment_token})
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
@@ -776,11 +800,11 @@ class ApiClient():
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
 
     def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None) -> BatchPrediction:
-        '''Creates a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
+        '''Creates a batch prediction job description for the given deployment.'''
         return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule}, parse_type=BatchPrediction)
 
     def start_batch_prediction(self, batch_prediction_id: str) -> BatchPredictionVersion:
-        '''Starts a batch prediction task with the specified deployment ID, output location, and batch prediction job name.'''
+        '''Creates a new batch prediction version job for a given batch prediction job description'''
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
 
     def get_batch_prediction_result(self, batch_prediction_version: str) -> io.BytesIO:
@@ -794,56 +818,56 @@ class ApiClient():
         return self._call_api('downloadBatchPredictionResultChunk', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
 
     def get_batch_prediction_connector_errors(self, batch_prediction_version: str) -> io.BytesIO:
-        '''Returns a stream containing the batch prediction external connection error, if it exists'''
+        '''Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector'''
         return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
 
     def list_batch_predictions(self, project_id: str) -> List[BatchPrediction]:
-        '''Retrieves a list for the batch prediction jobs for the specified deployment.'''
+        '''Retrieves a list for the batch predictions in the project'''
         return self._call_api('listBatchPredictions', 'GET', query_params={'projectId': project_id}, parse_type=BatchPrediction)
 
     def describe_batch_prediction(self, batch_prediction_id: str) -> BatchPrediction:
-        '''Describe batch prediction Description'''
+        '''Describes the batch prediction'''
         return self._call_api('describeBatchPrediction', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
 
-    def list_batch_prediction_versions(self, batch_prediction_id: str, limit: None = 100, start_after_version: None = None) -> BatchPredictionVersion:
-        ''''''
+    def list_batch_prediction_versions(self, batch_prediction_id: str, limit: None = 100, start_after_version: None = None) -> List[BatchPredictionVersion]:
+        '''Retrieves a list of versions of a given batch prediction'''
         return self._call_api('listBatchPredictionVersions', 'GET', query_params={'batchPredictionId': batch_prediction_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=BatchPredictionVersion)
 
     def describe_batch_prediction_version(self, batch_prediction_version: str) -> BatchPredictionVersion:
-        ''''''
+        '''Describes a batch prediction version'''
         return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
 
     def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None) -> BatchPrediction:
-        ''''''
+        '''Updates a batch prediction job description'''
         return self._call_api('updateBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'batchPredictionId': batch_prediction_id, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format}, parse_type=BatchPrediction)
 
     def set_batch_prediction_file_connector_output(self, batch_prediction_id: str, output_format: str = None, output_location: str = None) -> BatchPrediction:
-        ''''''
+        '''Updates the file connector output configuration of the batch prediction'''
         return self._call_api('setBatchPredictionFileConnectorOutput', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'outputFormat': output_format, 'outputLocation': output_location}, parse_type=BatchPrediction)
 
     def set_batch_prediction_database_connector_output(self, batch_prediction_id: str, database_connector_id: str = None, database_output_config: dict = None) -> BatchPrediction:
-        ''''''
+        '''Updates the database connector output configuration of the batch prediction'''
         return self._call_api('setBatchPredictionDatabaseConnectorOutput', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config}, parse_type=BatchPrediction)
 
     def set_batch_prediction_output_to_console(self, batch_prediction_id: str) -> BatchPrediction:
-        ''''''
+        '''Sets the batch prediction output to the console, clearing both the file connector and database connector config'''
         return self._call_api('setBatchPredictionOutputToConsole', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
 
     def set_batch_prediction_dataset(self, batch_prediction_id: str, dataset_type: str, dataset_id: str = None) -> BatchPrediction:
-        ''''''
+        '''[Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects'''
         return self._call_api('setBatchPredictionDataset', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'datasetType': dataset_type}, parse_type=BatchPrediction)
 
     def set_batch_prediction_feature_group(self, batch_prediction_id: str, feature_group_type: str, feature_group_id: str = None) -> BatchPrediction:
-        ''''''
+        '''Sets the batch prediction input feature group.'''
         return self._call_api('setBatchPredictionFeatureGroup', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'featureGroupType': feature_group_type, 'featureGroupId': feature_group_id}, parse_type=BatchPrediction)
 
-    def delete_batch_prediction(self, batch_prediction_id: str):
-        ''''''
-        return self._call_api('deleteBatchPrediction', 'DELETE', query_params={'batchPredictionId': batch_prediction_id})
-
     def set_batch_prediction_dataset_remap(self, batch_prediction_id: str, dataset_id_remap: dict) -> BatchPrediction:
-        ''''''
+        '''For the purpose of this batch prediction, will swap out datasets in the input feature groups'''
         return self._call_api('setBatchPredictionDatasetRemap', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'datasetIdRemap': dataset_id_remap}, parse_type=BatchPrediction)
+
+    def delete_batch_prediction(self, batch_prediction_id: str):
+        '''Deletes a batch prediction'''
+        return self._call_api('deleteBatchPrediction', 'DELETE', query_params={'batchPredictionId': batch_prediction_id})
 
     def add_user_item_interaction(self, streaming_token: str, dataset_id: str, timestamp: int, user_id: str, item_id: list, event_type: str, additional_attributes: dict):
         '''Adds a user-item interaction record (data row) to a streaming dataset.'''

@@ -1,10 +1,10 @@
-from .prediction_dataset import PredictionDataset
 from .prediction_feature_group import PredictionFeatureGroup
+from .prediction_dataset import PredictionDataset
 
 
 class PredictionInput():
     '''
-
+        Batch inputs
     '''
 
     def __init__(self, client, featureGroupDatasetIds=None, datasetIdRemap=None, featureGroups={}, datasets={}):

@@ -2,7 +2,7 @@
 
 class PredictionFeatureGroup():
     '''
-
+        Batch Input Feature Group
     '''
 
     def __init__(self, client, featureGroupId=None, datasetType=None, default=None, required=None):

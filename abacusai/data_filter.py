@@ -2,7 +2,7 @@
 
 class DataFilter():
     '''
-
+        A sql logic statement for including and excluding data from training
     '''
 
     def __init__(self, client, sql=None, type=None, whereExpression=None, join=None):

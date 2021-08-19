@@ -2,7 +2,7 @@
 
 class UseCaseRequirements():
     '''
-
+        Use Case Requirements
     '''
 
     def __init__(self, client, datasetType=None, name=None, description=None, required=None, allowedColumnMappings=None):

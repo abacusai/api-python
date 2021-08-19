@@ -2,7 +2,7 @@
 
 class UploadPart():
     '''
-
+        Unique identifiers for a part
     '''
 
     def __init__(self, client, etag=None, md5=None):

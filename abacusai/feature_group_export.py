@@ -2,7 +2,7 @@
 
 class FeatureGroupExport():
     '''
-
+        A feature Group Export Job
     '''
 
     def __init__(self, client, exportId=None, featureGroupId=None, outputLocation=None, status=None, createdAt=None, exportCompletedAt=None):

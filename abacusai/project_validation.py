@@ -2,7 +2,7 @@
 
 class ProjectValidation():
     '''
-
+        A validation result for a project
     '''
 
     def __init__(self, client, valid=None, datasetErrors=None, columnHints=None):

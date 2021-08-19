@@ -1,11 +1,12 @@
+from .refresh_schedule import RefreshSchedule
 
 
 class Deployment():
     '''
-
+        A model deployment
     '''
 
-    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, refreshSchedules=None, batchPredictionRefreshSchedules=None, callsPerSecond=None, autoDeploy=None, regions=None):
+    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}):
         self.client = client
         self.id = deploymentId
         self.deployment_id = deploymentId
@@ -17,20 +18,21 @@ class Deployment():
         self.project_id = projectId
         self.model_id = modelId
         self.model_version = modelVersion
-        self.refresh_schedules = refreshSchedules
-        self.batch_prediction_refresh_schedules = batchPredictionRefreshSchedules
         self.calls_per_second = callsPerSecond
         self.auto_deploy = autoDeploy
         self.regions = regions
+        self.error = error
+        self.refresh_schedules = client._build_class(
+            RefreshSchedule, refreshSchedules)
 
     def __repr__(self):
-        return f"Deployment(deployment_id={repr(self.deployment_id)}, name={repr(self.name)}, status={repr(self.status)}, description={repr(self.description)}, deployed_at={repr(self.deployed_at)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, refresh_schedules={repr(self.refresh_schedules)}, batch_prediction_refresh_schedules={repr(self.batch_prediction_refresh_schedules)}, calls_per_second={repr(self.calls_per_second)}, auto_deploy={repr(self.auto_deploy)}, regions={repr(self.regions)})"
+        return f"Deployment(deployment_id={repr(self.deployment_id)}, name={repr(self.name)}, status={repr(self.status)}, description={repr(self.description)}, deployed_at={repr(self.deployed_at)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, calls_per_second={repr(self.calls_per_second)}, auto_deploy={repr(self.auto_deploy)}, regions={repr(self.regions)}, error={repr(self.error)}, refresh_schedules={repr(self.refresh_schedules)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'refresh_schedules': self.refresh_schedules, 'batch_prediction_refresh_schedules': self.batch_prediction_refresh_schedules, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions}
+        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None}
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
@@ -39,8 +41,11 @@ class Deployment():
     def describe(self):
         return self.client.describe_deployment(self.deployment_id)
 
-    def update(self, name=None, description=None):
-        return self.client.update_deployment(self.deployment_id, name, description)
+    def update(self, description=None):
+        return self.client.update_deployment(self.deployment_id, description)
+
+    def rename(self, name):
+        return self.client.rename_deployment(self.deployment_id, name)
 
     def set_auto(self, enable=None):
         return self.client.set_auto_deployment(self.deployment_id, enable)

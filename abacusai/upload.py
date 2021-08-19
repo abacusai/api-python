@@ -1,11 +1,11 @@
-import io
-from multiprocessing import Pool
 import time
+from multiprocessing import Pool
+import io
 
 
 class Upload():
     '''
-
+        A Upload Reference for uploading file parts
     '''
 
     def __init__(self, client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None):

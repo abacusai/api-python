@@ -2,7 +2,7 @@
 
 class DeploymentAuthToken():
     '''
-
+        A deployment authentication token that is used to authenticate prediction requests
     '''
 
     def __init__(self, client, deploymentToken=None, createdAt=None):

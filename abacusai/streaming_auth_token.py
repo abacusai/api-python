@@ -2,7 +2,7 @@
 
 class StreamingAuthToken():
     '''
-
+        A streaming authentication token that is used to authenticate requests to append data to streaming datasets
     '''
 
     def __init__(self, client, streamingToken=None, createdAt=None):

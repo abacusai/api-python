@@ -2,7 +2,7 @@
 
 class Feature():
     '''
-
+        A feature in a feature group
     '''
 
     def __init__(self, client, name=None, sql=None, selectExpression=None, featureType=None, startTime=None, windowInterval=None):

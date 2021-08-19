@@ -2,7 +2,7 @@
 
 class DatasetColumn():
     '''
-
+        A schema description for a column
     '''
 
     def __init__(self, client, name=None, columnDataType=None, originalName=None):

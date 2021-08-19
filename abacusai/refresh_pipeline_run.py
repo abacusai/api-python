@@ -3,7 +3,7 @@ from .refresh_policy import RefreshPolicy
 
 class RefreshPipelineRun():
     '''
-
+        A refresh policy run or a project refresh run.
     '''
 
     def __init__(self, client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, modelVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={}):

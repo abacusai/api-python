@@ -2,7 +2,7 @@
 
 class Project():
     '''
-
+        A project is a container which holds datasets, models and deployments
     '''
 
     def __init__(self, client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None):
@@ -39,6 +39,9 @@ class Project():
     def rename(self, name):
         return self.client.rename_project(self.project_id, name)
 
+    def delete(self):
+        return self.client.delete_project(self.project_id)
+
     def set_column_data_type(self, dataset_id, column, data_type):
         return self.client.set_column_data_type(self.project_id, dataset_id, column, data_type)
 
@@ -66,11 +69,8 @@ class Project():
     def remove_column_mapping(self, dataset_id, column):
         return self.client.remove_column_mapping(self.project_id, dataset_id, column)
 
-    def delete(self):
-        return self.client.delete_project(self.project_id)
-
-    def list_feature_groups(self, limit=100, start_after_id=None):
-        return self.client.list_feature_groups(self.project_id, limit, start_after_id)
+    def list_feature_groups(self):
+        return self.client.list_project_feature_groups(self.project_id)
 
     def get_training_config_options(self):
         return self.client.get_training_config_options(self.project_id)

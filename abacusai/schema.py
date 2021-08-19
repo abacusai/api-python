@@ -3,7 +3,7 @@ from .nested_column import NestedColumn
 
 class Schema():
     '''
-
+        A schema description for a column
     '''
 
     def __init__(self, client, name=None, columnMapping=None, columnDataType=None, custom=None, sql=None, selectExpression=None):

@@ -2,7 +2,7 @@
 
 class FeatureRecord():
     '''
-
+        A feature record
     '''
 
     def __init__(self, client, data=None):
