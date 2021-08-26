@@ -1,6 +1,6 @@
-from .model_version import ModelVersion
 from .model_location import ModelLocation
 from .refresh_schedule import RefreshSchedule
+from .model_version import ModelVersion
 
 
 class Model():

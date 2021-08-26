@@ -1,6 +1,6 @@
+from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
 from .dataset_column import DatasetColumn
-from .dataset_version import DatasetVersion
 
 
 class Dataset():

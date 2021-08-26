@@ -322,6 +322,18 @@ class ApiClient():
         '''Creates a new feature group from a SQL statement.'''
         return self._call_api('createFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
 
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str, function_name: str, input_feature_groups: list = None, description: str = None) -> FeatureGroup:
+        '''Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
+
+        If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
+        (pandas in the case of Python) with the materialized feature groups for those input feature groups.
+
+        This method expects `function_source_code to be a valid language source file which contains a function named
+        `function_name`. This function needs return a DataFrame when it is executed and this DataFrame will be used
+        as the materialized version of this feature group table.
+        '''
+        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description}, parse_type=FeatureGroup)
+
     def add_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
         '''[DEPRECATED] Creates a new feature in a Feature Group from a SQL select statement'''
         logging.warning(
@@ -397,6 +409,10 @@ class ApiClient():
     def update_feature_group(self, feature_group_id: str, sql: str = None, name: str = None, description: str = None) -> FeatureGroup:
         '''Modifies an existing feature group. The user has to specify the feature group to be updated along with at least one parameter: SQL, name or description.'''
         return self._call_api('updateFeatureGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql, 'name': name, 'description': description}, parse_type=FeatureGroup)
+
+    def update_feature_group_function_definition(self, feature_group_id: str, sql: str = None, name: str = None) -> FeatureGroup:
+        '''Updates the function definition for a feature group created using createFeatureGroupFromFunction'''
+        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql, 'name': name}, parse_type=FeatureGroup)
 
     def update_feature(self, feature_group_id: str, name: str, select_expression: str = None, new_name: str = None) -> FeatureGroup:
         '''Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.'''
@@ -518,9 +534,9 @@ class ApiClient():
         '''Delete a database connector.'''
         return self._call_api('deleteDatabaseConnector', 'DELETE', query_params={'databaseConnectorId': database_connector_id})
 
-    def delete_application_connector(self, application_connection_id: str):
+    def delete_application_connector(self, application_connector_id: str):
         '''Delete a application connector.'''
-        return self._call_api('deleteApplicationConnector', 'DELETE', query_params={'applicationConnectionId': application_connection_id})
+        return self._call_api('deleteApplicationConnector', 'DELETE', query_params={'applicationConnectorId': application_connector_id})
 
     def delete_file_connector(self, bucket: str):
         '''Removes a connected service from the specified organization.'''
@@ -772,7 +788,7 @@ class ApiClient():
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start})
 
     def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False) -> Dict:
-        '''Returns the k nearest neighbors to the the provided embedding vector.'''
+        '''Returns the k nearest neighbors for the provided embedding vector.'''
         return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score})
 
     def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):

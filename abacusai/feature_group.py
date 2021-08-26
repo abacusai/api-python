@@ -88,6 +88,9 @@ class FeatureGroup():
     def update(self, sql=None, name=None, description=None):
         return self.client.update_feature_group(self.feature_group_id, sql, name, description)
 
+    def update_function_definition(self, sql=None, name=None):
+        return self.client.update_feature_group_function_definition(self.feature_group_id, sql, name)
+
     def update_feature(self, name, select_expression=None, new_name=None):
         return self.client.update_feature(self.feature_group_id, name, select_expression, new_name)
 

@@ -27,6 +27,9 @@ class ApplicationConnector():
     def rename(self, name):
         return self.client.rename_application_connector(self.application_connector_id, name)
 
+    def delete(self):
+        return self.client.delete_application_connector(self.application_connector_id)
+
     def list_objects(self):
         return self.client.list_application_connector_objects(self.application_connector_id)
 
