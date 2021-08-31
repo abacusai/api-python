@@ -1,6 +1,6 @@
+from concurrent.futures import ThreadPoolExecutor
 import time
 import io
-from multiprocessing import Pool
 
 
 class Upload():
@@ -46,10 +46,11 @@ class Upload():
     def describe(self):
         return self.client.describe_upload(self.upload_id)
 
-    def upload_part(self, part_number, part_data):
+    def upload_part(self, upload_args):
         '''Uploads a file part.
            If the upload fails, it will retry up to 3 times with a short backoff before raising an exception.
         '''
+        (part_number, part_data) = upload_args
         retries = 0
         while True:
             try:
@@ -62,9 +63,8 @@ class Upload():
                 time.sleep(retries)
 
     def upload_file(self, file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600):
-        with Pool(processes=threads) as pool:
-            pool.starmap(self.upload_part,
-                         self._yield_upload_part(file, chunksize))
+        with ThreadPoolExecutor(max_workers=threads) as pool:
+            pool.map(self.upload_part, self._yield_upload_part(file, chunksize))
         upload_object = self.mark_complete()
         self.wait_for_join(timeout=wait_timeout)
         if upload_object.batch_prediction_id:

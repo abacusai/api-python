@@ -1,5 +1,6 @@
-from .model_location import ModelLocation
 from .refresh_schedule import RefreshSchedule
+import time
+from .model_location import ModelLocation
 from .model_version import ModelVersion
 
 
@@ -71,7 +72,16 @@ class Model():
         return self.wait_for_training()
 
     def wait_for_full_automl(self, timeout=None):
-        return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout, poll_args={'get_automl_status': True})
+        start_time = time.time()
+        while True:
+            if timeout and time.time() - start_time > timeout:
+                raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
+            model_version = self.client._call_api('describeModel', 'GET', query_params={
+                                                  'modelId': self.model_id, 'waitForFullAutoml': True}, parse_type=Model).latest_model_version
+            if model_version.status not in {'PENDING', 'TRAINING'} and not model_version.pending_deployment_ids:
+                break
+            time.sleep(30)
+        return self.describe()
 
     def get_status(self, get_automl_status: bool = False):
         if get_automl_status:

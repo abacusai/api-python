@@ -45,6 +45,7 @@ from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
 from .refresh_schedule import RefreshSchedule
 from .streaming_auth_token import StreamingAuthToken
+from .streaming_connector import StreamingConnector
 from .training_config_options import TrainingConfigOptions
 from .upload import Upload
 from .upload_part import UploadPart
@@ -418,6 +419,10 @@ class ApiClient():
         '''Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.'''
         return self._call_api('updateFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression, 'newName': new_name}, parse_type=FeatureGroup)
 
+    def export_feature_group_version_to_file_connector(self, feature_group_instance_id: str, location: str, export_file_format: str) -> FeatureGroupExport:
+        ''''''
+        return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupInstanceId': feature_group_instance_id, 'location': location, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
+
     def delete_feature(self, feature_group_id: str, name: str) -> FeatureGroup:
         '''Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.'''
         return self._call_api('deleteFeature', 'DELETE', query_params={'featureGroupId': feature_group_id, 'name': name}, parse_type=FeatureGroup)
@@ -558,6 +563,10 @@ class ApiClient():
         '''Authenticates specified Azure Blob Storage bucket using an authenticated Connection String.'''
         return self._call_api('setAzureBlobConnectionString', 'POST', query_params={}, body={'bucket': bucket, 'connectionString': connection_string}, parse_type=FileConnectorVerification)
 
+    def list_streaming_connectors(self) -> StreamingConnector:
+        '''Retrieves a list of all of the streaming connectors along with all their attributes.'''
+        return self._call_api('listStreamingConnectors', 'GET', query_params={}, parse_type=StreamingConnector)
+
     def create_streaming_token(self) -> StreamingAuthToken:
         '''Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.'''
         return self._call_api('createStreamingToken', 'POST', query_params={}, body={}, parse_type=StreamingAuthToken)
@@ -678,6 +687,10 @@ class ApiClient():
     def delete_model_version(self, model_version: str):
         '''Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.'''
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
+
+    def describe_model_version(self, model_version: str) -> ModelVersion:
+        '''Retrieves a full description of the specified model version'''
+        return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
 
     def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
         '''Creates a deployment with the specified name and description for the specified model.
