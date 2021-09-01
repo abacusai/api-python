@@ -159,14 +159,14 @@ deployment = client.create_feature_group_deployment(project_id=project.project_i
 deployment.wait_for_deployment()
 deployment_token = client.create_deployment_token(project_id=project.project_id)
 ```
-Now that the deployment is online, you can featurize data for a single row:
+Now that the deployment is online, you can featurize data by passing in raw dataset rows, a list of lookup keys, or a single lookup key:
 ```python
-client.get_feature_group_row(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'datasets_event_log': {'@TODO': 'FILL IN DATA'}})
+client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'datasets_event_log': {'@TODO': 'FILL IN DATA'}})
+client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'user_id': ['id1', 'id2']})
+client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'item_id': 'item1'})
 ```
-Or get multiple rows in a single call:
-```python
-client.get_multiple_feature_group_rows(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data=[{'datasets_event_log': {'@TODO': 'FILL IN DATA'}}, {'datasets_event_log': {'@TODO': 'FILL IN DATA'}}])
-```
+
+The response will be a list of feature group rows.
 
 ### Streaming Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=2IVYnjlvnF5F)
 
