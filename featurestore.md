@@ -175,7 +175,7 @@ A feature group can be setup to support online updates. This type of feature gro
 
 ```python
 streaming_feature_group = client.create_streaming_feature_group(table_name='datasets_streaming_interaction_log', record_timestamp_feature='timestamp', [record_id_feature='interaction_id', data_retention_hours=24, data_retention_row_count=1_000_000])
-streaming_feature_group.set_streaming_schema(schema=[{'name': 'interaction_id', 'data_type': 'STRING'}, {'name': 'timestamp', 'data_type': 'TIMESTAMP'}, {'name": 'data_column', 'data_type': 'FLOAT'}])
+streaming_feature_group.set_schema(schema=[{'name': 'interaction_id', 'data_type': 'STRING'}, {'name': 'timestamp', 'data_type': 'TIMESTAMP'}, {'name": 'data_column', 'data_type': 'FLOAT'}])
 streaming_feature_group.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
 ```
 
