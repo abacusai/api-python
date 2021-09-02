@@ -98,16 +98,16 @@ To create a feature group backed by a Python function, we have first provide the
 
 import pandas as pd
 
-def item_filtering(event_df, items_df):
-    final_df = pd.merge(items_df, event_df['item_id'], how='inner', on='item_id')
+def item_filtering(items_df, events_df):
+    final_df = pd.merge(items_df, events_df['item_id'], how='inner', on='item_id')
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
     return final_df
 ````
 
 Assuming we have saved this file as `fg_impl.py`, we can use the following snippet to create a python function feature group.
 ````python
-fg_code = open('fg_imp.py').read()
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='item_filtering', input_feature_groups=['datasets_event_log', 'datasets_item_metadata'])
+fg_code = open('fg_impl.py').read()
+feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='item_filtering', input_feature_groups=['item_metadata', 'events_log'])
 ````
 
 We can also use the Abacus.AI client within the python function. The client available during function execution, is a secure version which exposes a read only restricted set of APIs.
@@ -120,17 +120,18 @@ import abacusai
 
 def construct_fg_from_api():
     client = abacusai.get_client()
-    event_fg = client.get_feature_group('datasets_events_log')
-    item_fg = client.get_feature_group('datasets_item_metadata')
+    items_fg = client.get_feature_group('item_metadata')
+    events_fg = client.get_feature_group('events_log')
+    items_df = items_fg.read_as_pandas()
+    events_df = events_fg.read_as_pandas()
 
-    final_df = pd.merge(items_df, event_df['item_id'], how='inner', on='item_id')
+    final_df = pd.merge(items_df, events_df['item_id'], how='inner', on='item_id')
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
     return final_df
 ````
 
-Assuming we have saved this file as `fg_impl.py`, we can use the following snippet to create a python function feature group.
+FOr this type of no arguments function, can use the following snippet to create a python function feature group.
 ````python
-fg_code = open('fg_imp.py').read()
 feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='construct_fg_from_api')
 ````
 
