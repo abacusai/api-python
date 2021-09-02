@@ -1,6 +1,6 @@
 
 
-Abacus.AI Feature Store API 
+Abacus.AI Feature Store API
 ============
 
 
@@ -13,10 +13,10 @@ The Abacus.AI platform allows you to process, join and transform raw tabular dat
 |--------|--|
 |   Datasets     |A dataset is a named table definition consisting of a data source (an external system connection, a blob storage URI, or a file upload) and a schema (list of column names along with their data types). A dataset version represents actual materialized data created from this definition. Dataset versions are immutable. Datasets can be setup to refresh periodically - which will result in new versions being created automatically from the data source (not applicable for uploads). Every dataset has a table name that is unique to the organization.|
 |   Feature Groups     |A feature group is a named table definition which is based on a transformation of the features from datasets or other feature groups. Feature group definitions can be specified using ANSI SQL transformations which reference other dataset and feature group table names directly in the SQL statement. Feature group definitions can also be specified using a user-provided Python function which returns a Pandas Dataframe. Similar to datasets, Feature Groups are just a definition of the transormations and aren't actually applied until you create a Feature Group Version to materialize the data. This can be done via the API or on a refresh schedule. |
-| Feature | A column in a feature group. | 
-| Nested Feature Group | A type of Feature Group that supports time-based windowing of data | 
+| Feature | A column in a feature group. |
+| Nested Feature Group | A type of Feature Group that supports time-based windowing of data |
 | Feature Group Version | A materialized snapshot of a Feature Group's data |
-| Project | Entity in Abacus.AI which can contain machine learning models, deployments for online serving of feature groups, and pipelines for training models on feature group data |  
+| Project | Entity in Abacus.AI which can contain machine learning models, deployments for online serving of feature groups, and pipelines for training models on feature group data |
 | Organization | Entity in Abacus.AI which corresponds to a collection of users who belong to an organization. Datasets, Feature Groups, and Projects are scoped to an organization. Table names across datasets and feature groups are unique to an organization. |
 
 ## Setting up a new Feature Store Project [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=8idfft0im5ci)
@@ -27,7 +27,7 @@ project = client.create_project(name='My first Feature Store Project', use_case=
 
 ## Create Dataset Definitions and associated Feature Groups [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=oi6qwR46m71i)
 
-Datasets can be created via uploads [\[example\]](https://github.com/abacusai), file connectors  [\[example\]](https://github.com/abacusai) (blob storage providers such as S3 or GCP Storage), or database connectors  [\[example\]](https://github.com/abacusai) (Salesforce, Snowflake, BigQuery, etc.). 
+Datasets can be created via uploads [\[example\]](https://github.com/abacusai), file connectors  [\[example\]](https://github.com/abacusai) (blob storage providers such as S3 or GCP Storage), or database connectors  [\[example\]](https://github.com/abacusai) (Salesforce, Snowflake, BigQuery, etc.).
 
 We'll be using the file connector for the demo purposes as we support reading from publicly accesible buckets, however you can verify your own private buckets on the [Connected Services Page](https://abacus.ai/app/profile/connected_services)
 
@@ -47,7 +47,7 @@ feature_group = client.create_feature_group(table_name='joined_events_data', sql
 
 ### Python Functions
 
-To create a feature group backed by a Python function, we have first provide the source code for the function in a valid python file. In this example, we are using pandas functions in our function. We will run the code in a container which has a Python 3.8 environment with a of standard list of python libraries (specified here).  
+To create a feature group backed by a Python function, we have first provide the source code for the function in a valid python file. In this example, we are using pandas functions in our function. We will run the code in a container which has a Python 3.8 environment with a of standard list of python libraries (specified here).
 ````python
 fg_code = '''
 import pandas as pd
@@ -92,7 +92,7 @@ df = feature_group.read_latest_version_as_pandas()
 
  - #### Python function feature groups
 
-To create a feature group backed by a Python function, we have first provide the source code for the function in a valid python file. In this example, we are using pandas functions in our function. We will run the code in a container which has a Python 3.8 environment with a of standard list of python libraries (specified here).  
+To create a feature group backed by a Python function, we have first provide the source code for the function in a valid python file. In this example, we are using pandas functions in our function. We will run the code in a container which has a Python 3.8 environment with a of standard list of python libraries (specified here).
 
 ````python
 
@@ -122,12 +122,12 @@ def construct_fg_from_api():
     client = abacusai.get_client()
     event_fg = client.get_feature_group('datasets_events_log')
     item_fg = client.get_feature_group('datasets_item_metadata')
-   
+
     final_df = pd.merge(items_df, event_df['item_id'], how='inner', on='item_id')
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
-    return final_df   
-````    
-    
+    return final_df
+````
+
 Assuming we have saved this file as `fg_impl.py`, we can use the following snippet to create a python function feature group.
 ````python
 fg_code = open('fg_imp.py').read()
@@ -151,11 +151,11 @@ feature_group_version.export_feature_group_to_file_connector(location='s3://your
 ```
 
 ### Deploy Feature Groups for Online Featurization of Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ZleD66xQnCY_)
-Feature Groups can be deployed for online data transformations and lookups. Feature Groups with simple join conditions will also support single column id based lookups. The `describeFeatureGroup` method will expose these keys when set. In addition, streaming  
+Feature Groups can be deployed for online data transformations and lookups. Feature Groups with simple join conditions will also support single column id based lookups. The `describeFeatureGroup` method will expose these keys when set. In addition, streaming
 
 Once set, you can deploy the feature group:
 ```python
-deployment = client.create_feature_group_deployment(project_id=project.project_id, feature_group_id=feature_group.feature_group_id) 
+deployment = client.create_feature_group_deployment(project_id=project.project_id, feature_group_id=feature_group.feature_group_id)
 deployment.wait_for_deployment()
 deployment_token = client.create_deployment_token(project_id=project.project_id)
 ```
@@ -170,16 +170,20 @@ The response will be a list of feature group rows.
 
 ### Streaming Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=2IVYnjlvnF5F)
 
-A feature group can be setup to support online updates. This type of feature group is known as a **streaming feature group**. A streaming feature group needs to have a `timestamp` type column that is used as the `recordTimestamp` column. Additionally, a `recordId` column can be specified as the primary key of the feature group, and when that is set, the system will assert that there is only one row for each value of the `recordId` column. When a `recordId` column is specified, the `upsertData` API method is supported, which can be used to partially update data for a specific primary key value. Otherwise, data can be added to a streaming feature group using the `appendData` method. The `recordTimestamp` column is updated to be the time when data is added or updated (and it is not passed in as part of those method calls). 
+A feature group project can be setup to support online updates. To accomplish this, we need to configure a **streaming dataset**.
+
+**Streaming feature groups** All streaming datasets (like other datasets) have an associated feature group. You can use this feature group to include streaming data in another project. This feature group needs to map the `recordId`, `recordTimestamp` columns and lookup key columns. We can also explicitly set a schema on this feature group if we want to start configuring it before we actually stream data and infer schema from the streaming dataset. Streaming feature groups need to have a `timestamp` type column that can be used as the `recordTimestamp` column. Additionally, a `recordId` column can be specified as the primary key of the streaming dataset, and when this property is set, there is an implicit assertion that there is only one row for each value of the `recordId` column. When a `recordId` column is specified, the `upsertData` API method is supported, which can be used to partially update data for a specific primary key value. In addition, streaming data can be indexed by lookup columns Otherwise, data can be added to a streaming dataset using the `appendData` method. The `recordTimestamp` column is updated to be the time when data is added or updated (and it is not passed in as part of those method calls). To facilitate online look ups, we can mark columns in the streaming feature group as lookup keys.
 
 
 ```python
-streaming_feature_group = client.create_streaming_feature_group(table_name='datasets_streaming_interaction_log', record_timestamp_feature='timestamp', [record_id_feature='interaction_id', data_retention_hours=24, data_retention_row_count=1_000_000])
-streaming_feature_group.set_schema(schema=[{'name': 'interaction_id', 'data_type': 'STRING'}, {'name': 'timestamp', 'data_type': 'TIMESTAMP'}, {'name": 'data_column', 'data_type': 'FLOAT'}])
-streaming_feature_group.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
+streaming_dataset = client.create_streaming_dataset(table_name='streaming_interaction_log',
+                                                    record_timestamp_column='timestamp', record_id_column='user_id',
+						    data_retention_hours=24, data_retention_row_count=1_000_000)
+streaming_feature_group = client.lookup_feature_group('streaming_feature_group')
+streaming_dataset.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
 ```
 
-Streaming feature groups can have a retention period which will let the system manage retain only a certain amount of data. This retention policy can be expressed as a period of time or a number of rows. 
+Streaming datasets can have a retention period which will let the system manage retain only a certain amount of data. This retention policy can be expressed as a period of time or a number of rows.
 
 
 To add data to a streaming dataset, we can use the following APIs:
@@ -188,25 +192,25 @@ streaming_token = client.create_streaming_token()
 ```
 
 ```python
-streaming_feature_group.upsert_data(streaming_token=streaming_token, record_id='user_id_1', data={'data_column': 1}, [record_timestamp=datetime.now() - timedelta(minutes=2)])
-client.upsert_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, record_id='user_id_1', data={'data_column': 1}, [record_timestamp=datetime.now() - timedelta(minutes=2)])
+streaming_feature_group.upsert_data(streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1}, [record_timestamp=datetime.now() - timedelta(minutes=2)])
+client.upsert_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1}, [record_timestamp=datetime.now() - timedelta(minutes=2)])
 
 streaming_feature_group.append_data(streaming_token=streaming_token, data={'data_column': 1})
 client.append_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, data={'data_column': 1})
 
 ```
 
-Another way to manage data in a streaming feature group is to invalidate data before a certain specific timestamp.
+Another way to manage data in a streaming dataset is to invalidate data before a certain specific timestamp.
 
 ```python
 streaming_feature_group.invalidate_old_data(valid_after_timestamp=datetime.now() - datetime.timedelta(hours=6))
 ```
 
-**Concatenating streaming feature group with offline data** Streaming feature groups can be merged with a regular feature group using a **concatenate** operation. Feature groups can be merged if their schema's are compatible and they have the special `recordTimestamp` column and if set, the `recordId` column. The second operand in the concatenate operation will be appended to the first operand (merge target).  
+**Concatenating streaming feature group with offline data** Streaming feature groups can be merged with a regular feature group using a **concatenate** operation. Feature groups can be merged if their schema's are compatible and they have the special `recordTimestamp` column and if set, the `recordId` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
-We can specify a `mergeType` option, which can be a `UNION` or an `INTERSECTION`. Depending on this value (defaults to `UNION`), the columns in the final feature group will be a union or an intersection of the two feature groups. 
+We can specify a `mergeType` option, which can be a `UNION` or an `INTERSECTION`. Depending on this value (defaults to `UNION`), the columns in the final feature group will be a union or an intersection of the two feature groups.
 
-Concatenation is useful in production settings when we either want to evolve streaming feature groups, or add online updates to a specific table of a feature group that has been developed an initially deployed with offline datasets. 
+Concatenation is useful in production settings when we either want to evolve streaming feature groups, or add online updates to a specific table of a feature group that has been developed an initially deployed with offline datasets.
 
 - If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data upto a certan point with a new batch data feature group.
 
@@ -224,7 +228,7 @@ If the original feature group was refreshed using a refresh policy, each time th
 
 
 
-### Open Issues 
+### Open Issues
 
 - Indexing for streaming lookups
 - Constraints in making a FG deployable
