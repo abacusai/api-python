@@ -87,7 +87,7 @@ feature_group.update_sql(sql='SELECT *, CONCAT(col1, col2) AS feature_name FROM 
 ### Looking at Materialized Data
 
 ````python
-df = feature_group.read_latest_version_as_pandas()
+df = feature_group.latest_feature_group_version.load_as_pandas()
 ````
 
  - #### Python function feature groups
