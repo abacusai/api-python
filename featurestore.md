@@ -36,7 +36,7 @@ When creating a dataset, you must assign a **Dataset Table Name** which is uniqu
 We'll create two datasets, one containing an event log and the other containing item metadata
 ```python
 events_dataset = client.create_dataset_from_file_connector(name='Events Log', location='s3://abacusai.exampledatasets/pers_promotion/events.csv', table_name='datasets_event_log')
-items_datasets = client.create_dataset_from_file_connector(name='Items Data', 'location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', table_name='datasets_item_metadata')
+items_datasets = client.create_dataset_from_file_connector(name='Items Data', location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', table_name='datasets_item_metadata')
 ```
 Finally, we can create a feature group from these datasets, sepcifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
 
