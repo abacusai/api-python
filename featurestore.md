@@ -174,17 +174,14 @@ A feature group project can be setup to support online updates. To accomplish th
 
 **Streaming feature groups** All streaming datasets (like other datasets) have an associated feature group. You can use this feature group to include streaming data in another project. This feature group needs to map the `recordId`, `recordTimestamp` columns and lookup key columns. We can also explicitly set a schema on this feature group if we want to start configuring it before we actually stream data and infer schema from the streaming dataset. Streaming feature groups need to have a `timestamp` type column that can be used as the `recordTimestamp` column. Additionally, a `recordId` column can be specified as the primary key of the streaming dataset, and when this property is set, there is an implicit assertion that there is only one row for each value of the `recordId` column. When a `recordId` column is specified, the `upsertData` API method is supported, which can be used to partially update data for a specific primary key value. In addition, streaming data can be indexed by lookup columns Otherwise, data can be added to a streaming dataset using the `appendData` method. The `recordTimestamp` column is updated to be the time when data is added or updated (and it is not passed in as part of those method calls). To facilitate online look ups, we can mark columns in the streaming feature group as lookup keys.
 
-
-```python
-streaming_dataset = client.create_streaming_dataset(table_name='streaming_interaction_log',
-                                                    record_timestamp_column='timestamp', record_id_column='user_id',
-						    data_retention_hours=24, data_retention_row_count=1_000_000)
-streaming_feature_group = client.lookup_feature_group('streaming_feature_group')
-streaming_dataset.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
-```
-
 Streaming datasets can have a retention period which will let the system manage retain only a certain amount of data. This retention policy can be expressed as a period of time or a number of rows.
 
+```python
+streaming_dataset_users = client.create_streaming_dataset(table_name='streaming_user_data')
+streaming_feature_group_users = client.lookup_feature_group('streaming_user_data')
+streaming_feature_group_user.set_record_attributes(record_timestamp_feature='update_timestamp', record_id_feature='user_id')
+streaming_dataset_users.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
+```
 
 To add data to a streaming dataset, we can use the following APIs:
 ```python
@@ -192,18 +189,31 @@ streaming_token = client.create_streaming_token()
 ```
 
 ```python
-streaming_feature_group.upsert_data(streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1}, [record_timestamp=datetime.now() - timedelta(minutes=2)])
-client.upsert_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1}, [record_timestamp=datetime.now() - timedelta(minutes=2)])
+streaming_feature_group.upsert_data(streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1, 'update_timestamp': datetime.now() - timedelta(minutes=2)})
+client.upsert_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1, 'update_timestamp': datetime.now() - timedelta(minutes=2)})
+```
 
-streaming_feature_group.append_data(streaming_token=streaming_token, data={'data_column': 1})
-client.append_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, data={'data_column': 1})
+
+We can also create a streaming feature group which behaves like a log of events with an index.
+
+```python
+streaming_dataset_user_activity = client.create_streaming_dataset(table_name='streaming_user_activity')
+streaming_feature_group_user_activity = client.lookup_feature_group('streaming_user_activity')
+streaming_feature_group_user_activity.set_record_attributes(record_timestamp_feature='event_timestamp', lookup_key_features=['user_id'])
+```
+
+Data can be added to this dataset using the append_data api call.
+
+```python
+streaming_feature_group_user_activity.append_data(streaming_token=streaming_token, data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
+client.append_data(feature_group_id=streaming_feature_group_user_activity.feature_group_id, streaming_token=streaming_token, data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
 
 ```
 
 Another way to manage data in a streaming dataset is to invalidate data before a certain specific timestamp.
 
 ```python
-streaming_feature_group.invalidate_old_data(valid_after_timestamp=datetime.now() - datetime.timedelta(hours=6))
+streaming_feature_group_user_activity.invalidate_old_data(valid_after_timestamp=datetime.now() - datetime.timedelta(hours=6))
 ```
 
 **Concatenating streaming feature group with offline data** Streaming feature groups can be merged with a regular feature group using a **concatenate** operation. Feature groups can be merged if their schema's are compatible and they have the special `recordTimestamp` column and if set, the `recordId` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
@@ -215,20 +225,13 @@ Concatenation is useful in production settings when we either want to evolve str
 - If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data upto a certan point with a new batch data feature group.
 
 ```python
-streaming_feature_group.concatenate(feature_group_id, merge_type='UNION', afterTimestamp=datetime(2021, 09, 01))
+streaming_feature_group_user_activity.concatenate(feature_group_id, merge_type='UNION', afterTimestamp=datetime(2021, 09, 01))
 ```
 
 - If we started with a batch feature group, built and deployed a final feature group that used this feature group, we can supplement it with realtime data for lookups with a streaming feature group.
 
 ```python
-feature_group.concatenate(streaming_feature_group_id)
+feature_group.concatenate(streaming_feature_group_user_activity.feature_group_id)
 ```
 
 If the original feature group was refreshed using a refresh policy, each time the feature group refreshes, we will only add streaming data after the maximum record timestamp of the merge target feature group.
-
-
-
-### Open Issues
-
-- Indexing for streaming lookups
-- Constraints in making a FG deployable
