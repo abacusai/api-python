@@ -178,8 +178,8 @@ Streaming datasets can have a retention period which will let the system manage 
 
 ```python
 streaming_dataset_users = client.create_streaming_dataset(table_name='streaming_user_data')
-streaming_feature_group_users = client.lookup_feature_group('streaming_user_data')
-streaming_feature_group_user.set_record_attributes(record_timestamp_feature='update_timestamp', record_id_feature='user_id')
+streaming_feature_group_users = client.describe_feature_group_by_table_name(table_name='streaming_user_data')
+streaming_feature_group_user.set_feature_group_record_attributes(record_timestamp_feature='update_timestamp', record_id_feature='user_id')
 streaming_dataset_users.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
 ```
 
@@ -198,11 +198,11 @@ We can also create a streaming feature group which behaves like a log of events 
 
 ```python
 streaming_dataset_user_activity = client.create_streaming_dataset(table_name='streaming_user_activity')
-streaming_feature_group_user_activity = client.lookup_feature_group('streaming_user_activity')
-streaming_feature_group_user_activity.set_record_attributes(record_timestamp_feature='event_timestamp', lookup_key_features=['user_id'])
+streaming_feature_group_user_activity = client.describe_feature_group_by_table_name(table_name='streaming_user_activity')
+streaming_feature_group_user_activity.set_feature_group_record_attributes(record_timestamp_feature='event_timestamp', lookup_key_features=['user_id'])
 ```
 
-Data can be added to this dataset using the append_data api call.
+Data can be added to this dataset using the append_data api call. If the `recordTimestamp` attribute
 
 ```python
 streaming_feature_group_user_activity.append_data(streaming_token=streaming_token, data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
