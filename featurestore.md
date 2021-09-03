@@ -31,12 +31,11 @@ Datasets can be created via uploads [\[example\]](https://github.com/abacusai), 
 
 We'll be using the file connector for the demo purposes as we support reading from publicly accesible buckets, however you can verify your own private buckets on the [Connected Services Page](https://abacus.ai/app/profile/connected_services)
 
-When creating a dataset, you must assign a **Dataset Table Name** which is unique to your organization and used when building derivative Feature Groups. **Dataset Table Names** *must* begin with `datasets_`, if a table name is provided that does not begin with `datasets_`, it will automatically be prepended.
-
+When creating a dataset, you must assign a **Feature Group Table Name** which is unique to your organization and used when building derivative Feature Groups. 
 We'll create two datasets, one containing an event log and the other containing item metadata
 ```python
-events_dataset = client.create_dataset_from_file_connector(name='Events Log', location='s3://abacusai.exampledatasets/pers_promotion/events.csv', table_name='datasets_event_log')
-items_datasets = client.create_dataset_from_file_connector(name='Items Data', location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', table_name='datasets_item_metadata')
+events_dataset = client.create_dataset_from_file_connector(name='Events Log', location='s3://abacusai.exampledatasets/pers_promotion/events.csv', table_name='event_log')
+items_datasets = client.create_dataset_from_file_connector(name='Items Data', location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', table_name='item_metadata')
 ```
 Finally, we can create a feature group from these datasets, sepcifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
 
@@ -56,7 +55,7 @@ def item_filtering(event_df, items_df):
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
     return final_df
 '''
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=function_code, input_feature_groups=['events_log', 'item_metadata'])
+feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=function_code, input_feature_groups=['event_log', 'item_metadata'])
 ````
 
 
