@@ -56,7 +56,7 @@ def item_filtering(event_df, items_df):
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
     return final_df
 '''
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=function_code, input_feature_groups=['datasets_event_log', 'datasets_item_metadata'])
+feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=function_code, input_feature_groups=['events_log', 'item_metadata'])
 ````
 
 
