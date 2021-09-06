@@ -41,7 +41,7 @@ Finally, we can create a feature group from these datasets, sepcifying what colu
 
 ### ANSI SQL
 ```python
-feature_group = client.create_feature_group(table_name='joined_events_data', sql='SELECT * FROM datasets_event_log JOIN datasets_item_metadata USING (item_id)')
+feature_group = client.create_feature_group(table_name='joined_events_data', sql='SELECT * FROM event_log JOIN item_metadata USING (item_id) WHERE timestamp > NOW() - INTERVAL 180 DAY')
 ```
 
 ### Python Functions
