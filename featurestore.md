@@ -55,17 +55,10 @@ def item_filtering(event_df, items_df):
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
     return final_df
 '''
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=function_code, input_feature_groups=['event_log', 'item_metadata'])
+feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='item_filtering', input_feature_groups=['event_log', 'item_metadata'])
 ````
 
 
-##
-Finally, we can add descriptive tags to our feature group and add it to our project.
-```python
-feature_group.add_tag('Joined events log')  # Optional
-
-feature_group.add_to_project(project_id=project.project_id)
-```
 
 ### Add New Features  [SQL-Based Feature Groups Only] [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=VT0WqjmfAFdg)
 Once you create a feature group, you can add, edit, and remove features by editing the entire sql, or by using utility methods provided:
@@ -127,6 +120,14 @@ A slightly different example shows how to calculate the click through rate from 
 purchases_feature_group.add_point_in_time_feature('recent_events_ctr', aggregation_key_features=['user_id', 'site_id'], time_feature='purchase_timestamp', historical_feature_group='activity_log', historical_time_feature='activity_timestamp', lookback_count=100, expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
 ```
 
+
+### Tags on Feature Groups
+To better organize feature groups, we can add descriptive tags to our feature group and add it to our project.
+```python
+feature_group.add_tag('Joined events log')  # Optional
+
+feature_group.add_to_project(project_id=project.project_id)
+```
 
 ### Export Materialized Feature Group Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ompwZJ4nLkqw)
 
