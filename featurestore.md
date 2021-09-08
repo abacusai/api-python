@@ -47,17 +47,22 @@ feature_group = client.create_feature_group(table_name='joined_events_data', sql
 ### Python Functions
 
 To create a feature group backed by a Python function, we have first provide the source code for the function in a valid python file. In this example, we are using pandas functions in our function. We will run the code in a container which has a Python 3.8 environment with a of standard list of python libraries. 
+
 ````python
-fg_code = '''
+
 import pandas as pd
-def item_filtering(event_df, items_df):
-    final_df = pd.merge(items_df, event_df['item_id'], how='inner', on='item_id')
+
+def item_filtering(items_df, events_df):
+    final_df = pd.merge(items_df, events_df['item_id'], how='inner', on='item_id')
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
     return final_df
-'''
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='item_filtering', input_feature_groups=['event_log', 'item_metadata'])
 ````
 
+Assuming we have saved this file as `fg_impl.py`, we can use the following snippet to create a python function feature group.
+````python
+fg_code = open('fg_impl.py').read()
+feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='item_filtering', input_feature_groups=['item_metadata', 'event_log'])
+````
 
 
 ### Add New Features  [SQL-Based Feature Groups Only] [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=VT0WqjmfAFdg)
@@ -77,7 +82,7 @@ feature_group.update_sql(sql='SELECT *, CONCAT(col1, col2) AS feature_name FROM 
 df = feature_group.latest_feature_group_version.load_as_pandas()
 ````
 
- - #### Inputless Python function feature groups
+ ### Inputless Python function feature groups
 
 If we want to use a Python function to dynamically read other tables and construct data without having to pre-specify the list of inputs, we can use the Abacus.AI client within the python function. The client available during function execution is a secure version, which exposes a read only restricted set of APIs.
 
@@ -109,7 +114,7 @@ feature_group = client.create_feature_group_from_function(table_name='joined_eve
 Abacus.AI also supports defining and querying point in time features. Say we want to calculate the number of times a certain event has occurred within a historical window when another event occurred (for e.g, number of views 30 minutes before a purchase), we can associate a historical activity table with another table which records purchases. 
 
 ```python
-purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_key_features=['user_id', 'site_id'], time_feature='purchase_timestamp', historical_feature_group='activity_log', historical_time_feature='activity_timestamp', lookback_start_seconds=300, expression='COUNT(1)') 
+purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_key_features=['user_id', 'site_id'], time_feature='purchase_timestamp', historical_feature_group='activity_log', historical_time_feature='activity_timestamp', lookback_window_seconds=300, expression='COUNT(1)') 
 ```
 
 The `add_point_in_time_feature` API method uses the aggregation_key_features to match up the `purchases` and `activity` tables, and for each point in the `purchases` table, retrieves all rows from the `activity` table which have a timestamp within 5 minutes in the past of the purchase timestamp, and evaluates a aggregation expression on those rows. 
