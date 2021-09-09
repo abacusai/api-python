@@ -211,7 +211,7 @@ client.append_data(feature_group_id=streaming_feature_group_user_activity.featur
 Another way to manage data in a streaming dataset is to invalidate data before a certain specific timestamp.
 
 ```python
-streaming_feature_group_user_activity.invalidate_old_data(valid_after_timestamp=datetime.now() - datetime.timedelta(hours=6))
+streaming_feature_group_user_activity.invalidate_streaming_data(valid_after_timestamp=datetime.now() - datetime.timedelta(hours=6))
 ```
 
 **Concatenating streaming feature group with offline data** Streaming feature groups can be merged with a regular feature group using a **concatenate** operation. Feature groups can be merged if their schema's are compatible and they have the special `recordTimestamp` column and if set, the `recordId` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
