@@ -1,7 +1,7 @@
-from .model_version import ModelVersion
-from .model_location import ModelLocation
-import time
 from .refresh_schedule import RefreshSchedule
+from .model_location import ModelLocation
+from .model_version import ModelVersion
+import time
 
 
 class Model():

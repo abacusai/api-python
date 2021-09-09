@@ -1,5 +1,5 @@
-from .feature_column import FeatureColumn
 from .feature_group_version import FeatureGroupVersion
+from .feature_column import FeatureColumn
 
 
 class FeatureGroup():

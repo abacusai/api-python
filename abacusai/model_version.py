@@ -29,14 +29,14 @@ class ModelVersion():
         return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids}
 
     def delete(self):
-        return self.client.delete_model_version(self.model_version, model_version)
+        return self.client.delete_model_version(self.model_version)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
-        return self.client.describe_model_version(self.model_version, model_version)
+        return self.client.describe_model_version(self.model_version)
 
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)

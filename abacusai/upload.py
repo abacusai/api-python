@@ -1,6 +1,6 @@
-import time
-import io
 from concurrent.futures import ThreadPoolExecutor
+import io
+import time
 
 
 class Upload():

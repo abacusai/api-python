@@ -1,7 +1,7 @@
+from concurrent.futures import ThreadPoolExecutor
+import io
 import time
 from .feature_column import FeatureColumn
-import io
-from concurrent.futures import ThreadPoolExecutor
 
 
 class FeatureGroupVersion():
@@ -30,14 +30,14 @@ class FeatureGroupVersion():
         return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'columns': [elem.to_dict() for elem in self.columns or []]}
 
     def export_to_file_connector(self, location, export_file_format):
-        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, feature_group_version, location, export_file_format)
+        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
-        return self.client.describe_feature_group_version(self.feature_group_version, feature_group_version)
+        return self.client.describe_feature_group_version(self.feature_group_version)
 
     def wait_for_results(self, timeout=3600):
         return self.client._poll(self, {'PENDING'}, timeout=timeout)

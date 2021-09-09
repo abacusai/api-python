@@ -66,7 +66,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.0'
+    client_version = '0.30.1'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
