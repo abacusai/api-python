@@ -178,7 +178,7 @@ Streaming datasets can have a retention period which will let the system manage 
 streaming_dataset_users = client.create_streaming_dataset(table_name='streaming_user_data')
 streaming_feature_group_users = client.describe_feature_group_by_table_name(table_name='streaming_user_data')
 streaming_feature_group_user.set_record_attributes(record_timestamp_feature='update_timestamp', record_id_feature='user_id')
-streaming_dataset_users.set_streaming_retention_policy(data_retention_hours=48, data_retention_row_count=2_000_000_000)
+streaming_dataset_users.set_streaming_retention_policy(retention_hours=48, retention_row_count=2_000_000_000)
 ```
 
 To add data to a streaming dataset, we can use the following APIs:
