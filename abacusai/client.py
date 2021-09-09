@@ -33,6 +33,7 @@ from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
 from .model_upload import ModelUpload
 from .model_version import ModelVersion
+from .modification_lock_info import ModificationLockInfo
 from .nested_column import NestedColumn
 from .organization_group import OrganizationGroup
 from .prediction_dataset import PredictionDataset
@@ -65,7 +66,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.21.0'
+    client_version = '0.30.0'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -255,6 +256,10 @@ class ApiClient():
         '''Returns a schema given a specific FeatureGroup in a project.'''
         return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=FeatureColumn)
 
+    def set_feature_group_schema(self, feature_group_id: str, schema: list):
+        '''Creates a new schema and points the feature group to the new feature group schema id.'''
+        return self._call_api('setFeatureGroupSchema', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'schema': schema})
+
     def rename_project(self, project_id: str, name: str):
         '''This method renames a project after it is created.'''
         return self._call_api('renameProject', 'PATCH', query_params={}, body={'projectId': project_id, 'name': name})
@@ -323,7 +328,7 @@ class ApiClient():
         '''Creates a new feature group from a SQL statement.'''
         return self._call_api('createFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_function(self, table_name: str, function_source_code: str, function_name: str, input_feature_groups: list = None, description: str = None) -> FeatureGroup:
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str, function_name: str, input_feature_groups: list = [], description: str = None) -> FeatureGroup:
         '''Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
         If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
@@ -345,6 +350,14 @@ class ApiClient():
         '''Creates a new feature in a Feature Group from a SQL select statement'''
         return self._call_api('createFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression}, parse_type=FeatureGroup)
 
+    def add_feature_group_tag(self, feature_group_id: str, tag: str):
+        '''Adds a tag to the feature group'''
+        return self._call_api('addFeatureGroupTag', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tag': tag})
+
+    def remove_feature_group_tag(self, feature_group_id: str, tag: str):
+        '''Removes a tag from the feature group'''
+        return self._call_api('removeFeatureGroupTag', 'DELETE', query_params={'featureGroupId': feature_group_id, 'tag': tag})
+
     def add_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
         '''[DEPRECATED] Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.'''
         logging.warning(
@@ -362,6 +375,22 @@ class ApiClient():
     def delete_nested_feature(self, feature_group_id: str, nested_feature_name: str) -> FeatureGroup:
         '''Delete a nested feature.'''
         return self._call_api('deleteNestedFeature', 'DELETE', query_params={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name}, parse_type=FeatureGroup)
+
+    def create_point_in_time_feature(self, feature_group_id: str, feature_name: str, history_table_name: str = None, aggregation_key_features: list = None, time_feature: str = None, historical_time_feature: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0, expression: str = None) -> FeatureGroup:
+        '''Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
+
+        We use the aggregation keys, and either the lookbackWindowSeconds or the lookbackCount values to perform the window aggregation for every row in the current feature group.
+        If the window is specified in seconds, then all rows in the history table which match the aggregation keys and with historicalTimeFeature >= lookbackStartCount and < the value
+        of the current rows timeFeature are considered. An option lookbackWindowLagSeconds (+ve or -ve) can be used to offset the current value of the timeFeature. If this value
+        is negative, we will look at the future rows in the history table, so care must be taken to make sure that these rows are available in the online context when we are performing
+        a lookup on this feature group. If window is specified in counts, then we order the historical table rows aligning by time and consider rows from the window where
+        the rank order is >= lookbackCount and includes the row just prior to the current one. The lag is specified in term of positions using lookbackUntilPosition.
+        '''
+        return self._call_api('createPointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeyFeatures': aggregation_key_features, 'timeFeature': time_feature, 'historicalTimeFeature': historical_time_feature, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression}, parse_type=FeatureGroup)
+
+    def update_point_in_time_feature(self, feature_group_id: str, feature_name: str, history_table_name: str = None, aggregation_key_features: list = None, time_feature: str = None, historical_time_feature: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0, expression: str = None, new_feature_name: str = None) -> FeatureGroup:
+        '''Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.'''
+        return self._call_api('updatePointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeyFeatures': aggregation_key_features, 'timeFeature': time_feature, 'historicalTimeFeature': historical_time_feature, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression, 'newFeatureName': new_feature_name}, parse_type=FeatureGroup)
 
     def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         '''[DEPRECATED] Adds a feature group to a project,'''
@@ -391,6 +420,14 @@ class ApiClient():
         '''Update the feature group type in a project. The feature group must already be added to the project.'''
         return self._call_api('setFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
+    def invalidate_streaming_feature_group_data(self, feature_group_id: str, invalid_before_timestamp: int):
+        '''Invalidates all streaming data with timestamp before invalidBeforeTimestamp'''
+        return self._call_api('invalidateStreamingFeatureGroupData', 'GET', query_params={'featureGroupId': feature_group_id, 'invalidBeforeTimestamp': invalid_before_timestamp})
+
+    def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', after_timestamp: int = None):
+        '''Concatenating streaming feature group with offline data Streaming feature groups can be merged with a regular feature group using a concatenate operation. Feature groups can be merged if their schema's are compatible and they have the special recordTimestamp column and if set, the recordId column. The second operand in the concatenate operation will be appended to the first operand (merge target).'''
+        return self._call_api('concatenateFeatureGroupData', 'GET', query_params={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'afterTimestamp': after_timestamp})
+
     def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
         '''Describe a Feature Group.'''
         return self._call_api('describeFeatureGroup', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
@@ -398,6 +435,10 @@ class ApiClient():
     def describe_feature_group_by_table_name(self, table_name: str) -> FeatureGroup:
         '''Describe a Feature Group by the feature group's table name'''
         return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
+
+    def set_feature_group_record_attributes(self, feature_group_id: str, record_id_column: str = None, record_timestamp_column: str = None):
+        '''Sets the record_id and record_timestamp attributes for the feature group'''
+        return self._call_api('setFeatureGroupRecordAttributes', 'GET', query_params={'featureGroupId': feature_group_id, 'recordIdColumn': record_id_column, 'recordTimestampColumn': record_timestamp_column})
 
     def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
@@ -411,17 +452,45 @@ class ApiClient():
         '''Modifies an existing feature group. The user has to specify the feature group to be updated along with at least one parameter: SQL, name or description.'''
         return self._call_api('updateFeatureGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql, 'name': name, 'description': description}, parse_type=FeatureGroup)
 
-    def update_feature_group_function_definition(self, feature_group_id: str, sql: str = None, name: str = None) -> FeatureGroup:
+    def update_feature_group_sql_definition(self, feature_group_id: str, sql: str) -> FeatureGroup:
+        ''''''
+        return self._call_api('updateFeatureGroupSqlDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql}, parse_type=FeatureGroup)
+
+    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = []) -> FeatureGroup:
         '''Updates the function definition for a feature group created using createFeatureGroupFromFunction'''
-        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql, 'name': name}, parse_type=FeatureGroup)
+        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups}, parse_type=FeatureGroup)
 
     def update_feature(self, feature_group_id: str, name: str, select_expression: str = None, new_name: str = None) -> FeatureGroup:
         '''Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.'''
         return self._call_api('updateFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression, 'newName': new_name}, parse_type=FeatureGroup)
 
-    def export_feature_group_version_to_file_connector(self, feature_group_instance_id: str, location: str, export_file_format: str) -> FeatureGroupExport:
+    def export_feature_group_version_to_file_connector(self, feature_group_version: str, location: str, export_file_format: str) -> FeatureGroupExport:
         ''''''
-        return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupInstanceId': feature_group_instance_id, 'location': location, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
+        return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'location': location, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
+
+    def set_feature_group_modifier_lock(self, feature_group_id: str, locked: bool = True):
+        ''''''
+        return self._call_api('setFeatureGroupModifierLock', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'locked': locked})
+
+    def list_feature_group_modifiers(self, feature_group_id: str) -> ModificationLockInfo:
+        ''''''
+        return self._call_api('listFeatureGroupModifiers', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=ModificationLockInfo)
+
+    def add_user_to_feature_group_modifiers(self, feature_group_id: str, email: str):
+        ''''''
+        return self._call_api('addUserToFeatureGroupModifiers', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'email': email})
+
+    def add_organization_group_to_feature_group_modifiers(self, feature_group_id: str, organization_group_id: str):
+        ''''''
+        return self._call_api('addOrganizationGroupToFeatureGroupModifiers', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'organizationGroupId': organization_group_id})
+
+    def remove_user_from_feature_group_modifiers(self, feature_group_id: str, email: str):
+        ''''''
+        return self._call_api('removeUserFromFeatureGroupModifiers', 'DELETE', query_params={'featureGroupId': feature_group_id, 'email': email})
+
+    def remove_organization_group_from_feature_group_modifiers(self, feature_group_id: str, organization_group_id: str):
+        ''''''
+        return self._call_api('removeOrganizationGroupFromFeatureGroupModifiers', 'DELETE', query_params={'featureGroupId': feature_group_id, 'organizationGroupId': organization_group_id})
 
     def delete_feature(self, feature_group_id: str, name: str) -> FeatureGroup:
         '''Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.'''
@@ -455,21 +524,21 @@ class ApiClient():
         '''Marks an upload process as complete.'''
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, name: str, location: str, file_format: str = None, refresh_schedule: str = None, dataset_table_name: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
+    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None) -> Dataset:
         '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.'''
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset.'''
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, dataset_table_name: str = None) -> Dataset:
+    def create_dataset_from_database_connector(self, name: str, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None) -> Dataset:
         '''Creates a dataset from a Database Connector'''
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None, dataset_table_name: str = None) -> Dataset:
-        '''Creates a dataset from a Database Connector'''
-        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'refreshSchedule': refresh_schedule, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+    def create_dataset_from_application_connector(self, name: str, table_name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None) -> Dataset:
+        '''Creates a dataset from an Application Connector'''
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset'''
@@ -479,17 +548,17 @@ class ApiClient():
         '''Creates a new version of the specified dataset'''
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, name: str, file_format: str = None, dataset_table_name: str = None, csv_delimiter: str = None) -> Upload:
+    def create_dataset_from_upload(self, name: str, table_name: str, file_format: str = None, csv_delimiter: str = None) -> Upload:
         '''Creates a dataset and return an upload Id that can be used to upload a file.'''
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'fileFormat': file_format, 'datasetTableName': dataset_table_name, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         '''Creates a new version of the specified dataset using a local file upload.'''
         return self._call_api('createDatasetVersionFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
 
-    def create_streaming_dataset(self, name: str, project_id: str, dataset_type: str, dataset_table_name: str = None) -> Dataset:
+    def create_streaming_dataset(self, name: str, table_name: str, project_id: str = None, dataset_type: str = None) -> Dataset:
         '''Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.'''
-        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'datasetType': dataset_type, 'datasetTableName': dataset_table_name}, parse_type=Dataset)
+        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Dataset)
 
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         '''Snapshots the current data in the streaming dataset for training.'''
@@ -498,6 +567,14 @@ class ApiClient():
     def set_dataset_column_data_type(self, dataset_id: str, column: str, data_type: str) -> Dataset:
         '''Set a column's type in a specified dataset.'''
         return self._call_api('setDatasetColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'column': column, 'dataType': data_type}, parse_type=Dataset)
+
+    def create_dataset_from_streaming_connector(self, name: str, table_name: str, streaming_connector_id: str, streaming_args: dict = None, refresh_schedule: str = None) -> Dataset:
+        '''Creates a dataset from a Streaming Connector'''
+        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'streamingArgs': streaming_args, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+
+    def set_streaming_retention_policy(self, dataset_id: str, retention_hours: int = None, retention_row_count: int = None):
+        '''Sets the streaming retention policy'''
+        return self._call_api('setStreamingRetentionPolicy', 'GET', query_params={'datasetId': dataset_id, 'retentionHours': retention_hours, 'retentionRowCount': retention_row_count})
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         '''Retrieves verification information to create a data connector to a cloud storage bucket.'''
@@ -595,10 +672,6 @@ class ApiClient():
         '''Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.'''
         return self._call_api('describeDataset', 'GET', query_params={'datasetId': dataset_id}, parse_type=Dataset)
 
-    def describe_dataset_by_table_name(self, dataset_table_name: str) -> Dataset:
-        '''Retrieves a description of the specified dataset using the dataset's table name'''
-        return self._call_api('describeDatasetByTableName', 'GET', query_params={'datasetTableName': dataset_table_name}, parse_type=Dataset)
-
     def list_dataset_versions(self, dataset_id: str, limit: None = 100, start_after_version: None = None) -> List[DatasetVersion]:
         '''Retrieves a list of all dataset versions for the specified dataset.'''
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
@@ -692,12 +765,12 @@ class ApiClient():
         '''Retrieves a full description of the specified model version'''
         return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
 
-    def create_deployment(self, model_id: str, name: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
-        '''Creates a deployment with the specified name and description for the specified model.
+    def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
+        '''Creates a deployment with the specified name and description for the specified model or feature group.
 
-        A Deployment makes the trained model available for prediction requests.
+        A Deployment makes the trained model or feature group available for prediction requests.
         '''
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'modelId': model_id, 'name': name, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'featureGroupId': feature_group_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str) -> DeploymentAuthToken:
         '''Creates a deployment token for the specified project.
@@ -740,6 +813,10 @@ class ApiClient():
         '''Promotes a Model Version to be served in the Deployment'''
         return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version})
 
+    def set_deployment_feature_group_version(self, deployment_id: str, feature_group_version: str):
+        '''Promotes a Feature Group Version to be served in the Deployment'''
+        return self._call_api('setDeploymentFeatureGroupVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'featureGroupVersion': feature_group_version})
+
     def start_deployment(self, deployment_id: str):
         '''Restarts the specified deployment that was previously suspended.'''
         return self._call_api('startDeployment', 'GET', query_params={'deploymentId': deployment_id})
@@ -755,6 +832,10 @@ class ApiClient():
     def delete_deployment_token(self, deployment_token: str):
         '''Deletes the specified deployment token.'''
         return self._call_api('deleteDeploymentToken', 'DELETE', query_params={'deploymentToken': deployment_token})
+
+    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}):
+        ''''''
+        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
         '''Returns a prediction for Predictive Modeling'''
@@ -827,6 +908,10 @@ class ApiClient():
     def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, scaling_factors: list = [], restrict_items: list = [], exclude_items: list = []) -> Dict:
         '''Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).'''
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items})
+
+    def get_feature_group_rows(self, deployment_token: str, deployment_id: str, query_data: dict):
+        ''''''
+        return self._call_api('getFeatureGroupRows', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None) -> BatchPrediction:
         '''Creates a batch prediction job description for the given deployment.'''
@@ -945,3 +1030,11 @@ class ApiClient():
     def upsert_multiple_item_embeddings(self, streaming_token: str, model_id: str, upserts: list, catalog_id: str = None):
         '''Upserts a knn embedding for multiple item ids for a model_id.'''
         return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'upserts': upserts, 'catalogId': catalog_id})
+
+    def upsert_data(self, feature_group_id: str, streaming_token: str, data: dict):
+        '''Updates new data into the feature group for a given lookup key recordId.'''
+        return self._call_api('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
+
+    def append_data(self, feature_group_id: str, streaming_token: str, data: dict):
+        '''Appends new data into the feature group for a given lookup key recordId.'''
+        return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})

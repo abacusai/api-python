@@ -1,7 +1,7 @@
-from .refresh_schedule import RefreshSchedule
-import time
-from .model_location import ModelLocation
 from .model_version import ModelVersion
+from .model_location import ModelLocation
+import time
+from .refresh_schedule import RefreshSchedule
 
 
 class Model():
@@ -32,7 +32,7 @@ class Model():
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'location': [elem.to_dict() for elem in self.location or []], 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_model_version': [elem.to_dict() for elem in self.latest_model_version or []]}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'location': self.location.to_dict() if self.location else None, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_model_version': [elem.to_dict() for elem in self.latest_model_version or []]}
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
@@ -61,9 +61,6 @@ class Model():
 
     def delete(self):
         return self.client.delete_model(self.model_id)
-
-    def create_deployment(self, name=None, description=None, calls_per_second=None, auto_deploy=True):
-        return self.client.create_deployment(self.model_id, name, description, calls_per_second, auto_deploy)
 
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)

@@ -53,6 +53,9 @@ class Deployment():
     def set_model_version(self, model_version):
         return self.client.set_deployment_model_version(self.deployment_id, model_version)
 
+    def set_feature_group_version(self, feature_group_version):
+        return self.client.set_deployment_feature_group_version(self.deployment_id, feature_group_version)
+
     def start(self):
         return self.client.start_deployment(self.deployment_id)
 

@@ -1,6 +1,6 @@
+from .refresh_schedule import RefreshSchedule
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
-from .refresh_schedule import RefreshSchedule
 
 
 class Dataset():
@@ -8,7 +8,7 @@ class Dataset():
         A dataset reference
     '''
 
-    def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, datasetTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={}):
+    def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={}):
         self.client = client
         self.id = datasetId
         self.dataset_id = datasetId
@@ -22,7 +22,7 @@ class Dataset():
         self.database_connector_id = databaseConnectorId
         self.database_connector_config = databaseConnectorConfig
         self.connector_type = connectorType
-        self.dataset_table_name = datasetTableName
+        self.feature_group_table_name = featureGroupTableName
         self.application_connector_id = applicationConnectorId
         self.application_connector_config = applicationConnectorConfig
         self.schema = client._build_class(DatasetColumn, schema)
@@ -32,13 +32,13 @@ class Dataset():
             DatasetVersion, latestDatasetVersion)
 
     def __repr__(self):
-        return f"Dataset(dataset_id={repr(self.dataset_id)}, name={repr(self.name)}, source_type={repr(self.source_type)}, data_source={repr(self.data_source)}, created_at={repr(self.created_at)}, ignore_before={repr(self.ignore_before)}, ephemeral={repr(self.ephemeral)}, lookback_days={repr(self.lookback_days)}, database_connector_id={repr(self.database_connector_id)}, database_connector_config={repr(self.database_connector_config)}, connector_type={repr(self.connector_type)}, dataset_table_name={repr(self.dataset_table_name)}, application_connector_id={repr(self.application_connector_id)}, application_connector_config={repr(self.application_connector_config)}, schema={repr(self.schema)}, refresh_schedules={repr(self.refresh_schedules)}, latest_dataset_version={repr(self.latest_dataset_version)})"
+        return f"Dataset(dataset_id={repr(self.dataset_id)}, name={repr(self.name)}, source_type={repr(self.source_type)}, data_source={repr(self.data_source)}, created_at={repr(self.created_at)}, ignore_before={repr(self.ignore_before)}, ephemeral={repr(self.ephemeral)}, lookback_days={repr(self.lookback_days)}, database_connector_id={repr(self.database_connector_id)}, database_connector_config={repr(self.database_connector_config)}, connector_type={repr(self.connector_type)}, feature_group_table_name={repr(self.feature_group_table_name)}, application_connector_id={repr(self.application_connector_id)}, application_connector_config={repr(self.application_connector_config)}, schema={repr(self.schema)}, refresh_schedules={repr(self.refresh_schedules)}, latest_dataset_version={repr(self.latest_dataset_version)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'dataset_table_name': self.dataset_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'schema': [elem.to_dict() for elem in self.schema or []], 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
+        return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'schema': [elem.to_dict() for elem in self.schema or []], 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
 
     def get_schema(self):
         return self.client.get_dataset_schema(self.dataset_id)
@@ -60,6 +60,9 @@ class Dataset():
 
     def set_column_data_type(self, column, data_type):
         return self.client.set_dataset_column_data_type(self.dataset_id, column, data_type)
+
+    def set_streaming_retention_policy(self, retention_hours=None, retention_row_count=None):
+        return self.client.set_streaming_retention_policy(self.dataset_id, retention_hours, retention_row_count)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)

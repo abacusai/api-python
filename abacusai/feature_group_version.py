@@ -1,4 +1,7 @@
+import time
 from .feature_column import FeatureColumn
+import io
+from concurrent.futures import ThreadPoolExecutor
 
 
 class FeatureGroupVersion():
@@ -26,6 +29,9 @@ class FeatureGroupVersion():
     def to_dict(self):
         return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'columns': [elem.to_dict() for elem in self.columns or []]}
 
+    def export_to_file_connector(self, location, export_file_format):
+        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, feature_group_version, location, export_file_format)
+
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
         return self
@@ -41,3 +47,32 @@ class FeatureGroupVersion():
 
     def describe(self):
         return self.client._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': self.feature_group_version}, parse_type=FeatureGroupVersion)
+
+    def _get_avro_file(self, file_part):
+        file = io.BytesIO()
+        offset = 0
+        while True:
+            with self.client._call_api('_downloadFeatureGroupVersionPartChunk', 'GET', query_params={'featureGroupVersion': self.id, 'part': file_part, 'offset': offset}, streamable_response=True) as chunk:
+                bytes_written = file.write(chunk.read())
+            if not bytes_written:
+                break
+            offset += bytes_written
+        file.seek(0)
+        return file
+
+    def load_as_pandas(self, max_workers=10):
+        import pandas as pd
+        import fastavro
+
+        file_parts = range(self.client._call_api(
+            '_getFeatureGroupVersionPartCount', 'GET', query_params={'featureGroupVersion': self.id}))
+        data_df = pd.DataFrame()
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            file_futures = [executor.submit(
+                self._get_avro_file, file_part) for file_part in file_parts]
+            for future in file_futures:
+                data = future.result()
+                reader = fastavro.reader(data)
+                data_df = data_df.append(
+                    pd.DataFrame.from_records([r for r in reader]))
+        return data_df

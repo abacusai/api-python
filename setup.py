@@ -1,13 +1,13 @@
 from setuptools import setup
 setup(name='abacusai',
-      version='0.21.2',
+      version='0.30.0',
       description='Abacus.AI Python Client Library',
       url='https://github.com/abacusai/api-python',
       author='Abacus.AI',
       author_email='dev@abacus.ai',
       license='MIT',
       packages=['abacusai'],
-      install_requires=['packaging', 'requests'],
+      install_requires=['packaging', 'requests', 'pandas', 'fastavro'],
       zip_safe=True,
       classifiers=[
           'Development Status :: 5 - Production/Stable',
