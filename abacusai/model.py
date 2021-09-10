@@ -1,5 +1,5 @@
-import time
 from .refresh_schedule import RefreshSchedule
+import time
 from .model_location import ModelLocation
 from .model_version import ModelVersion
 

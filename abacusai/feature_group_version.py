@@ -1,7 +1,7 @@
-from concurrent.futures import ThreadPoolExecutor
 from .feature_column import FeatureColumn
 import time
 import io
+from concurrent.futures import ThreadPoolExecutor
 
 
 class FeatureGroupVersion():
