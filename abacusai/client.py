@@ -66,7 +66,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.2'
+    client_version = '0.30.4'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -422,11 +422,11 @@ class ApiClient():
 
     def invalidate_streaming_feature_group_data(self, feature_group_id: str, invalid_before_timestamp: int):
         '''Invalidates all streaming data with timestamp before invalidBeforeTimestamp'''
-        return self._call_api('invalidateStreamingFeatureGroupData', 'GET', query_params={'featureGroupId': feature_group_id, 'invalidBeforeTimestamp': invalid_before_timestamp})
+        return self._call_api('invalidateStreamingFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'invalidBeforeTimestamp': invalid_before_timestamp})
 
     def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', after_timestamp: int = None):
         '''Concatenating streaming feature group with offline data Streaming feature groups can be merged with a regular feature group using a concatenate operation. Feature groups can be merged if their schema's are compatible and they have the special recordTimestamp column and if set, the recordId column. The second operand in the concatenate operation will be appended to the first operand (merge target).'''
-        return self._call_api('concatenateFeatureGroupData', 'GET', query_params={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'afterTimestamp': after_timestamp})
+        return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'afterTimestamp': after_timestamp})
 
     def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
         '''Describe a Feature Group.'''
@@ -438,7 +438,7 @@ class ApiClient():
 
     def set_feature_group_record_attributes(self, feature_group_id: str, record_id_feature: str = None, record_timestamp_feature: str = None, lookup_keys: list = None):
         '''Sets various attributes of the feature group used for deployment lookups and streaming updates.'''
-        return self._call_api('setFeatureGroupRecordAttributes', 'GET', query_params={'featureGroupId': feature_group_id, 'recordIdFeature': record_id_feature, 'recordTimestampFeature': record_timestamp_feature, 'lookupKeys': lookup_keys})
+        return self._call_api('setFeatureGroupRecordAttributes', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'recordIdFeature': record_id_feature, 'recordTimestampFeature': record_timestamp_feature, 'lookupKeys': lookup_keys})
 
     def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
