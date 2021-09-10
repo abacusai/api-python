@@ -1,5 +1,5 @@
-from .feature_group_version import FeatureGroupVersion
 from .feature_column import FeatureColumn
+from .feature_group_version import FeatureGroupVersion
 
 
 class FeatureGroup():
@@ -110,11 +110,11 @@ class FeatureGroup():
     def describe(self):
         return self.client.describe_feature_group(self.feature_group_id)
 
-    def set_record_attributes(self, record_id_column=None, record_timestamp_column=None):
-        return self.client.set_feature_group_record_attributes(self.feature_group_id, record_id_column, record_timestamp_column)
+    def set_record_attributes(self, record_id_feature=None, record_timestamp_feature=None, lookup_keys=None):
+        return self.client.set_feature_group_record_attributes(self.feature_group_id, record_id_feature, record_timestamp_feature, lookup_keys)
 
-    def update(self, sql=None, name=None, description=None):
-        return self.client.update_feature_group(self.feature_group_id, sql, name, description)
+    def update(self, description=None):
+        return self.client.update_feature_group(self.feature_group_id, description)
 
     def update_sql_definition(self, sql):
         return self.client.update_feature_group_sql_definition(self.feature_group_id, sql)

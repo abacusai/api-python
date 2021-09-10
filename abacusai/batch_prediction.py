@@ -1,6 +1,6 @@
 from .refresh_schedule import RefreshSchedule
-from .prediction_input import PredictionInput
 from .batch_prediction_version import BatchPredictionVersion
+from .prediction_input import PredictionInput
 
 
 class BatchPrediction():
@@ -36,7 +36,7 @@ class BatchPrediction():
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'global_prediction_args': self.global_prediction_args, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'batch_inputs': [elem.to_dict() for elem in self.batch_inputs or []], 'latest_batch_prediction_version': [elem.to_dict() for elem in self.latest_batch_prediction_version or []], 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None}
+        return {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'global_prediction_args': self.global_prediction_args, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'batch_inputs': self.batch_inputs.to_dict() if self.batch_inputs else None, 'latest_batch_prediction_version': self.latest_batch_prediction_version.to_dict() if self.latest_batch_prediction_version else None, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None}
 
     def start(self):
         return self.client.start_batch_prediction(self.batch_prediction_id)

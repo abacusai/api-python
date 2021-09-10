@@ -1,4 +1,4 @@
 from .client import ApiClient
 from .client import ApiException
 
-__version__ = "0.30.1"
+__version__ = "0.30.2"

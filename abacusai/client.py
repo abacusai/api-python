@@ -66,7 +66,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.1'
+    client_version = '0.30.2'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -436,9 +436,9 @@ class ApiClient():
         '''Describe a Feature Group by the feature group's table name'''
         return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
 
-    def set_feature_group_record_attributes(self, feature_group_id: str, record_id_column: str = None, record_timestamp_column: str = None):
-        '''Sets the record_id and record_timestamp attributes for the feature group'''
-        return self._call_api('setFeatureGroupRecordAttributes', 'GET', query_params={'featureGroupId': feature_group_id, 'recordIdColumn': record_id_column, 'recordTimestampColumn': record_timestamp_column})
+    def set_feature_group_record_attributes(self, feature_group_id: str, record_id_feature: str = None, record_timestamp_feature: str = None, lookup_keys: list = None):
+        '''Sets various attributes of the feature group used for deployment lookups and streaming updates.'''
+        return self._call_api('setFeatureGroupRecordAttributes', 'GET', query_params={'featureGroupId': feature_group_id, 'recordIdFeature': record_id_feature, 'recordTimestampFeature': record_timestamp_feature, 'lookupKeys': lookup_keys})
 
     def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
@@ -448,9 +448,9 @@ class ApiClient():
         '''List all the feature groups associated with a project'''
         return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id}, parse_type=FeatureGroup)
 
-    def update_feature_group(self, feature_group_id: str, sql: str = None, name: str = None, description: str = None) -> FeatureGroup:
-        '''Modifies an existing feature group. The user has to specify the feature group to be updated along with at least one parameter: SQL, name or description.'''
-        return self._call_api('updateFeatureGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql, 'name': name, 'description': description}, parse_type=FeatureGroup)
+    def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
+        '''Modifies an existing feature group'''
+        return self._call_api('updateFeatureGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'description': description}, parse_type=FeatureGroup)
 
     def update_feature_group_sql_definition(self, feature_group_id: str, sql: str) -> FeatureGroup:
         ''''''

@@ -1,7 +1,7 @@
+import time
 from .refresh_schedule import RefreshSchedule
 from .model_location import ModelLocation
 from .model_version import ModelVersion
-import time
 
 
 class Model():
@@ -32,7 +32,7 @@ class Model():
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'location': self.location.to_dict() if self.location else None, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_model_version': [elem.to_dict() for elem in self.latest_model_version or []]}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'location': self.location.to_dict() if self.location else None, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_model_version': self.latest_model_version.to_dict() if self.latest_model_version else None}
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
