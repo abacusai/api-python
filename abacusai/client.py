@@ -66,7 +66,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.4'
+    client_version = '0.30.5'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -436,9 +436,9 @@ class ApiClient():
         '''Describe a Feature Group by the feature group's table name'''
         return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
 
-    def set_feature_group_record_attributes(self, feature_group_id: str, record_id_feature: str = None, record_timestamp_feature: str = None, lookup_keys: list = None):
+    def set_feature_group_indexing_config(self, feature_group_id: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None):
         '''Sets various attributes of the feature group used for deployment lookups and streaming updates.'''
-        return self._call_api('setFeatureGroupRecordAttributes', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'recordIdFeature': record_id_feature, 'recordTimestampFeature': record_timestamp_feature, 'lookupKeys': lookup_keys})
+        return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
 
     def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''

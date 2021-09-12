@@ -1,6 +1,6 @@
-from .prediction_input import PredictionInput
 from .batch_prediction_version import BatchPredictionVersion
 from .refresh_schedule import RefreshSchedule
+from .prediction_input import PredictionInput
 
 
 class BatchPrediction():

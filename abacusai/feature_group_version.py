@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
-import time
 import io
+import time
 from .feature_column import FeatureColumn
 
 
