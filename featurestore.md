@@ -223,7 +223,7 @@ Concatenation is useful in production settings when we either want to evolve str
 - If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data upto a certan point with a new batch data feature group.
 
 ```python
-streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', replaceUntilTimestamp=datetime(2021, 09, 01))
+streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', replace_until_timestamp=datetime(2021, 09, 01))
 ```
 
 - If we started with a batch feature group, built and deployed a final feature group that used this feature group, we can supplement it with realtime data for lookups with a streaming feature group.
