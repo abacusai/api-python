@@ -96,8 +96,8 @@ def construct_fg_from_api():
     client = abacusai.get_client()
     items_fg = client.get_feature_group('item_metadata')
     events_fg = client.get_feature_group('events_log')
-    items_df = items_fg.read_as_pandas()
-    events_df = events_fg.read_as_pandas()
+    items_df = items_fg.load_as_pandas()
+    events_df = events_fg.load_as_pandas()
 
     final_df = pd.merge(items_df, events_df['item_id'], how='inner', on='item_id')
     final_df = final_df[final_df['timestamp'] < datetime.datetime.now() - datetime.timedelta(days=180)]
