@@ -114,7 +114,7 @@ feature_group = client.create_feature_group_from_function(table_name='joined_eve
 Abacus.AI also supports defining and querying point in time features. Say we want to calculate the number of times a certain event has occurred within a historical window when another event occurred (for e.g, number of views 30 minutes before a purchase), we can associate a historical activity table with another table which records purchases. 
 
 ```python
-purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', historical_feature_group='activity_log', historical_timestamp_key='activity_timestamp', lookback_window_seconds=300, expression='COUNT(1)') 
+purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', history_table_name='activity_log', historical_timestamp_key='activity_timestamp', lookback_window_seconds=300, expression='COUNT(1)') 
 ```
 
 The `add_point_in_time_feature` API method uses the aggregation_key_features to match up the `purchases` and `activity` tables, and for each point in the `purchases` table, retrieves all rows from the `activity` table which have a timestamp within 5 minutes in the past of the purchase timestamp, and evaluates a aggregation expression on those rows. 
@@ -122,7 +122,7 @@ The `add_point_in_time_feature` API method uses the aggregation_key_features to 
 
 A slightly different example shows how to calculate the click through rate from the last 100 events in the activity log.
 ```python
-purchases_feature_group.add_point_in_time_feature('recent_events_ctr', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', historical_feature_group='activity_log', historical_timestamp_key='activity_timestamp', lookback_count=100, expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
+purchases_feature_group.add_point_in_time_feature('recent_events_ctr', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', history_table_name='activity_log', historical_timestamp_key='activity_timestamp', lookback_count=100, expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
 ```
 
 
@@ -146,7 +146,7 @@ Now that your data is materialized, we can now export it to a file connector whi
 Abacus.AI supports "CSV", "JSON" and "AVRO" as the **Export File Format** of the feature group data.
 
 ```python
-feature_group_version.export_feature_group_to_file_connector(location='s3://your-bucket/export-location.csv', export_file_format='CSV')
+feature_group_version.export_to_file_connector(location='s3://your-bucket/export-location.csv', export_file_format='CSV')
 ```
 
 ### Deploy Feature Groups for Online Featurization of Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ZleD66xQnCY_)
@@ -154,9 +154,9 @@ Feature Groups can be deployed for online data transformations and lookups. Feat
 
 Once set, you can deploy the feature group:
 ```python
-deployment = client.create_feature_group_deployment(project_id=project.project_id, feature_group_id=feature_group.feature_group_id)
+deployment = client.create_deployment(feature_group_id=feature_group.feature_group_id)
 deployment.wait_for_deployment()
-deployment_token = client.create_deployment_token(project_id=project.project_id)
+deployment_token = client.create_deployment_token(project_id=project.project_id).deployment_token
 ```
 Now that the deployment is online, you can featurize data by passing in raw dataset rows, a list of lookup keys, or a single lookup key:
 ```python
@@ -183,7 +183,7 @@ streaming_dataset_users.set_streaming_retention_policy(retention_hours=48, reten
 
 To add data to a streaming dataset, we can use the following APIs:
 ```python
-streaming_token = client.create_streaming_token()
+streaming_token = client.create_streaming_token().streaming_token
 ```
 
 ```python
