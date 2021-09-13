@@ -170,7 +170,7 @@ The response will be a list of feature group rows.
 
 A feature group project can be setup to support online updates. To accomplish this, we need to configure a **streaming dataset**.
 
-**Streaming feature groups** All streaming datasets (like other datasets) have an associated feature group. You can use this feature group to include streaming data in another project. This feature group needs to map the `recordId`, `recordTimestamp` columns and lookup key columns. We can also explicitly set a schema on this feature group if we want to start configuring it before we actually stream data and infer schema from the streaming dataset. Streaming feature groups need to have a `timestamp` type column that can be used as the `recordTimestamp` column. Additionally, a `recordId` column can be specified as the primary key of the streaming dataset, and when this property is set, there is an implicit assertion that there is only one row for each value of the `recordId` column. When a `recordId` column is specified, the `upsertData` API method is supported, which can be used to partially update data for a specific primary key value. In addition, streaming data can be indexed by lookup columns Otherwise, data can be added to a streaming dataset using the `appendData` method. The `recordTimestamp` column is updated to be the time when data is added or updated (and it is not passed in as part of those method calls). To facilitate online look ups, we can mark columns in the streaming feature group as lookup keys.
+**Streaming feature groups** All streaming datasets (like other datasets) have an associated feature group. You can use this feature group to include streaming data in another project. This feature group can map the `primaryKey`, `updateTimestampKey`, and `lookupKeys` features. We can also explicitly set a schema on this feature group if we want to start configuring it before we actually stream data and infer schema from the streaming dataset. Streaming feature groups need to have a `timestamp` type column that can be used as the `updateTimestampKey` column. Additionally, a `primaryKey` column can be specified as the primary key of the streaming dataset, and when this property is set, there is an implicit assertion that there is only one row for each value of the `primaryKey` column. When a `primaryKey` column is specified, the `upsertData` API method is supported, which can be used to partially update data for a specific primary key value. In addition, streaming data can be indexed by lookup columns Otherwise, data can be added to a streaming dataset using the `appendData` method. The `updateTimestampKey` column is updated to be the time when data is added or updated (and it is not passed in as part of those method calls). To facilitate online look ups, we can mark columns in the streaming feature group as lookup keys.
 
 Streaming datasets can have a retention period which will let the system manage retain only a certain amount of data. This retention policy can be expressed as a period of time or a number of rows.
 
@@ -200,7 +200,7 @@ streaming_feature_group_user_activity = client.describe_feature_group_by_table_n
 streaming_feature_group_user_activity.set_indexing_config(update_timestamp_key='event_timestamp', lookup_keys=['user_id'])
 ```
 
-Data can be added to this dataset using the append_data api call. If the `recordTimestamp` attribute
+Data can be added to this dataset using the append_data api call. If the `updateTimestampKey` attribute is not set, we use the server recieve timestamp as the value for the `updateTimestampKey`
 
 ```python
 streaming_feature_group_user_activity.append_data(streaming_token=streaming_token, data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
@@ -214,7 +214,7 @@ Another way to manage data in a streaming dataset is to invalidate data before a
 streaming_feature_group_user_activity.invalidate_streaming_data(invalid_before_timestamp=datetime.now() - datetime.timedelta(hours=6))
 ```
 
-**Concatenating streaming feature group with offline data** Streaming feature groups can be merged with a regular feature group using a **concatenate** operation. Feature groups can be merged if their schema's are compatible and they have the special `recordTimestamp` column and if set, the `recordId` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
+**Concatenating streaming feature group with offline data** Streaming feature groups can be merged with a regular feature group using a **concatenate** operation. Feature groups can be merged if their schema's are compatible and they have the special `updateTimestampKey` column and if set, the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
 We can specify a `mergeType` option, which can be a `UNION` or an `INTERSECTION`. Depending on this value (defaults to `UNION`), the columns in the final feature group will be a union or an intersection of the two feature groups.
 
