@@ -1,3 +1,4 @@
+from .point_in_time_feature import PointInTimeFeature
 from .nested_column import NestedColumn
 
 

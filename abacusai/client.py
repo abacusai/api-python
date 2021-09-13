@@ -36,6 +36,7 @@ from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
 from .nested_column import NestedColumn
 from .organization_group import OrganizationGroup
+from .point_in_time_feature import PointInTimeFeature
 from .prediction_dataset import PredictionDataset
 from .prediction_feature_group import PredictionFeatureGroup
 from .prediction_input import PredictionInput
@@ -66,7 +67,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.5'
+    client_version = '0.30.6'
 
     def __init__(self, api_key=None, server='https://abacus.ai'):
         self.api_key = api_key
@@ -376,7 +377,7 @@ class ApiClient():
         '''Delete a nested feature.'''
         return self._call_api('deleteNestedFeature', 'DELETE', query_params={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name}, parse_type=FeatureGroup)
 
-    def create_point_in_time_feature(self, feature_group_id: str, feature_name: str, history_table_name: str = None, aggregation_key_features: list = None, time_feature: str = None, historical_time_feature: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0, expression: str = None) -> FeatureGroup:
+    def create_point_in_time_feature(self, feature_group_id: str, feature_name: str, history_table_name: str = None, aggregation_keys: list = None, timestamp_key: str = None, historical_timestamp_key: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0, expression: str = None) -> FeatureGroup:
         '''Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
 
         We use the aggregation keys, and either the lookbackWindowSeconds or the lookbackCount values to perform the window aggregation for every row in the current feature group.
@@ -386,11 +387,11 @@ class ApiClient():
         a lookup on this feature group. If window is specified in counts, then we order the historical table rows aligning by time and consider rows from the window where
         the rank order is >= lookbackCount and includes the row just prior to the current one. The lag is specified in term of positions using lookbackUntilPosition.
         '''
-        return self._call_api('createPointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeyFeatures': aggregation_key_features, 'timeFeature': time_feature, 'historicalTimeFeature': historical_time_feature, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression}, parse_type=FeatureGroup)
+        return self._call_api('createPointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeys': aggregation_keys, 'timestampKey': timestamp_key, 'historicalTimestampKey': historical_timestamp_key, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression}, parse_type=FeatureGroup)
 
-    def update_point_in_time_feature(self, feature_group_id: str, feature_name: str, history_table_name: str = None, aggregation_key_features: list = None, time_feature: str = None, historical_time_feature: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0, expression: str = None, new_feature_name: str = None) -> FeatureGroup:
+    def update_point_in_time_feature(self, feature_group_id: str, feature_name: str, history_table_name: str = None, aggregation_keys: list = None, timestamp_key: str = None, historical_timestamp_key: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0, expression: str = None, new_feature_name: str = None) -> FeatureGroup:
         '''Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.'''
-        return self._call_api('updatePointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeyFeatures': aggregation_key_features, 'timeFeature': time_feature, 'historicalTimeFeature': historical_time_feature, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression, 'newFeatureName': new_feature_name}, parse_type=FeatureGroup)
+        return self._call_api('updatePointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeys': aggregation_keys, 'timestampKey': timestamp_key, 'historicalTimestampKey': historical_timestamp_key, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression, 'newFeatureName': new_feature_name}, parse_type=FeatureGroup)
 
     def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         '''[DEPRECATED] Adds a feature group to a project,'''
@@ -424,9 +425,9 @@ class ApiClient():
         '''Invalidates all streaming data with timestamp before invalidBeforeTimestamp'''
         return self._call_api('invalidateStreamingFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'invalidBeforeTimestamp': invalid_before_timestamp})
 
-    def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', after_timestamp: int = None):
-        '''Concatenating streaming feature group with offline data Streaming feature groups can be merged with a regular feature group using a concatenate operation. Feature groups can be merged if their schema's are compatible and they have the special recordTimestamp column and if set, the recordId column. The second operand in the concatenate operation will be appended to the first operand (merge target).'''
-        return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'afterTimestamp': after_timestamp})
+    def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None):
+        '''Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).'''
+        return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'replaceUntilTimestamp': replace_until_timestamp})
 
     def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
         '''Describe a Feature Group.'''

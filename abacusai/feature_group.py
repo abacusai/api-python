@@ -77,11 +77,11 @@ class FeatureGroup():
     def delete_nested_feature(self, nested_feature_name):
         return self.client.delete_nested_feature(self.feature_group_id, nested_feature_name)
 
-    def create_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_key_features=None, time_feature=None, historical_time_feature=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None):
-        return self.client.create_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_key_features, time_feature, historical_time_feature, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, expression)
+    def create_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None):
+        return self.client.create_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, expression)
 
-    def update_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_key_features=None, time_feature=None, historical_time_feature=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None, new_feature_name=None):
-        return self.client.update_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_key_features, time_feature, historical_time_feature, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, expression, new_feature_name)
+    def update_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None, new_feature_name=None):
+        return self.client.update_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, expression, new_feature_name)
 
     def attach_to_project(self, project_id, feature_group_type='CUSTOM_TABLE'):
         return self.client.attach_feature_group_to_project(self.feature_group_id, project_id, feature_group_type)
@@ -104,8 +104,8 @@ class FeatureGroup():
     def invalidate_streaming_data(self, invalid_before_timestamp):
         return self.client.invalidate_streaming_feature_group_data(self.feature_group_id, invalid_before_timestamp)
 
-    def concatenate_data(self, source_feature_group_id, merge_type='UNION', after_timestamp=None):
-        return self.client.concatenate_feature_group_data(self.feature_group_id, source_feature_group_id, merge_type, after_timestamp)
+    def concatenate_data(self, source_feature_group_id, merge_type='UNION', replace_until_timestamp=None):
+        return self.client.concatenate_feature_group_data(self.feature_group_id, source_feature_group_id, merge_type, replace_until_timestamp)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
