@@ -114,7 +114,7 @@ feature_group = client.create_feature_group_from_function(table_name='joined_eve
 Abacus.AI also supports defining and querying point in time features. Say we want to calculate the number of times a certain event has occurred within a historical window when another event occurred (for e.g, number of views 30 minutes before a purchase), we can associate a historical activity table with another table which records purchases. 
 
 ```python
-purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_key_features=['user_id', 'site_id'], time_feature='purchase_timestamp', historical_feature_group='activity_log', historical_time_feature='activity_timestamp', lookback_window_seconds=300, expression='COUNT(1)') 
+purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', historical_feature_group='activity_log', historical_timestamp_key='activity_timestamp', lookback_window_seconds=300, expression='COUNT(1)') 
 ```
 
 The `add_point_in_time_feature` API method uses the aggregation_key_features to match up the `purchases` and `activity` tables, and for each point in the `purchases` table, retrieves all rows from the `activity` table which have a timestamp within 5 minutes in the past of the purchase timestamp, and evaluates a aggregation expression on those rows. 
@@ -122,7 +122,7 @@ The `add_point_in_time_feature` API method uses the aggregation_key_features to 
 
 A slightly different example shows how to calculate the click through rate from the last 100 events in the activity log.
 ```python
-purchases_feature_group.add_point_in_time_feature('recent_events_ctr', aggregation_key_features=['user_id', 'site_id'], time_feature='purchase_timestamp', historical_feature_group='activity_log', historical_time_feature='activity_timestamp', lookback_count=100, expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
+purchases_feature_group.add_point_in_time_feature('recent_events_ctr', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', historical_feature_group='activity_log', historical_timestamp_key='activity_timestamp', lookback_count=100, expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
 ```
 
 
@@ -177,7 +177,7 @@ Streaming datasets can have a retention period which will let the system manage 
 ```python
 streaming_dataset_users = client.create_streaming_dataset(table_name='streaming_user_data')
 streaming_feature_group_users = client.describe_feature_group_by_table_name(table_name='streaming_user_data')
-streaming_feature_group_user.set_record_attributes(record_timestamp_feature='update_timestamp', record_id_feature='user_id')
+streaming_feature_group_user.set_indexing_config(update_timestamp_key='update_timestamp', primary_key='user_id')
 streaming_dataset_users.set_streaming_retention_policy(retention_hours=48, retention_row_count=2_000_000_000)
 ```
 
@@ -197,7 +197,7 @@ We can also create a streaming feature group which behaves like a log of events 
 ```python
 streaming_dataset_user_activity = client.create_streaming_dataset(table_name='streaming_user_activity')
 streaming_feature_group_user_activity = client.describe_feature_group_by_table_name(table_name='streaming_user_activity')
-streaming_feature_group_user_activity.set_record_attributes(record_timestamp_feature='event_timestamp', lookup_key_features=['user_id'])
+streaming_feature_group_user_activity.set_indexing_config(update_timestamp_key='event_timestamp', lookup_keys=['user_id'])
 ```
 
 Data can be added to this dataset using the append_data api call. If the `recordTimestamp` attribute
@@ -223,7 +223,7 @@ Concatenation is useful in production settings when we either want to evolve str
 - If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data upto a certan point with a new batch data feature group.
 
 ```python
-streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', afterTimestamp=datetime(2021, 09, 01))
+streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', replaceUntilTimestamp=datetime(2021, 09, 01))
 ```
 
 - If we started with a batch feature group, built and deployed a final feature group that used this feature group, we can supplement it with realtime data for lookups with a streaming feature group.
