@@ -7,7 +7,7 @@ class FeatureGroup():
         A feature group
     '''
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, columns={}, duplicateColumns={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, columns={}, duplicateColumns={}, latestFeatureGroupVersion={}):
         self.client = client
         self.id = featureGroupId
         self.modification_lock = modificationLock
@@ -16,6 +16,7 @@ class FeatureGroup():
         self.feature_group_source_type = featureGroupSourceType
         self.table_name = tableName
         self.sql = sql
+        self.dataset_id = datasetId
         self.function_source_code = functionSourceCode
         self.function_name = functionName
         self.source_tables = sourceTables
@@ -36,13 +37,13 @@ class FeatureGroup():
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)}, feature_group_id={repr(self.feature_group_id)}, name={repr(self.name)}, feature_group_source_type={repr(self.feature_group_source_type)}, table_name={repr(self.table_name)}, sql={repr(self.sql)}, function_source_code={repr(self.function_source_code)}, function_name={repr(self.function_name)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, description={repr(self.description)}, feature_group_type={repr(self.feature_group_type)}, use_for_training={repr(self.use_for_training)}, sql_error={repr(self.sql_error)}, latest_version_outdated={repr(self.latest_version_outdated)}, tags={repr(self.tags)}, primary_key={repr(self.primary_key)}, update_timestamp_key={repr(self.update_timestamp_key)}, lookup_keys={repr(self.lookup_keys)}, columns={repr(self.columns)}, duplicate_columns={repr(self.duplicate_columns)}, latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)}, feature_group_id={repr(self.feature_group_id)}, name={repr(self.name)}, feature_group_source_type={repr(self.feature_group_source_type)}, table_name={repr(self.table_name)}, sql={repr(self.sql)}, dataset_id={repr(self.dataset_id)}, function_source_code={repr(self.function_source_code)}, function_name={repr(self.function_name)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, description={repr(self.description)}, feature_group_type={repr(self.feature_group_type)}, use_for_training={repr(self.use_for_training)}, sql_error={repr(self.sql_error)}, latest_version_outdated={repr(self.latest_version_outdated)}, tags={repr(self.tags)}, primary_key={repr(self.primary_key)}, update_timestamp_key={repr(self.update_timestamp_key)}, lookup_keys={repr(self.lookup_keys)}, columns={repr(self.columns)}, duplicate_columns={repr(self.duplicate_columns)}, latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'columns': [elem.to_dict() for elem in self.columns or []], 'duplicate_columns': [elem.to_dict() for elem in self.duplicate_columns or []], 'latest_feature_group_version': [elem.to_dict() for elem in self.latest_feature_group_version or []]}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'columns': [elem.to_dict() for elem in self.columns or []], 'duplicate_columns': [elem.to_dict() for elem in self.duplicate_columns or []], 'latest_feature_group_version': [elem.to_dict() for elem in self.latest_feature_group_version or []]}
 
     def get_schema(self, project_id=None):
         return self.client.get_feature_group_schema(self.feature_group_id, project_id)
