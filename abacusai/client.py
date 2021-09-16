@@ -56,6 +56,12 @@ from .use_case_requirements import UseCaseRequirements
 from .user import User
 
 
+class ClientOptions:
+    def __init__(self, exception_on_404=True, server='https://abacus.ai'):
+        self.exception_on_404 = exception_on_404
+        self.server = server
+
+
 class ApiException(Exception):
     def __init__(self, message, http_status, exception=None):
         self.message = message
@@ -67,12 +73,13 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.7'
+    client_version = '0.30.8'
 
-    def __init__(self, api_key=None, server='https://abacus.ai'):
+    def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
         self.web_version = None
-        self.server = server
+        self.client_options = client_options or ClientOptions()
+        self.server = server or self.client_options.server
         self.user = None
         # Connection and version check
         try:
@@ -120,6 +127,8 @@ class ApiClient():
         if not success:
             if response.status_code > 502 and response.status_code not in (501, 503):
                 error_message = 'Internal Server Error, please contact dev@abacus.ai for support'
+            if response.status_code == 404 and not self.client_options.exception_on_404:
+                return None
             raise ApiException(error_message, response.status_code, error_type)
         return result
 
@@ -441,7 +450,7 @@ class ApiClient():
         '''Sets various attributes of the feature group used for deployment lookups and streaming updates.'''
         return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
 
-    def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> FeatureGroup:
+    def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> List[FeatureGroup]:
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
         return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
 
@@ -466,8 +475,20 @@ class ApiClient():
         return self._call_api('updateFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression, 'newName': new_name}, parse_type=FeatureGroup)
 
     def export_feature_group_version_to_file_connector(self, feature_group_version: str, location: str, export_file_format: str) -> FeatureGroupExport:
-        ''''''
+        '''Export Feature group to File Connector.'''
         return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'location': location, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
+
+    def export_feature_group_version_to_database_connector(self, feature_group_version: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str) -> FeatureGroupExport:
+        '''Export Feature group to Database Connector.'''
+        return self._call_api('exportFeatureGroupVersionToDatabaseConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column}, parse_type=FeatureGroupExport)
+
+    def describe_feature_group_export(self, feature_group_export_id: str) -> FeatureGroupExport:
+        '''A feature group export'''
+        return self._call_api('describeFeatureGroupExport', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, parse_type=FeatureGroupExport)
+
+    def list_feature_group_exports(self, feature_group_id: str) -> List[FeatureGroupExport]:
+        '''Lists all of the feature group exports for a given feature group'''
+        return self._call_api('listFeatureGroupExports', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupExport)
 
     def set_feature_group_modifier_lock(self, feature_group_id: str, locked: bool = True):
         ''''''

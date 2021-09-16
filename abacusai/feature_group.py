@@ -130,6 +130,9 @@ class FeatureGroup():
     def update_feature(self, name, select_expression=None, new_name=None):
         return self.client.update_feature(self.feature_group_id, name, select_expression, new_name)
 
+    def list_exports(self):
+        return self.client.list_feature_group_exports(self.feature_group_id)
+
     def set_modifier_lock(self, locked=True):
         return self.client.set_feature_group_modifier_lock(self.feature_group_id, locked)
 

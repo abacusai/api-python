@@ -1,7 +1,7 @@
-from .feature_column import FeatureColumn
-import io
-from concurrent.futures import ThreadPoolExecutor
 import time
+from .feature_column import FeatureColumn
+from concurrent.futures import ThreadPoolExecutor
+import io
 
 
 class FeatureGroupVersion():
@@ -31,6 +31,9 @@ class FeatureGroupVersion():
 
     def export_to_file_connector(self, location, export_file_format):
         return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format)
+
+    def export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column):
+        return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
