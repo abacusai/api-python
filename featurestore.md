@@ -160,7 +160,7 @@ deployment_token = client.create_deployment_token(project_id=project.project_id)
 ```
 Now that the deployment is online, you can featurize data by passing in raw dataset rows, a list of lookup keys, or a single lookup key:
 ```python
-client.features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'user_id': ['id1', 'id2']})
+client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'user_id': ['id1', 'id2']})
 client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'item_id': 'item1'})
 ```
 
