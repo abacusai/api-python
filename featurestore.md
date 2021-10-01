@@ -210,8 +210,15 @@ streaming_token = client.create_streaming_token().streaming_token
 ```
 
 ```python
-streaming_feature_group.upsert_data(streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1, 'update_timestamp': datetime.now() - timedelta(minutes=2)})
-client.upsert_data(feature_group_id=streaming_feature_group.feature_group_id, streaming_token=streaming_token, data={'user_id': 'user_id_1', 'data_column': 1, 'update_timestamp': datetime.now() - timedelta(minutes=2)})
+streaming_feature_group.upsert_data(streaming_token=streaming_token, 
+                                    data={'user_id': 'user_id_1', 
+                                          'data_column': 1, 
+                                          'update_timestamp': datetime.now() - timedelta(minutes=2)})
+client.upsert_data(feature_group_id=streaming_feature_group.feature_group_id, 
+                   streaming_token=streaming_token, 
+                   data={'user_id': 'user_id_1', 
+                         'data_column': 1, 
+                         'update_timestamp': datetime.now() - timedelta(minutes=2)})
 ```
 
 
@@ -226,8 +233,14 @@ streaming_feature_group_user_activity.set_indexing_config(update_timestamp_key='
 Data can be added to this dataset using the append_data api call. If the `updateTimestampKey` attribute is not set, we use the server recieve timestamp as the value for the `updateTimestampKey`
 
 ```python
-streaming_feature_group_user_activity.append_data(streaming_token=streaming_token, data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
-client.append_data(feature_group_id=streaming_feature_group_user_activity.feature_group_id, streaming_token=streaming_token, data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
+streaming_feature_group_user_activity.append_data(streaming_token=streaming_token, 
+                                                  data={'user_id': '1ae2ee', 
+                                                        'item_id': '12ef11', 
+                                                        'action': 'click', 
+                                                        'num_items': 3})
+client.append_data(feature_group_id=streaming_feature_group_user_activity.feature_group_id, 
+                   streaming_token=streaming_token, 
+                   data={'user_id': '1ae2ee', 'item_id': '12ef11', 'action': 'click', 'num_items': 3})
 
 ```
 
