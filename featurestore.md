@@ -114,7 +114,13 @@ feature_group = client.create_feature_group_from_function(table_name='joined_eve
 Abacus.AI also supports defining and querying point in time features. Say we want to calculate the number of times a certain event has occurred within a historical window when another event occurred (for e.g, number of views 30 minutes before a purchase), we can associate a historical activity table with another table which records purchases. 
 
 ```python
-purchases_feature_group.add_point_in_time_feature('num_views_last_30', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', history_table_name='activity_log', historical_timestamp_key='activity_timestamp', lookback_window_seconds=300, expression='COUNT(1)') 
+purchases_feature_group.add_point_in_time_feature('num_views_last_30', 
+                                                  aggregation_keys=['user_id', 'site_id'], 
+                                                  timestamp_key='purchase_timestamp', 
+                                                  history_table_name='activity_log', 
+                                                  historical_timestamp_key='activity_timestamp', 
+                                                  lookback_window_seconds=300, 
+                                                  expression='COUNT(1)') 
 ```
 
 The `add_point_in_time_feature` API method uses the aggregation_key_features to match up the `purchases` and `activity` tables, and for each point in the `purchases` table, retrieves all rows from the `activity` table which have a timestamp within 5 minutes in the past of the purchase timestamp, and evaluates a aggregation expression on those rows. 
@@ -122,7 +128,13 @@ The `add_point_in_time_feature` API method uses the aggregation_key_features to 
 
 A slightly different example shows how to calculate the click through rate from the last 100 events in the activity log.
 ```python
-purchases_feature_group.add_point_in_time_feature('recent_events_ctr', aggregation_keys=['user_id', 'site_id'], timestamp_key='purchase_timestamp', history_table_name='activity_log', historical_timestamp_key='activity_timestamp', lookback_count=100, expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
+purchases_feature_group.add_point_in_time_feature('recent_events_ctr', 
+                                                  aggregation_keys=['user_id', 'site_id'], 
+                                                  timestamp_key='purchase_timestamp', 
+                                                  history_table_name='activity_log', 
+                                                  historical_timestamp_key='activity_timestamp', 
+                                                  lookback_count=100, 
+                                                  expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
 ```
 
 
@@ -160,8 +172,12 @@ deployment_token = client.create_deployment_token(project_id=project.project_id)
 ```
 Now that the deployment is online, you can featurize data by passing in raw dataset rows, a list of lookup keys, or a single lookup key:
 ```python
-client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'user_id': ['id1', 'id2']})
-client.lookup_features(deployment_id=deployment.deployment_id, deployment_token=deployment_token, query_data={'item_id': 'item1'})
+client.lookup_features(deployment_id=deployment.deployment_id, 
+                       deployment_token=deployment_token, 
+                       query_data={'user_id': ['id1', 'id2']})
+client.lookup_features(deployment_id=deployment.deployment_id, 
+                       deployment_token=deployment_token, 
+                       query_data={'item_id': 'item1'})
 ```
 
 The response will be a list of feature group rows.
