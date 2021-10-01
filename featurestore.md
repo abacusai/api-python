@@ -122,7 +122,11 @@ def construct_fg_from_api():
 
 For this type of no arguments function, can use the following snippet to create a python function feature group.
 ````python
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='construct_fg_from_api')
+feature_group = client.create_feature_group_from_function(
+           table_name='joined_events_data', 
+           function_source_code=fg_code, 
+           function_name='construct_fg_from_api'
+)
 ````
 
 ### Point In Time Features
@@ -144,13 +148,15 @@ The `add_point_in_time_feature` API method uses the aggregation_key_features to 
 
 A slightly different example shows how to calculate the click through rate from the last 100 events in the activity log.
 ```python
-purchases_feature_group.add_point_in_time_feature('recent_events_ctr', 
-                                                  aggregation_keys=['user_id', 'site_id'], 
-                                                  timestamp_key='purchase_timestamp', 
-                                                  history_table_name='activity_log', 
-                                                  historical_timestamp_key='activity_timestamp', 
-                                                  lookback_count=100, 
-                                                  expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))') 
+purchases_feature_group.add_point_in_time_feature(
+                     'recent_events_ctr', 
+                     aggregation_keys=['user_id', 'site_id'], 
+                     timestamp_key='purchase_timestamp', 
+                     history_table_name='activity_log', 
+                     historical_timestamp_key='activity_timestamp', 
+                     lookback_count=100, 
+                     expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))'
+) 
 ```
 
 
