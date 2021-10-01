@@ -34,8 +34,12 @@ We'll be using the file connector for the demo purposes as we support reading fr
 When creating a dataset, you must assign a **Feature Group Table Name** which is unique to your organization and used when building derivative Feature Groups. 
 We'll create two datasets, one containing an event log and the other containing item metadata
 ```python
-events_dataset = client.create_dataset_from_file_connector(name='Events Log', location='s3://abacusai.exampledatasets/pers_promotion/events.csv', table_name='event_log')
-items_dataset = client.create_dataset_from_file_connector(name='Items Data', location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', table_name='item_metadata')
+events_dataset = client.create_dataset_from_file_connector(name='Events Log', 
+                                                           location='s3://abacusai.exampledatasets/pers_promotion/events.csv', 
+                                                           table_name='event_log')
+items_dataset = client.create_dataset_from_file_connector(name='Items Data', 
+                                                          location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', 
+                                                          table_name='item_metadata')
 ```
 Finally, we can create a feature group from these datasets, sepcifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
 
@@ -61,7 +65,10 @@ def item_filtering(items_df, events_df):
 Assuming we have saved this file as `fg_impl.py`, we can use the following snippet to create a python function feature group.
 ````python
 fg_code = open('fg_impl.py').read()
-feature_group = client.create_feature_group_from_function(table_name='joined_events_data', function_source_code=fg_code, function_name='item_filtering', input_feature_groups=['item_metadata', 'event_log'])
+feature_group = client.create_feature_group_from_function(table_name='joined_events_data', 
+                                                          function_source_code=fg_code, 
+                                                          function_name='item_filtering', 
+                                                          input_feature_groups=['item_metadata', 'event_log'])
 ````
 
 
@@ -239,7 +246,8 @@ Concatenation is useful in production settings when we either want to evolve str
 - If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data upto a certan point with a new batch data feature group.
 
 ```python
-streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', replace_until_timestamp=datetime(2021, 09, 01))
+streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', 
+                                                       replace_until_timestamp=datetime(2021, 09, 01))
 ```
 
 - If we started with a batch feature group, built and deployed a final feature group that used this feature group, we can supplement it with realtime data for lookups with a streaming feature group.
