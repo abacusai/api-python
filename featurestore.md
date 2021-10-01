@@ -34,18 +34,25 @@ We'll be using the file connector for the demo purposes as we support reading fr
 When creating a dataset, you must assign a **Feature Group Table Name** which is unique to your organization and used when building derivative Feature Groups. 
 We'll create two datasets, one containing an event log and the other containing item metadata
 ```python
-events_dataset = client.create_dataset_from_file_connector(name='Events Log', 
-                                                           location='s3://abacusai.exampledatasets/pers_promotion/events.csv', 
-                                                           table_name='event_log')
-items_dataset = client.create_dataset_from_file_connector(name='Items Data', 
-                                                          location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', 
-                                                          table_name='item_metadata')
+events_dataset = client.create_dataset_from_file_connector(
+           name='Events Log', 
+           location='s3://abacusai.exampledatasets/pers_promotion/events.csv', 
+           table_name='event_log'
+)
+items_dataset = client.create_dataset_from_file_connector(
+           name='Items Data', 
+           location='s3://abacusai.exampledatasets/pers_promotion/item_categories.csv', 
+           table_name='item_metadata'
+)
 ```
 Finally, we can create a feature group from these datasets, sepcifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
 
 ### ANSI SQL
 ```python
-feature_group = client.create_feature_group(table_name='joined_events_data', sql='SELECT * FROM event_log JOIN item_metadata USING (item_id) WHERE timestamp > NOW() - INTERVAL 180 DAY')
+feature_group = client.create_feature_group(
+     table_name='joined_events_data', 
+     sql='SELECT * FROM event_log JOIN item_metadata USING (item_id) WHERE timestamp > NOW() - INTERVAL 180 DAY'
+)
 ```
 
 ### Python Functions
@@ -79,7 +86,9 @@ feature_group.add_feature(name='feature_name', select_expression='CONCAT(col1, c
 feature_group.update_feature(name='feature_name', select_expression='CONCAT(col1, col3)')
 feature_group.delete_feature(name='feature_name')
 
-feature_group.update_sql(sql='SELECT *, CONCAT(col1, col2) AS feature_name FROM datasets_abc JOIN datasets_second USING (id)')
+feature_group.update_sql(
+       sql='SELECT *, CONCAT(col1, col2) AS feature_name FROM datasets_abc JOIN datasets_second USING (id)'
+)
 ```
 
 
