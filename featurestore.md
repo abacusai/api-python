@@ -12,7 +12,7 @@ The Abacus.AI platform allows you to process, join and transform raw tabular dat
 |Concept|Definition  |
 |--------|--|
 |   Datasets     |A dataset is a named table definition consisting of a data source (an external system connection, a blob storage URI, or a file upload) and a schema (list of column names along with their data types). A dataset version represents actual materialized data created from this definition. Dataset versions are immutable. Datasets can be setup to refresh periodically - which will result in new versions being created automatically from the data source (not applicable for uploads). Every dataset has a table name that is unique to the organization.|
-|   Feature Groups     |A feature group is a named table definition which is based on a transformation of the features from datasets or other feature groups. Feature group definitions can be specified using ANSI SQL transformations which reference other dataset and feature group table names directly in the SQL statement. Feature group definitions can also be specified using a user-provided Python function which returns a Pandas Dataframe. Similar to datasets, Feature Groups are just a definition of the transormations and aren't actually applied until you create a Feature Group Version to materialize the data. This can be done via the API or on a refresh schedule. |
+|   Feature Groups     |A feature group is a named table definition which is based on a transformation of the features from datasets or other feature groups. Feature group definitions can be specified using ANSI SQL transformations which reference other dataset and feature group table names directly in the SQL statement. Feature group definitions can also be specified using a user-provided Python function which returns a Pandas Dataframe. Similar to datasets, Feature Groups are just a definition of the transformations and aren't actually applied until you create a Feature Group Version to materialize the data. This can be done via the API or on a refresh schedule. |
 | Feature | A column in a feature group. |
 | Nested Feature Group | A type of Feature Group that supports time-based windowing of data |
 | Feature Group Version | A materialized snapshot of a Feature Group's data |
@@ -29,7 +29,7 @@ project = client.create_project(name='My first Feature Store Project', use_case=
 
 Datasets can be created via uploads [\[example\]](https://github.com/abacusai), file connectors  [\[example\]](https://github.com/abacusai) (blob storage providers such as S3 or GCP Storage), or database connectors  [\[example\]](https://github.com/abacusai) (Salesforce, Snowflake, BigQuery, etc.).
 
-We'll be using the file connector for the demo purposes as we support reading from publicly accesible buckets, however you can verify your own private buckets on the [Connected Services Page](https://abacus.ai/app/profile/connected_services)
+We'll be using the file connector for the demo purposes as we support reading from publicly accessible buckets, however you can verify your own private buckets on the [Connected Services Page](https://abacus.ai/app/profile/connected_services)
 
 When creating a dataset, you must assign a **Feature Group Table Name** which is unique to your organization and used when building derivative Feature Groups. 
 We'll create two datasets, one containing an event log and the other containing item metadata
@@ -45,7 +45,7 @@ items_dataset = client.create_dataset_from_file_connector(
            table_name='item_metadata'
 )
 ```
-Finally, we can create a feature group from these datasets, sepcifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
+Finally, we can create a feature group from these datasets, specifying what columns we want as features, and how to join the two tables together. We can do this via ANSI SQL statements or python functions:
 
 ### ANSI SQL
 ```python
@@ -245,7 +245,7 @@ streaming_feature_group_user_activity = client.describe_feature_group_by_table_n
 streaming_feature_group_user_activity.set_indexing_config(update_timestamp_key='event_timestamp', lookup_keys=['user_id'])
 ```
 
-Data can be added to this dataset using the append_data api call. If the `updateTimestampKey` attribute is not set, we use the server recieve timestamp as the value for the `updateTimestampKey`
+Data can be added to this dataset using the append_data api call. If the `updateTimestampKey` attribute is not set, we use the server receive timestamp as the value for the `updateTimestampKey`
 
 ```python
 streaming_feature_group_user_activity.append_data(streaming_token=streaming_token, 
@@ -271,7 +271,7 @@ We can specify a `mergeType` option, which can be a `UNION` or an `INTERSECTION`
 
 Concatenation is useful in production settings when we either want to evolve streaming feature groups, or add online updates to a specific table of a feature group that has been developed an initially deployed with offline datasets.
 
-- If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data upto a certan point with a new batch data feature group.
+- If a feature group was developed starting with a streaming feature group and we want to replace past data, we can concatenate data up to a certain point with a new batch data feature group.
 
 ```python
 streaming_feature_group_user_activity.concatenate_data(feature_group_id, merge_type='UNION', 
