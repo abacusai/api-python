@@ -1,6 +1,6 @@
-from .dataset_version import DatasetVersion
-from .dataset_column import DatasetColumn
 from .refresh_schedule import RefreshSchedule
+from .dataset_column import DatasetColumn
+from .dataset_version import DatasetVersion
 
 
 class Dataset():
@@ -63,6 +63,9 @@ class Dataset():
 
     def set_streaming_retention_policy(self, retention_hours=None, retention_row_count=None):
         return self.client.set_streaming_retention_policy(self.dataset_id, retention_hours, retention_row_count)
+
+    def set_column_native_data_type(self, column, native_data_type):
+        return self.client.set_dataset_column_native_data_type(self.dataset_id, column, native_data_type)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
