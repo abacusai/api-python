@@ -78,6 +78,9 @@ class Project():
     def train_model(self, name=None, training_config={}, refresh_schedule=None):
         return self.client.train_model(self.project_id, name, training_config, refresh_schedule)
 
+    def create_python_model(self, function_source_code, train_function_name, predict_function_name, training_input_tables=[], name=None):
+        return self.client.create_python_model(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name)
+
     def list_models(self):
         return self.client.list_models(self.project_id)
 

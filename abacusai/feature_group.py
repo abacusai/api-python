@@ -1,6 +1,6 @@
 from .feature_group_version import FeatureGroupVersion
-from .feature_column import FeatureColumn
 from .modification_lock_info import ModificationLockInfo
+from .feature_column import FeatureColumn
 
 
 class FeatureGroup():
@@ -163,6 +163,9 @@ class FeatureGroup():
 
     def list_versions(self, limit=100, start_after_version=None):
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
+
+    def get_recent_streamed_data(self):
+        return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
 
     def upsert_data(self, streaming_token, data):
         return self.client.upsert_data(self.feature_group_id, streaming_token, data)

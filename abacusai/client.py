@@ -73,7 +73,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.30.9'
+    client_version = '0.31.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
@@ -682,6 +682,10 @@ class ApiClient():
         '''Deletes the specified streaming token.'''
         return self._call_api('deleteStreamingToken', 'DELETE', query_params={'streamingToken': streaming_token})
 
+    def get_recent_feature_group_streamed_data(self, feature_group_id: str):
+        '''Returns recently streamed data to a streaming feature group.'''
+        return self._call_api('getRecentFeatureGroupStreamedData', 'GET', query_params={'featureGroupId': feature_group_id})
+
     def list_uploads(self) -> List[Upload]:
         '''Lists all ongoing uploads in the organization'''
         return self._call_api('listUploads', 'GET', query_params={}, parse_type=Upload)
@@ -741,6 +745,19 @@ class ApiClient():
         Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
         '''
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'refreshSchedule': refresh_schedule}, parse_type=Model)
+
+    def create_python_model(self, project_id: str, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list = [], name: str = None) -> Model:
+        '''Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `functionSourceCode` to be a valid language source file which contains the functions named
+        `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+        '''
+        return self._call_api('createPythonModel', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainingInputTables': training_input_tables, 'name': name}, parse_type=Model)
 
     def list_models(self, project_id: str) -> List[Model]:
         '''Retrieves the list of models in the specified project.'''
