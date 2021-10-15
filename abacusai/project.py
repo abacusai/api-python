@@ -42,29 +42,17 @@ class Project():
     def delete(self):
         return self.client.delete_project(self.project_id)
 
+    def set_feature_mapping(self, feature_group_id, feature_name, feature_mapping):
+        return self.client.set_feature_mapping(self.project_id, feature_group_id, feature_name, feature_mapping)
+
+    def validate(self):
+        return self.client.validate_project(self.project_id)
+
     def set_column_data_type(self, dataset_id, column, data_type):
         return self.client.set_column_data_type(self.project_id, dataset_id, column, data_type)
 
     def set_column_mapping(self, dataset_id, column, column_mapping):
         return self.client.set_column_mapping(self.project_id, dataset_id, column, column_mapping)
-
-    def set_feature_group_column_mapping(self, feature_group_id, column, column_mapping):
-        return self.client.set_feature_group_column_mapping(self.project_id, feature_group_id, column, column_mapping)
-
-    def add_custom_column(self, dataset_id, column, select_expression):
-        return self.client.add_custom_column(self.project_id, dataset_id, column, select_expression)
-
-    def edit_custom_column(self, dataset_id, column, new_column_name=None, select_expression=None):
-        return self.client.edit_custom_column(self.project_id, dataset_id, column, new_column_name, select_expression)
-
-    def delete_custom_column(self, dataset_id, column):
-        return self.client.delete_custom_column(self.project_id, dataset_id, column)
-
-    def set_dataset_filters(self, dataset_id, filters):
-        return self.client.set_project_dataset_filters(self.project_id, dataset_id, filters)
-
-    def validate(self):
-        return self.client.validate_project(self.project_id)
 
     def remove_column_mapping(self, dataset_id, column):
         return self.client.remove_column_mapping(self.project_id, dataset_id, column)

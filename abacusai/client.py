@@ -11,7 +11,6 @@ from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
-from .schema import Schema
 from .data_filter import DataFilter
 from .database_connector import DatabaseConnector
 from .dataset import Dataset
@@ -20,11 +19,11 @@ from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .feature import Feature
-from .feature_column import FeatureColumn
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
 from .feature_group_version import FeatureGroupVersion
 from .feature_record import FeatureRecord
+from .schema import Schema
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
@@ -34,7 +33,7 @@ from .model_metrics import ModelMetrics
 from .model_upload import ModelUpload
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
-from .nested_column import NestedColumn
+from .nested_feature import NestedFeature
 from .organization_group import OrganizationGroup
 from .point_in_time_feature import PointInTimeFeature
 from .prediction_dataset import PredictionDataset
@@ -73,7 +72,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.31.0'
+    client_version = '0.32.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
@@ -258,18 +257,6 @@ class ApiClient():
             'This function is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
         return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
 
-    def get_dataset_schema(self, dataset_id: str) -> List[Schema]:
-        '''Retrieves the column schema of a dataset'''
-        return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=Schema)
-
-    def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[FeatureColumn]:
-        '''Returns a schema given a specific FeatureGroup in a project.'''
-        return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=FeatureColumn)
-
-    def set_feature_group_schema(self, feature_group_id: str, schema: list):
-        '''Creates a new schema and points the feature group to the new feature group schema id.'''
-        return self._call_api('setFeatureGroupSchema', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'schema': schema})
-
     def rename_project(self, project_id: str, name: str):
         '''This method renames a project after it is created.'''
         return self._call_api('renameProject', 'PATCH', query_params={}, body={'projectId': project_id, 'name': name})
@@ -285,6 +272,46 @@ class ApiClient():
         '''
         return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
 
+    def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[Feature]:
+        '''Returns a schema given a specific FeatureGroup in a project.'''
+        return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=Feature)
+
+    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        '''[DEPRECATED] Adds a feature group to a project,'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
+        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+
+    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        '''Adds a feature group to a project,'''
+        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+
+    def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
+        '''Removes a feature group from a project.'''
+        return self._call_api('removeFeatureGroupFromProject', 'DELETE', query_params={'featureGroupId': feature_group_id, 'projectId': project_id})
+
+    def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        '''[DEPRECATED] Update the feature group type in a project. The feature group must already be added to the project.'''
+        logging.warning(
+            'This function is deprecated and will be removed in a future version. Use set_feature_group_type instead.')
+        return self._call_api('updateFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+
+    def set_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+        '''Update the feature group type in a project. The feature group must already be added to the project.'''
+        return self._call_api('setFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+
+    def use_feature_group_for_training(self, feature_group_id: str, project_id: str, use_for_training: bool = True):
+        '''Train the model on the previously created feature group.'''
+        return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
+
+    def set_feature_mapping(self, project_id: str, feature_group_id: str, feature_name: str, feature_mapping: str) -> List[Feature]:
+        '''Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.'''
+        return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping}, parse_type=Feature)
+
+    def validate_project(self, project_id: str) -> ProjectValidation:
+        '''Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.'''
+        return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
+
     def set_column_data_type(self, project_id: str, dataset_id: str, column: str, data_type: str) -> List[Schema]:
         '''Set a dataset's column type.'''
         return self._call_api('setColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'dataType': data_type}, parse_type=Schema)
@@ -292,37 +319,6 @@ class ApiClient():
     def set_column_mapping(self, project_id: str, dataset_id: str, column: str, column_mapping: str) -> List[Schema]:
         '''Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.'''
         return self._call_api('setColumnMapping', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'columnMapping': column_mapping}, parse_type=Schema)
-
-    def set_feature_group_column_data_type(self, feature_group_id: str, column: str, data_type: str) -> FeatureColumn:
-        '''Set a column's type in a specified dataset. Specify the project ID, dataset ID, column name and data type, and the method will return the entire dataset with the resulting changes reflected.'''
-        return self._call_api('setFeatureGroupColumnDataType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'column': column, 'dataType': data_type}, parse_type=FeatureColumn)
-
-    def set_feature_group_column_mapping(self, project_id: str, feature_group_id: str, column: str, column_mapping: str) -> List[FeatureColumn]:
-        '''Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.'''
-        return self._call_api('setFeatureGroupColumnMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'column': column, 'columnMapping': column_mapping}, parse_type=FeatureColumn)
-
-    def add_custom_column(self, project_id: str, dataset_id: str, column: str, select_expression: str) -> Schema:
-        '''Adds a custom column to the dataset. To add a column, the user needs to provide the location of the dataset to add a custom column to. This is performed by providing a project ID and a dataset ID. The method also requires a custom column name and a SELECT SQL statement to generate the new column.'''
-        return self._call_api('addCustomColumn', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'selectExpression': select_expression}, parse_type=Schema)
-
-    def edit_custom_column(self, project_id: str, dataset_id: str, column: str, new_column_name: str = None, select_expression: str = None) -> Schema:
-        '''Edits a custom column'''
-        return self._call_api('editCustomColumn', 'PATCH', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'newColumnName': new_column_name, 'selectExpression': select_expression}, parse_type=Schema)
-
-    def delete_custom_column(self, project_id: str, dataset_id: str, column: str) -> Schema:
-        '''Deletes a custom column'''
-        return self._call_api('deleteCustomColumn', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
-
-    def set_project_dataset_filters(self, project_id: str, dataset_id: str, filters: list):
-        '''Sets the data filters for a dataset uploaded under a project.
-
-        Each filter in the filter list must be an object containing the keys 'type' and 'whereExpression'. The type must be either 'INCLUDE', signifying any rows matching the sql statement will be included as part of training, or 'EXCLUDE' signifying that any rows matching the sql statement will be excluded from training.
-        '''
-        return self._call_api('setProjectDatasetFilters', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'filters': filters})
-
-    def validate_project(self, project_id: str) -> ProjectValidation:
-        '''Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.'''
-        return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
 
     def remove_column_mapping(self, project_id: str, dataset_id: str, column: str) -> List[Schema]:
         '''Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.'''
@@ -349,6 +345,10 @@ class ApiClient():
         as the materialized version of this feature group table.
         '''
         return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description}, parse_type=FeatureGroup)
+
+    def set_feature_group_schema(self, feature_group_id: str, schema: list):
+        '''Creates a new schema and points the feature group to the new feature group schema id.'''
+        return self._call_api('setFeatureGroupSchema', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'schema': schema})
 
     def add_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
         '''[DEPRECATED] Creates a new feature in a Feature Group from a SQL select statement'''
@@ -402,33 +402,9 @@ class ApiClient():
         '''Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.'''
         return self._call_api('updatePointInTimeFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeys': aggregation_keys, 'timestampKey': timestamp_key, 'historicalTimestampKey': historical_timestamp_key, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'expression': expression, 'newFeatureName': new_feature_name}, parse_type=FeatureGroup)
 
-    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        '''[DEPRECATED] Adds a feature group to a project,'''
-        logging.warning(
-            'This function is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
-        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
-
-    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        '''Adds a feature group to a project,'''
-        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
-
-    def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
-        '''Removes a feature group from a project.'''
-        return self._call_api('removeFeatureGroupFromProject', 'DELETE', query_params={'featureGroupId': feature_group_id, 'projectId': project_id})
-
-    def use_feature_group_for_training(self, feature_group_id: str, project_id: str, use_for_training: bool = True):
-        '''Train the model on the previously created feature group.'''
-        return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
-
-    def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        '''[DEPRECATED] Update the feature group type in a project. The feature group must already be added to the project.'''
-        logging.warning(
-            'This function is deprecated and will be removed in a future version. Use set_feature_group_type instead.')
-        return self._call_api('updateFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
-
-    def set_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        '''Update the feature group type in a project. The feature group must already be added to the project.'''
-        return self._call_api('setFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+    def set_feature_type(self, feature_group_id: str, feature: str, feature_type: str) -> Schema:
+        '''Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.'''
+        return self._call_api('setFeatureType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'feature': feature, 'featureType': feature_type}, parse_type=Schema)
 
     def invalidate_streaming_feature_group_data(self, feature_group_id: str, invalid_before_timestamp: int):
         '''Invalidates all streaming data with timestamp before invalidBeforeTimestamp'''
@@ -546,9 +522,9 @@ class ApiClient():
         '''Marks an upload process as complete.'''
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None) -> Dataset:
+    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None) -> Dataset:
         '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.'''
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset.'''
@@ -598,9 +574,9 @@ class ApiClient():
         '''Sets the streaming retention policy'''
         return self._call_api('setStreamingRetentionPolicy', 'GET', query_params={'datasetId': dataset_id, 'retentionHours': retention_hours, 'retentionRowCount': retention_row_count})
 
-    def set_dataset_column_native_data_type(self, dataset_id: str, column: str, native_data_type: str) -> Schema:
-        '''Creates a new schema and points the feature group to the new feature group schema id.'''
-        return self._call_api('setDatasetColumnNativeDataType', 'POST', query_params={'datasetId': dataset_id}, body={'column': column, 'nativeDataType': native_data_type}, parse_type=Schema)
+    def get_dataset_schema(self, dataset_id: str) -> List[DatasetColumn]:
+        '''Retrieves the column schema of a dataset'''
+        return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=DatasetColumn)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         '''Retrieves verification information to create a data connector to a cloud storage bucket.'''

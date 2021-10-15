@@ -1,6 +1,6 @@
+from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
 from .dataset_column import DatasetColumn
-from .dataset_version import DatasetVersion
 
 
 class Dataset():
@@ -40,9 +40,6 @@ class Dataset():
     def to_dict(self):
         return {'dataset_id': self.dataset_id, 'name': self.name, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'schema': [elem.to_dict() for elem in self.schema or []], 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_dataset_version': [elem.to_dict() for elem in self.latest_dataset_version or []]}
 
-    def get_schema(self):
-        return self.client.get_dataset_schema(self.dataset_id)
-
     def create_version_from_file_connector(self, location=None, file_format=None, csv_delimiter=None):
         return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter)
 
@@ -64,8 +61,8 @@ class Dataset():
     def set_streaming_retention_policy(self, retention_hours=None, retention_row_count=None):
         return self.client.set_streaming_retention_policy(self.dataset_id, retention_hours, retention_row_count)
 
-    def set_column_native_data_type(self, column, native_data_type):
-        return self.client.set_dataset_column_native_data_type(self.dataset_id, column, native_data_type)
+    def get_schema(self):
+        return self.client.get_dataset_schema(self.dataset_id)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
@@ -97,3 +94,6 @@ class Dataset():
 
     def get_status(self):
         return self.describe().latest_dataset_version.status
+
+    def describe_feature_group(self):
+        return self.client.describe_feature_group_by_table_name(self.feature_group_table_name)
