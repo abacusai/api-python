@@ -149,14 +149,23 @@ The `add_point_in_time_feature` API method uses the aggregation_key_features to 
 A slightly different example shows how to calculate the click through rate from the last 100 events in the activity log.
 ```python
 purchases_feature_group.add_point_in_time_feature(
-                     'recent_events_ctr', 
+                     'recent_clicks', 
                      aggregation_keys=['user_id', 'site_id'], 
                      timestamp_key='purchase_timestamp', 
                      history_table_name='activity_log', 
                      historical_timestamp_key='activity_timestamp', 
                      lookback_count=100, 
-                     expression='SUM(IF(event_type = "click", 1, 0)) / SUM(IF(event_type="impression", 1, 0))'
-) 
+                     expression='SUM(IF(event_type = "click", 1, 0))'
+)
+purchases_feature_group.add_point_in_time_feature(
+                     'recent_views', 
+                     aggregation_keys=['user_id', 'site_id'], 
+                     timestamp_key='purchase_timestamp', 
+                     history_table_name='activity_log', 
+                     historical_timestamp_key='activity_timestamp', 
+                     lookback_count=100, 
+                     expression='SUM(IF(event_type = "view", 1, 0))'
+)
 ```
 
 
