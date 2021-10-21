@@ -1,9 +1,9 @@
 
 
 class DatasetColumn():
-    '''
+    """
         A schema description for a column
-    '''
+    """
 
     def __init__(self, client, name=None, dataType=None, featureType=None, originalName=None):
         self.client = client

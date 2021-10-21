@@ -1,9 +1,9 @@
 
 
 class ModelLocation():
-    '''
+    """
 
-    '''
+    """
 
     def __init__(self, client, location=None, artifactNames=None):
         self.client = client

@@ -1,9 +1,9 @@
 
 
 class PredictionDataset():
-    '''
+    """
         Batch Input Datasets
-    '''
+    """
 
     def __init__(self, client, datasetId=None, datasetType=None, datasetVersion=None, default=None, required=None):
         self.client = client

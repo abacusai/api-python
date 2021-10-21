@@ -1,9 +1,9 @@
 
 
 class FeatureGroupExport():
-    '''
+    """
         A feature Group Export Job
-    '''
+    """
 
     def __init__(self, client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None):
         self.client = client

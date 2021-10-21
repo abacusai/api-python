@@ -1,9 +1,9 @@
 
 
 class NestedFeature():
-    '''
+    """
         A nested feature in a feature group
-    '''
+    """
 
     def __init__(self, client, name=None, selectClause=None, featureType=None, featureMapping=None, dataType=None, dataUse=None, sourceTable=None, originalName=None):
         self.client = client

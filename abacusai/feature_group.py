@@ -1,12 +1,12 @@
-from .feature import Feature
-from .modification_lock_info import ModificationLockInfo
 from .feature_group_version import FeatureGroupVersion
+from .modification_lock_info import ModificationLockInfo
+from .feature import Feature
 
 
 class FeatureGroup():
-    '''
+    """
         A feature group
-    '''
+    """
 
     def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, features={}, duplicateFeatures={}, latestFeatureGroupVersion={}):
         self.client = client
@@ -97,7 +97,7 @@ class FeatureGroup():
     def create_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None):
         return self.client.create_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, expression)
 
-    def update_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None, new_feature_name=None):
+    def update_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=None, lookback_count=None, lookback_until_position=None, expression=None, new_feature_name=None):
         return self.client.update_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, expression, new_feature_name)
 
     def set_feature_type(self, feature, feature_type):
@@ -125,7 +125,7 @@ class FeatureGroup():
     def update_sql_definition(self, sql):
         return self.client.update_feature_group_sql_definition(self.feature_group_id, sql)
 
-    def update_function_definition(self, function_source_code=None, function_name=None, input_feature_groups=[]):
+    def update_function_definition(self, function_source_code=None, function_name=None, input_feature_groups=None):
         return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups)
 
     def update_feature(self, name, select_expression=None, new_name=None):

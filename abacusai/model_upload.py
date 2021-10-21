@@ -1,9 +1,9 @@
 
 
 class ModelUpload():
-    '''
+    """
         A Model Version that includes the upload ids for the various required files.
-    '''
+    """
 
     def __init__(self, client, modelId=None, modelVersion=None, status=None, createdAt=None, modelUploadId=None, embeddingsUploadId=None, artifactsUploadId=None, verificationsUploadId=None, defaultItemsUploadId=None, modelFileUploadId=None, modelStateUploadId=None, inputPreprocessorUploadId=None, requirementsUploadId=None, resourcesUploadId=None):
         self.client = client

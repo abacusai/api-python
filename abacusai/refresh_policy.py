@@ -1,9 +1,9 @@
 
 
 class RefreshPolicy():
-    '''
+    """
         A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.
-    '''
+    """
 
     def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, paused=None):
         self.client = client

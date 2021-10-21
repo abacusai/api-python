@@ -1,12 +1,12 @@
+from .refresh_schedule import RefreshSchedule
 from .batch_prediction_version import BatchPredictionVersion
 from .prediction_input import PredictionInput
-from .refresh_schedule import RefreshSchedule
 
 
 class BatchPrediction():
-    '''
+    """
         Batch predictions
-    '''
+    """
 
     def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}):
         self.client = client

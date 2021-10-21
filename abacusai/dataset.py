@@ -1,12 +1,12 @@
-from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
+from .dataset_version import DatasetVersion
 from .dataset_column import DatasetColumn
 
 
 class Dataset():
-    '''
+    """
         A dataset reference
-    '''
+    """
 
     def __init__(self, client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={}):
         self.client = client

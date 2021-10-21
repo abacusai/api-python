@@ -1,9 +1,9 @@
 
 
 class UseCaseRequirements():
-    '''
+    """
         Use Case Requirements
-    '''
+    """
 
     def __init__(self, client, datasetType=None, name=None, description=None, required=None, allowedFeatureMappings=None):
         self.client = client

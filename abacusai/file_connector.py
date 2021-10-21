@@ -1,9 +1,9 @@
 
 
 class FileConnector():
-    '''
+    """
         Verification result for an external storage service
-    '''
+    """
 
     def __init__(self, client, bucket=None, verified=None, writePermission=None):
         self.client = client

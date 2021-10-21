@@ -1,9 +1,9 @@
 
 
 class FileConnectorVerification():
-    '''
+    """
 
-    '''
+    """
 
     def __init__(self, client, verified=None, writePermission=None):
         self.client = client

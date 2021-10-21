@@ -1,9 +1,9 @@
 
 
 class ApplicationConnector():
-    '''
+    """
         A connector to an external service
-    '''
+    """
 
     def __init__(self, client, applicationConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None):
         self.client = client

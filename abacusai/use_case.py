@@ -1,9 +1,9 @@
 
 
 class UseCase():
-    '''
+    """
         A Project Use Case
-    '''
+    """
 
     def __init__(self, client, useCase=None, prettyName=None, description=None):
         self.client = client

@@ -3,9 +3,9 @@ from .point_in_time_feature import PointInTimeFeature
 
 
 class Feature():
-    '''
+    """
         A feature in a feature group
-    '''
+    """
 
     def __init__(self, client, name=None, selectClause=None, featureMapping=None, sourceTable=None, originalName=None, usingClause=None, orderClause=None, whereClause=None, featureType=None, dataType=None, columns={}, pointInTimeInfo={}):
         self.client = client

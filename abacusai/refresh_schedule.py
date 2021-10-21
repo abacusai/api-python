@@ -1,9 +1,9 @@
 
 
 class RefreshSchedule():
-    '''
+    """
         A refresh schedule for an object. Defines when the next version of the object will be created
-    '''
+    """
 
     def __init__(self, client, refreshPolicyId=None, nextRunTime=None, cron=None, refreshType=None):
         self.client = client

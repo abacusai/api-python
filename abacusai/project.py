@@ -1,9 +1,9 @@
 
 
 class Project():
-    '''
+    """
         A project is a container which holds datasets, models and deployments
-    '''
+    """
 
     def __init__(self, client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None):
         self.client = client
@@ -66,8 +66,8 @@ class Project():
     def train_model(self, name=None, training_config={}, refresh_schedule=None):
         return self.client.train_model(self.project_id, name, training_config, refresh_schedule)
 
-    def create_python_model(self, function_source_code, train_function_name, predict_function_name, training_input_tables=[], name=None):
-        return self.client.create_python_model(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name)
+    def create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables=[], name=None):
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name)
 
     def list_models(self):
         return self.client.list_models(self.project_id)

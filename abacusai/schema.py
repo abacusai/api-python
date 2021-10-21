@@ -3,9 +3,9 @@ from .point_in_time_feature import PointInTimeFeature
 
 
 class Schema():
-    '''
+    """
         A schema description for a feature
-    '''
+    """
 
     def __init__(self, client, name=None, featureMapping=None, featureType=None, dataType=None):
         self.client = client

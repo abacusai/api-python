@@ -1,9 +1,9 @@
 
 
 class DatabaseConnector():
-    '''
+    """
         A connector to an external service
-    '''
+    """
 
     def __init__(self, client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None):
         self.client = client

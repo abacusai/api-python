@@ -2,9 +2,9 @@ from .refresh_schedule import RefreshSchedule
 
 
 class Deployment():
-    '''
+    """
         A model deployment
-    '''
+    """
 
     def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}):
         self.client = client

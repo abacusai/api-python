@@ -1,9 +1,9 @@
 
 
 class OrganizationGroup():
-    '''
+    """
         An Organization Group. Defines the permissions available to the users who are members of the group.
-    '''
+    """
 
     def __init__(self, client, organizationGroupId=None, permissions=None, groupName=None, defaultGroup=None, admin=None, createdAt=None):
         self.client = client

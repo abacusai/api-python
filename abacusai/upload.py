@@ -4,9 +4,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class Upload():
-    '''
+    """
         A Upload Reference for uploading file parts
-    '''
+    """
 
     def __init__(self, client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None):
         self.client = client
@@ -47,9 +47,9 @@ class Upload():
         return self.client.describe_upload(self.upload_id)
 
     def upload_part(self, upload_args):
-        '''Uploads a file part.
+        """Uploads a file part.
            If the upload fails, it will retry up to 3 times with a short backoff before raising an exception.
-        '''
+        """
         (part_number, part_data) = upload_args
         retries = 0
         while True:

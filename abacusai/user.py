@@ -2,9 +2,9 @@ from .organization_group import OrganizationGroup
 
 
 class User():
-    '''
+    """
         A Abacus.AI User
-    '''
+    """
 
     def __init__(self, client, name=None, email=None, createdAt=None, status=None, organizationGroups={}):
         self.client = client

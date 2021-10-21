@@ -1,9 +1,9 @@
 
 
 class TrainingConfigOptions():
-    '''
+    """
         Training options for a model
-    '''
+    """
 
     def __init__(self, client, name=None, dataType=None, valueType=None, valueOptions=None, value=None, default=None, options=None, description=None, required=None, lastModelValue=None):
         self.client = client

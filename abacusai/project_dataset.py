@@ -2,9 +2,9 @@ from .data_filter import DataFilter
 
 
 class ProjectDataset():
-    '''
+    """
         The description of how a dataset is used in a project
-    '''
+    """
 
     def __init__(self, client, name=None, datasetType=None, datasetId=None, streaming=None, dataFilters={}):
         self.client = client

@@ -1,9 +1,9 @@
 
 
 class ModelMetrics():
-    '''
+    """
 
-    '''
+    """
 
     def __init__(self, client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None):
         self.client = client

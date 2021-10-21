@@ -1,9 +1,9 @@
 
 
 class ModelVersion():
-    '''
+    """
         A version of a model
-    '''
+    """
 
     def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None):
         self.client = client

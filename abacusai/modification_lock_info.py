@@ -1,9 +1,9 @@
 
 
 class ModificationLockInfo():
-    '''
+    """
         Information about a modification lock for a certain object
-    '''
+    """
 
     def __init__(self, client, modificationLock=None, userEmails=None, organizationGroups=None):
         self.client = client

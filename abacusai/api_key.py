@@ -1,9 +1,9 @@
 
 
 class ApiKey():
-    '''
+    """
         An API Key to authenticate requests to the Abacus.AI API
-    '''
+    """
 
     def __init__(self, client, apiKeyId=None, apiKey=None, tag=None, createdAt=None):
         self.client = client

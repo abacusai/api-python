@@ -1,9 +1,9 @@
 
 
 class PointInTimeFeature():
-    '''
+    """
         A point in time feature description
-    '''
+    """
 
     def __init__(self, client, historyTableName=None, aggregationKeys=None, timestampKey=None, historicalTimestampKey=None, lookbackWindowSeconds=None, lookbackWindowLagSeconds=None, lookbackCount=None, lookbackUntilPosition=None, expression=None):
         self.client = client

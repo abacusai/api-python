@@ -5,9 +5,9 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class FeatureGroupVersion():
-    '''
+    """
         A materialized version of a feature group
-    '''
+    """
 
     def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, features={}):
         self.client = client
