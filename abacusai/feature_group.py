@@ -1,6 +1,6 @@
+from .feature import Feature
 from .feature_group_version import FeatureGroupVersion
 from .modification_lock_info import ModificationLockInfo
-from .feature import Feature
 
 
 class FeatureGroup():

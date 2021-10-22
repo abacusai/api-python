@@ -1,7 +1,7 @@
-import time
-import io
 from .feature import Feature
+import io
 from concurrent.futures import ThreadPoolExecutor
+import time
 
 
 class FeatureGroupVersion():

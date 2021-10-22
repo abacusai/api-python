@@ -3,6 +3,7 @@ import io
 import logging
 import time
 from typing import Dict, List
+import pandas as pd
 
 import requests
 from packaging import version
@@ -72,7 +73,7 @@ class ApiException(Exception):
 
 
 class ApiClient():
-    client_version = '0.32.1'
+    client_version = '0.32.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
@@ -163,6 +164,38 @@ class ApiClient():
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
             time.sleep(delay)
         return obj.describe()
+
+    def _upload_from_df(self, upload, df):
+        with io.StringIO(df.to_csv(index=bool(any(df.index.names)), float_format='%.7f')) as csv_out:
+            return upload.upload_file(csv_out)
+
+    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame) -> Dataset:
+        """
+        Creates a Dataset from a pandas dataframe
+        """
+        upload = self.create_dataset_from_upload(
+            name=feature_group_table_name, table_name=feature_group_table_name, file_format='CSV')
+        return self._upload_from_df(upload, df)
+
+    def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame) -> Dataset:
+        """
+        Updates an existing dataset from a pandas dataframe
+        """
+        dataset_id = None
+        try:
+            self.describe_dataset(table_name_or_id)
+            dataset_id = table_name_or_id
+        except ApiException:
+            pass
+        if not dataset_id:
+            feature_group = self.describe_feature_group_by_table_name(
+                table_name_or_id)
+            if feature_group.feature_group_source_type != 'DATASET':
+                raise ApiException(
+                    'Feature Group is not source type DATASET', 409, 'ConflictError')
+            dataset_id = feature_group.dataset_id
+        upload = self.create_dataset_version_from_upload(dataset_id)
+        return self._upload_from_df(upload, df)
 
     def add_user_to_organization(self, email: str):
         '''Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.'''
