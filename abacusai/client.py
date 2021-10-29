@@ -3,9 +3,11 @@ import io
 import logging
 import time
 from typing import Dict, List
-import pandas as pd
-
 import requests
+
+import pandas as pd
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 from packaging import version
 
 from .api_key import ApiKey
@@ -72,8 +74,22 @@ class ApiException(Exception):
         return f'{self.exception}({self.http_status}): {self.message}'
 
 
+def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
+    session = session or requests.Session()
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('https://', adapter)
+    return session
+
+
 class ApiClient():
-    client_version = '0.32.2'
+    client_version = '0.32.3'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
@@ -105,9 +121,14 @@ class ApiClient():
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
                    'User-Agent': f'python-abacusai-{self.client_version}'}
         url = (server_override or self.server) + '/api/v0/' + action
-
         response = self._request(url, method, query_params=query_params,
                                  headers=headers, body=body, files=files, stream=streamable_response)
+        retry = 0
+        while response.status_code == 504 and method == 'GET' and retry < 3:
+            time.sleep(retry + 1)
+            response = self._request(url, method, query_params=query_params,
+                                     headers=headers, body=body, files=files, stream=streamable_response)
+            retry += 1
         result = None
         success = False
         error_message = None
@@ -125,9 +146,11 @@ class ApiClient():
         except Exception:
             error_message = response.text
         if not success:
-            if response.status_code > 502 and response.status_code not in (501, 503):
+            if response.status_code == 504:
+                error_message = 'Gateway timeout, please try again later'
+            elif response.status_code > 502 and response.status_code not in (501, 503):
                 error_message = 'Internal Server Error, please contact dev@abacus.ai for support'
-            if response.status_code == 404 and not self.client_options.exception_on_404:
+            elif response.status_code == 404 and not self.client_options.exception_on_404:
                 return None
             raise ApiException(error_message, response.status_code, error_type)
         return result
@@ -143,15 +166,15 @@ class ApiClient():
     def _request(self, url, method, query_params=None, headers=None,
                  body=None, files=None, stream=False):
         if method == 'GET':
-            return requests.get(url, params=query_params, headers=headers, stream=stream)
+            return _requests_retry_session().get(url, params=query_params, headers=headers, stream=stream)
         elif method == 'POST':
-            return requests.post(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
+            return _requests_retry_session().post(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
         elif method == 'PUT':
-            return requests.put(url, params=query_params, data=body, headers=headers, files=files, timeout=90)
+            return _requests_retry_session().put(url, params=query_params, data=body, headers=headers, files=files, timeout=90)
         elif method == 'PATCH':
-            return requests.patch(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
+            return _requests_retry_session().patch(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
         elif method == 'DELETE':
-            return requests.delete(url, params=query_params, data=body, headers=headers)
+            return _requests_retry_session().delete(url, params=query_params, data=body, headers=headers)
         else:
             raise ValueError(
                 'HTTP method must be `GET`, `POST`, `PATCH`, `PUT` or `DELETE`'
@@ -337,9 +360,9 @@ class ApiClient():
         '''Train the model on the previously created feature group.'''
         return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
 
-    def set_feature_mapping(self, project_id: str, feature_group_id: str, feature_name: str, feature_mapping: str) -> List[Feature]:
+    def set_feature_mapping(self, project_id: str, feature_group_id: str, feature_name: str, feature_mapping: str, nested_column_name: str = None) -> List[Feature]:
         '''Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.'''
-        return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping}, parse_type=Feature)
+        return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping, 'nestedColumnName': nested_column_name}, parse_type=Feature)
 
     def validate_project(self, project_id: str) -> ProjectValidation:
         '''Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.'''
@@ -378,6 +401,13 @@ class ApiClient():
         as the materialized version of this feature group table.
         '''
         return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description}, parse_type=FeatureGroup)
+
+    def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
+        '''Creates a new feature group defined as a sample of rows from another feature group.
+
+        For efficiency, sampling is approximate unles otherwise specified. (E.g. the number of rows may vary slightly from what was requested).
+        '''
+        return self._call_api('createSamplingFeatureGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tableName': table_name, 'samplingConfig': sampling_config, 'description': description}, parse_type=FeatureGroup)
 
     def set_feature_group_schema(self, feature_group_id: str, schema: list):
         '''Creates a new schema and points the feature group to the new feature group schema id.'''
@@ -483,9 +513,9 @@ class ApiClient():
         '''Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.'''
         return self._call_api('updateFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression, 'newName': new_name}, parse_type=FeatureGroup)
 
-    def export_feature_group_version_to_file_connector(self, feature_group_version: str, location: str, export_file_format: str) -> FeatureGroupExport:
+    def export_feature_group_version_to_file_connector(self, feature_group_version: str, location: str, export_file_format: str, overwrite: bool = False) -> FeatureGroupExport:
         '''Export Feature group to File Connector.'''
-        return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'location': location, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
+        return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'location': location, 'exportFileFormat': export_file_format, 'overwrite': overwrite}, parse_type=FeatureGroupExport)
 
     def export_feature_group_version_to_database_connector(self, feature_group_version: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None) -> FeatureGroupExport:
         '''Export Feature group to Database Connector.'''
@@ -785,6 +815,19 @@ class ApiClient():
         logging.warning(
             'This function is deprecated and will be removed in a future version. Use set_model_training_config instead.')
         return self._call_api('updateModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
+
+    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = []) -> Model:
+        '''Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `functionSourceCode` to be a valid language source file which contains the functions named
+        `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+        '''
+        return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainingInputTables': training_input_tables}, parse_type=Model)
 
     def set_model_training_config(self, model_id: str, training_config: dict) -> Model:
         '''Edits the default model training config'''

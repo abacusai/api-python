@@ -1,5 +1,5 @@
-from .feature import Feature
 from .feature_group_version import FeatureGroupVersion
+from .feature import Feature
 from .modification_lock_info import ModificationLockInfo
 
 
@@ -66,6 +66,9 @@ class FeatureGroup():
 
     def use_for_training(self, project_id, use_for_training=True):
         return self.client.use_feature_group_for_training(self.feature_group_id, project_id, use_for_training)
+
+    def create_sampling(self, table_name, sampling_config, description=None):
+        return self.client.create_sampling_feature_group(self.feature_group_id, table_name, sampling_config, description)
 
     def set_schema(self, schema):
         return self.client.set_feature_group_schema(self.feature_group_id, schema)

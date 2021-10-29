@@ -42,8 +42,8 @@ class Project():
     def delete(self):
         return self.client.delete_project(self.project_id)
 
-    def set_feature_mapping(self, feature_group_id, feature_name, feature_mapping):
-        return self.client.set_feature_mapping(self.project_id, feature_group_id, feature_name, feature_mapping)
+    def set_feature_mapping(self, feature_group_id, feature_name, feature_mapping, nested_column_name=None):
+        return self.client.set_feature_mapping(self.project_id, feature_group_id, feature_name, feature_mapping, nested_column_name)
 
     def validate(self):
         return self.client.validate_project(self.project_id)

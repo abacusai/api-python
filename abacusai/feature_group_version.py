@@ -1,6 +1,6 @@
-from .feature import Feature
-import io
 from concurrent.futures import ThreadPoolExecutor
+import io
+from .feature import Feature
 import time
 
 
@@ -30,8 +30,8 @@ class FeatureGroupVersion():
     def to_dict(self):
         return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'features': self.features.to_dict() if self.features else None}
 
-    def export_to_file_connector(self, location, export_file_format):
-        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format)
+    def export_to_file_connector(self, location, export_file_format, overwrite=False):
+        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format, overwrite)
 
     def export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column=None):
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)

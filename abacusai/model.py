@@ -1,7 +1,7 @@
-import time
-from .refresh_schedule import RefreshSchedule
-from .model_version import ModelVersion
 from .model_location import ModelLocation
+from .refresh_schedule import RefreshSchedule
+import time
+from .model_version import ModelVersion
 
 
 class Model():
@@ -50,6 +50,9 @@ class Model():
 
     def update_training_config(self, training_config):
         return self.client.update_model_training_config(self.model_id, training_config)
+
+    def update_python(self, function_source_code=None, train_function_name=None, predict_function_name=None, training_input_tables=[]):
+        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, training_input_tables)
 
     def set_training_config(self, training_config):
         return self.client.set_model_training_config(self.model_id, training_config)
