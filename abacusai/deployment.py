@@ -1,14 +1,14 @@
+from .return_class import AbstractApiClass
 from .refresh_schedule import RefreshSchedule
 
 
-class Deployment():
+class Deployment(AbstractApiClass):
     """
         A model deployment
     """
 
     def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}):
-        self.client = client
-        self.id = deploymentId
+        super().__init__(client, deploymentId)
         self.deployment_id = deploymentId
         self.name = name
         self.status = status
@@ -30,11 +30,8 @@ class Deployment():
     def __repr__(self):
         return f"Deployment(deployment_id={repr(self.deployment_id)}, name={repr(self.name)}, status={repr(self.status)}, description={repr(self.description)}, deployed_at={repr(self.deployed_at)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, model_id={repr(self.model_id)}, model_version={repr(self.model_version)}, feature_group_id={repr(self.feature_group_id)}, feature_group_version={repr(self.feature_group_version)}, calls_per_second={repr(self.calls_per_second)}, auto_deploy={repr(self.auto_deploy)}, regions={repr(self.regions)}, error={repr(self.error)}, refresh_schedules={repr(self.refresh_schedules)})"
 
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
-
     def to_dict(self):
-        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None}
+        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
@@ -75,3 +72,9 @@ class Deployment():
 
     def get_status(self):
         return self.describe().status
+
+    def create_refresh_policy(self, cron: str):
+        return self.client.create_refresh_policy(self.name, cron, 'DEPLOYMENT', deployment_ids=[self.id])
+
+    def list_refresh_policies(self):
+        return self.client.list_refresh_policies(deployment_ids=[self.id])

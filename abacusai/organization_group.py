@@ -1,13 +1,13 @@
+from .return_class import AbstractApiClass
 
 
-class OrganizationGroup():
+class OrganizationGroup(AbstractApiClass):
     """
         An Organization Group. Defines the permissions available to the users who are members of the group.
     """
 
     def __init__(self, client, organizationGroupId=None, permissions=None, groupName=None, defaultGroup=None, admin=None, createdAt=None):
-        self.client = client
-        self.id = organizationGroupId
+        super().__init__(client, organizationGroupId)
         self.organization_group_id = organizationGroupId
         self.permissions = permissions
         self.group_name = groupName
@@ -17,9 +17,6 @@ class OrganizationGroup():
 
     def __repr__(self):
         return f"OrganizationGroup(organization_group_id={repr(self.organization_group_id)}, permissions={repr(self.permissions)}, group_name={repr(self.group_name)}, default_group={repr(self.default_group)}, admin={repr(self.admin)}, created_at={repr(self.created_at)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
         return {'organization_group_id': self.organization_group_id, 'permissions': self.permissions, 'group_name': self.group_name, 'default_group': self.default_group, 'admin': self.admin, 'created_at': self.created_at}

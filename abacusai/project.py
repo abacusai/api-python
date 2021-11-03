@@ -1,13 +1,13 @@
+from .return_class import AbstractApiClass
 
 
-class Project():
+class Project(AbstractApiClass):
     """
         A project is a container which holds datasets, models and deployments
     """
 
     def __init__(self, client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None):
-        self.client = client
-        self.id = projectId
+        super().__init__(client, projectId)
         self.project_id = projectId
         self.name = name
         self.use_case = useCase
@@ -16,9 +16,6 @@ class Project():
 
     def __repr__(self):
         return f"Project(project_id={repr(self.project_id)}, name={repr(self.name)}, use_case={repr(self.use_case)}, created_at={repr(self.created_at)}, feature_groups_enabled={repr(self.feature_groups_enabled)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
         return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled}
@@ -81,6 +78,9 @@ class Project():
     def list_deployment_tokens(self):
         return self.client.list_deployment_tokens(self.project_id)
 
+    def list_refresh_policies(self, dataset_ids=[], model_ids=[], deployment_ids=[], batch_prediction_ids=[]):
+        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids)
+
     def list_batch_predictions(self):
         return self.client.list_batch_predictions(self.project_id)
 
@@ -89,3 +89,6 @@ class Project():
 
     def remove_dataset(self, dataset_id):
         return self.client.remove_dataset_from_project(dataset_id, self.project_id)
+
+    def create_model_from_functions(self, train_function: callable, predict_function: callable, training_input_tables: list = None):
+        return self.client.create_model_from_functions(self.project_id, train_function, predict_function, training_input_tables)

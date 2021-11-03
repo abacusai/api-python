@@ -1,17 +1,17 @@
+from .return_class import AbstractApiClass
+from .model_version import ModelVersion
 from .model_location import ModelLocation
 from .refresh_schedule import RefreshSchedule
 import time
-from .model_version import ModelVersion
 
 
-class Model():
+class Model(AbstractApiClass):
     """
         A model
     """
 
     def __init__(self, client, name=None, modelId=None, modelConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, location={}, refreshSchedules={}, latestModelVersion={}):
-        self.client = client
-        self.id = modelId
+        super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
         self.model_config = modelConfig
@@ -32,11 +32,8 @@ class Model():
     def __repr__(self):
         return f"Model(name={repr(self.name)}, model_id={repr(self.model_id)}, model_config={repr(self.model_config)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, shared={repr(self.shared)}, shared_at={repr(self.shared_at)}, train_function_name={repr(self.train_function_name)}, predict_function_name={repr(self.predict_function_name)}, training_input_tables={repr(self.training_input_tables)}, source_code={repr(self.source_code)}, location={repr(self.location)}, refresh_schedules={repr(self.refresh_schedules)}, latest_model_version={repr(self.latest_model_version)})"
 
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
-
     def to_dict(self):
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'location': self.location.to_dict() if self.location else None, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None, 'latest_model_version': self.latest_model_version.to_dict() if self.latest_model_version else None}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)
@@ -91,3 +88,9 @@ class Model():
         if get_automl_status:
             return self.client._call_api('describeModel', 'GET', query_params={'modelId': self.model_id, 'waitForFullAutoml': True}, parse_type=Model).latest_model_version.status
         return self.describe().latest_model_version.status
+
+    def create_refresh_policy(self, cron: str):
+        return self.client.create_refresh_policy(self.name, cron, 'MODEL', model_ids=[self.id])
+
+    def list_refresh_policies(self):
+        return self.client.list_refresh_policies(model_ids=[self.id])

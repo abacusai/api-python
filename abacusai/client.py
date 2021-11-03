@@ -10,6 +10,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from packaging import version
 
+from .return_class import AbstractApiClass
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
@@ -58,6 +59,20 @@ from .use_case_requirements import UseCaseRequirements
 from .user import User
 
 
+def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
+    session = session or requests.Session()
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('https://', adapter)
+    return session
+
+
 class ClientOptions:
     def __init__(self, exception_on_404=True, server='https://abacus.ai'):
         self.exception_on_404 = exception_on_404
@@ -74,22 +89,8 @@ class ApiException(Exception):
         return f'{self.exception}({self.http_status}): {self.message}'
 
 
-def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
-    session = session or requests.Session()
-    retry = Retry(
-        total=retries,
-        read=retries,
-        connect=retries,
-        backoff_factor=backoff_factor,
-        status_forcelist=status_forcelist
-    )
-    adapter = HTTPAdapter(max_retries=retry)
-    session.mount('https://', adapter)
-    return session
-
-
-class ApiClient():
-    client_version = '0.32.3'
+class BaseApiClient:
+    client_version = '0.32.4'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
@@ -115,12 +116,23 @@ class ApiClient():
             except Exception:
                 logging.error('Invalid API Key')
 
+    def _clean_api_objects(self, obj):
+        for key, val in (obj or {}).items():
+            if isinstance(val, StreamingAuthToken):
+                obj[key] = val.streaming_token
+            elif isinstance(val, DeploymentAuthToken):
+                obj[key] = val.deployment_token
+            elif isinstance(val, AbstractApiClass):
+                obj[key] = getattr(val, 'id', None)
+
     def _call_api(
             self, action, method, query_params=None,
             body=None, files=None, parse_type=None, streamable_response=False, server_override=None):
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
                    'User-Agent': f'python-abacusai-{self.client_version}'}
         url = (server_override or self.server) + '/api/v0/' + action
+        self._clean_api_objects(query_params)
+        self._clean_api_objects(body)
         response = self._request(url, method, query_params=query_params,
                                  headers=headers, body=body, files=files, stream=streamable_response)
         retry = 0
@@ -192,6 +204,9 @@ class ApiClient():
         with io.StringIO(df.to_csv(index=bool(any(df.index.names)), float_format='%.7f')) as csv_out:
             return upload.upload_file(csv_out)
 
+
+class ApiClient(BaseApiClient):
+
     def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame) -> Dataset:
         """
         Creates a Dataset from a pandas dataframe
@@ -219,6 +234,11 @@ class ApiClient():
             dataset_id = feature_group.dataset_id
         upload = self.create_dataset_version_from_upload(dataset_id)
         return self._upload_from_df(upload, df)
+
+    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable, training_input_tables: list = None):
+        function_source_code = inspect.getsource(
+            train_function) + '\n\n' + inspect.getsource(predict_function)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function.__name__, predict_function_name=predict_function.__name__, training_input_tables=training_input_tables)
 
     def add_user_to_organization(self, email: str):
         '''Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.'''
@@ -357,7 +377,7 @@ class ApiClient():
         return self._call_api('setFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
     def use_feature_group_for_training(self, feature_group_id: str, project_id: str, use_for_training: bool = True):
-        '''Train the model on the previously created feature group.'''
+        '''Use the feature group for model training input'''
         return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
 
     def set_feature_mapping(self, project_id: str, feature_group_id: str, feature_name: str, feature_mapping: str, nested_column_name: str = None) -> List[Feature]:
@@ -405,9 +425,16 @@ class ApiClient():
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
         '''Creates a new feature group defined as a sample of rows from another feature group.
 
-        For efficiency, sampling is approximate unles otherwise specified. (E.g. the number of rows may vary slightly from what was requested).
+        For efficiency, sampling is approximate unless otherwise specified. (E.g. the number of rows may vary slightly from what was requested).
         '''
         return self._call_api('createSamplingFeatureGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tableName': table_name, 'samplingConfig': sampling_config, 'description': description}, parse_type=FeatureGroup)
+
+    def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: dict) -> FeatureGroup:
+        '''Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
+
+        Currently, sampling is only for Sampling FeatureGroups, so this API only allows calling on that kind of FeatureGroup.
+        '''
+        return self._call_api('setFeatureGroupSamplingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'samplingConfig': sampling_config}, parse_type=FeatureGroup)
 
     def set_feature_group_schema(self, feature_group_id: str, schema: list):
         '''Creates a new schema and points the feature group to the new feature group schema id.'''
@@ -928,6 +955,49 @@ class ApiClient():
         '''Deletes the specified deployment token.'''
         return self._call_api('deleteDeploymentToken', 'DELETE', query_params={'deploymentToken': deployment_token})
 
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = []) -> RefreshPolicy:
+        '''Creates a refresh policy with a particular cron pattern and refresh type.
+
+        A refresh policy allows for the scheduling of a particular set of actions at regular intervals. This can be useful for periodically updated data which needs to be re-imported into the project for re-training.
+        '''
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids}, parse_type=RefreshPolicy)
+
+    def delete_refresh_policy(self, refresh_policy_id: str):
+        '''Delete a refresh policy'''
+        return self._call_api('deleteRefreshPolicy', 'DELETE', query_params={'refreshPolicyId': refresh_policy_id})
+
+    def describe_refresh_policy(self, refresh_policy_id: str) -> RefreshPolicy:
+        '''Retrieve a single refresh policy'''
+        return self._call_api('describeRefreshPolicy', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPolicy)
+
+    def describe_refresh_pipeline_run(self, refresh_pipeline_run_id: str) -> RefreshPipelineRun:
+        '''Retrieve a single refresh pipeline run'''
+        return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
+
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = []) -> RefreshPolicy:
+        '''List the refresh policies for the organization'''
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids}, parse_type=RefreshPolicy)
+
+    def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
+        '''List the the times that the refresh policy has been run'''
+        return self._call_api('listRefreshPipelineRuns', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPipelineRun)
+
+    def pause_refresh_policy(self, refresh_policy_id: str):
+        '''Pauses a refresh policy'''
+        return self._call_api('pauseRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id})
+
+    def resume_refresh_policy(self, refresh_policy_id: str):
+        '''Resumes a refresh policy'''
+        return self._call_api('resumeRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id})
+
+    def run_refresh_policy(self, refresh_policy_id: str):
+        '''Force a run of the refresh policy.'''
+        return self._call_api('runRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id})
+
+    def update_refresh_policy(self, refresh_policy_id: str, name: str = None, cron: str = None) -> RefreshPolicy:
+        '''Update the name or cron string of a  refresh policy'''
+        return self._call_api('updateRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id, 'name': name, 'cron': cron}, parse_type=RefreshPolicy)
+
     def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}):
         ''''''
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
@@ -1007,6 +1077,10 @@ class ApiClient():
     def get_feature_group_rows(self, deployment_token: str, deployment_id: str, query_data: dict):
         ''''''
         return self._call_api('getFeatureGroupRows', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+
+    def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        '''TODO'''
+        return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         '''Creates a batch prediction job description for the given deployment.'''

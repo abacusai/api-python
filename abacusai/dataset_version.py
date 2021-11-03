@@ -1,14 +1,14 @@
+from .return_class import AbstractApiClass
 from .upload import Upload
 
 
-class DatasetVersion():
+class DatasetVersion(AbstractApiClass):
     """
         A specific version of a dataset
     """
 
     def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None):
-        self.client = client
-        self.id = datasetVersion
+        super().__init__(client, datasetVersion)
         self.dataset_version = datasetVersion
         self.status = status
         self.dataset_id = datasetId
@@ -19,9 +19,6 @@ class DatasetVersion():
 
     def __repr__(self):
         return f"DatasetVersion(dataset_version={repr(self.dataset_version)}, status={repr(self.status)}, dataset_id={repr(self.dataset_id)}, size={repr(self.size)}, row_count={repr(self.row_count)}, created_at={repr(self.created_at)}, error={repr(self.error)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
         return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error}

@@ -1,16 +1,16 @@
-from .feature_group_version import FeatureGroupVersion
+from .return_class import AbstractApiClass
 from .feature import Feature
 from .modification_lock_info import ModificationLockInfo
+from .feature_group_version import FeatureGroupVersion
 
 
-class FeatureGroup():
+class FeatureGroup(AbstractApiClass):
     """
         A feature group
     """
 
     def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, features={}, duplicateFeatures={}, latestFeatureGroupVersion={}):
-        self.client = client
-        self.id = featureGroupId
+        super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
         self.name = name
@@ -40,11 +40,8 @@ class FeatureGroup():
     def __repr__(self):
         return f"FeatureGroup(modification_lock={repr(self.modification_lock)}, feature_group_id={repr(self.feature_group_id)}, name={repr(self.name)}, feature_group_source_type={repr(self.feature_group_source_type)}, table_name={repr(self.table_name)}, sql={repr(self.sql)}, dataset_id={repr(self.dataset_id)}, function_source_code={repr(self.function_source_code)}, function_name={repr(self.function_name)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, description={repr(self.description)}, feature_group_type={repr(self.feature_group_type)}, use_for_training={repr(self.use_for_training)}, sql_error={repr(self.sql_error)}, latest_version_outdated={repr(self.latest_version_outdated)}, tags={repr(self.tags)}, primary_key={repr(self.primary_key)}, update_timestamp_key={repr(self.update_timestamp_key)}, lookup_keys={repr(self.lookup_keys)}, features={repr(self.features)}, duplicate_features={repr(self.duplicate_features)}, latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
-
     def to_dict(self):
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'features': self.features.to_dict() if self.features else None, 'duplicate_features': [elem.to_dict() for elem in self.duplicate_features or []], 'latest_feature_group_version': [elem.to_dict() for elem in self.latest_feature_group_version or []]}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def get_schema(self, project_id=None):
         return self.client.get_feature_group_schema(self.feature_group_id, project_id)
@@ -69,6 +66,9 @@ class FeatureGroup():
 
     def create_sampling(self, table_name, sampling_config, description=None):
         return self.client.create_sampling_feature_group(self.feature_group_id, table_name, sampling_config, description)
+
+    def set_sampling_config(self, sampling_config):
+        return self.client.set_feature_group_sampling_config(self.feature_group_id, sampling_config)
 
     def set_schema(self, schema):
         return self.client.set_feature_group_schema(self.feature_group_id, schema)

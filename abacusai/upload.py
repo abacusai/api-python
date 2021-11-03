@@ -1,16 +1,16 @@
+from .return_class import AbstractApiClass
 from concurrent.futures import ThreadPoolExecutor
-import io
 import time
+import io
 
 
-class Upload():
+class Upload(AbstractApiClass):
     """
         A Upload Reference for uploading file parts
     """
 
     def __init__(self, client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None):
-        self.client = client
-        self.id = uploadId
+        super().__init__(client, uploadId)
         self.upload_id = uploadId
         self.dataset_upload_id = datasetUploadId
         self.status = status
@@ -23,9 +23,6 @@ class Upload():
 
     def __repr__(self):
         return f"Upload(upload_id={repr(self.upload_id)}, dataset_upload_id={repr(self.dataset_upload_id)}, status={repr(self.status)}, dataset_id={repr(self.dataset_id)}, dataset_version={repr(self.dataset_version)}, model_version={repr(self.model_version)}, batch_prediction_id={repr(self.batch_prediction_id)}, parts={repr(self.parts)}, created_at={repr(self.created_at)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
         return {'upload_id': self.upload_id, 'dataset_upload_id': self.dataset_upload_id, 'status': self.status, 'dataset_id': self.dataset_id, 'dataset_version': self.dataset_version, 'model_version': self.model_version, 'batch_prediction_id': self.batch_prediction_id, 'parts': self.parts, 'created_at': self.created_at}
