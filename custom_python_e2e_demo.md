@@ -14,7 +14,7 @@ This notebook provides you with a hands on environment to build and deploy custo
 ```
 #@title Abacus.AI API Key
 
-api_key = 'cf45d23272e74465b776e5fa79101f7b'  #@param {type: "string"}
+api_key = 'c237******f7b'  #@param {type: "string"}
 ```
 
 3. Import the Abacus.AI library and instantiate a client.
