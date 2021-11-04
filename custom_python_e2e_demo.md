@@ -4,23 +4,23 @@ This notebook provides you with a hands on environment to build and deploy custo
 1. Install the Abacus.AI library.
 
 
-```
+```python
 !pip install abacusai
 ```
 
 2. Add your Abacus.AI [API Key](https://abacus.ai/app/profile/apikey) generated using the API dashboard as follows:
 
 
-```
+```python
 #@title Abacus.AI API Key
 
-api_key = 'c237******f7b'  #@param {type: "string"}
+api_key = 'cf45d*****01f7b'  #@param {type: "string"}
 ```
 
 3. Import the Abacus.AI library and instantiate a client.
 
 
-```
+```python
 from abacusai import ApiClient, ApiException
 client = ApiClient(api_key)
 ```
@@ -32,7 +32,7 @@ client = ApiClient(api_key)
 In this notebook, we're going to see how to use python to customize models in Abacus. We will cover custom data transforms, model training and prediction handling. Projects that will be hosting a custom model needed to be created with the `PYTHON_MODEL` use case. Note that custom python data transforms can be used in any kind of project and like any other feature group can be shared across projects. However, custom training algorithms and prediction functions are enabled by this use case.
 
 
-```
+```python
 project = client.create_project(name='Demo Python Model', use_case='PYTHON_MODEL')
 ```
 
@@ -52,7 +52,7 @@ Using the Create Dataset API, we can tell Abacus.AI the public S3 URI of where t
 
 
 
-```
+```python
 # if the dataset already exists, skip creation
 try: 
   concrete_dataset = client.describe_dataset(client.describe_feature_group_by_table_name('concrete_strength').dataset_id)
@@ -71,7 +71,7 @@ Most of the time it is easiest to develop custom transformations on your local m
 Here we are working with a fairly small dataset so can easily load it into memory. The first block fetches the feature group corresponding to the dataset (datasets are used to move data into Abacus.AI, feature groups are used to consume data for various operations). It initiates a materialization of the feature group to generate a snapshot, waits for it to be ready and then loads it as a pandas dataframe.
 
 
-```
+```python
 concrete_feature_group = concrete_dataset.describe_feature_group()
 if not concrete_feature_group.list_versions():
   concrete_feature_group.create_version()
@@ -248,7 +248,7 @@ The example is not entirely realistic and it is certainly feasible to achieve th
 Note that we test the function locally by running it against the dataframe loaded from the feature group.
 
 
-```
+```python
 def separate_by_flyash(concrete_strength):
   import pandas as pd
   feature_df = concrete_strength.drop(['flyash'], axis=1)
@@ -417,7 +417,7 @@ Registering the function involves supplying the source artifact, the name of the
 Note, that Abacus.AI will ensure that the function is operating on the latest versions of the input feature groups.
 
 
-```
+```python
 concrete_flyash = client.create_feature_group_from_function(
     table_name='concrete_by_flyash',
     function_source_code=separate_by_flyash,
@@ -426,7 +426,7 @@ concrete_flyash = client.create_feature_group_from_function(
 ```
 
 
-```
+```python
 concrete_flyash.create_version()
 concrete_flyash.wait_for_materialization()
 concrete_by_flyash_df = concrete_flyash.load_as_pandas()
@@ -438,28 +438,29 @@ Now we will define a custom model trained on this flyash partitioned data. A cus
 To illustrate that the training can be customized arbitrarily we will train a composite model that depending on the age of the concrete uses a linear model on quantized features or a GBDT trained on raw inputs.
 
 
-```
+```python
 !pip install catboost
 ```
 
-    Collecting catboost
-      Downloading catboost-1.0.0-cp37-none-manylinux1_x86_64.whl (76.4 MB)
-    [K     |████████████████████████████████| 76.4 MB 36 kB/s 
-    [?25hRequirement already satisfied: pandas>=0.24.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.1.5)
-    Requirement already satisfied: scipy in /usr/local/lib/python3.7/dist-packages (from catboost) (1.4.1)
-    Requirement already satisfied: graphviz in /usr/local/lib/python3.7/dist-packages (from catboost) (0.10.1)
-    Requirement already satisfied: numpy>=1.16.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.19.5)
-    Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from catboost) (3.2.2)
-    Requirement already satisfied: plotly in /usr/local/lib/python3.7/dist-packages (from catboost) (4.4.1)
-    Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from catboost) (1.15.0)
-    Requirement already satisfied: python-dateutil>=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas>=0.24.0->catboost) (2.8.2)
-    Requirement already satisfied: pytz>=2017.2 in /usr/local/lib/python3.7/dist-packages (from pandas>=0.24.0->catboost) (2018.9)
-    Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (2.4.7)
-    Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (0.10.0)
-    Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (1.3.2)
-    Requirement already satisfied: retrying>=1.3.3 in /usr/local/lib/python3.7/dist-packages (from plotly->catboost) (1.3.3)
-    Installing collected packages: catboost
-    Successfully installed catboost-1.0.0
+
+> Collecting catboost
+>      Downloading catboost-1.0.0-cp37-none-manylinux1_x86_64.whl (76.4 MB)
+>    [K     |===========================| 76.4 MB 36 kB/s 
+>    [?25hRequirement already satisfied: pandas>=0.24.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.1.5)
+>    Requirement already satisfied: scipy in /usr/local/lib/python3.7/dist-packages (from catboost) (1.4.1)
+>    Requirement already satisfied: graphviz in /usr/local/lib/python3.7/dist-packages (from catboost) (0.10.1)
+>    Requirement already satisfied: numpy>=1.16.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.19.5)
+>    Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from catboost) (3.2.2)
+>    Requirement already satisfied: plotly in /usr/local/lib/python3.7/dist-packages (from catboost) (4.4.1)
+>    Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from catboost) (1.15.0)
+>    Requirement already satisfied: python-dateutil>=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas>=0.24.0->catboost) (2.8.2)
+>    Requirement already satisfied: pytz>=2017.2 in /usr/local/lib/python3.7/dist-packages (from pandas>=0.24.0->catboost) (2018.9)
+>    Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (2.4.7)
+>    Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (0.10.0)
+>    Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (1.3.2)
+>    Requirement already satisfied: retrying>=1.3.3 in /usr/local/lib/python3.7/dist-packages (from plotly->catboost) (1.3.3)
+>    Installing collected packages: catboost
+>    Successfully installed catboost-1.0.0
 
 
 Just like with data transforms we can test our function locally to ensure it works on the data frame as expected and that it is building a reasonable model. Notice that the model object we return is tuple comprising
@@ -471,7 +472,7 @@ Just like with data transforms we can test our function locally to ensure it wor
 Since this tuple can be pickled we do not need to bother writing anything to local disk. Also we will be able to use the default identity initialization function which will just return this tuple unmodified at prediction time.
 
 
-```
+```python
 def train(concrete_by_flyash):
   # set the seed for reproducible results
   import numpy as np
@@ -500,14 +501,14 @@ def train(concrete_by_flyash):
 local_model = train(concrete_by_flyash_df)
 ```
 
-    Linear model R^2 = -59474.80409065778
-    Learning rate set to 0.5
-    0:	learn: 12.7627412	total: 46.9ms	remaining: 188ms
-    1:	learn: 11.5585084	total: 47.7ms	remaining: 71.6ms
-    2:	learn: 10.3223491	total: 48.4ms	remaining: 32.3ms
-    3:	learn: 9.3247540	total: 49ms	remaining: 12.3ms
-    4:	learn: 8.5430952	total: 49.6ms	remaining: 0us
-    Catboost model R^2 = 0.6814947748102853
+> Linear model R^2 = -59474.80409065778
+> Learning rate set to 0.5
+> 0:	learn: 12.7627412	total: 46.9ms	remaining: 188ms
+> 1:	learn: 11.5585084	total: 47.7ms	remaining: 71.6ms
+> 2:	learn: 10.3223491	total: 48.4ms	remaining: 32.3ms
+> 3:	learn: 9.3247540	total: 49ms	remaining: 12.3ms
+> 4:	learn: 8.5430952	total: 49.6ms	remaining: 0us
+> Catboost model R^2 = 0.6814947748102853
 
 
 ### Prediction Function
@@ -519,7 +520,7 @@ In the example we are building there is even more complexity because the model i
 We can follow the same pattern of testing locally to ensure that the prediction function works as expected. If the model requires an initialization function that loads data from disk it would also be good to test that locally.
 
 
-```
+```python
 def predict(model, query):
   # abacusai.get_client().get_feature_group().lookup(...)
   columns, qt, recent_model, older_model = model
@@ -538,23 +539,23 @@ for _, r in concrete_by_flyash_df[concrete_by_flyash_df.age > 10][:5].iterrows()
   print(predict(local_model, r.to_dict()), r['csMPa'])
 ```
 
-    {'csMPa': -31.75412474980192} -28.711784452296826
-    {'csMPa': -5.324797742032455} 1.8282155477031736
-    {'csMPa': -4.377726654712578} -1.6917844522968295
-    {'csMPa': -23.147157848108026} -21.721784452296827
-    {'csMPa': -16.712019233341156} -10.511784452296826
-    {'csMPa': 19.340295162698652} 43.21821554770317
-    {'csMPa': 19.340295162698652} 25.118215547703173
-    {'csMPa': 10.376285866501192} 3.4982155477031753
-    {'csMPa': 10.376285866501192} 4.278215547703169
-    {'csMPa': -2.273645085750303} 7.528215547703169
 
+> {'csMPa': -31.75412474980192} -28.711784452296826
+> {'csMPa': -5.324797742032455} 1.8282155477031736
+> {'csMPa': -4.377726654712578} -1.6917844522968295
+> {'csMPa': -23.147157848108026} -21.721784452296827
+> {'csMPa': -16.712019233341156} -10.511784452296826
+> {'csMPa': 19.340295162698652} 43.21821554770317
+> {'csMPa': 19.340295162698652} 25.118215547703173
+> {'csMPa': 10.376285866501192} 3.4982155477031753
+> {'csMPa': 10.376285866501192} 4.278215547703169
+> {'csMPa': -2.273645085750303} 7.528215547703169
 
 ### Register the Model
 We now put together the feature group, the training function and the prediction function as a new Abacus model. Like with custom feature groups the model has to specify the feature groups required for training which will be passed as arguments to the train function.
 
 
-```
+```python
 model = client.create_model_from_functions(project_id=project, 
                                    train_function=train, 
                                    predict_function=predict, 
@@ -564,27 +565,28 @@ model = client.create_model_from_functions(project_id=project,
 Wait for the model to finish training and then deploy the model to use for prediction.
 
 
-```
+```python
 model.wait_for_training()
 deployment_token = client.create_deployment_token(project.project_id).deployment_token
 deployment = client.create_deployment(model_id=model.model_id)
 deployment.wait_for_deployment()
 ```
 
-    Linear model R^2 = -59474.80409065778
-    Learning rate set to 0.5
-    0:	learn: 12.7627412	total: 573us	remaining: 2.29ms
-    1:	learn: 11.5585084	total: 1.03ms	remaining: 1.54ms
-    2:	learn: 10.3223491	total: 1.73ms	remaining: 1.15ms
-    3:	learn: 9.3247540	total: 2.41ms	remaining: 601us
-    4:	learn: 8.5430952	total: 3ms	remaining: 0us
-    Catboost model R^2 = 0.6814947748102853
+
+> Linear model R^2 = -59474.80409065778
+> Learning rate set to 0.5
+> 0:	learn: 12.7627412	total: 573us	remaining: 2.29ms
+> 1:	learn: 11.5585084	total: 1.03ms	remaining: 1.54ms
+> 2:	learn: 10.3223491	total: 1.73ms	remaining: 1.15ms
+> 3:	learn: 9.3247540	total: 2.41ms	remaining: 601us
+> 4:	learn: 8.5430952	total: 3ms	remaining: 0us
+> Catboost model R^2 = 0.6814947748102853
 
 
 Now we can run predictions on Abacus and compare against predictions from the local model.
 
 
-```
+```python
 # locally trained
 for _, r in concrete_by_flyash_df[concrete_by_flyash_df.age < 10][:5].iterrows():
   print(predict(local_model, r.to_dict()), r['csMPa'])
@@ -596,17 +598,18 @@ for _, r in concrete_by_flyash_df[concrete_by_flyash_df.age < 10][:5].iterrows()
   print(client.predict(deployment_token, deployment.deployment_id, r.to_dict()), r['csMPa'])
 ```
 
-    {'csMPa': -31.75412474980192} -28.711784452296826
-    {'csMPa': -5.324797742032455} 1.8282155477031736
-    {'csMPa': -4.377726654712578} -1.6917844522968295
-    {'csMPa': -23.147157848108026} -21.721784452296827
-    {'csMPa': -16.712019233341156} -10.511784452296826
-     Is equal to 
-    {'csMPa': -31.75412474980192} -28.711784452296826
-    {'csMPa': -5.324797742032455} 1.8282155477031736
-    {'csMPa': -4.377726654712578} -1.6917844522968295
-    {'csMPa': -23.147157848108026} -21.721784452296827
-    {'csMPa': -16.712019233341156} -10.511784452296826
+
+> {'csMPa': -31.75412474980192} -28.711784452296826
+> {'csMPa': -5.324797742032455} 1.8282155477031736
+> {'csMPa': -4.377726654712578} -1.6917844522968295
+> {'csMPa': -23.147157848108026} -21.721784452296827
+> {'csMPa': -16.712019233341156} -10.511784452296826
+>   Is equal to 
+> {'csMPa': -31.75412474980192} -28.711784452296826
+> {'csMPa': -5.324797742032455} 1.8282155477031736
+> {'csMPa': -4.377726654712578} -1.6917844522968295
+> {'csMPa': -23.147157848108026} -21.721784452296827
+> {'csMPa': -16.712019233341156} -10.511784452296826
 
 
 ### Setup Batch Predictions
@@ -614,7 +617,7 @@ for _, r in concrete_by_flyash_df[concrete_by_flyash_df.age < 10][:5].iterrows()
 We can setup a new dataset to feed a batch prediction job. Abacus will run the prediction dataset through the feature transformation function and then apply the custom model to generate predictions for the uploaded data. Keep in mind the input to the model will be what is generated by transform. The inputs to the model are included in the batch prediction download along with model outputs.
 
 
-```
+```python
 try: 
   prediction_dataset = client.describe_dataset(client.describe_feature_group_by_table_name('concrete_strength_prediction_input').dataset_id)
 except ApiException: # dataset not found
@@ -640,7 +643,7 @@ with open('batch_predictions_results.csv', 'wb') as bpr_file:
 As a final step we can attach refresh schedules to various objects to ensure that they are updated regularly without any manual intervention. This allows the custom model to run with the same level of automation as models generated internally by the service.
 
 
-```
+```python
 concrete_dataset.set_refresh_schedule('0 4 * * 1')
 model.set_refresh_schedule('0 6 * * 1')
 deployment.set_auto_deployment(True)
