@@ -1,7 +1,7 @@
 from .return_class import AbstractApiClass
-from .dataset_column import DatasetColumn
-from .refresh_schedule import RefreshSchedule
 from .dataset_version import DatasetVersion
+from .refresh_schedule import RefreshSchedule
+from .dataset_column import DatasetColumn
 
 
 class Dataset(AbstractApiClass):

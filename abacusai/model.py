@@ -1,8 +1,8 @@
 from .return_class import AbstractApiClass
-from .model_version import ModelVersion
 from .model_location import ModelLocation
-from .refresh_schedule import RefreshSchedule
 import time
+from .refresh_schedule import RefreshSchedule
+from .model_version import ModelVersion
 
 
 class Model(AbstractApiClass):

@@ -124,6 +124,12 @@ class BaseApiClient:
                 obj[key] = val.deployment_token
             elif isinstance(val, AbstractApiClass):
                 obj[key] = getattr(val, 'id', None)
+            elif callable(val):
+                try:
+                    obj[key] = inspect.getsource(val)
+                except OSError:
+                    raise OSError(
+                        f'Could not get source for function {key}. Please pass a stringified version of this function when the function is defined in a shell environemnt.')
 
     def _call_api(
             self, action, method, query_params=None,
@@ -207,12 +213,12 @@ class BaseApiClient:
 
 class ApiClient(BaseApiClient):
 
-    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame) -> Dataset:
+    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame, name: str = None) -> Dataset:
         """
         Creates a Dataset from a pandas dataframe
         """
         upload = self.create_dataset_from_upload(
-            name=feature_group_table_name, table_name=feature_group_table_name, file_format='CSV')
+            name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='CSV')
         return self._upload_from_df(upload, df)
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame) -> Dataset:
