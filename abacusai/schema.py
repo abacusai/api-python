@@ -1,27 +1,22 @@
-from .nested_column import NestedColumn
+from .return_class import AbstractApiClass
+from .nested_feature import NestedFeature
 from .point_in_time_feature import PointInTimeFeature
 
 
-class Schema():
-    '''
-        A schema description for a column
-    '''
+class Schema(AbstractApiClass):
+    """
+        A schema description for a feature
+    """
 
-    def __init__(self, client, name=None, columnMapping=None, columnDataType=None, custom=None, sql=None, selectExpression=None):
-        self.client = client
-        self.id = None
+    def __init__(self, client, name=None, featureMapping=None, featureType=None, dataType=None):
+        super().__init__(client, None)
         self.name = name
-        self.column_mapping = columnMapping
-        self.column_data_type = columnDataType
-        self.custom = custom
-        self.sql = sql
-        self.select_expression = selectExpression
+        self.feature_mapping = featureMapping
+        self.feature_type = featureType
+        self.data_type = dataType
 
     def __repr__(self):
-        return f"Schema(name={repr(self.name)}, column_mapping={repr(self.column_mapping)}, column_data_type={repr(self.column_data_type)}, custom={repr(self.custom)}, sql={repr(self.sql)}, select_expression={repr(self.select_expression)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
+        return f"Schema(name={repr(self.name)}, feature_mapping={repr(self.feature_mapping)}, feature_type={repr(self.feature_type)}, data_type={repr(self.data_type)})"
 
     def to_dict(self):
-        return {'name': self.name, 'column_mapping': self.column_mapping, 'column_data_type': self.column_data_type, 'custom': self.custom, 'sql': self.sql, 'select_expression': self.select_expression}
+        return {'name': self.name, 'feature_mapping': self.feature_mapping, 'feature_type': self.feature_type, 'data_type': self.data_type}

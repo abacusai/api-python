@@ -1,16 +1,16 @@
-from .prediction_input import PredictionInput
+from .return_class import AbstractApiClass
 from .refresh_schedule import RefreshSchedule
+from .prediction_input import PredictionInput
 from .batch_prediction_version import BatchPredictionVersion
 
 
-class BatchPrediction():
-    '''
+class BatchPrediction(AbstractApiClass):
+    """
         Batch predictions
-    '''
+    """
 
     def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}):
-        self.client = client
-        self.id = batchPredictionId
+        super().__init__(client, batchPredictionId)
         self.batch_prediction_id = batchPredictionId
         self.created_at = createdAt
         self.name = name
@@ -36,11 +36,8 @@ class BatchPrediction():
     def __repr__(self):
         return f"BatchPrediction(batch_prediction_id={repr(self.batch_prediction_id)}, created_at={repr(self.created_at)}, name={repr(self.name)}, deployment_id={repr(self.deployment_id)}, file_connector_output_location={repr(self.file_connector_output_location)}, global_prediction_args={repr(self.global_prediction_args)}, database_connector_id={repr(self.database_connector_id)}, database_output_configuration={repr(self.database_output_configuration)}, explanations={repr(self.explanations)}, file_output_format={repr(self.file_output_format)}, connector_type={repr(self.connector_type)}, legacy_input_location={repr(self.legacy_input_location)}, feature_group_table_name={repr(self.feature_group_table_name)}, csv_input_prefix={repr(self.csv_input_prefix)}, csv_prediction_prefix={repr(self.csv_prediction_prefix)}, csv_explanations_prefix={repr(self.csv_explanations_prefix)}, batch_inputs={repr(self.batch_inputs)}, latest_batch_prediction_version={repr(self.latest_batch_prediction_version)}, refresh_schedules={repr(self.refresh_schedules)})"
 
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
-
     def to_dict(self):
-        return {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'global_prediction_args': self.global_prediction_args, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'feature_group_table_name': self.feature_group_table_name, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'batch_inputs': self.batch_inputs.to_dict() if self.batch_inputs else None, 'latest_batch_prediction_version': self.latest_batch_prediction_version.to_dict() if self.latest_batch_prediction_version else None, 'refresh_schedules': self.refresh_schedules.to_dict() if self.refresh_schedules else None}
+        return {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'global_prediction_args': self.global_prediction_args, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'feature_group_table_name': self.feature_group_table_name, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs), 'latest_batch_prediction_version': self._get_attribute_as_dict(self.latest_batch_prediction_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
 
     def start(self):
         return self.client.start_batch_prediction(self.batch_prediction_id)
@@ -82,8 +79,14 @@ class BatchPrediction():
     def delete(self):
         return self.client.delete_batch_prediction(self.batch_prediction_id)
 
-    def wait_for_predictions(self, timeout=1200):
+    def wait_for_predictions(self, timeout=86400):
         return self.client._poll(self, {'PENDING', 'UPLOADING', 'PREDICTING'}, timeout=timeout)
 
     def get_status(self):
         return self.describe().latest_batch_prediction_version.status
+
+    def create_refresh_policy(self, cron: str):
+        return self.client.create_refresh_policy(self.name, cron, 'BATCHPRED', batch_prediction_ids=[self.id])
+
+    def list_refresh_policies(self):
+        return self.client.list_refresh_policies(batch_prediction_ids=[self.id])

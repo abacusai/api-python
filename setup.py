@@ -1,6 +1,6 @@
 from setuptools import setup
 setup(name='abacusai',
-      version='0.30.10',
+      version='0.32.5',
       description='Abacus.AI Python Client Library',
       url='https://github.com/abacusai/api-python',
       author='Abacus.AI',

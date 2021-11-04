@@ -1,13 +1,13 @@
+from .return_class import AbstractApiClass
 
 
-class DatabaseConnector():
-    '''
+class DatabaseConnector(AbstractApiClass):
+    """
         A connector to an external service
-    '''
+    """
 
     def __init__(self, client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None):
-        self.client = client
-        self.id = databaseConnectorId
+        super().__init__(client, databaseConnectorId)
         self.database_connector_id = databaseConnectorId
         self.service = service
         self.name = name
@@ -17,9 +17,6 @@ class DatabaseConnector():
 
     def __repr__(self):
         return f"DatabaseConnector(database_connector_id={repr(self.database_connector_id)}, service={repr(self.service)}, name={repr(self.name)}, status={repr(self.status)}, auth={repr(self.auth)}, created_at={repr(self.created_at)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
         return {'database_connector_id': self.database_connector_id, 'service': self.service, 'name': self.name, 'status': self.status, 'auth': self.auth, 'created_at': self.created_at}

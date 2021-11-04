@@ -1,36 +1,34 @@
+from .return_class import AbstractApiClass
+from .feature import Feature
 import io
-from .feature_column import FeatureColumn
-import time
 from concurrent.futures import ThreadPoolExecutor
+import time
 
 
-class FeatureGroupVersion():
-    '''
+class FeatureGroupVersion(AbstractApiClass):
+    """
         A materialized version of a feature group
-    '''
+    """
 
-    def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, columns={}):
-        self.client = client
-        self.id = featureGroupVersion
+    def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, features={}):
+        super().__init__(client, featureGroupVersion)
         self.feature_group_version = featureGroupVersion
         self.sql = sql
         self.source_tables = sourceTables
         self.created_at = createdAt
         self.status = status
         self.error = error
-        self.columns = client._build_class(FeatureColumn, columns)
+        self.deployable = deployable
+        self.features = client._build_class(Feature, features)
 
     def __repr__(self):
-        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)}, sql={repr(self.sql)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, status={repr(self.status)}, error={repr(self.error)}, columns={repr(self.columns)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
+        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)}, sql={repr(self.sql)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, status={repr(self.status)}, error={repr(self.error)}, deployable={repr(self.deployable)}, features={repr(self.features)})"
 
     def to_dict(self):
-        return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'columns': [elem.to_dict() for elem in self.columns or []]}
+        return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'features': self._get_attribute_as_dict(self.features)}
 
-    def export_to_file_connector(self, location, export_file_format):
-        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format)
+    def export_to_file_connector(self, location, export_file_format, overwrite=False):
+        return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format, overwrite)
 
     def export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column=None):
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)

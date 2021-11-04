@@ -1,13 +1,13 @@
+from .return_class import AbstractApiClass
 
 
-class DataFilter():
-    '''
+class DataFilter(AbstractApiClass):
+    """
         A sql logic statement for including and excluding data from training
-    '''
+    """
 
     def __init__(self, client, sql=None, type=None, whereExpression=None, join=None):
-        self.client = client
-        self.id = None
+        super().__init__(client, None)
         self.sql = sql
         self.type = type
         self.where_expression = whereExpression
@@ -15,9 +15,6 @@ class DataFilter():
 
     def __repr__(self):
         return f"DataFilter(sql={repr(self.sql)}, type={repr(self.type)}, where_expression={repr(self.where_expression)}, join={repr(self.join)})"
-
-    def __eq__(self, other):
-        return self.__class__ == other.__class__ and self.id == other.id
 
     def to_dict(self):
         return {'sql': self.sql, 'type': self.type, 'where_expression': self.where_expression, 'join': self.join}
