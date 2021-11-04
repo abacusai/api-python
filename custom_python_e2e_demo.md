@@ -14,7 +14,7 @@ This notebook provides you with a hands on environment to build and deploy custo
 ```python
 #@title Abacus.AI API Key
 
-api_key = 'cf45d*****01f7b'  #@param {type: "string"}
+api_key = 'cf45d2********fa79101f7b'  #@param {type: "string"}
 ```
 
 3. Import the Abacus.AI library and instantiate a client.
@@ -85,20 +85,7 @@ concrete_df[:10]
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table border="1">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -264,20 +251,7 @@ concrete_by_flyash_df[:10]
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
+<table border="1">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -444,22 +418,39 @@ To illustrate that the training can be customized arbitrarily we will train a co
 
 
 > Collecting catboost
+> 
 >      Downloading catboost-1.0.0-cp37-none-manylinux1_x86_64.whl (76.4 MB)
+> 
 >    [K     |===========================| 76.4 MB 36 kB/s 
+> 
 >    [?25hRequirement already satisfied: pandas>=0.24.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.1.5)
+> 
 >    Requirement already satisfied: scipy in /usr/local/lib/python3.7/dist-packages (from catboost) (1.4.1)
+> 
 >    Requirement already satisfied: graphviz in /usr/local/lib/python3.7/dist-packages (from catboost) (0.10.1)
+> 
 >    Requirement already satisfied: numpy>=1.16.0 in /usr/local/lib/python3.7/dist-packages (from catboost) (1.19.5)
+> 
 >    Requirement already satisfied: matplotlib in /usr/local/lib/python3.7/dist-packages (from catboost) (3.2.2)
+> 
 >    Requirement already satisfied: plotly in /usr/local/lib/python3.7/dist-packages (from catboost) (4.4.1)
+> 
 >    Requirement already satisfied: six in /usr/local/lib/python3.7/dist-packages (from catboost) (1.15.0)
+> 
 >    Requirement already satisfied: python-dateutil>=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas>=0.24.0->catboost) (2.8.2)
+> 
 >    Requirement already satisfied: pytz>=2017.2 in /usr/local/lib/python3.7/dist-packages (from pandas>=0.24.0->catboost) (2018.9)
+> 
 >    Requirement already satisfied: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (2.4.7)
+> 
 >    Requirement already satisfied: cycler>=0.10 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (0.10.0)
+> 
 >    Requirement already satisfied: kiwisolver>=1.0.1 in /usr/local/lib/python3.7/dist-packages (from matplotlib->catboost) (1.3.2)
+> 
 >    Requirement already satisfied: retrying>=1.3.3 in /usr/local/lib/python3.7/dist-packages (from plotly->catboost) (1.3.3)
+> 
 >    Installing collected packages: catboost
+> 
 >    Successfully installed catboost-1.0.0
 
 
@@ -502,12 +493,19 @@ local_model = train(concrete_by_flyash_df)
 ```
 
 > Linear model R^2 = -59474.80409065778
+>
 > Learning rate set to 0.5
+>
 > 0:	learn: 12.7627412	total: 46.9ms	remaining: 188ms
+>
 > 1:	learn: 11.5585084	total: 47.7ms	remaining: 71.6ms
+>
 > 2:	learn: 10.3223491	total: 48.4ms	remaining: 32.3ms
+>
 > 3:	learn: 9.3247540	total: 49ms	remaining: 12.3ms
+>
 > 4:	learn: 8.5430952	total: 49.6ms	remaining: 0us
+>
 > Catboost model R^2 = 0.6814947748102853
 
 
