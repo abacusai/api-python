@@ -90,7 +90,7 @@ class ApiException(Exception):
 
 
 class BaseApiClient:
-    client_version = '0.32.4'
+    client_version = '0.32.6'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
         self.api_key = api_key
@@ -129,7 +129,7 @@ class BaseApiClient:
                     obj[key] = inspect.getsource(val)
                 except OSError:
                     raise OSError(
-                        f'Could not get source for function {key}. Please pass a stringified version of this function when the function is defined in a shell environemnt.')
+                        f'Could not get source for function {key}. Please pass a stringified version of this function when the function is defined in a shell environment.')
 
     def _call_api(
             self, action, method, query_params=None,
@@ -358,15 +358,15 @@ class ApiClient(BaseApiClient):
         '''Returns a schema given a specific FeatureGroup in a project.'''
         return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=Feature)
 
-    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
         '''[DEPRECATED] Adds a feature group to a project,'''
         logging.warning(
             'This function is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
-        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'projectFeatureGroupType': project_feature_group_type})
 
-    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
+    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
         '''Adds a feature group to a project,'''
-        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
+        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'projectFeatureGroupType': project_feature_group_type})
 
     def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
         '''Removes a feature group from a project.'''
@@ -526,9 +526,9 @@ class ApiClient(BaseApiClient):
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
         return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
 
-    def list_project_feature_groups(self, project_id: str) -> FeatureGroup:
+    def list_project_feature_groups(self, project_id: str, filter_project_feature_group_type: str = None) -> FeatureGroup:
         '''List all the feature groups associated with a project'''
-        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id}, parse_type=FeatureGroup)
+        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterProjectFeatureGroupType': filter_project_feature_group_type}, parse_type=FeatureGroup)
 
     def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
         '''Modifies an existing feature group'''

@@ -54,8 +54,8 @@ class Project(AbstractApiClass):
     def remove_column_mapping(self, dataset_id, column):
         return self.client.remove_column_mapping(self.project_id, dataset_id, column)
 
-    def list_feature_groups(self):
-        return self.client.list_project_feature_groups(self.project_id)
+    def list_feature_groups(self, filter_project_feature_group_type=None):
+        return self.client.list_project_feature_groups(self.project_id, filter_project_feature_group_type)
 
     def get_training_config_options(self):
         return self.client.get_training_config_options(self.project_id)

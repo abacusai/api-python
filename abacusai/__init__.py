@@ -1,4 +1,4 @@
 from .client import ApiClient, ApiException, ClientOptions
 from .prediction_client import PredictionClient
 
-__version__ = "0.32.4"
+__version__ = "0.32.6"

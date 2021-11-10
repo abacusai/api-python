@@ -1,8 +1,8 @@
 from .return_class import AbstractApiClass
 from .feature import Feature
-import io
 from concurrent.futures import ThreadPoolExecutor
 import time
+import io
 
 
 class FeatureGroupVersion(AbstractApiClass):
