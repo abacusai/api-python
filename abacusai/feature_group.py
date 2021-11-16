@@ -1,7 +1,7 @@
 from .return_class import AbstractApiClass
 from .feature import Feature
-from .modification_lock_info import ModificationLockInfo
 from .feature_group_version import FeatureGroupVersion
+from .modification_lock_info import ModificationLockInfo
 
 
 class FeatureGroup(AbstractApiClass):

@@ -206,7 +206,7 @@ class BaseApiClient:
             if timeout and time.time() - start_time > timeout:
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
             time.sleep(delay)
-        return obj.describe()
+        return obj.refresh()
 
     def _upload_from_df(self, upload, df):
         with io.StringIO(df.to_csv(index=bool(any(df.index.names)), float_format='%.7f')) as csv_out:
