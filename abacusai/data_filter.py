@@ -14,7 +14,7 @@ class DataFilter(AbstractApiClass):
         self.join = join
 
     def __repr__(self):
-        return f"DataFilter(sql={repr(self.sql)}, type={repr(self.type)}, where_expression={repr(self.where_expression)}, join={repr(self.join)})"
+        return f"DataFilter(sql={repr(self.sql)},\n  type={repr(self.type)},\n  where_expression={repr(self.where_expression)},\n  join={repr(self.join)})"
 
     def to_dict(self):
         return {'sql': self.sql, 'type': self.type, 'where_expression': self.where_expression, 'join': self.join}

@@ -12,7 +12,7 @@ class ModelLocation(AbstractApiClass):
         self.artifact_names = artifactNames
 
     def __repr__(self):
-        return f"ModelLocation(location={repr(self.location)}, artifact_names={repr(self.artifact_names)})"
+        return f"ModelLocation(location={repr(self.location)},\n  artifact_names={repr(self.artifact_names)})"
 
     def to_dict(self):
         return {'location': self.location, 'artifact_names': self.artifact_names}

@@ -16,7 +16,7 @@ class OrganizationGroup(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"OrganizationGroup(organization_group_id={repr(self.organization_group_id)}, permissions={repr(self.permissions)}, group_name={repr(self.group_name)}, default_group={repr(self.default_group)}, admin={repr(self.admin)}, created_at={repr(self.created_at)})"
+        return f"OrganizationGroup(organization_group_id={repr(self.organization_group_id)},\n  permissions={repr(self.permissions)},\n  group_name={repr(self.group_name)},\n  default_group={repr(self.default_group)},\n  admin={repr(self.admin)},\n  created_at={repr(self.created_at)})"
 
     def to_dict(self):
         return {'organization_group_id': self.organization_group_id, 'permissions': self.permissions, 'group_name': self.group_name, 'default_group': self.default_group, 'admin': self.admin, 'created_at': self.created_at}

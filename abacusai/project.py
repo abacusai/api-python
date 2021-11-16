@@ -15,7 +15,7 @@ class Project(AbstractApiClass):
         self.feature_groups_enabled = featureGroupsEnabled
 
     def __repr__(self):
-        return f"Project(project_id={repr(self.project_id)}, name={repr(self.name)}, use_case={repr(self.use_case)}, created_at={repr(self.created_at)}, feature_groups_enabled={repr(self.feature_groups_enabled)})"
+        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  created_at={repr(self.created_at)},\n  feature_groups_enabled={repr(self.feature_groups_enabled)})"
 
     def to_dict(self):
         return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled}

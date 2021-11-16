@@ -13,7 +13,7 @@ class FileConnector(AbstractApiClass):
         self.write_permission = writePermission
 
     def __repr__(self):
-        return f"FileConnector(bucket={repr(self.bucket)}, verified={repr(self.verified)}, write_permission={repr(self.write_permission)})"
+        return f"FileConnector(bucket={repr(self.bucket)},\n  verified={repr(self.verified)},\n  write_permission={repr(self.write_permission)})"
 
     def to_dict(self):
         return {'bucket': self.bucket, 'verified': self.verified, 'write_permission': self.write_permission}

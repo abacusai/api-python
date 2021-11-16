@@ -15,7 +15,7 @@ class PredictionDataset(AbstractApiClass):
         self.required = required
 
     def __repr__(self):
-        return f"PredictionDataset(dataset_id={repr(self.dataset_id)}, dataset_type={repr(self.dataset_type)}, dataset_version={repr(self.dataset_version)}, default={repr(self.default)}, required={repr(self.required)})"
+        return f"PredictionDataset(dataset_id={repr(self.dataset_id)},\n  dataset_type={repr(self.dataset_type)},\n  dataset_version={repr(self.dataset_version)},\n  default={repr(self.default)},\n  required={repr(self.required)})"
 
     def to_dict(self):
         return {'dataset_id': self.dataset_id, 'dataset_type': self.dataset_type, 'dataset_version': self.dataset_version, 'default': self.default, 'required': self.required}

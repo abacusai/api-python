@@ -31,6 +31,7 @@ from .schema import Schema
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
+from .function_logs import FunctionLogs
 from .model import Model
 from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
@@ -57,6 +58,7 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
+from .user_exception import UserException
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
@@ -336,7 +338,7 @@ class ApiClient(BaseApiClient):
     def get_schema(self, project_id: str, dataset_id: str) -> List[Schema]:
         '''[DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
+            'This function (getSchema) is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
         return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
 
     def rename_project(self, project_id: str, name: str):
@@ -361,7 +363,7 @@ class ApiClient(BaseApiClient):
     def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
         '''[DEPRECATED] Adds a feature group to a project,'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
+            'This function (attachFeatureGroupToProject) is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
         return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'projectFeatureGroupType': project_feature_group_type})
 
     def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
@@ -375,7 +377,7 @@ class ApiClient(BaseApiClient):
     def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         '''[DEPRECATED] Update the feature group type in a project. The feature group must already be added to the project.'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use set_feature_group_type instead.')
+            'This function (updateFeatureGroupType) is deprecated and will be removed in a future version. Use set_feature_group_type instead.')
         return self._call_api('updateFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
     def set_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
@@ -409,7 +411,7 @@ class ApiClient(BaseApiClient):
     def add_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
         '''[DEPRECATED] Creates a new feature group from a SQL statement.'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_feature_group instead.')
+            'This function (addFeatureGroup) is deprecated and will be removed in a future version. Use create_feature_group instead.')
         return self._call_api('addFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
 
     def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
@@ -449,7 +451,7 @@ class ApiClient(BaseApiClient):
     def add_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
         '''[DEPRECATED] Creates a new feature in a Feature Group from a SQL select statement'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_feature instead.')
+            'This function (addFeature) is deprecated and will be removed in a future version. Use create_feature instead.')
         return self._call_api('addFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression}, parse_type=FeatureGroup)
 
     def create_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
@@ -467,7 +469,7 @@ class ApiClient(BaseApiClient):
     def add_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
         '''[DEPRECATED] Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use create_nested_feature instead.')
+            'This function (addNestedFeature) is deprecated and will be removed in a future version. Use create_nested_feature instead.')
         return self._call_api('addNestedFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name, 'tableName': table_name, 'usingClause': using_clause, 'whereClause': where_clause, 'orderClause': order_clause}, parse_type=FeatureGroup)
 
     def create_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
@@ -535,7 +537,7 @@ class ApiClient(BaseApiClient):
         return self._call_api('updateFeatureGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'description': description}, parse_type=FeatureGroup)
 
     def update_feature_group_sql_definition(self, feature_group_id: str, sql: str) -> FeatureGroup:
-        ''''''
+        '''Updates the SQL statement for a feature group.'''
         return self._call_api('updateFeatureGroupSqlDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql}, parse_type=FeatureGroup)
 
     def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None) -> FeatureGroup:
@@ -563,27 +565,27 @@ class ApiClient(BaseApiClient):
         return self._call_api('listFeatureGroupExports', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupExport)
 
     def set_feature_group_modifier_lock(self, feature_group_id: str, locked: bool = True):
-        ''''''
+        '''To lock a feature group to prevent it from being modified.'''
         return self._call_api('setFeatureGroupModifierLock', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'locked': locked})
 
     def list_feature_group_modifiers(self, feature_group_id: str) -> ModificationLockInfo:
-        ''''''
+        '''To list users who can modify a feature group.'''
         return self._call_api('listFeatureGroupModifiers', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=ModificationLockInfo)
 
     def add_user_to_feature_group_modifiers(self, feature_group_id: str, email: str):
-        ''''''
+        '''Adds user to a feature group.'''
         return self._call_api('addUserToFeatureGroupModifiers', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'email': email})
 
     def add_organization_group_to_feature_group_modifiers(self, feature_group_id: str, organization_group_id: str):
-        ''''''
+        '''Add Organization to a feature group.'''
         return self._call_api('addOrganizationGroupToFeatureGroupModifiers', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'organizationGroupId': organization_group_id})
 
     def remove_user_from_feature_group_modifiers(self, feature_group_id: str, email: str):
-        ''''''
+        '''Removes user from a feature group.'''
         return self._call_api('removeUserFromFeatureGroupModifiers', 'DELETE', query_params={'featureGroupId': feature_group_id, 'email': email})
 
     def remove_organization_group_from_feature_group_modifiers(self, feature_group_id: str, organization_group_id: str):
-        ''''''
+        '''Removes Organization from a feature group.'''
         return self._call_api('removeOrganizationGroupFromFeatureGroupModifiers', 'DELETE', query_params={'featureGroupId': feature_group_id, 'organizationGroupId': organization_group_id})
 
     def delete_feature(self, feature_group_id: str, name: str) -> FeatureGroup:
@@ -597,6 +599,10 @@ class ApiClient(BaseApiClient):
     def create_feature_group_version(self, feature_group_id: str) -> FeatureGroupVersion:
         '''Creates a snapshot for a specified feature group.'''
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
+
+    def get_materialization_logs(self, feature_group_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
+        ''''''
+        return self._call_api('getMaterializationLogs', 'GET', query_params={'featureGroupVersion': feature_group_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
     def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_version: str = None) -> List[FeatureGroupVersion]:
         '''Retrieves a list of all feature group versions for the specified feature group.'''
@@ -784,13 +790,13 @@ class ApiClient(BaseApiClient):
         Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
         '''
         logging.warning(
-            'This function is deprecated and will be removed in a future version.')
+            'This function (attachDatasetToProject) is deprecated and will be removed in a future version.')
         return self._call_api('attachDatasetToProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'datasetType': dataset_type}, parse_type=Schema)
 
     def remove_dataset_from_project(self, dataset_id: str, project_id: str):
         '''[DEPRECATED] Removes a dataset from a project.'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version.')
+            'This function (removeDatasetFromProject) is deprecated and will be removed in a future version.')
         return self._call_api('removeDatasetFromProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id})
 
     def rename_dataset(self, dataset_id: str, name: str):
@@ -846,7 +852,7 @@ class ApiClient(BaseApiClient):
     def update_model_training_config(self, model_id: str, training_config: dict) -> Model:
         '''[DEPRECATED] Edits the default model training config'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use set_model_training_config instead.')
+            'This function (updateModelTrainingConfig) is deprecated and will be removed in a future version. Use set_model_training_config instead.')
         return self._call_api('updateModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
     def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = []) -> Model:
@@ -892,6 +898,10 @@ class ApiClient(BaseApiClient):
     def describe_model_version(self, model_version: str) -> ModelVersion:
         '''Retrieves a full description of the specified model version'''
         return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
+
+    def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
+        ''''''
+        return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
     def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
         '''Creates a deployment with the specified name and description for the specified model or feature group.
@@ -1099,7 +1109,7 @@ class ApiClient(BaseApiClient):
     def get_batch_prediction_result(self, batch_prediction_version: str) -> io.BytesIO:
         '''[DEPRECATED] Returns a stream containing the batch prediction results'''
         logging.warning(
-            'This function is deprecated and will be removed in a future version. Use download_batch_prediction_result_chunk instead.')
+            'This function (getBatchPredictionResult) is deprecated and will be removed in a future version. Use download_batch_prediction_result_chunk instead.')
         return self._call_api('getBatchPredictionResult', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
 
     def download_batch_prediction_result_chunk(self, batch_prediction_version: str, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:

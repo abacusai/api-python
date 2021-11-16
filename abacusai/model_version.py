@@ -20,7 +20,7 @@ class ModelVersion(AbstractApiClass):
         self.failed_deployment_ids = failedDeploymentIds
 
     def __repr__(self):
-        return f"ModelVersion(model_version={repr(self.model_version)}, status={repr(self.status)}, model_id={repr(self.model_id)}, model_config={repr(self.model_config)}, training_started_at={repr(self.training_started_at)}, training_completed_at={repr(self.training_completed_at)}, dataset_versions={repr(self.dataset_versions)}, error={repr(self.error)}, pending_deployment_ids={repr(self.pending_deployment_ids)}, failed_deployment_ids={repr(self.failed_deployment_ids)})"
+        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)})"
 
     def to_dict(self):
         return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids}
@@ -34,6 +34,9 @@ class ModelVersion(AbstractApiClass):
 
     def describe(self):
         return self.client.describe_model_version(self.model_version)
+
+    def get_training_logs(self, stdout=False, stderr=False):
+        return self.client.get_training_logs(self.model_version, stdout, stderr)
 
     def wait_for_training(self, timeout=None):
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)

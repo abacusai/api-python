@@ -16,7 +16,7 @@ class ProjectDataset(AbstractApiClass):
         self.data_filters = client._build_class(DataFilter, dataFilters)
 
     def __repr__(self):
-        return f"ProjectDataset(name={repr(self.name)}, dataset_type={repr(self.dataset_type)}, dataset_id={repr(self.dataset_id)}, streaming={repr(self.streaming)}, data_filters={repr(self.data_filters)})"
+        return f"ProjectDataset(name={repr(self.name)},\n  dataset_type={repr(self.dataset_type)},\n  dataset_id={repr(self.dataset_id)},\n  streaming={repr(self.streaming)},\n  data_filters={repr(self.data_filters)})"
 
     def to_dict(self):
         return {'name': self.name, 'dataset_type': self.dataset_type, 'dataset_id': self.dataset_id, 'streaming': self.streaming, 'data_filters': self._get_attribute_as_dict(self.data_filters)}

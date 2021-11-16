@@ -16,7 +16,7 @@ class Schema(AbstractApiClass):
         self.data_type = dataType
 
     def __repr__(self):
-        return f"Schema(name={repr(self.name)}, feature_mapping={repr(self.feature_mapping)}, feature_type={repr(self.feature_type)}, data_type={repr(self.data_type)})"
+        return f"Schema(name={repr(self.name)},\n  feature_mapping={repr(self.feature_mapping)},\n  feature_type={repr(self.feature_type)},\n  data_type={repr(self.data_type)})"
 
     def to_dict(self):
         return {'name': self.name, 'feature_mapping': self.feature_mapping, 'feature_type': self.feature_type, 'data_type': self.data_type}

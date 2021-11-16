@@ -21,7 +21,7 @@ class RefreshPolicy(AbstractApiClass):
         self.paused = paused
 
     def __repr__(self):
-        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)}, name={repr(self.name)}, cron={repr(self.cron)}, next_run_time={repr(self.next_run_time)}, created_at={repr(self.created_at)}, refresh_type={repr(self.refresh_type)}, project_id={repr(self.project_id)}, dataset_ids={repr(self.dataset_ids)}, model_ids={repr(self.model_ids)}, deployment_ids={repr(self.deployment_ids)}, paused={repr(self.paused)})"
+        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  paused={repr(self.paused)})"
 
     def to_dict(self):
         return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'paused': self.paused}

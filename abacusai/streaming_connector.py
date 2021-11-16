@@ -16,7 +16,7 @@ class StreamingConnector(AbstractApiClass):
         self.auth = auth
 
     def __repr__(self):
-        return f"StreamingConnector(streaming_connector_id={repr(self.streaming_connector_id)}, service={repr(self.service)}, name={repr(self.name)}, created_at={repr(self.created_at)}, status={repr(self.status)}, auth={repr(self.auth)})"
+        return f"StreamingConnector(streaming_connector_id={repr(self.streaming_connector_id)},\n  service={repr(self.service)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  auth={repr(self.auth)})"
 
     def to_dict(self):
         return {'streaming_connector_id': self.streaming_connector_id, 'service': self.service, 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}

@@ -18,7 +18,7 @@ class NestedFeature(AbstractApiClass):
         self.original_name = originalName
 
     def __repr__(self):
-        return f"NestedFeature(name={repr(self.name)}, select_clause={repr(self.select_clause)}, feature_type={repr(self.feature_type)}, feature_mapping={repr(self.feature_mapping)}, data_type={repr(self.data_type)}, data_use={repr(self.data_use)}, source_table={repr(self.source_table)}, original_name={repr(self.original_name)})"
+        return f"NestedFeature(name={repr(self.name)},\n  select_clause={repr(self.select_clause)},\n  feature_type={repr(self.feature_type)},\n  feature_mapping={repr(self.feature_mapping)},\n  data_type={repr(self.data_type)},\n  data_use={repr(self.data_use)},\n  source_table={repr(self.source_table)},\n  original_name={repr(self.original_name)})"
 
     def to_dict(self):
         return {'name': self.name, 'select_clause': self.select_clause, 'feature_type': self.feature_type, 'feature_mapping': self.feature_mapping, 'data_type': self.data_type, 'data_use': self.data_use, 'source_table': self.source_table, 'original_name': self.original_name}

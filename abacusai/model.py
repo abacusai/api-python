@@ -1,8 +1,8 @@
 from .return_class import AbstractApiClass
-from .model_version import ModelVersion
-from .model_location import ModelLocation
 import time
 from .refresh_schedule import RefreshSchedule
+from .model_location import ModelLocation
+from .model_version import ModelVersion
 
 
 class Model(AbstractApiClass):
@@ -30,7 +30,7 @@ class Model(AbstractApiClass):
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)}, model_id={repr(self.model_id)}, model_config={repr(self.model_config)}, created_at={repr(self.created_at)}, project_id={repr(self.project_id)}, shared={repr(self.shared)}, shared_at={repr(self.shared_at)}, train_function_name={repr(self.train_function_name)}, predict_function_name={repr(self.predict_function_name)}, training_input_tables={repr(self.training_input_tables)}, source_code={repr(self.source_code)}, location={repr(self.location)}, refresh_schedules={repr(self.refresh_schedules)}, latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_model_version={repr(self.latest_model_version)})"
 
     def to_dict(self):
         return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}

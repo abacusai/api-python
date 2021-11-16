@@ -12,7 +12,7 @@ class DeploymentAuthToken(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"DeploymentAuthToken(deployment_token={repr(self.deployment_token)}, created_at={repr(self.created_at)})"
+        return f"DeploymentAuthToken(deployment_token={repr(self.deployment_token)},\n  created_at={repr(self.created_at)})"
 
     def to_dict(self):
         return {'deployment_token': self.deployment_token, 'created_at': self.created_at}

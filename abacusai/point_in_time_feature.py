@@ -19,7 +19,7 @@ class PointInTimeFeature(AbstractApiClass):
         self.expression = expression
 
     def __repr__(self):
-        return f"PointInTimeFeature(history_table_name={repr(self.history_table_name)}, aggregation_keys={repr(self.aggregation_keys)}, timestamp_key={repr(self.timestamp_key)}, historical_timestamp_key={repr(self.historical_timestamp_key)}, lookback_window_seconds={repr(self.lookback_window_seconds)}, lookback_window_lag_seconds={repr(self.lookback_window_lag_seconds)}, lookback_count={repr(self.lookback_count)}, lookback_until_position={repr(self.lookback_until_position)}, expression={repr(self.expression)})"
+        return f"PointInTimeFeature(history_table_name={repr(self.history_table_name)},\n  aggregation_keys={repr(self.aggregation_keys)},\n  timestamp_key={repr(self.timestamp_key)},\n  historical_timestamp_key={repr(self.historical_timestamp_key)},\n  lookback_window_seconds={repr(self.lookback_window_seconds)},\n  lookback_window_lag_seconds={repr(self.lookback_window_lag_seconds)},\n  lookback_count={repr(self.lookback_count)},\n  lookback_until_position={repr(self.lookback_until_position)},\n  expression={repr(self.expression)})"
 
     def to_dict(self):
         return {'history_table_name': self.history_table_name, 'aggregation_keys': self.aggregation_keys, 'timestamp_key': self.timestamp_key, 'historical_timestamp_key': self.historical_timestamp_key, 'lookback_window_seconds': self.lookback_window_seconds, 'lookback_window_lag_seconds': self.lookback_window_lag_seconds, 'lookback_count': self.lookback_count, 'lookback_until_position': self.lookback_until_position, 'expression': self.expression}

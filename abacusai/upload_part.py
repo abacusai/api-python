@@ -12,7 +12,7 @@ class UploadPart(AbstractApiClass):
         self.md5 = md5
 
     def __repr__(self):
-        return f"UploadPart(etag={repr(self.etag)}, md5={repr(self.md5)})"
+        return f"UploadPart(etag={repr(self.etag)},\n  md5={repr(self.md5)})"
 
     def to_dict(self):
         return {'etag': self.etag, 'md5': self.md5}

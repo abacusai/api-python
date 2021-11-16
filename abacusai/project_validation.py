@@ -13,7 +13,7 @@ class ProjectValidation(AbstractApiClass):
         self.column_hints = columnHints
 
     def __repr__(self):
-        return f"ProjectValidation(valid={repr(self.valid)}, dataset_errors={repr(self.dataset_errors)}, column_hints={repr(self.column_hints)})"
+        return f"ProjectValidation(valid={repr(self.valid)},\n  dataset_errors={repr(self.dataset_errors)},\n  column_hints={repr(self.column_hints)})"
 
     def to_dict(self):
         return {'valid': self.valid, 'dataset_errors': self.dataset_errors, 'column_hints': self.column_hints}

@@ -14,7 +14,7 @@ class PredictionFeatureGroup(AbstractApiClass):
         self.required = required
 
     def __repr__(self):
-        return f"PredictionFeatureGroup(feature_group_id={repr(self.feature_group_id)}, dataset_type={repr(self.dataset_type)}, default={repr(self.default)}, required={repr(self.required)})"
+        return f"PredictionFeatureGroup(feature_group_id={repr(self.feature_group_id)},\n  dataset_type={repr(self.dataset_type)},\n  default={repr(self.default)},\n  required={repr(self.required)})"
 
     def to_dict(self):
         return {'feature_group_id': self.feature_group_id, 'dataset_type': self.dataset_type, 'default': self.default, 'required': self.required}

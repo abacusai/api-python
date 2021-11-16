@@ -17,7 +17,7 @@ class User(AbstractApiClass):
             OrganizationGroup, organizationGroups)
 
     def __repr__(self):
-        return f"User(name={repr(self.name)}, email={repr(self.email)}, created_at={repr(self.created_at)}, status={repr(self.status)}, organization_groups={repr(self.organization_groups)})"
+        return f"User(name={repr(self.name)},\n  email={repr(self.email)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  organization_groups={repr(self.organization_groups)})"
 
     def to_dict(self):
         return {'name': self.name, 'email': self.email, 'created_at': self.created_at, 'status': self.status, 'organization_groups': self._get_attribute_as_dict(self.organization_groups)}

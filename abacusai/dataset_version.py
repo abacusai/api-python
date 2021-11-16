@@ -18,7 +18,7 @@ class DatasetVersion(AbstractApiClass):
         self.error = error
 
     def __repr__(self):
-        return f"DatasetVersion(dataset_version={repr(self.dataset_version)}, status={repr(self.status)}, dataset_id={repr(self.dataset_id)}, size={repr(self.size)}, row_count={repr(self.row_count)}, created_at={repr(self.created_at)}, error={repr(self.error)})"
+        return f"DatasetVersion(dataset_version={repr(self.dataset_version)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  size={repr(self.size)},\n  row_count={repr(self.row_count)},\n  created_at={repr(self.created_at)},\n  error={repr(self.error)})"
 
     def to_dict(self):
         return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error}

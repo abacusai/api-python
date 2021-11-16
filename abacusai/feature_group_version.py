@@ -1,8 +1,8 @@
 from .return_class import AbstractApiClass
-from .feature import Feature
-from concurrent.futures import ThreadPoolExecutor
-import time
 import io
+from .feature import Feature
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 
 class FeatureGroupVersion(AbstractApiClass):
@@ -22,7 +22,7 @@ class FeatureGroupVersion(AbstractApiClass):
         self.features = client._build_class(Feature, features)
 
     def __repr__(self):
-        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)}, sql={repr(self.sql)}, source_tables={repr(self.source_tables)}, created_at={repr(self.created_at)}, status={repr(self.status)}, error={repr(self.error)}, deployable={repr(self.deployable)}, features={repr(self.features)})"
+        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  features={repr(self.features)})"
 
     def to_dict(self):
         return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'features': self._get_attribute_as_dict(self.features)}
@@ -32,6 +32,9 @@ class FeatureGroupVersion(AbstractApiClass):
 
     def export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column=None):
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
+
+    def get_materialization_logs(self, stdout=False, stderr=False):
+        return self.client.get_materialization_logs(self.feature_group_version, stdout, stderr)
 
     def refresh(self):
         self.__dict__.update(self.describe().__dict__)

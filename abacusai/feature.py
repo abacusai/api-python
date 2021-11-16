@@ -25,7 +25,7 @@ class Feature(AbstractApiClass):
             PointInTimeFeature, pointInTimeInfo)
 
     def __repr__(self):
-        return f"Feature(name={repr(self.name)}, select_clause={repr(self.select_clause)}, feature_mapping={repr(self.feature_mapping)}, source_table={repr(self.source_table)}, original_name={repr(self.original_name)}, using_clause={repr(self.using_clause)}, order_clause={repr(self.order_clause)}, where_clause={repr(self.where_clause)}, feature_type={repr(self.feature_type)}, data_type={repr(self.data_type)}, columns={repr(self.columns)}, point_in_time_info={repr(self.point_in_time_info)})"
+        return f"Feature(name={repr(self.name)},\n  select_clause={repr(self.select_clause)},\n  feature_mapping={repr(self.feature_mapping)},\n  source_table={repr(self.source_table)},\n  original_name={repr(self.original_name)},\n  using_clause={repr(self.using_clause)},\n  order_clause={repr(self.order_clause)},\n  where_clause={repr(self.where_clause)},\n  feature_type={repr(self.feature_type)},\n  data_type={repr(self.data_type)},\n  columns={repr(self.columns)},\n  point_in_time_info={repr(self.point_in_time_info)})"
 
     def to_dict(self):
         return {'name': self.name, 'select_clause': self.select_clause, 'feature_mapping': self.feature_mapping, 'source_table': self.source_table, 'original_name': self.original_name, 'using_clause': self.using_clause, 'order_clause': self.order_clause, 'where_clause': self.where_clause, 'feature_type': self.feature_type, 'data_type': self.data_type, 'columns': self._get_attribute_as_dict(self.columns), 'point_in_time_info': self._get_attribute_as_dict(self.point_in_time_info)}

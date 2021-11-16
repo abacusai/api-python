@@ -16,7 +16,7 @@ class DatabaseConnector(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"DatabaseConnector(database_connector_id={repr(self.database_connector_id)}, service={repr(self.service)}, name={repr(self.name)}, status={repr(self.status)}, auth={repr(self.auth)}, created_at={repr(self.created_at)})"
+        return f"DatabaseConnector(database_connector_id={repr(self.database_connector_id)},\n  service={repr(self.service)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  auth={repr(self.auth)},\n  created_at={repr(self.created_at)})"
 
     def to_dict(self):
         return {'database_connector_id': self.database_connector_id, 'service': self.service, 'name': self.name, 'status': self.status, 'auth': self.auth, 'created_at': self.created_at}

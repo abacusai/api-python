@@ -16,7 +16,7 @@ class UseCaseRequirements(AbstractApiClass):
         self.allowed_nested_feature_mappings = allowedNestedFeatureMappings
 
     def __repr__(self):
-        return f"UseCaseRequirements(dataset_type={repr(self.dataset_type)}, name={repr(self.name)}, description={repr(self.description)}, required={repr(self.required)}, allowed_feature_mappings={repr(self.allowed_feature_mappings)}, allowed_nested_feature_mappings={repr(self.allowed_nested_feature_mappings)})"
+        return f"UseCaseRequirements(dataset_type={repr(self.dataset_type)},\n  name={repr(self.name)},\n  description={repr(self.description)},\n  required={repr(self.required)},\n  allowed_feature_mappings={repr(self.allowed_feature_mappings)},\n  allowed_nested_feature_mappings={repr(self.allowed_nested_feature_mappings)})"
 
     def to_dict(self):
         return {'dataset_type': self.dataset_type, 'name': self.name, 'description': self.description, 'required': self.required, 'allowed_feature_mappings': self.allowed_feature_mappings, 'allowed_nested_feature_mappings': self.allowed_nested_feature_mappings}
