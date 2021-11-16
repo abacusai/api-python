@@ -176,7 +176,7 @@ class BaseApiClient:
         return result
 
     def _build_class(self, return_class, values):
-        if values is None:
+        if values is None or values == {}:
             return None
         if isinstance(values, list):
             return [self._build_class(return_class, val) for val in values if val is not None]

@@ -1,6 +1,6 @@
 from .return_class import AbstractApiClass
-import textwrap
 from .user_exception import UserException
+import textwrap
 
 
 class FunctionLogs(AbstractApiClass):
@@ -17,7 +17,7 @@ class FunctionLogs(AbstractApiClass):
         self.exception = client._build_class(UserException, exception)
 
     def __repr__(self):
-        return f"FunctionLogs(function={repr(self.function)},\n  stats={repr(self.stats)},\n  stdout={'[92m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stdout, ' ' * 6) + chr(39) * 3) if self.stdout else '') + '[0;0m'},\n  stderr={'[91m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stderr, ' ' * 6) + chr(39) * 3) if self.stderr else '') + '[0;0m'},\n  exception={repr(self.exception)})"
+        return f"FunctionLogs(function={repr(self.function)},\n  stats={repr(self.stats)},\n  stdout={'[92m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stdout, ' ' * 6) + chr(39) * 3) if self.stdout else str(self.stdout)) + '[0;0m'},\n  stderr={'[91m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stderr, ' ' * 6) + chr(39) * 3) if self.stderr else str(self.stderr)) + '[0;0m'},\n  exception={repr(self.exception)})"
 
     def to_dict(self):
         return {'function': self.function, 'stats': self.stats, 'stdout': self.stdout, 'stderr': self.stderr, 'exception': self._get_attribute_as_dict(self.exception)}
