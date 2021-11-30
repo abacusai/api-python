@@ -1,7 +1,7 @@
 from .return_class import AbstractApiClass
-import time
-from concurrent.futures import ThreadPoolExecutor
 import io
+from concurrent.futures import ThreadPoolExecutor
+import time
 
 
 class Upload(AbstractApiClass):

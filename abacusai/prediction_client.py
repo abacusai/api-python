@@ -6,7 +6,7 @@ from .client import BaseApiClient, ClientOptions
 
 class PredictionClient(BaseApiClient):
     def __init__(self, client_options: ClientOptions = None):
-        super().__init__(api_key=None, client_options=client_options)
+        super().__init__(api_key=None, client_options=client_options, skip_version_check=True)
 
     def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}):
         ''''''

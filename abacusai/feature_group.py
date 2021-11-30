@@ -1,6 +1,6 @@
 from .return_class import AbstractApiClass
-from .modification_lock_info import ModificationLockInfo
 from .feature_group_version import FeatureGroupVersion
+from .modification_lock_info import ModificationLockInfo
 from .feature import Feature
 
 
@@ -44,20 +44,11 @@ class FeatureGroup(AbstractApiClass):
     def to_dict(self):
         return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'project_feature_group_type': self.project_feature_group_type, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
-    def get_schema(self, project_id=None):
-        return self.client.get_feature_group_schema(self.feature_group_id, project_id)
-
-    def attach_to_project(self, project_id, feature_group_type='CUSTOM_TABLE', project_feature_group_type=None):
-        return self.client.attach_feature_group_to_project(self.feature_group_id, project_id, feature_group_type, project_feature_group_type)
-
     def add_to_project(self, project_id, feature_group_type='CUSTOM_TABLE', project_feature_group_type=None):
         return self.client.add_feature_group_to_project(self.feature_group_id, project_id, feature_group_type, project_feature_group_type)
 
     def remove_from_project(self, project_id):
         return self.client.remove_feature_group_from_project(self.feature_group_id, project_id)
-
-    def update_type(self, project_id, feature_group_type='CUSTOM_TABLE'):
-        return self.client.update_feature_group_type(self.feature_group_id, project_id, feature_group_type)
 
     def set_type(self, project_id, feature_group_type='CUSTOM_TABLE'):
         return self.client.set_feature_group_type(self.feature_group_id, project_id, feature_group_type)
@@ -74,8 +65,8 @@ class FeatureGroup(AbstractApiClass):
     def set_schema(self, schema):
         return self.client.set_feature_group_schema(self.feature_group_id, schema)
 
-    def add_feature(self, name, select_expression):
-        return self.client.add_feature(self.feature_group_id, name, select_expression)
+    def get_schema(self, project_id=None):
+        return self.client.get_feature_group_schema(self.feature_group_id, project_id)
 
     def create_feature(self, name, select_expression):
         return self.client.create_feature(self.feature_group_id, name, select_expression)
@@ -85,9 +76,6 @@ class FeatureGroup(AbstractApiClass):
 
     def remove_tag(self, tag):
         return self.client.remove_feature_group_tag(self.feature_group_id, tag)
-
-    def add_nested_feature(self, nested_feature_name, table_name, using_clause, where_clause=None, order_clause=None):
-        return self.client.add_nested_feature(self.feature_group_id, nested_feature_name, table_name, using_clause, where_clause, order_clause)
 
     def create_nested_feature(self, nested_feature_name, table_name, using_clause, where_clause=None, order_clause=None):
         return self.client.create_nested_feature(self.feature_group_id, nested_feature_name, table_name, using_clause, where_clause, order_clause)

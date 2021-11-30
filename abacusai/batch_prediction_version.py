@@ -39,9 +39,6 @@ class BatchPredictionVersion(AbstractApiClass):
     def to_dict(self):
         return {'batch_prediction_version': self.batch_prediction_version, 'batch_prediction_id': self.batch_prediction_id, 'status': self.status, 'deployment_id': self.deployment_id, 'model_id': self.model_id, 'model_version': self.model_version, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_connector_output_location': self.file_connector_output_location, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'error': self.error, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs)}
 
-    def get_batch_prediction_result(self):
-        return self.client.get_batch_prediction_result(self.batch_prediction_version)
-
     def download_batch_prediction_result_chunk(self, offset=0, chunk_size=10485760):
         return self.client.download_batch_prediction_result_chunk(self.batch_prediction_version, offset, chunk_size)
 

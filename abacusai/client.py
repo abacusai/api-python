@@ -3,14 +3,16 @@ import io
 import logging
 import time
 from typing import Dict, List
-import requests
 
 import pandas as pd
+import requests
+from packaging import version
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-from packaging import version
 
 from .return_class import AbstractApiClass
+
+
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
@@ -72,11 +74,12 @@ def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502
     )
     adapter = HTTPAdapter(max_retries=retry)
     session.mount('https://', adapter)
+    session.mount('http://', adapter)
     return session
 
 
 class ClientOptions:
-    def __init__(self, exception_on_404=True, server='https://abacus.ai'):
+    def __init__(self, exception_on_404=True, server='https://api.abacus.ai'):
         self.exception_on_404 = exception_on_404
         self.server = server
 
@@ -92,26 +95,27 @@ class ApiException(Exception):
 
 
 class BaseApiClient:
-    client_version = '0.32.6'
+    client_version = '0.32.10'
 
-    def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None):
+    def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
         self.web_version = None
         self.client_options = client_options or ClientOptions()
         self.server = server or self.client_options.server
         self.user = None
         # Connection and version check
-        try:
-            self.web_version = self._call_api(
-                'version', 'GET', server_override='https://abacus.ai')
-            if version.parse(self.web_version) > version.parse(self.client_version):
-                logging.warning(
-                    'A new version of the Abacus.AI library is available')
-                logging.warning(
-                    f'Current Version: {self.client_version} -> New Version: {self.web_version}')
-        except Exception:
-            logging.error(
-                'Failed get the current API version from Abacus.AI (https://abacus.ai/api/v0/version)')
+        if not skip_version_check:
+            try:
+                self.web_version = self._call_api(
+                    'version', 'GET', server_override='https://api.abacus.ai')
+                if version.parse(self.web_version) > version.parse(self.client_version):
+                    logging.warning(
+                        'A new version of the Abacus.AI library is available')
+                    logging.warning(
+                        f'Current Version: {self.client_version} -> New Version: {self.web_version}')
+            except Exception:
+                logging.error(
+                    'Failed get the current API version from Abacus.AI (https://api.abacus.ai/api/v0/version)')
         if api_key is not None:
             try:
                 self.user = self._call_api('getUser', 'GET')
@@ -143,12 +147,7 @@ class BaseApiClient:
         self._clean_api_objects(body)
         response = self._request(url, method, query_params=query_params,
                                  headers=headers, body=body, files=files, stream=streamable_response)
-        retry = 0
-        while response.status_code == 504 and method == 'GET' and retry < 3:
-            time.sleep(retry + 1)
-            response = self._request(url, method, query_params=query_params,
-                                     headers=headers, body=body, files=files, stream=streamable_response)
-            retry += 1
+
         result = None
         success = False
         error_message = None
@@ -356,16 +355,6 @@ class ApiClient(BaseApiClient):
         '''
         return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
 
-    def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[Feature]:
-        '''Returns a schema given a specific FeatureGroup in a project.'''
-        return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=Feature)
-
-    def attach_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
-        '''[DEPRECATED] Adds a feature group to a project,'''
-        logging.warning(
-            'This function (attachFeatureGroupToProject) is deprecated and will be removed in a future version. Use add_feature_group_to_project instead.')
-        return self._call_api('attachFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'projectFeatureGroupType': project_feature_group_type})
-
     def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
         '''Adds a feature group to a project,'''
         return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'projectFeatureGroupType': project_feature_group_type})
@@ -373,12 +362,6 @@ class ApiClient(BaseApiClient):
     def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
         '''Removes a feature group from a project.'''
         return self._call_api('removeFeatureGroupFromProject', 'DELETE', query_params={'featureGroupId': feature_group_id, 'projectId': project_id})
-
-    def update_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
-        '''[DEPRECATED] Update the feature group type in a project. The feature group must already be added to the project.'''
-        logging.warning(
-            'This function (updateFeatureGroupType) is deprecated and will be removed in a future version. Use set_feature_group_type instead.')
-        return self._call_api('updateFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
     def set_feature_group_type(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         '''Update the feature group type in a project. The feature group must already be added to the project.'''
@@ -407,12 +390,6 @@ class ApiClient(BaseApiClient):
     def remove_column_mapping(self, project_id: str, dataset_id: str, column: str) -> List[Schema]:
         '''Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.'''
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
-
-    def add_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
-        '''[DEPRECATED] Creates a new feature group from a SQL statement.'''
-        logging.warning(
-            'This function (addFeatureGroup) is deprecated and will be removed in a future version. Use create_feature_group instead.')
-        return self._call_api('addFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
 
     def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
         '''Creates a new feature group from a SQL statement.'''
@@ -448,11 +425,9 @@ class ApiClient(BaseApiClient):
         '''Creates a new schema and points the feature group to the new feature group schema id.'''
         return self._call_api('setFeatureGroupSchema', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'schema': schema})
 
-    def add_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
-        '''[DEPRECATED] Creates a new feature in a Feature Group from a SQL select statement'''
-        logging.warning(
-            'This function (addFeature) is deprecated and will be removed in a future version. Use create_feature instead.')
-        return self._call_api('addFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'selectExpression': select_expression}, parse_type=FeatureGroup)
+    def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[Feature]:
+        '''Returns a schema given a specific FeatureGroup in a project.'''
+        return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=Feature)
 
     def create_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
         '''Creates a new feature in a Feature Group from a SQL select statement'''
@@ -465,12 +440,6 @@ class ApiClient(BaseApiClient):
     def remove_feature_group_tag(self, feature_group_id: str, tag: str):
         '''Removes a tag from the feature group'''
         return self._call_api('removeFeatureGroupTag', 'DELETE', query_params={'featureGroupId': feature_group_id, 'tag': tag})
-
-    def add_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
-        '''[DEPRECATED] Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.'''
-        logging.warning(
-            'This function (addNestedFeature) is deprecated and will be removed in a future version. Use create_nested_feature instead.')
-        return self._call_api('addNestedFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'nestedFeatureName': nested_feature_name, 'tableName': table_name, 'usingClause': using_clause, 'whereClause': where_clause, 'orderClause': order_clause}, parse_type=FeatureGroup)
 
     def create_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
         '''Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.'''
@@ -813,7 +782,7 @@ class ApiClient(BaseApiClient):
     def get_training_config_options(self, project_id: str) -> List[TrainingConfigOptions]:
         '''Retrieves the full description of the model training configuration options available for the specified project.
 
-        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
+        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
         '''
         return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
 
@@ -848,12 +817,6 @@ class ApiClient(BaseApiClient):
     def rename_model(self, model_id: str, name: str):
         '''Renames a model'''
         return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
-
-    def update_model_training_config(self, model_id: str, training_config: dict) -> Model:
-        '''[DEPRECATED] Edits the default model training config'''
-        logging.warning(
-            'This function (updateModelTrainingConfig) is deprecated and will be removed in a future version. Use set_model_training_config instead.')
-        return self._call_api('updateModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
     def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = []) -> Model:
         '''Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
@@ -1105,12 +1068,6 @@ class ApiClient(BaseApiClient):
     def start_batch_prediction(self, batch_prediction_id: str) -> BatchPredictionVersion:
         '''Creates a new batch prediction version job for a given batch prediction job description'''
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
-
-    def get_batch_prediction_result(self, batch_prediction_version: str) -> io.BytesIO:
-        '''[DEPRECATED] Returns a stream containing the batch prediction results'''
-        logging.warning(
-            'This function (getBatchPredictionResult) is deprecated and will be removed in a future version. Use download_batch_prediction_result_chunk instead.')
-        return self._call_api('getBatchPredictionResult', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
 
     def download_batch_prediction_result_chunk(self, batch_prediction_version: str, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
         '''Returns a stream containing the batch prediction results'''
