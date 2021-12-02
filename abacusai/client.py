@@ -1,7 +1,9 @@
 import inspect
 import io
 import logging
+import os
 import time
+from functools import lru_cache
 from typing import Dict, List
 
 import pandas as pd
@@ -37,6 +39,8 @@ from .function_logs import FunctionLogs
 from .model import Model
 from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
+from .model_monitor import ModelMonitor
+from .model_monitor_version import ModelMonitorVersion
 from .model_upload import ModelUpload
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
@@ -78,6 +82,24 @@ def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502
     return session
 
 
+@lru_cache(maxsize=None)
+def _discover_service_url(service_discovery_url, client_version, deployment_id, deployment_token):
+    from .cryptography import get_public_key, verify_response
+    if not service_discovery_url:
+        return None
+    response = _requests_retry_session().get(service_discovery_url, headers={'clientVersion': client_version}, params={
+        'deploymentId': deployment_id, 'deploymentToken': deployment_token})
+    response_dict = response.json()
+
+    verify_response(get_public_key(), response_dict)
+    return response_dict['url']
+
+
+@lru_cache()
+def _get_service_discovery_url():
+    return os.getenv('ABACUS_SERVICE_DISCOVERY_URL')
+
+
 class ClientOptions:
     def __init__(self, exception_on_404=True, server='https://api.abacus.ai'):
         self.exception_on_404 = exception_on_404
@@ -95,7 +117,7 @@ class ApiException(Exception):
 
 
 class BaseApiClient:
-    client_version = '0.32.10'
+    client_version = '0.32.11'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -103,6 +125,7 @@ class BaseApiClient:
         self.client_options = client_options or ClientOptions()
         self.server = server or self.client_options.server
         self.user = None
+        self.service_discovery_url = _get_service_discovery_url()
         # Connection and version check
         if not skip_version_check:
             try:
@@ -145,6 +168,10 @@ class BaseApiClient:
         url = (server_override or self.server) + '/api/v0/' + action
         self._clean_api_objects(query_params)
         self._clean_api_objects(body)
+        if self.service_discovery_url and query_params and 'deploymentId' in query_params and 'deploymentToken' in query_params:
+            discovered_url = _discover_service_url(
+                self.service_discovery_url, self.client_version, query_params['deploymentId'], query_params['deploymentToken'])
+            url = discovered_url or url
         response = self._request(url, method, query_params=query_params,
                                  headers=headers, body=body, files=files, stream=streamable_response)
 
@@ -866,6 +893,46 @@ class ApiClient(BaseApiClient):
         ''''''
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
+    def create_model_monitor(self, project_id: str, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
+        '''Runs a model monitor for the specified project.'''
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
+
+    def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
+        '''Reruns the specified model monitor.'''
+        return self._call_api('rerunModelMonitor', 'POST', query_params={}, body={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+
+    def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
+        '''Retrieves the list of models monitors in the specified project.'''
+        return self._call_api('listModelMonitors', 'GET', query_params={'projectId': project_id}, parse_type=ModelMonitor)
+
+    def describe_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
+        '''Retrieves a full description of the specified model monitor.'''
+        return self._call_api('describeModelMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+
+    def list_model_monitor_versions(self, model_monitor_id: str, limit: None = 100, start_after_version: None = None) -> List[ModelMonitorVersion]:
+        '''Retrieves a list of the versions for a given model monitor.'''
+        return self._call_api('listModelMonitorVersions', 'GET', query_params={'modelMonitorId': model_monitor_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelMonitorVersion)
+
+    def describe_model_monitor_version(self, model_monitor_version: str) -> ModelMonitorVersion:
+        '''Retrieves a full description of the specified model monitor version'''
+        return self._call_api('describeModelMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
+
+    def rename_model_monitor(self, model_monitor_id: str, name: str):
+        '''Renames a model monitor'''
+        return self._call_api('renameModelMonitor', 'PATCH', query_params={}, body={'modelMonitorId': model_monitor_id, 'name': name})
+
+    def delete_model_monitor(self, model_monitor_id: str):
+        '''Deletes the specified model monitor and all its versions.'''
+        return self._call_api('deleteModelMonitor', 'DELETE', query_params={'modelMonitorId': model_monitor_id})
+
+    def delete_model_monitor_version(self, model_monitor_version: str):
+        '''Deletes the specified model monitor version.'''
+        return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
+
+    def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
+        ''''''
+        return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
+
     def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
         '''Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -953,9 +1020,9 @@ class ApiClient(BaseApiClient):
         '''Retrieve a single refresh pipeline run'''
         return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
 
-    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = []) -> RefreshPolicy:
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = []) -> RefreshPolicy:
         '''List the refresh policies for the organization'''
-        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids}, parse_type=RefreshPolicy)
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids}, parse_type=RefreshPolicy)
 
     def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
         '''List the the times that the refresh policy has been run'''

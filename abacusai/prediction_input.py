@@ -1,6 +1,6 @@
 from .return_class import AbstractApiClass
-from .prediction_dataset import PredictionDataset
 from .prediction_feature_group import PredictionFeatureGroup
+from .prediction_dataset import PredictionDataset
 
 
 class PredictionInput(AbstractApiClass):

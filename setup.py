@@ -1,8 +1,11 @@
 from setuptools import setup
 
 
+__version__ = '0.32.11'
+
+
 setup(name='abacusai',
-      version='0.32.10',
+      version=__version__,
       description='Abacus.AI Python Client Library',
       url='https://github.com/abacusai/api-python',
       author='Abacus.AI',
@@ -11,6 +14,8 @@ setup(name='abacusai',
       packages=['abacusai'],
       install_requires=['packaging', 'requests', 'pandas', 'fastavro'],
       zip_safe=True,
+      package_data={'': ['public.pem']},
+      include_package_data=True,
       classifiers=[
           'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',

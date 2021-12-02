@@ -69,6 +69,12 @@ class Project(AbstractApiClass):
     def list_models(self):
         return self.client.list_models(self.project_id)
 
+    def create_model_monitor(self, name=None, refresh_schedule=None):
+        return self.client.create_model_monitor(self.project_id, name, refresh_schedule)
+
+    def list_model_monitors(self):
+        return self.client.list_model_monitors(self.project_id)
+
     def create_deployment_token(self):
         return self.client.create_deployment_token(self.project_id)
 
@@ -78,8 +84,8 @@ class Project(AbstractApiClass):
     def list_deployment_tokens(self):
         return self.client.list_deployment_tokens(self.project_id)
 
-    def list_refresh_policies(self, dataset_ids=[], model_ids=[], deployment_ids=[], batch_prediction_ids=[]):
-        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids)
+    def list_refresh_policies(self, dataset_ids=[], model_ids=[], deployment_ids=[], batch_prediction_ids=[], model_monitor_ids=[]):
+        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids)
 
     def list_batch_predictions(self):
         return self.client.list_batch_predictions(self.project_id)
