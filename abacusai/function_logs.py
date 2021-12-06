@@ -1,6 +1,6 @@
 from .return_class import AbstractApiClass
-from .user_exception import UserException
 import textwrap
+from .user_exception import UserException
 
 
 class FunctionLogs(AbstractApiClass):

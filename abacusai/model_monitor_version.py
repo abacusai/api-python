@@ -37,3 +37,6 @@ class ModelMonitorVersion(AbstractApiClass):
 
     def get_model_monitoring_logs(self, stdout=False, stderr=False):
         return self.client.get_model_monitoring_logs(self.model_monitor_version, stdout, stderr)
+
+    def get_drift_for_feature(self, feature_name):
+        return self.client.get_drift_for_feature(self.model_monitor_version, feature_name)

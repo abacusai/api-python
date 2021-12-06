@@ -91,3 +91,7 @@ class PredictionClient(BaseApiClient):
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         '''TODO'''
         return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+
+    def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+        '''TODO'''
+        return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)

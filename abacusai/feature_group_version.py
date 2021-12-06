@@ -1,6 +1,6 @@
 from .return_class import AbstractApiClass
-from concurrent.futures import ThreadPoolExecutor
 from .feature import Feature
+from concurrent.futures import ThreadPoolExecutor
 import io
 import time
 

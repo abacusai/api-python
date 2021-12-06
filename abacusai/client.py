@@ -45,6 +45,7 @@ from .model_upload import ModelUpload
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
 from .nested_feature import NestedFeature
+from .nlp_sentiment_prediction import NlpSentimentPrediction
 from .organization_group import OrganizationGroup
 from .point_in_time_feature import PointInTimeFeature
 from .prediction_dataset import PredictionDataset
@@ -117,7 +118,7 @@ class ApiException(Exception):
 
 
 class BaseApiClient:
-    client_version = '0.32.11'
+    client_version = '0.32.12'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -171,7 +172,8 @@ class BaseApiClient:
         if self.service_discovery_url and query_params and 'deploymentId' in query_params and 'deploymentToken' in query_params:
             discovered_url = _discover_service_url(
                 self.service_discovery_url, self.client_version, query_params['deploymentId'], query_params['deploymentToken'])
-            url = discovered_url or url
+            if discovered_url:
+                url = discovered_url + '/api/' + action
         response = self._request(url, method, query_params=query_params,
                                  headers=headers, body=body, files=files, stream=streamable_response)
 
@@ -933,6 +935,10 @@ class ApiClient(BaseApiClient):
         ''''''
         return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
+    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
+        '''Gets the feature drift associated with a single feature in an output feature group from a prediction.'''
+        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
+
     def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
         '''Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -1127,6 +1133,10 @@ class ApiClient(BaseApiClient):
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         '''TODO'''
         return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+
+    def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+        '''TODO'''
+        return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)
 
     def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         '''Creates a batch prediction job description for the given deployment.'''
