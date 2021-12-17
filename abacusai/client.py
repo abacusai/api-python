@@ -12,14 +12,10 @@ from packaging import version
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
-from .return_class import AbstractApiClass
-
-
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
-from .data_filter import DataFilter
 from .database_connector import DatabaseConnector
 from .dataset import Dataset
 from .dataset_column import DatasetColumn
@@ -30,33 +26,27 @@ from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
 from .feature_group_version import FeatureGroupVersion
-from .feature_record import FeatureRecord
-from .schema import Schema
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
 from .model import Model
-from .model_location import ModelLocation
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
 from .model_monitor_version import ModelMonitorVersion
-from .model_upload import ModelUpload
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
-from .nested_feature import NestedFeature
 from .nlp_sentiment_prediction import NlpSentimentPrediction
 from .organization_group import OrganizationGroup
-from .point_in_time_feature import PointInTimeFeature
-from .prediction_dataset import PredictionDataset
-from .prediction_feature_group import PredictionFeatureGroup
-from .prediction_input import PredictionInput
+from .prediction_metric import PredictionMetric
+from .prediction_metric_version import PredictionMetricVersion
 from .project import Project
 from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
 from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
-from .refresh_schedule import RefreshSchedule
+from .return_class import AbstractApiClass
+from .schema import Schema
 from .streaming_auth_token import StreamingAuthToken
 from .streaming_connector import StreamingConnector
 from .training_config_options import TrainingConfigOptions
@@ -65,7 +55,6 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
-from .user_exception import UserException
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
@@ -118,7 +107,7 @@ class ApiException(Exception):
 
 
 class BaseApiClient:
-    client_version = '0.32.12'
+    client_version = '0.32.14'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -355,7 +344,7 @@ class ApiClient(BaseApiClient):
         '''Returns a description of a project.'''
         return self._call_api('describeProject', 'GET', query_params={'projectId': project_id}, parse_type=Project)
 
-    def list_projects(self, limit: None = 100, start_after_id: None = None) -> List[Project]:
+    def list_projects(self, limit: int = 100, start_after_id: str = None) -> List[Project]:
         '''Retrieves a list of all projects in the current organization.'''
         return self._call_api('listProjects', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Project)
 
@@ -384,9 +373,9 @@ class ApiClient(BaseApiClient):
         '''
         return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
 
-    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', project_feature_group_type: str = None):
+    def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
         '''Adds a feature group to a project,'''
-        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'projectFeatureGroupType': project_feature_group_type})
+        return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'featureGroupUse': feature_group_use})
 
     def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
         '''Removes a feature group from a project.'''
@@ -526,9 +515,9 @@ class ApiClient(BaseApiClient):
         '''Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.'''
         return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
 
-    def list_project_feature_groups(self, project_id: str, filter_project_feature_group_type: str = None) -> FeatureGroup:
+    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> FeatureGroup:
         '''List all the feature groups associated with a project'''
-        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterProjectFeatureGroupType': filter_project_feature_group_type}, parse_type=FeatureGroup)
+        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=FeatureGroup)
 
     def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
         '''Modifies an existing feature group'''
@@ -599,7 +588,7 @@ class ApiClient(BaseApiClient):
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
 
     def get_materialization_logs(self, feature_group_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        ''''''
+        '''Returns logs for materialized feature group version.'''
         return self._call_api('getMaterializationLogs', 'GET', query_params={'featureGroupVersion': feature_group_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
     def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_version: str = None) -> List[FeatureGroupVersion]:
@@ -770,7 +759,7 @@ class ApiClient(BaseApiClient):
         '''Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.'''
         return self._call_api('describeUpload', 'GET', query_params={'uploadId': upload_id}, parse_type=Upload)
 
-    def list_datasets(self, limit: None = 100, start_after_id: None = None) -> List[Dataset]:
+    def list_datasets(self, limit: int = 100, start_after_id: str = None) -> List[Dataset]:
         '''Retrieves a list of all of the datasets in the organization.'''
         return self._call_api('listDatasets', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Dataset)
 
@@ -778,7 +767,7 @@ class ApiClient(BaseApiClient):
         '''Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.'''
         return self._call_api('describeDataset', 'GET', query_params={'datasetId': dataset_id}, parse_type=Dataset)
 
-    def list_dataset_versions(self, dataset_id: str, limit: None = 100, start_after_version: None = None) -> List[DatasetVersion]:
+    def list_dataset_versions(self, dataset_id: str, limit: int = 100, start_after_version: str = None) -> List[DatasetVersion]:
         '''Retrieves a list of all dataset versions for the specified dataset.'''
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
 
@@ -822,7 +811,7 @@ class ApiClient(BaseApiClient):
         '''
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'refreshSchedule': refresh_schedule}, parse_type=Model)
 
-    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list = [], name: str = None) -> Model:
+    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None) -> Model:
         '''Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
         we will provide as arguments to the train and predict functions with the materialized feature groups for those
@@ -847,7 +836,7 @@ class ApiClient(BaseApiClient):
         '''Renames a model'''
         return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
 
-    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = []) -> Model:
+    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = None) -> Model:
         '''Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
 
         we will provide as arguments to the train and predict functions with the materialized feature groups for those
@@ -871,7 +860,7 @@ class ApiClient(BaseApiClient):
         '''
         return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics}, parse_type=ModelMetrics)
 
-    def list_model_versions(self, model_id: str, limit: None = 100, start_after_version: None = None) -> List[ModelVersion]:
+    def list_model_versions(self, model_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelVersion]:
         '''Retrieves a list of the version for a given model.'''
         return self._call_api('listModelVersions', 'GET', query_params={'modelId': model_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelVersion)
 
@@ -892,12 +881,12 @@ class ApiClient(BaseApiClient):
         return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
 
     def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        ''''''
+        '''Returns training logs for the model.'''
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
-    def create_model_monitor(self, project_id: str, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, training_feature_group_id: str = None, prediction_feature_group_id: str = None, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
         '''Runs a model monitor for the specified project.'''
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'trainingFeatureGroupId': training_feature_group_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         '''Reruns the specified model monitor.'''
@@ -911,7 +900,7 @@ class ApiClient(BaseApiClient):
         '''Retrieves a full description of the specified model monitor.'''
         return self._call_api('describeModelMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
 
-    def list_model_monitor_versions(self, model_monitor_id: str, limit: None = 100, start_after_version: None = None) -> List[ModelMonitorVersion]:
+    def list_model_monitor_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
         '''Retrieves a list of the versions for a given model monitor.'''
         return self._call_api('listModelMonitorVersions', 'GET', query_params={'modelMonitorId': model_monitor_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelMonitorVersion)
 
@@ -931,13 +920,21 @@ class ApiClient(BaseApiClient):
         '''Deletes the specified model monitor version.'''
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
 
+    def set_model_monitor_alert_config(self, model_monitor_id: str, alert_config: dict) -> ModelMonitor:
+        '''Sets the alert configuration associated with a model monitor.'''
+        return self._call_api('setModelMonitorAlertConfig', 'POST', query_params={}, body={'modelMonitorId': model_monitor_id, 'alertConfig': alert_config}, parse_type=ModelMonitor)
+
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        ''''''
+        '''Returns monitoring logs for the model.'''
         return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
     def get_drift_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
         '''Gets the feature drift associated with a single feature in an output feature group from a prediction.'''
         return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
+
+    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
+        '''Gets the feature drift associated with a single feature in an output feature group from a prediction.'''
+        return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
 
     def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
         '''Creates a deployment with the specified name and description for the specified model or feature group.
@@ -1058,7 +1055,7 @@ class ApiClient(BaseApiClient):
         '''Returns a prediction for Predictive Modeling'''
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+    def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list = {}) -> Dict:
         '''Returns a list of predictions for Predictive Modeling'''
         return self._call_api('predictMultiple', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
@@ -1138,6 +1135,41 @@ class ApiClient(BaseApiClient):
         '''TODO'''
         return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)
 
+    def create_prediction_metric(self, feature_group_id: str, prediction_metric_config: dict, project_id: str = None) -> PredictionMetric:
+        '''Create a prediction metric job description for the given prediction and actual-labels data.'''
+        return self._call_api('createPredictionMetric', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'predictionMetricConfig': prediction_metric_config, 'projectId': project_id}, parse_type=PredictionMetric)
+
+    def describe_prediction_metric(self, prediction_metric_id: str) -> PredictionMetric:
+        '''Describe a Prediction Metric.'''
+        return self._call_api('describePredictionMetric', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id}, parse_type=PredictionMetric)
+
+    def delete_prediction_metric(self, prediction_metric_id: str):
+        '''Removes an existing PredictionMetric.'''
+        return self._call_api('deletePredictionMetric', 'DELETE', query_params={'predictionMetricId': prediction_metric_id})
+
+    def list_prediction_metrics(self, feature_group_id: str, limit: int = 100, start_after_id: str = None) -> List[PredictionMetric]:
+        '''List the prediction metrics for a feature group.'''
+        return self._call_api('listPredictionMetrics', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=PredictionMetric)
+
+    def run_prediction_metric(self, prediction_metric_id: str) -> PredictionMetricVersion:
+        '''Creates a new prediction metrics job run for the given prediction metric job description, and starts that job.
+
+        Configures and starts the computations running to compute the prediciton metric.
+        '''
+        return self._call_api('runPredictionMetric', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id}, parse_type=PredictionMetricVersion)
+
+    def describe_prediction_metric_version(self, prediction_metric_version: str) -> PredictionMetricVersion:
+        '''Retrieves a full description of the specified prediction metric version'''
+        return self._call_api('describePredictionMetricVersion', 'POST', query_params={}, body={'predictionMetricVersion': prediction_metric_version}, parse_type=PredictionMetricVersion)
+
+    def delete_prediction_metric_version(self, prediction_metric_version: str):
+        '''Removes an existing prediction metric version.'''
+        return self._call_api('deletePredictionMetricVersion', 'DELETE', query_params={'predictionMetricVersion': prediction_metric_version})
+
+    def list_prediction_metric_versions(self, prediction_metric_id: str, limit: int = 100, start_after_id: str = None) -> List[PredictionMetricVersion]:
+        '''List the prediction metric versions for a prediction metric.'''
+        return self._call_api('listPredictionMetricVersions', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=PredictionMetricVersion)
+
     def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         '''Creates a batch prediction job description for the given deployment.'''
         return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix}, parse_type=BatchPrediction)
@@ -1162,7 +1194,7 @@ class ApiClient(BaseApiClient):
         '''Describes the batch prediction'''
         return self._call_api('describeBatchPrediction', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
 
-    def list_batch_prediction_versions(self, batch_prediction_id: str, limit: None = 100, start_after_version: None = None) -> List[BatchPredictionVersion]:
+    def list_batch_prediction_versions(self, batch_prediction_id: str, limit: int = 100, start_after_version: str = None) -> List[BatchPredictionVersion]:
         '''Retrieves a list of versions of a given batch prediction'''
         return self._call_api('listBatchPredictionVersions', 'GET', query_params={'batchPredictionId': batch_prediction_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=BatchPredictionVersion)
 

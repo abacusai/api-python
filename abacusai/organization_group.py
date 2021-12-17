@@ -22,26 +22,34 @@ class OrganizationGroup(AbstractApiClass):
         return {'organization_group_id': self.organization_group_id, 'permissions': self.permissions, 'group_name': self.group_name, 'default_group': self.default_group, 'admin': self.admin, 'created_at': self.created_at}
 
     def refresh(self):
+        """Calls describe and refreshes the current object's fields"""
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
+        """Returns the specific organization group passes in by the user."""
         return self.client.describe_organization_group(self.organization_group_id)
 
     def add_permission(self, permission):
+        """Adds a permission to the specified Organization Group"""
         return self.client.add_organization_group_permission(self.organization_group_id, permission)
 
     def remove_permission(self, permission):
+        """Removes a permission from the specified Organization Group"""
         return self.client.remove_organization_group_permission(self.organization_group_id, permission)
 
     def delete(self):
+        """Deletes the specified Organization Group from the organization."""
         return self.client.delete_organization_group(self.organization_group_id)
 
     def add_user_to(self, email):
+        """Adds a user to the specified Organization Group"""
         return self.client.add_user_to_organization_group(self.organization_group_id, email)
 
     def remove_user_from(self, email):
+        """Removes a user from an Organization Group"""
         return self.client.remove_user_from_organization_group(self.organization_group_id, email)
 
     def set_default(self):
+        """Sets the default Organization Group that all new users that join an organization are automatically added to"""
         return self.client.set_default_organization_group(self.organization_group_id)

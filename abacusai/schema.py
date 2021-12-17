@@ -1,6 +1,4 @@
 from .return_class import AbstractApiClass
-from .nested_feature import NestedFeature
-from .point_in_time_feature import PointInTimeFeature
 
 
 class Schema(AbstractApiClass):

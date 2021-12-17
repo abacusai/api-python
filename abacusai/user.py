@@ -1,5 +1,5 @@
-from .return_class import AbstractApiClass
 from .organization_group import OrganizationGroup
+from .return_class import AbstractApiClass
 
 
 class User(AbstractApiClass):

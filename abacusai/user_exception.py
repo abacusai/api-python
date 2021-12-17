@@ -1,5 +1,6 @@
-from .return_class import AbstractApiClass
 import textwrap
+
+from .return_class import AbstractApiClass
 
 
 class UserException(AbstractApiClass):

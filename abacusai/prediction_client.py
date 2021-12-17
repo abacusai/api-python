@@ -1,5 +1,5 @@
-from typing import Dict
 import io
+from typing import Dict
 
 from .client import BaseApiClient, ClientOptions
 
@@ -16,7 +16,7 @@ class PredictionClient(BaseApiClient):
         '''Returns a prediction for Predictive Modeling'''
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+    def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list = {}) -> Dict:
         '''Returns a list of predictions for Predictive Modeling'''
         return self._call_api('predictMultiple', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 

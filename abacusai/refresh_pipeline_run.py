@@ -1,5 +1,5 @@
-from .return_class import AbstractApiClass
 from .refresh_policy import RefreshPolicy
+from .return_class import AbstractApiClass
 
 
 class RefreshPipelineRun(AbstractApiClass):
@@ -29,8 +29,10 @@ class RefreshPipelineRun(AbstractApiClass):
         return {'refresh_pipeline_run_id': self.refresh_pipeline_run_id, 'refresh_policy_id': self.refresh_policy_id, 'created_at': self.created_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'refresh_type': self.refresh_type, 'dataset_versions': self.dataset_versions, 'model_versions': self.model_versions, 'deployment_versions': self.deployment_versions, 'batch_predictions': self.batch_predictions, 'refresh_policy': self._get_attribute_as_dict(self.refresh_policy)}
 
     def refresh(self):
+        """Calls describe and refreshes the current object's fields"""
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
+        """Retrieve a single refresh pipeline run"""
         return self.client.describe_refresh_pipeline_run(self.refresh_pipeline_run_id)

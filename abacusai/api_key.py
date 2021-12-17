@@ -20,4 +20,5 @@ class ApiKey(AbstractApiClass):
         return {'api_key_id': self.api_key_id, 'api_key': self.api_key, 'tag': self.tag, 'created_at': self.created_at}
 
     def delete(self):
+        """Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs."""
         return self.client.delete_api_key(self.api_key_id)

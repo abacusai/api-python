@@ -22,16 +22,21 @@ class DatabaseConnector(AbstractApiClass):
         return {'database_connector_id': self.database_connector_id, 'service': self.service, 'name': self.name, 'status': self.status, 'auth': self.auth, 'created_at': self.created_at}
 
     def list_objects(self):
+        """Lists querable objects in the database connector."""
         return self.client.list_database_connector_objects(self.database_connector_id)
 
     def get_object_schema(self, object_name=None):
+        """Get the schema of an object in an database connector."""
         return self.client.get_database_connector_object_schema(self.database_connector_id, object_name)
 
     def rename(self, name):
+        """Renames a Database Connector"""
         return self.client.rename_database_connector(self.database_connector_id, name)
 
     def verify(self):
+        """Checks to see if Abacus.AI can access the database."""
         return self.client.verify_database_connector(self.database_connector_id)
 
     def delete(self):
+        """Delete a database connector."""
         return self.client.delete_database_connector(self.database_connector_id)

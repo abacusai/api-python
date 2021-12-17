@@ -1,5 +1,5 @@
-from .return_class import AbstractApiClass
 from .data_filter import DataFilter
+from .return_class import AbstractApiClass
 
 
 class ProjectDataset(AbstractApiClass):

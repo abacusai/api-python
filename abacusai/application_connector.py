@@ -22,13 +22,17 @@ class ApplicationConnector(AbstractApiClass):
         return {'application_connector_id': self.application_connector_id, 'service': self.service, 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
 
     def rename(self, name):
+        """Renames an Application Connector"""
         return self.client.rename_application_connector(self.application_connector_id, name)
 
     def delete(self):
+        """Delete a application connector."""
         return self.client.delete_application_connector(self.application_connector_id)
 
     def list_objects(self):
+        """Lists querable objects in the application connector."""
         return self.client.list_application_connector_objects(self.application_connector_id)
 
     def verify(self):
+        """Checks to see if Abacus.AI can access the Application."""
         return self.client.verify_application_connector(self.application_connector_id)

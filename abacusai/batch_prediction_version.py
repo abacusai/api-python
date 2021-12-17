@@ -1,5 +1,5 @@
-from .return_class import AbstractApiClass
 from .prediction_input import PredictionInput
+from .return_class import AbstractApiClass
 
 
 class BatchPredictionVersion(AbstractApiClass):
@@ -40,19 +40,32 @@ class BatchPredictionVersion(AbstractApiClass):
         return {'batch_prediction_version': self.batch_prediction_version, 'batch_prediction_id': self.batch_prediction_id, 'status': self.status, 'deployment_id': self.deployment_id, 'model_id': self.model_id, 'model_version': self.model_version, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_connector_output_location': self.file_connector_output_location, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'error': self.error, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs)}
 
     def download_batch_prediction_result_chunk(self, offset=0, chunk_size=10485760):
+        """Returns a stream containing the batch prediction results"""
         return self.client.download_batch_prediction_result_chunk(self.batch_prediction_version, offset, chunk_size)
 
     def get_batch_prediction_connector_errors(self):
+        """Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector"""
         return self.client.get_batch_prediction_connector_errors(self.batch_prediction_version)
 
     def refresh(self):
+        """Calls describe and refreshes the current object's fields"""
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
+        """Describes a batch prediction version"""
         return self.client.describe_batch_prediction_version(self.batch_prediction_version)
 
     def download_result_to_file(self, file):
+        """
+        Downloads the batch prediction version in a local file.
+
+        Args:
+            file (file object): A file object opened in a binary mode e.g., file=open('/tmp/output', 'wb').
+
+        Returns:
+            None
+        """
         offset = 0
         while True:
             with self.download_batch_prediction_result_chunk(offset) as chunk:
@@ -62,7 +75,22 @@ class BatchPredictionVersion(AbstractApiClass):
             offset += bytes_written
 
     def wait_for_predictions(self, timeout=1200):
+        """
+        A waiting call until batch prediction version is ready.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+
+        Returns:
+            None
+        """
         return self.client._poll(self, {'PENDING', 'UPLOADING', 'PREDICTING'}, timeout=timeout)
 
     def get_status(self):
+        """
+        Gets the status of the batch prediction version.
+
+        Returns:
+            Enum (string): A string describing the status of the batch prediction version, for e.g., pending, complete, etc.
+            """
         return self.describe().status

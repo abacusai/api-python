@@ -27,26 +27,34 @@ class RefreshPolicy(AbstractApiClass):
         return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'paused': self.paused}
 
     def delete(self):
+        """Delete a refresh policy"""
         return self.client.delete_refresh_policy(self.refresh_policy_id)
 
     def refresh(self):
+        """Calls describe and refreshes the current object's fields"""
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
+        """Retrieve a single refresh policy"""
         return self.client.describe_refresh_policy(self.refresh_policy_id)
 
     def list_refresh_pipeline_runs(self):
+        """List the the times that the refresh policy has been run"""
         return self.client.list_refresh_pipeline_runs(self.refresh_policy_id)
 
     def pause(self):
+        """Pauses a refresh policy"""
         return self.client.pause_refresh_policy(self.refresh_policy_id)
 
     def resume(self):
+        """Resumes a refresh policy"""
         return self.client.resume_refresh_policy(self.refresh_policy_id)
 
     def run(self):
+        """Force a run of the refresh policy."""
         return self.client.run_refresh_policy(self.refresh_policy_id)
 
     def update(self, name=None, cron=None):
+        """Update the name or cron string of a  refresh policy"""
         return self.client.update_refresh_policy(self.refresh_policy_id, name, cron)

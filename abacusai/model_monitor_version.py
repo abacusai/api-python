@@ -26,17 +26,26 @@ class ModelMonitorVersion(AbstractApiClass):
         return {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids}
 
     def refresh(self):
+        """Calls describe and refreshes the current object's fields"""
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
+        """Retrieves a full description of the specified model monitor version"""
         return self.client.describe_model_monitor_version(self.model_monitor_version)
 
     def delete(self):
+        """Deletes the specified model monitor version."""
         return self.client.delete_model_monitor_version(self.model_monitor_version)
 
     def get_model_monitoring_logs(self, stdout=False, stderr=False):
+        """Returns monitoring logs for the model."""
         return self.client.get_model_monitoring_logs(self.model_monitor_version, stdout, stderr)
 
     def get_drift_for_feature(self, feature_name):
+        """Gets the feature drift associated with a single feature in an output feature group from a prediction."""
         return self.client.get_drift_for_feature(self.model_monitor_version, feature_name)
+
+    def get_outliers_for_feature(self, feature_name):
+        """Gets the feature drift associated with a single feature in an output feature group from a prediction."""
+        return self.client.get_outliers_for_feature(self.model_monitor_version, feature_name)
