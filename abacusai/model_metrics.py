@@ -3,7 +3,7 @@ from .return_class import AbstractApiClass
 
 class ModelMetrics(AbstractApiClass):
     """
-
+        Metrics of the trained model.
     """
 
     def __init__(self, client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None):

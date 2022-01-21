@@ -8,8 +8,8 @@ class PredictionClient(BaseApiClient):
     def __init__(self, client_options: ClientOptions = None):
         super().__init__(api_key=None, client_options=client_options, skip_version_check=True)
 
-    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}):
-        ''''''
+    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+        '''Returns the feature group deployed in the feature store project.'''
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
@@ -40,9 +40,13 @@ class PredictionClient(BaseApiClient):
         '''Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).'''
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None) -> Dict:
+    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
         '''Returns a prediction for regression classification'''
-        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class})
+        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested})
+
+    def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict = {}, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
+        '''Returns a prediction from a classification or regression model. Optionally, includes explanations.'''
+        return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested})
 
     def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False) -> io.BytesIO:
         '''Returns a list of anomalies from the training dataset'''
@@ -95,3 +99,7 @@ class PredictionClient(BaseApiClient):
     def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
         '''TODO'''
         return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)
+
+    def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
+        '''TODO'''
+        return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, parse_type=LanguageDetectionPrediction)

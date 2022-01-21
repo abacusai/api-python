@@ -8,7 +8,7 @@ class FeatureGroup(AbstractApiClass):
         A feature group
     """
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, features={}, duplicateFeatures={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, features={}, duplicateFeatures={}, latestFeatureGroupVersion={}):
         super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
@@ -31,6 +31,8 @@ class FeatureGroup(AbstractApiClass):
         self.update_timestamp_key = updateTimestampKey
         self.lookup_keys = lookupKeys
         self.feature_group_use = featureGroupUse
+        self.is_incremental = isIncremental
+        self.merge_config = mergeConfig
         self.features = client._build_class(Feature, features)
         self.duplicate_features = client._build_class(
             Feature, duplicateFeatures)
@@ -38,10 +40,10 @@ class FeatureGroup(AbstractApiClass):
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  use_for_training={repr(self.use_for_training)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  feature_group_use={repr(self.feature_group_use)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  use_for_training={repr(self.use_for_training)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  feature_group_use={repr(self.feature_group_use)},\n  is_incremental={repr(self.is_incremental)},\n  merge_config={repr(self.merge_config)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def to_dict(self):
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'feature_group_use': self.feature_group_use, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'feature_group_use': self.feature_group_use, 'is_incremental': self.is_incremental, 'merge_config': self.merge_config, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def add_to_project(self, project_id, feature_group_type='CUSTOM_TABLE', feature_group_use=None):
         """Adds a feature group to a project,"""
@@ -66,6 +68,10 @@ class FeatureGroup(AbstractApiClass):
     def set_sampling_config(self, sampling_config):
         """Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned."""
         return self.client.set_feature_group_sampling_config(self.feature_group_id, sampling_config)
+
+    def set_merge_config(self, merge_config):
+        """Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset."""
+        return self.client.set_feature_group_merge_config(self.feature_group_id, merge_config)
 
     def set_schema(self, schema):
         """Creates a new schema and points the feature group to the new feature group schema id."""
@@ -115,9 +121,9 @@ class FeatureGroup(AbstractApiClass):
         """Invalidates all streaming data with timestamp before invalidBeforeTimestamp"""
         return self.client.invalidate_streaming_feature_group_data(self.feature_group_id, invalid_before_timestamp)
 
-    def concatenate_data(self, source_feature_group_id, merge_type='UNION', replace_until_timestamp=None):
+    def concatenate_data(self, source_feature_group_id, merge_type='UNION', replace_until_timestamp=None, skip_materialize=False):
         """Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target)."""
-        return self.client.concatenate_feature_group_data(self.feature_group_id, source_feature_group_id, merge_type, replace_until_timestamp)
+        return self.client.concatenate_feature_group_data(self.feature_group_id, source_feature_group_id, merge_type, replace_until_timestamp, skip_materialize)
 
     def refresh(self):
         """Calls describe and refreshes the current object's fields"""
@@ -195,14 +201,6 @@ class FeatureGroup(AbstractApiClass):
     def get_recent_streamed_data(self):
         """Returns recently streamed data to a streaming feature group."""
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
-
-    def create_prediction_metric(self, prediction_metric_config, project_id=None):
-        """Create a prediction metric job description for the given prediction and actual-labels data."""
-        return self.client.create_prediction_metric(self.feature_group_id, prediction_metric_config, project_id)
-
-    def list_prediction_metrics(self, limit=100, start_after_id=None):
-        """List the prediction metrics for a feature group."""
-        return self.client.list_prediction_metrics(self.feature_group_id, limit, start_after_id)
 
     def upsert_data(self, streaming_token, data):
         """Updates new data into the feature group for a given lookup key recordId."""

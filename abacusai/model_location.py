@@ -3,7 +3,7 @@ from .return_class import AbstractApiClass
 
 class ModelLocation(AbstractApiClass):
     """
-
+        Location information for plug and play model.
     """
 
     def __init__(self, client, location=None, artifactNames=None):

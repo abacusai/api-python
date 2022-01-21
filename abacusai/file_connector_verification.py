@@ -3,7 +3,7 @@ from .return_class import AbstractApiClass
 
 class FileConnectorVerification(AbstractApiClass):
     """
-
+        To verify the file connector
     """
 
     def __init__(self, client, verified=None, writePermission=None):

@@ -74,6 +74,18 @@ class Deployment(AbstractApiClass):
         """Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted."""
         return self.client.delete_deployment(self.deployment_id)
 
+    def set_feature_group_export_file_connector_output(self, output_format=None, output_location=None):
+        """Sets the export output for the Feature Group Deployment to be a file connector."""
+        return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, output_format, output_location)
+
+    def set_feature_group_export_database_connector_output(self, database_connector_id=None, object_name=None, write_mode=None, database_feature_mapping=None, id_column=None):
+        """Sets the export output for the Feature Group Deployment to be a Database connector."""
+        return self.client.set_deployment_feature_group_export_database_connector_output(self.deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
+
+    def remove_feature_group_export_output(self):
+        """Removes the export type that is set for the Feature Group Deployment"""
+        return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
+
     def create_batch_prediction(self, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None, refresh_schedule=None, csv_input_prefix=None, csv_prediction_prefix=None, csv_explanations_prefix=None):
         """Creates a batch prediction job description for the given deployment."""
         return self.client.create_batch_prediction(self.deployment_id, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix)

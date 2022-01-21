@@ -52,7 +52,3 @@ class ModelMonitor(AbstractApiClass):
     def delete(self):
         """Deletes the specified model monitor and all its versions."""
         return self.client.delete_model_monitor(self.model_monitor_id)
-
-    def set_alert_config(self, alert_config):
-        """Sets the alert configuration associated with a model monitor."""
-        return self.client.set_model_monitor_alert_config(self.model_monitor_id, alert_config)

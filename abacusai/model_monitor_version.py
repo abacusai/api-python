@@ -46,6 +46,27 @@ class ModelMonitorVersion(AbstractApiClass):
         """Gets the feature drift associated with a single feature in an output feature group from a prediction."""
         return self.client.get_drift_for_feature(self.model_monitor_version, feature_name)
 
-    def get_outliers_for_feature(self, feature_name):
-        """Gets the feature drift associated with a single feature in an output feature group from a prediction."""
+    def get_outliers_for_feature(self, feature_name=None):
+        """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction."""
         return self.client.get_outliers_for_feature(self.model_monitor_version, feature_name)
+
+    def wait_for_monitor(self, timeout=1200):
+        """
+        A waiting call until model monitor version is ready.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+
+        Returns:
+            None
+        """
+        return self.client._poll(self, {'PENDING', 'MONITORING'}, timeout=timeout)
+
+    def get_status(self):
+        """
+        Gets the status of the model monitor version.
+
+        Returns:
+            Enum (string): A string describing the status of the model monitor version, for e.g., pending, complete, etc.
+            """
+        return self.describe().status

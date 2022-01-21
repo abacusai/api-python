@@ -23,16 +23,3 @@ class PredictionMetricVersion(AbstractApiClass):
 
     def to_dict(self):
         return {'created_at': self.created_at, 'error': self.error, 'feature_group_version': self.feature_group_version, 'prediction_metric_completed_at': self.prediction_metric_completed_at, 'prediction_metric_config': self.prediction_metric_config, 'prediction_metric_id': self.prediction_metric_id, 'prediction_metric_started_at': self.prediction_metric_started_at, 'prediction_metric_version': self.prediction_metric_version, 'status': self.status}
-
-    def refresh(self):
-        """Calls describe and refreshes the current object's fields"""
-        self.__dict__.update(self.describe().__dict__)
-        return self
-
-    def describe(self):
-        """Retrieves a full description of the specified prediction metric version"""
-        return self.client.describe_prediction_metric_version(self.prediction_metric_version)
-
-    def delete(self):
-        """Removes an existing prediction metric version."""
-        return self.client.delete_prediction_metric_version(self.prediction_metric_version)

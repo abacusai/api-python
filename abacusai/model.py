@@ -11,11 +11,12 @@ class Model(AbstractApiClass):
         A model
     """
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, location={}, refreshSchedules={}, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, location={}, refreshSchedules={}, latestModelVersion={}):
         super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
         self.model_config = modelConfig
+        self.model_prediction_config = modelPredictionConfig
         self.created_at = createdAt
         self.project_id = projectId
         self.shared = shared
@@ -31,10 +32,10 @@ class Model(AbstractApiClass):
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_model_version={repr(self.latest_model_version)})"
 
     def to_dict(self):
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
     def refresh(self):
         """Calls describe and refreshes the current object's fields"""
@@ -56,6 +57,10 @@ class Model(AbstractApiClass):
     def set_training_config(self, training_config):
         """Edits the default model training config"""
         return self.client.set_model_training_config(self.model_id, training_config)
+
+    def set_prediction_params(self, prediction_config):
+        """Sets the model prediction config for the model"""
+        return self.client.set_model_prediction_params(self.model_id, prediction_config)
 
     def get_metrics(self, model_version=None, baseline_metrics=False):
         """Retrieves a full list of the metrics for the specified model."""

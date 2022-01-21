@@ -30,6 +30,7 @@ from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
+from .language_detection_prediction import LanguageDetectionPrediction
 from .model import Model
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
@@ -38,8 +39,6 @@ from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
 from .nlp_sentiment_prediction import NlpSentimentPrediction
 from .organization_group import OrganizationGroup
-from .prediction_metric import PredictionMetric
-from .prediction_metric_version import PredictionMetricVersion
 from .project import Project
 from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
@@ -107,7 +106,7 @@ class ApiException(Exception):
 
 
 class BaseApiClient:
-    client_version = '0.32.14'
+    client_version = '0.33.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -432,12 +431,20 @@ class ApiClient(BaseApiClient):
         '''
         return self._call_api('createSamplingFeatureGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tableName': table_name, 'samplingConfig': sampling_config, 'description': description}, parse_type=FeatureGroup)
 
+    def create_merge_feature_group(self, source_feature_group_id: str, table_name: str, merge_config: dict, description: str = None) -> FeatureGroup:
+        '''Creates a new feature group defined as the union of other feature group versions.'''
+        return self._call_api('createMergeFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'mergeConfig': merge_config, 'description': description}, parse_type=FeatureGroup)
+
     def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: dict) -> FeatureGroup:
         '''Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
         Currently, sampling is only for Sampling FeatureGroups, so this API only allows calling on that kind of FeatureGroup.
         '''
         return self._call_api('setFeatureGroupSamplingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'samplingConfig': sampling_config}, parse_type=FeatureGroup)
+
+    def set_feature_group_merge_config(self, feature_group_id: str, merge_config: dict) -> None:
+        '''Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.'''
+        return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config})
 
     def set_feature_group_schema(self, feature_group_id: str, schema: list):
         '''Creates a new schema and points the feature group to the new feature group schema id.'''
@@ -495,9 +502,9 @@ class ApiClient(BaseApiClient):
         '''Invalidates all streaming data with timestamp before invalidBeforeTimestamp'''
         return self._call_api('invalidateStreamingFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'invalidBeforeTimestamp': invalid_before_timestamp})
 
-    def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None):
+    def concatenate_feature_group_data(self, feature_group_id: str, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None, skip_materialize: bool = False):
         '''Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).'''
-        return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'replaceUntilTimestamp': replace_until_timestamp})
+        return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'replaceUntilTimestamp': replace_until_timestamp, 'skipMaterialize': skip_materialize})
 
     def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
         '''Describe a Feature Group.'''
@@ -611,9 +618,9 @@ class ApiClient(BaseApiClient):
         '''Marks an upload process as complete.'''
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None) -> Dataset:
+    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, merge_config: dict = None) -> Dataset:
         '''Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.'''
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'mergeConfig': merge_config}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         '''Creates a new version of the specified dataset.'''
@@ -759,9 +766,9 @@ class ApiClient(BaseApiClient):
         '''Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.'''
         return self._call_api('describeUpload', 'GET', query_params={'uploadId': upload_id}, parse_type=Upload)
 
-    def list_datasets(self, limit: int = 100, start_after_id: str = None) -> List[Dataset]:
+    def list_datasets(self, limit: int = 100, start_after_id: str = None, exclude_streaming: bool = False) -> List[Dataset]:
         '''Retrieves a list of all of the datasets in the organization.'''
-        return self._call_api('listDatasets', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Dataset)
+        return self._call_api('listDatasets', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'excludeStreaming': exclude_streaming}, parse_type=Dataset)
 
     def describe_dataset(self, dataset_id: str) -> Dataset:
         '''Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.'''
@@ -853,6 +860,10 @@ class ApiClient(BaseApiClient):
         '''Edits the default model training config'''
         return self._call_api('setModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
 
+    def set_model_prediction_params(self, model_id: str, prediction_config: dict) -> Model:
+        '''Sets the model prediction config for the model'''
+        return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
+
     def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False) -> ModelMetrics:
         '''Retrieves a full list of the metrics for the specified model.
 
@@ -920,10 +931,6 @@ class ApiClient(BaseApiClient):
         '''Deletes the specified model monitor version.'''
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
 
-    def set_model_monitor_alert_config(self, model_monitor_id: str, alert_config: dict) -> ModelMonitor:
-        '''Sets the alert configuration associated with a model monitor.'''
-        return self._call_api('setModelMonitorAlertConfig', 'POST', query_params={}, body={'modelMonitorId': model_monitor_id, 'alertConfig': alert_config}, parse_type=ModelMonitor)
-
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         '''Returns monitoring logs for the model.'''
         return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
@@ -932,16 +939,16 @@ class ApiClient(BaseApiClient):
         '''Gets the feature drift associated with a single feature in an output feature group from a prediction.'''
         return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
 
-    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
-        '''Gets the feature drift associated with a single feature in an output feature group from a prediction.'''
+    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str = None) -> Dict:
+        '''Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.'''
         return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
 
-    def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True) -> Deployment:
+    def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True) -> Deployment:
         '''Creates a deployment with the specified name and description for the specified model or feature group.
 
         A Deployment makes the trained model or feature group available for prediction requests.
         '''
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str) -> DeploymentAuthToken:
         '''Creates a deployment token for the specified project.
@@ -1004,12 +1011,24 @@ class ApiClient(BaseApiClient):
         '''Deletes the specified deployment token.'''
         return self._call_api('deleteDeploymentToken', 'DELETE', query_params={'deploymentToken': deployment_token})
 
-    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = []) -> RefreshPolicy:
+    def set_deployment_feature_group_export_file_connector_output(self, deployment_id: str, output_format: str = None, output_location: str = None):
+        '''Sets the export output for the Feature Group Deployment to be a file connector.'''
+        return self._call_api('setDeploymentFeatureGroupExportFileConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'outputFormat': output_format, 'outputLocation': output_location})
+
+    def set_deployment_feature_group_export_database_connector_output(self, deployment_id: str, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None):
+        '''Sets the export output for the Feature Group Deployment to be a Database connector.'''
+        return self._call_api('setDeploymentFeatureGroupExportDatabaseConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column})
+
+    def remove_deployment_feature_group_export_output(self, deployment_id: str):
+        '''Removes the export type that is set for the Feature Group Deployment'''
+        return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
+
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = []) -> RefreshPolicy:
         '''Creates a refresh policy with a particular cron pattern and refresh type.
 
         A refresh policy allows for the scheduling of a particular set of actions at regular intervals. This can be useful for periodically updated data which needs to be re-imported into the project for re-training.
         '''
-        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids}, parse_type=RefreshPolicy)
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids}, parse_type=RefreshPolicy)
 
     def delete_refresh_policy(self, refresh_policy_id: str):
         '''Delete a refresh policy'''
@@ -1047,8 +1066,8 @@ class ApiClient(BaseApiClient):
         '''Update the name or cron string of a  refresh policy'''
         return self._call_api('updateRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id, 'name': name, 'cron': cron}, parse_type=RefreshPolicy)
 
-    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}):
-        ''''''
+    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+        '''Returns the feature group deployed in the feature store project.'''
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
@@ -1079,9 +1098,13 @@ class ApiClient(BaseApiClient):
         '''Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).'''
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None) -> Dict:
+    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
         '''Returns a prediction for regression classification'''
-        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class})
+        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested})
+
+    def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict = {}, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
+        '''Returns a prediction from a classification or regression model. Optionally, includes explanations.'''
+        return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested})
 
     def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False) -> io.BytesIO:
         '''Returns a list of anomalies from the training dataset'''
@@ -1135,40 +1158,9 @@ class ApiClient(BaseApiClient):
         '''TODO'''
         return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)
 
-    def create_prediction_metric(self, feature_group_id: str, prediction_metric_config: dict, project_id: str = None) -> PredictionMetric:
-        '''Create a prediction metric job description for the given prediction and actual-labels data.'''
-        return self._call_api('createPredictionMetric', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'predictionMetricConfig': prediction_metric_config, 'projectId': project_id}, parse_type=PredictionMetric)
-
-    def describe_prediction_metric(self, prediction_metric_id: str) -> PredictionMetric:
-        '''Describe a Prediction Metric.'''
-        return self._call_api('describePredictionMetric', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id}, parse_type=PredictionMetric)
-
-    def delete_prediction_metric(self, prediction_metric_id: str):
-        '''Removes an existing PredictionMetric.'''
-        return self._call_api('deletePredictionMetric', 'DELETE', query_params={'predictionMetricId': prediction_metric_id})
-
-    def list_prediction_metrics(self, feature_group_id: str, limit: int = 100, start_after_id: str = None) -> List[PredictionMetric]:
-        '''List the prediction metrics for a feature group.'''
-        return self._call_api('listPredictionMetrics', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=PredictionMetric)
-
-    def run_prediction_metric(self, prediction_metric_id: str) -> PredictionMetricVersion:
-        '''Creates a new prediction metrics job run for the given prediction metric job description, and starts that job.
-
-        Configures and starts the computations running to compute the prediciton metric.
-        '''
-        return self._call_api('runPredictionMetric', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id}, parse_type=PredictionMetricVersion)
-
-    def describe_prediction_metric_version(self, prediction_metric_version: str) -> PredictionMetricVersion:
-        '''Retrieves a full description of the specified prediction metric version'''
-        return self._call_api('describePredictionMetricVersion', 'POST', query_params={}, body={'predictionMetricVersion': prediction_metric_version}, parse_type=PredictionMetricVersion)
-
-    def delete_prediction_metric_version(self, prediction_metric_version: str):
-        '''Removes an existing prediction metric version.'''
-        return self._call_api('deletePredictionMetricVersion', 'DELETE', query_params={'predictionMetricVersion': prediction_metric_version})
-
-    def list_prediction_metric_versions(self, prediction_metric_id: str, limit: int = 100, start_after_id: str = None) -> List[PredictionMetricVersion]:
-        '''List the prediction metric versions for a prediction metric.'''
-        return self._call_api('listPredictionMetricVersions', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=PredictionMetricVersion)
+    def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
+        '''TODO'''
+        return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, parse_type=LanguageDetectionPrediction)
 
     def create_batch_prediction(self, deployment_id: str, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         '''Creates a batch prediction job description for the given deployment.'''
