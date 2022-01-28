@@ -23,3 +23,24 @@ class PredictionMetricVersion(AbstractApiClass):
 
     def to_dict(self):
         return {'created_at': self.created_at, 'error': self.error, 'feature_group_version': self.feature_group_version, 'prediction_metric_completed_at': self.prediction_metric_completed_at, 'prediction_metric_config': self.prediction_metric_config, 'prediction_metric_id': self.prediction_metric_id, 'prediction_metric_started_at': self.prediction_metric_started_at, 'prediction_metric_version': self.prediction_metric_version, 'status': self.status}
+
+    def wait_for_prediction_metric_version(self, timeout=1200):
+        """
+        A waiting call until the prediction metric version is ready.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+
+        Returns:
+            None
+        """
+        return self.client._poll(self, {'PENDING', 'RUNNING'}, timeout=timeout)
+
+    def get_status(self):
+        """
+        Get the lifecycle status of this version.
+
+        Returns:
+            Enum (string): An enum value of the lifecycle status of this version.
+        """
+        return self.describe().status

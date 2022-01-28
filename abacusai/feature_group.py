@@ -203,7 +203,7 @@ class FeatureGroup(AbstractApiClass):
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
 
     def upsert_data(self, streaming_token, data):
-        """Updates new data into the feature group for a given lookup key recordId."""
+        """Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group."""
         return self.client.upsert_data(self.feature_group_id, streaming_token, data)
 
     def append_data(self, streaming_token, data):

@@ -3,7 +3,7 @@ from .return_class import AbstractApiClass
 
 class FileConnectorInstructions(AbstractApiClass):
     """
-
+        An object with full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
     """
 
     def __init__(self, client, verified=None, writePermission=None, authOptions=None):

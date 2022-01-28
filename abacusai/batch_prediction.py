@@ -133,3 +133,16 @@ class BatchPrediction(AbstractApiClass):
             List (RefreshPolicy): A list of refresh policy objects.
         """
         return self.client.list_refresh_policies(batch_prediction_ids=[self.id])
+
+    def describe_output_feature_group(self):
+        """
+        Gets the results feature group for this batch prediction
+
+        Returns:
+            FeatureGroup (object): A feature group object.
+        """
+        if not self.feature_group_table_name:
+            from .client import ApiException
+            raise ApiException(
+                'Batch prediction does not have a feature group output', 409, 'ConflictError')
+        return self.client.describe_feature_group_by_table_name(self.feature_group_table_name)
