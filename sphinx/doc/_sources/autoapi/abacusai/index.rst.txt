@@ -1,0 +1,1485 @@
+:py:mod:`abacusai`
+==================
+
+.. py:module:: abacusai
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   api_key/index.rst
+   application_connector/index.rst
+   batch_prediction/index.rst
+   batch_prediction_version/index.rst
+   categorical_range_violation/index.rst
+   client/index.rst
+   cryptography/index.rst
+   data_filter/index.rst
+   database_connector/index.rst
+   dataset/index.rst
+   dataset_column/index.rst
+   dataset_version/index.rst
+   deployment/index.rst
+   deployment_auth_token/index.rst
+   feature/index.rst
+   feature_drift_summary/index.rst
+   feature_group/index.rst
+   feature_group_export/index.rst
+   feature_group_version/index.rst
+   feature_record/index.rst
+   file_connector/index.rst
+   file_connector_instructions/index.rst
+   file_connector_verification/index.rst
+   function_logs/index.rst
+   language_detection_prediction/index.rst
+   model/index.rst
+   model_location/index.rst
+   model_metrics/index.rst
+   model_monitor/index.rst
+   model_monitor_version/index.rst
+   model_upload/index.rst
+   model_version/index.rst
+   modification_lock_info/index.rst
+   nested_feature/index.rst
+   nlp_sentiment_prediction/index.rst
+   null_violation/index.rst
+   organization_group/index.rst
+   point_in_time_feature/index.rst
+   prediction_client/index.rst
+   prediction_dataset/index.rst
+   prediction_feature_group/index.rst
+   prediction_input/index.rst
+   prediction_metric/index.rst
+   prediction_metric_version/index.rst
+   project/index.rst
+   project_dataset/index.rst
+   project_validation/index.rst
+   range_violation/index.rst
+   refresh_pipeline_run/index.rst
+   refresh_policy/index.rst
+   refresh_schedule/index.rst
+   return_class/index.rst
+   schema/index.rst
+   streaming_auth_token/index.rst
+   streaming_connector/index.rst
+   training_config_options/index.rst
+   type_violation/index.rst
+   upload/index.rst
+   upload_part/index.rst
+   use_case/index.rst
+   use_case_requirements/index.rst
+   user/index.rst
+   user_exception/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.ApiClient
+   abacusai.ClientOptions
+   abacusai.PredictionClient
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.__version__
+
+
+.. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
+   Bases: :py:obj:`BaseApiClient`
+
+   .. py:method:: create_dataset_from_pandas(self, feature_group_table_name, df, name = None)
+
+      Creates a Dataset from a pandas dataframe
+
+
+   .. py:method:: create_dataset_version_from_pandas(self, table_name_or_id, df)
+
+      Updates an existing dataset from a pandas dataframe
+
+
+   .. py:method:: create_model_from_functions(self, project_id, train_function, predict_function, training_input_tables = None)
+
+
+   .. py:method:: add_user_to_organization(self, email)
+
+      Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
+
+
+   .. py:method:: list_api_keys(self)
+
+      Lists all of the user's API keys the user's organization.
+
+
+   .. py:method:: list_organization_users(self)
+
+      Retrieves a list of all users in the organization.
+
+      This method will retrieve a list containing all the users in the organization. The list includes pending users who have been invited to the organization.
+
+
+   .. py:method:: describe_user(self)
+
+      Get the current user's information, such as their name, email, admin status, etc.
+
+
+   .. py:method:: list_organization_groups(self)
+
+      Lists all Organizations Groups within this Organization
+
+
+   .. py:method:: create_organization_group(self, group_name, permissions, default_group = False)
+
+      Creates a new Organization Group.
+
+
+   .. py:method:: describe_organization_group(self, organization_group_id)
+
+      Returns the specific organization group passes in by the user.
+
+
+   .. py:method:: add_organization_group_permission(self, organization_group_id, permission)
+
+      Adds a permission to the specified Organization Group
+
+
+   .. py:method:: remove_organization_group_permission(self, organization_group_id, permission)
+
+      Removes a permission from the specified Organization Group
+
+
+   .. py:method:: delete_organization_group(self, organization_group_id)
+
+      Deletes the specified Organization Group from the organization.
+
+
+   .. py:method:: add_user_to_organization_group(self, organization_group_id, email)
+
+      Adds a user to the specified Organization Group
+
+
+   .. py:method:: remove_user_from_organization_group(self, organization_group_id, email)
+
+      Removes a user from an Organization Group
+
+
+   .. py:method:: set_default_organization_group(self, organization_group_id)
+
+      Sets the default Organization Group that all new users that join an organization are automatically added to
+
+
+   .. py:method:: delete_api_key(self, api_key_id)
+
+      Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.
+
+
+   .. py:method:: remove_user_from_organization(self, email)
+
+      Removes the specified user from the Organization. You can remove yourself, Otherwise you must be an Organization Administrator to use this method to remove other users from the organization.
+
+
+   .. py:method:: create_project(self, name, use_case)
+
+      Creates a project with your specified project name and use case. Creating a project creates a container for all of the datasets and the models that are associated with a particular problem/project that you would like to work on. For example, if you want to create a model to detect fraud, you have to first create a project, upload datasets, create feature groups, and then create one or more models to get predictions for your use case.
+
+
+   .. py:method:: list_use_cases(self)
+
+      Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.
+
+
+   .. py:method:: describe_use_case_requirements(self, use_case)
+
+      This API call returns the feature requirements for a specified use case
+
+
+   .. py:method:: describe_project(self, project_id)
+
+      Returns a description of a project.
+
+
+   .. py:method:: list_projects(self, limit = 100, start_after_id = None)
+
+      Retrieves a list of all projects in the current organization.
+
+
+   .. py:method:: list_project_datasets(self, project_id)
+
+      Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
+
+
+   .. py:method:: get_schema(self, project_id, dataset_id)
+
+      [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
+
+
+   .. py:method:: rename_project(self, project_id, name)
+
+      This method renames a project after it is created.
+
+
+   .. py:method:: delete_project(self, project_id)
+
+      Deletes a specified project from your organization.
+
+      This method deletes the project, trained models and deployments in the specified project. The datasets attached to the specified project remain available for use with other projects in the organization.
+
+      This method will not delete a project that contains active deployments. Be sure to stop all active deployments before you use the delete option.
+
+      Note: All projects, models, and deployments cannot be recovered once they are deleted.
+
+
+   .. py:method:: add_feature_group_to_project(self, feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE', feature_group_use = None)
+
+      Adds a feature group to a project,
+
+
+   .. py:method:: remove_feature_group_from_project(self, feature_group_id, project_id)
+
+      Removes a feature group from a project.
+
+
+   .. py:method:: set_feature_group_type(self, feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE')
+
+      Update the feature group type in a project. The feature group must already be added to the project.
+
+
+   .. py:method:: use_feature_group_for_training(self, feature_group_id, project_id, use_for_training = True)
+
+      Use the feature group for model training input
+
+
+   .. py:method:: set_feature_mapping(self, project_id, feature_group_id, feature_name, feature_mapping, nested_column_name = None)
+
+      Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
+
+
+   .. py:method:: validate_project(self, project_id)
+
+      Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
+
+
+   .. py:method:: set_column_data_type(self, project_id, dataset_id, column, data_type)
+
+      Set a dataset's column type.
+
+
+   .. py:method:: set_column_mapping(self, project_id, dataset_id, column, column_mapping)
+
+      Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
+
+
+   .. py:method:: remove_column_mapping(self, project_id, dataset_id, column)
+
+      Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
+
+
+   .. py:method:: create_feature_group(self, table_name, sql, description = None)
+
+      Creates a new feature group from a SQL statement.
+
+
+   .. py:method:: create_feature_group_from_function(self, table_name, function_source_code, function_name, input_feature_groups = [], description = None)
+
+      Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
+
+      If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
+      (pandas in the case of Python) with the materialized feature groups for those input feature groups.
+
+      This method expects `function_source_code to be a valid language source file which contains a function named
+      `function_name`. This function needs return a DataFrame when it is executed and this DataFrame will be used
+      as the materialized version of this feature group table.
+
+
+   .. py:method:: create_sampling_feature_group(self, feature_group_id, table_name, sampling_config, description = None)
+
+      Creates a new feature group defined as a sample of rows from another feature group.
+
+      For efficiency, sampling is approximate unless otherwise specified. (E.g. the number of rows may vary slightly from what was requested).
+
+
+   .. py:method:: create_merge_feature_group(self, source_feature_group_id, table_name, merge_config, description = None)
+
+      Creates a new feature group defined as the union of other feature group versions.
+
+
+   .. py:method:: set_feature_group_sampling_config(self, feature_group_id, sampling_config)
+
+      Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
+
+      Currently, sampling is only for Sampling FeatureGroups, so this API only allows calling on that kind of FeatureGroup.
+
+
+   .. py:method:: set_feature_group_merge_config(self, feature_group_id, merge_config)
+
+      Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
+
+
+   .. py:method:: set_feature_group_schema(self, feature_group_id, schema)
+
+      Creates a new schema and points the feature group to the new feature group schema id.
+
+
+   .. py:method:: get_feature_group_schema(self, feature_group_id, project_id = None)
+
+      Returns a schema given a specific FeatureGroup in a project.
+
+
+   .. py:method:: create_feature(self, feature_group_id, name, select_expression)
+
+      Creates a new feature in a Feature Group from a SQL select statement
+
+
+   .. py:method:: add_feature_group_tag(self, feature_group_id, tag)
+
+      Adds a tag to the feature group
+
+
+   .. py:method:: remove_feature_group_tag(self, feature_group_id, tag)
+
+      Removes a tag from the feature group
+
+
+   .. py:method:: create_nested_feature(self, feature_group_id, nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
+
+      Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.
+
+
+   .. py:method:: update_nested_feature(self, feature_group_id, nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
+
+      Updates a previously existing nested feature in a feature group.
+
+
+   .. py:method:: delete_nested_feature(self, feature_group_id, nested_feature_name)
+
+      Delete a nested feature.
+
+
+   .. py:method:: create_point_in_time_feature(self, feature_group_id, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0, expression = None)
+
+      Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
+
+      We use the aggregation keys, and either the lookbackWindowSeconds or the lookbackCount values to perform the window aggregation for every row in the current feature group.
+      If the window is specified in seconds, then all rows in the history table which match the aggregation keys and with historicalTimeFeature >= lookbackStartCount and < the value
+      of the current rows timeFeature are considered. An option lookbackWindowLagSeconds (+ve or -ve) can be used to offset the current value of the timeFeature. If this value
+      is negative, we will look at the future rows in the history table, so care must be taken to make sure that these rows are available in the online context when we are performing
+      a lookup on this feature group. If window is specified in counts, then we order the historical table rows aligning by time and consider rows from the window where
+      the rank order is >= lookbackCount and includes the row just prior to the current one. The lag is specified in term of positions using lookbackUntilPosition.
+
+
+   .. py:method:: update_point_in_time_feature(self, feature_group_id, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, expression = None, new_feature_name = None)
+
+      Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.
+
+
+   .. py:method:: set_feature_type(self, feature_group_id, feature, feature_type)
+
+      Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
+
+
+   .. py:method:: invalidate_streaming_feature_group_data(self, feature_group_id, invalid_before_timestamp)
+
+      Invalidates all streaming data with timestamp before invalidBeforeTimestamp
+
+
+   .. py:method:: concatenate_feature_group_data(self, feature_group_id, source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
+
+      Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).
+
+
+   .. py:method:: describe_feature_group(self, feature_group_id)
+
+      Describe a Feature Group.
+
+
+   .. py:method:: describe_feature_group_by_table_name(self, table_name)
+
+      Describe a Feature Group by the feature group's table name
+
+
+   .. py:method:: set_feature_group_indexing_config(self, feature_group_id, primary_key = None, update_timestamp_key = None, lookup_keys = None)
+
+      Sets various attributes of the feature group used for deployment lookups and streaming updates.
+
+
+   .. py:method:: list_feature_groups(self, limit = 100, start_after_id = None)
+
+      Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.
+
+
+   .. py:method:: list_project_feature_groups(self, project_id, filter_feature_group_use = None)
+
+      List all the feature groups associated with a project
+
+
+   .. py:method:: update_feature_group(self, feature_group_id, description = None)
+
+      Modifies an existing feature group
+
+
+   .. py:method:: update_feature_group_sql_definition(self, feature_group_id, sql)
+
+      Updates the SQL statement for a feature group.
+
+
+   .. py:method:: update_feature_group_function_definition(self, feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None)
+
+      Updates the function definition for a feature group created using createFeatureGroupFromFunction
+
+
+   .. py:method:: update_feature(self, feature_group_id, name, select_expression = None, new_name = None)
+
+      Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
+
+
+   .. py:method:: export_feature_group_version_to_file_connector(self, feature_group_version, location, export_file_format, overwrite = False)
+
+      Export Feature group to File Connector.
+
+
+   .. py:method:: export_feature_group_version_to_database_connector(self, feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None)
+
+      Export Feature group to Database Connector.
+
+
+   .. py:method:: describe_feature_group_export(self, feature_group_export_id)
+
+      A feature group export
+
+
+   .. py:method:: list_feature_group_exports(self, feature_group_id)
+
+      Lists all of the feature group exports for a given feature group
+
+
+   .. py:method:: set_feature_group_modifier_lock(self, feature_group_id, locked = True)
+
+      To lock a feature group to prevent it from being modified.
+
+
+   .. py:method:: list_feature_group_modifiers(self, feature_group_id)
+
+      To list users who can modify a feature group.
+
+
+   .. py:method:: add_user_to_feature_group_modifiers(self, feature_group_id, email)
+
+      Adds user to a feature group.
+
+
+   .. py:method:: add_organization_group_to_feature_group_modifiers(self, feature_group_id, organization_group_id)
+
+      Add Organization to a feature group.
+
+
+   .. py:method:: remove_user_from_feature_group_modifiers(self, feature_group_id, email)
+
+      Removes user from a feature group.
+
+
+   .. py:method:: remove_organization_group_from_feature_group_modifiers(self, feature_group_id, organization_group_id)
+
+      Removes Organization from a feature group.
+
+
+   .. py:method:: delete_feature(self, feature_group_id, name)
+
+      Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.
+
+
+   .. py:method:: delete_feature_group(self, feature_group_id)
+
+      Removes an existing feature group.
+
+
+   .. py:method:: create_feature_group_version(self, feature_group_id)
+
+      Creates a snapshot for a specified feature group.
+
+
+   .. py:method:: get_materialization_logs(self, feature_group_version, stdout = False, stderr = False)
+
+      Returns logs for materialized feature group version.
+
+
+   .. py:method:: list_feature_group_versions(self, feature_group_id, limit = 100, start_after_version = None)
+
+      Retrieves a list of all feature group versions for the specified feature group.
+
+
+   .. py:method:: describe_feature_group_version(self, feature_group_version)
+
+      Get a specific feature group version.
+
+
+   .. py:method:: cancel_upload(self, upload_id)
+
+      Cancels an upload
+
+
+   .. py:method:: upload_part(self, upload_id, part_number, part_data)
+
+      Uploads a part of a large dataset file from your bucket to our system. Our system currently supports a size of up to 5GB for a part of a full file and a size of up to 5TB for the full file. Note that each part must be >=5MB in size, unless it is the last part in the sequence of parts for the full file.
+
+
+   .. py:method:: mark_upload_complete(self, upload_id)
+
+      Marks an upload process as complete.
+
+
+   .. py:method:: create_dataset_from_file_connector(self, name, table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, merge_config = None)
+
+      Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
+
+
+   .. py:method:: create_dataset_version_from_file_connector(self, dataset_id, location = None, file_format = None, csv_delimiter = None)
+
+      Creates a new version of the specified dataset.
+
+
+   .. py:method:: create_dataset_from_database_connector(self, name, table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None)
+
+      Creates a dataset from a Database Connector
+
+
+   .. py:method:: create_dataset_from_application_connector(self, name, table_name, application_connector_id, object_id = None, start_timestamp = None, end_timestamp = None, refresh_schedule = None)
+
+      Creates a dataset from an Application Connector
+
+
+   .. py:method:: create_dataset_version_from_database_connector(self, dataset_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
+
+      Creates a new version of the specified dataset
+
+
+   .. py:method:: create_dataset_version_from_application_connector(self, dataset_id, object_id = None, start_timestamp = None, end_timestamp = None)
+
+      Creates a new version of the specified dataset
+
+
+   .. py:method:: create_dataset_from_upload(self, name, table_name, file_format = None, csv_delimiter = None)
+
+      Creates a dataset and return an upload Id that can be used to upload a file.
+
+
+   .. py:method:: create_dataset_version_from_upload(self, dataset_id, file_format = None)
+
+      Creates a new version of the specified dataset using a local file upload.
+
+
+   .. py:method:: create_streaming_dataset(self, name, table_name, project_id = None, dataset_type = None)
+
+      Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
+
+
+   .. py:method:: snapshot_streaming_data(self, dataset_id)
+
+      Snapshots the current data in the streaming dataset for training.
+
+
+   .. py:method:: set_dataset_column_data_type(self, dataset_id, column, data_type)
+
+      Set a column's type in a specified dataset.
+
+
+   .. py:method:: create_dataset_from_streaming_connector(self, name, table_name, streaming_connector_id, streaming_args = None, refresh_schedule = None)
+
+      Creates a dataset from a Streaming Connector
+
+
+   .. py:method:: set_streaming_retention_policy(self, dataset_id, retention_hours = None, retention_row_count = None)
+
+      Sets the streaming retention policy
+
+
+   .. py:method:: get_dataset_schema(self, dataset_id)
+
+      Retrieves the column schema of a dataset
+
+
+   .. py:method:: get_file_connector_instructions(self, bucket, write_permission = False)
+
+      Retrieves verification information to create a data connector to a cloud storage bucket.
+
+
+   .. py:method:: list_database_connectors(self)
+
+      Retrieves a list of all of the database connectors along with all their attributes.
+
+
+   .. py:method:: list_file_connectors(self)
+
+      Retrieves a list of all connected services in the organization and their current verification status.
+
+
+   .. py:method:: list_database_connector_objects(self, database_connector_id)
+
+      Lists querable objects in the database connector.
+
+
+   .. py:method:: get_database_connector_object_schema(self, database_connector_id, object_name = None)
+
+      Get the schema of an object in an database connector.
+
+
+   .. py:method:: rename_database_connector(self, database_connector_id, name)
+
+      Renames a Database Connector
+
+
+   .. py:method:: rename_application_connector(self, application_connector_id, name)
+
+      Renames an Application Connector
+
+
+   .. py:method:: verify_database_connector(self, database_connector_id)
+
+      Checks to see if Abacus.AI can access the database.
+
+
+   .. py:method:: verify_file_connector(self, bucket)
+
+      Checks to see if Abacus.AI can access the bucket.
+
+
+   .. py:method:: delete_database_connector(self, database_connector_id)
+
+      Delete a database connector.
+
+
+   .. py:method:: delete_application_connector(self, application_connector_id)
+
+      Delete a application connector.
+
+
+   .. py:method:: delete_file_connector(self, bucket)
+
+      Removes a connected service from the specified organization.
+
+
+   .. py:method:: list_application_connectors(self)
+
+      Retrieves a list of all of the application connectors along with all their attributes.
+
+
+   .. py:method:: list_application_connector_objects(self, application_connector_id)
+
+      Lists querable objects in the application connector.
+
+
+   .. py:method:: verify_application_connector(self, application_connector_id)
+
+      Checks to see if Abacus.AI can access the Application.
+
+
+   .. py:method:: set_azure_blob_connection_string(self, bucket, connection_string)
+
+      Authenticates specified Azure Blob Storage bucket using an authenticated Connection String.
+
+
+   .. py:method:: list_streaming_connectors(self)
+
+      Retrieves a list of all of the streaming connectors along with all their attributes.
+
+
+   .. py:method:: create_streaming_token(self)
+
+      Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.
+
+
+   .. py:method:: list_streaming_tokens(self)
+
+      Retrieves a list of all streaming tokens along with their attributes.
+
+
+   .. py:method:: delete_streaming_token(self, streaming_token)
+
+      Deletes the specified streaming token.
+
+
+   .. py:method:: get_recent_feature_group_streamed_data(self, feature_group_id)
+
+      Returns recently streamed data to a streaming feature group.
+
+
+   .. py:method:: list_uploads(self)
+
+      Lists all ongoing uploads in the organization
+
+
+   .. py:method:: describe_upload(self, upload_id)
+
+      Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
+
+
+   .. py:method:: list_datasets(self, limit = 100, start_after_id = None, exclude_streaming = False)
+
+      Retrieves a list of all of the datasets in the organization.
+
+
+   .. py:method:: describe_dataset(self, dataset_id)
+
+      Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
+
+
+   .. py:method:: list_dataset_versions(self, dataset_id, limit = 100, start_after_version = None)
+
+      Retrieves a list of all dataset versions for the specified dataset.
+
+
+   .. py:method:: attach_dataset_to_project(self, dataset_id, project_id, dataset_type)
+
+      [DEPRECATED] Attaches the dataset to the project.
+
+      Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
+
+
+   .. py:method:: remove_dataset_from_project(self, dataset_id, project_id)
+
+      [DEPRECATED] Removes a dataset from a project.
+
+
+   .. py:method:: rename_dataset(self, dataset_id, name)
+
+      Rename a dataset.
+
+
+   .. py:method:: delete_dataset(self, dataset_id)
+
+      Deletes the specified dataset from the organization.
+
+      The dataset cannot be deleted if it is currently attached to a project.
+
+
+   .. py:method:: get_training_config_options(self, project_id)
+
+      Retrieves the full description of the model training configuration options available for the specified project.
+
+      The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
+
+
+   .. py:method:: train_model(self, project_id, name = None, training_config = {}, refresh_schedule = None)
+
+      Trains a model for the specified project.
+
+      Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
+
+
+   .. py:method:: create_model_from_python(self, project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None)
+
+      Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `functionSourceCode` to be a valid language source file which contains the functions named
+      `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+   .. py:method:: list_models(self, project_id)
+
+      Retrieves the list of models in the specified project.
+
+
+   .. py:method:: describe_model(self, model_id)
+
+      Retrieves a full description of the specified model.
+
+
+   .. py:method:: rename_model(self, model_id, name)
+
+      Renames a model
+
+
+   .. py:method:: update_python_model(self, model_id, function_source_code = None, train_function_name = None, predict_function_name = None, training_input_tables = None)
+
+      Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `functionSourceCode` to be a valid language source file which contains the functions named
+      `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+   .. py:method:: set_model_training_config(self, model_id, training_config)
+
+      Edits the default model training config
+
+
+   .. py:method:: set_model_prediction_params(self, model_id, prediction_config)
+
+      Sets the model prediction config for the model
+
+
+   .. py:method:: get_model_metrics(self, model_id, model_version = None, baseline_metrics = False)
+
+      Retrieves a full list of the metrics for the specified model.
+
+      If only the model's unique identifier (modelId) is specified, the latest trained version of model (modelVersion) is used.
+
+
+   .. py:method:: list_model_versions(self, model_id, limit = 100, start_after_version = None)
+
+      Retrieves a list of the version for a given model.
+
+
+   .. py:method:: retrain_model(self, model_id, deployment_ids = [])
+
+      Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
+
+
+   .. py:method:: delete_model(self, model_id)
+
+      Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
+
+
+   .. py:method:: delete_model_version(self, model_version)
+
+      Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
+
+
+   .. py:method:: describe_model_version(self, model_version)
+
+      Retrieves a full description of the specified model version
+
+
+   .. py:method:: get_training_logs(self, model_version, stdout = False, stderr = False)
+
+      Returns training logs for the model.
+
+
+   .. py:method:: create_model_monitor(self, project_id, training_feature_group_id = None, prediction_feature_group_id = None, name = None, refresh_schedule = None)
+
+      Runs a model monitor for the specified project.
+
+
+   .. py:method:: rerun_model_monitor(self, model_monitor_id)
+
+      Reruns the specified model monitor.
+
+
+   .. py:method:: list_model_monitors(self, project_id)
+
+      Retrieves the list of models monitors in the specified project.
+
+
+   .. py:method:: describe_model_monitor(self, model_monitor_id)
+
+      Retrieves a full description of the specified model monitor.
+
+
+   .. py:method:: list_model_monitor_versions(self, model_monitor_id, limit = 100, start_after_version = None)
+
+      Retrieves a list of the versions for a given model monitor.
+
+
+   .. py:method:: describe_model_monitor_version(self, model_monitor_version)
+
+      Retrieves a full description of the specified model monitor version
+
+
+   .. py:method:: rename_model_monitor(self, model_monitor_id, name)
+
+      Renames a model monitor
+
+
+   .. py:method:: delete_model_monitor(self, model_monitor_id)
+
+      Deletes the specified model monitor and all its versions.
+
+
+   .. py:method:: delete_model_monitor_version(self, model_monitor_version)
+
+      Deletes the specified model monitor version.
+
+
+   .. py:method:: get_model_monitoring_logs(self, model_monitor_version, stdout = False, stderr = False)
+
+      Returns monitoring logs for the model.
+
+
+   .. py:method:: get_drift_for_feature(self, model_monitor_version, feature_name)
+
+      Gets the feature drift associated with a single feature in an output feature group from a prediction.
+
+
+   .. py:method:: get_outliers_for_feature(self, model_monitor_version, feature_name = None)
+
+      Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
+
+
+   .. py:method:: create_deployment(self, name = None, model_id = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True)
+
+      Creates a deployment with the specified name and description for the specified model or feature group.
+
+      A Deployment makes the trained model or feature group available for prediction requests.
+
+
+   .. py:method:: create_deployment_token(self, project_id)
+
+      Creates a deployment token for the specified project.
+
+      Deployment tokens are used to authenticate requests to the prediction APIs and are scoped on the project level.
+
+
+   .. py:method:: describe_deployment(self, deployment_id)
+
+      Retrieves a full description of the specified deployment.
+
+
+   .. py:method:: list_deployments(self, project_id)
+
+      Retrieves a list of all deployments in the specified project.
+
+
+   .. py:method:: list_deployment_tokens(self, project_id)
+
+      Retrieves a list of all deployment tokens in the specified project.
+
+
+   .. py:method:: update_deployment(self, deployment_id, description = None)
+
+      Updates a deployment's description.
+
+
+   .. py:method:: rename_deployment(self, deployment_id, name)
+
+      Updates a deployment's name and/or description.
+
+
+   .. py:method:: set_auto_deployment(self, deployment_id, enable = None)
+
+      Enable/Disable auto deployment for the specified deployment.
+
+      When a model is scheduled to retrain, deployments with this enabled will be marked to automatically promote the new model
+      version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version
+      will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not,
+      it will be marked as a failed model version promotion with an error indicating poor metrics performance.
+
+
+   .. py:method:: set_deployment_model_version(self, deployment_id, model_version)
+
+      Promotes a Model Version to be served in the Deployment
+
+
+   .. py:method:: set_deployment_feature_group_version(self, deployment_id, feature_group_version)
+
+      Promotes a Feature Group Version to be served in the Deployment
+
+
+   .. py:method:: start_deployment(self, deployment_id)
+
+      Restarts the specified deployment that was previously suspended.
+
+
+   .. py:method:: stop_deployment(self, deployment_id)
+
+      Stops the specified deployment.
+
+
+   .. py:method:: delete_deployment(self, deployment_id)
+
+      Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
+
+
+   .. py:method:: delete_deployment_token(self, deployment_token)
+
+      Deletes the specified deployment token.
+
+
+   .. py:method:: set_deployment_feature_group_export_file_connector_output(self, deployment_id, output_format = None, output_location = None)
+
+      Sets the export output for the Feature Group Deployment to be a file connector.
+
+
+   .. py:method:: set_deployment_feature_group_export_database_connector_output(self, deployment_id, database_connector_id = None, object_name = None, write_mode = None, database_feature_mapping = None, id_column = None)
+
+      Sets the export output for the Feature Group Deployment to be a Database connector.
+
+
+   .. py:method:: remove_deployment_feature_group_export_output(self, deployment_id)
+
+      Removes the export type that is set for the Feature Group Deployment
+
+
+   .. py:method:: create_refresh_policy(self, name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [])
+
+      Creates a refresh policy with a particular cron pattern and refresh type.
+
+      A refresh policy allows for the scheduling of a particular set of actions at regular intervals. This can be useful for periodically updated data which needs to be re-imported into the project for re-training.
+
+
+   .. py:method:: delete_refresh_policy(self, refresh_policy_id)
+
+      Delete a refresh policy
+
+
+   .. py:method:: describe_refresh_policy(self, refresh_policy_id)
+
+      Retrieve a single refresh policy
+
+
+   .. py:method:: describe_refresh_pipeline_run(self, refresh_pipeline_run_id)
+
+      Retrieve a single refresh pipeline run
+
+
+   .. py:method:: list_refresh_policies(self, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [])
+
+      List the refresh policies for the organization
+
+
+   .. py:method:: list_refresh_pipeline_runs(self, refresh_policy_id)
+
+      List the the times that the refresh policy has been run
+
+
+   .. py:method:: pause_refresh_policy(self, refresh_policy_id)
+
+      Pauses a refresh policy
+
+
+   .. py:method:: resume_refresh_policy(self, refresh_policy_id)
+
+      Resumes a refresh policy
+
+
+   .. py:method:: run_refresh_policy(self, refresh_policy_id)
+
+      Force a run of the refresh policy.
+
+
+   .. py:method:: update_refresh_policy(self, refresh_policy_id, name = None, cron = None)
+
+      Update the name or cron string of a  refresh policy
+
+
+   .. py:method:: lookup_features(self, deployment_token, deployment_id, query_data = {})
+
+      Returns the feature group deployed in the feature store project.
+
+
+   .. py:method:: predict(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a prediction for Predictive Modeling
+
+
+   .. py:method:: predict_multiple(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a list of predictions for Predictive Modeling
+
+
+   .. py:method:: predict_from_datasets(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a list of predictions for Predictive Modeling
+
+
+   .. py:method:: predict_lead(self, deployment_token, deployment_id, query_data)
+
+      Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
+
+
+   .. py:method:: predict_churn(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability of a user to churn out in response to his/her interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
+
+
+   .. py:method:: predict_takeover(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: predict_fraud(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, explain_predictions = False, fixed_features = None, nested = None)
+
+      Returns a prediction for regression classification
+
+
+   .. py:method:: predict_target(self, deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None)
+
+      Returns a prediction from a classification or regression model. Optionally, includes explanations.
+
+
+   .. py:method:: get_anomalies(self, deployment_token, deployment_id, threshold = None, histogram = False)
+
+      Returns a list of anomalies from the training dataset
+
+
+   .. py:method:: is_anomaly(self, deployment_token, deployment_id, query_data = None)
+
+      Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: get_forecast(self, deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
+
+      Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
+
+
+   .. py:method:: get_k_nearest(self, deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
+
+      Returns the k nearest neighbors for the provided embedding vector.
+
+
+   .. py:method:: get_multiple_k_nearest(self, deployment_token, deployment_id, queries)
+
+      Returns the k nearest neighbors for the queries provided
+
+
+   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = 0.5)
+
+      Returns a list of scored labels from
+
+
+   .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
+
+      Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
+
+
+   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+
+      Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+
+      Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_related_items(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
+
+      Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_feature_group_rows(self, deployment_token, deployment_id, query_data)
+
+
+   .. py:method:: get_search_results(self, deployment_token, deployment_id, query_data)
+
+      TODO
+
+
+   .. py:method:: get_sentiment(self, deployment_token, deployment_id, document)
+
+      TODO
+
+
+   .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
+
+      TODO
+
+
+   .. py:method:: create_batch_prediction(self, deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
+
+      Creates a batch prediction job description for the given deployment.
+
+
+   .. py:method:: start_batch_prediction(self, batch_prediction_id)
+
+      Creates a new batch prediction version job for a given batch prediction job description
+
+
+   .. py:method:: download_batch_prediction_result_chunk(self, batch_prediction_version, offset = 0, chunk_size = 10485760)
+
+      Returns a stream containing the batch prediction results
+
+
+   .. py:method:: get_batch_prediction_connector_errors(self, batch_prediction_version)
+
+      Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
+
+
+   .. py:method:: list_batch_predictions(self, project_id)
+
+      Retrieves a list for the batch predictions in the project
+
+
+   .. py:method:: describe_batch_prediction(self, batch_prediction_id)
+
+      Describes the batch prediction
+
+
+   .. py:method:: list_batch_prediction_versions(self, batch_prediction_id, limit = 100, start_after_version = None)
+
+      Retrieves a list of versions of a given batch prediction
+
+
+   .. py:method:: describe_batch_prediction_version(self, batch_prediction_version)
+
+      Describes a batch prediction version
+
+
+   .. py:method:: update_batch_prediction(self, batch_prediction_id, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
+
+      Updates a batch prediction job description
+
+
+   .. py:method:: set_batch_prediction_file_connector_output(self, batch_prediction_id, output_format = None, output_location = None)
+
+      Updates the file connector output configuration of the batch prediction
+
+
+   .. py:method:: set_batch_prediction_database_connector_output(self, batch_prediction_id, database_connector_id = None, database_output_config = None)
+
+      Updates the database connector output configuration of the batch prediction
+
+
+   .. py:method:: set_batch_prediction_feature_group_output(self, batch_prediction_id, table_name)
+
+      Creates a feature group and sets it to be the batch prediction output
+
+
+   .. py:method:: set_batch_prediction_output_to_console(self, batch_prediction_id)
+
+      Sets the batch prediction output to the console, clearing both the file connector and database connector config
+
+
+   .. py:method:: set_batch_prediction_dataset(self, batch_prediction_id, dataset_type, dataset_id = None)
+
+      [Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects
+
+
+   .. py:method:: set_batch_prediction_feature_group(self, batch_prediction_id, feature_group_type, feature_group_id = None)
+
+      Sets the batch prediction input feature group.
+
+
+   .. py:method:: set_batch_prediction_dataset_remap(self, batch_prediction_id, dataset_id_remap)
+
+      For the purpose of this batch prediction, will swap out datasets in the input feature groups
+
+
+   .. py:method:: delete_batch_prediction(self, batch_prediction_id)
+
+      Deletes a batch prediction
+
+
+   .. py:method:: add_user_item_interaction(self, streaming_token, dataset_id, timestamp, user_id, item_id, event_type, additional_attributes)
+
+      Adds a user-item interaction record (data row) to a streaming dataset.
+
+
+   .. py:method:: upsert_user_attributes(self, streaming_token, dataset_id, user_id, user_attributes)
+
+      Adds a user attributes record (data row) to a streaming dataset.
+
+      Either the streaming dataset ID or the project ID is required.
+
+
+   .. py:method:: upsert_item_attributes(self, streaming_token, dataset_id, item_id, item_attributes)
+
+      Adds an item attributes record (data row) to a streaming dataset.
+
+      Either the streaming dataset ID or the project ID is required.
+
+
+   .. py:method:: add_multiple_user_item_interactions(self, streaming_token, dataset_id, interactions)
+
+      Adds a user-item interaction record (data row) to a streaming dataset.
+
+
+   .. py:method:: upsert_multiple_user_attributes(self, streaming_token, dataset_id, upserts)
+
+      Adds multiple user attributes records (data row) to a streaming dataset.
+
+      The streaming dataset ID is required.
+
+
+   .. py:method:: upsert_multiple_item_attributes(self, streaming_token, dataset_id, upserts)
+
+      Adds multiple item attributes records (data row) to a streaming dataset.
+
+      The streaming dataset ID is required.
+
+
+   .. py:method:: upsert_item_embeddings(self, streaming_token, model_id, item_id, vector, catalog_id = None)
+
+      Upserts an embedding vector for an item id for a model_id.
+
+
+   .. py:method:: delete_item_embeddings(self, streaming_token, model_id, item_ids, catalog_id = None)
+
+      Deletes knn embeddings for a list of item ids for a model_id.
+
+
+   .. py:method:: upsert_multiple_item_embeddings(self, streaming_token, model_id, upserts, catalog_id = None)
+
+      Upserts a knn embedding for multiple item ids for a model_id.
+
+
+   .. py:method:: upsert_data(self, feature_group_id, streaming_token, data)
+
+      Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+
+
+   .. py:method:: append_data(self, feature_group_id, streaming_token, data)
+
+      Appends new data into the feature group for a given lookup key recordId.
+
+
+
+.. py:exception:: ApiException(message, http_status, exception=None)
+
+   Bases: :py:obj:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+   .. py:method:: __str__(self)
+
+      Return str(self).
+
+
+
+.. py:class:: ClientOptions(exception_on_404=True, server='https://api.abacus.ai')
+
+
+.. py:class:: PredictionClient(client_options = None)
+
+   Bases: :py:obj:`abacusai.client.BaseApiClient`
+
+   .. py:method:: lookup_features(self, deployment_token, deployment_id, query_data = {})
+
+      Returns the feature group deployed in the feature store project.
+
+
+   .. py:method:: predict(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a prediction for Predictive Modeling
+
+
+   .. py:method:: predict_multiple(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a list of predictions for Predictive Modeling
+
+
+   .. py:method:: predict_from_datasets(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a list of predictions for Predictive Modeling
+
+
+   .. py:method:: predict_lead(self, deployment_token, deployment_id, query_data)
+
+      Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
+
+
+   .. py:method:: predict_churn(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability of a user to churn out in response to his/her interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
+
+
+   .. py:method:: predict_takeover(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: predict_fraud(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, explain_predictions = False, fixed_features = None, nested = None)
+
+      Returns a prediction for regression classification
+
+
+   .. py:method:: predict_target(self, deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None)
+
+      Returns a prediction from a classification or regression model. Optionally, includes explanations.
+
+
+   .. py:method:: get_anomalies(self, deployment_token, deployment_id, threshold = None, histogram = False)
+
+      Returns a list of anomalies from the training dataset
+
+
+   .. py:method:: is_anomaly(self, deployment_token, deployment_id, query_data = None)
+
+      Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: get_forecast(self, deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
+
+      Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
+
+
+   .. py:method:: get_k_nearest(self, deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
+
+      Returns the k nearest neighbors for the provided embedding vector.
+
+
+   .. py:method:: get_multiple_k_nearest(self, deployment_token, deployment_id, queries)
+
+      Returns the k nearest neighbors for the queries provided
+
+
+   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = 0.5)
+
+      Returns a list of scored labels from
+
+
+   .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
+
+      Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
+
+
+   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+
+      Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+
+      Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_related_items(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
+
+      Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_feature_group_rows(self, deployment_token, deployment_id, query_data)
+
+
+   .. py:method:: get_search_results(self, deployment_token, deployment_id, query_data)
+
+      TODO
+
+
+   .. py:method:: get_sentiment(self, deployment_token, deployment_id, document)
+
+      TODO
+
+
+   .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
+
+      TODO
+
+
+
+.. py:data:: __version__
+   :annotation: = 0.33.1
+
+   
+

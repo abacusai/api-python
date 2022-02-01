@@ -1,0 +1,82 @@
+:py:mod:`abacusai.batch_prediction_version`
+===========================================
+
+.. py:module:: abacusai.batch_prediction_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.batch_prediction_version.BatchPredictionVersion
+
+
+
+
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Batch Prediction Version
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: download_batch_prediction_result_chunk(self, offset=0, chunk_size=10485760)
+
+      Returns a stream containing the batch prediction results
+
+
+   .. py:method:: get_batch_prediction_connector_errors(self)
+
+      Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Describes a batch prediction version
+
+
+   .. py:method:: download_result_to_file(self, file)
+
+      Downloads the batch prediction version in a local file.
+
+      :param file: A file object opened in a binary mode e.g., file=open('/tmp/output', 'wb').
+      :type file: file object
+
+      :returns: None
+
+
+   .. py:method:: wait_for_predictions(self, timeout=1200)
+
+      A waiting call until batch prediction version is ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the batch prediction version.
+
+      :returns: A string describing the status of the batch prediction version, for e.g., pending, complete, etc.
+      :rtype: Enum (string)
+
+
+

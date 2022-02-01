@@ -1,0 +1,44 @@
+:py:mod:`abacusai.refresh_pipeline_run`
+=======================================
+
+.. py:module:: abacusai.refresh_pipeline_run
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.refresh_pipeline_run.RefreshPipelineRun
+
+
+
+
+.. py:class:: RefreshPipelineRun(client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, modelVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A refresh policy run or a project refresh run.
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieve a single refresh pipeline run
+
+
+

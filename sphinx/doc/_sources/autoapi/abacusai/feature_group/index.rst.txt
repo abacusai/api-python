@@ -1,0 +1,273 @@
+:py:mod:`abacusai.feature_group`
+================================
+
+.. py:module:: abacusai.feature_group
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group.FeatureGroup
+
+
+
+
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, features={}, duplicateFeatures={}, latestFeatureGroupVersion={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A feature group
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: add_to_project(self, project_id, feature_group_type='CUSTOM_TABLE', feature_group_use=None)
+
+      Adds a feature group to a project,
+
+
+   .. py:method:: remove_from_project(self, project_id)
+
+      Removes a feature group from a project.
+
+
+   .. py:method:: set_type(self, project_id, feature_group_type='CUSTOM_TABLE')
+
+      Update the feature group type in a project. The feature group must already be added to the project.
+
+
+   .. py:method:: use_for_training(self, project_id, use_for_training=True)
+
+      Use the feature group for model training input
+
+
+   .. py:method:: create_sampling(self, table_name, sampling_config, description=None)
+
+      Creates a new feature group defined as a sample of rows from another feature group.
+
+
+   .. py:method:: set_sampling_config(self, sampling_config)
+
+      Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
+
+
+   .. py:method:: set_merge_config(self, merge_config)
+
+      Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
+
+
+   .. py:method:: set_schema(self, schema)
+
+      Creates a new schema and points the feature group to the new feature group schema id.
+
+
+   .. py:method:: get_schema(self, project_id=None)
+
+      Returns a schema given a specific FeatureGroup in a project.
+
+
+   .. py:method:: create_feature(self, name, select_expression)
+
+      Creates a new feature in a Feature Group from a SQL select statement
+
+
+   .. py:method:: add_tag(self, tag)
+
+      Adds a tag to the feature group
+
+
+   .. py:method:: remove_tag(self, tag)
+
+      Removes a tag from the feature group
+
+
+   .. py:method:: create_nested_feature(self, nested_feature_name, table_name, using_clause, where_clause=None, order_clause=None)
+
+      Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.
+
+
+   .. py:method:: update_nested_feature(self, nested_feature_name, table_name=None, using_clause=None, where_clause=None, order_clause=None, new_nested_feature_name=None)
+
+      Updates a previously existing nested feature in a feature group.
+
+
+   .. py:method:: delete_nested_feature(self, nested_feature_name)
+
+      Delete a nested feature.
+
+
+   .. py:method:: create_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=0, lookback_count=None, lookback_until_position=0, expression=None)
+
+      Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
+
+
+   .. py:method:: update_point_in_time_feature(self, feature_name, history_table_name=None, aggregation_keys=None, timestamp_key=None, historical_timestamp_key=None, lookback_window_seconds=None, lookback_window_lag_seconds=None, lookback_count=None, lookback_until_position=None, expression=None, new_feature_name=None)
+
+      Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.
+
+
+   .. py:method:: set_feature_type(self, feature, feature_type)
+
+      Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
+
+
+   .. py:method:: invalidate_streaming_data(self, invalid_before_timestamp)
+
+      Invalidates all streaming data with timestamp before invalidBeforeTimestamp
+
+
+   .. py:method:: concatenate_data(self, source_feature_group_id, merge_type='UNION', replace_until_timestamp=None, skip_materialize=False)
+
+      Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Describe a Feature Group.
+
+
+   .. py:method:: set_indexing_config(self, primary_key=None, update_timestamp_key=None, lookup_keys=None)
+
+      Sets various attributes of the feature group used for deployment lookups and streaming updates.
+
+
+   .. py:method:: update(self, description=None)
+
+      Modifies an existing feature group
+
+
+   .. py:method:: update_sql_definition(self, sql)
+
+      Updates the SQL statement for a feature group.
+
+
+   .. py:method:: update_function_definition(self, function_source_code=None, function_name=None, input_feature_groups=None)
+
+      Updates the function definition for a feature group created using createFeatureGroupFromFunction
+
+
+   .. py:method:: update_feature(self, name, select_expression=None, new_name=None)
+
+      Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
+
+
+   .. py:method:: list_exports(self)
+
+      Lists all of the feature group exports for a given feature group
+
+
+   .. py:method:: set_modifier_lock(self, locked=True)
+
+      To lock a feature group to prevent it from being modified.
+
+
+   .. py:method:: list_modifiers(self)
+
+      To list users who can modify a feature group.
+
+
+   .. py:method:: add_user_to_modifiers(self, email)
+
+      Adds user to a feature group.
+
+
+   .. py:method:: add_organization_group_to_modifiers(self, organization_group_id)
+
+      Add Organization to a feature group.
+
+
+   .. py:method:: remove_user_from_modifiers(self, email)
+
+      Removes user from a feature group.
+
+
+   .. py:method:: remove_organization_group_from_modifiers(self, organization_group_id)
+
+      Removes Organization from a feature group.
+
+
+   .. py:method:: delete_feature(self, name)
+
+      Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.
+
+
+   .. py:method:: delete(self)
+
+      Removes an existing feature group.
+
+
+   .. py:method:: create_version(self)
+
+      Creates a snapshot for a specified feature group.
+
+
+   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+
+      Retrieves a list of all feature group versions for the specified feature group.
+
+
+   .. py:method:: get_recent_streamed_data(self)
+
+      Returns recently streamed data to a streaming feature group.
+
+
+   .. py:method:: upsert_data(self, streaming_token, data)
+
+      Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+
+
+   .. py:method:: append_data(self, streaming_token, data)
+
+      Appends new data into the feature group for a given lookup key recordId.
+
+
+   .. py:method:: wait_for_materialization(self, timeout=7200)
+
+      A waiting call until feature group is materialized.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the feature group.
+
+      :returns: A string describing the status of a feature group (pending, complete, etc.).
+      :rtype: Enum (string)
+
+
+   .. py:method:: load_as_pandas(self)
+
+      Loads the feature groups into a python pandas dataframe.
+
+      :returns: A pandas dataframe with annotations and text_snippet columns.
+      :rtype: DataFrame
+
+
+   .. py:method:: describe_dataset(self)
+
+      Displays the dataset attached to a feature group.
+
+      :returns: A dataset object with all the relevant information about the dataset.
+      :rtype: Dataset (object)
+
+
+

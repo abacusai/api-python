@@ -1,0 +1,39 @@
+:py:mod:`abacusai.api_key`
+==========================
+
+.. py:module:: abacusai.api_key
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_key.ApiKey
+
+
+
+
+.. py:class:: ApiKey(client, apiKeyId=None, apiKey=None, tag=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An API Key to authenticate requests to the Abacus.AI API
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: delete(self)
+
+      Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.
+
+
+

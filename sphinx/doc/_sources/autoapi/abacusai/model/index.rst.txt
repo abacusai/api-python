@@ -1,0 +1,141 @@
+:py:mod:`abacusai.model`
+========================
+
+.. py:module:: abacusai.model
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model.Model
+
+
+
+
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, location={}, refreshSchedules={}, latestModelVersion={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A model
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieves a full description of the specified model.
+
+
+   .. py:method:: rename(self, name)
+
+      Renames a model
+
+
+   .. py:method:: update_python(self, function_source_code=None, train_function_name=None, predict_function_name=None, training_input_tables=None)
+
+      Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
+
+
+   .. py:method:: set_training_config(self, training_config)
+
+      Edits the default model training config
+
+
+   .. py:method:: set_prediction_params(self, prediction_config)
+
+      Sets the model prediction config for the model
+
+
+   .. py:method:: get_metrics(self, model_version=None, baseline_metrics=False)
+
+      Retrieves a full list of the metrics for the specified model.
+
+
+   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+
+      Retrieves a list of the version for a given model.
+
+
+   .. py:method:: retrain(self, deployment_ids=[])
+
+      Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
+
+
+   .. py:method:: delete(self)
+
+      Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
+
+
+   .. py:method:: wait_for_training(self, timeout=None)
+
+      A waiting call until model is trained.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: wait_for_evaluation(self, timeout=None)
+
+      A waiting call until model is evaluated completely.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: wait_for_full_automl(self, timeout=None)
+
+      A waiting call until full AutoML cycle is completed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self, get_automl_status = False)
+
+      Gets the status of the model training.
+
+      :returns: A string describing the status of a model training (pending, complete, etc.).
+      :rtype: Enum (string)
+
+
+   .. py:method:: create_refresh_policy(self, cron)
+
+      To create a refresh policy for a model.
+
+      :param cron: A cron style string to set the refresh time.
+      :type cron: str
+
+      :returns: The refresh policy object.
+      :rtype: RefreshPolicy
+
+
+   .. py:method:: list_refresh_policies(self)
+
+      Gets the refresh policies in a list.
+
+      :returns: A list of refresh policy objects.
+      :rtype: List<RefreshPolicy>
+
+
+

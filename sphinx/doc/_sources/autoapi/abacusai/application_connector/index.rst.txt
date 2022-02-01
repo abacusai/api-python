@@ -1,0 +1,54 @@
+:py:mod:`abacusai.application_connector`
+========================================
+
+.. py:module:: abacusai.application_connector
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.application_connector.ApplicationConnector
+
+
+
+
+.. py:class:: ApplicationConnector(client, applicationConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A connector to an external service
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: rename(self, name)
+
+      Renames an Application Connector
+
+
+   .. py:method:: delete(self)
+
+      Delete a application connector.
+
+
+   .. py:method:: list_objects(self)
+
+      Lists querable objects in the application connector.
+
+
+   .. py:method:: verify(self)
+
+      Checks to see if Abacus.AI can access the Application.
+
+
+

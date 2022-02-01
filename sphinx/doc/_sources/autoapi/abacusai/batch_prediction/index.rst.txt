@@ -1,0 +1,144 @@
+:py:mod:`abacusai.batch_prediction`
+===================================
+
+.. py:module:: abacusai.batch_prediction
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.batch_prediction.BatchPrediction
+
+
+
+
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Batch predictions
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: start(self)
+
+      Creates a new batch prediction version job for a given batch prediction job description
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Describes the batch prediction
+
+
+   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+
+      Retrieves a list of versions of a given batch prediction
+
+
+   .. py:method:: update(self, deployment_id=None, global_prediction_args=None, explanations=None, output_format=None, csv_input_prefix=None, csv_prediction_prefix=None, csv_explanations_prefix=None)
+
+      Updates a batch prediction job description
+
+
+   .. py:method:: set_file_connector_output(self, output_format=None, output_location=None)
+
+      Updates the file connector output configuration of the batch prediction
+
+
+   .. py:method:: set_database_connector_output(self, database_connector_id=None, database_output_config=None)
+
+      Updates the database connector output configuration of the batch prediction
+
+
+   .. py:method:: set_feature_group_output(self, table_name)
+
+      Creates a feature group and sets it to be the batch prediction output
+
+
+   .. py:method:: set_output_to_console(self)
+
+      Sets the batch prediction output to the console, clearing both the file connector and database connector config
+
+
+   .. py:method:: set_dataset(self, dataset_type, dataset_id=None)
+
+      [Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects
+
+
+   .. py:method:: set_feature_group(self, feature_group_type, feature_group_id=None)
+
+      Sets the batch prediction input feature group.
+
+
+   .. py:method:: set_dataset_remap(self, dataset_id_remap)
+
+      For the purpose of this batch prediction, will swap out datasets in the input feature groups
+
+
+   .. py:method:: delete(self)
+
+      Deletes a batch prediction
+
+
+   .. py:method:: wait_for_predictions(self, timeout=86400)
+
+      A waiting call until batch predictions are ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 86400 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the latest batch prediction version.
+
+      :returns: A string describing the status of the latest batch prediction version e.g., pending, complete, etc.
+      :rtype: Enum (string)
+
+
+   .. py:method:: create_refresh_policy(self, cron)
+
+      To create a refresh policy for a batch prediction.
+
+      :param cron: A cron style string to set the refresh time.
+      :type cron: str
+
+      :returns: The refresh policy object.
+      :rtype: RefreshPolicy (object)
+
+
+   .. py:method:: list_refresh_policies(self)
+
+      Gets the refresh policies in a list.
+
+      :returns: A list of refresh policy objects.
+      :rtype: List (RefreshPolicy)
+
+
+   .. py:method:: describe_output_feature_group(self)
+
+      Gets the results feature group for this batch prediction
+
+      :returns: A feature group object.
+      :rtype: FeatureGroup (object)
+
+
+

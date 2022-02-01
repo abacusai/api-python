@@ -1,0 +1,105 @@
+:py:mod:`abacusai.upload`
+=========================
+
+.. py:module:: abacusai.upload
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.upload.Upload
+
+
+
+
+.. py:class:: Upload(client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Upload Reference for uploading file parts
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: cancel(self)
+
+      Cancels an upload
+
+
+   .. py:method:: part(self, part_number, part_data)
+
+      Uploads a part of a large dataset file from your bucket to our system. Our system currently supports a size of up to 5GB for a part of a full file and a size of up to 5TB for the full file. Note that each part must be >=5MB in size, unless it is the last part in the sequence of parts for the full file.
+
+
+   .. py:method:: mark_complete(self)
+
+      Marks an upload process as complete.
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
+
+
+   .. py:method:: upload_part(self, upload_args)
+
+      Uploads a file part. If the upload fails, it will retry up to 3 times with a short backoff before raising an exception.
+
+      :returns: The object 'UploadPart' that encapsulates the hash and the etag for the part that got uploaded.
+      :rtype: UploadPart (json)
+
+
+   .. py:method:: upload_file(self, file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
+
+      Uploads the file in the specified chunk size using the specified number of workers.
+
+      :param file: A bytesIO or StringIO object to upload to Abacus.AI
+      :type file: IOBase
+      :param threads: The max number of workers to use while uploading the file
+      :type threads: int, optional
+      :param chunksize: The number of bytes to use for each chunk while uploading the file. Defaults to 10 MB
+      :type chunksize: int, optional
+      :param wait_timeout: The max number of seconds to wait for the file parts to be joined on Abacus.AI. Defaults to 600.
+      :type wait_timeout: int, optional
+
+      :returns: The upload file object.
+      :rtype: UploadObject(object)
+
+
+   .. py:method:: _yield_upload_part(self, file, chunksize)
+
+
+   .. py:method:: wait_for_join(self, timeout=600)
+
+      A waiting call until the upload parts are joined.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to have timed out. Defaults to 600.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the upload.
+
+      :returns: A string describing the status of the upload (pending, complete, etc.).
+      :rtype: Enum (string)
+
+
+

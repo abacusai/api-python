@@ -1,0 +1,187 @@
+:py:mod:`abacusai.project`
+==========================
+
+.. py:module:: abacusai.project
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.project.Project
+
+
+
+
+.. py:class:: Project(client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A project is a container which holds datasets, models and deployments
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Returns a description of a project.
+
+
+   .. py:method:: list_datasets(self)
+
+      Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
+
+
+   .. py:method:: get_schema(self, dataset_id)
+
+      Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
+
+
+   .. py:method:: rename(self, name)
+
+      This method renames a project after it is created.
+
+
+   .. py:method:: delete(self)
+
+      Deletes a specified project from your organization.
+
+
+   .. py:method:: set_feature_mapping(self, feature_group_id, feature_name, feature_mapping, nested_column_name=None)
+
+      Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
+
+
+   .. py:method:: validate(self)
+
+      Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
+
+
+   .. py:method:: set_column_data_type(self, dataset_id, column, data_type)
+
+      Set a dataset's column type.
+
+
+   .. py:method:: set_column_mapping(self, dataset_id, column, column_mapping)
+
+      Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
+
+
+   .. py:method:: remove_column_mapping(self, dataset_id, column)
+
+      Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
+
+
+   .. py:method:: list_feature_groups(self, filter_feature_group_use=None)
+
+      List all the feature groups associated with a project
+
+
+   .. py:method:: get_training_config_options(self)
+
+      Retrieves the full description of the model training configuration options available for the specified project.
+
+
+   .. py:method:: train_model(self, name=None, training_config={}, refresh_schedule=None)
+
+      Trains a model for the specified project.
+
+
+   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name=None)
+
+      Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
+
+
+   .. py:method:: list_models(self)
+
+      Retrieves the list of models in the specified project.
+
+
+   .. py:method:: create_model_monitor(self, training_feature_group_id=None, prediction_feature_group_id=None, name=None, refresh_schedule=None)
+
+      Runs a model monitor for the specified project.
+
+
+   .. py:method:: list_model_monitors(self)
+
+      Retrieves the list of models monitors in the specified project.
+
+
+   .. py:method:: create_deployment_token(self)
+
+      Creates a deployment token for the specified project.
+
+
+   .. py:method:: list_deployments(self)
+
+      Retrieves a list of all deployments in the specified project.
+
+
+   .. py:method:: list_deployment_tokens(self)
+
+      Retrieves a list of all deployment tokens in the specified project.
+
+
+   .. py:method:: list_refresh_policies(self, dataset_ids=[], model_ids=[], deployment_ids=[], batch_prediction_ids=[], model_monitor_ids=[])
+
+      List the refresh policies for the organization
+
+
+   .. py:method:: list_batch_predictions(self)
+
+      Retrieves a list for the batch predictions in the project
+
+
+   .. py:method:: attach_dataset(self, dataset_id, project_dataset_type)
+
+      Attaches dataset to the project.
+
+      :param dataset_id: A unique identifier for the dataset.
+      :type dataset_id: unique string identifier
+      :param project_dataset_type: The unique use case specific dataset type that might be required or recommended for the specific use case.
+      :type project_dataset_type: enum of type string
+
+      :returns: The schema of the attached dataset.
+      :rtype: Schema (object)
+
+
+   .. py:method:: remove_dataset(self, dataset_id)
+
+      Removes dataset from the project.
+
+      :param dataset_id: A unique identifier for the dataset.
+      :type dataset_id: unique string identifier
+
+      :returns: None
+
+
+   .. py:method:: create_model_from_functions(self, train_function, predict_function, training_input_tables = None)
+
+      Creates a model using python.
+
+      :param train_function: The train function is passed.
+      :type train_function: callable
+      :param predict_function: The prediction function is passed.
+      :type predict_function: callable
+      :param training_input_tables: The input tables to be used for training the model. Defaults to None.
+      :type training_input_tables: list, optional
+
+      :returns: The model object.
+      :rtype: Model (object)
+
+
+

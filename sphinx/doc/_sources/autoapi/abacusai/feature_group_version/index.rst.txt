@@ -1,0 +1,91 @@
+:py:mod:`abacusai.feature_group_version`
+========================================
+
+.. py:module:: abacusai.feature_group_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_version.FeatureGroupVersion
+
+
+
+
+.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, features={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A materialized version of a feature group
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: export_to_file_connector(self, location, export_file_format, overwrite=False)
+
+      Export Feature group to File Connector.
+
+
+   .. py:method:: export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column=None)
+
+      Export Feature group to Database Connector.
+
+
+   .. py:method:: get_materialization_logs(self, stdout=False, stderr=False)
+
+      Returns logs for materialized feature group version.
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Get a specific feature group version.
+
+
+   .. py:method:: wait_for_results(self, timeout=3600)
+
+      A waiting call until feature group version is created.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the feature group version.
+
+      :returns: A string describing the status of a feature group version (pending, complete, etc.).
+      :rtype: Enum (string)
+
+
+   .. py:method:: _get_avro_file(self, file_part)
+
+
+   .. py:method:: load_as_pandas(self, max_workers=10)
+
+      Loads the feature group version into a pandas dataframe.
+
+      :param max_workers: The number of threads.
+      :type max_workers: int, optional
+
+      :returns: A pandas dataframe displaying the data in the feature group version.
+      :rtype: DataFrame
+
+
+

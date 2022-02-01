@@ -1,0 +1,52 @@
+:py:mod:`abacusai.prediction_metric_version`
+============================================
+
+.. py:module:: abacusai.prediction_metric_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.prediction_metric_version.PredictionMetricVersion
+
+
+
+
+.. py:class:: PredictionMetricVersion(client, createdAt=None, error=None, featureGroupVersion=None, predictionMetricCompletedAt=None, predictionMetricConfig=None, predictionMetricId=None, predictionMetricStartedAt=None, predictionMetricVersion=None, status=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Prediction Metric version for a Prediction Metric job description.
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: wait_for_prediction_metric_version(self, timeout=1200)
+
+      A waiting call until the prediction metric version is ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Get the lifecycle status of this version.
+
+      :returns: An enum value of the lifecycle status of this version.
+      :rtype: Enum (string)
+
+
+

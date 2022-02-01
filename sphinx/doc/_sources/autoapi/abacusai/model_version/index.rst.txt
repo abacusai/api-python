@@ -1,0 +1,72 @@
+:py:mod:`abacusai.model_version`
+================================
+
+.. py:module:: abacusai.model_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_version.ModelVersion
+
+
+
+
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A version of a model
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: delete(self)
+
+      Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieves a full description of the specified model version
+
+
+   .. py:method:: get_training_logs(self, stdout=False, stderr=False)
+
+      Returns training logs for the model.
+
+
+   .. py:method:: wait_for_training(self, timeout=None)
+
+      A waiting call until model gets trained.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the model version under training.
+
+      :returns: A string describing the status of a model training (pending, complete, etc.).
+      :rtype: Enum (string)
+
+
+

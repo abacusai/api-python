@@ -1,0 +1,62 @@
+:py:mod:`abacusai.dataset_version`
+==================================
+
+.. py:module:: abacusai.dataset_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.dataset_version.DatasetVersion
+
+
+
+
+.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A specific version of a dataset
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: wait_for_import(self, timeout=900)
+
+      A waiting call until dataset version is imported.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: wait_for_inspection(self, timeout=None)
+
+      A waiting call until dataset version is completely inspected.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the dataset version.
+
+      :returns: A string describing the status of a dataset version (importing, inspecting, complete, etc.).
+      :rtype: Enum (string)
+
+
+

@@ -1,0 +1,164 @@
+:py:mod:`abacusai.dataset`
+==========================
+
+.. py:module:: abacusai.dataset
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.dataset.Dataset
+
+
+
+
+.. py:class:: Dataset(client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A dataset reference
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: create_version_from_file_connector(self, location=None, file_format=None, csv_delimiter=None)
+
+      Creates a new version of the specified dataset.
+
+
+   .. py:method:: create_version_from_database_connector(self, object_name=None, columns=None, query_arguments=None, sql_query=None)
+
+      Creates a new version of the specified dataset
+
+
+   .. py:method:: create_version_from_application_connector(self, object_id=None, start_timestamp=None, end_timestamp=None)
+
+      Creates a new version of the specified dataset
+
+
+   .. py:method:: create_version_from_upload(self, file_format=None)
+
+      Creates a new version of the specified dataset using a local file upload.
+
+
+   .. py:method:: snapshot_streaming_data(self)
+
+      Snapshots the current data in the streaming dataset for training.
+
+
+   .. py:method:: set_column_data_type(self, column, data_type)
+
+      Set a column's type in a specified dataset.
+
+
+   .. py:method:: set_streaming_retention_policy(self, retention_hours=None, retention_row_count=None)
+
+      Sets the streaming retention policy
+
+
+   .. py:method:: get_schema(self)
+
+      Retrieves the column schema of a dataset
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
+
+
+   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+
+      Retrieves a list of all dataset versions for the specified dataset.
+
+
+   .. py:method:: attach_to_project(self, project_id, dataset_type)
+
+      Attaches the dataset to the project.
+
+
+   .. py:method:: remove_from_project(self, project_id)
+
+      Removes a dataset from a project.
+
+
+   .. py:method:: rename(self, name)
+
+      Rename a dataset.
+
+
+   .. py:method:: delete(self)
+
+      Deletes the specified dataset from the organization.
+
+
+   .. py:method:: wait_for_import(self, timeout=900)
+
+      A waiting call until dataset is imported.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: wait_for_inspection(self, timeout=None)
+
+      A waiting call until dataset is completely inspected.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the latest dataset version.
+
+      :returns: A string describing the status of a dataset (importing, inspecting, complete, etc.).
+      :rtype: Enum (string)
+
+
+   .. py:method:: describe_feature_group(self)
+
+      Gets the feature group attached to the dataset.
+
+      :returns: A feature group object.
+      :rtype: FeatureGroup (object)
+
+
+   .. py:method:: create_refresh_policy(self, cron)
+
+      To create a refresh policy for a dataset.
+
+      :param cron: A cron style string to set the refresh time.
+      :type cron: str
+
+      :returns: The refresh policy object.
+      :rtype: RefreshPolicy (object)
+
+
+   .. py:method:: list_refresh_policies(self)
+
+      Gets the refresh policies in a list.
+
+      :returns: A list of refresh policy objects.
+      :rtype: List (RefreshPolicy)
+
+
+

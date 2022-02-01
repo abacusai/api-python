@@ -1,0 +1,141 @@
+:py:mod:`abacusai.deployment`
+=============================
+
+.. py:module:: abacusai.deployment
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.deployment.Deployment
+
+
+
+
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A model deployment
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieves a full description of the specified deployment.
+
+
+   .. py:method:: update(self, description=None)
+
+      Updates a deployment's description.
+
+
+   .. py:method:: rename(self, name)
+
+      Updates a deployment's name and/or description.
+
+
+   .. py:method:: set_auto(self, enable=None)
+
+      Enable/Disable auto deployment for the specified deployment.
+
+
+   .. py:method:: set_model_version(self, model_version)
+
+      Promotes a Model Version to be served in the Deployment
+
+
+   .. py:method:: set_feature_group_version(self, feature_group_version)
+
+      Promotes a Feature Group Version to be served in the Deployment
+
+
+   .. py:method:: start(self)
+
+      Restarts the specified deployment that was previously suspended.
+
+
+   .. py:method:: stop(self)
+
+      Stops the specified deployment.
+
+
+   .. py:method:: delete(self)
+
+      Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
+
+
+   .. py:method:: set_feature_group_export_file_connector_output(self, output_format=None, output_location=None)
+
+      Sets the export output for the Feature Group Deployment to be a file connector.
+
+
+   .. py:method:: set_feature_group_export_database_connector_output(self, database_connector_id=None, object_name=None, write_mode=None, database_feature_mapping=None, id_column=None)
+
+      Sets the export output for the Feature Group Deployment to be a Database connector.
+
+
+   .. py:method:: remove_feature_group_export_output(self)
+
+      Removes the export type that is set for the Feature Group Deployment
+
+
+   .. py:method:: create_batch_prediction(self, table_name=None, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None, refresh_schedule=None, csv_input_prefix=None, csv_prediction_prefix=None, csv_explanations_prefix=None)
+
+      Creates a batch prediction job description for the given deployment.
+
+
+   .. py:method:: wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480)
+
+      A waiting call until deployment is completed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 480 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the deployment.
+
+      :returns: A string describing the status of a deploymet (pending, deploying, active, etc.).
+      :rtype: Enum (string)
+
+
+   .. py:method:: create_refresh_policy(self, cron)
+
+      To create a refresh policy for a deployment.
+
+      :param cron: A cron style string to set the refresh time.
+      :type cron: str
+
+      :returns: The refresh policy object.
+      :rtype: RefreshPolicy (object)
+
+
+   .. py:method:: list_refresh_policies(self)
+
+      Gets the refresh policies in a list.
+
+      :returns: A list of refresh policy objects.
+      :rtype: List (RefreshPolicy)
+
+
+

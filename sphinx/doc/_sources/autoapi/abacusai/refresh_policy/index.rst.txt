@@ -1,0 +1,74 @@
+:py:mod:`abacusai.refresh_policy`
+=================================
+
+.. py:module:: abacusai.refresh_policy
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.refresh_policy.RefreshPolicy
+
+
+
+
+.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, paused=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: delete(self)
+
+      Delete a refresh policy
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieve a single refresh policy
+
+
+   .. py:method:: list_refresh_pipeline_runs(self)
+
+      List the the times that the refresh policy has been run
+
+
+   .. py:method:: pause(self)
+
+      Pauses a refresh policy
+
+
+   .. py:method:: resume(self)
+
+      Resumes a refresh policy
+
+
+   .. py:method:: run(self)
+
+      Force a run of the refresh policy.
+
+
+   .. py:method:: update(self, name=None, cron=None)
+
+      Update the name or cron string of a  refresh policy
+
+
+

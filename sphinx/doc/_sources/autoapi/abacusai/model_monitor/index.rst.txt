@@ -1,0 +1,64 @@
+:py:mod:`abacusai.model_monitor`
+================================
+
+.. py:module:: abacusai.model_monitor
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_monitor.ModelMonitor
+
+
+
+
+.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, refreshSchedules={}, latestMonitorModelVersion={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A model monitor
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: rerun(self)
+
+      Reruns the specified model monitor.
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      Retrieves a full description of the specified model monitor.
+
+
+   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+
+      Retrieves a list of the versions for a given model monitor.
+
+
+   .. py:method:: rename(self, name)
+
+      Renames a model monitor
+
+
+   .. py:method:: delete(self)
+
+      Deletes the specified model monitor and all its versions.
+
+
+

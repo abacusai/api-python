@@ -1,0 +1,142 @@
+:py:mod:`abacusai.prediction_client`
+====================================
+
+.. py:module:: abacusai.prediction_client
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.prediction_client.PredictionClient
+
+
+
+
+.. py:class:: PredictionClient(client_options = None)
+
+   Bases: :py:obj:`abacusai.client.BaseApiClient`
+
+   .. py:method:: lookup_features(self, deployment_token, deployment_id, query_data = {})
+
+      Returns the feature group deployed in the feature store project.
+
+
+   .. py:method:: predict(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a prediction for Predictive Modeling
+
+
+   .. py:method:: predict_multiple(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a list of predictions for Predictive Modeling
+
+
+   .. py:method:: predict_from_datasets(self, deployment_token, deployment_id, query_data = {})
+
+      Returns a list of predictions for Predictive Modeling
+
+
+   .. py:method:: predict_lead(self, deployment_token, deployment_id, query_data)
+
+      Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
+
+
+   .. py:method:: predict_churn(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability of a user to churn out in response to his/her interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
+
+
+   .. py:method:: predict_takeover(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: predict_fraud(self, deployment_token, deployment_id, query_data)
+
+      Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, explain_predictions = False, fixed_features = None, nested = None)
+
+      Returns a prediction for regression classification
+
+
+   .. py:method:: predict_target(self, deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None)
+
+      Returns a prediction from a classification or regression model. Optionally, includes explanations.
+
+
+   .. py:method:: get_anomalies(self, deployment_token, deployment_id, threshold = None, histogram = False)
+
+      Returns a list of anomalies from the training dataset
+
+
+   .. py:method:: is_anomaly(self, deployment_token, deployment_id, query_data = None)
+
+      Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+
+   .. py:method:: get_forecast(self, deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
+
+      Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
+
+
+   .. py:method:: get_k_nearest(self, deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
+
+      Returns the k nearest neighbors for the provided embedding vector.
+
+
+   .. py:method:: get_multiple_k_nearest(self, deployment_token, deployment_id, queries)
+
+      Returns the k nearest neighbors for the queries provided
+
+
+   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = 0.5)
+
+      Returns a list of scored labels from
+
+
+   .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
+
+      Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
+
+
+   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+
+      Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+
+      Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_related_items(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
+
+      Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+
+   .. py:method:: get_feature_group_rows(self, deployment_token, deployment_id, query_data)
+
+
+   .. py:method:: get_search_results(self, deployment_token, deployment_id, query_data)
+
+      TODO
+
+
+   .. py:method:: get_sentiment(self, deployment_token, deployment_id, document)
+
+      TODO
+
+
+   .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
+
+      TODO
+
+
+

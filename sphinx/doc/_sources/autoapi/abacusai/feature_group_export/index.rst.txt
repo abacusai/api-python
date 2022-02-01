@@ -1,0 +1,65 @@
+:py:mod:`abacusai.feature_group_export`
+=======================================
+
+.. py:module:: abacusai.feature_group_export
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_export.FeatureGroupExport
+
+
+
+
+.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A feature Group Export Job
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+
+   .. py:method:: refresh(self)
+
+      Calls describe and refreshes the current object's fields
+
+
+   .. py:method:: describe(self)
+
+      A feature group export
+
+
+   .. py:method:: wait_for_results(self, timeout=3600)
+
+      A waiting call until feature group export is created.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
+      :type timeout: int, optional
+
+      :returns: None
+
+
+   .. py:method:: get_status(self)
+
+      Gets the status of the feature group export.
+
+      :returns: A string describing the status of a feature group export (pending, complete, etc.).
+      :rtype: Enum (string)
+
+
+   .. py:method:: get_results(self)
+
+
+
