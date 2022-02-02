@@ -23,12 +23,34 @@ Classes
 
    Summary of important range mismatches for a numerical feature discovered by a model monitoring instance
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: Name of feature.
+   :type name: str
+   :param trainingMin: Minimum value of training distribution for the specified feature.
+   :type trainingMin: float
+   :param trainingMax: Maximum value of training distribution for the specified feature.
+   :type trainingMax: float
+   :param predictionMin: Minimum value of prediction distribution for the specified feature.
+   :type predictionMin: float
+   :param predictionMax: Maximum value of prediction distribution for the specified feature.
+   :type predictionMax: float
+   :param freqAboveTrainingRange: Frequency of prediction rows below training minimum for the specified feature.
+   :type freqAboveTrainingRange: float
+   :param freqBelowTrainingRange: Frequency of prediction rows above training maximum for the specified feature.
+   :type freqBelowTrainingRange: float
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

@@ -23,12 +23,30 @@ Classes
 
    The description of how a dataset is used in a project
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name for the dataset.
+   :type name: str
+   :param datasetType: The dataset's type in this project. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
+   :type datasetType: str
+   :param datasetId: The unique ID associated with the dataset.
+   :type datasetId: str
+   :param streaming: true if the dataset is a streaming dataset.
+   :type streaming: bool
+   :param dataFilters: List of data filters.
+   :type dataFilters: DataFilter
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

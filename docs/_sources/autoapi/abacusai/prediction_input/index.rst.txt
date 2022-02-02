@@ -23,12 +23,28 @@ Classes
 
    Batch inputs
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupDatasetIds:
+   :type featureGroupDatasetIds: list
+   :param datasetIdRemap:
+   :type datasetIdRemap: dict
+   :param featureGroups: List of prediction feature groups
+   :type featureGroups: PredictionFeatureGroup
+   :param datasets: List of prediction datasets
+   :type datasets: PredictionDataset
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

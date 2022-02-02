@@ -23,12 +23,48 @@ Classes
 
    A Model Version that includes the upload ids for the various required files.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelId: A reference to the model this version belongs to
+   :type modelId: str
+   :param modelVersion: The unique identifier of a model version.
+   :type modelVersion: str
+   :param status: The current status of the model.
+   :type status: str
+   :param createdAt: The timestamp at which the model version was created.
+   :type createdAt: str
+   :param modelUploadId: An Upload Identifier to be used when uploading the Tensorflow Saved Model
+   :type modelUploadId: str
+   :param embeddingsUploadId: An Upload Identifier to be used when uploading the embeddings csv
+   :type embeddingsUploadId: str
+   :param artifactsUploadId: An Upload Identifier to be used when uploading the artifacts json file
+   :type artifactsUploadId: str
+   :param verificationsUploadId: An Upload Identifier to be used when uploading the verifications json file
+   :type verificationsUploadId: str
+   :param defaultItemsUploadId: An Upload Identifier to be used when uploading the default items json file
+   :type defaultItemsUploadId: str
+   :param modelFileUploadId: An Upload Identifier to be used when uploading the model json file
+   :type modelFileUploadId: str
+   :param modelStateUploadId: An Upload Identifier to be used when uploading the model state json file
+   :type modelStateUploadId: str
+   :param inputPreprocessorUploadId: An Upload Identifier to be used when uploading the input preprocessor json file
+   :type inputPreprocessorUploadId: str
+   :param requirementsUploadId: An Upload Identifier to be used when uploading the requirements json file
+   :type requirementsUploadId: str
+   :param resourcesUploadId: An Upload Identifier to be used when uploading the resources json file
+   :type resourcesUploadId: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

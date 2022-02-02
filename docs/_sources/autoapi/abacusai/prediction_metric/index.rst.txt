@@ -23,12 +23,32 @@ Classes
 
    A Prediction Metric job description.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param createdAt: Date and time when this prediction metric was created.
+   :type createdAt: str
+   :param featureGroupId: The feature group used as input to this prediction metric.
+   :type featureGroupId: str
+   :param predictionMetricConfig: Specification for the prediction metric to run in this job.
+   :type predictionMetricConfig: json
+   :param predictionMetricId: The unique identifier of the prediction metric.
+   :type predictionMetricId: str
+   :param projectId: The project this prediction metric belongs to.
+   :type projectId: str
+   :param latestPredictionMetricVersionDescription: Description of the latest prediction metric version (if any).
+   :type latestPredictionMetricVersionDescription: PredictionMetricVersion
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

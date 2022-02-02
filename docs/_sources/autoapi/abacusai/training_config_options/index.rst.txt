@@ -23,12 +23,40 @@ Classes
 
    Training options for a model
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the parameter
+   :type name: str
+   :param dataType: The type of input required for this option
+   :type dataType: str
+   :param valueType: If the data_type is of type DICT_VALUES, this field specifies the expected value type of the values
+   :type valueType: str
+   :param valueOptions: The list of valid values for DICT_VALUES
+   :type valueOptions: list of string
+   :param value: The value of this option
+   :type value: string/number
+   :param default: The default value for this option
+   :type default: boolean/string/number
+   :param options: A list of options for this parameter
+   :type options: list of json objects
+   :param description: A description of the parameter
+   :type description: str
+   :param required: True if the parameter is required for training
+   :type required: bool
+   :param lastModelValue: The last value used to train a model in this project
+   :type lastModelValue: string/number
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

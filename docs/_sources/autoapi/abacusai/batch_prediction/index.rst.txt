@@ -23,6 +23,47 @@ Classes
 
    Batch predictions
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param batchPredictionId: The unique identifier of the batch prediction request
+   :type batchPredictionId: str
+   :param createdAt: When the batch prediction was created
+   :type createdAt: str
+   :param name: Name given to the batch prediction object
+   :type name: str
+   :param deploymentId: The deployment used to make the predictions
+   :type deploymentId: str
+   :param fileConnectorOutputLocation: Contains information about where the batch predictions are written to
+   :type fileConnectorOutputLocation: str
+   :param globalPredictionArgs: Argument(s) passed to every prediction call
+   :type globalPredictionArgs: dict
+   :param databaseConnectorId: The database connector to write the results to
+   :type databaseConnectorId: str
+   :param databaseOutputConfiguration: Contains information about where the batch predictions are written to
+   :type databaseOutputConfiguration: dict
+   :param explanations: If true, explanations for each prediction were created
+   :type explanations: bool
+   :param fileOutputFormat: The format of the batch prediction output (CSV or JSON)
+   :type fileOutputFormat: str
+   :param connectorType: Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR
+   :type connectorType: str
+   :param legacyInputLocation: The location of the input data
+   :type legacyInputLocation: str
+   :param featureGroupTableName: The table name of the Batch Prediction feature group
+   :type featureGroupTableName: str
+   :param csvInputPrefix: A prefix to prepend to the input columns, only applies when output format is CSV
+   :type csvInputPrefix: str
+   :param csvPredictionPrefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+   :type csvPredictionPrefix: str
+   :param csvExplanationsPrefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+   :type csvExplanationsPrefix: str
+   :param batchInputs: Inputs to the batch prediction
+   :type batchInputs: PredictionInput
+   :param latestBatchPredictionVersion: The latest batch prediction version
+   :type latestBatchPredictionVersion: BatchPredictionVersion
+   :param refreshSchedules: List of refresh schedules that dictate the next time the batch prediction will be run
+   :type refreshSchedules: RefreshSchedule
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,70 +71,169 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: start(self)
 
       Creates a new batch prediction version job for a given batch prediction job description
+
+      :param batch_prediction_id: The unique identifier of the batch prediction to create a new version of
+      :type batch_prediction_id: str
+
+      :returns: The batch prediction version started by this method call.
+      :rtype: BatchPredictionVersion
 
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: BatchPrediction
+
 
    .. py:method:: describe(self)
 
       Describes the batch prediction
 
+      :param batch_prediction_id: The unique ID associated with the batch prediction.
+      :type batch_prediction_id: str
 
-   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
+
+   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
 
       Retrieves a list of versions of a given batch prediction
 
+      :param limit: The number of versions to list
+      :type limit: int
+      :param start_after_version: The version to start after
+      :type start_after_version: str
 
-   .. py:method:: update(self, deployment_id=None, global_prediction_args=None, explanations=None, output_format=None, csv_input_prefix=None, csv_prediction_prefix=None, csv_explanations_prefix=None)
+      :returns: A list of batch prediction versions.
+      :rtype: BatchPredictionVersion
+
+
+   .. py:method:: update(self, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
 
       Updates a batch prediction job description
 
+      :param deployment_id: The unique identifier to a deployment.
+      :type deployment_id: str
+      :param global_prediction_args: Argument(s) to pass on every prediction call.
+      :type global_prediction_args: dict
+      :param explanations: If true, will provide SHAP Explanations for each prediction, if supported by the use case.
+      :type explanations: bool
+      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
+      :type output_format: str
+      :param csv_input_prefix: A prefix to prepend to the input columns, only applies when output format is CSV
+      :type csv_input_prefix: str
+      :param csv_prediction_prefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+      :type csv_prediction_prefix: str
+      :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+      :type csv_explanations_prefix: str
 
-   .. py:method:: set_file_connector_output(self, output_format=None, output_location=None)
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
+
+   .. py:method:: set_file_connector_output(self, output_format = None, output_location = None)
 
       Updates the file connector output configuration of the batch prediction
 
+      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
+      :type output_format: str
+      :param output_location: If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+      :type output_location: str
 
-   .. py:method:: set_database_connector_output(self, database_connector_id=None, database_output_config=None)
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
+
+   .. py:method:: set_database_connector_output(self, database_connector_id = None, database_output_config = None)
 
       Updates the database connector output configuration of the batch prediction
+
+      :param database_connector_id: The unique identifier of an Database Connection to write predictions to.
+      :type database_connector_id: str
+      :param database_output_config: A key-value pair of columns/values to write to the database connector
+      :type database_output_config: dict
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: set_feature_group_output(self, table_name)
 
       Creates a feature group and sets it to be the batch prediction output
 
+      :param table_name: The name of the feature group table to create
+      :type table_name: str
+
+      :returns: The batch prediction after the output has been applied
+      :rtype: BatchPrediction
+
 
    .. py:method:: set_output_to_console(self)
 
       Sets the batch prediction output to the console, clearing both the file connector and database connector config
 
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
 
-   .. py:method:: set_dataset(self, dataset_type, dataset_id=None)
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
+
+   .. py:method:: set_dataset(self, dataset_type, dataset_id = None)
 
       [Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects
 
+      :param dataset_type: The dataset type to set
+      :type dataset_type: str
+      :param dataset_id: The dataset to set
+      :type dataset_id: str
 
-   .. py:method:: set_feature_group(self, feature_group_type, feature_group_id=None)
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
+
+   .. py:method:: set_feature_group(self, feature_group_type, feature_group_id = None)
 
       Sets the batch prediction input feature group.
+
+      :param feature_group_type: The feature group type to set. The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
+      :type feature_group_type: str
+      :param feature_group_id: The feature group to set as input to the batch prediction
+      :type feature_group_id: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: set_dataset_remap(self, dataset_id_remap)
 
       For the purpose of this batch prediction, will swap out datasets in the input feature groups
 
+      :param dataset_id_remap: Key/value pairs of dataset_ids to replace during batch predictions
+      :type dataset_id_remap: dict
+
+      :returns: Batch Prediction object
+      :rtype: BatchPrediction
+
 
    .. py:method:: delete(self)
 
       Deletes a batch prediction
+
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
 
 
    .. py:method:: wait_for_predictions(self, timeout=86400)
@@ -103,15 +243,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 86400 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the latest batch prediction version.
 
       :returns: A string describing the status of the latest batch prediction version e.g., pending, complete, etc.
-      :rtype: Enum (string)
+      :rtype: str
 
 
    .. py:method:: create_refresh_policy(self, cron)
@@ -122,7 +260,7 @@ Classes
       :type cron: str
 
       :returns: The refresh policy object.
-      :rtype: RefreshPolicy (object)
+      :rtype: RefreshPolicy
 
 
    .. py:method:: list_refresh_policies(self)
@@ -130,7 +268,7 @@ Classes
       Gets the refresh policies in a list.
 
       :returns: A list of refresh policy objects.
-      :rtype: List (RefreshPolicy)
+      :rtype: List[RefreshPolicy]
 
 
    .. py:method:: describe_output_feature_group(self)
@@ -138,7 +276,7 @@ Classes
       Gets the results feature group for this batch prediction
 
       :returns: A feature group object.
-      :rtype: FeatureGroup (object)
+      :rtype: FeatureGroup
 
 
 

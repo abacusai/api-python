@@ -23,6 +23,41 @@ Classes
 
    A model deployment
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentId: The unique identifier for the deployment.
+   :type deploymentId: str
+   :param name: The user-friendly name for the deployment.
+   :type name: str
+   :param status: The status of the deployment.
+   :type status: str
+   :param description: A description of this deployment.
+   :type description: str
+   :param deployedAt: When the deployment last became active.
+   :type deployedAt: str
+   :param createdAt: When the deployment was created.
+   :type createdAt: str
+   :param projectId: The unique identifier of the project this deployment belongs to.
+   :type projectId: str
+   :param modelId: The model that is currently deployed.
+   :type modelId: str
+   :param modelVersion: The model version ID that is currently deployed.
+   :type modelVersion: str
+   :param featureGroupId: The feature group that is currently deployed.
+   :type featureGroupId: str
+   :param featureGroupVersion: The feature group version ID that is currently deployed.
+   :type featureGroupVersion: str
+   :param callsPerSecond: The number of calls per second the deployment could handle.
+   :type callsPerSecond: int
+   :param autoDeploy: Flag marking the deployment eligible for auto deployments whenever any model in the project finishes training.
+   :type autoDeploy: bool
+   :param regions: List of regions that a deployment has been deployed to
+   :type regions: list of strings
+   :param error: Relevant error if the status is FAILED
+   :type error: str
+   :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
+   :type refreshSchedules: RefreshSchedule
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,75 +65,166 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: Deployment
 
 
    .. py:method:: describe(self)
 
       Retrieves a full description of the specified deployment.
 
+      :param deployment_id: The unique ID associated with the deployment.
+      :type deployment_id: str
 
-   .. py:method:: update(self, description=None)
+      :returns: The description of the deployment.
+      :rtype: Deployment
+
+
+   .. py:method:: update(self, description = None)
 
       Updates a deployment's description.
+
+      :param description: The new deployment description.
+      :type description: str
 
 
    .. py:method:: rename(self, name)
 
       Updates a deployment's name and/or description.
 
+      :param name: The new deployment name.
+      :type name: str
 
-   .. py:method:: set_auto(self, enable=None)
+
+   .. py:method:: set_auto(self, enable = None)
 
       Enable/Disable auto deployment for the specified deployment.
+
+      When a model is scheduled to retrain, deployments with this enabled will be marked to automatically promote the new model
+      version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version
+      will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not,
+      it will be marked as a failed model version promotion with an error indicating poor metrics performance.
+
+
+      :param enable: Enable/disable the autoDeploy property of the Deployment.
+      :type enable: bool
 
 
    .. py:method:: set_model_version(self, model_version)
 
       Promotes a Model Version to be served in the Deployment
 
+      :param model_version: The unique ID for the Model Version
+      :type model_version: str
+
 
    .. py:method:: set_feature_group_version(self, feature_group_version)
 
       Promotes a Feature Group Version to be served in the Deployment
+
+      :param feature_group_version: The unique ID for the Feature Group Version
+      :type feature_group_version: str
 
 
    .. py:method:: start(self)
 
       Restarts the specified deployment that was previously suspended.
 
+      :param deployment_id: The unique ID associated with the deployment.
+      :type deployment_id: str
+
 
    .. py:method:: stop(self)
 
       Stops the specified deployment.
+
+      :param deployment_id: The Deployment ID
+      :type deployment_id: str
 
 
    .. py:method:: delete(self)
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
+      :param deployment_id: The ID of the deployment to delete.
+      :type deployment_id: str
 
-   .. py:method:: set_feature_group_export_file_connector_output(self, output_format=None, output_location=None)
+
+   .. py:method:: set_feature_group_export_file_connector_output(self, output_format = None, output_location = None)
 
       Sets the export output for the Feature Group Deployment to be a file connector.
 
+      :param output_format: CSV or JSON type export output
+      :type output_format: str
+      :param output_location: the file connector (cloud) location of where to export
+      :type output_location: str
 
-   .. py:method:: set_feature_group_export_database_connector_output(self, database_connector_id=None, object_name=None, write_mode=None, database_feature_mapping=None, id_column=None)
+
+   .. py:method:: set_feature_group_export_database_connector_output(self, database_connector_id = None, object_name = None, write_mode = None, database_feature_mapping = None, id_column = None)
 
       Sets the export output for the Feature Group Deployment to be a Database connector.
+
+      :param database_connector_id: The database connector ID used
+      :type database_connector_id: str
+      :param object_name: The database connector's object to write to
+      :type object_name: str
+      :param write_mode: UPSERT or INSERT for writing to the database connector
+      :type write_mode: str
+      :param database_feature_mapping: The column/feature pairs mapping the features to the database columns
+      :type database_feature_mapping: dict
+      :param id_column: The id column to use as the upsert key
+      :type id_column: str
 
 
    .. py:method:: remove_feature_group_export_output(self)
 
       Removes the export type that is set for the Feature Group Deployment
 
+      :param deployment_id: The deployment for which the export type is set
+      :type deployment_id: str
 
-   .. py:method:: create_batch_prediction(self, table_name=None, name=None, global_prediction_args=None, explanations=False, output_format=None, output_location=None, database_connector_id=None, database_output_config=None, refresh_schedule=None, csv_input_prefix=None, csv_prediction_prefix=None, csv_explanations_prefix=None)
+
+   .. py:method:: create_batch_prediction(self, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
 
       Creates a batch prediction job description for the given deployment.
+
+      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If table_name is specified, the outputType will be enforced as CSV
+      :type table_name: str
+      :param name: The name of batch prediction job.
+      :type name: str
+      :param global_prediction_args: Argument(s) to pass on every prediction call.
+      :type global_prediction_args: dict
+      :param explanations: If true, will provide SHAP Explanations for each prediction, if supported by the use case.
+      :type explanations: bool
+      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON)
+      :type output_format: str
+      :param output_location: If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+      :type output_location: str
+      :param database_connector_id: The unique identifier of an Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
+      :type database_connector_id: str
+      :param database_output_config: A key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.
+      :type database_output_config: dict
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically run the batch prediction.
+      :type refresh_schedule: str
+      :param csv_input_prefix: A prefix to prepend to the input columns, only applies when output format is CSV
+      :type csv_input_prefix: str
+      :param csv_prediction_prefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+      :type csv_prediction_prefix: str
+      :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+      :type csv_explanations_prefix: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480)
@@ -108,15 +234,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 480 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the deployment.
 
       :returns: A string describing the status of a deploymet (pending, deploying, active, etc.).
-      :rtype: Enum (string)
+      :rtype: str
 
 
    .. py:method:: create_refresh_policy(self, cron)
@@ -127,7 +251,7 @@ Classes
       :type cron: str
 
       :returns: The refresh policy object.
-      :rtype: RefreshPolicy (object)
+      :rtype: RefreshPolicy
 
 
    .. py:method:: list_refresh_policies(self)
@@ -135,7 +259,7 @@ Classes
       Gets the refresh policies in a list.
 
       :returns: A list of refresh policy objects.
-      :rtype: List (RefreshPolicy)
+      :rtype: List[RefreshPolicy]
 
 
 

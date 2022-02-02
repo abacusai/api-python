@@ -4,6 +4,22 @@ from .return_class import AbstractApiClass
 class FeatureGroupExport(AbstractApiClass):
     """
         A feature Group Export Job
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            featureGroupExportId (str): The unique identifier for this export
+            featureGroupVersion (str): The version of the feature group being exported
+            connectorType (str): Either DATABASE_CONNECTOR or FILE_CONNECTOR
+            outputLocation (str): The File Connector location the feature group is being written to
+            fileFormat (str): The file format being written to outputLocation
+            databaseConnectorId (str): The database connector ID used
+            objectName (str): The database connector's object to write to
+            writeMode (str): UPSERT or INSERT for writing to the database connector
+            databaseFeatureMapping (dict): The column/feature pairs mapping the features to the database columns
+            idColumn (str): The id column to use as the upsert key
+            status (str): The current status of the export.
+            createdAt (str): The timestamp at which the export was created.
+            exportCompletedAt (str): The timestamp at which the export completed
     """
 
     def __init__(self, client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None):
@@ -26,15 +42,34 @@ class FeatureGroupExport(AbstractApiClass):
         return f"FeatureGroupExport(feature_group_export_id={repr(self.feature_group_export_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  connector_type={repr(self.connector_type)},\n  output_location={repr(self.output_location)},\n  file_format={repr(self.file_format)},\n  database_connector_id={repr(self.database_connector_id)},\n  object_name={repr(self.object_name)},\n  write_mode={repr(self.write_mode)},\n  database_feature_mapping={repr(self.database_feature_mapping)},\n  id_column={repr(self.id_column)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  export_completed_at={repr(self.export_completed_at)})"
 
     def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
         return {'feature_group_export_id': self.feature_group_export_id, 'feature_group_version': self.feature_group_version, 'connector_type': self.connector_type, 'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name, 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at}
 
     def refresh(self):
-        """Calls describe and refreshes the current object's fields"""
+        """
+        Calls describe and refreshes the current object's fields
+
+        Returns:
+            FeatureGroupExport: The current object
+        """
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
-        """A feature group export"""
+        """
+        A feature group export
+
+        Args:
+            feature_group_export_id (str): The ID of the feature group export.
+
+        Returns:
+            FeatureGroupExport: The feature group export
+        """
         return self.client.describe_feature_group_export(self.feature_group_export_id)
 
     def wait_for_results(self, timeout=3600):
@@ -43,9 +78,6 @@ class FeatureGroupExport(AbstractApiClass):
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
-
-        Returns:
-            None
         """
         return self.client._poll(self, {'PENDING', 'EXPORTING'}, timeout=timeout)
 
@@ -54,7 +86,7 @@ class FeatureGroupExport(AbstractApiClass):
         Gets the status of the feature group export.
 
         Returns:
-            Enum (string): A string describing the status of a feature group export (pending, complete, etc.).
+            str: A string describing the status of a feature group export (pending, complete, etc.).
         """
         return self.describe().status
 

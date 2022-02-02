@@ -23,12 +23,30 @@ Classes
 
    Metrics of the trained model.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelId: The Model
+   :type modelId: str
+   :param modelVersion: The Model Version
+   :type modelVersion: str
+   :param metrics: Key/value pairs of metrics and their values
+   :type metrics: dict
+   :param baselineMetrics: Key/value pairs of the baseline model metrics and their values
+   :type baselineMetrics: dict
+   :param targetColumn: The target column the model is predicting
+   :type targetColumn: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

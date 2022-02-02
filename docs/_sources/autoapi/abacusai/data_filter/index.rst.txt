@@ -23,12 +23,28 @@ Classes
 
    A sql logic statement for including and excluding data from training
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param sql: [DEPRECATED] The sql logic for excluding data from this dataset
+   :type sql: str
+   :param type: Either INCLUDE or EXCLUDE
+   :type type: str
+   :param whereExpression: The SQL WHERE expression for excluding or including data from this dataset
+   :type whereExpression: str
+   :param join: The SQL operator to join with the following statement, if any
+   :type join: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

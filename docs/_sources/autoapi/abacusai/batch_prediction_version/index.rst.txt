@@ -23,6 +23,55 @@ Classes
 
    Batch Prediction Version
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param batchPredictionVersion: The unique identifier of the batch prediction
+   :type batchPredictionVersion: str
+   :param batchPredictionId: The unique identifier of the batch prediction
+   :type batchPredictionId: str
+   :param status: The current status of the batch prediction
+   :type status: str
+   :param deploymentId: The deployment used to make the predictions
+   :type deploymentId: str
+   :param modelId: The model used to make the predictions
+   :type modelId: str
+   :param modelVersion: The model version used to make the predictions
+   :type modelVersion: str
+   :param predictionsStartedAt: Predictions start date and time
+   :type predictionsStartedAt: str
+   :param predictionsCompletedAt: Predictions completion date and time
+   :type predictionsCompletedAt: str
+   :param globalPredictionArgs: Argument(s) passed to every prediction call
+   :type globalPredictionArgs: dict
+   :param totalPredictions: Number of predictions performed in this batch prediction job
+   :type totalPredictions: int
+   :param failedPredictions: Number of predictions that failed
+   :type failedPredictions: int
+   :param databaseConnectorId: The database connector to write the results to
+   :type databaseConnectorId: str
+   :param databaseOutputConfiguration: Contains information about where the batch predictions are written to
+   :type databaseOutputConfiguration: dict
+   :param explanations: If true, explanations for each prediction were created
+   :type explanations: bool
+   :param fileConnectorOutputLocation: Contains information about where the batch predictions are written to
+   :type fileConnectorOutputLocation: str
+   :param fileOutputFormat: The format of the batch prediction output (CSV or JSON)
+   :type fileOutputFormat: str
+   :param connectorType: Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR
+   :type connectorType: str
+   :param legacyInputLocation: The location of the input data
+   :type legacyInputLocation: str
+   :param error: Relevant error if the status is FAILED
+   :type error: str
+   :param csvInputPrefix: A prefix to prepend to the input columns, only applies when output format is CSV
+   :type csvInputPrefix: str
+   :param csvPredictionPrefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+   :type csvPredictionPrefix: str
+   :param csvExplanationsPrefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+   :type csvExplanationsPrefix: str
+   :param batchInputs: Inputs to the batch prediction
+   :type batchInputs: PredictionInput
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,25 +79,47 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
 
-   .. py:method:: download_batch_prediction_result_chunk(self, offset=0, chunk_size=10485760)
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: download_batch_prediction_result_chunk(self, offset = 0, chunk_size = 10485760)
 
       Returns a stream containing the batch prediction results
+
+      :param offset: The offset to read from
+      :type offset: int
+      :param chunk_size: The max amount of data to read
+      :type chunk_size: int
 
 
    .. py:method:: get_batch_prediction_connector_errors(self)
 
       Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
 
+      :param batch_prediction_version: The unique identifier of the batch prediction job to get the errors for
+      :type batch_prediction_version: str
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: BatchPredictionVersion
+
 
    .. py:method:: describe(self)
 
       Describes a batch prediction version
+
+      :param batch_prediction_version: The unique identifier of the batch prediction version
+      :type batch_prediction_version: str
+
+      :returns: The batch prediction version.
+      :rtype: BatchPredictionVersion
 
 
    .. py:method:: download_result_to_file(self, file)
@@ -58,8 +129,6 @@ Classes
       :param file: A file object opened in a binary mode e.g., file=open('/tmp/output', 'wb').
       :type file: file object
 
-      :returns: None
-
 
    .. py:method:: wait_for_predictions(self, timeout=1200)
 
@@ -68,15 +137,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the batch prediction version.
 
       :returns: A string describing the status of the batch prediction version, for e.g., pending, complete, etc.
-      :rtype: Enum (string)
+      :rtype: str
 
 
 

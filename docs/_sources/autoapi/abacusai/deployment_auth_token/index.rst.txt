@@ -23,12 +23,24 @@ Classes
 
    A deployment authentication token that is used to authenticate prediction requests
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentToken: The unique token used to authenticate requests
+   :type deploymentToken: str
+   :param createdAt: When the token was created
+   :type createdAt: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

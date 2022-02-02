@@ -23,6 +23,19 @@ Classes
 
    A project is a container which holds datasets, models and deployments
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param projectId: The ID of the project.
+   :type projectId: str
+   :param name: The name of the project.
+   :type name: str
+   :param useCase: The  Use Case associated with the project.
+   :type useCase: str
+   :param createdAt: The date and time when the project was created.
+   :type createdAt: str
+   :param featureGroupsEnabled: Project uses feature groups instead of datasets.
+   :type featureGroupsEnabled: bool
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,120 +43,321 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: Project
 
 
    .. py:method:: describe(self)
 
       Returns a description of a project.
 
+      :param project_id: The unique project ID
+      :type project_id: str
+
+      :returns: The project description is returned.
+      :rtype: Project
+
 
    .. py:method:: list_datasets(self)
 
       Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array representing all of the datasets attached to the project.
+      :rtype: ProjectDataset
+
 
    .. py:method:: get_schema(self, dataset_id)
 
-      Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
+      [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+
+      :returns: An array of objects for each column in the specified dataset.
+      :rtype: Schema
 
 
    .. py:method:: rename(self, name)
 
       This method renames a project after it is created.
 
+      :param name: The new name for the project.
+      :type name: str
+
 
    .. py:method:: delete(self)
 
       Deletes a specified project from your organization.
 
+      This method deletes the project, trained models and deployments in the specified project. The datasets attached to the specified project remain available for use with other projects in the organization.
 
-   .. py:method:: set_feature_mapping(self, feature_group_id, feature_name, feature_mapping, nested_column_name=None)
+      This method will not delete a project that contains active deployments. Be sure to stop all active deployments before you use the delete option.
+
+      Note: All projects, models, and deployments cannot be recovered once they are deleted.
+
+
+      :param project_id: The unique ID of the project to delete.
+      :type project_id: str
+
+
+   .. py:method:: set_feature_mapping(self, feature_group_id, feature_name, feature_mapping, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature.
+      :type feature_name: str
+      :param feature_mapping: The mapping of the feature in the feature group.
+      :type feature_mapping: str
+      :param nested_column_name: The name of the nested column.
+      :type nested_column_name: str
+
+      :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
+      :rtype: Feature
 
 
    .. py:method:: validate(self)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
+      :rtype: ProjectValidation
+
 
    .. py:method:: set_column_data_type(self, dataset_id, column, data_type)
 
       Set a dataset's column type.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
+      :param data_type: The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+      :type data_type: str
+
+      :returns: A list of objects that describes the resulting dataset's schema after the column's dataType is set.
+      :rtype: Schema
 
 
    .. py:method:: set_column_mapping(self, dataset_id, column, column_mapping)
 
       Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
+      :param column_mapping: The mapping of the column in the dataset. See a list of columns mapping enums here.
+      :type column_mapping: str
+
+      :returns: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set.
+      :rtype: Schema
+
 
    .. py:method:: remove_column_mapping(self, dataset_id, column)
 
       Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
 
-   .. py:method:: list_feature_groups(self, filter_feature_group_use=None)
+      :returns: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set.
+      :rtype: Schema
+
+
+   .. py:method:: list_feature_groups(self, filter_feature_group_use = None)
 
       List all the feature groups associated with a project
+
+      :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
+      :type filter_feature_group_use: str
+
+      :returns: All the Feature Groups in the Organization
+      :rtype: FeatureGroup
 
 
    .. py:method:: get_training_config_options(self)
 
       Retrieves the full description of the model training configuration options available for the specified project.
 
+      The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
 
-   .. py:method:: train_model(self, name=None, training_config={}, refresh_schedule=None)
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of options that can be specified when training a model in this project.
+      :rtype: TrainingConfigOptions
+
+
+   .. py:method:: train_model(self, name = None, training_config = {}, refresh_schedule = None)
 
       Trains a model for the specified project.
 
+      Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
 
-   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name=None)
+
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param training_config: The training config key/value pairs used to train this model.
+      :type training_config: dict
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
+      :type refresh_schedule: str
+
+      :returns: The new model which is being trained.
+      :rtype: Model
+
+
+   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None)
 
       Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `functionSourceCode` to be a valid language source file which contains the functions named
+      `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param function_source_code: Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model"
+      :type name: str
+
+      :returns: The new model, which has not been trained.
+      :rtype: Model
 
 
    .. py:method:: list_models(self)
 
       Retrieves the list of models in the specified project.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
 
-   .. py:method:: create_model_monitor(self, training_feature_group_id=None, prediction_feature_group_id=None, name=None, refresh_schedule=None)
+      :returns: An array of models.
+      :rtype: Model
+
+
+   .. py:method:: create_model_monitor(self, training_feature_group_id = None, prediction_feature_group_id = None, name = None, refresh_schedule = None)
 
       Runs a model monitor for the specified project.
+
+      :param training_feature_group_id: The unique ID of the training data feature group
+      :type training_feature_group_id: str
+      :param prediction_feature_group_id: The unique ID of the prediction data feature group
+      :type prediction_feature_group_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+      :type name: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
+      :type refresh_schedule: str
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
 
 
    .. py:method:: list_model_monitors(self)
 
       Retrieves the list of models monitors in the specified project.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of model monitors.
+      :rtype: ModelMonitor
+
 
    .. py:method:: create_deployment_token(self)
 
       Creates a deployment token for the specified project.
+
+      Deployment tokens are used to authenticate requests to the prediction APIs and are scoped on the project level.
+
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: The deployment token.
+      :rtype: DeploymentAuthToken
 
 
    .. py:method:: list_deployments(self)
 
       Retrieves a list of all deployments in the specified project.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of deployments.
+      :rtype: Deployment
+
 
    .. py:method:: list_deployment_tokens(self)
 
       Retrieves a list of all deployment tokens in the specified project.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
 
-   .. py:method:: list_refresh_policies(self, dataset_ids=[], model_ids=[], deployment_ids=[], batch_prediction_ids=[], model_monitor_ids=[])
+      :returns: An array of deployment tokens.
+      :rtype: DeploymentAuthToken
+
+
+   .. py:method:: list_refresh_policies(self, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [])
 
       List the refresh policies for the organization
+
+      :param dataset_ids: Comma separated list of Dataset IDs
+      :type dataset_ids: list
+      :param model_ids: Comma separated list of Model IDs
+      :type model_ids: list
+      :param deployment_ids: Comma separated list of Deployment IDs
+      :type deployment_ids: list
+      :param batch_prediction_ids: Comma separated list of Batch Predictions
+      :type batch_prediction_ids: list
+      :param model_monitor_ids: Comma separated list of Model Monitor IDs.
+      :type model_monitor_ids: list
+
+      :returns: List of all refresh policies in the organization
+      :rtype: RefreshPolicy
 
 
    .. py:method:: list_batch_predictions(self)
 
       Retrieves a list for the batch predictions in the project
+
+      :param project_id: The unique identifier of the project
+      :type project_id: str
+
+      :returns: A list of batch prediction jobs.
+      :rtype: BatchPrediction
 
 
    .. py:method:: attach_dataset(self, dataset_id, project_dataset_type)
@@ -156,7 +370,7 @@ Classes
       :type project_dataset_type: enum of type string
 
       :returns: The schema of the attached dataset.
-      :rtype: Schema (object)
+      :rtype: Schema
 
 
    .. py:method:: remove_dataset(self, dataset_id)
@@ -165,8 +379,6 @@ Classes
 
       :param dataset_id: A unique identifier for the dataset.
       :type dataset_id: unique string identifier
-
-      :returns: None
 
 
    .. py:method:: create_model_from_functions(self, train_function, predict_function, training_input_tables = None)
@@ -181,7 +393,7 @@ Classes
       :type training_input_tables: list, optional
 
       :returns: The model object.
-      :rtype: Model (object)
+      :rtype: Model
 
 
 

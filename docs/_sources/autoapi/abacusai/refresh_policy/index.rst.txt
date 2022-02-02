@@ -23,6 +23,31 @@ Classes
 
    A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param refreshPolicyId: The unique identifier for the refresh policy
+   :type refreshPolicyId: str
+   :param name: The user-friendly name for the refresh policy
+   :type name: str
+   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
+   :type cron: str
+   :param nextRunTime: The next UTC time that this refresh policy will be executed
+   :type nextRunTime: str
+   :param createdAt: The time when the refresh policy was created
+   :type createdAt: str
+   :param refreshType: The type of refresh policy to be run
+   :type refreshType: str
+   :param projectId: The unique identifier of a project that this refresh policy applies to
+   :type projectId: str
+   :param datasetIds: Comma separated list of Dataset IDs that this refresh policy applies to
+   :type datasetIds: list of unique identifiers of type 'string'
+   :param modelIds: Comma separated list of Model IDs that this refresh policy applies to
+   :type modelIds: list of unique identifiers of type 'string'
+   :param deploymentIds: Comma separated list of Deployment IDs that this refresh policy applies to
+   :type deploymentIds: list of unique identifiers of type 'string'
+   :param paused: (Boolean): True if the refresh policy is paused
+   :type paused: bool
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,45 +55,85 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: delete(self)
 
       Delete a refresh policy
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
 
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: RefreshPolicy
+
 
    .. py:method:: describe(self)
 
       Retrieve a single refresh policy
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
+      :returns: A refresh policy object
+      :rtype: RefreshPolicy
 
 
    .. py:method:: list_refresh_pipeline_runs(self)
 
       List the the times that the refresh policy has been run
 
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
+      :returns: A list of refresh pipeline runs for the given refresh policy id
+      :rtype: RefreshPipelineRun
+
 
    .. py:method:: pause(self)
 
       Pauses a refresh policy
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
 
 
    .. py:method:: resume(self)
 
       Resumes a refresh policy
 
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
 
    .. py:method:: run(self)
 
       Force a run of the refresh policy.
 
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
 
-   .. py:method:: update(self, name=None, cron=None)
+
+   .. py:method:: update(self, name = None, cron = None)
 
       Update the name or cron string of a  refresh policy
+
+      :param name: Optional, specify to update the name of the refresh policy
+      :type name: str
+      :param cron: Optional, specify to update the cron string describing the schedule from the refresh policy
+      :type cron: str
+
+      :returns: The updated refresh policy
+      :rtype: RefreshPolicy
 
 
 

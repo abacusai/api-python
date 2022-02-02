@@ -23,12 +23,28 @@ Classes
 
    Summary of anomalous null frequencies for a feature discovered by a model monitoring instance
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: Name of feature.
+   :type name: str
+   :param violation: Description of null violation for a prediction feature.
+   :type violation: str
+   :param trainingNullFreq: Proportion of null entries in training feature.
+   :type trainingNullFreq: float
+   :param predictionNullFreq: Proportion of null entries in prediction feature.
+   :type predictionNullFreq: float
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

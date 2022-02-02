@@ -4,6 +4,18 @@ from .return_class import AbstractApiClass
 class PredictionMetricVersion(AbstractApiClass):
     """
         A Prediction Metric version for a Prediction Metric job description.
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            createdAt (str): Date and time when this preddiction metric version was created.
+            error (str): Relevant error if the status of this job version is FAILED.
+            featureGroupVersion (str): The feature group version used as input to this prediction metric.
+            predictionMetricCompletedAt (str): The time and date computatations were completed for this job version.
+            predictionMetricConfig (json): Specification for prediction metric used to run this job.
+            predictionMetricId (str): The unique identifier of the prediction metric this is a version of.
+            predictionMetricStartedAt (str): The time and date computations were started for this job version.
+            predictionMetricVersion (str): The unique identifier of this prediction metric version.
+            status (str): The current status of the computations for this job version.
     """
 
     def __init__(self, client, createdAt=None, error=None, featureGroupVersion=None, predictionMetricCompletedAt=None, predictionMetricConfig=None, predictionMetricId=None, predictionMetricStartedAt=None, predictionMetricVersion=None, status=None):
@@ -22,6 +34,12 @@ class PredictionMetricVersion(AbstractApiClass):
         return f"PredictionMetricVersion(created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  feature_group_version={repr(self.feature_group_version)},\n  prediction_metric_completed_at={repr(self.prediction_metric_completed_at)},\n  prediction_metric_config={repr(self.prediction_metric_config)},\n  prediction_metric_id={repr(self.prediction_metric_id)},\n  prediction_metric_started_at={repr(self.prediction_metric_started_at)},\n  prediction_metric_version={repr(self.prediction_metric_version)},\n  status={repr(self.status)})"
 
     def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
         return {'created_at': self.created_at, 'error': self.error, 'feature_group_version': self.feature_group_version, 'prediction_metric_completed_at': self.prediction_metric_completed_at, 'prediction_metric_config': self.prediction_metric_config, 'prediction_metric_id': self.prediction_metric_id, 'prediction_metric_started_at': self.prediction_metric_started_at, 'prediction_metric_version': self.prediction_metric_version, 'status': self.status}
 
     def wait_for_prediction_metric_version(self, timeout=1200):
@@ -30,9 +48,6 @@ class PredictionMetricVersion(AbstractApiClass):
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
-
-        Returns:
-            None
         """
         return self.client._poll(self, {'PENDING', 'RUNNING'}, timeout=timeout)
 
@@ -41,6 +56,6 @@ class PredictionMetricVersion(AbstractApiClass):
         Get the lifecycle status of this version.
 
         Returns:
-            Enum (string): An enum value of the lifecycle status of this version.
+            str: An enum value of the lifecycle status of this version.
         """
         return self.describe().status

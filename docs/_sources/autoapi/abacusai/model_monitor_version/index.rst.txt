@@ -23,6 +23,29 @@ Classes
 
    A version of a model monitor
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelMonitorVersion: The unique identifier of a model monitor version.
+   :type modelMonitorVersion: str
+   :param status: The current status of the model.
+   :type status: str
+   :param modelMonitorId: A reference to the model monitor this version belongs to.
+   :type modelMonitorId: str
+   :param monitoringStartedAt: The start time and date of the monitoring process.
+   :type monitoringStartedAt: str
+   :param monitoringCompletedAt: The end time and date of the monitoring process.
+   :type monitoringCompletedAt: str
+   :param trainingFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is monitoring.
+   :type trainingFeatureGroupVersion: unique string identifiers
+   :param predictionFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is monitoring.
+   :type predictionFeatureGroupVersion: unique string identifiers
+   :param error: Relevant error if the status is FAILED.
+   :type error: str
+   :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
+   :type pendingDeploymentIds: list
+   :param failedDeploymentIds: List of failed deployment IDs.
+   :type failedDeploymentIds: list
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,35 +53,66 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: ModelMonitorVersion
 
 
    .. py:method:: describe(self)
 
       Retrieves a full description of the specified model monitor version
 
+      :param model_monitor_version: The unique version ID of the model monitor version
+      :type model_monitor_version: str
+
+      :returns: A model monitor version.
+      :rtype: ModelMonitorVersion
+
 
    .. py:method:: delete(self)
 
       Deletes the specified model monitor version.
 
+      :param model_monitor_version: The ID of the model monitor version to delete.
+      :type model_monitor_version: str
 
-   .. py:method:: get_model_monitoring_logs(self, stdout=False, stderr=False)
+
+   .. py:method:: get_model_monitoring_logs(self, stdout = False, stderr = False)
 
       Returns monitoring logs for the model.
+
+      :param stdout: Set True to get info logs
+      :type stdout: bool
+      :param stderr: Set True to get error logs
+      :type stderr: bool
+
+      :returns: A function logs.
+      :rtype: FunctionLogs
 
 
    .. py:method:: get_drift_for_feature(self, feature_name)
 
       Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
+      :param feature_name: Name of the feature to view the distribution of.
+      :type feature_name: str
 
-   .. py:method:: get_outliers_for_feature(self, feature_name=None)
+
+   .. py:method:: get_outliers_for_feature(self, feature_name = None)
 
       Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
+
+      :param feature_name: Name of the feature to view the distribution of.
+      :type feature_name: str
 
 
    .. py:method:: wait_for_monitor(self, timeout=1200)
@@ -68,15 +122,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the model monitor version.
 
       :returns: A string describing the status of the model monitor version, for e.g., pending, complete, etc.
-      :rtype: Enum (string)
+      :rtype: str
 
 
 

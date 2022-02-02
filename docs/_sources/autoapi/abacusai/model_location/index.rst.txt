@@ -23,12 +23,24 @@ Classes
 
    Location information for plug and play model.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param location: Location of the plug and play model.
+   :type location: str
+   :param artifactNames: Representations of the names of the artifacts used to create the model.
+   :type artifactNames: dict
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

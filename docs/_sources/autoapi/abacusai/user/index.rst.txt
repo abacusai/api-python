@@ -23,12 +23,30 @@ Classes
 
    A Abacus.AI User
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The User's name.
+   :type name: str
+   :param email: The User's primary email address.
+   :type email: str
+   :param createdAt: The date and time when the user joined Abacus.AI.
+   :type createdAt: str
+   :param status: `ACTIVE` when the user has accepted an invite to join the organization, else `INVITED`.
+   :type status: str
+   :param organizationGroups: List of Organization Groups this user belongs to.
+   :type organizationGroups: OrganizationGroup
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

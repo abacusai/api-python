@@ -23,6 +23,25 @@ Classes
 
    A materialized version of a feature group
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupVersion: The unique identifier for this version of feature group.
+   :type featureGroupVersion: str
+   :param sql: The sql definition creating this feature group.
+   :type sql: str
+   :param sourceTables: The source tables for this feature group.
+   :type sourceTables: list of string
+   :param createdAt: The timestamp at which the feature group was created.
+   :type createdAt: str
+   :param status: The current status of the feature group version.
+   :type status: str
+   :param error: Relevant error if the status is FAILED.
+   :type error: str
+   :param deployable: whether feature group is deployable or not.
+   :type deployable: bool
+   :param features: List of features.
+   :type features: Feature
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,30 +49,76 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
 
-   .. py:method:: export_to_file_connector(self, location, export_file_format, overwrite=False)
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: export_to_file_connector(self, location, export_file_format, overwrite = False)
 
       Export Feature group to File Connector.
 
+      :param location: Cloud file location to export to.
+      :type location: str
+      :param export_file_format: File format to export to.
+      :type export_file_format: str
+      :param overwrite: If true and a file exists at this location, this process will overwrite the file.
+      :type overwrite: bool
 
-   .. py:method:: export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column=None)
+      :returns: The FeatureGroupExport instance
+      :rtype: FeatureGroupExport
+
+
+   .. py:method:: export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None)
 
       Export Feature group to Database Connector.
 
+      :param database_connector_id: Database connector to export to.
+      :type database_connector_id: str
+      :param object_name: The database object to write to
+      :type object_name: str
+      :param write_mode: Either INSERT or UPSERT
+      :type write_mode: str
+      :param database_feature_mapping: A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
+      :type database_feature_mapping: dict
+      :param id_column: Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
+      :type id_column: str
 
-   .. py:method:: get_materialization_logs(self, stdout=False, stderr=False)
+      :returns: The FeatureGroupExport instance
+      :rtype: FeatureGroupExport
+
+
+   .. py:method:: get_materialization_logs(self, stdout = False, stderr = False)
 
       Returns logs for materialized feature group version.
+
+      :param stdout: Set True to get info logs
+      :type stdout: bool
+      :param stderr: Set True to get error logs
+      :type stderr: bool
+
+      :returns: A function logs.
+      :rtype: FunctionLogs
 
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: FeatureGroupVersion
+
 
    .. py:method:: describe(self)
 
       Get a specific feature group version.
+
+      :param feature_group_version: The unique ID associated with the feature group version.
+      :type feature_group_version: str
+
+      :returns: A feature group version.
+      :rtype: FeatureGroupVersion
 
 
    .. py:method:: wait_for_results(self, timeout=3600)
@@ -63,15 +128,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the feature group version.
 
       :returns: A string describing the status of a feature group version (pending, complete, etc.).
-      :rtype: Enum (string)
+      :rtype: str
 
 
    .. py:method:: _get_avro_file(self, file_part)

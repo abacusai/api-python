@@ -23,6 +23,33 @@ Classes
 
    A refresh policy run or a project refresh run.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param refreshPipelineRunId: The unique identifier for the refresh pipeline run
+   :type refreshPipelineRunId: str
+   :param refreshPolicyId: Populated when the run was triggered by a refresh policy
+   :type refreshPolicyId: str
+   :param createdAt: The time when this refresh pipeline run was created
+   :type createdAt: str
+   :param startedAt: The time when the refresh pipeline run was started
+   :type startedAt: str
+   :param completedAt: The time when the refresh pipeline run was completed
+   :type completedAt: is-8601 string
+   :param status: The status of the refresh pipeline run
+   :type status: str
+   :param refreshType: The type of refresh policy to be run
+   :type refreshType: str
+   :param datasetVersions: Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring
+   :type datasetVersions: list of string identifiers
+   :param modelVersions: Comma separated list of Model version IDs that this refresh pipeline run is monitoring
+   :type modelVersions: list of string identifiers
+   :param deploymentVersions: Comma separated list of Deployment version IDs that this refresh pipeline run is monitoring
+   :type deploymentVersions: list of string identifiers
+   :param batchPredictions: Comma separated list of batch predictionn IDs that this refresh pipeline run is monitoring
+   :type batchPredictions: list of string identifiers
+   :param refreshPolicy:
+   :type refreshPolicy: RefreshPolicy
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,15 +57,29 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: RefreshPipelineRun
+
 
    .. py:method:: describe(self)
 
       Retrieve a single refresh pipeline run
+
+      :param refresh_pipeline_run_id: The unique ID associated with this refresh pipeline_run
+      :type refresh_pipeline_run_id: str
+
+      :returns: A refresh pipeline run object
+      :rtype: RefreshPipelineRun
 
 
 

@@ -4,6 +4,12 @@ from .return_class import AbstractApiClass
 class ProjectValidation(AbstractApiClass):
     """
         A validation result for a project
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            valid (bool): `true` if the project is valid and ready to be trained, otherwise `false`.
+            datasetErrors (list of json objects): A list of errors keeping the dataset from being valid
+            columnHints (dict): 
     """
 
     def __init__(self, client, valid=None, datasetErrors=None, columnHints=None):
@@ -16,4 +22,10 @@ class ProjectValidation(AbstractApiClass):
         return f"ProjectValidation(valid={repr(self.valid)},\n  dataset_errors={repr(self.dataset_errors)},\n  column_hints={repr(self.column_hints)})"
 
     def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
         return {'valid': self.valid, 'dataset_errors': self.dataset_errors, 'column_hints': self.column_hints}

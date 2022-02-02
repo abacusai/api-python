@@ -23,6 +23,17 @@ Classes
 
    An API Key to authenticate requests to the Abacus.AI API
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param apiKeyId: The unique ID for the API key
+   :type apiKeyId: str
+   :param apiKey: The unique API key scoped to a specific organization. Value will be partially obscured.
+   :type apiKey: str
+   :param tag: A user-friendly tag for the API key.
+   :type tag: str
+   :param createdAt: The timestamp when the API key was created.
+   :type createdAt: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,10 +41,18 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: delete(self)
 
       Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.
+
+      :param api_key_id: The ID of the API key to delete.
+      :type api_key_id: str
 
 
 

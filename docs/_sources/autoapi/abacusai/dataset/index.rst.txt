@@ -23,6 +23,43 @@ Classes
 
    A dataset reference
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param datasetId: The unique identifier of the dataset.
+   :type datasetId: str
+   :param name: The user-friendly name of the dataset.
+   :type name: str
+   :param sourceType: The source of the Dataset. EXTERNAL_SERVICE, UPLOAD, or STREAMING.
+   :type sourceType: str
+   :param dataSource: Location of data. It may be a URI such as an s3 bucket or the database table.
+   :type dataSource: str
+   :param createdAt: The timestamp at which this dataset was created.
+   :type createdAt: str
+   :param ignoreBefore: The timestamp at which all previous events are ignored when training.
+   :type ignoreBefore: str
+   :param ephemeral: The dataset is ephemeral and not used for training.
+   :type ephemeral: bool
+   :param lookbackDays: Specific to streaming datasets, this specifies how many days worth of data to include when generating a snapshot. Value of 0 indicates leaves this selection to the system.
+   :type lookbackDays: int
+   :param databaseConnectorId: The Database Connector used.
+   :type databaseConnectorId: str
+   :param databaseConnectorConfig: The database connector query used to retrieve data.
+   :type databaseConnectorConfig: dict
+   :param connectorType: The type of connector used to get this dataset FILE or DATABASE.
+   :type connectorType: str
+   :param featureGroupTableName: The table name of the dataset's feature group
+   :type featureGroupTableName: str
+   :param applicationConnectorId: The Application Connector used.
+   :type applicationConnectorId: str
+   :param applicationConnectorConfig: The application connector query used to retrieve data.
+   :type applicationConnectorConfig: dict
+   :param latestDatasetVersion: The latest version of this dataset.
+   :type latestDatasetVersion: DatasetVersion
+   :param schema: List of resolved columns.
+   :type schema: DatasetColumn
+   :param refreshSchedules: List of schedules that determines when the next version of the dataset will be created.
+   :type refreshSchedules: RefreshSchedule
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,80 +67,188 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
 
-   .. py:method:: create_version_from_file_connector(self, location=None, file_format=None, csv_delimiter=None)
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: create_version_from_file_connector(self, location = None, file_format = None, csv_delimiter = None)
 
       Creates a new version of the specified dataset.
 
+      :param location: A new external URI to import the dataset from. If not specified, the last location will be used.
+      :type location: str
+      :param file_format: The fileFormat to be used. If not specified, the service will try to detect the file format.
+      :type file_format: str
+      :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
+      :type csv_delimiter: str
 
-   .. py:method:: create_version_from_database_connector(self, object_name=None, columns=None, query_arguments=None, sql_query=None)
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
+
+   .. py:method:: create_version_from_database_connector(self, object_name = None, columns = None, query_arguments = None, sql_query = None)
 
       Creates a new version of the specified dataset
 
+      :param object_name: If applicable, the name/id of the object in the service to query. If not specified, the last name will be used.
+      :type object_name: str
+      :param columns: The columns to query from the external service object. If not specified, the last columns will be used.
+      :type columns: str
+      :param query_arguments: Additional query arguments to filter the data. If not specified, the last arguments will be used.
+      :type query_arguments: str
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+      :type sql_query: str
 
-   .. py:method:: create_version_from_application_connector(self, object_id=None, start_timestamp=None, end_timestamp=None)
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
+
+   .. py:method:: create_version_from_application_connector(self, object_id = None, start_timestamp = None, end_timestamp = None)
 
       Creates a new version of the specified dataset
 
+      :param object_id: If applicable, the id of the object in the service to query. If not specified, the last name will be used.
+      :type object_id: str
+      :param start_timestamp: The Unix timestamp of the start of the period that will be queried.
+      :type start_timestamp: int
+      :param end_timestamp: The Unix timestamp of the end of the period that will be queried.
+      :type end_timestamp: int
 
-   .. py:method:: create_version_from_upload(self, file_format=None)
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
+
+   .. py:method:: create_version_from_upload(self, file_format = None)
 
       Creates a new version of the specified dataset using a local file upload.
+
+      :param file_format: The file_format to be used. If not specified, the service will try to detect the file format.
+      :type file_format: str
+
+      :returns: A token to be used when uploading file parts.
+      :rtype: Upload
 
 
    .. py:method:: snapshot_streaming_data(self)
 
       Snapshots the current data in the streaming dataset for training.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
 
    .. py:method:: set_column_data_type(self, column, data_type)
 
       Set a column's type in a specified dataset.
 
+      :param column: The name of the column.
+      :type column: str
+      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+      :type data_type: str
 
-   .. py:method:: set_streaming_retention_policy(self, retention_hours=None, retention_row_count=None)
+      :returns: The dataset and schema after the data_type has been set
+      :rtype: Dataset
+
+
+   .. py:method:: set_streaming_retention_policy(self, retention_hours = None, retention_row_count = None)
 
       Sets the streaming retention policy
+
+      :param retention_hours: The number of hours to retain streamed data in memory
+      :type retention_hours: int
+      :param retention_row_count: The number of rows to retain streamed data in memory
+      :type retention_row_count: int
 
 
    .. py:method:: get_schema(self)
 
       Retrieves the column schema of a dataset
 
+      :param dataset_id: The Dataset schema to lookup.
+      :type dataset_id: str
+
+      :returns: List of Column schema definitions
+      :rtype: DatasetColumn
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: Dataset
 
 
    .. py:method:: describe(self)
 
       Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
 
-   .. py:method:: list_versions(self, limit=100, start_after_version=None)
+      :returns: The dataset.
+      :rtype: Dataset
+
+
+   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
 
       Retrieves a list of all dataset versions for the specified dataset.
+
+      :param limit: The max length of the list of all dataset versions.
+      :type limit: int
+      :param start_after_version: The id of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: A list of dataset versions.
+      :rtype: DatasetVersion
 
 
    .. py:method:: attach_to_project(self, project_id, dataset_type)
 
-      Attaches the dataset to the project.
+      [DEPRECATED] Attaches the dataset to the project.
+
+      Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
+
+
+      :param project_id: The project to attach the dataset to.
+      :type project_id: str
+      :param dataset_type: The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for the datasetTypes that are supported per use case.
+      :type dataset_type: str
+
+      :returns: An array of columns descriptions.
+      :rtype: Schema
 
 
    .. py:method:: remove_from_project(self, project_id)
 
-      Removes a dataset from a project.
+      [DEPRECATED] Removes a dataset from a project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
 
 
    .. py:method:: rename(self, name)
 
       Rename a dataset.
 
+      :param name: The new name for the dataset.
+      :type name: str
+
 
    .. py:method:: delete(self)
 
       Deletes the specified dataset from the organization.
+
+      The dataset cannot be deleted if it is currently attached to a project.
+
+
+      :param dataset_id: The dataset to delete.
+      :type dataset_id: str
 
 
    .. py:method:: wait_for_import(self, timeout=900)
@@ -113,8 +258,6 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: wait_for_inspection(self, timeout=None)
 
@@ -123,15 +266,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the latest dataset version.
 
       :returns: A string describing the status of a dataset (importing, inspecting, complete, etc.).
-      :rtype: Enum (string)
+      :rtype: str
 
 
    .. py:method:: describe_feature_group(self)
@@ -139,7 +280,7 @@ Classes
       Gets the feature group attached to the dataset.
 
       :returns: A feature group object.
-      :rtype: FeatureGroup (object)
+      :rtype: FeatureGroup
 
 
    .. py:method:: create_refresh_policy(self, cron)
@@ -150,7 +291,7 @@ Classes
       :type cron: str
 
       :returns: The refresh policy object.
-      :rtype: RefreshPolicy (object)
+      :rtype: RefreshPolicy
 
 
    .. py:method:: list_refresh_policies(self)
@@ -158,7 +299,7 @@ Classes
       Gets the refresh policies in a list.
 
       :returns: A list of refresh policy objects.
-      :rtype: List (RefreshPolicy)
+      :rtype: List[RefreshPolicy]
 
 
 

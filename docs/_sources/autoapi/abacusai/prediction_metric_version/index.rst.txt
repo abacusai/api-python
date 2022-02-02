@@ -23,12 +23,38 @@ Classes
 
    A Prediction Metric version for a Prediction Metric job description.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param createdAt: Date and time when this preddiction metric version was created.
+   :type createdAt: str
+   :param error: Relevant error if the status of this job version is FAILED.
+   :type error: str
+   :param featureGroupVersion: The feature group version used as input to this prediction metric.
+   :type featureGroupVersion: str
+   :param predictionMetricCompletedAt: The time and date computatations were completed for this job version.
+   :type predictionMetricCompletedAt: str
+   :param predictionMetricConfig: Specification for prediction metric used to run this job.
+   :type predictionMetricConfig: json
+   :param predictionMetricId: The unique identifier of the prediction metric this is a version of.
+   :type predictionMetricId: str
+   :param predictionMetricStartedAt: The time and date computations were started for this job version.
+   :type predictionMetricStartedAt: str
+   :param predictionMetricVersion: The unique identifier of this prediction metric version.
+   :type predictionMetricVersion: str
+   :param status: The current status of the computations for this job version.
+   :type status: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
    .. py:method:: wait_for_prediction_metric_version(self, timeout=1200)
@@ -38,15 +64,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Get the lifecycle status of this version.
 
       :returns: An enum value of the lifecycle status of this version.
-      :rtype: Enum (string)
+      :rtype: str
 
 
 

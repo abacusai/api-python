@@ -38,14 +38,28 @@ Functions
 .. py:function:: _get_service_discovery_url()
 
 
-.. py:class:: ClientOptions(exception_on_404=True, server='https://api.abacus.ai')
+.. py:class:: ClientOptions(exception_on_404 = True, server = 'https://api.abacus.ai')
+
+   Options for configuring the ApiClient
+
+   :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
+   :type exception_on_404: bool
+   :param server: The default server endpoint to use for API requests
+   :type server: str
 
 
-.. py:exception:: ApiException(message, http_status, exception=None)
+.. py:exception:: ApiException(message, http_status, exception = None)
 
    Bases: :py:obj:`Exception`
 
-   Common base class for all non-exit exceptions.
+   Default ApiException raised by APIs
+
+   :param message: The error message
+   :type message: str
+   :param http_status: The https status code raised by the server
+   :type http_status: int
+   :param exception: The exception class raised by the server
+   :type exception: str
 
    .. py:method:: __str__(self)
 
@@ -55,8 +69,19 @@ Functions
 
 .. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
+   Abstract Base API Client
+
+   :param api_key: The api key to use as authentication to the server
+   :type api_key: str
+   :param server: The base server url to use to send API requets to
+   :type server: str
+   :param client_options: Optional API client configurations
+   :type client_options: ClientOptions
+   :param skip_version_check: If true, will skip checking the server's current API version on initializing the client
+   :type skip_version_check: bool
+
    .. py:attribute:: client_version
-      :annotation: = 0.33.1
+      :annotation: = 0.34.0
 
       
 
@@ -83,27 +108,73 @@ Functions
 
    Bases: :py:obj:`BaseApiClient`
 
+   Abacus.AI API Client
+
+   :param api_key: The api key to use as authentication to the server
+   :type api_key: str
+   :param server: The base server url to use to send API requets to
+   :type server: str
+   :param client_options: Optional API client configurations
+   :type client_options: ClientOptions
+   :param skip_version_check: If true, will skip checking the server's current API version on initializing the client
+   :type skip_version_check: bool
+
    .. py:method:: create_dataset_from_pandas(self, feature_group_table_name, df, name = None)
 
       Creates a Dataset from a pandas dataframe
+
+      :param feature_group_table_name: The table name to assign to the feature group created by this call
+      :type feature_group_table_name: str
+      :param df: The dataframe to upload
+      :type df: pandas.DataFrame
+      :param name: The name to give to the dataset
+      :type name: str
+
+      :returns: The dataset object created
+      :rtype: Dataset
 
 
    .. py:method:: create_dataset_version_from_pandas(self, table_name_or_id, df)
 
       Updates an existing dataset from a pandas dataframe
 
+      :param table_name_or_id: The table name of the feature group or the ID of the dataset to update
+      :type table_name_or_id: str
+      :param df: The dataframe to upload
+      :type df: pandas.DataFrame
+
+      :returns: The dataset updated
+      :rtype: Dataset
+
 
    .. py:method:: create_model_from_functions(self, project_id, train_function, predict_function, training_input_tables = None)
+
+      Creates a model from a python function
+
+      :param project_id: The project to create the model in
+      :type project_id: str
+      :param train_function: The training fucntion callable to serialize and upload
+      :type train_function: callable
+      :param predict_function: The predict function callable to serialize and upload
+      :type predict_function: callable
+      :param training_input_tables: The input table names of the feature groups to pass to the train function
+      :type training_input_tables: list
 
 
    .. py:method:: add_user_to_organization(self, email)
 
       Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
 
+      :param email: The email address to invite to your Organization.
+      :type email: str
+
 
    .. py:method:: list_api_keys(self)
 
       Lists all of the user's API keys the user's organization.
+
+      :returns: List of API Keys for this user.
+      :rtype: ApiKey
 
 
    .. py:method:: list_organization_users(self)
@@ -113,104 +184,212 @@ Functions
       This method will retrieve a list containing all the users in the organization. The list includes pending users who have been invited to the organization.
 
 
+      :returns: Array of all of the users in the Organization
+      :rtype: User
+
+
    .. py:method:: describe_user(self)
 
       Get the current user's information, such as their name, email, admin status, etc.
+
+      :returns: Information about the current User
+      :rtype: User
 
 
    .. py:method:: list_organization_groups(self)
 
       Lists all Organizations Groups within this Organization
 
+      :returns: List of Groups in this Organization
+      :rtype: OrganizationGroup
+
 
    .. py:method:: create_organization_group(self, group_name, permissions, default_group = False)
 
       Creates a new Organization Group.
+
+      :param group_name: The name of the group
+      :type group_name: str
+      :param permissions: The list of permissions to initialize the group with
+      :type permissions: list
+      :param default_group: If true, this group will replace the current default group
+      :type default_group: bool
+
+      :returns: Information about the created Organization Group
+      :rtype: OrganizationGroup
 
 
    .. py:method:: describe_organization_group(self, organization_group_id)
 
       Returns the specific organization group passes in by the user.
 
+      :param organization_group_id: The unique ID of the organization group to that needs to be described.
+      :type organization_group_id: str
+
+      :returns: Information about a specific Organization Group
+      :rtype: OrganizationGroup
+
 
    .. py:method:: add_organization_group_permission(self, organization_group_id, permission)
 
       Adds a permission to the specified Organization Group
+
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
+      :param permission: The permission to add to the Organization Group
+      :type permission: str
 
 
    .. py:method:: remove_organization_group_permission(self, organization_group_id, permission)
 
       Removes a permission from the specified Organization Group
 
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
+      :param permission: The permission to remove from the Organization Group
+      :type permission: str
+
 
    .. py:method:: delete_organization_group(self, organization_group_id)
 
       Deletes the specified Organization Group from the organization.
+
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
 
 
    .. py:method:: add_user_to_organization_group(self, organization_group_id, email)
 
       Adds a user to the specified Organization Group
 
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
+      :param email: The email of the user that is added to the group
+      :type email: str
+
 
    .. py:method:: remove_user_from_organization_group(self, organization_group_id, email)
 
       Removes a user from an Organization Group
+
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
+      :param email: The email of the user to remove
+      :type email: str
 
 
    .. py:method:: set_default_organization_group(self, organization_group_id)
 
       Sets the default Organization Group that all new users that join an organization are automatically added to
 
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
+
 
    .. py:method:: delete_api_key(self, api_key_id)
 
       Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.
+
+      :param api_key_id: The ID of the API key to delete.
+      :type api_key_id: str
 
 
    .. py:method:: remove_user_from_organization(self, email)
 
       Removes the specified user from the Organization. You can remove yourself, Otherwise you must be an Organization Administrator to use this method to remove other users from the organization.
 
+      :param email: The email address of the user to remove from the Organization.
+      :type email: str
+
 
    .. py:method:: create_project(self, name, use_case)
 
       Creates a project with your specified project name and use case. Creating a project creates a container for all of the datasets and the models that are associated with a particular problem/project that you would like to work on. For example, if you want to create a model to detect fraud, you have to first create a project, upload datasets, create feature groups, and then create one or more models to get predictions for your use case.
+
+      :param name: The project's name
+      :type name: str
+      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  NLP_HYBRID,  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  ANOMALYEVENTSTREAM,  UCPLUGANDPLAY,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  DECO_REALTIME,  DECO_HOSTMON,  DECO_VECTOR,  DECO_EXPDEB,  VISION_SEGMENTATION,  VISION,  VISION_HYBRID,  FEATURE_DRIFT.
+      :type use_case: str
+
+      :returns: This object represents the newly created project. For details refer to
+      :rtype: Project
 
 
    .. py:method:: list_use_cases(self)
 
       Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.
 
+      :returns: A list of UseCase objects describing all the use cases addressed by the platform. For details, please refer to
+      :rtype: UseCase
+
 
    .. py:method:: describe_use_case_requirements(self, use_case)
 
       This API call returns the feature requirements for a specified use case
+
+      :param use_case: This will contain the Enum String for the use case whose dataset requirements are needed.
+      :type use_case: str
+
+      :returns: The feature requirements of the use case are returned. This includes all the feature group required for the use case along with their descriptions and feature mapping details.
+      :rtype: UseCaseRequirements
 
 
    .. py:method:: describe_project(self, project_id)
 
       Returns a description of a project.
 
+      :param project_id: The unique project ID
+      :type project_id: str
+
+      :returns: The project description is returned.
+      :rtype: Project
+
 
    .. py:method:: list_projects(self, limit = 100, start_after_id = None)
 
       Retrieves a list of all projects in the current organization.
+
+      :param limit: The max length of the list of projects.
+      :type limit: int
+      :param start_after_id: The ID of the project after which the list starts.
+      :type start_after_id: str
+
+      :returns: An array of all projects in the Organization the user is currently logged in to.
+      :rtype: Project
 
 
    .. py:method:: list_project_datasets(self, project_id)
 
       Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array representing all of the datasets attached to the project.
+      :rtype: ProjectDataset
+
 
    .. py:method:: get_schema(self, project_id, dataset_id)
 
       [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+
+      :returns: An array of objects for each column in the specified dataset.
+      :rtype: Schema
+
 
    .. py:method:: rename_project(self, project_id, name)
 
       This method renames a project after it is created.
+
+      :param project_id: The unique ID for the project.
+      :type project_id: str
+      :param name: The new name for the project.
+      :type name: str
 
 
    .. py:method:: delete_project(self, project_id)
@@ -224,54 +403,150 @@ Functions
       Note: All projects, models, and deployments cannot be recovered once they are deleted.
 
 
+      :param project_id: The unique ID of the project to delete.
+      :type project_id: str
+
+
    .. py:method:: add_feature_group_to_project(self, feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE', feature_group_use = None)
 
       Adds a feature group to a project,
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_type: The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
+      :type feature_group_type: str
+      :param feature_group_use: The user assigned feature group use which allows for organizing project feature groups  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT
+      :type feature_group_use: str
 
 
    .. py:method:: remove_feature_group_from_project(self, feature_group_id, project_id)
 
       Removes a feature group from a project.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
 
    .. py:method:: set_feature_group_type(self, feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE')
 
       Update the feature group type in a project. The feature group must already be added to the project.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_type: The feature group type to set the feature group as. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
+      :type feature_group_type: str
 
 
    .. py:method:: use_feature_group_for_training(self, feature_group_id, project_id, use_for_training = True)
 
       Use the feature group for model training input
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param use_for_training: Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training
+      :type use_for_training: bool
+
 
    .. py:method:: set_feature_mapping(self, project_id, feature_group_id, feature_name, feature_mapping, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature.
+      :type feature_name: str
+      :param feature_mapping: The mapping of the feature in the feature group.
+      :type feature_mapping: str
+      :param nested_column_name: The name of the nested column.
+      :type nested_column_name: str
+
+      :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
+      :rtype: Feature
 
 
    .. py:method:: validate_project(self, project_id)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
+      :rtype: ProjectValidation
+
 
    .. py:method:: set_column_data_type(self, project_id, dataset_id, column, data_type)
 
       Set a dataset's column type.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
+      :param data_type: The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+      :type data_type: str
+
+      :returns: A list of objects that describes the resulting dataset's schema after the column's dataType is set.
+      :rtype: Schema
 
 
    .. py:method:: set_column_mapping(self, project_id, dataset_id, column, column_mapping)
 
       Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
+      :param column_mapping: The mapping of the column in the dataset. See a list of columns mapping enums here.
+      :type column_mapping: str
+
+      :returns: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set.
+      :rtype: Schema
+
 
    .. py:method:: remove_column_mapping(self, project_id, dataset_id, column)
 
       Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
+
+      :returns: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set.
+      :rtype: Schema
+
 
    .. py:method:: create_feature_group(self, table_name, sql, description = None)
 
       Creates a new feature group from a SQL statement.
+
+      :param table_name: The unique name to be given to the feature group.
+      :type table_name: str
+      :param sql: Input SQL statement for forming the feature group.
+      :type sql: str
+      :param description: The description about the feature group.
+      :type description: str
+
+      :returns: The created feature group
+      :rtype: FeatureGroup
 
 
    .. py:method:: create_feature_group_from_function(self, table_name, function_source_code, function_name, input_feature_groups = [], description = None)
@@ -286,6 +561,21 @@ Functions
       as the materialized version of this feature group table.
 
 
+      :param table_name: The unique name to be given to the feature group.
+      :type table_name: str
+      :param function_source_code: Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called function_name. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+      :type function_name: str
+      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type input_feature_groups: list
+      :param description: The description for this feature group.
+      :type description: str
+
+      :returns: The created feature group
+      :rtype: FeatureGroup
+
+
    .. py:method:: create_sampling_feature_group(self, feature_group_id, table_name, sampling_config, description = None)
 
       Creates a new feature group defined as a sample of rows from another feature group.
@@ -293,9 +583,34 @@ Functions
       For efficiency, sampling is approximate unless otherwise specified. (E.g. the number of rows may vary slightly from what was requested).
 
 
+      :param feature_group_id: The unique ID associated with the pre-existing feature group that will be sampled by this new feature group. I.e. the input for sampling.
+      :type feature_group_id: str
+      :param table_name: The unique name to be given to this sampling feature group.
+      :type table_name: str
+      :param sampling_config: JSON object (aka map) defining the sampling method and its parameters.
+      :type sampling_config: dict
+      :param description: A human-readable description of this feature group.
+      :type description: str
+
+      :returns: The created feature group.
+      :rtype: FeatureGroup
+
+
    .. py:method:: create_merge_feature_group(self, source_feature_group_id, table_name, merge_config, description = None)
 
       Creates a new feature group defined as the union of other feature group versions.
+
+      :param source_feature_group_id:
+      :type source_feature_group_id: str
+      :param table_name: The unique name to be given to this merge feature group.
+      :type table_name: str
+      :param merge_config: JSON object (aka map) defining the merging method and its parameters.
+      :type merge_config: dict
+      :param description: A human-readable description of this feature group.
+      :type description: str
+
+      :returns: The created feature group.
+      :rtype: FeatureGroup
 
 
    .. py:method:: set_feature_group_sampling_config(self, feature_group_id, sampling_config)
@@ -305,52 +620,141 @@ Functions
       Currently, sampling is only for Sampling FeatureGroups, so this API only allows calling on that kind of FeatureGroup.
 
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param sampling_config: A json object string specifying the sampling method and parameters specific to that sampling method. Empty sampling_config means no sampling.
+      :type sampling_config: dict
+
+      :returns: The updated feature group.
+      :rtype: FeatureGroup
+
+
    .. py:method:: set_feature_group_merge_config(self, feature_group_id, merge_config)
 
       Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param merge_config: A json object string specifying the merge rule. An empty mergeConfig will default to only including the latest Dataset Version.
+      :type merge_config: dict
 
 
    .. py:method:: set_feature_group_schema(self, feature_group_id, schema)
 
       Creates a new schema and points the feature group to the new feature group schema id.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param schema: An array of json objects with 'name' and 'dataType' properties.
+      :type schema: list
+
 
    .. py:method:: get_feature_group_schema(self, feature_group_id, project_id = None)
 
       Returns a schema given a specific FeatureGroup in a project.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of objects for each column in the specified feature group.
+      :rtype: Feature
 
 
    .. py:method:: create_feature(self, feature_group_id, name, select_expression)
 
       Creates a new feature in a Feature Group from a SQL select statement
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param name: The name of the feature to add
+      :type name: str
+      :param select_expression: SQL select expression to create the feature
+      :type select_expression: str
+
+      :returns: A feature group object with the newly added feature.
+      :rtype: FeatureGroup
+
 
    .. py:method:: add_feature_group_tag(self, feature_group_id, tag)
 
       Adds a tag to the feature group
+
+      :param feature_group_id: The feature group
+      :type feature_group_id: str
+      :param tag: The tag to add to the feature group
+      :type tag: str
 
 
    .. py:method:: remove_feature_group_tag(self, feature_group_id, tag)
 
       Removes a tag from the feature group
 
+      :param feature_group_id: The feature group
+      :type feature_group_id: str
+      :param tag: The tag to add to the feature group
+      :type tag: str
+
 
    .. py:method:: create_nested_feature(self, feature_group_id, nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
 
       Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param nested_feature_name: The name of the feature.
+      :type nested_feature_name: str
+      :param table_name: The table name of the feature group to nest
+      :type table_name: str
+      :param using_clause: The SQL join column or logic to join the nested table with the parent
+      :type using_clause: str
+      :param where_clause: A SQL where statement to filter the nested rows
+      :type where_clause: str
+      :param order_clause: A SQL clause to order the nested rows
+      :type order_clause: str
+
+      :returns: A feature group object with the newly added nested feature.
+      :rtype: FeatureGroup
 
 
    .. py:method:: update_nested_feature(self, feature_group_id, nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
 
       Updates a previously existing nested feature in a feature group.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param nested_feature_name: The name of the feature to be updated.
+      :type nested_feature_name: str
+      :param table_name: The name of the table.
+      :type table_name: str
+      :param using_clause: The SQL join column or logic to join the nested table with the parent
+      :type using_clause: str
+      :param where_clause: A SQL where statement to filter the nested rows
+      :type where_clause: str
+      :param order_clause: A SQL clause to order the nested rows
+      :type order_clause: str
+      :param new_nested_feature_name: New name for the nested feature.
+      :type new_nested_feature_name: str
+
+      :returns: A feature group object with the updated nested feature.
+      :rtype: FeatureGroup
+
 
    .. py:method:: delete_nested_feature(self, feature_group_id, nested_feature_name)
 
       Delete a nested feature.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param nested_feature_name: The name of the feature to be updated.
+      :type nested_feature_name: str
 
-   .. py:method:: create_point_in_time_feature(self, feature_group_id, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0, expression = None)
+      :returns: A feature group object without the deleted nested feature.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_point_in_time_feature(self, feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
 
       Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
 
@@ -362,364 +766,951 @@ Functions
       the rank order is >= lookbackCount and includes the row just prior to the current one. The lag is specified in term of positions using lookbackUntilPosition.
 
 
-   .. py:method:: update_point_in_time_feature(self, feature_group_id, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, expression = None, new_feature_name = None)
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature to create
+      :type feature_name: str
+      :param history_table_name: The table name of the history table.
+      :type history_table_name: str
+      :param aggregation_keys: List of keys to use for join the historical table and performing the window aggregation.
+      :type aggregation_keys: list
+      :param timestamp_key: Name of feature which contains the timestamp value for the point in time feature
+      :type timestamp_key: str
+      :param historical_timestamp_key: Name of feature which contains the historical timestamp.
+      :type historical_timestamp_key: str
+      :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+      :type expression: str
+      :param lookback_window_seconds: If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
+      :type lookback_window_seconds: float
+      :param lookback_window_lag_seconds: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+      :type lookback_window_lag_seconds: float
+      :param lookback_count: If window is specified in terms of count, the start position of the window (0 is the current row)
+      :type lookback_count: int
+      :param lookback_until_position: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+      :type lookback_until_position: int
+
+      :returns: A feature group object with the newly added nested feature.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_point_in_time_feature(self, feature_group_id, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
 
       Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature.
+      :type feature_name: str
+      :param history_table_name: The table name of the history table. If not specified, we use the current table to do a self join.
+      :type history_table_name: str
+      :param aggregation_keys: List of keys to use for join the historical table and performing the window aggregation.
+      :type aggregation_keys: list
+      :param timestamp_key: Name of feature which contains the timestamp value for the point in time feature
+      :type timestamp_key: str
+      :param historical_timestamp_key: Name of feature which contains the historical timestamp.
+      :type historical_timestamp_key: str
+      :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+      :type expression: str
+      :param lookback_window_seconds: If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
+      :type lookback_window_seconds: float
+      :param lookback_window_lag_seconds: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+      :type lookback_window_lag_seconds: float
+      :param lookback_count: If window is specified in terms of count, the start position of the window (0 is the current row)
+      :type lookback_count: int
+      :param lookback_until_position: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+      :type lookback_until_position: int
+      :param new_feature_name: New name for the point in time feature.
+      :type new_feature_name: str
+
+      :returns: A feature group object with the newly added nested feature.
+      :rtype: FeatureGroup
 
 
    .. py:method:: set_feature_type(self, feature_group_id, feature, feature_type)
 
       Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param feature: The name of the feature.
+      :type feature: str
+      :param feature_type: The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
+      :type feature_type: str
+
+      :returns: The feature group after the data_type is applied
+      :rtype: Schema
+
 
    .. py:method:: invalidate_streaming_feature_group_data(self, feature_group_id, invalid_before_timestamp)
 
       Invalidates all streaming data with timestamp before invalidBeforeTimestamp
+
+      :param feature_group_id: The Streaming feature group to record data to
+      :type feature_group_id: str
+      :param invalid_before_timestamp: The unix timestamp, any data which has a timestamp before this time will be deleted
+      :type invalid_before_timestamp: int
 
 
    .. py:method:: concatenate_feature_group_data(self, feature_group_id, source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
+      :param feature_group_id: The destination feature group.
+      :type feature_group_id: str
+      :param source_feature_group_id: The feature group to concatenate with the destination feature group.
+      :type source_feature_group_id: str
+      :param merge_type: UNION or INTERSECTION
+      :type merge_type: str
+      :param replace_until_timestamp: The unix timestamp to specify the point till which we will replace data from the source feature group.
+      :type replace_until_timestamp: int
+      :param skip_materialize: If true, will not materialize the concatenated feature group
+      :type skip_materialize: bool
+
 
    .. py:method:: describe_feature_group(self, feature_group_id)
 
       Describe a Feature Group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: The feature group object.
+      :rtype: FeatureGroup
 
 
    .. py:method:: describe_feature_group_by_table_name(self, table_name)
 
       Describe a Feature Group by the feature group's table name
 
+      :param table_name: The unique table name of the Feature Group to lookup
+      :type table_name: str
+
+      :returns: The Feature Group
+      :rtype: FeatureGroup
+
 
    .. py:method:: set_feature_group_indexing_config(self, feature_group_id, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Sets various attributes of the feature group used for deployment lookups and streaming updates.
+
+      :param feature_group_id: The feature group
+      :type feature_group_id: str
+      :param primary_key: Name of feature which defines the primary key of the feature group.
+      :type primary_key: str
+      :param update_timestamp_key: Name of feature which defines the update timestamp of the feature group - used in concatenation and primary key deduplication.
+      :type update_timestamp_key: str
+      :param lookup_keys: List of feature names which can be used in the lookup api to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+      :type lookup_keys: list
 
 
    .. py:method:: list_feature_groups(self, limit = 100, start_after_id = None)
 
       Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.
 
+      :param limit: The the number of feature groups to be retrieved.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all feature groups till a specified ID.
+      :type start_after_id: str
+
+      :returns: All the feature groups in the organization
+      :rtype: FeatureGroup
+
 
    .. py:method:: list_project_feature_groups(self, project_id, filter_feature_group_use = None)
 
       List all the feature groups associated with a project
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
+      :type filter_feature_group_use: str
+
+      :returns: All the Feature Groups in the Organization
+      :rtype: FeatureGroup
 
 
    .. py:method:: update_feature_group(self, feature_group_id, description = None)
 
       Modifies an existing feature group
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param description: The description about the feature group.
+      :type description: str
+
+      :returns: The updated feature group object.
+      :rtype: FeatureGroup
+
 
    .. py:method:: update_feature_group_sql_definition(self, feature_group_id, sql)
 
       Updates the SQL statement for a feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param sql: Input SQL statement for the feature group.
+      :type sql: str
+
+      :returns: The updated feature group
+      :rtype: FeatureGroup
 
 
    .. py:method:: update_feature_group_function_definition(self, feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param function_source_code: Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called function_name. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+      :type function_name: str
+      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type input_feature_groups: list
+
+      :returns: The updated feature group
+      :rtype: FeatureGroup
+
 
    .. py:method:: update_feature(self, feature_group_id, name, select_expression = None, new_name = None)
 
       Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param name: The name of the feature to be updated.
+      :type name: str
+      :param select_expression: Input SQL statement for modifying the feature.
+      :type select_expression: str
+      :param new_name: The new name of the feature.
+      :type new_name: str
+
+      :returns: The updated feature group object.
+      :rtype: FeatureGroup
 
 
    .. py:method:: export_feature_group_version_to_file_connector(self, feature_group_version, location, export_file_format, overwrite = False)
 
       Export Feature group to File Connector.
 
+      :param feature_group_version: The Feature Group instance to export.
+      :type feature_group_version: str
+      :param location: Cloud file location to export to.
+      :type location: str
+      :param export_file_format: File format to export to.
+      :type export_file_format: str
+      :param overwrite: If true and a file exists at this location, this process will overwrite the file.
+      :type overwrite: bool
+
+      :returns: The FeatureGroupExport instance
+      :rtype: FeatureGroupExport
+
 
    .. py:method:: export_feature_group_version_to_database_connector(self, feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None)
 
       Export Feature group to Database Connector.
+
+      :param feature_group_version: The Feature Group instance id to export.
+      :type feature_group_version: str
+      :param database_connector_id: Database connector to export to.
+      :type database_connector_id: str
+      :param object_name: The database object to write to
+      :type object_name: str
+      :param write_mode: Either INSERT or UPSERT
+      :type write_mode: str
+      :param database_feature_mapping: A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
+      :type database_feature_mapping: dict
+      :param id_column: Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
+      :type id_column: str
+
+      :returns: The FeatureGroupExport instance
+      :rtype: FeatureGroupExport
 
 
    .. py:method:: describe_feature_group_export(self, feature_group_export_id)
 
       A feature group export
 
+      :param feature_group_export_id: The ID of the feature group export.
+      :type feature_group_export_id: str
+
+      :returns: The feature group export
+      :rtype: FeatureGroupExport
+
 
    .. py:method:: list_feature_group_exports(self, feature_group_id)
 
       Lists all of the feature group exports for a given feature group
+
+      :param feature_group_id: The ID of the feature group
+      :type feature_group_id: str
+
+      :returns: The feature group exports
+      :rtype: FeatureGroupExport
 
 
    .. py:method:: set_feature_group_modifier_lock(self, feature_group_id, locked = True)
 
       To lock a feature group to prevent it from being modified.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param locked: True or False to disable or enable feature group modification.
+      :type locked: bool
+
 
    .. py:method:: list_feature_group_modifiers(self, feature_group_id)
 
       To list users who can modify a feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: Modification lock status and groups and organizations added to the feature group.
+      :rtype: ModificationLockInfo
 
 
    .. py:method:: add_user_to_feature_group_modifiers(self, feature_group_id, email)
 
       Adds user to a feature group.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param email: The email address of the user to be removed.
+      :type email: str
+
 
    .. py:method:: add_organization_group_to_feature_group_modifiers(self, feature_group_id, organization_group_id)
 
       Add Organization to a feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param organization_group_id: The unique ID associated with the organization group.
+      :type organization_group_id: str
 
 
    .. py:method:: remove_user_from_feature_group_modifiers(self, feature_group_id, email)
 
       Removes user from a feature group.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param email: The email address of the user to be removed.
+      :type email: str
+
 
    .. py:method:: remove_organization_group_from_feature_group_modifiers(self, feature_group_id, organization_group_id)
 
       Removes Organization from a feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param organization_group_id: The unique ID associated with the organization group.
+      :type organization_group_id: str
 
 
    .. py:method:: delete_feature(self, feature_group_id, name)
 
       Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param name: The name of the feature to be deleted.
+      :type name: str
+
+      :returns: The updated feature group object.
+      :rtype: FeatureGroup
+
 
    .. py:method:: delete_feature_group(self, feature_group_id)
 
       Removes an existing feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
 
 
    .. py:method:: create_feature_group_version(self, feature_group_id)
 
       Creates a snapshot for a specified feature group.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: A feature group version.
+      :rtype: FeatureGroupVersion
+
 
    .. py:method:: get_materialization_logs(self, feature_group_version, stdout = False, stderr = False)
 
       Returns logs for materialized feature group version.
+
+      :param feature_group_version: The Feature Group instance to export
+      :type feature_group_version: str
+      :param stdout: Set True to get info logs
+      :type stdout: bool
+      :param stderr: Set True to get error logs
+      :type stderr: bool
+
+      :returns: A function logs.
+      :rtype: FunctionLogs
 
 
    .. py:method:: list_feature_group_versions(self, feature_group_id, limit = 100, start_after_version = None)
 
       Retrieves a list of all feature group versions for the specified feature group.
 
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param limit: The max length of the returned versions
+      :type limit: int
+      :param start_after_version: Results will start after this version
+      :type start_after_version: str
+
+      :returns: An array of feature group version.
+      :rtype: FeatureGroupVersion
+
 
    .. py:method:: describe_feature_group_version(self, feature_group_version)
 
       Get a specific feature group version.
+
+      :param feature_group_version: The unique ID associated with the feature group version.
+      :type feature_group_version: str
+
+      :returns: A feature group version.
+      :rtype: FeatureGroupVersion
 
 
    .. py:method:: cancel_upload(self, upload_id)
 
       Cancels an upload
 
+      :param upload_id: The Upload ID
+      :type upload_id: str
+
 
    .. py:method:: upload_part(self, upload_id, part_number, part_data)
 
       Uploads a part of a large dataset file from your bucket to our system. Our system currently supports a size of up to 5GB for a part of a full file and a size of up to 5TB for the full file. Note that each part must be >=5MB in size, unless it is the last part in the sequence of parts for the full file.
+
+      :param upload_id: A unique identifier for this upload
+      :type upload_id: str
+      :param part_number: The 1-indexed number denoting the position of the file part in the sequence of parts for the full file.
+      :type part_number: int
+      :param part_data: The multipart/form-data for the current part of the full file.
+      :type part_data: io.TextIOBase
+
+      :returns: The object 'UploadPart' which encapsulates the hash and the etag for the part that got uploaded.
+      :rtype: UploadPart
 
 
    .. py:method:: mark_upload_complete(self, upload_id)
 
       Marks an upload process as complete.
 
+      :param upload_id: A unique identifier for this upload
+      :type upload_id: str
+
+      :returns: The upload object associated with the upload process for the full file. The details of the object are described below:
+      :rtype: Upload
+
 
    .. py:method:: create_dataset_from_file_connector(self, name, table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, merge_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
+
+      :param name: The name for the dataset.
+      :type name: str
+      :param table_name: Organization-unique table name or the name of the feature group table to create using the source table.
+      :type table_name: str
+      :param location: The URI location format of the dataset source. The URI location format needs to be specified to match the location_date_format when location_date_format is specified. Ex. Location = s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/* when The URI location format needs to include both the start_prefix and until_prefix when both are specified. Ex. Location s3://bucket1/dir1/* includes both s3://bucket1/dir1/dir2/event_date=2021-08-02/* and s3://bucket1/dir1/dir2/event_date=2021-08-08/*
+      :type location: str
+      :param file_format: The file format of the dataset.
+      :type file_format: str
+      :param refresh_schedule: The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
+      :type refresh_schedule: str
+      :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
+      :type csv_delimiter: str
+      :param filename_column: Adds a new column to the dataset with the external URI path.
+      :type filename_column: str
+      :param start_prefix: The start prefix (inclusive) for a range based search on a cloud storage location URI.
+      :type start_prefix: str
+      :param until_prefix: The end prefix (exclusive) for a range based search on a cloud storage location URI.
+      :type until_prefix: str
+      :param location_date_format: The date format in which the data is partitioned in the cloud storage location. E.g., if the data is partitioned as s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/dir4/filename.parquet, then the location_date_format is YYYY-MM-DD This format needs to be consistent across all files within the specified location.
+      :type location_date_format: str
+      :param date_format_lookback_days: The number of days to look back from the current day for import locations that are date partitioned. E.g., import date, 2021-06-04, with date_format_lookback_days = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
+      :type date_format_lookback_days: int
+      :param merge_config: Struct for specifying an incremental dataset and the merge rule associated with it.
+      :type merge_config: dict
+
+      :returns: The dataset created.
+      :rtype: Dataset
 
 
    .. py:method:: create_dataset_version_from_file_connector(self, dataset_id, location = None, file_format = None, csv_delimiter = None)
 
       Creates a new version of the specified dataset.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param location: A new external URI to import the dataset from. If not specified, the last location will be used.
+      :type location: str
+      :param file_format: The fileFormat to be used. If not specified, the service will try to detect the file format.
+      :type file_format: str
+      :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
+      :type csv_delimiter: str
+
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
 
    .. py:method:: create_dataset_from_database_connector(self, name, table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None)
 
       Creates a dataset from a Database Connector
+
+      :param name: The name for the dataset to be attached.
+      :type name: str
+      :param table_name: Organization-unique table name
+      :type table_name: str
+      :param database_connector_id: The Database Connector to import the dataset from
+      :type database_connector_id: str
+      :param object_name: If applicable, the name/id of the object in the service to query.
+      :type object_name: str
+      :param columns: The columns to query from the external service object.
+      :type columns: str
+      :param query_arguments: Additional query arguments to filter the data
+      :type query_arguments: str
+      :param refresh_schedule: The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
+      :type refresh_schedule: str
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+      :type sql_query: str
+
+      :returns: The created dataset.
+      :rtype: Dataset
 
 
    .. py:method:: create_dataset_from_application_connector(self, name, table_name, application_connector_id, object_id = None, start_timestamp = None, end_timestamp = None, refresh_schedule = None)
 
       Creates a dataset from an Application Connector
 
+      :param name: The name for the dataset
+      :type name: str
+      :param table_name: Organization-unique table name
+      :type table_name: str
+      :param application_connector_id: The unique application connector to download data from
+      :type application_connector_id: str
+      :param object_id: If applicable, the id of the object in the service to query.
+      :type object_id: str
+      :param start_timestamp: The Unix timestamp of the start of the period that will be queried.
+      :type start_timestamp: int
+      :param end_timestamp: The Unix timestamp of the end of the period that will be queried.
+      :type end_timestamp: int
+      :param refresh_schedule: The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
+      :type refresh_schedule: str
+
+      :returns: The created dataset.
+      :rtype: Dataset
+
 
    .. py:method:: create_dataset_version_from_database_connector(self, dataset_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
 
       Creates a new version of the specified dataset
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param object_name: If applicable, the name/id of the object in the service to query. If not specified, the last name will be used.
+      :type object_name: str
+      :param columns: The columns to query from the external service object. If not specified, the last columns will be used.
+      :type columns: str
+      :param query_arguments: Additional query arguments to filter the data. If not specified, the last arguments will be used.
+      :type query_arguments: str
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+      :type sql_query: str
+
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
 
 
    .. py:method:: create_dataset_version_from_application_connector(self, dataset_id, object_id = None, start_timestamp = None, end_timestamp = None)
 
       Creates a new version of the specified dataset
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param object_id: If applicable, the id of the object in the service to query. If not specified, the last name will be used.
+      :type object_id: str
+      :param start_timestamp: The Unix timestamp of the start of the period that will be queried.
+      :type start_timestamp: int
+      :param end_timestamp: The Unix timestamp of the end of the period that will be queried.
+      :type end_timestamp: int
+
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
 
    .. py:method:: create_dataset_from_upload(self, name, table_name, file_format = None, csv_delimiter = None)
 
       Creates a dataset and return an upload Id that can be used to upload a file.
+
+      :param name: The name for the dataset.
+      :type name: str
+      :param table_name: Organization-unique table name for this dataset.
+      :type table_name: str
+      :param file_format: The file format of the dataset.
+      :type file_format: str
+      :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
+      :type csv_delimiter: str
+
+      :returns: A refernce to be used when uploading file parts.
+      :rtype: Upload
 
 
    .. py:method:: create_dataset_version_from_upload(self, dataset_id, file_format = None)
 
       Creates a new version of the specified dataset using a local file upload.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param file_format: The file_format to be used. If not specified, the service will try to detect the file format.
+      :type file_format: str
+
+      :returns: A token to be used when uploading file parts.
+      :rtype: Upload
+
 
    .. py:method:: create_streaming_dataset(self, name, table_name, project_id = None, dataset_type = None)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
+
+      :param name: The name for the dataset.
+      :type name: str
+      :param table_name: The feature group table name to create for this dataset
+      :type table_name: str
+      :param project_id: The project to create the streaming dataset for.
+      :type project_id: str
+      :param dataset_type: The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for the datasetTypes that are supported per use case.
+      :type dataset_type: str
+
+      :returns: The streaming dataset created.
+      :rtype: Dataset
 
 
    .. py:method:: snapshot_streaming_data(self, dataset_id)
 
       Snapshots the current data in the streaming dataset for training.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+
+      :returns: The new Dataset Version created.
+      :rtype: DatasetVersion
+
 
    .. py:method:: set_dataset_column_data_type(self, dataset_id, column, data_type)
 
       Set a column's type in a specified dataset.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param column: The name of the column.
+      :type column: str
+      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+      :type data_type: str
+
+      :returns: The dataset and schema after the data_type has been set
+      :rtype: Dataset
 
 
    .. py:method:: create_dataset_from_streaming_connector(self, name, table_name, streaming_connector_id, streaming_args = None, refresh_schedule = None)
 
       Creates a dataset from a Streaming Connector
 
+      :param name: The name for the dataset to be attached.
+      :type name: str
+      :param table_name: Organization-unique table name
+      :type table_name: str
+      :param streaming_connector_id: The Streaming Connector to import the dataset from
+      :type streaming_connector_id: str
+      :param streaming_args: Dict of arguments to read data from the streaming connector
+      :type streaming_args: dict
+      :param refresh_schedule: The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
+      :type refresh_schedule: str
+
+      :returns: The created dataset.
+      :rtype: Dataset
+
 
    .. py:method:: set_streaming_retention_policy(self, dataset_id, retention_hours = None, retention_row_count = None)
 
       Sets the streaming retention policy
+
+      :param dataset_id: The Streaming dataset
+      :type dataset_id: str
+      :param retention_hours: The number of hours to retain streamed data in memory
+      :type retention_hours: int
+      :param retention_row_count: The number of rows to retain streamed data in memory
+      :type retention_row_count: int
 
 
    .. py:method:: get_dataset_schema(self, dataset_id)
 
       Retrieves the column schema of a dataset
 
+      :param dataset_id: The Dataset schema to lookup.
+      :type dataset_id: str
+
+      :returns: List of Column schema definitions
+      :rtype: DatasetColumn
+
 
    .. py:method:: get_file_connector_instructions(self, bucket, write_permission = False)
 
       Retrieves verification information to create a data connector to a cloud storage bucket.
+
+      :param bucket: The fully qualified URI of the storage bucket to verify.
+      :type bucket: str
+      :param write_permission: If `true`, instructions will include steps for allowing Abacus.AI to write to this service.
+      :type write_permission: bool
+
+      :returns: An object with full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
+      :rtype: FileConnectorInstructions
 
 
    .. py:method:: list_database_connectors(self)
 
       Retrieves a list of all of the database connectors along with all their attributes.
 
+      :returns: The database Connector
+      :rtype: DatabaseConnector
+
 
    .. py:method:: list_file_connectors(self)
 
       Retrieves a list of all connected services in the organization and their current verification status.
+
+      :returns: An array of cloud storage buckets connected to the organization.
+      :rtype: FileConnector
 
 
    .. py:method:: list_database_connector_objects(self, database_connector_id)
 
       Lists querable objects in the database connector.
 
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
+
 
    .. py:method:: get_database_connector_object_schema(self, database_connector_id, object_name = None)
 
       Get the schema of an object in an database connector.
+
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
+      :param object_name: The unique identifier for the object in the external system.
+      :type object_name: str
 
 
    .. py:method:: rename_database_connector(self, database_connector_id, name)
 
       Renames a Database Connector
 
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
+      :param name: The new name for the Database Connector
+      :type name: str
+
 
    .. py:method:: rename_application_connector(self, application_connector_id, name)
 
       Renames an Application Connector
+
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
+      :param name: A new name for the application connector
+      :type name: str
 
 
    .. py:method:: verify_database_connector(self, database_connector_id)
 
       Checks to see if Abacus.AI can access the database.
 
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
+
 
    .. py:method:: verify_file_connector(self, bucket)
 
       Checks to see if Abacus.AI can access the bucket.
+
+      :param bucket: The bucket to test.
+      :type bucket: str
+
+      :returns: The Result of the verification.
+      :rtype: FileConnectorVerification
 
 
    .. py:method:: delete_database_connector(self, database_connector_id)
 
       Delete a database connector.
 
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
+
 
    .. py:method:: delete_application_connector(self, application_connector_id)
 
       Delete a application connector.
+
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
 
 
    .. py:method:: delete_file_connector(self, bucket)
 
       Removes a connected service from the specified organization.
 
+      :param bucket: The fully qualified URI of the bucket to remove.
+      :type bucket: str
+
 
    .. py:method:: list_application_connectors(self)
 
       Retrieves a list of all of the application connectors along with all their attributes.
+
+      :returns: The appplication Connector
+      :rtype: ApplicationConnector
 
 
    .. py:method:: list_application_connector_objects(self, application_connector_id)
 
       Lists querable objects in the application connector.
 
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
+
 
    .. py:method:: verify_application_connector(self, application_connector_id)
 
       Checks to see if Abacus.AI can access the Application.
+
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
 
 
    .. py:method:: set_azure_blob_connection_string(self, bucket, connection_string)
 
       Authenticates specified Azure Blob Storage bucket using an authenticated Connection String.
 
+      :param bucket: The fully qualified Azure Blob Storage Bucket URI
+      :type bucket: str
+      :param connection_string: The Connection String {product_name} should use to authenticate when accessing this bucket
+      :type connection_string: str
+
+      :returns: An object with the roleArn and verification status for the specified bucket.
+      :rtype: FileConnectorVerification
+
 
    .. py:method:: list_streaming_connectors(self)
 
       Retrieves a list of all of the streaming connectors along with all their attributes.
+
+      :returns: The streaming Connector
+      :rtype: StreamingConnector
 
 
    .. py:method:: create_streaming_token(self)
 
       Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.
 
+      :returns: The streaming token.
+      :rtype: StreamingAuthToken
+
 
    .. py:method:: list_streaming_tokens(self)
 
       Retrieves a list of all streaming tokens along with their attributes.
+
+      :returns: An array of streaming tokens.
+      :rtype: StreamingAuthToken
 
 
    .. py:method:: delete_streaming_token(self, streaming_token)
 
       Deletes the specified streaming token.
 
+      :param streaming_token: The streaming token to delete.
+      :type streaming_token: str
+
 
    .. py:method:: get_recent_feature_group_streamed_data(self, feature_group_id)
 
       Returns recently streamed data to a streaming feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
 
 
    .. py:method:: list_uploads(self)
 
       Lists all ongoing uploads in the organization
 
+      :returns: An array of uploads.
+      :rtype: Upload
+
 
    .. py:method:: describe_upload(self, upload_id)
 
       Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
+
+      :param upload_id: The unique ID associated with the file uploaded or being uploaded in parts.
+      :type upload_id: str
+
+      :returns: The details associated with the large dataset file uploaded in parts.
+      :rtype: Upload
 
 
    .. py:method:: list_datasets(self, limit = 100, start_after_id = None, exclude_streaming = False)
 
       Retrieves a list of all of the datasets in the organization.
 
+      :param limit: The max length of the list of projects.
+      :type limit: int
+      :param start_after_id: The ID of the project after which the list starts.
+      :type start_after_id: str
+      :param exclude_streaming: Exclude streaming datasets from result.
+      :type exclude_streaming: bool
+
+      :returns: A list of datasets.
+      :rtype: Dataset
+
 
    .. py:method:: describe_dataset(self, dataset_id)
 
       Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
 
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+
+      :returns: The dataset.
+      :rtype: Dataset
+
 
    .. py:method:: list_dataset_versions(self, dataset_id, limit = 100, start_after_version = None)
 
       Retrieves a list of all dataset versions for the specified dataset.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param limit: The max length of the list of all dataset versions.
+      :type limit: int
+      :param start_after_version: The id of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: A list of dataset versions.
+      :rtype: DatasetVersion
 
 
    .. py:method:: attach_dataset_to_project(self, dataset_id, project_id, dataset_type)
@@ -729,14 +1720,35 @@ Functions
       Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
 
 
+      :param dataset_id: The dataset to attach.
+      :type dataset_id: str
+      :param project_id: The project to attach the dataset to.
+      :type project_id: str
+      :param dataset_type: The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for the datasetTypes that are supported per use case.
+      :type dataset_type: str
+
+      :returns: An array of columns descriptions.
+      :rtype: Schema
+
+
    .. py:method:: remove_dataset_from_project(self, dataset_id, project_id)
 
       [DEPRECATED] Removes a dataset from a project.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
 
 
    .. py:method:: rename_dataset(self, dataset_id, name)
 
       Rename a dataset.
+
+      :param dataset_id: The unique ID associated with the dataset.
+      :type dataset_id: str
+      :param name: The new name for the dataset.
+      :type name: str
 
 
    .. py:method:: delete_dataset(self, dataset_id)
@@ -746,6 +1758,10 @@ Functions
       The dataset cannot be deleted if it is currently attached to a project.
 
 
+      :param dataset_id: The dataset to delete.
+      :type dataset_id: str
+
+
    .. py:method:: get_training_config_options(self, project_id)
 
       Retrieves the full description of the model training configuration options available for the specified project.
@@ -753,11 +1769,31 @@ Functions
       The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
 
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of options that can be specified when training a model in this project.
+      :rtype: TrainingConfigOptions
+
+
    .. py:method:: train_model(self, project_id, name = None, training_config = {}, refresh_schedule = None)
 
       Trains a model for the specified project.
 
       Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
+
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param training_config: The training config key/value pairs used to train this model.
+      :type training_config: dict
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
+      :type refresh_schedule: str
+
+      :returns: The new model which is being trained.
+      :rtype: Model
 
 
    .. py:method:: create_model_from_python(self, project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None)
@@ -773,19 +1809,53 @@ Functions
       as it returns the prediction made by the `predictFunctionName`, which can be anything
 
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param function_source_code: Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model"
+      :type name: str
+
+      :returns: The new model, which has not been trained.
+      :rtype: Model
+
+
    .. py:method:: list_models(self, project_id)
 
       Retrieves the list of models in the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of models.
+      :rtype: Model
 
 
    .. py:method:: describe_model(self, model_id)
 
       Retrieves a full description of the specified model.
 
+      :param model_id: The unique ID associated with the model.
+      :type model_id: str
+
+      :returns: The description of the model.
+      :rtype: Model
+
 
    .. py:method:: rename_model(self, model_id, name)
 
       Renames a model
+
+      :param model_id: The ID of the model to rename
+      :type model_id: str
+      :param name: The name to apply to the model
+      :type name: str
 
 
    .. py:method:: update_python_model(self, model_id, function_source_code = None, train_function_name = None, predict_function_name = None, training_input_tables = None)
@@ -801,14 +1871,45 @@ Functions
       as it returns the prediction made by the `predictFunctionName`, which can be anything
 
 
+      :param model_id: The unique ID associated with the Python model to be changed.
+      :type model_id: str
+      :param function_source_code: Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+
+      :returns: The updated model
+      :rtype: Model
+
+
    .. py:method:: set_model_training_config(self, model_id, training_config)
 
       Edits the default model training config
+
+      :param model_id: The unique ID of the model to update
+      :type model_id: str
+      :param training_config: The training config key/value pairs used to train this model.
+      :type training_config: dict
+
+      :returns: The model object correspoding after the training config is applied
+      :rtype: Model
 
 
    .. py:method:: set_model_prediction_params(self, model_id, prediction_config)
 
       Sets the model prediction config for the model
+
+      :param model_id: The unique ID of the model to update
+      :type model_id: str
+      :param prediction_config: The prediction config for the model
+      :type prediction_config: dict
+
+      :returns: The model object correspoding after the prediction config is applied
+      :rtype: Model
 
 
    .. py:method:: get_model_metrics(self, model_id, model_version = None, baseline_metrics = False)
@@ -818,94 +1919,224 @@ Functions
       If only the model's unique identifier (modelId) is specified, the latest trained version of model (modelVersion) is used.
 
 
+      :param model_id: The unique ID associated with the model.
+      :type model_id: str
+      :param model_version: The version of the model.
+      :type model_version: str
+      :param baseline_metrics: If true, will also return the baseline model metrics for comparison.
+      :type baseline_metrics: bool
+
+      :returns: An object to show the model metrics and explanations for what each metric means.
+      :rtype: ModelMetrics
+
+
    .. py:method:: list_model_versions(self, model_id, limit = 100, start_after_version = None)
 
       Retrieves a list of the version for a given model.
+
+      :param model_id: The unique ID associated with the model.
+      :type model_id: str
+      :param limit: The max length of the list of all dataset versions.
+      :type limit: int
+      :param start_after_version: The id of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: An array of model versions.
+      :rtype: ModelVersion
 
 
    .. py:method:: retrain_model(self, model_id, deployment_ids = [])
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
+      :param model_id: The model to retrain.
+      :type model_id: str
+      :param deployment_ids: List of deployments to automatically deploy to.
+      :type deployment_ids: list
+
+      :returns: The model that is being retrained.
+      :rtype: Model
+
 
    .. py:method:: delete_model(self, model_id)
 
       Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
+
+      :param model_id: The ID of the model to delete.
+      :type model_id: str
 
 
    .. py:method:: delete_model_version(self, model_version)
 
       Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
 
+      :param model_version: The ID of the model version to delete.
+      :type model_version: str
+
 
    .. py:method:: describe_model_version(self, model_version)
 
       Retrieves a full description of the specified model version
+
+      :param model_version: The unique version ID of the model version
+      :type model_version: str
+
+      :returns: A model version.
+      :rtype: ModelVersion
 
 
    .. py:method:: get_training_logs(self, model_version, stdout = False, stderr = False)
 
       Returns training logs for the model.
 
+      :param model_version: The unique version ID of the model version
+      :type model_version: str
+      :param stdout: Set True to get info logs
+      :type stdout: bool
+      :param stderr: Set True to get error logs
+      :type stderr: bool
+
+      :returns: A function logs.
+      :rtype: FunctionLogs
+
 
    .. py:method:: create_model_monitor(self, project_id, training_feature_group_id = None, prediction_feature_group_id = None, name = None, refresh_schedule = None)
 
       Runs a model monitor for the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param training_feature_group_id: The unique ID of the training data feature group
+      :type training_feature_group_id: str
+      :param prediction_feature_group_id: The unique ID of the prediction data feature group
+      :type prediction_feature_group_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+      :type name: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
+      :type refresh_schedule: str
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
 
 
    .. py:method:: rerun_model_monitor(self, model_monitor_id)
 
       Reruns the specified model monitor.
 
+      :param model_monitor_id: The model monitor to rerun.
+      :type model_monitor_id: str
+
+      :returns: The model monitor that is being rerun.
+      :rtype: ModelMonitor
+
 
    .. py:method:: list_model_monitors(self, project_id)
 
       Retrieves the list of models monitors in the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of model monitors.
+      :rtype: ModelMonitor
 
 
    .. py:method:: describe_model_monitor(self, model_monitor_id)
 
       Retrieves a full description of the specified model monitor.
 
+      :param model_monitor_id: The unique ID associated with the model monitor.
+      :type model_monitor_id: str
+
+      :returns: The description of the model monitor.
+      :rtype: ModelMonitor
+
 
    .. py:method:: list_model_monitor_versions(self, model_monitor_id, limit = 100, start_after_version = None)
 
       Retrieves a list of the versions for a given model monitor.
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
+      :type model_monitor_id: str
+      :param limit: The max length of the list of all model monitor versions.
+      :type limit: int
+      :param start_after_version: The id of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: An array of model monitor versions.
+      :rtype: ModelMonitorVersion
 
 
    .. py:method:: describe_model_monitor_version(self, model_monitor_version)
 
       Retrieves a full description of the specified model monitor version
 
+      :param model_monitor_version: The unique version ID of the model monitor version
+      :type model_monitor_version: str
+
+      :returns: A model monitor version.
+      :rtype: ModelMonitorVersion
+
 
    .. py:method:: rename_model_monitor(self, model_monitor_id, name)
 
       Renames a model monitor
+
+      :param model_monitor_id: The ID of the model monitor to rename
+      :type model_monitor_id: str
+      :param name: The name to apply to the model monitor
+      :type name: str
 
 
    .. py:method:: delete_model_monitor(self, model_monitor_id)
 
       Deletes the specified model monitor and all its versions.
 
+      :param model_monitor_id: The ID of the model monitor to delete.
+      :type model_monitor_id: str
+
 
    .. py:method:: delete_model_monitor_version(self, model_monitor_version)
 
       Deletes the specified model monitor version.
+
+      :param model_monitor_version: The ID of the model monitor version to delete.
+      :type model_monitor_version: str
 
 
    .. py:method:: get_model_monitoring_logs(self, model_monitor_version, stdout = False, stderr = False)
 
       Returns monitoring logs for the model.
 
+      :param model_monitor_version: The unique version ID of the model monitor version
+      :type model_monitor_version: str
+      :param stdout: Set True to get info logs
+      :type stdout: bool
+      :param stderr: Set True to get error logs
+      :type stderr: bool
+
+      :returns: A function logs.
+      :rtype: FunctionLogs
+
 
    .. py:method:: get_drift_for_feature(self, model_monitor_version, feature_name)
 
       Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
+      :param model_monitor_version: The unique identifier to a model monitor version created under the project.
+      :type model_monitor_version: str
+      :param feature_name: Name of the feature to view the distribution of.
+      :type feature_name: str
+
 
    .. py:method:: get_outliers_for_feature(self, model_monitor_version, feature_name = None)
 
       Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
+
+      :param model_monitor_version: The unique identifier to a model monitor version created under the project.
+      :type model_monitor_version: str
+      :param feature_name: Name of the feature to view the distribution of.
+      :type feature_name: str
 
 
    .. py:method:: create_deployment(self, name = None, model_id = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True)
@@ -915,6 +2146,27 @@ Functions
       A Deployment makes the trained model or feature group available for prediction requests.
 
 
+      :param name: The name of the deployment.
+      :type name: str
+      :param model_id: The unique ID associated with the model.
+      :type model_id: str
+      :param feature_group_id: The unique ID associated with a feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with a project.
+      :type project_id: str
+      :param description: The description for the deployment.
+      :type description: str
+      :param calls_per_second: The number of calls per second the deployment could handle.
+      :type calls_per_second: int
+      :param auto_deploy: Flag to enable the automatic deployment when a new Model Version finishes training.
+      :type auto_deploy: bool
+      :param start:
+      :type start: bool
+
+      :returns: The new model or feature group deployment.
+      :rtype: Deployment
+
+
    .. py:method:: create_deployment_token(self, project_id)
 
       Creates a deployment token for the specified project.
@@ -922,29 +2174,64 @@ Functions
       Deployment tokens are used to authenticate requests to the prediction APIs and are scoped on the project level.
 
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: The deployment token.
+      :rtype: DeploymentAuthToken
+
+
    .. py:method:: describe_deployment(self, deployment_id)
 
       Retrieves a full description of the specified deployment.
+
+      :param deployment_id: The unique ID associated with the deployment.
+      :type deployment_id: str
+
+      :returns: The description of the deployment.
+      :rtype: Deployment
 
 
    .. py:method:: list_deployments(self, project_id)
 
       Retrieves a list of all deployments in the specified project.
 
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of deployments.
+      :rtype: Deployment
+
 
    .. py:method:: list_deployment_tokens(self, project_id)
 
       Retrieves a list of all deployment tokens in the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of deployment tokens.
+      :rtype: DeploymentAuthToken
 
 
    .. py:method:: update_deployment(self, deployment_id, description = None)
 
       Updates a deployment's description.
 
+      :param deployment_id: The deployment to update.
+      :type deployment_id: str
+      :param description: The new deployment description.
+      :type description: str
+
 
    .. py:method:: rename_deployment(self, deployment_id, name)
 
       Updates a deployment's name and/or description.
+
+      :param deployment_id: The deployment to update.
+      :type deployment_id: str
+      :param name: The new deployment name.
+      :type name: str
 
 
    .. py:method:: set_auto_deployment(self, deployment_id, enable = None)
@@ -957,49 +2244,100 @@ Functions
       it will be marked as a failed model version promotion with an error indicating poor metrics performance.
 
 
+      :param deployment_id: The unique ID associated with the deployment
+      :type deployment_id: str
+      :param enable: Enable/disable the autoDeploy property of the Deployment.
+      :type enable: bool
+
+
    .. py:method:: set_deployment_model_version(self, deployment_id, model_version)
 
       Promotes a Model Version to be served in the Deployment
+
+      :param deployment_id: The unique ID for the Deployment
+      :type deployment_id: str
+      :param model_version: The unique ID for the Model Version
+      :type model_version: str
 
 
    .. py:method:: set_deployment_feature_group_version(self, deployment_id, feature_group_version)
 
       Promotes a Feature Group Version to be served in the Deployment
 
+      :param deployment_id: The unique ID for the Deployment
+      :type deployment_id: str
+      :param feature_group_version: The unique ID for the Feature Group Version
+      :type feature_group_version: str
+
 
    .. py:method:: start_deployment(self, deployment_id)
 
       Restarts the specified deployment that was previously suspended.
+
+      :param deployment_id: The unique ID associated with the deployment.
+      :type deployment_id: str
 
 
    .. py:method:: stop_deployment(self, deployment_id)
 
       Stops the specified deployment.
 
+      :param deployment_id: The Deployment ID
+      :type deployment_id: str
+
 
    .. py:method:: delete_deployment(self, deployment_id)
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
+
+      :param deployment_id: The ID of the deployment to delete.
+      :type deployment_id: str
 
 
    .. py:method:: delete_deployment_token(self, deployment_token)
 
       Deletes the specified deployment token.
 
+      :param deployment_token: The deployment token to delete.
+      :type deployment_token: str
+
 
    .. py:method:: set_deployment_feature_group_export_file_connector_output(self, deployment_id, output_format = None, output_location = None)
 
       Sets the export output for the Feature Group Deployment to be a file connector.
+
+      :param deployment_id: The deployment for which the export type is set
+      :type deployment_id: str
+      :param output_format: CSV or JSON type export output
+      :type output_format: str
+      :param output_location: the file connector (cloud) location of where to export
+      :type output_location: str
 
 
    .. py:method:: set_deployment_feature_group_export_database_connector_output(self, deployment_id, database_connector_id = None, object_name = None, write_mode = None, database_feature_mapping = None, id_column = None)
 
       Sets the export output for the Feature Group Deployment to be a Database connector.
 
+      :param deployment_id: The deployment for which the export type is set
+      :type deployment_id: str
+      :param database_connector_id: The database connector ID used
+      :type database_connector_id: str
+      :param object_name: The database connector's object to write to
+      :type object_name: str
+      :param write_mode: UPSERT or INSERT for writing to the database connector
+      :type write_mode: str
+      :param database_feature_mapping: The column/feature pairs mapping the features to the database columns
+      :type database_feature_mapping: dict
+      :param id_column: The id column to use as the upsert key
+      :type id_column: str
+
 
    .. py:method:: remove_deployment_feature_group_export_output(self, deployment_id)
 
       Removes the export type that is set for the Feature Group Deployment
+
+      :param deployment_id: The deployment for which the export type is set
+      :type deployment_id: str
 
 
    .. py:method:: create_refresh_policy(self, name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [])
@@ -1009,257 +2347,750 @@ Functions
       A refresh policy allows for the scheduling of a particular set of actions at regular intervals. This can be useful for periodically updated data which needs to be re-imported into the project for re-training.
 
 
+      :param name: The name for the refresh policy
+      :type name: str
+      :param cron: A cron-like string specifying the frequency of a refresh policy
+      :type cron: str
+      :param refresh_type: The Refresh Type is used to determine what is being refreshed, whether its a single dataset, or dataset and a model, or more.
+      :type refresh_type: str
+      :param project_id: Optionally, a Project ID can be specified so that all datasets, models and deployments are captured at the instant this policy was created
+      :type project_id: str
+      :param dataset_ids: Comma separated list of Dataset IDs
+      :type dataset_ids: list
+      :param model_ids: Comma separated list of Model IDs
+      :type model_ids: list
+      :param deployment_ids: Comma separated list of Deployment IDs
+      :type deployment_ids: list
+      :param batch_prediction_ids: Comma separated list of Batch Predictions
+      :type batch_prediction_ids: list
+      :param prediction_metric_ids: Comma separated list of Prediction Metrics
+      :type prediction_metric_ids: list
+
+      :returns: The refresh policy created
+      :rtype: RefreshPolicy
+
+
    .. py:method:: delete_refresh_policy(self, refresh_policy_id)
 
       Delete a refresh policy
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
 
 
    .. py:method:: describe_refresh_policy(self, refresh_policy_id)
 
       Retrieve a single refresh policy
 
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
+      :returns: A refresh policy object
+      :rtype: RefreshPolicy
+
 
    .. py:method:: describe_refresh_pipeline_run(self, refresh_pipeline_run_id)
 
       Retrieve a single refresh pipeline run
+
+      :param refresh_pipeline_run_id: The unique ID associated with this refresh pipeline_run
+      :type refresh_pipeline_run_id: str
+
+      :returns: A refresh pipeline run object
+      :rtype: RefreshPipelineRun
 
 
    .. py:method:: list_refresh_policies(self, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [])
 
       List the refresh policies for the organization
 
+      :param project_id: Optionally, a Project ID can be specified so that all datasets, models and deployments are captured at the instant this policy was created
+      :type project_id: str
+      :param dataset_ids: Comma separated list of Dataset IDs
+      :type dataset_ids: list
+      :param model_ids: Comma separated list of Model IDs
+      :type model_ids: list
+      :param deployment_ids: Comma separated list of Deployment IDs
+      :type deployment_ids: list
+      :param batch_prediction_ids: Comma separated list of Batch Predictions
+      :type batch_prediction_ids: list
+      :param model_monitor_ids: Comma separated list of Model Monitor IDs.
+      :type model_monitor_ids: list
+
+      :returns: List of all refresh policies in the organization
+      :rtype: RefreshPolicy
+
 
    .. py:method:: list_refresh_pipeline_runs(self, refresh_policy_id)
 
       List the the times that the refresh policy has been run
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
+      :returns: A list of refresh pipeline runs for the given refresh policy id
+      :rtype: RefreshPipelineRun
 
 
    .. py:method:: pause_refresh_policy(self, refresh_policy_id)
 
       Pauses a refresh policy
 
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
 
    .. py:method:: resume_refresh_policy(self, refresh_policy_id)
 
       Resumes a refresh policy
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
 
 
    .. py:method:: run_refresh_policy(self, refresh_policy_id)
 
       Force a run of the refresh policy.
 
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+
 
    .. py:method:: update_refresh_policy(self, refresh_policy_id, name = None, cron = None)
 
       Update the name or cron string of a  refresh policy
+
+      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :type refresh_policy_id: str
+      :param name: Optional, specify to update the name of the refresh policy
+      :type name: str
+      :param cron: Optional, specify to update the cron string describing the schedule from the refresh policy
+      :type cron: str
+
+      :returns: The updated refresh policy
+      :rtype: RefreshPolicy
 
 
    .. py:method:: lookup_features(self, deployment_token, deployment_id, query_data = {})
 
       Returns the feature group deployed in the feature store project.
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: dict
+
 
    .. py:method:: predict(self, deployment_token, deployment_id, query_data = {})
 
       Returns a prediction for Predictive Modeling
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: dict
 
 
    .. py:method:: predict_multiple(self, deployment_token, deployment_id, query_data = {})
 
       Returns a list of predictions for Predictive Modeling
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a list of dictionaries where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: list
+
 
    .. py:method:: predict_from_datasets(self, deployment_token, deployment_id, query_data = {})
 
       Returns a list of predictions for Predictive Modeling
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the source dataset name and 'Value' will be a list of records corresponding to the dataset rows
+      :type query_data: dict
 
 
    .. py:method:: predict_lead(self, deployment_token, deployment_id, query_data)
 
       Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary containing user attributes and/or user's interaction data with the product/service (e.g. number of click, items in cart, etc.).
+      :type query_data: dict
+
 
    .. py:method:: predict_churn(self, deployment_token, deployment_id, query_data)
 
       Returns a probability of a user to churn out in response to his/her interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: dict
 
 
    .. py:method:: predict_takeover(self, deployment_token, deployment_id, query_data)
 
       Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary containing account activity characteristics (e.g. login id, login duration, login type, ip address, etc.).
+      :type query_data: dict
+
 
    .. py:method:: predict_fraud(self, deployment_token, deployment_id, query_data)
 
       Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.).
+      :type query_data: dict
 
 
    .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, explain_predictions = False, fixed_features = None, nested = None)
 
       Returns a prediction for regression classification
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: dict
+      :param threshold: float value that is applied on the popular class label.
+      :type threshold: float
+      :param threshold_class: label upon which the threshold is added (Binary labels only)
+      :type threshold_class: str
+      :param explain_predictions: If true, returns the SHAP explanations for all input features.
+      :type explain_predictions: bool
+      :param fixed_features: Set of input features to treat as constant for explanations.
+      :type fixed_features: list
+      :param nested: If specified generates prediction delta for each index of the specified nested feature.
+      :type nested: str
+
 
    .. py:method:: predict_target(self, deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None)
 
       Returns a prediction from a classification or regression model. Optionally, includes explanations.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: dict
+      :param explain_predictions: If true, returns the SHAP explanations for all input features.
+      :type explain_predictions: bool
+      :param fixed_features: Set of input features to treat as constant for explanations.
+      :type fixed_features: list
+      :param nested: If specified generates prediction delta for each index of the specified nested feature.
+      :type nested: str
 
 
    .. py:method:: get_anomalies(self, deployment_token, deployment_id, threshold = None, histogram = False)
 
       Returns a list of anomalies from the training dataset
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param threshold: The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99.
+      :type threshold: float
+      :param histogram: If True, will return a histogram of the distribution of all points
+      :type histogram: bool
+
 
    .. py:method:: is_anomaly(self, deployment_token, deployment_id, query_data = None)
 
       Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: The input data for the prediction.
+      :type query_data: dict
 
 
    .. py:method:: get_forecast(self, deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'store_id' in your dataset) mapped to the column mapping ITEM_ID that uniquely identifies the entity against which forecasting is performed and 'Value' will be the unique value of the same entity.
+      :type query_data: dict
+      :param future_data: This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'String'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
+      :type future_data: dict
+      :param num_predictions: The number of timestamps to predict in the future.
+      :type num_predictions: int
+      :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
+      :type prediction_start: str
+
 
    .. py:method:: get_k_nearest(self, deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
 
       Returns the k nearest neighbors for the provided embedding vector.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param vector: Input vector to perform the k nearest neighbors with.
+      :type vector: list
+      :param k: Overrideable number of items to return
+      :type k: int
+      :param distance: Specify the distance function to use when finding nearest neighbors
+      :type distance: str
+      :param include_score: If True, will return the score alongside the resulting embedding value
+      :type include_score: bool
 
 
    .. py:method:: get_multiple_k_nearest(self, deployment_token, deployment_id, queries)
 
       Returns the k nearest neighbors for the queries provided
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param queries: List of Mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See getKNearest for additional information about the supported parameters
+      :type queries: list
+
 
    .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = 0.5)
 
       Returns a list of scored labels from
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
+      :type query_data: dict
+      :param threshold: The minimum output probability that a predicted label must have in order for us to report it.
+      :type threshold: float
 
 
    .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_name' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the user against which recommendations are made and 'Value' will be the unique value of the same item. For example, if you have the column name 'user_name' mapped to the column mapping 'USER_ID', then the query must have the exact same column name (user_name) as key and the name of the user (John Doe) as value.
+      :type query_data: dict
+      :param num_items: The number of items to recommend on one page. By default, it is set to 50 items per page.
+      :type num_items: int
+      :param page: The page number to be displayed. For example, let's say that the num_items is set to 10 with the total recommendations list size of 50 recommended items, then an input value of 2 in the 'page' variable will display a list of items that rank from 11th to 20th.
+      :type page: int
+      :param exclude_item_ids: [DEPRECATED]
+      :type exclude_item_ids: list
+      :param score_field: The relative item scores are returned in a separate field named with the same name as the key (score_field) for this argument.
+      :type score_field: str
+      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
+      :type scaling_factors: list
+      :param restrict_items: It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restrition is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
+      :type restrict_items: list
+      :param exclude_items: It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is particularly useful if there's a list of items that you know is of no use in some particular scenario and you don't want to show those items present in that list.
+      :type exclude_items: list
+      :param explore_fraction: The fraction of recommendations that is to be new items.
+      :type explore_fraction: float
+
 
    .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
 
       Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
+      :type query_data: dict
+      :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
+      :type preserve_ranks: list
+      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
+      :type scaling_factors: list
 
 
    .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
+      :type query_data: dict
+      :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
+      :type preserve_ranks: list
+      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
+      :type scaling_factors: list
+
 
    .. py:method:: get_related_items(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_name' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the user against which related items are determined and 'Value' will be the unique value of the same item. For example, if you have the column name 'user_name' mapped to the column mapping 'USER_ID', then the query must have the exact same column name (user_name) as key and the name of the user (John Doe) as value.
+      :type query_data: dict
+      :param num_items: The number of items to recommend on one page. By default, it is set to 50 items per page.
+      :type num_items: int
+      :param page: The page number to be displayed. For example, let's say that the num_items is set to 10 with the total recommendations list size of 50 recommended items, then an input value of 2 in the 'page' variable will display a list of items that rank from 11th to 20th.
+      :type page: int
+      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
+      :type scaling_factors: list
+      :param restrict_items: It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restrition is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
+      :type restrict_items: list
+      :param exclude_items: It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is particularly useful if there's a list of items that you know is of no use in some particular scenario and you don't want to show those items present in that list.
+      :type exclude_items: list
+
 
    .. py:method:: get_feature_group_rows(self, deployment_token, deployment_id, query_data)
+
+      :param deployment_token:
+      :type deployment_token: str
+      :param deployment_id:
+      :type deployment_id: str
+      :param query_data:
+      :type query_data: dict
 
 
    .. py:method:: get_search_results(self, deployment_token, deployment_id, query_data)
 
       TODO
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
+      :type query_data: dict
+
 
    .. py:method:: get_sentiment(self, deployment_token, deployment_id, document)
 
       TODO
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param document: # TODO
+      :type document: str
+
+      :returns: Dict of labels and their probabilities
+      :rtype: NlpSentimentPrediction
 
 
    .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
 
       TODO
 
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: # TODO
+      :type query_data: str
+
+      :returns: Dict of labels and their probabilities
+      :rtype: LanguageDetectionPrediction
+
 
    .. py:method:: create_batch_prediction(self, deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
 
       Creates a batch prediction job description for the given deployment.
+
+      :param deployment_id: The unique identifier to a deployment.
+      :type deployment_id: str
+      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If table_name is specified, the outputType will be enforced as CSV
+      :type table_name: str
+      :param name: The name of batch prediction job.
+      :type name: str
+      :param global_prediction_args: Argument(s) to pass on every prediction call.
+      :type global_prediction_args: dict
+      :param explanations: If true, will provide SHAP Explanations for each prediction, if supported by the use case.
+      :type explanations: bool
+      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON)
+      :type output_format: str
+      :param output_location: If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+      :type output_location: str
+      :param database_connector_id: The unique identifier of an Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
+      :type database_connector_id: str
+      :param database_output_config: A key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.
+      :type database_output_config: dict
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically run the batch prediction.
+      :type refresh_schedule: str
+      :param csv_input_prefix: A prefix to prepend to the input columns, only applies when output format is CSV
+      :type csv_input_prefix: str
+      :param csv_prediction_prefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+      :type csv_prediction_prefix: str
+      :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+      :type csv_explanations_prefix: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: start_batch_prediction(self, batch_prediction_id)
 
       Creates a new batch prediction version job for a given batch prediction job description
 
+      :param batch_prediction_id: The unique identifier of the batch prediction to create a new version of
+      :type batch_prediction_id: str
+
+      :returns: The batch prediction version started by this method call.
+      :rtype: BatchPredictionVersion
+
 
    .. py:method:: download_batch_prediction_result_chunk(self, batch_prediction_version, offset = 0, chunk_size = 10485760)
 
       Returns a stream containing the batch prediction results
+
+      :param batch_prediction_version: The unique identifier of the batch prediction version to get the results from
+      :type batch_prediction_version: str
+      :param offset: The offset to read from
+      :type offset: int
+      :param chunk_size: The max amount of data to read
+      :type chunk_size: int
 
 
    .. py:method:: get_batch_prediction_connector_errors(self, batch_prediction_version)
 
       Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
 
+      :param batch_prediction_version: The unique identifier of the batch prediction job to get the errors for
+      :type batch_prediction_version: str
+
 
    .. py:method:: list_batch_predictions(self, project_id)
 
       Retrieves a list for the batch predictions in the project
+
+      :param project_id: The unique identifier of the project
+      :type project_id: str
+
+      :returns: A list of batch prediction jobs.
+      :rtype: BatchPrediction
 
 
    .. py:method:: describe_batch_prediction(self, batch_prediction_id)
 
       Describes the batch prediction
 
+      :param batch_prediction_id: The unique ID associated with the batch prediction.
+      :type batch_prediction_id: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
 
    .. py:method:: list_batch_prediction_versions(self, batch_prediction_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions of a given batch prediction
+
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+      :param limit: The number of versions to list
+      :type limit: int
+      :param start_after_version: The version to start after
+      :type start_after_version: str
+
+      :returns: A list of batch prediction versions.
+      :rtype: BatchPredictionVersion
 
 
    .. py:method:: describe_batch_prediction_version(self, batch_prediction_version)
 
       Describes a batch prediction version
 
+      :param batch_prediction_version: The unique identifier of the batch prediction version
+      :type batch_prediction_version: str
+
+      :returns: The batch prediction version.
+      :rtype: BatchPredictionVersion
+
 
    .. py:method:: update_batch_prediction(self, batch_prediction_id, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
 
       Updates a batch prediction job description
+
+      :param batch_prediction_id: The unique identifier of the batch prediction.
+      :type batch_prediction_id: str
+      :param deployment_id: The unique identifier to a deployment.
+      :type deployment_id: str
+      :param global_prediction_args: Argument(s) to pass on every prediction call.
+      :type global_prediction_args: dict
+      :param explanations: If true, will provide SHAP Explanations for each prediction, if supported by the use case.
+      :type explanations: bool
+      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
+      :type output_format: str
+      :param csv_input_prefix: A prefix to prepend to the input columns, only applies when output format is CSV
+      :type csv_input_prefix: str
+      :param csv_prediction_prefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+      :type csv_prediction_prefix: str
+      :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+      :type csv_explanations_prefix: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: set_batch_prediction_file_connector_output(self, batch_prediction_id, output_format = None, output_location = None)
 
       Updates the file connector output configuration of the batch prediction
 
+      :param batch_prediction_id: The unique identifier of the batch prediction.
+      :type batch_prediction_id: str
+      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
+      :type output_format: str
+      :param output_location: If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+      :type output_location: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
 
    .. py:method:: set_batch_prediction_database_connector_output(self, batch_prediction_id, database_connector_id = None, database_output_config = None)
 
       Updates the database connector output configuration of the batch prediction
+
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+      :param database_connector_id: The unique identifier of an Database Connection to write predictions to.
+      :type database_connector_id: str
+      :param database_output_config: A key-value pair of columns/values to write to the database connector
+      :type database_output_config: dict
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: set_batch_prediction_feature_group_output(self, batch_prediction_id, table_name)
 
       Creates a feature group and sets it to be the batch prediction output
 
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+      :param table_name: The name of the feature group table to create
+      :type table_name: str
+
+      :returns: The batch prediction after the output has been applied
+      :rtype: BatchPrediction
+
 
    .. py:method:: set_batch_prediction_output_to_console(self, batch_prediction_id)
 
       Sets the batch prediction output to the console, clearing both the file connector and database connector config
+
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: set_batch_prediction_dataset(self, batch_prediction_id, dataset_type, dataset_id = None)
 
       [Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects
 
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+      :param dataset_type: The dataset type to set
+      :type dataset_type: str
+      :param dataset_id: The dataset to set
+      :type dataset_id: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
+
 
    .. py:method:: set_batch_prediction_feature_group(self, batch_prediction_id, feature_group_type, feature_group_id = None)
 
       Sets the batch prediction input feature group.
+
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+      :param feature_group_type: The feature group type to set. The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
+      :type feature_group_type: str
+      :param feature_group_id: The feature group to set as input to the batch prediction
+      :type feature_group_id: str
+
+      :returns: The batch prediction description.
+      :rtype: BatchPrediction
 
 
    .. py:method:: set_batch_prediction_dataset_remap(self, batch_prediction_id, dataset_id_remap)
 
       For the purpose of this batch prediction, will swap out datasets in the input feature groups
 
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+      :param dataset_id_remap: Key/value pairs of dataset_ids to replace during batch predictions
+      :type dataset_id_remap: dict
+
+      :returns: Batch Prediction object
+      :rtype: BatchPrediction
+
 
    .. py:method:: delete_batch_prediction(self, batch_prediction_id)
 
       Deletes a batch prediction
 
+      :param batch_prediction_id: The unique identifier of the batch prediction
+      :type batch_prediction_id: str
+
 
    .. py:method:: add_user_item_interaction(self, streaming_token, dataset_id, timestamp, user_id, item_id, event_type, additional_attributes)
 
       Adds a user-item interaction record (data row) to a streaming dataset.
+
+      :param streaming_token: The streaming token for authenticating requests to the dataset.
+      :type streaming_token: str
+      :param dataset_id: The streaming dataset to record data to.
+      :type dataset_id: str
+      :param timestamp: The unix timestamp of the event.
+      :type timestamp: int
+      :param user_id: The unique identifier for the user.
+      :type user_id: str
+      :param item_id: The unique identifier for the items
+      :type item_id: list
+      :param event_type: The event type.
+      :type event_type: str
+      :param additional_attributes: Attributes of the user interaction.
+      :type additional_attributes: dict
 
 
    .. py:method:: upsert_user_attributes(self, streaming_token, dataset_id, user_id, user_attributes)
@@ -1269,6 +3100,16 @@ Functions
       Either the streaming dataset ID or the project ID is required.
 
 
+      :param streaming_token: The streaming token for authenticating requests to the dataset.
+      :type streaming_token: str
+      :param dataset_id: The streaming dataset to record data to.
+      :type dataset_id: str
+      :param user_id: The unique identifier for the user.
+      :type user_id: str
+      :param user_attributes: Attributes of the user interaction.
+      :type user_attributes: dict
+
+
    .. py:method:: upsert_item_attributes(self, streaming_token, dataset_id, item_id, item_attributes)
 
       Adds an item attributes record (data row) to a streaming dataset.
@@ -1276,9 +3117,26 @@ Functions
       Either the streaming dataset ID or the project ID is required.
 
 
+      :param streaming_token: The streaming token for authenticating requests to the dataset.
+      :type streaming_token: str
+      :param dataset_id: The streaming dataset to record data to.
+      :type dataset_id: str
+      :param item_id: The unique identifier for the item.
+      :type item_id: str
+      :param item_attributes: Attributes of the item interaction.
+      :type item_attributes: dict
+
+
    .. py:method:: add_multiple_user_item_interactions(self, streaming_token, dataset_id, interactions)
 
       Adds a user-item interaction record (data row) to a streaming dataset.
+
+      :param streaming_token: The streaming token for authenticating requests to the dataset.
+      :type streaming_token: str
+      :param dataset_id: The streaming dataset to record data to.
+      :type dataset_id: str
+      :param interactions: List of interactions, each interaction of format {'userId': userId, 'timestamp': timestamp, 'itemId': itemId, 'eventType': eventType, 'additionalAttributes': {'attribute1': 'abc', 'attribute2': 123}}
+      :type interactions: list
 
 
    .. py:method:: upsert_multiple_user_attributes(self, streaming_token, dataset_id, upserts)
@@ -1288,6 +3146,14 @@ Functions
       The streaming dataset ID is required.
 
 
+      :param streaming_token: The streaming token for authenticating requests to the dataset.
+      :type streaming_token: str
+      :param dataset_id: The streaming dataset to record data to.
+      :type dataset_id: str
+      :param upserts: List of upserts, each upsert of format {'userId': userId, 'userAttributes': {'attribute1': 'abc', 'attribute2': 123}}.
+      :type upserts: list
+
+
    .. py:method:: upsert_multiple_item_attributes(self, streaming_token, dataset_id, upserts)
 
       Adds multiple item attributes records (data row) to a streaming dataset.
@@ -1295,29 +3161,80 @@ Functions
       The streaming dataset ID is required.
 
 
+      :param streaming_token: The streaming token for authenticating requests to the dataset.
+      :type streaming_token: str
+      :param dataset_id: The streaming dataset to record data to.
+      :type dataset_id: str
+      :param upserts: List of upserts, each upsert of format {'itemId': itemId, 'itemAttributes': {'attribute1': 'abc', 'attribute2': 123}}.
+      :type upserts: list
+
+
    .. py:method:: upsert_item_embeddings(self, streaming_token, model_id, item_id, vector, catalog_id = None)
 
       Upserts an embedding vector for an item id for a model_id.
+
+      :param streaming_token: The streaming token for authenticating requests to the model.
+      :type streaming_token: str
+      :param model_id: The model id to upsert item embeddings to.
+      :type model_id: str
+      :param item_id: The item id for which its embeddings will be upserted.
+      :type item_id: str
+      :param vector: The embedding vector.
+      :type vector: list
+      :param catalog_id: Optional name to specify which catalog in a model to update.
+      :type catalog_id: str
 
 
    .. py:method:: delete_item_embeddings(self, streaming_token, model_id, item_ids, catalog_id = None)
 
       Deletes knn embeddings for a list of item ids for a model_id.
 
+      :param streaming_token: The streaming token for authenticating requests to the model.
+      :type streaming_token: str
+      :param model_id: The model id to delete item embeddings from.
+      :type model_id: str
+      :param item_ids: A list of item ids for which its embeddings will be deleted.
+      :type item_ids: list
+      :param catalog_id: Optional name to specify which catalog in a model to update.
+      :type catalog_id: str
+
 
    .. py:method:: upsert_multiple_item_embeddings(self, streaming_token, model_id, upserts, catalog_id = None)
 
       Upserts a knn embedding for multiple item ids for a model_id.
+
+      :param streaming_token: The streaming token for authenticating requests to the model.
+      :type streaming_token: str
+      :param model_id: The model id to upsert item embeddings to.
+      :type model_id: str
+      :param upserts: A list of {'itemId': ..., 'vector': [...]} dicts for each upsert.
+      :type upserts: list
+      :param catalog_id: Optional name to specify which catalog in a model to update.
+      :type catalog_id: str
 
 
    .. py:method:: upsert_data(self, feature_group_id, streaming_token, data)
 
       Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
 
+      :param feature_group_id: The Streaming feature group to record data to
+      :type feature_group_id: str
+      :param streaming_token: The streaming token for authenticating requests
+      :type streaming_token: str
+      :param data: The data to record
+      :type data: dict
+
 
    .. py:method:: append_data(self, feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
+
+      :param feature_group_id: The Streaming feature group to record data to
+      :type feature_group_id: str
+      :param streaming_token: The streaming token for authenticating requests
+      :type streaming_token: str
+      :param data: The data to record
+      :type data: dict
 
 
 

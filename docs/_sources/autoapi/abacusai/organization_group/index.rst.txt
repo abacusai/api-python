@@ -23,6 +23,21 @@ Classes
 
    An Organization Group. Defines the permissions available to the users who are members of the group.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param organizationGroupId: The unique identifier of the Organization Group.
+   :type organizationGroupId: str
+   :param permissions: The list of permissions (VIEW, MODIFY, ADMIN, BILLING, API_KEY, INVITE_USER) the group has.
+   :type permissions: list of enum string
+   :param groupName: The name of the Organization Group.
+   :type groupName: str
+   :param defaultGroup: If true, all new users will be added to this group automatically.
+   :type defaultGroup: bool
+   :param admin: If true, this group contains all permissions available to the organization and cannot be modified or deleted.
+   :type admin: bool
+   :param createdAt: When the Organization Group was created.
+   :type createdAt: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,45 +45,77 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: OrganizationGroup
 
 
    .. py:method:: describe(self)
 
       Returns the specific organization group passes in by the user.
 
+      :param organization_group_id: The unique ID of the organization group to that needs to be described.
+      :type organization_group_id: str
+
+      :returns: Information about a specific Organization Group
+      :rtype: OrganizationGroup
+
 
    .. py:method:: add_permission(self, permission)
 
       Adds a permission to the specified Organization Group
+
+      :param permission: The permission to add to the Organization Group
+      :type permission: str
 
 
    .. py:method:: remove_permission(self, permission)
 
       Removes a permission from the specified Organization Group
 
+      :param permission: The permission to remove from the Organization Group
+      :type permission: str
+
 
    .. py:method:: delete(self)
 
       Deletes the specified Organization Group from the organization.
+
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
 
 
    .. py:method:: add_user_to(self, email)
 
       Adds a user to the specified Organization Group
 
+      :param email: The email of the user that is added to the group
+      :type email: str
+
 
    .. py:method:: remove_user_from(self, email)
 
       Removes a user from an Organization Group
 
+      :param email: The email of the user to remove
+      :type email: str
+
 
    .. py:method:: set_default(self)
 
       Sets the default Organization Group that all new users that join an organization are automatically added to
+
+      :param organization_group_id: The ID of the Organization Group
+      :type organization_group_id: str
 
 
 

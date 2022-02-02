@@ -23,12 +23,30 @@ Classes
 
    Logs from an invocation of a function.
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param function:
+   :type function: str
+   :param stats:
+   :type stats: dict
+   :param stdout:
+   :type stdout: str
+   :param stderr:
+   :type stderr: str
+   :param exception:
+   :type exception: UserException
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

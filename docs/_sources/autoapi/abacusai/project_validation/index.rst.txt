@@ -23,12 +23,26 @@ Classes
 
    A validation result for a project
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param valid: `true` if the project is valid and ready to be trained, otherwise `false`.
+   :type valid: bool
+   :param datasetErrors: A list of errors keeping the dataset from being valid
+   :type datasetErrors: list of json objects
+   :param columnHints:
+   :type columnHints: dict
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

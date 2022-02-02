@@ -23,12 +23,40 @@ Classes
 
    Summary of important model monitoring statistics for features available in a model monitoring instance
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureIndex: A list of dicts of eligible feature names and corresponding overall feature drift measures.
+   :type featureIndex: list of json objects
+   :param name: Name of feature.
+   :type name: str
+   :param distance: Symmetric sum of KL divergences between the training distribution and the range of values in the specified window.
+   :type distance: float
+   :param jsDistance: JS divergence between the training distribution and the range of values in the specified window.
+   :type jsDistance: float
+   :param predictionDrift: Drift for the target column.
+   :type predictionDrift: float
+   :param targetColumn: Target column name.
+   :type targetColumn: str
+   :param nullViolations: A list of dicts of feature names and a description of corresponding null violations.
+   :type nullViolations: NullViolation
+   :param typeViolations: A list of dicts of feature names and corresponding type mismatches.
+   :type typeViolations: TypeViolation
+   :param rangeViolations: A list of dicts of numerical feature names and corresponding prediction range discrepancies.
+   :type rangeViolations: RangeViolation
+   :param catViolations: A list of dicts of categorical feature names and corresponding prediction range discrepancies.
+   :type catViolations: CategoricalRangeViolation
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

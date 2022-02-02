@@ -4,6 +4,20 @@ from .return_class import AbstractApiClass
 class ModelVersion(AbstractApiClass):
     """
         A version of a model
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            modelVersion (str): The unique identifier of a model version.
+            status (str): The current status of the model.
+            modelId (str): A reference to the model this version belongs to.
+            modelConfig (dict): The training config options used to train this model.
+            modelPredictionConfig (dict): 
+            trainingStartedAt (str): The start time and date of the training process.
+            trainingCompletedAt (str): The end time and date of the training process.
+            datasetVersions (list of unique string identifiers): Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.
+            error (str): Relevant error if the status is FAILED.
+            pendingDeploymentIds (list): List of deployment IDs where deployment is pending.
+            failedDeploymentIds (list): List of failed deployment IDs.
     """
 
     def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None):
@@ -24,23 +38,56 @@ class ModelVersion(AbstractApiClass):
         return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)})"
 
     def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
         return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids}
 
     def delete(self):
-        """Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted."""
+        """
+        Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
+
+        Args:
+            model_version (str): The ID of the model version to delete.
+        """
         return self.client.delete_model_version(self.model_version)
 
     def refresh(self):
-        """Calls describe and refreshes the current object's fields"""
+        """
+        Calls describe and refreshes the current object's fields
+
+        Returns:
+            ModelVersion: The current object
+        """
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
-        """Retrieves a full description of the specified model version"""
+        """
+        Retrieves a full description of the specified model version
+
+        Args:
+            model_version (str): The unique version ID of the model version
+
+        Returns:
+            ModelVersion: A model version.
+        """
         return self.client.describe_model_version(self.model_version)
 
-    def get_training_logs(self, stdout=False, stderr=False):
-        """Returns training logs for the model."""
+    def get_training_logs(self, stdout: bool = False, stderr: bool = False):
+        """
+        Returns training logs for the model.
+
+        Args:
+            stdout (bool):  Set True to get info logs
+            stderr (bool):  Set True to get error logs
+
+        Returns:
+            FunctionLogs: A function logs.
+        """
         return self.client.get_training_logs(self.model_version, stdout, stderr)
 
     def wait_for_training(self, timeout=None):
@@ -49,9 +96,6 @@ class ModelVersion(AbstractApiClass):
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
-
-        Returns:
-            None
         """
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
 
@@ -60,6 +104,6 @@ class ModelVersion(AbstractApiClass):
         Gets the status of the model version under training.
 
         Returns:
-            Enum (string): A string describing the status of a model training (pending, complete, etc.).
+            str: A string describing the status of a model training (pending, complete, etc.).
         """
         return self.describe().status

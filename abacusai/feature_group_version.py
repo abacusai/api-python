@@ -8,6 +8,17 @@ from .return_class import AbstractApiClass
 class FeatureGroupVersion(AbstractApiClass):
     """
         A materialized version of a feature group
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            featureGroupVersion (str): The unique identifier for this version of feature group.
+            sql (str): The sql definition creating this feature group.
+            sourceTables (list of string): The source tables for this feature group.
+            createdAt (str): The timestamp at which the feature group was created.
+            status (str): The current status of the feature group version.
+            error (str): Relevant error if the status is FAILED.
+            deployable (bool): whether feature group is deployable or not.
+            features (Feature): List of features.
     """
 
     def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, features={}):
@@ -25,27 +36,77 @@ class FeatureGroupVersion(AbstractApiClass):
         return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  features={repr(self.features)})"
 
     def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
         return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'features': self._get_attribute_as_dict(self.features)}
 
-    def export_to_file_connector(self, location, export_file_format, overwrite=False):
-        """Export Feature group to File Connector."""
+    def export_to_file_connector(self, location: str, export_file_format: str, overwrite: bool = False):
+        """
+        Export Feature group to File Connector.
+
+        Args:
+            location (str): Cloud file location to export to.
+            export_file_format (str): File format to export to.
+            overwrite (bool): If true and a file exists at this location, this process will overwrite the file.
+
+        Returns:
+            FeatureGroupExport: The FeatureGroupExport instance
+        """
         return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format, overwrite)
 
-    def export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column=None):
-        """Export Feature group to Database Connector."""
+    def export_to_database_connector(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None):
+        """
+        Export Feature group to Database Connector.
+
+        Args:
+            database_connector_id (str): Database connector to export to.
+            object_name (str): The database object to write to
+            write_mode (str): Either INSERT or UPSERT
+            database_feature_mapping (dict): A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
+            id_column (str): Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
+
+        Returns:
+            FeatureGroupExport: The FeatureGroupExport instance
+        """
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
 
-    def get_materialization_logs(self, stdout=False, stderr=False):
-        """Returns logs for materialized feature group version."""
+    def get_materialization_logs(self, stdout: bool = False, stderr: bool = False):
+        """
+        Returns logs for materialized feature group version.
+
+        Args:
+            stdout (bool):  Set True to get info logs
+            stderr (bool):  Set True to get error logs
+
+        Returns:
+            FunctionLogs: A function logs.
+        """
         return self.client.get_materialization_logs(self.feature_group_version, stdout, stderr)
 
     def refresh(self):
-        """Calls describe and refreshes the current object's fields"""
+        """
+        Calls describe and refreshes the current object's fields
+
+        Returns:
+            FeatureGroupVersion: The current object
+        """
         self.__dict__.update(self.describe().__dict__)
         return self
 
     def describe(self):
-        """Get a specific feature group version."""
+        """
+        Get a specific feature group version.
+
+        Args:
+            feature_group_version (str): The unique ID associated with the feature group version.
+
+        Returns:
+            FeatureGroupVersion: A feature group version.
+        """
         return self.client.describe_feature_group_version(self.feature_group_version)
 
     def wait_for_results(self, timeout=3600):
@@ -54,9 +115,6 @@ class FeatureGroupVersion(AbstractApiClass):
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
-
-        Returns:
-            None
         """
         return self.client._poll(self, {'PENDING'}, timeout=timeout)
 
@@ -65,7 +123,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Gets the status of the feature group version.
 
         Returns:
-            Enum (string): A string describing the status of a feature group version (pending, complete, etc.).
+            str: A string describing the status of a feature group version (pending, complete, etc.).
         """
         return self.describe().status
 

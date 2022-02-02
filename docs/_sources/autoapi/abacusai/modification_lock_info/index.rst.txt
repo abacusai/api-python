@@ -23,12 +23,26 @@ Classes
 
    Information about a modification lock for a certain object
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modificationLock: Whether or not the object has its modification lock activated.
+   :type modificationLock: bool
+   :param userEmails: The list of user emails allowed to modify the object if the object's modification lock is activated.
+   :type userEmails: list of strings
+   :param organizationGroups: The list organization groups allowed to modify the object if the object's modification lock is activated.
+   :type organizationGroups: list of unique string identifiers
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

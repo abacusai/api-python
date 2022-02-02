@@ -23,12 +23,34 @@ Classes
 
    A specific version of a dataset
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param datasetVersion: The unique identifier of the dataset version.
+   :type datasetVersion: str
+   :param status: The current status of the dataset version
+   :type status: str
+   :param datasetId: A reference to the Dataset this dataset version belongs to.
+   :type datasetId: str
+   :param size: The size in bytes of the file.
+   :type size: int
+   :param rowCount: Number of rows in the dataset version.
+   :type rowCount: int
+   :param createdAt: The timestamp this dataset version was created.
+   :type createdAt: str
+   :param error: If status is FAILED, this field will be populated with an error.
+   :type error: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
    .. py:method:: wait_for_import(self, timeout=900)
@@ -38,8 +60,6 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: wait_for_inspection(self, timeout=None)
 
@@ -48,15 +68,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the dataset version.
 
       :returns: A string describing the status of a dataset version (importing, inspecting, complete, etc.).
-      :rtype: Enum (string)
+      :rtype: str
 
 
 

@@ -23,6 +23,31 @@ Classes
 
    A version of a model
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelVersion: The unique identifier of a model version.
+   :type modelVersion: str
+   :param status: The current status of the model.
+   :type status: str
+   :param modelId: A reference to the model this version belongs to.
+   :type modelId: str
+   :param modelConfig: The training config options used to train this model.
+   :type modelConfig: dict
+   :param modelPredictionConfig:
+   :type modelPredictionConfig: dict
+   :param trainingStartedAt: The start time and date of the training process.
+   :type trainingStartedAt: str
+   :param trainingCompletedAt: The end time and date of the training process.
+   :type trainingCompletedAt: str
+   :param datasetVersions: Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.
+   :type datasetVersions: list of unique string identifiers
+   :param error: Relevant error if the status is FAILED.
+   :type error: str
+   :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
+   :type pendingDeploymentIds: list
+   :param failedDeploymentIds: List of failed deployment IDs.
+   :type failedDeploymentIds: list
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,25 +55,50 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: delete(self)
 
       Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
+
+      :param model_version: The ID of the model version to delete.
+      :type model_version: str
 
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: ModelVersion
+
 
    .. py:method:: describe(self)
 
       Retrieves a full description of the specified model version
 
+      :param model_version: The unique version ID of the model version
+      :type model_version: str
 
-   .. py:method:: get_training_logs(self, stdout=False, stderr=False)
+      :returns: A model version.
+      :rtype: ModelVersion
+
+
+   .. py:method:: get_training_logs(self, stdout = False, stderr = False)
 
       Returns training logs for the model.
+
+      :param stdout: Set True to get info logs
+      :type stdout: bool
+      :param stderr: Set True to get error logs
+      :type stderr: bool
+
+      :returns: A function logs.
+      :rtype: FunctionLogs
 
 
    .. py:method:: wait_for_training(self, timeout=None)
@@ -58,15 +108,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the model version under training.
 
       :returns: A string describing the status of a model training (pending, complete, etc.).
-      :rtype: Enum (string)
+      :rtype: str
 
 
 

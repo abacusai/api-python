@@ -23,12 +23,38 @@ Classes
 
    A point in time feature description
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param historyTableName: The table name of the history table. If not specified, we use the current table to do a self join.
+   :type historyTableName: str
+   :param aggregationKeys: List of keys to use for join the historical table and performing the window aggregation.
+   :type aggregationKeys: list of string
+   :param timestampKey: Name of feature which contains the timestamp value for the point in time feature
+   :type timestampKey: str
+   :param historicalTimestampKey: Name of feature which contains the historical timestamp.
+   :type historicalTimestampKey: str
+   :param lookbackWindowSeconds: If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
+   :type lookbackWindowSeconds: float
+   :param lookbackWindowLagSeconds: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+   :type lookbackWindowLagSeconds: float
+   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row)
+   :type lookbackCount: int
+   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+   :type lookbackUntilPosition: int
+   :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+   :type expression: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

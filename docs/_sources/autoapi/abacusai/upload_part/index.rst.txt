@@ -23,12 +23,24 @@ Classes
 
    Unique identifiers for a part
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param etag: A unique string for this part.
+   :type etag: str
+   :param md5: The MD5 hash of this part.
+   :type md5: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

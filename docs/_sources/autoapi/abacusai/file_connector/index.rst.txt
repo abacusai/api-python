@@ -23,12 +23,26 @@ Classes
 
    Verification result for an external storage service
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param bucket: The address of the bucket. eg., `s3://your-bucket`
+   :type bucket: str
+   :param verified: `true` if the bucket has passed verification
+   :type verified: bool
+   :param writePermission: `true` if Abacus.AI has permission to write to this bucket
+   :type writePermission: bool
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
 
 
    .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
 
 
 

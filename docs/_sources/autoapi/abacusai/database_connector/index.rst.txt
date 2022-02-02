@@ -23,6 +23,21 @@ Classes
 
    A connector to an external service
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param databaseConnectorId: The unique ID for the connection.
+   :type databaseConnectorId: str
+   :param service: The service this connection connects to
+   :type service: str
+   :param name: A user-friendly name for the service
+   :type name: str
+   :param status: The status of the Database Connector
+   :type status: str
+   :param auth: Non-secret connection information for this connector
+   :type auth: dict
+   :param createdAt: When the API key was created
+   :type createdAt: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,30 +45,50 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: list_objects(self)
 
       Lists querable objects in the database connector.
 
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
 
-   .. py:method:: get_object_schema(self, object_name=None)
+
+   .. py:method:: get_object_schema(self, object_name = None)
 
       Get the schema of an object in an database connector.
+
+      :param object_name: The unique identifier for the object in the external system.
+      :type object_name: str
 
 
    .. py:method:: rename(self, name)
 
       Renames a Database Connector
 
+      :param name: The new name for the Database Connector
+      :type name: str
+
 
    .. py:method:: verify(self)
 
       Checks to see if Abacus.AI can access the database.
 
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
+
 
    .. py:method:: delete(self)
 
       Delete a database connector.
+
+      :param database_connector_id: The unique identifier for the database connector.
+      :type database_connector_id: str
 
 
 

@@ -23,6 +23,21 @@ Classes
 
    A connector to an external service
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param applicationConnectorId: The unique ID for the connection.
+   :type applicationConnectorId: str
+   :param service: The service this connection connects to
+   :type service: str
+   :param name: A user-friendly name for the service
+   :type name: str
+   :param createdAt: When the API key was created
+   :type createdAt: str
+   :param status: The status of the Application Connector
+   :type status: str
+   :param auth: Non-secret connection information for this connector
+   :type auth: dict
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,25 +45,42 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: rename(self, name)
 
       Renames an Application Connector
+
+      :param name: A new name for the application connector
+      :type name: str
 
 
    .. py:method:: delete(self)
 
       Delete a application connector.
 
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
+
 
    .. py:method:: list_objects(self)
 
       Lists querable objects in the application connector.
 
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
+
 
    .. py:method:: verify(self)
 
       Checks to see if Abacus.AI can access the Application.
+
+      :param application_connector_id: The unique identifier for the application connector.
+      :type application_connector_id: str
 
 
 

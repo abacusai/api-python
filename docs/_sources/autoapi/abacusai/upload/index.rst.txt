@@ -23,6 +23,27 @@ Classes
 
    A Upload Reference for uploading file parts
 
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param uploadId: The unique ID generated when the upload process of the full large file in smaller parts is initiated.
+   :type uploadId: str
+   :param datasetUploadId: Same as upload_id. It is kept for backwards compatibility purposes.
+   :type datasetUploadId: str
+   :param status: The current status of the upload.
+   :type status: str
+   :param datasetId: A reference to the dataset this upload is adding data to.
+   :type datasetId: str
+   :param datasetVersion: A reference to the dataset version the upload is adding data to.
+   :type datasetVersion: str
+   :param modelVersion: A reference to the model version the upload is creating.
+   :type modelVersion: str
+   :param batchPredictionId: A reference to the batch prediction the upload is creating.
+   :type batchPredictionId: str
+   :param parts: A list containing the order of the file parts that have been uploaded.
+   :type parts: list of json objects
+   :param createdAt: The timestamp at which the upload was created.
+   :type createdAt: str
+
    .. py:method:: __repr__(self)
 
       Return repr(self).
@@ -30,30 +51,61 @@ Classes
 
    .. py:method:: to_dict(self)
 
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
 
    .. py:method:: cancel(self)
 
       Cancels an upload
+
+      :param upload_id: The Upload ID
+      :type upload_id: str
 
 
    .. py:method:: part(self, part_number, part_data)
 
       Uploads a part of a large dataset file from your bucket to our system. Our system currently supports a size of up to 5GB for a part of a full file and a size of up to 5TB for the full file. Note that each part must be >=5MB in size, unless it is the last part in the sequence of parts for the full file.
 
+      :param part_number: The 1-indexed number denoting the position of the file part in the sequence of parts for the full file.
+      :type part_number: int
+      :param part_data: The multipart/form-data for the current part of the full file.
+      :type part_data: io.TextIOBase
+
+      :returns: The object 'UploadPart' which encapsulates the hash and the etag for the part that got uploaded.
+      :rtype: UploadPart
+
 
    .. py:method:: mark_complete(self)
 
       Marks an upload process as complete.
+
+      :param upload_id: A unique identifier for this upload
+      :type upload_id: str
+
+      :returns: The upload object associated with the upload process for the full file. The details of the object are described below:
+      :rtype: Upload
 
 
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
 
+      :returns: The current object
+      :rtype: Upload
+
 
    .. py:method:: describe(self)
 
       Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
+
+      :param upload_id: The unique ID associated with the file uploaded or being uploaded in parts.
+      :type upload_id: str
+
+      :returns: The details associated with the large dataset file uploaded in parts.
+      :rtype: Upload
 
 
    .. py:method:: upload_part(self, upload_args)
@@ -61,7 +113,7 @@ Classes
       Uploads a file part. If the upload fails, it will retry up to 3 times with a short backoff before raising an exception.
 
       :returns: The object 'UploadPart' that encapsulates the hash and the etag for the part that got uploaded.
-      :rtype: UploadPart (json)
+      :rtype: UploadPart
 
 
    .. py:method:: upload_file(self, file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
@@ -78,7 +130,7 @@ Classes
       :type wait_timeout: int, optional
 
       :returns: The upload file object.
-      :rtype: UploadObject(object)
+      :rtype: Upload
 
 
    .. py:method:: _yield_upload_part(self, file, chunksize)
@@ -91,15 +143,13 @@ Classes
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to have timed out. Defaults to 600.
       :type timeout: int, optional
 
-      :returns: None
-
 
    .. py:method:: get_status(self)
 
       Gets the status of the upload.
 
       :returns: A string describing the status of the upload (pending, complete, etc.).
-      :rtype: Enum (string)
+      :rtype: str
 
 
 
