@@ -192,6 +192,28 @@ Abacus.AI supports "CSV", "JSON" and "AVRO" as the **Export File Format** of the
 feature_group_version.export_to_file_connector(location='s3://your-bucket/export-location.csv', export_file_format='CSV')
 ```
 
+### Online Serving of Complex features
+
+If we need to perform near realtime serving of fairly complex Feature Groups, we provide the concept of a **Push Feature Group**. A push feature group is a feature group which is derived from another feature group (**Serving Feature Group** - the one that is deployed), but only deals with calculations such that the recent data can be recomputed a bit more efficiently. The result of the Push Feature Group is meant to be concatenated to the  **Serving Feature Group**. The Push Feature Group is continously executed and can incorporate data from streaming sources. The results of the Push Feature Group are meant to be on the order of 1000s of rows and upon computation, we will push the data to the Feature Group Deployment. Push Feature Groups can be materialized for testing, but the data that is concatenated is exclusively streaming data. In a production setting, we typically combine the push feature group with a refresh policy on the base feature group so that the streaming data for the last n hours is recomputed constantly and we always have some overlap (that is deduped correctly in serving) between near real-time data and batch data.
+
+```python
+recent_purchases_feature_group = client.create_feature_group_from_sql('
+     SELECT * FROM event_log WHERE timestamp >= 
+
+```python
+feature_group_version = feature_group.create_version()
+feature_group_version.wait_for_results() # blocks waiting for materialization
+```
+Now that your data is materialized, we can now export it to a file connector which you have [authorized](https://abacus.ai/app/profile/connected_services) Abacus.AI to be able to write to.
+
+Abacus.AI supports "CSV", "JSON" and "AVRO" as the **Export File Format** of the feature group data.
+
+```python
+feature_group_version.export_to_file_connector(location='s3://your-bucket/export-location.csv', export_file_format='CSV')
+```
+
+
+
 ### Deploy Feature Groups for Online Featurization of Data [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1HzES-YN4Hzf8dKQuK2STi8uNYkZVtMB0#scrollTo=ZleD66xQnCY_)
 Feature Groups can be deployed for online data transformations and lookups. Feature Groups with simple join conditions will also support single column id based lookups. The `describeFeatureGroup` method will expose these keys when set. In addition, streaming
 
