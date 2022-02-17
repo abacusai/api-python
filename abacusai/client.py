@@ -132,7 +132,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.34.1'
+    client_version = '0.34.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2074,14 +2074,14 @@ class ApiClient(BaseApiClient):
             deployment_token (str): The deployment token to delete."""
         return self._call_api('deleteDeploymentToken', 'DELETE', query_params={'deploymentToken': deployment_token})
 
-    def set_deployment_feature_group_export_file_connector_output(self, deployment_id: str, output_format: str = None, output_location: str = None):
+    def set_deployment_feature_group_export_file_connector_output(self, deployment_id: str, file_format: str = None, output_location: str = None):
         """Sets the export output for the Feature Group Deployment to be a file connector.
 
         Args:
             deployment_id (str): The deployment for which the export type is set
-            output_format (str): CSV or JSON type export output
+            file_format (str): 
             output_location (str): the file connector (cloud) location of where to export"""
-        return self._call_api('setDeploymentFeatureGroupExportFileConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'outputFormat': output_format, 'outputLocation': output_location})
+        return self._call_api('setDeploymentFeatureGroupExportFileConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'fileFormat': file_format, 'outputLocation': output_location})
 
     def set_deployment_feature_group_export_database_connector_output(self, deployment_id: str, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None):
         """Sets the export output for the Feature Group Deployment to be a Database connector.
@@ -2468,7 +2468,7 @@ class ApiClient(BaseApiClient):
 
         Args:
             deployment_id (str): The unique identifier to a deployment.
-            table_name (str): If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If table_name is specified, the outputType will be enforced as CSV
+            table_name (str): If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV
             name (str): The name of batch prediction job.
             global_prediction_args (dict): Argument(s) to pass on every prediction call.
             explanations (bool): If true, will provide SHAP Explanations for each prediction, if supported by the use case.

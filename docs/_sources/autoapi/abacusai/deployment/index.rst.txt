@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}, featureGroupExportConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57,6 +57,8 @@ Classes
    :type error: str
    :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
    :type refreshSchedules: RefreshSchedule
+   :param featureGroupExportConfig: Export config (file connector or database connector information) for feature group deployment exports
+   :type featureGroupExportConfig: FeatureGroupExportConfig
 
    .. py:method:: __repr__(self)
 
@@ -160,12 +162,12 @@ Classes
       :type deployment_id: str
 
 
-   .. py:method:: set_feature_group_export_file_connector_output(self, output_format = None, output_location = None)
+   .. py:method:: set_feature_group_export_file_connector_output(self, file_format = None, output_location = None)
 
       Sets the export output for the Feature Group Deployment to be a file connector.
 
-      :param output_format: CSV or JSON type export output
-      :type output_format: str
+      :param file_format:
+      :type file_format: str
       :param output_location: the file connector (cloud) location of where to export
       :type output_location: str
 
@@ -198,7 +200,7 @@ Classes
 
       Creates a batch prediction job description for the given deployment.
 
-      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If table_name is specified, the outputType will be enforced as CSV
+      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV
       :type table_name: str
       :param name: The name of batch prediction job.
       :type name: str

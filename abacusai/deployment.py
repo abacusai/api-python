@@ -1,3 +1,4 @@
+from .feature_group_export_config import FeatureGroupExportConfig
 from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass
 
@@ -24,9 +25,10 @@ class Deployment(AbstractApiClass):
             regions (list of strings): List of regions that a deployment has been deployed to
             error (str): Relevant error if the status is FAILED
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the deployment will be updated to the latest model version
+            featureGroupExportConfig (FeatureGroupExportConfig): Export config (file connector or database connector information) for feature group deployment exports
     """
 
-    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}):
+    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}, featureGroupExportConfig={}):
         super().__init__(client, deploymentId)
         self.deployment_id = deploymentId
         self.name = name
@@ -45,9 +47,11 @@ class Deployment(AbstractApiClass):
         self.error = error
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
+        self.feature_group_export_config = client._build_class(
+            FeatureGroupExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  refresh_schedules={repr(self.refresh_schedules)})"
+        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
 
     def to_dict(self):
         """
@@ -56,7 +60,7 @@ class Deployment(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
+        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
 
     def refresh(self):
         """
@@ -158,15 +162,15 @@ class Deployment(AbstractApiClass):
         """
         return self.client.delete_deployment(self.deployment_id)
 
-    def set_feature_group_export_file_connector_output(self, output_format: str = None, output_location: str = None):
+    def set_feature_group_export_file_connector_output(self, file_format: str = None, output_location: str = None):
         """
         Sets the export output for the Feature Group Deployment to be a file connector.
 
         Args:
-            output_format (str): CSV or JSON type export output
+            file_format (str): 
             output_location (str): the file connector (cloud) location of where to export
         """
-        return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, output_format, output_location)
+        return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, file_format, output_location)
 
     def set_feature_group_export_database_connector_output(self, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None):
         """
@@ -195,7 +199,7 @@ class Deployment(AbstractApiClass):
         Creates a batch prediction job description for the given deployment.
 
         Args:
-            table_name (str): If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If table_name is specified, the outputType will be enforced as CSV
+            table_name (str): If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV
             name (str): The name of batch prediction job.
             global_prediction_args (dict): Argument(s) to pass on every prediction call.
             explanations (bool): If true, will provide SHAP Explanations for each prediction, if supported by the use case.

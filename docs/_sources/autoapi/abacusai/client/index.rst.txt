@@ -81,7 +81,7 @@ Functions
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.34.1
+      :annotation: = 0.34.2
 
       
 
@@ -2302,14 +2302,14 @@ Functions
       :type deployment_token: str
 
 
-   .. py:method:: set_deployment_feature_group_export_file_connector_output(self, deployment_id, output_format = None, output_location = None)
+   .. py:method:: set_deployment_feature_group_export_file_connector_output(self, deployment_id, file_format = None, output_location = None)
 
       Sets the export output for the Feature Group Deployment to be a file connector.
 
       :param deployment_id: The deployment for which the export type is set
       :type deployment_id: str
-      :param output_format: CSV or JSON type export output
-      :type output_format: str
+      :param file_format:
+      :type file_format: str
       :param output_location: the file connector (cloud) location of where to export
       :type output_location: str
 
@@ -2835,7 +2835,7 @@ Functions
 
       :param deployment_id: The unique identifier to a deployment.
       :type deployment_id: str
-      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If table_name is specified, the outputType will be enforced as CSV
+      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV
       :type table_name: str
       :param name: The name of batch prediction job.
       :type name: str

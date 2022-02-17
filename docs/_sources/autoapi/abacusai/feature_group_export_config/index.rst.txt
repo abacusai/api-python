@@ -1,0 +1,56 @@
+:py:mod:`abacusai.feature_group_export_config`
+==============================================
+
+.. py:module:: abacusai.feature_group_export_config
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_export_config.FeatureGroupExportConfig
+
+
+
+
+.. py:class:: FeatureGroupExportConfig(client, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Export config (file connector or database connector information) for feature group exports
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param outputLocation: The File Connector location the feature group is being written to
+   :type outputLocation: str
+   :param fileFormat: The file format being written to outputLocation
+   :type fileFormat: str
+   :param databaseConnectorId: The database connector ID used
+   :type databaseConnectorId: str
+   :param objectName: The database connector's object to write to
+   :type objectName: str
+   :param writeMode: UPSERT or INSERT for writing to the database connector
+   :type writeMode: str
+   :param databaseFeatureMapping: The column/feature pairs mapping the features to the database columns
+   :type databaseFeatureMapping: dict
+   :param idColumn: The id column to use as the upsert key
+   :type idColumn: str
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
