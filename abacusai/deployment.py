@@ -172,7 +172,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, file_format, output_location)
 
-    def set_feature_group_export_database_connector_output(self, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None):
+    def set_feature_group_export_database_connector_output(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None):
         """
         Sets the export output for the Feature Group Deployment to be a Database connector.
 

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, predictionDrift=None, targetColumn=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
+.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33,6 +33,10 @@ Classes
    :type distance: float
    :param jsDistance: JS divergence between the training distribution and the range of values in the specified window.
    :type jsDistance: float
+   :param wsDistance: Wasserstein distance between the training distribution and the range of values in the specified window.
+   :type wsDistance: float
+   :param ksStatistic: Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
+   :type ksStatistic: float
    :param predictionDrift: Drift for the target column.
    :type predictionDrift: float
    :param targetColumn: Target column name.

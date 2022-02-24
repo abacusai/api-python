@@ -132,7 +132,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.34.2'
+    client_version = '0.34.3'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1821,7 +1821,7 @@ class ApiClient(BaseApiClient):
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
-    def create_model_monitor(self, project_id: str, training_feature_group_id: str = None, prediction_feature_group_id: str = None, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
@@ -2083,7 +2083,7 @@ class ApiClient(BaseApiClient):
             output_location (str): the file connector (cloud) location of where to export"""
         return self._call_api('setDeploymentFeatureGroupExportFileConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'fileFormat': file_format, 'outputLocation': output_location})
 
-    def set_deployment_feature_group_export_database_connector_output(self, deployment_id: str, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None):
+    def set_deployment_feature_group_export_database_connector_output(self, deployment_id: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None):
         """Sets the export output for the Feature Group Deployment to be a Database connector.
 
         Args:

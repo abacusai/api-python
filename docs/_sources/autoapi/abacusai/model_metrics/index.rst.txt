@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMetrics(client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None)
+.. py:class:: ModelMetrics(client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None, trainValTestSplit=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,6 +35,8 @@ Classes
    :type baselineMetrics: dict
    :param targetColumn: The target column the model is predicting
    :type targetColumn: str
+   :param trainValTestSplit:
+   :type trainValTestSplit: dict
 
    .. py:method:: __repr__(self)
 

@@ -254,7 +254,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_models(self.project_id)
 
-    def create_model_monitor(self, training_feature_group_id: str = None, prediction_feature_group_id: str = None, name: str = None, refresh_schedule: str = None):
+    def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None):
         """
         Runs a model monitor for the specified project.
 
