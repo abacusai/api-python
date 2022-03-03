@@ -1,0 +1,50 @@
+:py:mod:`abacusai.concatenation_config`
+=======================================
+
+.. py:module:: abacusai.concatenation_config
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.concatenation_config.ConcatenationConfig
+
+
+
+
+.. py:class:: ConcatenationConfig(client, concatenatedTable=None, mergeType=None, replaceUntilTimestamp=None, skipMaterialize=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Feature Group Concatenation Config
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param concatenatedTable: The feature group to concatenate with the destination feature group.
+   :type concatenatedTable: str
+   :param mergeType: UNION or INTERSECTION
+   :type mergeType: str
+   :param replaceUntilTimestamp: The unix timestamp to specify the point till which we will replace data from the source feature group.
+   :type replaceUntilTimestamp: int
+   :param skipMaterialize: If true, will not materialize the concatenated feature group
+   :type skipMaterialize: bool
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

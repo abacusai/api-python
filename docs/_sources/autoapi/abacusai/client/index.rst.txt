@@ -81,7 +81,7 @@ Functions
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.34.3
+      :annotation: = 0.34.4
 
       
 
@@ -549,7 +549,7 @@ Functions
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_function(self, table_name, function_source_code, function_name, input_feature_groups = [], description = None)
+   .. py:method:: create_feature_group_from_function(self, table_name, function_source_code, function_name, input_feature_groups = [], description = None, cpu_size = None, memory = None)
 
       Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
@@ -571,6 +571,10 @@ Functions
       :type input_feature_groups: list
       :param description: The description for this feature group.
       :type description: str
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -955,7 +959,7 @@ Functions
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_function_definition(self, feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None)
+   .. py:method:: update_feature_group_function_definition(self, feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -967,6 +971,10 @@ Functions
       :type function_name: str
       :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type input_feature_groups: list
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
 
       :returns: The updated feature group
       :rtype: FeatureGroup
@@ -1796,7 +1804,7 @@ Functions
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(self, project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None)
+   .. py:method:: create_model_from_python(self, project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None)
 
       Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -1821,6 +1829,10 @@ Functions
       :type training_input_tables: list
       :param name: The name you want your model to have. Defaults to "<Project Name> Model"
       :type name: str
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -1858,7 +1870,7 @@ Functions
       :type name: str
 
 
-   .. py:method:: update_python_model(self, model_id, function_source_code = None, train_function_name = None, predict_function_name = None, training_input_tables = None)
+   .. py:method:: update_python_model(self, model_id, function_source_code = None, train_function_name = None, predict_function_name = None, training_input_tables = None, cpu_size = None, memory = None)
 
       Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
 
@@ -1881,6 +1893,10 @@ Functions
       :type predict_function_name: str
       :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type training_input_tables: list
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
 
       :returns: The updated model
       :rtype: Model
@@ -2812,6 +2828,21 @@ Functions
 
       :returns: Dict of labels and their probabilities
       :rtype: NlpSentimentPrediction
+
+
+   .. py:method:: get_entailment(self, deployment_token, deployment_id, document)
+
+      TODO
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param document: # TODO
+      :type document: str
+
+      :returns: Dict of premises and their probabilities
+      :rtype: NlpClassificationPrediction
 
 
    .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)

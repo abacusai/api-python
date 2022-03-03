@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Feature(client, name=None, selectClause=None, featureMapping=None, sourceTable=None, originalName=None, usingClause=None, orderClause=None, whereClause=None, featureType=None, dataType=None, columns={}, pointInTimeInfo={})
+.. py:class:: Feature(client, name=None, selectClause=None, featureMapping=None, sourceTable=None, originalName=None, usingClause=None, orderClause=None, whereClause=None, featureType=None, dataType=None, detectedFeatureType=None, detectedDataType=None, columns={}, pointInTimeInfo={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,6 +45,10 @@ Classes
    :type featureType: str
    :param dataType: Data Type of the Feature
    :type dataType: str
+   :param detectedFeatureType:
+   :type detectedFeatureType: str
+   :param detectedDataType:
+   :type detectedDataType: str
    :param columns: Nested Features
    :type columns: NestedFeature
    :param pointInTimeInfo: Point in time column information

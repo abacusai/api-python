@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DatasetColumn(client, name=None, dataType=None, featureType=None, originalName=None)
+.. py:class:: DatasetColumn(client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,8 +29,12 @@ Classes
    :type name: str
    :param dataType: The underlying data type of each column:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
    :type dataType: str
+   :param detectedDataType:
+   :type detectedDataType: str
    :param featureType: Feature Type of the Feature
    :type featureType: str
+   :param detectedFeatureType:
+   :type detectedFeatureType: str
    :param originalName: The original name of the column
    :type originalName: str
 

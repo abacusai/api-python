@@ -227,7 +227,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None)
+   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None)
 
       Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -250,6 +250,10 @@ Classes
       :type training_input_tables: list
       :param name: The name you want your model to have. Defaults to "<Project Name> Model"
       :type name: str
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
 
       :returns: The new model, which has not been trained.
       :rtype: Model

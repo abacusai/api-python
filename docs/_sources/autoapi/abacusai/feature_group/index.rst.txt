@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, features={}, duplicateFeatures={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, cpuSize=None, memory=None, features={}, duplicateFeatures={}, concatenationConfig={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -71,12 +71,18 @@ Classes
    :type isIncremental: bool
    :param mergeConfig: The merge configuration settings for the feature group.
    :type mergeConfig: dict
+   :param cpuSize: Cpu size specified for the python feature group.
+   :type cpuSize: str
+   :param memory: Memory in GB specified for the python feature group.
+   :type memory: int
    :param features: List of resolved features
    :type features: Feature
    :param duplicateFeatures: List of duplicate features
    :type duplicateFeatures: Feature
    :param latestFeatureGroupVersion: The latest feature group version
    :type latestFeatureGroupVersion: FeatureGroupVersion
+   :param concatenationConfig: The Feature Group ID whose data will be concatenated into this feature group
+   :type concatenationConfig: ConcatenationConfig
 
    .. py:method:: __repr__(self)
 
@@ -426,7 +432,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_function_definition(self, function_source_code = None, function_name = None, input_feature_groups = None)
+   .. py:method:: update_function_definition(self, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -436,6 +442,10 @@ Classes
       :type function_name: str
       :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type input_feature_groups: list
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
 
       :returns: The updated feature group
       :rtype: FeatureGroup

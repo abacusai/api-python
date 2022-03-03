@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, features={})
+.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39,6 +39,10 @@ Classes
    :type error: str
    :param deployable: whether feature group is deployable or not.
    :type deployable: bool
+   :param cpuSize: Cpu size specified for the python feature group.
+   :type cpuSize: str
+   :param memory: Memory in GB specified for the python feature group.
+   :type memory: int
    :param features: List of features.
    :type features: Feature
 

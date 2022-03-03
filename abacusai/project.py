@@ -217,7 +217,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, refresh_schedule)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None):
         """
         Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -236,11 +236,13 @@ class Project(AbstractApiClass):
             predict_function_name (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             name (str): The name you want your model to have. Defaults to "<Project Name> Model"
+            cpu_size (str): Size of the cpu for the model training function
+            memory (int): Memory (in GB) for the model training function
 
         Returns:
             Model: The new model, which has not been trained.
         """
-        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name)
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name, cpu_size, memory)
 
     def list_models(self):
         """

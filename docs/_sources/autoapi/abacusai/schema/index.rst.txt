@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Schema(client, name=None, featureMapping=None, featureType=None, dataType=None)
+.. py:class:: Schema(client, name=None, featureMapping=None, detectedFeatureMapping=None, featureType=None, detectedFeatureType=None, dataType=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,8 +29,12 @@ Classes
    :type name: str
    :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
    :type featureMapping: str
+   :param detectedFeatureMapping:
+   :type detectedFeatureMapping: str
    :param featureType: The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/FeatureType] for more information.
    :type featureType: str
+   :param detectedFeatureType:
+   :type detectedFeatureType: str
    :param dataType: The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
    :type dataType: str
 

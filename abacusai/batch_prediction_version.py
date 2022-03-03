@@ -17,6 +17,7 @@ class BatchPredictionVersion(AbstractApiClass):
             predictionsStartedAt (str): Predictions start date and time
             predictionsCompletedAt (str): Predictions completion date and time
             globalPredictionArgs (dict): Argument(s) passed to every prediction call
+            databaseOutputError (bool): If true, there were errors reported by the database connector while writing
             totalPredictions (int): Number of predictions performed in this batch prediction job
             failedPredictions (int): Number of predictions that failed
             databaseConnectorId (str): The database connector to write the results to
@@ -30,10 +31,12 @@ class BatchPredictionVersion(AbstractApiClass):
             csvInputPrefix (str): A prefix to prepend to the input columns, only applies when output format is CSV
             csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
             csvExplanationsPrefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
+            databaseOutputTotalWrites (int): The total number of rows attempted to write (may be less than total_predictions if write mode is UPSERT and multiple rows share the same ID)
+            databaseOutputFailedWrites (int): The number of failed writes to the Database Connector
             batchInputs (PredictionInput): Inputs to the batch prediction
     """
 
-    def __init__(self, client, batchPredictionVersion=None, batchPredictionId=None, status=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={}):
+    def __init__(self, client, batchPredictionVersion=None, batchPredictionId=None, status=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, batchInputs={}):
         super().__init__(client, batchPredictionVersion)
         self.batch_prediction_version = batchPredictionVersion
         self.batch_prediction_id = batchPredictionId
@@ -44,6 +47,7 @@ class BatchPredictionVersion(AbstractApiClass):
         self.predictions_started_at = predictionsStartedAt
         self.predictions_completed_at = predictionsCompletedAt
         self.global_prediction_args = globalPredictionArgs
+        self.database_output_error = databaseOutputError
         self.total_predictions = totalPredictions
         self.failed_predictions = failedPredictions
         self.database_connector_id = databaseConnectorId
@@ -57,10 +61,12 @@ class BatchPredictionVersion(AbstractApiClass):
         self.csv_input_prefix = csvInputPrefix
         self.csv_prediction_prefix = csvPredictionPrefix
         self.csv_explanations_prefix = csvExplanationsPrefix
+        self.database_output_total_writes = databaseOutputTotalWrites
+        self.database_output_failed_writes = databaseOutputFailedWrites
         self.batch_inputs = client._build_class(PredictionInput, batchInputs)
 
     def __repr__(self):
-        return f"BatchPredictionVersion(batch_prediction_version={repr(self.batch_prediction_version)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  status={repr(self.status)},\n  deployment_id={repr(self.deployment_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  predictions_started_at={repr(self.predictions_started_at)},\n  predictions_completed_at={repr(self.predictions_completed_at)},\n  global_prediction_args={repr(self.global_prediction_args)},\n  total_predictions={repr(self.total_predictions)},\n  failed_predictions={repr(self.failed_predictions)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_output_configuration={repr(self.database_output_configuration)},\n  explanations={repr(self.explanations)},\n  file_connector_output_location={repr(self.file_connector_output_location)},\n  file_output_format={repr(self.file_output_format)},\n  connector_type={repr(self.connector_type)},\n  legacy_input_location={repr(self.legacy_input_location)},\n  error={repr(self.error)},\n  csv_input_prefix={repr(self.csv_input_prefix)},\n  csv_prediction_prefix={repr(self.csv_prediction_prefix)},\n  csv_explanations_prefix={repr(self.csv_explanations_prefix)},\n  batch_inputs={repr(self.batch_inputs)})"
+        return f"BatchPredictionVersion(batch_prediction_version={repr(self.batch_prediction_version)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  status={repr(self.status)},\n  deployment_id={repr(self.deployment_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  predictions_started_at={repr(self.predictions_started_at)},\n  predictions_completed_at={repr(self.predictions_completed_at)},\n  global_prediction_args={repr(self.global_prediction_args)},\n  database_output_error={repr(self.database_output_error)},\n  total_predictions={repr(self.total_predictions)},\n  failed_predictions={repr(self.failed_predictions)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_output_configuration={repr(self.database_output_configuration)},\n  explanations={repr(self.explanations)},\n  file_connector_output_location={repr(self.file_connector_output_location)},\n  file_output_format={repr(self.file_output_format)},\n  connector_type={repr(self.connector_type)},\n  legacy_input_location={repr(self.legacy_input_location)},\n  error={repr(self.error)},\n  csv_input_prefix={repr(self.csv_input_prefix)},\n  csv_prediction_prefix={repr(self.csv_prediction_prefix)},\n  csv_explanations_prefix={repr(self.csv_explanations_prefix)},\n  database_output_total_writes={repr(self.database_output_total_writes)},\n  database_output_failed_writes={repr(self.database_output_failed_writes)},\n  batch_inputs={repr(self.batch_inputs)})"
 
     def to_dict(self):
         """
@@ -69,7 +75,7 @@ class BatchPredictionVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'batch_prediction_version': self.batch_prediction_version, 'batch_prediction_id': self.batch_prediction_id, 'status': self.status, 'deployment_id': self.deployment_id, 'model_id': self.model_id, 'model_version': self.model_version, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'global_prediction_args': self.global_prediction_args, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_connector_output_location': self.file_connector_output_location, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'error': self.error, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs)}
+        return {'batch_prediction_version': self.batch_prediction_version, 'batch_prediction_id': self.batch_prediction_id, 'status': self.status, 'deployment_id': self.deployment_id, 'model_id': self.model_id, 'model_version': self.model_version, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'global_prediction_args': self.global_prediction_args, 'database_output_error': self.database_output_error, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_connector_output_location': self.file_connector_output_location, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'error': self.error, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'database_output_total_writes': self.database_output_total_writes, 'database_output_failed_writes': self.database_output_failed_writes, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs)}
 
     def download_batch_prediction_result_chunk(self, offset: int = 0, chunk_size: int = 10485760):
         """

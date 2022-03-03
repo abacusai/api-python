@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None)
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33,7 +33,7 @@ Classes
    :type modelId: str
    :param modelConfig: The training config options used to train this model.
    :type modelConfig: dict
-   :param modelPredictionConfig:
+   :param modelPredictionConfig: The prediction config options for the model.
    :type modelPredictionConfig: dict
    :param trainingStartedAt: The start time and date of the training process.
    :type trainingStartedAt: str
@@ -41,12 +41,20 @@ Classes
    :type trainingCompletedAt: str
    :param datasetVersions: Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.
    :type datasetVersions: list of unique string identifiers
+   :param featureGroupVersions:
+   :type featureGroupVersions: list
    :param error: Relevant error if the status is FAILED.
    :type error: str
    :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
    :type pendingDeploymentIds: list
    :param failedDeploymentIds: List of failed deployment IDs.
    :type failedDeploymentIds: list
+   :param cpuSize: Cpu size specified for the python model training.
+   :type cpuSize: str
+   :param memory: Memory in GB specified for the python model training.
+   :type memory: int
+   :param automlComplete: If true, all algorithms have compelted training
+   :type automlComplete: bool
 
    .. py:method:: __repr__(self)
 

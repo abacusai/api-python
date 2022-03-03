@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, batchInputs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43,6 +43,8 @@ Classes
    :type predictionsCompletedAt: str
    :param globalPredictionArgs: Argument(s) passed to every prediction call
    :type globalPredictionArgs: dict
+   :param databaseOutputError: If true, there were errors reported by the database connector while writing
+   :type databaseOutputError: bool
    :param totalPredictions: Number of predictions performed in this batch prediction job
    :type totalPredictions: int
    :param failedPredictions: Number of predictions that failed
@@ -69,6 +71,10 @@ Classes
    :type csvPredictionPrefix: str
    :param csvExplanationsPrefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
    :type csvExplanationsPrefix: str
+   :param databaseOutputTotalWrites: The total number of rows attempted to write (may be less than total_predictions if write mode is UPSERT and multiple rows share the same ID)
+   :type databaseOutputTotalWrites: int
+   :param databaseOutputFailedWrites: The number of failed writes to the Database Connector
+   :type databaseOutputFailedWrites: int
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
 

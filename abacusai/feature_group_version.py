@@ -18,10 +18,12 @@ class FeatureGroupVersion(AbstractApiClass):
             status (str): The current status of the feature group version.
             error (str): Relevant error if the status is FAILED.
             deployable (bool): whether feature group is deployable or not.
+            cpuSize (str): Cpu size specified for the python feature group.
+            memory (int): Memory in GB specified for the python feature group.
             features (Feature): List of features.
     """
 
-    def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, features={}):
+    def __init__(self, client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={}):
         super().__init__(client, featureGroupVersion)
         self.feature_group_version = featureGroupVersion
         self.sql = sql
@@ -30,10 +32,12 @@ class FeatureGroupVersion(AbstractApiClass):
         self.status = status
         self.error = error
         self.deployable = deployable
+        self.cpu_size = cpuSize
+        self.memory = memory
         self.features = client._build_class(Feature, features)
 
     def __repr__(self):
-        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  features={repr(self.features)})"
+        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  features={repr(self.features)})"
 
     def to_dict(self):
         """
@@ -42,7 +46,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'features': self._get_attribute_as_dict(self.features)}
+        return {'feature_group_version': self.feature_group_version, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'features': self._get_attribute_as_dict(self.features)}
 
     def export_to_file_connector(self, location: str, export_file_format: str, overwrite: bool = False):
         """

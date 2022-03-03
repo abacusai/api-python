@@ -11,16 +11,20 @@ class ModelVersion(AbstractApiClass):
             status (str): The current status of the model.
             modelId (str): A reference to the model this version belongs to.
             modelConfig (dict): The training config options used to train this model.
-            modelPredictionConfig (dict): 
+            modelPredictionConfig (dict): The prediction config options for the model.
             trainingStartedAt (str): The start time and date of the training process.
             trainingCompletedAt (str): The end time and date of the training process.
             datasetVersions (list of unique string identifiers): Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.
+            featureGroupVersions (list): 
             error (str): Relevant error if the status is FAILED.
             pendingDeploymentIds (list): List of deployment IDs where deployment is pending.
             failedDeploymentIds (list): List of failed deployment IDs.
+            cpuSize (str): Cpu size specified for the python model training.
+            memory (int): Memory in GB specified for the python model training.
+            automlComplete (bool): If true, all algorithms have compelted training
     """
 
-    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None):
+    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None):
         super().__init__(client, modelVersion)
         self.model_version = modelVersion
         self.status = status
@@ -30,12 +34,16 @@ class ModelVersion(AbstractApiClass):
         self.training_started_at = trainingStartedAt
         self.training_completed_at = trainingCompletedAt
         self.dataset_versions = datasetVersions
+        self.feature_group_versions = featureGroupVersions
         self.error = error
         self.pending_deployment_ids = pendingDeploymentIds
         self.failed_deployment_ids = failedDeploymentIds
+        self.cpu_size = cpuSize
+        self.memory = memory
+        self.automl_complete = automlComplete
 
     def __repr__(self):
-        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)})"
+        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)})"
 
     def to_dict(self):
         """
@@ -44,7 +52,7 @@ class ModelVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids}
+        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete}
 
     def delete(self):
         """
