@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, cpuSize=None, memory=None, features={}, duplicateFeatures={}, concatenationConfig={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, cpuSize=None, memory=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -79,6 +79,8 @@ Classes
    :type features: Feature
    :param duplicateFeatures: List of duplicate features
    :type duplicateFeatures: Feature
+   :param pointInTimeGroups: List of Point In Time Groups
+   :type pointInTimeGroups: PointInTimeGroup
    :param latestFeatureGroupVersion: The latest feature group version
    :type latestFeatureGroupVersion: FeatureGroupVersion
    :param concatenationConfig: The Feature Group ID whose data will be concatenated into this feature group
@@ -341,6 +343,93 @@ Classes
       :type new_feature_name: str
 
       :returns: A feature group object with the newly added nested feature.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_point_in_time_group(self, group_name, window_key, aggregation_keys, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
+
+      Create point in time group
+
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param window_key: Name of feature which contains the timestamp value for the point in time feature
+      :type window_key: str
+      :param aggregation_keys: List of keys to use for join the historical table and performing the window aggregation.
+      :type aggregation_keys: list
+      :param lookback_window: Number of seconds in the past from the current time for start of the window.
+      :type lookback_window: float
+      :param lookback_window_lag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+      :type lookback_window_lag: float
+      :param lookback_count: If window is specified in terms of count, the start position of the window (0 is the current row)
+      :type lookback_count: int
+      :param lookback_until_position: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+      :type lookback_until_position: int
+
+      :returns: The feature group after the point in time group has been created
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_point_in_time_group(self, group_name, window_key = None, aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
+
+      Update point in time group
+
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param window_key: Name of feature which contains the timestamp value for the point in time feature
+      :type window_key: str
+      :param aggregation_keys: List of keys to use for join the historical table and performing the window aggregation.
+      :type aggregation_keys: list
+      :param lookback_window: Number of seconds in the past from the current time for start of the window.
+      :type lookback_window: float
+      :param lookback_window_lag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+      :type lookback_window_lag: float
+      :param lookback_count: If window is specified in terms of count, the start position of the window (0 is the current row)
+      :type lookback_count: int
+      :param lookback_until_position: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+      :type lookback_until_position: int
+
+      :returns: The feature group after the update has been applied
+      :rtype: FeatureGroup
+
+
+   .. py:method:: delete_point_in_time_group(self, group_name)
+
+      Delete point in time group
+
+      :param group_name: The name of the point in time group
+      :type group_name: str
+
+      :returns: The feature group after the point in time group has been deleted
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_point_in_time_group_feature(self, group_name, name, expression)
+
+      Create point in time group feature
+
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param name: The name of the feature to add to the point in time group
+      :type name: str
+      :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+      :type expression: str
+
+      :returns: The feature group after the update has been applied
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_point_in_time_group_feature(self, group_name, name, expression)
+
+      Update a feature's SQL expression in a point in time group
+
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param name: The name of the feature to add to the point in time group
+      :type name: str
+      :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+      :type expression: str
+
+      :returns: The feature group after the update has been applied
       :rtype: FeatureGroup
 
 

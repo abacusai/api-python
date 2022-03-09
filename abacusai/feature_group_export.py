@@ -50,6 +50,18 @@ class FeatureGroupExport(AbstractApiClass):
         """
         return {'feature_group_export_id': self.feature_group_export_id, 'feature_group_version': self.feature_group_version, 'connector_type': self.connector_type, 'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name, 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at}
 
+    def get_feature_group_version_export_download_url(self):
+        """
+        Get a link to download the feature group version.
+
+        Args:
+            feature_group_export_id (str): The Feature Group Export to get signed url for.
+
+        Returns:
+            FeatureGroupExportDownloadUrl: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time.
+        """
+        return self.client.get_feature_group_version_export_download_url(self.feature_group_export_id)
+
     def refresh(self):
         """
         Calls describe and refreshes the current object's fields

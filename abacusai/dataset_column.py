@@ -9,9 +9,9 @@ class DatasetColumn(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             name (str): The unique name of the column.
             dataType (str): The underlying data type of each column:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
-            detectedDataType (str): 
-            featureType (str): Feature Type of the Feature
-            detectedFeatureType (str): 
+            detectedDataType (str): The detected data type of the column
+            featureType (str): Feature Type of the column
+            detectedFeatureType (str): The feature type of the column
             originalName (str): The original name of the column
     """
 

@@ -63,6 +63,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_record</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector</span></code></a></li>
@@ -84,6 +85,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../point_in_time_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_group_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_client</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_feature_group</span></code></a></li>
@@ -169,9 +172,9 @@
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique name of the column.</p></li>
 <li><p><strong>dataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The underlying data type of each column:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/DataType">https://api.abacus.ai/app/help/class/DataType</a>] for more information.</p></li>
-<li><p><strong>detectedDataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>featureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Feature Type of the Feature</p></li>
-<li><p><strong>detectedFeatureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>detectedDataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The detected data type of the column</p></li>
+<li><p><strong>featureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Feature Type of the column</p></li>
+<li><p><strong>detectedFeatureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The feature type of the column</p></li>
 <li><p><strong>originalName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The original name of the column</p></li>
 </ul>
 </dd>

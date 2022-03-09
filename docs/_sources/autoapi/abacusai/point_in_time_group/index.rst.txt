@@ -1,0 +1,58 @@
+:py:mod:`abacusai.point_in_time_group`
+======================================
+
+.. py:module:: abacusai.point_in_time_group
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.point_in_time_group.PointInTimeGroup
+
+
+
+
+.. py:class:: PointInTimeGroup(client, groupName=None, windowKey=None, aggregationKeys=None, lookbackWindow=None, lookbackWindowLag=None, lookbackCount=None, lookbackUntilPosition=None, features={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A point in time group containing point in time features
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param groupName: The name of the point in time group
+   :type groupName: str
+   :param windowKey: Name of feature which contains the timestamp value for the point in time feature
+   :type windowKey: str
+   :param aggregationKeys: List of keys to use for join the historical table and performing the window aggregation.
+   :type aggregationKeys: list
+   :param lookbackWindow: Number of seconds in the past from the current time for start of the window.
+   :type lookbackWindow: float
+   :param lookbackWindowLag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+   :type lookbackWindowLag: float
+   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row)
+   :type lookbackCount: int
+   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+   :type lookbackUntilPosition: int
+   :param features:
+   :type features: PointInTimeGroupFeature
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -78,6 +78,18 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
 
+    def export_to_console(self, export_file_format: str):
+        """
+        Export Feature group to console.
+
+        Args:
+            export_file_format (str): File format to export to.
+
+        Returns:
+            FeatureGroupExport: The FeatureGroupExport instance
+        """
+        return self.client.export_feature_group_version_to_console(self.feature_group_version, export_file_format)
+
     def get_materialization_logs(self, stdout: bool = False, stderr: bool = False):
         """
         Returns logs for materialized feature group version.

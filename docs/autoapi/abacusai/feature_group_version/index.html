@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="abacusai.feature_record" href="../feature_record/index.html" />
-    <link rel="prev" title="abacusai.feature_group_export_config" href="../feature_group_export_config/index.html" /> 
+    <link rel="prev" title="abacusai.feature_group_export_download_url" href="../feature_group_export_download_url/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,6 +60,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
 </ul>
@@ -84,6 +85,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../point_in_time_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_group_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_client</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_feature_group</span></code></a></li>
@@ -245,6 +248,23 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.feature_group_version.FeatureGroupVersion.export_to_console">
+<span class="sig-name descname"><span class="pre">export_to_console</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_file_format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group_version.FeatureGroupVersion.export_to_console" title="Permalink to this definition"></a></dt>
+<dd><p>Export Feature group to console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>export_file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File format to export to.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The FeatureGroupExport instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../feature_group_export/index.html#abacusai.feature_group_export.FeatureGroupExport" title="abacusai.feature_group_export.FeatureGroupExport">FeatureGroupExport</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_group_version.FeatureGroupVersion.get_materialization_logs">
 <span class="sig-name descname"><span class="pre">get_materialization_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group_version.FeatureGroupVersion.get_materialization_logs" title="Permalink to this definition"></a></dt>
 <dd><p>Returns logs for materialized feature group version.</p>
@@ -352,7 +372,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../feature_group_export_config/index.html" class="btn btn-neutral float-left" title="abacusai.feature_group_export_config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../feature_group_export_download_url/index.html" class="btn btn-neutral float-left" title="abacusai.feature_group_export_download_url" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../feature_record/index.html" class="btn btn-neutral float-right" title="abacusai.feature_record" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

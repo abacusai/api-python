@@ -25,6 +25,7 @@ from .deployment_auth_token import DeploymentAuthToken
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
+from .feature_group_export_download_url import FeatureGroupExportDownloadUrl
 from .feature_group_version import FeatureGroupVersion
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
@@ -133,7 +134,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.34.4'
+    client_version = '0.34.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -861,6 +862,77 @@ class ApiClient(BaseApiClient):
             FeatureGroup: A feature group object with the newly added nested feature."""
         return self._call_api('updatePointInTimeFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeys': aggregation_keys, 'timestampKey': timestamp_key, 'historicalTimestampKey': historical_timestamp_key, 'expression': expression, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'newFeatureName': new_feature_name}, parse_type=FeatureGroup)
 
+    def create_point_in_time_group(self, feature_group_id: str, group_name: str, window_key: str, aggregation_keys: list, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0) -> FeatureGroup:
+        """Create point in time group
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            group_name (str): The name of the point in time group
+            window_key (str): Name of feature which contains the timestamp value for the point in time feature
+            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
+            lookback_window (float): Number of seconds in the past from the current time for start of the window.
+            lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
+            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+
+        Returns:
+            FeatureGroup: The feature group after the point in time group has been created"""
+        return self._call_api('createPointInTimeGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'windowKey': window_key, 'aggregationKeys': aggregation_keys, 'lookbackWindow': lookback_window, 'lookbackWindowLag': lookback_window_lag, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position}, parse_type=FeatureGroup)
+
+    def update_point_in_time_group(self, feature_group_id: str, group_name: str, window_key: str = None, aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None) -> FeatureGroup:
+        """Update point in time group
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            group_name (str): The name of the point in time group
+            window_key (str): Name of feature which contains the timestamp value for the point in time feature
+            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
+            lookback_window (float): Number of seconds in the past from the current time for start of the window.
+            lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
+            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+
+        Returns:
+            FeatureGroup: The feature group after the update has been applied"""
+        return self._call_api('updatePointInTimeGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'windowKey': window_key, 'aggregationKeys': aggregation_keys, 'lookbackWindow': lookback_window, 'lookbackWindowLag': lookback_window_lag, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position}, parse_type=FeatureGroup)
+
+    def delete_point_in_time_group(self, feature_group_id: str, group_name: str) -> FeatureGroup:
+        """Delete point in time group
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            group_name (str): The name of the point in time group
+
+        Returns:
+            FeatureGroup: The feature group after the point in time group has been deleted"""
+        return self._call_api('deletePointInTimeGroup', 'DELETE', query_params={'featureGroupId': feature_group_id, 'groupName': group_name}, parse_type=FeatureGroup)
+
+    def create_point_in_time_group_feature(self, feature_group_id: str, group_name: str, name: str, expression: str) -> FeatureGroup:
+        """Create point in time group feature
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            group_name (str): The name of the point in time group
+            name (str): The name of the feature to add to the point in time group
+            expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+
+        Returns:
+            FeatureGroup: The feature group after the update has been applied"""
+        return self._call_api('createPointInTimeGroupFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'name': name, 'expression': expression}, parse_type=FeatureGroup)
+
+    def update_point_in_time_group_feature(self, feature_group_id: str, group_name: str, name: str, expression: str) -> FeatureGroup:
+        """Update a feature's SQL expression in a point in time group
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            group_name (str): The name of the point in time group
+            name (str): The name of the feature to add to the point in time group
+            expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+
+        Returns:
+            FeatureGroup: The feature group after the update has been applied"""
+        return self._call_api('updatePointInTimeGroupFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'name': name, 'expression': expression}, parse_type=FeatureGroup)
+
     def set_feature_type(self, feature_group_id: str, feature: str, feature_type: str) -> Schema:
         """Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
 
@@ -1021,6 +1093,27 @@ class ApiClient(BaseApiClient):
         Returns:
             FeatureGroupExport: The FeatureGroupExport instance"""
         return self._call_api('exportFeatureGroupVersionToDatabaseConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column}, parse_type=FeatureGroupExport)
+
+    def export_feature_group_version_to_console(self, feature_group_version: str, export_file_format: str) -> FeatureGroupExport:
+        """Export Feature group to console.
+
+        Args:
+            feature_group_version (str): The Feature Group instance to export.
+            export_file_format (str): File format to export to.
+
+        Returns:
+            FeatureGroupExport: The FeatureGroupExport instance"""
+        return self._call_api('exportFeatureGroupVersionToConsole', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
+
+    def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
+        """Get a link to download the feature group version.
+
+        Args:
+            feature_group_export_id (str): The Feature Group Export to get signed url for.
+
+        Returns:
+            FeatureGroupExportDownloadUrl: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time."""
+        return self._call_api('getFeatureGroupVersionExportDownloadUrl', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, parse_type=FeatureGroupExportDownloadUrl)
 
     def describe_feature_group_export(self, feature_group_export_id: str) -> FeatureGroupExport:
         """A feature group export

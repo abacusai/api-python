@@ -30,6 +30,7 @@ Submodules
    feature_group/index.rst
    feature_group_export/index.rst
    feature_group_export_config/index.rst
+   feature_group_export_download_url/index.rst
    feature_group_version/index.rst
    feature_record/index.rst
    file_connector/index.rst
@@ -51,6 +52,8 @@ Submodules
    null_violation/index.rst
    organization_group/index.rst
    point_in_time_feature/index.rst
+   point_in_time_group/index.rst
+   point_in_time_group_feature/index.rst
    prediction_client/index.rst
    prediction_dataset/index.rst
    prediction_feature_group/index.rst
@@ -827,6 +830,103 @@ Attributes
       :rtype: FeatureGroup
 
 
+   .. py:method:: create_point_in_time_group(self, feature_group_id, group_name, window_key, aggregation_keys, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
+
+      Create point in time group
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param window_key: Name of feature which contains the timestamp value for the point in time feature
+      :type window_key: str
+      :param aggregation_keys: List of keys to use for join the historical table and performing the window aggregation.
+      :type aggregation_keys: list
+      :param lookback_window: Number of seconds in the past from the current time for start of the window.
+      :type lookback_window: float
+      :param lookback_window_lag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+      :type lookback_window_lag: float
+      :param lookback_count: If window is specified in terms of count, the start position of the window (0 is the current row)
+      :type lookback_count: int
+      :param lookback_until_position: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+      :type lookback_until_position: int
+
+      :returns: The feature group after the point in time group has been created
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_point_in_time_group(self, feature_group_id, group_name, window_key = None, aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
+
+      Update point in time group
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param window_key: Name of feature which contains the timestamp value for the point in time feature
+      :type window_key: str
+      :param aggregation_keys: List of keys to use for join the historical table and performing the window aggregation.
+      :type aggregation_keys: list
+      :param lookback_window: Number of seconds in the past from the current time for start of the window.
+      :type lookback_window: float
+      :param lookback_window_lag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+      :type lookback_window_lag: float
+      :param lookback_count: If window is specified in terms of count, the start position of the window (0 is the current row)
+      :type lookback_count: int
+      :param lookback_until_position: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+      :type lookback_until_position: int
+
+      :returns: The feature group after the update has been applied
+      :rtype: FeatureGroup
+
+
+   .. py:method:: delete_point_in_time_group(self, feature_group_id, group_name)
+
+      Delete point in time group
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param group_name: The name of the point in time group
+      :type group_name: str
+
+      :returns: The feature group after the point in time group has been deleted
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_point_in_time_group_feature(self, feature_group_id, group_name, name, expression)
+
+      Create point in time group feature
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param name: The name of the feature to add to the point in time group
+      :type name: str
+      :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+      :type expression: str
+
+      :returns: The feature group after the update has been applied
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_point_in_time_group_feature(self, feature_group_id, group_name, name, expression)
+
+      Update a feature's SQL expression in a point in time group
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param group_name: The name of the point in time group
+      :type group_name: str
+      :param name: The name of the feature to add to the point in time group
+      :type name: str
+      :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+      :type expression: str
+
+      :returns: The feature group after the update has been applied
+      :rtype: FeatureGroup
+
+
    .. py:method:: set_feature_type(self, feature_group_id, feature, feature_type)
 
       Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
@@ -1030,6 +1130,30 @@ Attributes
 
       :returns: The FeatureGroupExport instance
       :rtype: FeatureGroupExport
+
+
+   .. py:method:: export_feature_group_version_to_console(self, feature_group_version, export_file_format)
+
+      Export Feature group to console.
+
+      :param feature_group_version: The Feature Group instance to export.
+      :type feature_group_version: str
+      :param export_file_format: File format to export to.
+      :type export_file_format: str
+
+      :returns: The FeatureGroupExport instance
+      :rtype: FeatureGroupExport
+
+
+   .. py:method:: get_feature_group_version_export_download_url(self, feature_group_export_id)
+
+      Get a link to download the feature group version.
+
+      :param feature_group_export_id: The Feature Group Export to get signed url for.
+      :type feature_group_export_id: str
+
+      :returns: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time.
+      :rtype: FeatureGroupExportDownloadUrl
 
 
    .. py:method:: describe_feature_group_export(self, feature_group_export_id)
@@ -3679,7 +3803,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.34.4
+   :annotation: = 0.34.5
 
    
 
