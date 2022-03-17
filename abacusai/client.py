@@ -31,15 +31,12 @@ from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
-from .language_detection_prediction import LanguageDetectionPrediction
 from .model import Model
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
 from .model_monitor_version import ModelMonitorVersion
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
-from .nlp_classification_prediction import NlpClassificationPrediction
-from .nlp_sentiment_prediction import NlpSentimentPrediction
 from .organization_group import OrganizationGroup
 from .project import Project
 from .project_dataset import ProjectDataset
@@ -78,12 +75,19 @@ def _discover_service_url(service_discovery_url, client_version, deployment_id, 
     from .cryptography import get_public_key, verify_response
     if not service_discovery_url:
         return None
-    response = _requests_retry_session().get(service_discovery_url, headers={'clientVersion': client_version}, params={
-        'deploymentId': deployment_id, 'deploymentToken': deployment_token})
+    params = {}
+    if deployment_id:
+        params = {'deploymentId': deployment_id,
+                  'deploymentToken': deployment_token}
+    response = _requests_retry_session().get(service_discovery_url, headers={
+        'clientVersion': client_version}, params=params)
     response_dict = response.json()
 
     verify_response(get_public_key(), response_dict)
-    return response_dict['url']
+    if deployment_id:
+        return response_dict['prediction_url']
+    else:
+        return response_dict['api_url']
 
 
 @lru_cache()
@@ -134,7 +138,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.34.5'
+    client_version = '0.35.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -185,9 +189,9 @@ class BaseApiClient:
         url = (server_override or self.server) + '/api/v0/' + action
         self._clean_api_objects(query_params)
         self._clean_api_objects(body)
-        if self.service_discovery_url and query_params and 'deploymentId' in query_params and 'deploymentToken' in query_params:
-            discovered_url = _discover_service_url(
-                self.service_discovery_url, self.client_version, query_params['deploymentId'], query_params['deploymentToken'])
+        if self.service_discovery_url:
+            discovered_url = _discover_service_url(self.service_discovery_url, self.client_version, query_params.get(
+                'deploymentId') if query_params else None, query_params.get('deploymentToken') if query_params else None)
             if discovered_url:
                 url = discovered_url + '/api/' + action
         response = self._request(url, method, query_params=query_params,
@@ -244,7 +248,7 @@ class BaseApiClient:
                 'HTTP method must be `GET`, `POST`, `PATCH`, `PUT` or `DELETE`'
             )
 
-    def _poll(self, obj, wait_states: set, delay: int = 5, timeout: int = 300, poll_args: dict = {}):
+    def _poll(self, obj, wait_states: set, delay: int = 5, timeout: int = 300, poll_args: dict = {}, status_field=None):
         start_time = time.time()
         while obj.get_status(**poll_args) in wait_states:
             if timeout and time.time() - start_time > timeout:
@@ -257,7 +261,689 @@ class BaseApiClient:
             return upload.upload_file(csv_out)
 
 
-class ApiClient(BaseApiClient):
+class ReadOnlyClient(BaseApiClient):
+    """
+    Abacus.AI Read Only API Client. Only contains GET methods
+
+    Args:
+        api_key (str): The api key to use as authentication to the server
+        server (str): The base server url to use to send API requets to
+        client_options (ClientOptions): Optional API client configurations
+        skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
+    """
+
+    def list_api_keys(self) -> List[ApiKey]:
+        """Lists all of the user's API keys the user's organization.
+
+        Returns:
+            ApiKey: List of API Keys for this user."""
+        return self._call_api('listApiKeys', 'GET', query_params={}, parse_type=ApiKey)
+
+    def list_organization_users(self) -> List[User]:
+        """Retrieves a list of all users in the organization.
+
+        This method will retrieve a list containing all the users in the organization. The list includes pending users who have been invited to the organization.
+
+
+        Returns:
+            User: Array of all of the users in the Organization"""
+        return self._call_api('listOrganizationUsers', 'GET', query_params={}, parse_type=User)
+
+    def describe_user(self) -> User:
+        """Get the current user's information, such as their name, email, admin status, etc.
+
+        Returns:
+            User: Information about the current User"""
+        return self._call_api('describeUser', 'GET', query_params={}, parse_type=User)
+
+    def list_organization_groups(self) -> List[OrganizationGroup]:
+        """Lists all Organizations Groups within this Organization
+
+        Returns:
+            OrganizationGroup: List of Groups in this Organization"""
+        return self._call_api('listOrganizationGroups', 'GET', query_params={}, parse_type=OrganizationGroup)
+
+    def describe_organization_group(self, organization_group_id: str) -> OrganizationGroup:
+        """Returns the specific organization group passes in by the user.
+
+        Args:
+            organization_group_id (str): The unique ID of the organization group to that needs to be described.
+
+        Returns:
+            OrganizationGroup: Information about a specific Organization Group"""
+        return self._call_api('describeOrganizationGroup', 'GET', query_params={'organizationGroupId': organization_group_id}, parse_type=OrganizationGroup)
+
+    def list_use_cases(self) -> List[UseCase]:
+        """Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.
+
+        Returns:
+            UseCase: A list of UseCase objects describing all the use cases addressed by the platform. For details, please refer to"""
+        return self._call_api('listUseCases', 'GET', query_params={}, parse_type=UseCase)
+
+    def describe_use_case_requirements(self, use_case: str) -> UseCaseRequirements:
+        """This API call returns the feature requirements for a specified use case
+
+        Args:
+            use_case (str): This will contain the Enum String for the use case whose dataset requirements are needed.
+
+        Returns:
+            UseCaseRequirements: The feature requirements of the use case are returned. This includes all the feature group required for the use case along with their descriptions and feature mapping details."""
+        return self._call_api('describeUseCaseRequirements', 'GET', query_params={'useCase': use_case}, parse_type=UseCaseRequirements)
+
+    def describe_project(self, project_id: str) -> Project:
+        """Returns a description of a project.
+
+        Args:
+            project_id (str): The unique project ID
+
+        Returns:
+            Project: The project description is returned."""
+        return self._call_api('describeProject', 'GET', query_params={'projectId': project_id}, parse_type=Project)
+
+    def list_projects(self, limit: int = 100, start_after_id: str = None) -> List[Project]:
+        """Retrieves a list of all projects in the current organization.
+
+        Args:
+            limit (int): The max length of the list of projects.
+            start_after_id (str): The ID of the project after which the list starts.
+
+        Returns:
+            Project: An array of all projects in the Organization the user is currently logged in to."""
+        return self._call_api('listProjects', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Project)
+
+    def list_project_datasets(self, project_id: str) -> List[ProjectDataset]:
+        """Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            ProjectDataset: An array representing all of the datasets attached to the project."""
+        return self._call_api('listProjectDatasets', 'GET', query_params={'projectId': project_id}, parse_type=ProjectDataset)
+
+    def get_schema(self, project_id: str, dataset_id: str) -> List[Schema]:
+        """[DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            dataset_id (str): The unique ID associated with the dataset.
+
+        Returns:
+            Schema: An array of objects for each column in the specified dataset."""
+        logging.warning(
+            'This function (getSchema) is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
+        return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
+
+    def validate_project(self, project_id: str) -> ProjectValidation:
+        """Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group."""
+        return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
+
+    def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[Feature]:
+        """Returns a schema given a specific FeatureGroup in a project.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            Feature: An array of objects for each column in the specified feature group."""
+        return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=Feature)
+
+    def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
+        """Describe a Feature Group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            FeatureGroup: The feature group object."""
+        return self._call_api('describeFeatureGroup', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
+
+    def describe_feature_group_by_table_name(self, table_name: str) -> FeatureGroup:
+        """Describe a Feature Group by the feature group's table name
+
+        Args:
+            table_name (str): The unique table name of the Feature Group to lookup
+
+        Returns:
+            FeatureGroup: The Feature Group"""
+        return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
+
+    def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> List[FeatureGroup]:
+        """Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.
+
+        Args:
+            limit (int): The the number of feature groups to be retrieved.
+            start_after_id (str): An offset parameter to exclude all feature groups till a specified ID.
+
+        Returns:
+            FeatureGroup: All the feature groups in the organization"""
+        return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
+
+    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> FeatureGroup:
+        """List all the feature groups associated with a project
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
+
+        Returns:
+            FeatureGroup: All the Feature Groups in the Organization"""
+        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=FeatureGroup)
+
+    def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
+        """Get a link to download the feature group version.
+
+        Args:
+            feature_group_export_id (str): The Feature Group Export to get signed url for.
+
+        Returns:
+            FeatureGroupExportDownloadUrl: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time."""
+        return self._call_api('getFeatureGroupVersionExportDownloadUrl', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, parse_type=FeatureGroupExportDownloadUrl)
+
+    def describe_feature_group_export(self, feature_group_export_id: str) -> FeatureGroupExport:
+        """A feature group export
+
+        Args:
+            feature_group_export_id (str): The ID of the feature group export.
+
+        Returns:
+            FeatureGroupExport: The feature group export"""
+        return self._call_api('describeFeatureGroupExport', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, parse_type=FeatureGroupExport)
+
+    def list_feature_group_exports(self, feature_group_id: str) -> List[FeatureGroupExport]:
+        """Lists all of the feature group exports for a given feature group
+
+        Args:
+            feature_group_id (str): The ID of the feature group
+
+        Returns:
+            FeatureGroupExport: The feature group exports"""
+        return self._call_api('listFeatureGroupExports', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupExport)
+
+    def list_feature_group_modifiers(self, feature_group_id: str) -> ModificationLockInfo:
+        """To list users who can modify a feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            ModificationLockInfo: Modification lock status and groups and organizations added to the feature group."""
+        return self._call_api('listFeatureGroupModifiers', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=ModificationLockInfo)
+
+    def get_materialization_logs(self, feature_group_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
+        """Returns logs for materialized feature group version.
+
+        Args:
+            feature_group_version (str): The Feature Group instance to export
+            stdout (bool):  Set True to get info logs
+            stderr (bool):  Set True to get error logs
+
+        Returns:
+            FunctionLogs: A function logs."""
+        return self._call_api('getMaterializationLogs', 'GET', query_params={'featureGroupVersion': feature_group_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
+
+    def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_version: str = None) -> List[FeatureGroupVersion]:
+        """Retrieves a list of all feature group versions for the specified feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            limit (int): The max length of the returned versions
+            start_after_version (str): Results will start after this version
+
+        Returns:
+            FeatureGroupVersion: An array of feature group version."""
+        return self._call_api('listFeatureGroupVersions', 'GET', query_params={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=FeatureGroupVersion)
+
+    def describe_feature_group_version(self, feature_group_version: str) -> FeatureGroupVersion:
+        """Get a specific feature group version.
+
+        Args:
+            feature_group_version (str): The unique ID associated with the feature group version.
+
+        Returns:
+            FeatureGroupVersion: A feature group version."""
+        return self._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': feature_group_version}, parse_type=FeatureGroupVersion)
+
+    def get_dataset_schema(self, dataset_id: str) -> List[DatasetColumn]:
+        """Retrieves the column schema of a dataset
+
+        Args:
+            dataset_id (str): The Dataset schema to lookup.
+
+        Returns:
+            DatasetColumn: List of Column schema definitions"""
+        return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=DatasetColumn)
+
+    def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
+        """Retrieves verification information to create a data connector to a cloud storage bucket.
+
+        Args:
+            bucket (str): The fully qualified URI of the storage bucket to verify.
+            write_permission (bool): If `true`, instructions will include steps for allowing Abacus.AI to write to this service.
+
+        Returns:
+            FileConnectorInstructions: An object with full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid."""
+        return self._call_api('getFileConnectorInstructions', 'GET', query_params={'bucket': bucket, 'writePermission': write_permission}, parse_type=FileConnectorInstructions)
+
+    def list_database_connectors(self) -> DatabaseConnector:
+        """Retrieves a list of all of the database connectors along with all their attributes.
+
+        Returns:
+            DatabaseConnector: The database Connector"""
+        return self._call_api('listDatabaseConnectors', 'GET', query_params={}, parse_type=DatabaseConnector)
+
+    def list_file_connectors(self) -> List[FileConnector]:
+        """Retrieves a list of all connected services in the organization and their current verification status.
+
+        Returns:
+            FileConnector: An array of cloud storage buckets connected to the organization."""
+        return self._call_api('listFileConnectors', 'GET', query_params={}, parse_type=FileConnector)
+
+    def list_database_connector_objects(self, database_connector_id: str) -> List[str]:
+        """Lists querable objects in the database connector.
+
+        Args:
+            database_connector_id (str): The unique identifier for the database connector."""
+        return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id})
+
+    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None) -> List[str]:
+        """Get the schema of an object in an database connector.
+
+        Args:
+            database_connector_id (str): The unique identifier for the database connector.
+            object_name (str): The unique identifier for the object in the external system."""
+        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name})
+
+    def list_application_connectors(self) -> ApplicationConnector:
+        """Retrieves a list of all of the application connectors along with all their attributes.
+
+        Returns:
+            ApplicationConnector: The appplication Connector"""
+        return self._call_api('listApplicationConnectors', 'GET', query_params={}, parse_type=ApplicationConnector)
+
+    def list_application_connector_objects(self, application_connector_id: str) -> List[str]:
+        """Lists querable objects in the application connector.
+
+        Args:
+            application_connector_id (str): The unique identifier for the application connector."""
+        return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
+
+    def list_streaming_connectors(self) -> StreamingConnector:
+        """Retrieves a list of all of the streaming connectors along with all their attributes.
+
+        Returns:
+            StreamingConnector: The streaming Connector"""
+        return self._call_api('listStreamingConnectors', 'GET', query_params={}, parse_type=StreamingConnector)
+
+    def list_streaming_tokens(self) -> List[StreamingAuthToken]:
+        """Retrieves a list of all streaming tokens along with their attributes.
+
+        Returns:
+            StreamingAuthToken: An array of streaming tokens."""
+        return self._call_api('listStreamingTokens', 'GET', query_params={}, parse_type=StreamingAuthToken)
+
+    def get_recent_feature_group_streamed_data(self, feature_group_id: str):
+        """Returns recently streamed data to a streaming feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group."""
+        return self._call_api('getRecentFeatureGroupStreamedData', 'GET', query_params={'featureGroupId': feature_group_id})
+
+    def list_uploads(self) -> List[Upload]:
+        """Lists all ongoing uploads in the organization
+
+        Returns:
+            Upload: An array of uploads."""
+        return self._call_api('listUploads', 'GET', query_params={}, parse_type=Upload)
+
+    def describe_upload(self, upload_id: str) -> Upload:
+        """Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
+
+        Args:
+            upload_id (str): The unique ID associated with the file uploaded or being uploaded in parts.
+
+        Returns:
+            Upload: The details associated with the large dataset file uploaded in parts."""
+        return self._call_api('describeUpload', 'GET', query_params={'uploadId': upload_id}, parse_type=Upload)
+
+    def list_datasets(self, limit: int = 100, start_after_id: str = None, exclude_streaming: bool = False) -> List[Dataset]:
+        """Retrieves a list of all of the datasets in the organization.
+
+        Args:
+            limit (int): The max length of the list of projects.
+            start_after_id (str): The ID of the project after which the list starts.
+            exclude_streaming (bool): Exclude streaming datasets from result.
+
+        Returns:
+            Dataset: A list of datasets."""
+        return self._call_api('listDatasets', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'excludeStreaming': exclude_streaming}, parse_type=Dataset)
+
+    def describe_dataset(self, dataset_id: str) -> Dataset:
+        """Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
+
+        Args:
+            dataset_id (str): The unique ID associated with the dataset.
+
+        Returns:
+            Dataset: The dataset."""
+        return self._call_api('describeDataset', 'GET', query_params={'datasetId': dataset_id}, parse_type=Dataset)
+
+    def describe_dataset_version(self, dataset_version: str) -> DatasetVersion:
+        """Retrieves a full description of the specified dataset version, with attributes such as its ID, name, source type, etc.
+
+        Args:
+            dataset_version (str): The unique ID associated with the dataset version.
+
+        Returns:
+            DatasetVersion: The dataset version."""
+        return self._call_api('describeDatasetVersion', 'GET', query_params={'datasetVersion': dataset_version}, parse_type=DatasetVersion)
+
+    def list_dataset_versions(self, dataset_id: str, limit: int = 100, start_after_version: str = None) -> List[DatasetVersion]:
+        """Retrieves a list of all dataset versions for the specified dataset.
+
+        Args:
+            dataset_id (str): The unique ID associated with the dataset.
+            limit (int): The max length of the list of all dataset versions.
+            start_after_version (str): The id of the version after which the list starts.
+
+        Returns:
+            DatasetVersion: A list of dataset versions."""
+        return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
+
+    def get_training_config_options(self, project_id: str) -> List[TrainingConfigOptions]:
+        """Retrieves the full description of the model training configuration options available for the specified project.
+
+        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
+
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
+        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
+
+    def list_models(self, project_id: str) -> List[Model]:
+        """Retrieves the list of models in the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            Model: An array of models."""
+        return self._call_api('listModels', 'GET', query_params={'projectId': project_id}, parse_type=Model)
+
+    def describe_model(self, model_id: str) -> Model:
+        """Retrieves a full description of the specified model.
+
+        Args:
+            model_id (str): The unique ID associated with the model.
+
+        Returns:
+            Model: The description of the model."""
+        return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
+
+    def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False) -> ModelMetrics:
+        """Retrieves a full list of the metrics for the specified model.
+
+        If only the model's unique identifier (modelId) is specified, the latest trained version of model (modelVersion) is used.
+
+
+        Args:
+            model_id (str): The unique ID associated with the model.
+            model_version (str): The version of the model.
+            baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
+
+        Returns:
+            ModelMetrics: An object to show the model metrics and explanations for what each metric means."""
+        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics}, parse_type=ModelMetrics)
+
+    def list_model_versions(self, model_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelVersion]:
+        """Retrieves a list of the version for a given model.
+
+        Args:
+            model_id (str): The unique ID associated with the model.
+            limit (int): The max length of the list of all dataset versions.
+            start_after_version (str): The id of the version after which the list starts.
+
+        Returns:
+            ModelVersion: An array of model versions."""
+        return self._call_api('listModelVersions', 'GET', query_params={'modelId': model_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelVersion)
+
+    def describe_model_version(self, model_version: str) -> ModelVersion:
+        """Retrieves a full description of the specified model version
+
+        Args:
+            model_version (str): The unique version ID of the model version
+
+        Returns:
+            ModelVersion: A model version."""
+        return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
+
+    def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
+        """Returns training logs for the model.
+
+        Args:
+            model_version (str): The unique version ID of the model version
+            stdout (bool):  Set True to get info logs
+            stderr (bool):  Set True to get error logs
+
+        Returns:
+            FunctionLogs: A function logs."""
+        return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
+
+    def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
+        """Retrieves the list of models monitors in the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            ModelMonitor: An array of model monitors."""
+        return self._call_api('listModelMonitors', 'GET', query_params={'projectId': project_id}, parse_type=ModelMonitor)
+
+    def describe_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
+        """Retrieves a full description of the specified model monitor.
+
+        Args:
+            model_monitor_id (str): The unique ID associated with the model monitor.
+
+        Returns:
+            ModelMonitor: The description of the model monitor."""
+        return self._call_api('describeModelMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+
+    def list_model_monitor_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
+        """Retrieves a list of the versions for a given model monitor.
+
+        Args:
+            model_monitor_id (str): The unique ID associated with the model monitor.
+            limit (int): The max length of the list of all model monitor versions.
+            start_after_version (str): The id of the version after which the list starts.
+
+        Returns:
+            ModelMonitorVersion: An array of model monitor versions."""
+        return self._call_api('listModelMonitorVersions', 'GET', query_params={'modelMonitorId': model_monitor_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelMonitorVersion)
+
+    def describe_model_monitor_version(self, model_monitor_version: str) -> ModelMonitorVersion:
+        """Retrieves a full description of the specified model monitor version
+
+        Args:
+            model_monitor_version (str): The unique version ID of the model monitor version
+
+        Returns:
+            ModelMonitorVersion: A model monitor version."""
+        return self._call_api('describeModelMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
+
+    def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
+        """Returns monitoring logs for the model.
+
+        Args:
+            model_monitor_version (str): The unique version ID of the model monitor version
+            stdout (bool):  Set True to get info logs
+            stderr (bool):  Set True to get error logs
+
+        Returns:
+            FunctionLogs: A function logs."""
+        return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
+
+    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
+        """Gets the feature drift associated with a single feature in an output feature group from a prediction.
+
+        Args:
+            model_monitor_version (str): The unique identifier to a model monitor version created under the project.
+            feature_name (str): Name of the feature to view the distribution of."""
+        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
+
+    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str = None) -> Dict:
+        """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
+
+        Args:
+            model_monitor_version (str): The unique identifier to a model monitor version created under the project.
+            feature_name (str): Name of the feature to view the distribution of."""
+        return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
+
+    def describe_deployment(self, deployment_id: str) -> Deployment:
+        """Retrieves a full description of the specified deployment.
+
+        Args:
+            deployment_id (str): The unique ID associated with the deployment.
+
+        Returns:
+            Deployment: The description of the deployment."""
+        return self._call_api('describeDeployment', 'GET', query_params={'deploymentId': deployment_id}, parse_type=Deployment)
+
+    def list_deployments(self, project_id: str) -> List[Deployment]:
+        """Retrieves a list of all deployments in the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            Deployment: An array of deployments."""
+        return self._call_api('listDeployments', 'GET', query_params={'projectId': project_id}, parse_type=Deployment)
+
+    def list_deployment_tokens(self, project_id: str) -> List[DeploymentAuthToken]:
+        """Retrieves a list of all deployment tokens in the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            DeploymentAuthToken: An array of deployment tokens."""
+        return self._call_api('listDeploymentTokens', 'GET', query_params={'projectId': project_id}, parse_type=DeploymentAuthToken)
+
+    def describe_refresh_policy(self, refresh_policy_id: str) -> RefreshPolicy:
+        """Retrieve a single refresh policy
+
+        Args:
+            refresh_policy_id (str): The unique ID associated with this refresh policy
+
+        Returns:
+            RefreshPolicy: A refresh policy object"""
+        return self._call_api('describeRefreshPolicy', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPolicy)
+
+    def describe_refresh_pipeline_run(self, refresh_pipeline_run_id: str) -> RefreshPipelineRun:
+        """Retrieve a single refresh pipeline run
+
+        Args:
+            refresh_pipeline_run_id (str): The unique ID associated with this refresh pipeline_run
+
+        Returns:
+            RefreshPipelineRun: A refresh pipeline run object"""
+        return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
+
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = []) -> RefreshPolicy:
+        """List the refresh policies for the organization
+
+        Args:
+            project_id (str): Optionally, a Project ID can be specified so that all datasets, models and deployments are captured at the instant this policy was created
+            dataset_ids (list): Comma separated list of Dataset IDs
+            model_ids (list): Comma separated list of Model IDs
+            deployment_ids (list): Comma separated list of Deployment IDs
+            batch_prediction_ids (list): Comma separated list of Batch Predictions
+            model_monitor_ids (list): Comma separated list of Model Monitor IDs.
+
+        Returns:
+            RefreshPolicy: List of all refresh policies in the organization"""
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids}, parse_type=RefreshPolicy)
+
+    def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
+        """List the the times that the refresh policy has been run
+
+        Args:
+            refresh_policy_id (str): The unique ID associated with this refresh policy
+
+        Returns:
+            RefreshPipelineRun: A list of refresh pipeline runs for the given refresh policy id"""
+        return self._call_api('listRefreshPipelineRuns', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPipelineRun)
+
+    def download_batch_prediction_result_chunk(self, batch_prediction_version: str, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
+        """Returns a stream containing the batch prediction results
+
+        Args:
+            batch_prediction_version (str): The unique identifier of the batch prediction version to get the results from
+            offset (int): The offset to read from
+            chunk_size (int): The max amount of data to read"""
+        return self._call_api('downloadBatchPredictionResultChunk', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
+
+    def get_batch_prediction_connector_errors(self, batch_prediction_version: str) -> io.BytesIO:
+        """Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
+
+        Args:
+            batch_prediction_version (str): The unique identifier of the batch prediction job to get the errors for"""
+        return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
+
+    def list_batch_predictions(self, project_id: str) -> List[BatchPrediction]:
+        """Retrieves a list for the batch predictions in the project
+
+        Args:
+            project_id (str): The unique identifier of the project
+
+        Returns:
+            BatchPrediction: A list of batch prediction jobs."""
+        return self._call_api('listBatchPredictions', 'GET', query_params={'projectId': project_id}, parse_type=BatchPrediction)
+
+    def describe_batch_prediction(self, batch_prediction_id: str) -> BatchPrediction:
+        """Describes the batch prediction
+
+        Args:
+            batch_prediction_id (str): The unique ID associated with the batch prediction.
+
+        Returns:
+            BatchPrediction: The batch prediction description."""
+        return self._call_api('describeBatchPrediction', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
+
+    def list_batch_prediction_versions(self, batch_prediction_id: str, limit: int = 100, start_after_version: str = None) -> List[BatchPredictionVersion]:
+        """Retrieves a list of versions of a given batch prediction
+
+        Args:
+            batch_prediction_id (str): The unique identifier of the batch prediction
+            limit (int): The number of versions to list
+            start_after_version (str): The version to start after
+
+        Returns:
+            BatchPredictionVersion: A list of batch prediction versions."""
+        return self._call_api('listBatchPredictionVersions', 'GET', query_params={'batchPredictionId': batch_prediction_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=BatchPredictionVersion)
+
+    def describe_batch_prediction_version(self, batch_prediction_version: str) -> BatchPredictionVersion:
+        """Describes a batch prediction version
+
+        Args:
+            batch_prediction_version (str): The unique identifier of the batch prediction version
+
+        Returns:
+            BatchPredictionVersion: The batch prediction version."""
+        return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
+
+
+class ApiClient(ReadOnlyClient):
     """
     Abacus.AI API Client
 
@@ -332,37 +1018,6 @@ class ApiClient(BaseApiClient):
             email (str): The email address to invite to your Organization."""
         return self._call_api('addUserToOrganization', 'POST', query_params={}, body={'email': email})
 
-    def list_api_keys(self) -> List[ApiKey]:
-        """Lists all of the user's API keys the user's organization.
-
-        Returns:
-            ApiKey: List of API Keys for this user."""
-        return self._call_api('listApiKeys', 'GET', query_params={}, parse_type=ApiKey)
-
-    def list_organization_users(self) -> List[User]:
-        """Retrieves a list of all users in the organization.
-
-        This method will retrieve a list containing all the users in the organization. The list includes pending users who have been invited to the organization.
-
-
-        Returns:
-            User: Array of all of the users in the Organization"""
-        return self._call_api('listOrganizationUsers', 'GET', query_params={}, parse_type=User)
-
-    def describe_user(self) -> User:
-        """Get the current user's information, such as their name, email, admin status, etc.
-
-        Returns:
-            User: Information about the current User"""
-        return self._call_api('describeUser', 'GET', query_params={}, parse_type=User)
-
-    def list_organization_groups(self) -> List[OrganizationGroup]:
-        """Lists all Organizations Groups within this Organization
-
-        Returns:
-            OrganizationGroup: List of Groups in this Organization"""
-        return self._call_api('listOrganizationGroups', 'GET', query_params={}, parse_type=OrganizationGroup)
-
     def create_organization_group(self, group_name: str, permissions: list, default_group: bool = False) -> OrganizationGroup:
         """Creates a new Organization Group.
 
@@ -374,16 +1029,6 @@ class ApiClient(BaseApiClient):
         Returns:
             OrganizationGroup: Information about the created Organization Group"""
         return self._call_api('createOrganizationGroup', 'POST', query_params={}, body={'groupName': group_name, 'permissions': permissions, 'defaultGroup': default_group}, parse_type=OrganizationGroup)
-
-    def describe_organization_group(self, organization_group_id: str) -> OrganizationGroup:
-        """Returns the specific organization group passes in by the user.
-
-        Args:
-            organization_group_id (str): The unique ID of the organization group to that needs to be described.
-
-        Returns:
-            OrganizationGroup: Information about a specific Organization Group"""
-        return self._call_api('describeOrganizationGroup', 'GET', query_params={'organizationGroupId': organization_group_id}, parse_type=OrganizationGroup)
 
     def add_organization_group_permission(self, organization_group_id: str, permission: str):
         """Adds a permission to the specified Organization Group
@@ -456,67 +1101,6 @@ class ApiClient(BaseApiClient):
             Project: This object represents the newly created project. For details refer to"""
         return self._call_api('createProject', 'POST', query_params={}, body={'name': name, 'useCase': use_case}, parse_type=Project)
 
-    def list_use_cases(self) -> List[UseCase]:
-        """Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.
-
-        Returns:
-            UseCase: A list of UseCase objects describing all the use cases addressed by the platform. For details, please refer to"""
-        return self._call_api('listUseCases', 'GET', query_params={}, parse_type=UseCase)
-
-    def describe_use_case_requirements(self, use_case: str) -> UseCaseRequirements:
-        """This API call returns the feature requirements for a specified use case
-
-        Args:
-            use_case (str): This will contain the Enum String for the use case whose dataset requirements are needed.
-
-        Returns:
-            UseCaseRequirements: The feature requirements of the use case are returned. This includes all the feature group required for the use case along with their descriptions and feature mapping details."""
-        return self._call_api('describeUseCaseRequirements', 'GET', query_params={'useCase': use_case}, parse_type=UseCaseRequirements)
-
-    def describe_project(self, project_id: str) -> Project:
-        """Returns a description of a project.
-
-        Args:
-            project_id (str): The unique project ID
-
-        Returns:
-            Project: The project description is returned."""
-        return self._call_api('describeProject', 'GET', query_params={'projectId': project_id}, parse_type=Project)
-
-    def list_projects(self, limit: int = 100, start_after_id: str = None) -> List[Project]:
-        """Retrieves a list of all projects in the current organization.
-
-        Args:
-            limit (int): The max length of the list of projects.
-            start_after_id (str): The ID of the project after which the list starts.
-
-        Returns:
-            Project: An array of all projects in the Organization the user is currently logged in to."""
-        return self._call_api('listProjects', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Project)
-
-    def list_project_datasets(self, project_id: str) -> List[ProjectDataset]:
-        """Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            ProjectDataset: An array representing all of the datasets attached to the project."""
-        return self._call_api('listProjectDatasets', 'GET', query_params={'projectId': project_id}, parse_type=ProjectDataset)
-
-    def get_schema(self, project_id: str, dataset_id: str) -> List[Schema]:
-        """[DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            dataset_id (str): The unique ID associated with the dataset.
-
-        Returns:
-            Schema: An array of objects for each column in the specified dataset."""
-        logging.warning(
-            'This function (getSchema) is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
-        return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
-
     def rename_project(self, project_id: str, name: str):
         """This method renames a project after it is created.
 
@@ -588,16 +1172,6 @@ class ApiClient(BaseApiClient):
         Returns:
             Feature: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set."""
         return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping, 'nestedColumnName': nested_column_name}, parse_type=Feature)
-
-    def validate_project(self, project_id: str) -> ProjectValidation:
-        """Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group."""
-        return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
 
     def set_column_data_type(self, project_id: str, dataset_id: str, column: str, data_type: str) -> List[Schema]:
         """Set a dataset's column type.
@@ -732,17 +1306,6 @@ class ApiClient(BaseApiClient):
             schema (list): An array of json objects with 'name' and 'dataType' properties."""
         return self._call_api('setFeatureGroupSchema', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'schema': schema})
 
-    def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[Feature]:
-        """Returns a schema given a specific FeatureGroup in a project.
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group.
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            Feature: An array of objects for each column in the specified feature group."""
-        return self._call_api('getFeatureGroupSchema', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=Feature)
-
     def create_feature(self, feature_group_id: str, name: str, select_expression: str) -> FeatureGroup:
         """Creates a new feature in a Feature Group from a SQL select statement
 
@@ -862,14 +1425,17 @@ class ApiClient(BaseApiClient):
             FeatureGroup: A feature group object with the newly added nested feature."""
         return self._call_api('updatePointInTimeFeature', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'historyTableName': history_table_name, 'aggregationKeys': aggregation_keys, 'timestampKey': timestamp_key, 'historicalTimestampKey': historical_timestamp_key, 'expression': expression, 'lookbackWindowSeconds': lookback_window_seconds, 'lookbackWindowLagSeconds': lookback_window_lag_seconds, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position, 'newFeatureName': new_feature_name}, parse_type=FeatureGroup)
 
-    def create_point_in_time_group(self, feature_group_id: str, group_name: str, window_key: str, aggregation_keys: list, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0) -> FeatureGroup:
+    def create_point_in_time_group(self, feature_group_id: str, group_name: str, window_key: str, aggregation_keys: list, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0) -> FeatureGroup:
         """Create point in time group
 
         Args:
-            feature_group_id (str): The unique ID associated with the feature group.
+            feature_group_id (str): The unique ID associated with the feature group to add the point in time group to.
             group_name (str): The name of the point in time group
-            window_key (str): Name of feature which contains the timestamp value for the point in time feature
-            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
+            window_key (str): Name of feature to use for ordering the rows on the source table
+            aggregation_keys (list): List of keys to perform on the source table for the window aggregation.
+            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
+            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
+            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
             lookback_window (float): Number of seconds in the past from the current time for start of the window.
             lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
             lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
@@ -877,9 +1443,9 @@ class ApiClient(BaseApiClient):
 
         Returns:
             FeatureGroup: The feature group after the point in time group has been created"""
-        return self._call_api('createPointInTimeGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'windowKey': window_key, 'aggregationKeys': aggregation_keys, 'lookbackWindow': lookback_window, 'lookbackWindowLag': lookback_window_lag, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position}, parse_type=FeatureGroup)
+        return self._call_api('createPointInTimeGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'windowKey': window_key, 'aggregationKeys': aggregation_keys, 'historyTableName': history_table_name, 'historyWindowKey': history_window_key, 'historyAggregationKeys': history_aggregation_keys, 'lookbackWindow': lookback_window, 'lookbackWindowLag': lookback_window_lag, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position}, parse_type=FeatureGroup)
 
-    def update_point_in_time_group(self, feature_group_id: str, group_name: str, window_key: str = None, aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None) -> FeatureGroup:
+    def update_point_in_time_group(self, feature_group_id: str, group_name: str, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None) -> FeatureGroup:
         """Update point in time group
 
         Args:
@@ -887,6 +1453,9 @@ class ApiClient(BaseApiClient):
             group_name (str): The name of the point in time group
             window_key (str): Name of feature which contains the timestamp value for the point in time feature
             aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
+            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
+            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
+            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
             lookback_window (float): Number of seconds in the past from the current time for start of the window.
             lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
             lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
@@ -894,7 +1463,7 @@ class ApiClient(BaseApiClient):
 
         Returns:
             FeatureGroup: The feature group after the update has been applied"""
-        return self._call_api('updatePointInTimeGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'windowKey': window_key, 'aggregationKeys': aggregation_keys, 'lookbackWindow': lookback_window, 'lookbackWindowLag': lookback_window_lag, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position}, parse_type=FeatureGroup)
+        return self._call_api('updatePointInTimeGroup', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'groupName': group_name, 'windowKey': window_key, 'aggregationKeys': aggregation_keys, 'historyTableName': history_table_name, 'historyWindowKey': history_window_key, 'historyAggregationKeys': history_aggregation_keys, 'lookbackWindow': lookback_window, 'lookbackWindowLag': lookback_window_lag, 'lookbackCount': lookback_count, 'lookbackUntilPosition': lookback_until_position}, parse_type=FeatureGroup)
 
     def delete_point_in_time_group(self, feature_group_id: str, group_name: str) -> FeatureGroup:
         """Delete point in time group
@@ -964,26 +1533,6 @@ class ApiClient(BaseApiClient):
             skip_materialize (bool): If true, will not materialize the concatenated feature group"""
         return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'replaceUntilTimestamp': replace_until_timestamp, 'skipMaterialize': skip_materialize})
 
-    def describe_feature_group(self, feature_group_id: str) -> FeatureGroup:
-        """Describe a Feature Group.
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group.
-
-        Returns:
-            FeatureGroup: The feature group object."""
-        return self._call_api('describeFeatureGroup', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
-
-    def describe_feature_group_by_table_name(self, table_name: str) -> FeatureGroup:
-        """Describe a Feature Group by the feature group's table name
-
-        Args:
-            table_name (str): The unique table name of the Feature Group to lookup
-
-        Returns:
-            FeatureGroup: The Feature Group"""
-        return self._call_api('describeFeatureGroupByTableName', 'GET', query_params={'tableName': table_name}, parse_type=FeatureGroup)
-
     def set_feature_group_indexing_config(self, feature_group_id: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None):
         """Sets various attributes of the feature group used for deployment lookups and streaming updates.
 
@@ -993,28 +1542,6 @@ class ApiClient(BaseApiClient):
             update_timestamp_key (str): Name of feature which defines the update timestamp of the feature group - used in concatenation and primary key deduplication.
             lookup_keys (list): List of feature names which can be used in the lookup api to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns."""
         return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
-
-    def list_feature_groups(self, limit: int = 100, start_after_id: str = None) -> List[FeatureGroup]:
-        """Enlist all the feature groups associated with a project. A user needs to specify the unique project ID to fetch all attached feature groups.
-
-        Args:
-            limit (int): The the number of feature groups to be retrieved.
-            start_after_id (str): An offset parameter to exclude all feature groups till a specified ID.
-
-        Returns:
-            FeatureGroup: All the feature groups in the organization"""
-        return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroup)
-
-    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> FeatureGroup:
-        """List all the feature groups associated with a project
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
-
-        Returns:
-            FeatureGroup: All the Feature Groups in the Organization"""
-        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=FeatureGroup)
 
     def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
         """Modifies an existing feature group
@@ -1105,36 +1632,6 @@ class ApiClient(BaseApiClient):
             FeatureGroupExport: The FeatureGroupExport instance"""
         return self._call_api('exportFeatureGroupVersionToConsole', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'exportFileFormat': export_file_format}, parse_type=FeatureGroupExport)
 
-    def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
-        """Get a link to download the feature group version.
-
-        Args:
-            feature_group_export_id (str): The Feature Group Export to get signed url for.
-
-        Returns:
-            FeatureGroupExportDownloadUrl: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time."""
-        return self._call_api('getFeatureGroupVersionExportDownloadUrl', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, parse_type=FeatureGroupExportDownloadUrl)
-
-    def describe_feature_group_export(self, feature_group_export_id: str) -> FeatureGroupExport:
-        """A feature group export
-
-        Args:
-            feature_group_export_id (str): The ID of the feature group export.
-
-        Returns:
-            FeatureGroupExport: The feature group export"""
-        return self._call_api('describeFeatureGroupExport', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, parse_type=FeatureGroupExport)
-
-    def list_feature_group_exports(self, feature_group_id: str) -> List[FeatureGroupExport]:
-        """Lists all of the feature group exports for a given feature group
-
-        Args:
-            feature_group_id (str): The ID of the feature group
-
-        Returns:
-            FeatureGroupExport: The feature group exports"""
-        return self._call_api('listFeatureGroupExports', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupExport)
-
     def set_feature_group_modifier_lock(self, feature_group_id: str, locked: bool = True):
         """To lock a feature group to prevent it from being modified.
 
@@ -1142,16 +1639,6 @@ class ApiClient(BaseApiClient):
             feature_group_id (str): The unique ID associated with the feature group.
             locked (bool): True or False to disable or enable feature group modification."""
         return self._call_api('setFeatureGroupModifierLock', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'locked': locked})
-
-    def list_feature_group_modifiers(self, feature_group_id: str) -> ModificationLockInfo:
-        """To list users who can modify a feature group.
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group.
-
-        Returns:
-            ModificationLockInfo: Modification lock status and groups and organizations added to the feature group."""
-        return self._call_api('listFeatureGroupModifiers', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=ModificationLockInfo)
 
     def add_user_to_feature_group_modifiers(self, feature_group_id: str, email: str):
         """Adds user to a feature group.
@@ -1212,40 +1699,6 @@ class ApiClient(BaseApiClient):
         Returns:
             FeatureGroupVersion: A feature group version."""
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
-
-    def get_materialization_logs(self, feature_group_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        """Returns logs for materialized feature group version.
-
-        Args:
-            feature_group_version (str): The Feature Group instance to export
-            stdout (bool):  Set True to get info logs
-            stderr (bool):  Set True to get error logs
-
-        Returns:
-            FunctionLogs: A function logs."""
-        return self._call_api('getMaterializationLogs', 'GET', query_params={'featureGroupVersion': feature_group_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
-    def list_feature_group_versions(self, feature_group_id: str, limit: int = 100, start_after_version: str = None) -> List[FeatureGroupVersion]:
-        """Retrieves a list of all feature group versions for the specified feature group.
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group.
-            limit (int): The max length of the returned versions
-            start_after_version (str): Results will start after this version
-
-        Returns:
-            FeatureGroupVersion: An array of feature group version."""
-        return self._call_api('listFeatureGroupVersions', 'GET', query_params={'featureGroupId': feature_group_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=FeatureGroupVersion)
-
-    def describe_feature_group_version(self, feature_group_version: str) -> FeatureGroupVersion:
-        """Get a specific feature group version.
-
-        Args:
-            feature_group_version (str): The unique ID associated with the feature group version.
-
-        Returns:
-            FeatureGroupVersion: A feature group version."""
-        return self._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': feature_group_version}, parse_type=FeatureGroupVersion)
 
     def cancel_upload(self, upload_id: str):
         """Cancels an upload
@@ -1450,57 +1903,7 @@ class ApiClient(BaseApiClient):
             dataset_id (str): The Streaming dataset
             retention_hours (int): The number of hours to retain streamed data in memory
             retention_row_count (int): The number of rows to retain streamed data in memory"""
-        return self._call_api('setStreamingRetentionPolicy', 'GET', query_params={'datasetId': dataset_id, 'retentionHours': retention_hours, 'retentionRowCount': retention_row_count})
-
-    def get_dataset_schema(self, dataset_id: str) -> List[DatasetColumn]:
-        """Retrieves the column schema of a dataset
-
-        Args:
-            dataset_id (str): The Dataset schema to lookup.
-
-        Returns:
-            DatasetColumn: List of Column schema definitions"""
-        return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=DatasetColumn)
-
-    def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
-        """Retrieves verification information to create a data connector to a cloud storage bucket.
-
-        Args:
-            bucket (str): The fully qualified URI of the storage bucket to verify.
-            write_permission (bool): If `true`, instructions will include steps for allowing Abacus.AI to write to this service.
-
-        Returns:
-            FileConnectorInstructions: An object with full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid."""
-        return self._call_api('getFileConnectorInstructions', 'GET', query_params={'bucket': bucket, 'writePermission': write_permission}, parse_type=FileConnectorInstructions)
-
-    def list_database_connectors(self) -> DatabaseConnector:
-        """Retrieves a list of all of the database connectors along with all their attributes.
-
-        Returns:
-            DatabaseConnector: The database Connector"""
-        return self._call_api('listDatabaseConnectors', 'GET', query_params={}, parse_type=DatabaseConnector)
-
-    def list_file_connectors(self) -> List[FileConnector]:
-        """Retrieves a list of all connected services in the organization and their current verification status.
-
-        Returns:
-            FileConnector: An array of cloud storage buckets connected to the organization."""
-        return self._call_api('listFileConnectors', 'GET', query_params={}, parse_type=FileConnector)
-
-    def list_database_connector_objects(self, database_connector_id: str) -> List[str]:
-        """Lists querable objects in the database connector.
-
-        Args:
-            database_connector_id (str): The unique identifier for the database connector."""
-        return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id})
-
-    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None) -> List[str]:
-        """Get the schema of an object in an database connector.
-
-        Args:
-            database_connector_id (str): The unique identifier for the database connector.
-            object_name (str): The unique identifier for the object in the external system."""
-        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name})
+        return self._call_api('setStreamingRetentionPolicy', 'POST', query_params={'datasetId': dataset_id}, body={'retentionHours': retention_hours, 'retentionRowCount': retention_row_count})
 
     def rename_database_connector(self, database_connector_id: str, name: str):
         """Renames a Database Connector
@@ -1523,7 +1926,7 @@ class ApiClient(BaseApiClient):
 
         Args:
             database_connector_id (str): The unique identifier for the database connector."""
-        return self._call_api('verifyDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id})
+        return self._call_api('verifyDatabaseConnector', 'POST', query_params={}, body={'databaseConnectorId': database_connector_id})
 
     def verify_file_connector(self, bucket: str) -> FileConnectorVerification:
         """Checks to see if Abacus.AI can access the bucket.
@@ -1556,26 +1959,12 @@ class ApiClient(BaseApiClient):
             bucket (str): The fully qualified URI of the bucket to remove."""
         return self._call_api('deleteFileConnector', 'DELETE', query_params={'bucket': bucket})
 
-    def list_application_connectors(self) -> ApplicationConnector:
-        """Retrieves a list of all of the application connectors along with all their attributes.
-
-        Returns:
-            ApplicationConnector: The appplication Connector"""
-        return self._call_api('listApplicationConnectors', 'GET', query_params={}, parse_type=ApplicationConnector)
-
-    def list_application_connector_objects(self, application_connector_id: str) -> List[str]:
-        """Lists querable objects in the application connector.
-
-        Args:
-            application_connector_id (str): The unique identifier for the application connector."""
-        return self._call_api('listApplicationConnectorObjects', 'GET', query_params={'applicationConnectorId': application_connector_id})
-
     def verify_application_connector(self, application_connector_id: str):
         """Checks to see if Abacus.AI can access the Application.
 
         Args:
             application_connector_id (str): The unique identifier for the application connector."""
-        return self._call_api('verifyApplicationConnector', 'GET', query_params={'applicationConnectorId': application_connector_id})
+        return self._call_api('verifyApplicationConnector', 'POST', query_params={}, body={'applicationConnectorId': application_connector_id})
 
     def set_azure_blob_connection_string(self, bucket: str, connection_string: str) -> FileConnectorVerification:
         """Authenticates specified Azure Blob Storage bucket using an authenticated Connection String.
@@ -1588,13 +1977,6 @@ class ApiClient(BaseApiClient):
             FileConnectorVerification: An object with the roleArn and verification status for the specified bucket."""
         return self._call_api('setAzureBlobConnectionString', 'POST', query_params={}, body={'bucket': bucket, 'connectionString': connection_string}, parse_type=FileConnectorVerification)
 
-    def list_streaming_connectors(self) -> StreamingConnector:
-        """Retrieves a list of all of the streaming connectors along with all their attributes.
-
-        Returns:
-            StreamingConnector: The streaming Connector"""
-        return self._call_api('listStreamingConnectors', 'GET', query_params={}, parse_type=StreamingConnector)
-
     def create_streaming_token(self) -> StreamingAuthToken:
         """Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.
 
@@ -1602,77 +1984,12 @@ class ApiClient(BaseApiClient):
             StreamingAuthToken: The streaming token."""
         return self._call_api('createStreamingToken', 'POST', query_params={}, body={}, parse_type=StreamingAuthToken)
 
-    def list_streaming_tokens(self) -> List[StreamingAuthToken]:
-        """Retrieves a list of all streaming tokens along with their attributes.
-
-        Returns:
-            StreamingAuthToken: An array of streaming tokens."""
-        return self._call_api('listStreamingTokens', 'GET', query_params={}, parse_type=StreamingAuthToken)
-
     def delete_streaming_token(self, streaming_token: str):
         """Deletes the specified streaming token.
 
         Args:
             streaming_token (str): The streaming token to delete."""
         return self._call_api('deleteStreamingToken', 'DELETE', query_params={'streamingToken': streaming_token})
-
-    def get_recent_feature_group_streamed_data(self, feature_group_id: str):
-        """Returns recently streamed data to a streaming feature group.
-
-        Args:
-            feature_group_id (str): The unique ID associated with the feature group."""
-        return self._call_api('getRecentFeatureGroupStreamedData', 'GET', query_params={'featureGroupId': feature_group_id})
-
-    def list_uploads(self) -> List[Upload]:
-        """Lists all ongoing uploads in the organization
-
-        Returns:
-            Upload: An array of uploads."""
-        return self._call_api('listUploads', 'GET', query_params={}, parse_type=Upload)
-
-    def describe_upload(self, upload_id: str) -> Upload:
-        """Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
-
-        Args:
-            upload_id (str): The unique ID associated with the file uploaded or being uploaded in parts.
-
-        Returns:
-            Upload: The details associated with the large dataset file uploaded in parts."""
-        return self._call_api('describeUpload', 'GET', query_params={'uploadId': upload_id}, parse_type=Upload)
-
-    def list_datasets(self, limit: int = 100, start_after_id: str = None, exclude_streaming: bool = False) -> List[Dataset]:
-        """Retrieves a list of all of the datasets in the organization.
-
-        Args:
-            limit (int): The max length of the list of projects.
-            start_after_id (str): The ID of the project after which the list starts.
-            exclude_streaming (bool): Exclude streaming datasets from result.
-
-        Returns:
-            Dataset: A list of datasets."""
-        return self._call_api('listDatasets', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'excludeStreaming': exclude_streaming}, parse_type=Dataset)
-
-    def describe_dataset(self, dataset_id: str) -> Dataset:
-        """Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
-
-        Args:
-            dataset_id (str): The unique ID associated with the dataset.
-
-        Returns:
-            Dataset: The dataset."""
-        return self._call_api('describeDataset', 'GET', query_params={'datasetId': dataset_id}, parse_type=Dataset)
-
-    def list_dataset_versions(self, dataset_id: str, limit: int = 100, start_after_version: str = None) -> List[DatasetVersion]:
-        """Retrieves a list of all dataset versions for the specified dataset.
-
-        Args:
-            dataset_id (str): The unique ID associated with the dataset.
-            limit (int): The max length of the list of all dataset versions.
-            start_after_version (str): The id of the version after which the list starts.
-
-        Returns:
-            DatasetVersion: A list of dataset versions."""
-        return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
 
     def attach_dataset_to_project(self, dataset_id: str, project_id: str, dataset_type: str) -> List[Schema]:
         """[DEPRECATED] Attaches the dataset to the project.
@@ -1719,19 +2036,6 @@ class ApiClient(BaseApiClient):
             dataset_id (str): The dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def get_training_config_options(self, project_id: str) -> List[TrainingConfigOptions]:
-        """Retrieves the full description of the model training configuration options available for the specified project.
-
-        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
-
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
-        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
-
     def train_model(self, project_id: str, name: str = None, training_config: dict = {}, refresh_schedule: str = None) -> Model:
         """Trains a model for the specified project.
 
@@ -1773,26 +2077,6 @@ class ApiClient(BaseApiClient):
         Returns:
             Model: The new model, which has not been trained."""
         return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainingInputTables': training_input_tables, 'name': name, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
-
-    def list_models(self, project_id: str) -> List[Model]:
-        """Retrieves the list of models in the specified project.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            Model: An array of models."""
-        return self._call_api('listModels', 'GET', query_params={'projectId': project_id}, parse_type=Model)
-
-    def describe_model(self, model_id: str) -> Model:
-        """Retrieves a full description of the specified model.
-
-        Args:
-            model_id (str): The unique ID associated with the model.
-
-        Returns:
-            Model: The description of the model."""
-        return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
 
     def rename_model(self, model_id: str, name: str):
         """Renames a model
@@ -1849,33 +2133,6 @@ class ApiClient(BaseApiClient):
             Model: The model object correspoding after the prediction config is applied"""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False) -> ModelMetrics:
-        """Retrieves a full list of the metrics for the specified model.
-
-        If only the model's unique identifier (modelId) is specified, the latest trained version of model (modelVersion) is used.
-
-
-        Args:
-            model_id (str): The unique ID associated with the model.
-            model_version (str): The version of the model.
-            baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
-
-        Returns:
-            ModelMetrics: An object to show the model metrics and explanations for what each metric means."""
-        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics}, parse_type=ModelMetrics)
-
-    def list_model_versions(self, model_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelVersion]:
-        """Retrieves a list of the version for a given model.
-
-        Args:
-            model_id (str): The unique ID associated with the model.
-            limit (int): The max length of the list of all dataset versions.
-            start_after_version (str): The id of the version after which the list starts.
-
-        Returns:
-            ModelVersion: An array of model versions."""
-        return self._call_api('listModelVersions', 'GET', query_params={'modelId': model_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelVersion)
-
     def retrain_model(self, model_id: str, deployment_ids: list = []) -> Model:
         """Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -1901,28 +2158,6 @@ class ApiClient(BaseApiClient):
             model_version (str): The ID of the model version to delete."""
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
-    def describe_model_version(self, model_version: str) -> ModelVersion:
-        """Retrieves a full description of the specified model version
-
-        Args:
-            model_version (str): The unique version ID of the model version
-
-        Returns:
-            ModelVersion: A model version."""
-        return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
-
-    def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        """Returns training logs for the model.
-
-        Args:
-            model_version (str): The unique version ID of the model version
-            stdout (bool):  Set True to get info logs
-            stderr (bool):  Set True to get error logs
-
-        Returns:
-            FunctionLogs: A function logs."""
-        return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
     def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
@@ -1947,48 +2182,6 @@ class ApiClient(BaseApiClient):
             ModelMonitor: The model monitor that is being rerun."""
         return self._call_api('rerunModelMonitor', 'POST', query_params={}, body={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
 
-    def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
-        """Retrieves the list of models monitors in the specified project.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            ModelMonitor: An array of model monitors."""
-        return self._call_api('listModelMonitors', 'GET', query_params={'projectId': project_id}, parse_type=ModelMonitor)
-
-    def describe_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
-        """Retrieves a full description of the specified model monitor.
-
-        Args:
-            model_monitor_id (str): The unique ID associated with the model monitor.
-
-        Returns:
-            ModelMonitor: The description of the model monitor."""
-        return self._call_api('describeModelMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
-
-    def list_model_monitor_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
-        """Retrieves a list of the versions for a given model monitor.
-
-        Args:
-            model_monitor_id (str): The unique ID associated with the model monitor.
-            limit (int): The max length of the list of all model monitor versions.
-            start_after_version (str): The id of the version after which the list starts.
-
-        Returns:
-            ModelMonitorVersion: An array of model monitor versions."""
-        return self._call_api('listModelMonitorVersions', 'GET', query_params={'modelMonitorId': model_monitor_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelMonitorVersion)
-
-    def describe_model_monitor_version(self, model_monitor_version: str) -> ModelMonitorVersion:
-        """Retrieves a full description of the specified model monitor version
-
-        Args:
-            model_monitor_version (str): The unique version ID of the model monitor version
-
-        Returns:
-            ModelMonitorVersion: A model monitor version."""
-        return self._call_api('describeModelMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
-
     def rename_model_monitor(self, model_monitor_id: str, name: str):
         """Renames a model monitor
 
@@ -2010,34 +2203,6 @@ class ApiClient(BaseApiClient):
         Args:
             model_monitor_version (str): The ID of the model monitor version to delete."""
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
-
-    def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        """Returns monitoring logs for the model.
-
-        Args:
-            model_monitor_version (str): The unique version ID of the model monitor version
-            stdout (bool):  Set True to get info logs
-            stderr (bool):  Set True to get error logs
-
-        Returns:
-            FunctionLogs: A function logs."""
-        return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
-    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
-        """Gets the feature drift associated with a single feature in an output feature group from a prediction.
-
-        Args:
-            model_monitor_version (str): The unique identifier to a model monitor version created under the project.
-            feature_name (str): Name of the feature to view the distribution of."""
-        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
-
-    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str = None) -> Dict:
-        """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
-
-        Args:
-            model_monitor_version (str): The unique identifier to a model monitor version created under the project.
-            feature_name (str): Name of the feature to view the distribution of."""
-        return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
 
     def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
@@ -2071,36 +2236,6 @@ class ApiClient(BaseApiClient):
         Returns:
             DeploymentAuthToken: The deployment token."""
         return self._call_api('createDeploymentToken', 'POST', query_params={}, body={'projectId': project_id}, parse_type=DeploymentAuthToken)
-
-    def describe_deployment(self, deployment_id: str) -> Deployment:
-        """Retrieves a full description of the specified deployment.
-
-        Args:
-            deployment_id (str): The unique ID associated with the deployment.
-
-        Returns:
-            Deployment: The description of the deployment."""
-        return self._call_api('describeDeployment', 'GET', query_params={'deploymentId': deployment_id}, parse_type=Deployment)
-
-    def list_deployments(self, project_id: str) -> List[Deployment]:
-        """Retrieves a list of all deployments in the specified project.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            Deployment: An array of deployments."""
-        return self._call_api('listDeployments', 'GET', query_params={'projectId': project_id}, parse_type=Deployment)
-
-    def list_deployment_tokens(self, project_id: str) -> List[DeploymentAuthToken]:
-        """Retrieves a list of all deployment tokens in the specified project.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-
-        Returns:
-            DeploymentAuthToken: An array of deployment tokens."""
-        return self._call_api('listDeploymentTokens', 'GET', query_params={'projectId': project_id}, parse_type=DeploymentAuthToken)
 
     def update_deployment(self, deployment_id: str, description: str = None):
         """Updates a deployment's description.
@@ -2153,14 +2288,14 @@ class ApiClient(BaseApiClient):
 
         Args:
             deployment_id (str): The unique ID associated with the deployment."""
-        return self._call_api('startDeployment', 'GET', query_params={'deploymentId': deployment_id})
+        return self._call_api('startDeployment', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
     def stop_deployment(self, deployment_id: str):
         """Stops the specified deployment.
 
         Args:
             deployment_id (str): The Deployment ID"""
-        return self._call_api('stopDeployment', 'GET', query_params={'deploymentId': deployment_id})
+        return self._call_api('stopDeployment', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
     def delete_deployment(self, deployment_id: str):
         """Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
@@ -2231,51 +2366,6 @@ class ApiClient(BaseApiClient):
         Args:
             refresh_policy_id (str): The unique ID associated with this refresh policy"""
         return self._call_api('deleteRefreshPolicy', 'DELETE', query_params={'refreshPolicyId': refresh_policy_id})
-
-    def describe_refresh_policy(self, refresh_policy_id: str) -> RefreshPolicy:
-        """Retrieve a single refresh policy
-
-        Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
-
-        Returns:
-            RefreshPolicy: A refresh policy object"""
-        return self._call_api('describeRefreshPolicy', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPolicy)
-
-    def describe_refresh_pipeline_run(self, refresh_pipeline_run_id: str) -> RefreshPipelineRun:
-        """Retrieve a single refresh pipeline run
-
-        Args:
-            refresh_pipeline_run_id (str): The unique ID associated with this refresh pipeline_run
-
-        Returns:
-            RefreshPipelineRun: A refresh pipeline run object"""
-        return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
-
-    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = []) -> RefreshPolicy:
-        """List the refresh policies for the organization
-
-        Args:
-            project_id (str): Optionally, a Project ID can be specified so that all datasets, models and deployments are captured at the instant this policy was created
-            dataset_ids (list): Comma separated list of Dataset IDs
-            model_ids (list): Comma separated list of Model IDs
-            deployment_ids (list): Comma separated list of Deployment IDs
-            batch_prediction_ids (list): Comma separated list of Batch Predictions
-            model_monitor_ids (list): Comma separated list of Model Monitor IDs.
-
-        Returns:
-            RefreshPolicy: List of all refresh policies in the organization"""
-        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids}, parse_type=RefreshPolicy)
-
-    def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
-        """List the the times that the refresh policy has been run
-
-        Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
-
-        Returns:
-            RefreshPipelineRun: A list of refresh pipeline runs for the given refresh policy id"""
-        return self._call_api('listRefreshPipelineRuns', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPipelineRun)
 
     def pause_refresh_policy(self, refresh_policy_id: str):
         """Pauses a refresh policy
@@ -2547,11 +2637,8 @@ class ApiClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            document (str): # TODO
-
-        Returns:
-            NlpSentimentPrediction: Dict of labels and their probabilities"""
-        return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)
+            document (str): # TODO"""
+        return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
 
     def get_entailment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
         """TODO
@@ -2559,11 +2646,8 @@ class ApiClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            document (str): # TODO
-
-        Returns:
-            NlpClassificationPrediction: Dict of premises and their probabilities"""
-        return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpClassificationPrediction)
+            document (str): # TODO"""
+        return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
 
     def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
         """TODO
@@ -2571,11 +2655,8 @@ class ApiClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (str): # TODO
-
-        Returns:
-            LanguageDetectionPrediction: Dict of labels and their probabilities"""
-        return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, parse_type=LanguageDetectionPrediction)
+            query_data (str): # TODO"""
+        return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
@@ -2608,64 +2689,6 @@ class ApiClient(BaseApiClient):
         Returns:
             BatchPredictionVersion: The batch prediction version started by this method call."""
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
-
-    def download_batch_prediction_result_chunk(self, batch_prediction_version: str, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
-        """Returns a stream containing the batch prediction results
-
-        Args:
-            batch_prediction_version (str): The unique identifier of the batch prediction version to get the results from
-            offset (int): The offset to read from
-            chunk_size (int): The max amount of data to read"""
-        return self._call_api('downloadBatchPredictionResultChunk', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
-
-    def get_batch_prediction_connector_errors(self, batch_prediction_version: str) -> io.BytesIO:
-        """Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
-
-        Args:
-            batch_prediction_version (str): The unique identifier of the batch prediction job to get the errors for"""
-        return self._call_api('getBatchPredictionConnectorErrors', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, streamable_response=True)
-
-    def list_batch_predictions(self, project_id: str) -> List[BatchPrediction]:
-        """Retrieves a list for the batch predictions in the project
-
-        Args:
-            project_id (str): The unique identifier of the project
-
-        Returns:
-            BatchPrediction: A list of batch prediction jobs."""
-        return self._call_api('listBatchPredictions', 'GET', query_params={'projectId': project_id}, parse_type=BatchPrediction)
-
-    def describe_batch_prediction(self, batch_prediction_id: str) -> BatchPrediction:
-        """Describes the batch prediction
-
-        Args:
-            batch_prediction_id (str): The unique ID associated with the batch prediction.
-
-        Returns:
-            BatchPrediction: The batch prediction description."""
-        return self._call_api('describeBatchPrediction', 'GET', query_params={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
-
-    def list_batch_prediction_versions(self, batch_prediction_id: str, limit: int = 100, start_after_version: str = None) -> List[BatchPredictionVersion]:
-        """Retrieves a list of versions of a given batch prediction
-
-        Args:
-            batch_prediction_id (str): The unique identifier of the batch prediction
-            limit (int): The number of versions to list
-            start_after_version (str): The version to start after
-
-        Returns:
-            BatchPredictionVersion: A list of batch prediction versions."""
-        return self._call_api('listBatchPredictionVersions', 'GET', query_params={'batchPredictionId': batch_prediction_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=BatchPredictionVersion)
-
-    def describe_batch_prediction_version(self, batch_prediction_version: str) -> BatchPredictionVersion:
-        """Describes a batch prediction version
-
-        Args:
-            batch_prediction_version (str): The unique identifier of the batch prediction version
-
-        Returns:
-            BatchPredictionVersion: The batch prediction version."""
-        return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
 
     def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         """Updates a batch prediction job description

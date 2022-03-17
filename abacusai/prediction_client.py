@@ -252,11 +252,8 @@ class PredictionClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            document (str): # TODO
-
-        Returns:
-            NlpSentimentPrediction: Dict of labels and their probabilities"""
-        return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpSentimentPrediction)
+            document (str): # TODO"""
+        return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
 
     def get_entailment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
         """TODO
@@ -264,11 +261,8 @@ class PredictionClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            document (str): # TODO
-
-        Returns:
-            NlpClassificationPrediction: Dict of premises and their probabilities"""
-        return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, parse_type=NlpClassificationPrediction)
+            document (str): # TODO"""
+        return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
 
     def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
         """TODO
@@ -276,8 +270,5 @@ class PredictionClient(BaseApiClient):
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (str): # TODO
-
-        Returns:
-            LanguageDetectionPrediction: Dict of labels and their probabilities"""
-        return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, parse_type=LanguageDetectionPrediction)
+            query_data (str): # TODO"""
+        return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})

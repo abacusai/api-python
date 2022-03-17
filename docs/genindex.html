@@ -144,7 +144,7 @@
 </li>
         <li><a href="autoapi/abacusai/function_logs/index.html#abacusai.function_logs.FunctionLogs.__repr__">(abacusai.function_logs.FunctionLogs method)</a>
 </li>
-        <li><a href="autoapi/abacusai/language_detection_prediction/index.html#abacusai.language_detection_prediction.LanguageDetectionPrediction.__repr__">(abacusai.language_detection_prediction.LanguageDetectionPrediction method)</a>
+        <li><a href="autoapi/abacusai/indexing_config/index.html#abacusai.indexing_config.IndexingConfig.__repr__">(abacusai.indexing_config.IndexingConfig method)</a>
 </li>
         <li><a href="autoapi/abacusai/model/index.html#abacusai.model.Model.__repr__">(abacusai.model.Model method)</a>
 </li>
@@ -163,10 +163,6 @@
         <li><a href="autoapi/abacusai/modification_lock_info/index.html#abacusai.modification_lock_info.ModificationLockInfo.__repr__">(abacusai.modification_lock_info.ModificationLockInfo method)</a>
 </li>
         <li><a href="autoapi/abacusai/nested_feature/index.html#abacusai.nested_feature.NestedFeature.__repr__">(abacusai.nested_feature.NestedFeature method)</a>
-</li>
-        <li><a href="autoapi/abacusai/nlp_classification_prediction/index.html#abacusai.nlp_classification_prediction.NlpClassificationPrediction.__repr__">(abacusai.nlp_classification_prediction.NlpClassificationPrediction method)</a>
-</li>
-        <li><a href="autoapi/abacusai/nlp_sentiment_prediction/index.html#abacusai.nlp_sentiment_prediction.NlpSentimentPrediction.__repr__">(abacusai.nlp_sentiment_prediction.NlpSentimentPrediction method)</a>
 </li>
         <li><a href="autoapi/abacusai/null_violation/index.html#abacusai.null_violation.NullViolation.__repr__">(abacusai.null_violation.NullViolation method)</a>
 </li>
@@ -462,10 +458,10 @@
 </li>
       </ul></li>
       <li>
-    abacusai.language_detection_prediction
+    abacusai.indexing_config
 
       <ul>
-        <li><a href="autoapi/abacusai/language_detection_prediction/index.html#module-abacusai.language_detection_prediction">module</a>
+        <li><a href="autoapi/abacusai/indexing_config/index.html#module-abacusai.indexing_config">module</a>
 </li>
       </ul></li>
       <li>
@@ -532,20 +528,6 @@
 </li>
       </ul></li>
       <li>
-    abacusai.nlp_classification_prediction
-
-      <ul>
-        <li><a href="autoapi/abacusai/nlp_classification_prediction/index.html#module-abacusai.nlp_classification_prediction">module</a>
-</li>
-      </ul></li>
-      <li>
-    abacusai.nlp_sentiment_prediction
-
-      <ul>
-        <li><a href="autoapi/abacusai/nlp_sentiment_prediction/index.html#module-abacusai.nlp_sentiment_prediction">module</a>
-</li>
-      </ul></li>
-      <li>
     abacusai.null_violation
 
       <ul>
@@ -573,8 +555,6 @@
         <li><a href="autoapi/abacusai/point_in_time_group/index.html#module-abacusai.point_in_time_group">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     abacusai.point_in_time_group_feature
 
@@ -582,6 +562,8 @@
         <li><a href="autoapi/abacusai/point_in_time_group_feature/index.html#module-abacusai.point_in_time_group_feature">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     abacusai.prediction_client
 
@@ -1315,10 +1297,10 @@
         <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.delete_streaming_token">(abacusai.client.ApiClient method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/deployment/index.html#abacusai.deployment.Deployment">Deployment (class in abacusai.deployment)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/deployment_auth_token/index.html#abacusai.deployment_auth_token.DeploymentAuthToken">DeploymentAuthToken (class in abacusai.deployment_auth_token)</a>
 </li>
       <li><a href="autoapi/abacusai/batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction.describe">describe() (abacusai.batch_prediction.BatchPrediction method)</a>
@@ -1327,6 +1309,8 @@
         <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.describe">(abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
 </li>
         <li><a href="autoapi/abacusai/dataset/index.html#abacusai.dataset.Dataset.describe">(abacusai.dataset.Dataset method)</a>
+</li>
+        <li><a href="autoapi/abacusai/dataset_version/index.html#abacusai.dataset_version.DatasetVersion.describe">(abacusai.dataset_version.DatasetVersion method)</a>
 </li>
         <li><a href="autoapi/abacusai/deployment/index.html#abacusai.deployment.Deployment.describe">(abacusai.deployment.Deployment method)</a>
 </li>
@@ -1355,132 +1339,138 @@
         <li><a href="autoapi/abacusai/upload/index.html#abacusai.upload.Upload.describe">(abacusai.upload.Upload method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_batch_prediction">describe_batch_prediction() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_batch_prediction">describe_batch_prediction() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_batch_prediction">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_batch_prediction">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_batch_prediction_version">describe_batch_prediction_version() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_batch_prediction_version">describe_batch_prediction_version() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_batch_prediction_version">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_batch_prediction_version">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_dataset">describe_dataset() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_dataset">describe_dataset() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_dataset">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.describe_dataset">(abacusai.feature_group.FeatureGroup method)</a>
 </li>
-      </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_deployment">describe_deployment() (abacusai.ApiClient method)</a>
-
-      <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_deployment">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_dataset">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_feature_group">describe_feature_group() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_dataset_version">describe_dataset_version() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_feature_group">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_dataset_version">(abacusai.ReadOnlyClient method)</a>
 </li>
+      </ul></li>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_deployment">describe_deployment() (abacusai.client.ReadOnlyClient method)</a>
+
+      <ul>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_deployment">(abacusai.ReadOnlyClient method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_feature_group">describe_feature_group() (abacusai.client.ReadOnlyClient method)</a>
+
+      <ul>
         <li><a href="autoapi/abacusai/dataset/index.html#abacusai.dataset.Dataset.describe_feature_group">(abacusai.dataset.Dataset method)</a>
 </li>
-      </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_feature_group_by_table_name">describe_feature_group_by_table_name() (abacusai.ApiClient method)</a>
-
-      <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_feature_group_by_table_name">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_feature_group">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_feature_group_export">describe_feature_group_export() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_feature_group_by_table_name">describe_feature_group_by_table_name() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_feature_group_export">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_feature_group_by_table_name">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_feature_group_version">describe_feature_group_version() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_feature_group_export">describe_feature_group_export() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_feature_group_version">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_feature_group_export">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_model">describe_model() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_feature_group_version">describe_feature_group_version() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_model">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_feature_group_version">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_model_monitor">describe_model_monitor() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_model">describe_model() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_model_monitor">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_model">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_model_monitor_version">describe_model_monitor_version() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_model_monitor">describe_model_monitor() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_model_monitor_version">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_model_monitor">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_model_version">describe_model_version() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_model_monitor_version">describe_model_monitor_version() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_model_version">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_model_monitor_version">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_organization_group">describe_organization_group() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_model_version">describe_model_version() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_organization_group">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_model_version">(abacusai.ReadOnlyClient method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_organization_group">describe_organization_group() (abacusai.client.ReadOnlyClient method)</a>
+
+      <ul>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_organization_group">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction.describe_output_feature_group">describe_output_feature_group() (abacusai.batch_prediction.BatchPrediction method)</a>
 </li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_project">describe_project() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_project">describe_project() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_project">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_project">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_refresh_pipeline_run">describe_refresh_pipeline_run() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_refresh_pipeline_run">describe_refresh_pipeline_run() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_refresh_pipeline_run">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_refresh_pipeline_run">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_refresh_policy">describe_refresh_policy() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_refresh_policy">describe_refresh_policy() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_refresh_policy">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_refresh_policy">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_upload">describe_upload() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_upload">describe_upload() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_upload">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_upload">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_use_case_requirements">describe_use_case_requirements() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_use_case_requirements">describe_use_case_requirements() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_use_case_requirements">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_use_case_requirements">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.describe_user">describe_user() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.describe_user">describe_user() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.describe_user">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.describe_user">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.download_batch_prediction_result_chunk">download_batch_prediction_result_chunk() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.download_batch_prediction_result_chunk">download_batch_prediction_result_chunk() (abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.download_batch_prediction_result_chunk">(abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
+        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.download_batch_prediction_result_chunk">(abacusai.client.ReadOnlyClient method)</a>
 </li>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.download_batch_prediction_result_chunk">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.download_batch_prediction_result_chunk">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.download_result_to_file">download_result_to_file() (abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
@@ -1565,32 +1555,32 @@
         <li><a href="autoapi/abacusai/index.html#abacusai.PredictionClient.get_anomalies">(abacusai.PredictionClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_batch_prediction_connector_errors">get_batch_prediction_connector_errors() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.get_batch_prediction_connector_errors">get_batch_prediction_connector_errors() (abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.get_batch_prediction_connector_errors">(abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
+        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_batch_prediction_connector_errors">(abacusai.client.ReadOnlyClient method)</a>
 </li>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_batch_prediction_connector_errors">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_batch_prediction_connector_errors">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_database_connector_object_schema">get_database_connector_object_schema() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_database_connector_object_schema">get_database_connector_object_schema() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_database_connector_object_schema">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_database_connector_object_schema">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_dataset_schema">get_dataset_schema() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_dataset_schema">get_dataset_schema() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_dataset_schema">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_dataset_schema">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_drift_for_feature">get_drift_for_feature() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_drift_for_feature">get_drift_for_feature() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_drift_for_feature">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/model_monitor_version/index.html#abacusai.model_monitor_version.ModelMonitorVersion.get_drift_for_feature">(abacusai.model_monitor_version.ModelMonitorVersion method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_drift_for_feature">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_entailment">get_entailment() (abacusai.ApiClient method)</a>
@@ -1613,24 +1603,24 @@
         <li><a href="autoapi/abacusai/index.html#abacusai.PredictionClient.get_feature_group_rows">(abacusai.PredictionClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_feature_group_schema">get_feature_group_schema() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_feature_group_schema">get_feature_group_schema() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_feature_group_schema">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_feature_group_schema">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_feature_group_version_export_download_url">get_feature_group_version_export_download_url() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_feature_group_version_export_download_url">get_feature_group_version_export_download_url() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_feature_group_version_export_download_url">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/feature_group_export/index.html#abacusai.feature_group_export.FeatureGroupExport.get_feature_group_version_export_download_url">(abacusai.feature_group_export.FeatureGroupExport method)</a>
 </li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_feature_group_version_export_download_url">(abacusai.ReadOnlyClient method)</a>
+</li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_file_connector_instructions">get_file_connector_instructions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_file_connector_instructions">get_file_connector_instructions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_file_connector_instructions">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_file_connector_instructions">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_forecast">get_forecast() (abacusai.ApiClient method)</a>
@@ -1663,28 +1653,28 @@
         <li><a href="autoapi/abacusai/index.html#abacusai.PredictionClient.get_labels">(abacusai.PredictionClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_materialization_logs">get_materialization_logs() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_materialization_logs">get_materialization_logs() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_materialization_logs">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/feature_group_version/index.html#abacusai.feature_group_version.FeatureGroupVersion.get_materialization_logs">(abacusai.feature_group_version.FeatureGroupVersion method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_materialization_logs">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/model/index.html#abacusai.model.Model.get_metrics">get_metrics() (abacusai.model.Model method)</a>
 </li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_model_metrics">get_model_metrics() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_model_metrics">get_model_metrics() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_model_metrics">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_model_metrics">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_model_monitoring_logs">get_model_monitoring_logs() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_model_monitoring_logs">get_model_monitoring_logs() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_model_monitoring_logs">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/model_monitor_version/index.html#abacusai.model_monitor_version.ModelMonitorVersion.get_model_monitoring_logs">(abacusai.model_monitor_version.ModelMonitorVersion method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_model_monitoring_logs">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_multiple_k_nearest">get_multiple_k_nearest() (abacusai.ApiClient method)</a>
@@ -1701,12 +1691,12 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_outliers_for_feature">get_outliers_for_feature() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_outliers_for_feature">get_outliers_for_feature() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_outliers_for_feature">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/model_monitor_version/index.html#abacusai.model_monitor_version.ModelMonitorVersion.get_outliers_for_feature">(abacusai.model_monitor_version.ModelMonitorVersion method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_outliers_for_feature">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_personalized_ranking">get_personalized_ranking() (abacusai.ApiClient method)</a>
@@ -1731,10 +1721,10 @@
         <li><a href="autoapi/abacusai/index.html#abacusai.PredictionClient.get_ranked_items">(abacusai.PredictionClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_recent_feature_group_streamed_data">get_recent_feature_group_streamed_data() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_recent_feature_group_streamed_data">get_recent_feature_group_streamed_data() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_recent_feature_group_streamed_data">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_recent_feature_group_streamed_data">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.get_recent_streamed_data">get_recent_streamed_data() (abacusai.feature_group.FeatureGroup method)</a>
@@ -1761,16 +1751,16 @@
       </ul></li>
       <li><a href="autoapi/abacusai/feature_group_export/index.html#abacusai.feature_group_export.FeatureGroupExport.get_results">get_results() (abacusai.feature_group_export.FeatureGroupExport method)</a>
 </li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_schema">get_schema() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_schema">get_schema() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_schema">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/dataset/index.html#abacusai.dataset.Dataset.get_schema">(abacusai.dataset.Dataset method)</a>
 </li>
         <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.get_schema">(abacusai.feature_group.FeatureGroup method)</a>
 </li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.get_schema">(abacusai.project.Project method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_schema">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_search_results">get_search_results() (abacusai.ApiClient method)</a>
@@ -1821,20 +1811,20 @@
         <li><a href="autoapi/abacusai/upload/index.html#abacusai.upload.Upload.get_status">(abacusai.upload.Upload method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_training_config_options">get_training_config_options() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_training_config_options">get_training_config_options() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_training_config_options">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.get_training_config_options">(abacusai.project.Project method)</a>
 </li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_training_config_options">(abacusai.ReadOnlyClient method)</a>
+</li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.get_training_logs">get_training_logs() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.get_training_logs">get_training_logs() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.get_training_logs">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/model_version/index.html#abacusai.model_version.ModelVersion.get_training_logs">(abacusai.model_version.ModelVersion method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.get_training_logs">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1843,6 +1833,8 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/abacusai/indexing_config/index.html#abacusai.indexing_config.IndexingConfig">IndexingConfig (class in abacusai.indexing_config)</a>
+</li>
       <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.invalidate_streaming_data">invalidate_streaming_data() (abacusai.feature_group.FeatureGroup method)</a>
 </li>
       <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.invalidate_streaming_feature_group_data">invalidate_streaming_feature_group_data() (abacusai.ApiClient method)</a>
@@ -1869,144 +1861,142 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="autoapi/abacusai/language_detection_prediction/index.html#abacusai.language_detection_prediction.LanguageDetectionPrediction">LanguageDetectionPrediction (class in abacusai.language_detection_prediction)</a>
-</li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_api_keys">list_api_keys() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_api_keys">list_api_keys() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_api_keys">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_api_keys">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_application_connector_objects">list_application_connector_objects() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_application_connector_objects">list_application_connector_objects() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_application_connector_objects">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_application_connector_objects">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_application_connectors">list_application_connectors() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_application_connectors">list_application_connectors() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_application_connectors">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_application_connectors">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_batch_prediction_versions">list_batch_prediction_versions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_batch_prediction_versions">list_batch_prediction_versions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_batch_prediction_versions">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_batch_prediction_versions">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_batch_predictions">list_batch_predictions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_batch_predictions">list_batch_predictions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_batch_predictions">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_batch_predictions">(abacusai.project.Project method)</a>
 </li>
-      </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_database_connector_objects">list_database_connector_objects() (abacusai.ApiClient method)</a>
-
-      <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_database_connector_objects">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_batch_predictions">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_database_connectors">list_database_connectors() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_database_connector_objects">list_database_connector_objects() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_database_connectors">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_database_connector_objects">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_dataset_versions">list_dataset_versions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_database_connectors">list_database_connectors() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_dataset_versions">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_database_connectors">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_datasets">list_datasets() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_dataset_versions">list_dataset_versions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_datasets">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_dataset_versions">(abacusai.ReadOnlyClient method)</a>
 </li>
+      </ul></li>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_datasets">list_datasets() (abacusai.client.ReadOnlyClient method)</a>
+
+      <ul>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_datasets">(abacusai.project.Project method)</a>
 </li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_datasets">(abacusai.ReadOnlyClient method)</a>
+</li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_deployment_tokens">list_deployment_tokens() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_deployment_tokens">list_deployment_tokens() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_deployment_tokens">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_deployment_tokens">(abacusai.project.Project method)</a>
 </li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_deployment_tokens">(abacusai.ReadOnlyClient method)</a>
+</li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_deployments">list_deployments() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_deployments">list_deployments() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_deployments">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_deployments">(abacusai.project.Project method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_deployments">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.list_exports">list_exports() (abacusai.feature_group.FeatureGroup method)</a>
 </li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_feature_group_exports">list_feature_group_exports() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_feature_group_exports">list_feature_group_exports() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_feature_group_exports">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_feature_group_exports">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_feature_group_modifiers">list_feature_group_modifiers() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_feature_group_modifiers">list_feature_group_modifiers() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_feature_group_modifiers">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_feature_group_modifiers">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_feature_group_versions">list_feature_group_versions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_feature_group_versions">list_feature_group_versions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_feature_group_versions">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_feature_group_versions">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_feature_groups">list_feature_groups() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_feature_groups">list_feature_groups() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_feature_groups">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_feature_groups">(abacusai.project.Project method)</a>
 </li>
-      </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_file_connectors">list_file_connectors() (abacusai.ApiClient method)</a>
-
-      <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_file_connectors">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_feature_groups">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_model_monitor_versions">list_model_monitor_versions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_file_connectors">list_file_connectors() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_model_monitor_versions">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_file_connectors">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_model_monitors">list_model_monitors() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_model_monitor_versions">list_model_monitor_versions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_model_monitors">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_model_monitor_versions">(abacusai.ReadOnlyClient method)</a>
 </li>
+      </ul></li>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_model_monitors">list_model_monitors() (abacusai.client.ReadOnlyClient method)</a>
+
+      <ul>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_model_monitors">(abacusai.project.Project method)</a>
 </li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_model_monitors">(abacusai.ReadOnlyClient method)</a>
+</li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_model_versions">list_model_versions() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_model_versions">list_model_versions() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_model_versions">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_model_versions">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_models">list_models() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_models">list_models() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_models">(abacusai.client.ApiClient method)</a>
-</li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_models">(abacusai.project.Project method)</a>
+</li>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_models">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.list_modifiers">list_modifiers() (abacusai.feature_group.FeatureGroup method)</a>
@@ -2017,50 +2007,48 @@
         <li><a href="autoapi/abacusai/database_connector/index.html#abacusai.database_connector.DatabaseConnector.list_objects">(abacusai.database_connector.DatabaseConnector method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_organization_groups">list_organization_groups() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_organization_groups">list_organization_groups() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_organization_groups">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_organization_groups">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_organization_users">list_organization_users() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_organization_users">list_organization_users() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_organization_users">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_organization_users">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_project_datasets">list_project_datasets() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_project_datasets">list_project_datasets() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_project_datasets">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_project_datasets">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_project_feature_groups">list_project_feature_groups() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_project_feature_groups">list_project_feature_groups() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_project_feature_groups">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_project_feature_groups">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_projects">list_projects() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_projects">list_projects() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_projects">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_projects">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_refresh_pipeline_runs">list_refresh_pipeline_runs() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_refresh_pipeline_runs">list_refresh_pipeline_runs() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_refresh_pipeline_runs">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_refresh_pipeline_runs">(abacusai.ReadOnlyClient method)</a>
 </li>
         <li><a href="autoapi/abacusai/refresh_policy/index.html#abacusai.refresh_policy.RefreshPolicy.list_refresh_pipeline_runs">(abacusai.refresh_policy.RefreshPolicy method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_refresh_policies">list_refresh_policies() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction.list_refresh_policies">list_refresh_policies() (abacusai.batch_prediction.BatchPrediction method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction.list_refresh_policies">(abacusai.batch_prediction.BatchPrediction method)</a>
-</li>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_refresh_policies">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_refresh_policies">(abacusai.client.ReadOnlyClient method)</a>
 </li>
         <li><a href="autoapi/abacusai/dataset/index.html#abacusai.dataset.Dataset.list_refresh_policies">(abacusai.dataset.Dataset method)</a>
 </li>
@@ -2070,29 +2058,31 @@
 </li>
         <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.list_refresh_policies">(abacusai.project.Project method)</a>
 </li>
-      </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_streaming_connectors">list_streaming_connectors() (abacusai.ApiClient method)</a>
-
-      <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_streaming_connectors">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_refresh_policies">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_streaming_tokens">list_streaming_tokens() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_streaming_connectors">list_streaming_connectors() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_streaming_tokens">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_streaming_connectors">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_uploads">list_uploads() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_streaming_tokens">list_streaming_tokens() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_uploads">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_streaming_tokens">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.list_use_cases">list_use_cases() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_uploads">list_uploads() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.list_use_cases">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_uploads">(abacusai.ReadOnlyClient method)</a>
+</li>
+      </ul></li>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.list_use_cases">list_use_cases() (abacusai.client.ReadOnlyClient method)</a>
+
+      <ul>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.list_use_cases">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction.list_versions">list_versions() (abacusai.batch_prediction.BatchPrediction method)</a>
@@ -2213,7 +2203,7 @@
 </li>
         <li><a href="autoapi/abacusai/function_logs/index.html#module-abacusai.function_logs">abacusai.function_logs</a>
 </li>
-        <li><a href="autoapi/abacusai/language_detection_prediction/index.html#module-abacusai.language_detection_prediction">abacusai.language_detection_prediction</a>
+        <li><a href="autoapi/abacusai/indexing_config/index.html#module-abacusai.indexing_config">abacusai.indexing_config</a>
 </li>
         <li><a href="autoapi/abacusai/model/index.html#module-abacusai.model">abacusai.model</a>
 </li>
@@ -2232,10 +2222,6 @@
         <li><a href="autoapi/abacusai/modification_lock_info/index.html#module-abacusai.modification_lock_info">abacusai.modification_lock_info</a>
 </li>
         <li><a href="autoapi/abacusai/nested_feature/index.html#module-abacusai.nested_feature">abacusai.nested_feature</a>
-</li>
-        <li><a href="autoapi/abacusai/nlp_classification_prediction/index.html#module-abacusai.nlp_classification_prediction">abacusai.nlp_classification_prediction</a>
-</li>
-        <li><a href="autoapi/abacusai/nlp_sentiment_prediction/index.html#module-abacusai.nlp_sentiment_prediction">abacusai.nlp_sentiment_prediction</a>
 </li>
         <li><a href="autoapi/abacusai/null_violation/index.html#module-abacusai.null_violation">abacusai.null_violation</a>
 </li>
@@ -2306,12 +2292,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/nested_feature/index.html#abacusai.nested_feature.NestedFeature">NestedFeature (class in abacusai.nested_feature)</a>
 </li>
-      <li><a href="autoapi/abacusai/nlp_classification_prediction/index.html#abacusai.nlp_classification_prediction.NlpClassificationPrediction">NlpClassificationPrediction (class in abacusai.nlp_classification_prediction)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="autoapi/abacusai/nlp_sentiment_prediction/index.html#abacusai.nlp_sentiment_prediction.NlpSentimentPrediction">NlpSentimentPrediction (class in abacusai.nlp_sentiment_prediction)</a>
-</li>
       <li><a href="autoapi/abacusai/null_violation/index.html#abacusai.null_violation.NullViolation">NullViolation (class in abacusai.null_violation)</a>
 </li>
   </ul></td>
@@ -2476,12 +2458,20 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/range_violation/index.html#abacusai.range_violation.RangeViolation">RangeViolation (class in abacusai.range_violation)</a>
 </li>
+      <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient">ReadOnlyClient (class in abacusai)</a>
+
+      <ul>
+        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient">(class in abacusai.client)</a>
+</li>
+      </ul></li>
       <li><a href="autoapi/abacusai/batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction.refresh">refresh() (abacusai.batch_prediction.BatchPrediction method)</a>
 
       <ul>
         <li><a href="autoapi/abacusai/batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion.refresh">(abacusai.batch_prediction_version.BatchPredictionVersion method)</a>
 </li>
         <li><a href="autoapi/abacusai/dataset/index.html#abacusai.dataset.Dataset.refresh">(abacusai.dataset.Dataset method)</a>
+</li>
+        <li><a href="autoapi/abacusai/dataset_version/index.html#abacusai.dataset_version.DatasetVersion.refresh">(abacusai.dataset_version.DatasetVersion method)</a>
 </li>
         <li><a href="autoapi/abacusai/deployment/index.html#abacusai.deployment.Deployment.refresh">(abacusai.deployment.Deployment method)</a>
 </li>
@@ -2572,10 +2562,10 @@
         <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.remove_organization_group_permission">(abacusai.client.ApiClient method)</a>
 </li>
       </ul></li>
-      <li><a href="autoapi/abacusai/organization_group/index.html#abacusai.organization_group.OrganizationGroup.remove_permission">remove_permission() (abacusai.organization_group.OrganizationGroup method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="autoapi/abacusai/organization_group/index.html#abacusai.organization_group.OrganizationGroup.remove_permission">remove_permission() (abacusai.organization_group.OrganizationGroup method)</a>
+</li>
       <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.remove_tag">remove_tag() (abacusai.feature_group.FeatureGroup method)</a>
 </li>
       <li><a href="autoapi/abacusai/organization_group/index.html#abacusai.organization_group.OrganizationGroup.remove_user_from">remove_user_from() (abacusai.organization_group.OrganizationGroup method)</a>
@@ -3017,7 +3007,7 @@
 </li>
         <li><a href="autoapi/abacusai/function_logs/index.html#abacusai.function_logs.FunctionLogs.to_dict">(abacusai.function_logs.FunctionLogs method)</a>
 </li>
-        <li><a href="autoapi/abacusai/language_detection_prediction/index.html#abacusai.language_detection_prediction.LanguageDetectionPrediction.to_dict">(abacusai.language_detection_prediction.LanguageDetectionPrediction method)</a>
+        <li><a href="autoapi/abacusai/indexing_config/index.html#abacusai.indexing_config.IndexingConfig.to_dict">(abacusai.indexing_config.IndexingConfig method)</a>
 </li>
         <li><a href="autoapi/abacusai/model/index.html#abacusai.model.Model.to_dict">(abacusai.model.Model method)</a>
 </li>
@@ -3036,10 +3026,6 @@
         <li><a href="autoapi/abacusai/modification_lock_info/index.html#abacusai.modification_lock_info.ModificationLockInfo.to_dict">(abacusai.modification_lock_info.ModificationLockInfo method)</a>
 </li>
         <li><a href="autoapi/abacusai/nested_feature/index.html#abacusai.nested_feature.NestedFeature.to_dict">(abacusai.nested_feature.NestedFeature method)</a>
-</li>
-        <li><a href="autoapi/abacusai/nlp_classification_prediction/index.html#abacusai.nlp_classification_prediction.NlpClassificationPrediction.to_dict">(abacusai.nlp_classification_prediction.NlpClassificationPrediction method)</a>
-</li>
-        <li><a href="autoapi/abacusai/nlp_sentiment_prediction/index.html#abacusai.nlp_sentiment_prediction.NlpSentimentPrediction.to_dict">(abacusai.nlp_sentiment_prediction.NlpSentimentPrediction method)</a>
 </li>
         <li><a href="autoapi/abacusai/null_violation/index.html#abacusai.null_violation.NullViolation.to_dict">(abacusai.null_violation.NullViolation method)</a>
 </li>
@@ -3300,10 +3286,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/project/index.html#abacusai.project.Project.validate">validate() (abacusai.project.Project method)</a>
 </li>
-      <li><a href="autoapi/abacusai/index.html#abacusai.ApiClient.validate_project">validate_project() (abacusai.ApiClient method)</a>
+      <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ReadOnlyClient.validate_project">validate_project() (abacusai.client.ReadOnlyClient method)</a>
 
       <ul>
-        <li><a href="autoapi/abacusai/client/index.html#abacusai.client.ApiClient.validate_project">(abacusai.client.ApiClient method)</a>
+        <li><a href="autoapi/abacusai/index.html#abacusai.ReadOnlyClient.validate_project">(abacusai.ReadOnlyClient method)</a>
 </li>
       </ul></li>
       <li><a href="autoapi/abacusai/application_connector/index.html#abacusai.application_connector.ApplicationConnector.verify">verify() (abacusai.application_connector.ApplicationConnector method)</a>
@@ -3360,10 +3346,10 @@
       </ul></li>
       <li><a href="autoapi/abacusai/upload/index.html#abacusai.upload.Upload.wait_for_join">wait_for_join() (abacusai.upload.Upload method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.wait_for_materialization">wait_for_materialization() (abacusai.feature_group.FeatureGroup method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="autoapi/abacusai/model_monitor_version/index.html#abacusai.model_monitor_version.ModelMonitorVersion.wait_for_monitor">wait_for_monitor() (abacusai.model_monitor_version.ModelMonitorVersion method)</a>
 </li>
       <li><a href="autoapi/abacusai/prediction_metric_version/index.html#abacusai.prediction_metric_version.PredictionMetricVersion.wait_for_prediction_metric_version">wait_for_prediction_metric_version() (abacusai.prediction_metric_version.PredictionMetricVersion method)</a>
@@ -3380,6 +3366,8 @@
         <li><a href="autoapi/abacusai/feature_group_version/index.html#abacusai.feature_group_version.FeatureGroupVersion.wait_for_results">(abacusai.feature_group_version.FeatureGroupVersion method)</a>
 </li>
       </ul></li>
+      <li><a href="autoapi/abacusai/feature_group/index.html#abacusai.feature_group.FeatureGroup.wait_for_streaming_ready">wait_for_streaming_ready() (abacusai.feature_group.FeatureGroup method)</a>
+</li>
       <li><a href="autoapi/abacusai/model/index.html#abacusai.model.Model.wait_for_training">wait_for_training() (abacusai.model.Model method)</a>
 
       <ul>

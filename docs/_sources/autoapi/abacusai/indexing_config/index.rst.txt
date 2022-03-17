@@ -1,0 +1,48 @@
+:py:mod:`abacusai.indexing_config`
+==================================
+
+.. py:module:: abacusai.indexing_config
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.indexing_config.IndexingConfig
+
+
+
+
+.. py:class:: IndexingConfig(client, primaryKey=None, updateTimestampKey=None, lookupKeys=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The indexing config for a Feature Group
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param primaryKey: A single key index
+   :type primaryKey: str
+   :param updateTimestampKey: The primary timestamp feature
+   :type updateTimestampKey: str
+   :param lookupKeys: A multi-key index. Cannot be used in conjuction with primary key.
+   :type lookupKeys: list of string
+
+   .. py:method:: __repr__(self)
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict(self)
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

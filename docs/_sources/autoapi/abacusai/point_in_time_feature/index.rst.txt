@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PointInTimeFeature(client, historyTableName=None, aggregationKeys=None, timestampKey=None, historicalTimestampKey=None, lookbackWindowSeconds=None, lookbackWindowLagSeconds=None, lookbackCount=None, lookbackUntilPosition=None, expression=None)
+.. py:class:: PointInTimeFeature(client, historyTableName=None, aggregationKeys=None, timestampKey=None, historicalTimestampKey=None, lookbackWindowSeconds=None, lookbackWindowLagSeconds=None, lookbackCount=None, lookbackUntilPosition=None, expression=None, groupName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43,6 +43,8 @@ Classes
    :type lookbackUntilPosition: int
    :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
    :type expression: str
+   :param groupName: The group name this point in time feature belongs to
+   :type groupName: str
 
    .. py:method:: __repr__(self)
 

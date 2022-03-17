@@ -1,6 +1,7 @@
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
 from .feature_group_version import FeatureGroupVersion
+from .indexing_config import IndexingConfig
 from .point_in_time_group import PointInTimeGroup
 from .return_class import AbstractApiClass
 
@@ -31,19 +32,22 @@ class FeatureGroup(AbstractApiClass):
             primaryKey (str): The primary index feature
             updateTimestampKey (str): The primary timestamp feature
             lookupKeys (list of string): Additional indexed features for this feature group
+            streamingEnabled (bool): If true, the feature group can have data streamed to it
             featureGroupUse (str): The user assigned feature group use which allows for organizing feature groups in a project
             isIncremental (bool): If feature group corresponds to an incremental dataset.
             mergeConfig (dict): The merge configuration settings for the feature group.
             cpuSize (str): Cpu size specified for the python feature group.
             memory (int): Memory in GB specified for the python feature group.
+            streamingReady (bool): If true, the feature group is ready to receive streaming data
             features (Feature): List of resolved features
             duplicateFeatures (Feature): List of duplicate features
             pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
             latestFeatureGroupVersion (FeatureGroupVersion): The latest feature group version
             concatenationConfig (ConcatenationConfig): The Feature Group ID whose data will be concatenated into this feature group
+            indexingConfig (IndexingConfig): 
     """
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, cpuSize=None, memory=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, cpuSize=None, memory=None, streamingReady=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, latestFeatureGroupVersion={}):
         super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
@@ -65,11 +69,13 @@ class FeatureGroup(AbstractApiClass):
         self.primary_key = primaryKey
         self.update_timestamp_key = updateTimestampKey
         self.lookup_keys = lookupKeys
+        self.streaming_enabled = streamingEnabled
         self.feature_group_use = featureGroupUse
         self.is_incremental = isIncremental
         self.merge_config = mergeConfig
         self.cpu_size = cpuSize
         self.memory = memory
+        self.streaming_ready = streamingReady
         self.features = client._build_class(Feature, features)
         self.duplicate_features = client._build_class(
             Feature, duplicateFeatures)
@@ -77,11 +83,13 @@ class FeatureGroup(AbstractApiClass):
             PointInTimeGroup, pointInTimeGroups)
         self.concatenation_config = client._build_class(
             ConcatenationConfig, concatenationConfig)
+        self.indexing_config = client._build_class(
+            IndexingConfig, indexingConfig)
         self.latest_feature_group_version = client._build_class(
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  use_for_training={repr(self.use_for_training)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  feature_group_use={repr(self.feature_group_use)},\n  is_incremental={repr(self.is_incremental)},\n  merge_config={repr(self.merge_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  use_for_training={repr(self.use_for_training)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  is_incremental={repr(self.is_incremental)},\n  merge_config={repr(self.merge_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def to_dict(self):
         """
@@ -90,7 +98,7 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'feature_group_use': self.feature_group_use, 'is_incremental': self.is_incremental, 'merge_config': self.merge_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'use_for_training': self.use_for_training, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'is_incremental': self.is_incremental, 'merge_config': self.merge_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
         """
@@ -321,14 +329,17 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, new_feature_name)
 
-    def create_point_in_time_group(self, group_name: str, window_key: str, aggregation_keys: list, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
+    def create_point_in_time_group(self, group_name: str, window_key: str, aggregation_keys: list, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
         """
         Create point in time group
 
         Args:
             group_name (str): The name of the point in time group
-            window_key (str): Name of feature which contains the timestamp value for the point in time feature
-            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
+            window_key (str): Name of feature to use for ordering the rows on the source table
+            aggregation_keys (list): List of keys to perform on the source table for the window aggregation.
+            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
+            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
+            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
             lookback_window (float): Number of seconds in the past from the current time for start of the window.
             lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
             lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
@@ -337,9 +348,9 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             FeatureGroup: The feature group after the point in time group has been created
         """
-        return self.client.create_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
+        return self.client.create_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
 
-    def update_point_in_time_group(self, group_name: str, window_key: str = None, aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None):
+    def update_point_in_time_group(self, group_name: str, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None):
         """
         Update point in time group
 
@@ -347,6 +358,9 @@ class FeatureGroup(AbstractApiClass):
             group_name (str): The name of the point in time group
             window_key (str): Name of feature which contains the timestamp value for the point in time feature
             aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
+            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
+            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
+            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
             lookback_window (float): Number of seconds in the past from the current time for start of the window.
             lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
             lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
@@ -355,7 +369,7 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             FeatureGroup: The feature group after the update has been applied
         """
-        return self.client.update_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
+        return self.client.update_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
 
     def delete_point_in_time_group(self, group_name: str):
         """
@@ -667,17 +681,36 @@ class FeatureGroup(AbstractApiClass):
         A waiting call until feature group is materialized.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 milliseconds.
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
         """
         return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout)
 
-    def get_status(self):
+    def wait_for_streaming_ready(self, timeout: int = 600):
+        """
+        Waits for the feature group indexing config to be applied for streaming
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 600 seconds.
+        """
+        if not self.streaming_enabled:
+            from .client import ApiException
+            raise ApiException(409, 'Feature group is not streaming enabled')
+        indexing_config = self.describe().indexing_config
+        if not indexing_config or not (indexing_config.primary_key or indexing_config.lookup_keys):
+            from .client import ApiException
+            raise ApiException(
+                409, 'Feature group must have a primary key or lookup key defined prior to streaming data')
+        return self.client._poll(self, {false}, poll_args={'streaming_status': True}, timeout=timeout)
+
+    def get_status(self, streaming_status: bool = False):
         """
         Gets the status of the feature group.
 
         Returns:
             str: A string describing the status of a feature group (pending, complete, etc.).
         """
+        if streaming_status:
+            return self.describe().streaming_ready
         return self.describe().latest_feature_group_version.status
 
     def load_as_pandas(self):

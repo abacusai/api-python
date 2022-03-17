@@ -1,5 +1,5 @@
-from .client import ApiClient, ApiException, ClientOptions
+from .client import ApiClient, ApiException, ClientOptions, ReadOnlyClient
 from .prediction_client import PredictionClient
 
 
-__version__ = "0.34.5"
+__version__ = "0.35.0"
