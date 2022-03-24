@@ -15,9 +15,10 @@ class DatasetVersion(AbstractApiClass):
             createdAt (str): The timestamp this dataset version was created.
             error (str): If status is FAILED, this field will be populated with an error.
             invalidRecords (str): 
+            incrementalQueriedAt (str): If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
     """
 
-    def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, invalidRecords=None):
+    def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, invalidRecords=None, incrementalQueriedAt=None):
         super().__init__(client, datasetVersion)
         self.dataset_version = datasetVersion
         self.status = status
@@ -27,9 +28,10 @@ class DatasetVersion(AbstractApiClass):
         self.created_at = createdAt
         self.error = error
         self.invalid_records = invalidRecords
+        self.incremental_queried_at = incrementalQueriedAt
 
     def __repr__(self):
-        return f"DatasetVersion(dataset_version={repr(self.dataset_version)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  size={repr(self.size)},\n  row_count={repr(self.row_count)},\n  created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  invalid_records={repr(self.invalid_records)})"
+        return f"DatasetVersion(dataset_version={repr(self.dataset_version)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  size={repr(self.size)},\n  row_count={repr(self.row_count)},\n  created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  invalid_records={repr(self.invalid_records)},\n  incremental_queried_at={repr(self.incremental_queried_at)})"
 
     def to_dict(self):
         """
@@ -38,7 +40,7 @@ class DatasetVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error, 'invalid_records': self.invalid_records}
+        return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error, 'invalid_records': self.invalid_records, 'incremental_queried_at': self.incremental_queried_at}
 
     def refresh(self):
         """

@@ -138,7 +138,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.35.0'
+    client_version = '0.35.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -859,7 +859,7 @@ class ReadOnlyClient(BaseApiClient):
             RefreshPipelineRun: A refresh pipeline run object"""
         return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
 
-    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = []) -> RefreshPolicy:
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = []) -> RefreshPolicy:
         """List the refresh policies for the organization
 
         Args:
@@ -867,12 +867,13 @@ class ReadOnlyClient(BaseApiClient):
             dataset_ids (list): Comma separated list of Dataset IDs
             model_ids (list): Comma separated list of Model IDs
             deployment_ids (list): Comma separated list of Deployment IDs
-            batch_prediction_ids (list): Comma separated list of Batch Predictions
+            batch_prediction_ids (list): Comma separated list of Batch Prediction IDs
             model_monitor_ids (list): Comma separated list of Model Monitor IDs.
+            prediction_metric_ids (list): Comma separated list of Prediction Metric IDs,
 
         Returns:
             RefreshPolicy: List of all refresh policies in the organization"""
-        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids}, parse_type=RefreshPolicy)
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'predictionMetricIds': prediction_metric_ids}, parse_type=RefreshPolicy)
 
     def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
         """List the the times that the refresh policy has been run
@@ -1095,7 +1096,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name
-            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  NLP_HYBRID,  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_DOCUMENT_VISUALIZATION,  ANOMALYEVENTSTREAM,  UCPLUGANDPLAY,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  DECO_REALTIME,  DECO_HOSTMON,  DECO_VECTOR,  DECO_EXPDEB,  VISION_SEGMENTATION,  VISION,  VISION_HYBRID,  FEATURE_DRIFT.
+            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_SALES,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT.
 
         Returns:
             Project: This object represents the newly created project. For details refer to"""
@@ -1276,6 +1277,19 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group."""
         return self._call_api('createMergeFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'mergeConfig': merge_config, 'description': description}, parse_type=FeatureGroup)
 
+    def create_transform_feature_group(self, source_feature_group_id: str, table_name: str, transform_config: dict, description: str = None) -> FeatureGroup:
+        """Creates a new feature group defined as a pre-defined transform on another feature group.
+
+        Args:
+            source_feature_group_id (str): 
+            table_name (str): The unique name to be given to this transform feature group.
+            transform_config (dict): JSON object (aka map) defining the transform and its parameters.
+            description (str): A human-readable description of this feature group.
+
+        Returns:
+            FeatureGroup: The created feature group."""
+        return self._call_api('createTransformFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'transformConfig': transform_config, 'description': description}, parse_type=FeatureGroup)
+
     def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: dict) -> FeatureGroup:
         """Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
@@ -1297,6 +1311,14 @@ class ApiClient(ReadOnlyClient):
             feature_group_id (str): The unique ID associated with the feature group.
             merge_config (dict): A json object string specifying the merge rule. An empty mergeConfig will default to only including the latest Dataset Version."""
         return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config})
+
+    def set_feature_group_transform_config(self, feature_group_id: str, transform_config: dict) -> None:
+        """Set a TransformFeatureGroup’s transform config to the values provided.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            transform_config (dict): A json object string specifying the pre-defined transformation."""
+        return self._call_api('setFeatureGroupTransformConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'transformConfig': transform_config})
 
     def set_feature_group_schema(self, feature_group_id: str, schema: list):
         """Creates a new schema and points the feature group to the new feature group schema id.
@@ -1333,6 +1355,24 @@ class ApiClient(ReadOnlyClient):
             feature_group_id (str): The feature group
             tag (str): The tag to add to the feature group"""
         return self._call_api('removeFeatureGroupTag', 'DELETE', query_params={'featureGroupId': feature_group_id, 'tag': tag})
+
+    def add_feature_tag(self, feature_group_id: str, feature: str, tag: str):
+        """
+
+        Args:
+            feature_group_id (str): 
+            feature (str): 
+            tag (str): """
+        return self._call_api('addFeatureTag', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'feature': feature, 'tag': tag})
+
+    def remove_feature_tag(self, feature_group_id: str, feature: str, tag: str):
+        """
+
+        Args:
+            feature_group_id (str): 
+            feature (str): 
+            tag (str): """
+        return self._call_api('removeFeatureTag', 'DELETE', query_params={'featureGroupId': feature_group_id, 'feature': feature, 'tag': tag})
 
     def create_nested_feature(self, feature_group_id: str, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None) -> FeatureGroup:
         """Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.
@@ -1729,7 +1769,7 @@ class ApiClient(ReadOnlyClient):
             Upload: The upload object associated with the upload process for the full file. The details of the object are described below:"""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, merge_config: dict = None) -> Dataset:
+    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -1744,11 +1784,11 @@ class ApiClient(ReadOnlyClient):
             until_prefix (str): The end prefix (exclusive) for a range based search on a cloud storage location URI.
             location_date_format (str): The date format in which the data is partitioned in the cloud storage location. E.g., if the data is partitioned as s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/dir4/filename.parquet, then the location_date_format is YYYY-MM-DD This format needs to be consistent across all files within the specified location.
             date_format_lookback_days (int): The number of days to look back from the current day for import locations that are date partitioned. E.g., import date, 2021-06-04, with date_format_lookback_days = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
-            merge_config (dict): Struct for specifying an incremental dataset and the merge rule associated with it.
+            incremental (bool): Signifies if the dataset is an incremental dataset.
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'mergeConfig': merge_config}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -1763,7 +1803,7 @@ class ApiClient(ReadOnlyClient):
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, name: str, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None) -> Dataset:
+    def create_dataset_from_database_connector(self, name: str, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, timestamp_column: str = None) -> Dataset:
         """Creates a dataset from a Database Connector
 
         Args:
@@ -1775,10 +1815,12 @@ class ApiClient(ReadOnlyClient):
             query_arguments (str): Additional query arguments to filter the data
             refresh_schedule (str): The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
             sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+            incremental (bool): Signifies if the dataset is an incremental dataset.
+            timestamp_column (str): If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'timestampColumn': timestamp_column}, parse_type=Dataset)
 
     def create_dataset_from_application_connector(self, name: str, table_name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from an Application Connector
@@ -1976,6 +2018,28 @@ class ApiClient(ReadOnlyClient):
         Returns:
             FileConnectorVerification: An object with the roleArn and verification status for the specified bucket."""
         return self._call_api('setAzureBlobConnectionString', 'POST', query_params={}, body={'bucket': bucket, 'connectionString': connection_string}, parse_type=FileConnectorVerification)
+
+    def verify_streaming_connector(self, streaming_connector_id: str):
+        """Checks to see if Abacus.AI can access the streaming connector.
+
+        Args:
+            streaming_connector_id (str): The unique identifier for the streaming connector."""
+        return self._call_api('verifyStreamingConnector', 'POST', query_params={}, body={'streamingConnectorId': streaming_connector_id})
+
+    def rename_streaming_connector(self, streaming_connector_id: str, name: str):
+        """Renames a Streaming Connector
+
+        Args:
+            streaming_connector_id (str): The unique identifier for the streaming connector.
+            name (str): A new name for the streaming connector"""
+        return self._call_api('renameStreamingConnector', 'PATCH', query_params={}, body={'streamingConnectorId': streaming_connector_id, 'name': name})
+
+    def delete_streaming_connector(self, streaming_connector_id: str):
+        """Delete a streaming connector.
+
+        Args:
+            streaming_connector_id (str): The unique identifier for the streaming connector."""
+        return self._call_api('deleteStreamingConnector', 'DELETE', query_params={'streamingConnectorId': streaming_connector_id})
 
     def create_streaming_token(self) -> StreamingAuthToken:
         """Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.
@@ -2648,6 +2712,15 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             document (str): # TODO"""
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
+
+    def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            query_data (dict): Raw Data dictionary containing the required document data - must have a key document corresponding to a DOCUMENT type text as value."""
+        return self._call_api('getSummary', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
         """TODO

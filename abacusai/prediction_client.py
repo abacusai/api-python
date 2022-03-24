@@ -15,6 +15,16 @@ class PredictionClient(BaseApiClient):
     def __init__(self, client_options: ClientOptions = None):
         super().__init__(api_key=None, client_options=client_options, skip_version_check=True)
 
+    def predict_raw(self, deployment_token: str, deployment_id: str, **kwargs):
+        """Raw interface for returning predictions from Plug and Play deployments.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            **kwargs (dict): Arbitrary key/value pairs may be passed in and is sent as part of the request body."""
+
+        return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body=kwargs)
+
     def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
         """Returns the feature group deployed in the feature store project.
 
@@ -263,6 +273,15 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             document (str): # TODO"""
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
+
+    def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            query_data (dict): Raw Data dictionary containing the required document data - must have a key document corresponding to a DOCUMENT type text as value."""
+        return self._call_api('getSummary', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
         """TODO

@@ -35,3 +35,30 @@ class StreamingConnector(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         return {'streaming_connector_id': self.streaming_connector_id, 'service': self.service, 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
+
+    def verify(self):
+        """
+        Checks to see if Abacus.AI can access the streaming connector.
+
+        Args:
+            streaming_connector_id (str): The unique identifier for the streaming connector.
+        """
+        return self.client.verify_streaming_connector(self.streaming_connector_id)
+
+    def rename(self, name: str):
+        """
+        Renames a Streaming Connector
+
+        Args:
+            name (str): A new name for the streaming connector
+        """
+        return self.client.rename_streaming_connector(self.streaming_connector_id, name)
+
+    def delete(self):
+        """
+        Delete a streaming connector.
+
+        Args:
+            streaming_connector_id (str): The unique identifier for the streaming connector.
+        """
+        return self.client.delete_streaming_connector(self.streaming_connector_id)

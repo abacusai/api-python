@@ -322,7 +322,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_deployment_tokens(self.project_id)
 
-    def list_refresh_policies(self, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = []):
+    def list_refresh_policies(self, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = []):
         """
         List the refresh policies for the organization
 
@@ -330,13 +330,14 @@ class Project(AbstractApiClass):
             dataset_ids (list): Comma separated list of Dataset IDs
             model_ids (list): Comma separated list of Model IDs
             deployment_ids (list): Comma separated list of Deployment IDs
-            batch_prediction_ids (list): Comma separated list of Batch Predictions
+            batch_prediction_ids (list): Comma separated list of Batch Prediction IDs
             model_monitor_ids (list): Comma separated list of Model Monitor IDs.
+            prediction_metric_ids (list): Comma separated list of Prediction Metric IDs,
 
         Returns:
             RefreshPolicy: List of all refresh policies in the organization
         """
-        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids)
+        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, prediction_metric_ids)
 
     def list_batch_predictions(self):
         """
