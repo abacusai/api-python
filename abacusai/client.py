@@ -1,5 +1,6 @@
 import inspect
 import io
+import json
 import logging
 import os
 import time
@@ -7,6 +8,7 @@ from functools import lru_cache
 from typing import Dict, List
 
 import pandas as pd
+import pyspark.sql
 import requests
 from packaging import version
 from requests.adapters import HTTPAdapter
@@ -138,10 +140,12 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.35.1'
+    client_version = '0.35.4'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
+        if self.api_key is None:
+            self.api_key = os.getenv('ABACUS_API_KEY')
         self.web_version = None
         self.client_options = client_options or ClientOptions()
         self.server = server or self.client_options.server
@@ -204,6 +208,7 @@ class BaseApiClient:
         if streamable_response and response.status_code == 200:
             return response.raw
         try:
+            json_data = 'NOT SET YET'
             json_data = response.json()
             success = json_data['success']
             error_message = json_data.get('error')
@@ -211,7 +216,9 @@ class BaseApiClient:
             result = json_data.get('result')
             if success and parse_type:
                 result = self._build_class(parse_type, result)
-        except Exception:
+        except Exception as e:
+            logging.warn(
+                f"_call_api caught an exception {e} in processing json_data {json_data}. API call url method body: {url} {method} '{json.dumps(body)}'")
             error_message = response.text
         if not success:
             if response.status_code == 504:
@@ -998,6 +1005,32 @@ class ApiClient(ReadOnlyClient):
         upload = self.create_dataset_version_from_upload(dataset_id)
         return self._upload_from_df(upload, df)
 
+    def create_feature_group_from_spark_df(self, table_name: str, df: pyspark.sql.DataFrame, should_wait_for_upload: bool = False, timeout: int = 7200) -> FeatureGroup:
+        """Create an Abacus Feature Group from a local Spark DataFrame.
+
+        Args:
+            df (pyspark.sql.DataFrame): The dataframe to upload
+            table_name (str): The table name to assign to the feature group created by this call
+            should_wait_for_upload (bool): Wait for dataframe to upload before returning. Some FeatureGroup methods, like materialization, may not work until upload is complete.
+            timeout (int, optional): If waiting for upload, time out after this limit.
+        """
+        pdf = df.toPandas()
+        dataset = self.create_dataset_from_pandas(
+            feature_group_table_name=table_name, df=pdf)
+        feature_group = self.describe_feature_group_by_table_name(table_name)
+        if should_wait_for_upload:
+            feature_group.wait_for_upload(timeout=timeout)
+        return feature_group
+
+    def create_spark_df_from_feature_group_version(self, session: pyspark.sql.SparkSession, feature_group_version: str) -> pyspark.sql.DataFrame:
+        """Create a Spark Dataframe in the provided Spark Session context, for a materialized Abacus Feature Group Version."""
+        feature_group_version_object = self.describe_feature_group_version(
+            feature_group_version)
+        feature_group_version_object.wait_for_results()
+        # TODO: if waited-for results not successful, return informaive error
+        feature_group_version_pandas_df = feature_group_version_object.load_as_pandas()
+        return session.createDataFrame(feature_group_version_pandas_df)
+
     def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable, training_input_tables: list = None):
         '''
         Creates a model from a python function
@@ -1096,7 +1129,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name
-            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_SALES,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT.
+            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT.
 
         Returns:
             Project: This object represents the newly created project. For details refer to"""
@@ -1248,6 +1281,22 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory}, parse_type=FeatureGroup)
 
+    def create_feature_group_from_zip(self, table_name: str, function_name: str, module_name: str, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None) -> Upload:
+        """Creates a new feature group from a ZIP file.
+
+        Args:
+            table_name (str): The unique name to be given to the feature group.
+            function_name (str): Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
+            module_name (str): Path to the file with the feature group function.
+            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            description (str): The description about the feature group.
+            cpu_size (str): Size of the cpu for the feature group function
+            memory (int): Memory (in GB) for the feature group function
+
+        Returns:
+            Upload: The Upload to upload the zip file to"""
+        return self._call_api('createFeatureGroupFromZip', 'POST', query_params={}, body={'tableName': table_name, 'functionName': function_name, 'moduleName': module_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Upload)
+
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
         """Creates a new feature group defined as a sample of rows from another feature group.
 
@@ -1268,7 +1317,7 @@ class ApiClient(ReadOnlyClient):
         """Creates a new feature group defined as the union of other feature group versions.
 
         Args:
-            source_feature_group_id (str): 
+            source_feature_group_id (str): ID corresponding to the dataset feature group that will have its versions merged into this feature group.
             table_name (str): The unique name to be given to this merge feature group.
             merge_config (dict): JSON object (aka map) defining the merging method and its parameters.
             description (str): A human-readable description of this feature group.
@@ -1281,7 +1330,7 @@ class ApiClient(ReadOnlyClient):
         """Creates a new feature group defined as a pre-defined transform on another feature group.
 
         Args:
-            source_feature_group_id (str): 
+            source_feature_group_id (str): ID corresponding to the feature group that will have the transformation applied.
             table_name (str): The unique name to be given to this transform feature group.
             transform_config (dict): JSON object (aka map) defining the transform and its parameters.
             description (str): A human-readable description of this feature group.
@@ -1476,7 +1525,7 @@ class ApiClient(ReadOnlyClient):
             history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
             history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
             history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
-            lookback_window (float): Number of seconds in the past from the current time for start of the window.
+            lookback_window (float): Number of seconds in the past from the current time for start of the window. If 0, the lookback will include all rows.
             lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
             lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
             lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
@@ -1619,6 +1668,21 @@ class ApiClient(ReadOnlyClient):
         Returns:
             FeatureGroup: The updated feature group"""
         return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory}, parse_type=FeatureGroup)
+
+    def update_feature_group_zip(self, feature_group_id: str, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None) -> Upload:
+        """Updates the zip for a feature group created using createFeatureGroupFromZip
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+            module_name (str): Path to the file with the feature group function.
+            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            cpu_size (str): Size of the cpu for the feature group function
+            memory (int): Memory (in GB) for the feature group function
+
+        Returns:
+            Upload: The Upload to upload the zip file to"""
+        return self._call_api('updateFeatureGroupZip', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionName': function_name, 'moduleName': module_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Upload)
 
     def update_feature(self, feature_group_id: str, name: str, select_expression: str = None, new_name: str = None) -> FeatureGroup:
         """Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
@@ -1814,7 +1878,7 @@ class ApiClient(ReadOnlyClient):
             columns (str): The columns to query from the external service object.
             query_arguments (str): Additional query arguments to filter the data
             refresh_schedule (str): The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
-            sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+            sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, timestampColumn, and queryArguments
             incremental (bool): Signifies if the dataset is an incremental dataset.
             timestamp_column (str): If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
 
@@ -2100,7 +2164,7 @@ class ApiClient(ReadOnlyClient):
             dataset_id (str): The dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def train_model(self, project_id: str, name: str = None, training_config: dict = {}, refresh_schedule: str = None) -> Model:
+    def train_model(self, project_id: str, name: str = None, training_config: dict = {}, feature_group_ids: list = None, refresh_schedule: str = None) -> Model:
         """Trains a model for the specified project.
 
         Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
@@ -2110,11 +2174,12 @@ class ApiClient(ReadOnlyClient):
             project_id (str): The unique ID associated with the project.
             name (str): The name you want your model to have. Defaults to "<Project Name> Model".
             training_config (dict): The training config key/value pairs used to train this model.
+            feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
 
         Returns:
             Model: The new model which is being trained."""
-        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'refreshSchedule': refresh_schedule}, parse_type=Model)
+        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule}, parse_type=Model)
 
     def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None) -> Model:
         """Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
@@ -2197,16 +2262,17 @@ class ApiClient(ReadOnlyClient):
             Model: The model object correspoding after the prediction config is applied"""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = []) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None) -> Model:
         """Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
             model_id (str): The model to retrain.
             deployment_ids (list): List of deployments to automatically deploy to.
+            feature_group_ids (list): List of feature group ids provided by the user to train the model on.
 
         Returns:
             Model: The model that is being retrained."""
-        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids}, parse_type=Model)
+        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids}, parse_type=Model)
 
     def delete_model(self, model_id: str):
         """Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
@@ -2222,7 +2288,7 @@ class ApiClient(ReadOnlyClient):
             model_version (str): The ID of the model version to delete."""
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
-    def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
@@ -2231,10 +2297,12 @@ class ApiClient(ReadOnlyClient):
             prediction_feature_group_id (str): The unique ID of the prediction data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
+            target_value (str): A target positive value for the label to compute bias for
+            feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'trainingFeatureGroupId': training_feature_group_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'trainingFeatureGroupId': training_feature_group_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'featureMappings': feature_mappings}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Reruns the specified model monitor.
@@ -2536,8 +2604,8 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): This will be a dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.)."""
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
-        """Returns a prediction for regression classification
+    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
+        """Returns a classification prediction
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
@@ -2545,10 +2613,11 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
             threshold (float): float value that is applied on the popular class label.
             threshold_class (str): label upon which the threshold is added (Binary labels only)
+            thresholds (list): maps labels to thresholds (Multi label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5
             explain_predictions (bool): If true, returns the SHAP explanations for all input features.
             fixed_features (list): Set of input features to treat as constant for explanations.
             nested (str): If specified generates prediction delta for each index of the specified nested feature."""
-        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested})
+        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'thresholds': thresholds, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested})
 
     def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict = {}, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
         """Returns a prediction from a classification or regression model. Optionally, includes explanations.
@@ -2641,7 +2710,7 @@ class ApiClient(ReadOnlyClient):
             explore_fraction (float): The fraction of recommendations that is to be new items."""
         return self._call_api('getRecommendations', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'excludeItemIds': exclude_item_ids, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items, 'exploreFraction': explore_fraction})
 
-    def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = [], scaling_factors: list = []) -> Dict:
+    def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = [], preserve_unknown_items: bool = False, scaling_factors: list = []) -> Dict:
         """Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -2649,10 +2718,11 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): This will be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
             preserve_ranks (list): List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
+            preserve_unknown_items (bool): If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
-        return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'scalingFactors': scaling_factors})
+        return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors})
 
-    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = [], scaling_factors: list = []) -> Dict:
+    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = [], preserve_unknown_items: bool = False, scaling_factors: list = []) -> Dict:
         """Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -2660,8 +2730,9 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): This will be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
             preserve_ranks (list): List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
+            preserve_unknown_items (bool): If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
-        return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'scalingFactors': scaling_factors})
+        return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors})
 
     def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, scaling_factors: list = [], restrict_items: list = [], exclude_items: list = []) -> Dict:
         """Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).

@@ -200,7 +200,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id)
 
-    def train_model(self, name: str = None, training_config: dict = {}, refresh_schedule: str = None):
+    def train_model(self, name: str = None, training_config: dict = {}, feature_group_ids: list = None, refresh_schedule: str = None):
         """
         Trains a model for the specified project.
 
@@ -210,12 +210,13 @@ class Project(AbstractApiClass):
         Args:
             name (str): The name you want your model to have. Defaults to "<Project Name> Model".
             training_config (dict): The training config key/value pairs used to train this model.
+            feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
 
         Returns:
             Model: The new model which is being trained.
         """
-        return self.client.train_model(self.project_id, name, training_config, refresh_schedule)
+        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule)
 
     def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None):
         """
@@ -256,7 +257,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_models(self.project_id)
 
-    def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None):
+    def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None):
         """
         Runs a model monitor for the specified project.
 
@@ -265,11 +266,13 @@ class Project(AbstractApiClass):
             prediction_feature_group_id (str): The unique ID of the prediction data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
+            target_value (str): A target positive value for the label to compute bias for
+            feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, training_feature_group_id, prediction_feature_group_id, name, refresh_schedule)
+        return self.client.create_model_monitor(self.project_id, training_feature_group_id, prediction_feature_group_id, name, refresh_schedule, target_value, feature_mappings)
 
     def list_model_monitors(self):
         """

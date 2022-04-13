@@ -175,17 +175,18 @@ class Model(AbstractApiClass):
         """
         return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
-    def retrain(self, deployment_ids: list = []):
+    def retrain(self, deployment_ids: list = [], feature_group_ids: list = None):
         """
         Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
             deployment_ids (list): List of deployments to automatically deploy to.
+            feature_group_ids (list): List of feature group ids provided by the user to train the model on.
 
         Returns:
             Model: The model that is being retrained.
         """
-        return self.client.retrain_model(self.model_id, deployment_ids)
+        return self.client.retrain_model(self.model_id, deployment_ids, feature_group_ids)
 
     def delete(self):
         """
