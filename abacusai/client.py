@@ -8,7 +8,6 @@ from functools import lru_cache
 from typing import Dict, List
 
 import pandas as pd
-import pyspark.sql
 import requests
 from packaging import version
 from requests.adapters import HTTPAdapter
@@ -140,7 +139,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.35.4'
+    client_version = '0.35.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1005,7 +1004,7 @@ class ApiClient(ReadOnlyClient):
         upload = self.create_dataset_version_from_upload(dataset_id)
         return self._upload_from_df(upload, df)
 
-    def create_feature_group_from_spark_df(self, table_name: str, df: pyspark.sql.DataFrame, should_wait_for_upload: bool = False, timeout: int = 7200) -> FeatureGroup:
+    def create_feature_group_from_spark_df(self, table_name: str, df, should_wait_for_upload: bool = False, timeout: int = 7200) -> FeatureGroup:
         """Create an Abacus Feature Group from a local Spark DataFrame.
 
         Args:
@@ -1022,8 +1021,16 @@ class ApiClient(ReadOnlyClient):
             feature_group.wait_for_upload(timeout=timeout)
         return feature_group
 
-    def create_spark_df_from_feature_group_version(self, session: pyspark.sql.SparkSession, feature_group_version: str) -> pyspark.sql.DataFrame:
-        """Create a Spark Dataframe in the provided Spark Session context, for a materialized Abacus Feature Group Version."""
+    def create_spark_df_from_feature_group_version(self, session, feature_group_version: str):
+        """Create a Spark Dataframe in the provided Spark Session context, for a materialized Abacus Feature Group Version.
+
+        Args:
+            session (pyspark.sql.SparkSession): Spark session
+            feature_group_version (str): Feature group version to load from
+
+        Returns:
+            pyspark.sql.DataFrame
+        """
         feature_group_version_object = self.describe_feature_group_version(
             feature_group_version)
         feature_group_version_object.wait_for_results()
