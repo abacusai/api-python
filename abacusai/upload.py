@@ -16,26 +16,28 @@ class Upload(AbstractApiClass):
             status (str): The current status of the upload.
             datasetId (str): A reference to the dataset this upload is adding data to.
             datasetVersion (str): A reference to the dataset version the upload is adding data to.
+            modelId (str): A reference the model the upload is creating a version for
             modelVersion (str): A reference to the model version the upload is creating.
             batchPredictionId (str): A reference to the batch prediction the upload is creating.
             parts (list of json objects): A list containing the order of the file parts that have been uploaded.
             createdAt (str): The timestamp at which the upload was created.
     """
 
-    def __init__(self, client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None):
+    def __init__(self, client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelId=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None):
         super().__init__(client, uploadId)
         self.upload_id = uploadId
         self.dataset_upload_id = datasetUploadId
         self.status = status
         self.dataset_id = datasetId
         self.dataset_version = datasetVersion
+        self.model_id = modelId
         self.model_version = modelVersion
         self.batch_prediction_id = batchPredictionId
         self.parts = parts
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"Upload(upload_id={repr(self.upload_id)},\n  dataset_upload_id={repr(self.dataset_upload_id)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  dataset_version={repr(self.dataset_version)},\n  model_version={repr(self.model_version)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  parts={repr(self.parts)},\n  created_at={repr(self.created_at)})"
+        return f"Upload(upload_id={repr(self.upload_id)},\n  dataset_upload_id={repr(self.dataset_upload_id)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  dataset_version={repr(self.dataset_version)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  parts={repr(self.parts)},\n  created_at={repr(self.created_at)})"
 
     def to_dict(self):
         """
@@ -44,7 +46,7 @@ class Upload(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'upload_id': self.upload_id, 'dataset_upload_id': self.dataset_upload_id, 'status': self.status, 'dataset_id': self.dataset_id, 'dataset_version': self.dataset_version, 'model_version': self.model_version, 'batch_prediction_id': self.batch_prediction_id, 'parts': self.parts, 'created_at': self.created_at}
+        return {'upload_id': self.upload_id, 'dataset_upload_id': self.dataset_upload_id, 'status': self.status, 'dataset_id': self.dataset_id, 'dataset_version': self.dataset_version, 'model_id': self.model_id, 'model_version': self.model_version, 'batch_prediction_id': self.batch_prediction_id, 'parts': self.parts, 'created_at': self.created_at}
 
     def cancel(self):
         """
@@ -142,6 +144,8 @@ class Upload(AbstractApiClass):
             return self.client.describe_batch_prediction(upload_object.batch_prediction_id)
         elif upload_object.dataset_id:
             return self.client.describe_dataset(upload_object.dataset_id)
+        elif upload_object.model_id:
+            return self.client.describe_model(upload_object.model_id)
         return upload_object
 
     def _yield_upload_part(self, file, chunksize):

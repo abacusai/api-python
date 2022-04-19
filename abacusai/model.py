@@ -122,6 +122,33 @@ class Model(AbstractApiClass):
         """
         return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, training_input_tables, cpu_size, memory)
 
+    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
+        """
+        Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+        Args:
+            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
+            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
+            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            cpu_size (str): Size of the cpu for the model training function
+            memory (int): Memory (in GB) for the model training function
+
+        Returns:
+            Upload: The updated model
+        """
+        return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
+
     def set_training_config(self, training_config: dict):
         """
         Edits the default model training config

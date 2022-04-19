@@ -294,3 +294,12 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (str): # TODO"""
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+
+    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Get all positive assignments that match a query.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            query_data (dict): specifies the set of assignments being requested."""
+        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})

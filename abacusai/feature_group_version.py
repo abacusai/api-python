@@ -54,6 +54,18 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return {'feature_group_version': self.feature_group_version, 'feature_group_id': self.feature_group_id, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups)}
 
+    def create_snapshot_feature_group(self, table_name: str):
+        """
+
+
+        Args:
+            table_name (str): 
+
+        Returns:
+            FeatureGroup: None
+        """
+        return self.client.create_snapshot_feature_group(self.feature_group_version, table_name)
+
     def export_to_file_connector(self, location: str, export_file_format: str, overwrite: bool = False):
         """
         Export Feature group to File Connector.
