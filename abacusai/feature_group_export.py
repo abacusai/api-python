@@ -20,9 +20,10 @@ class FeatureGroupExport(AbstractApiClass):
             status (str): The current status of the export.
             createdAt (str): The timestamp at which the export was created.
             exportCompletedAt (str): The timestamp at which the export completed
+            additionalIdColumns (list of string): For database connectors which support it, additional ID columns to use as a complex key for upserting
     """
 
-    def __init__(self, client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None):
+    def __init__(self, client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None):
         super().__init__(client, featureGroupExportId)
         self.feature_group_export_id = featureGroupExportId
         self.feature_group_version = featureGroupVersion
@@ -37,9 +38,10 @@ class FeatureGroupExport(AbstractApiClass):
         self.status = status
         self.created_at = createdAt
         self.export_completed_at = exportCompletedAt
+        self.additional_id_columns = additionalIdColumns
 
     def __repr__(self):
-        return f"FeatureGroupExport(feature_group_export_id={repr(self.feature_group_export_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  connector_type={repr(self.connector_type)},\n  output_location={repr(self.output_location)},\n  file_format={repr(self.file_format)},\n  database_connector_id={repr(self.database_connector_id)},\n  object_name={repr(self.object_name)},\n  write_mode={repr(self.write_mode)},\n  database_feature_mapping={repr(self.database_feature_mapping)},\n  id_column={repr(self.id_column)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  export_completed_at={repr(self.export_completed_at)})"
+        return f"FeatureGroupExport(feature_group_export_id={repr(self.feature_group_export_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  connector_type={repr(self.connector_type)},\n  output_location={repr(self.output_location)},\n  file_format={repr(self.file_format)},\n  database_connector_id={repr(self.database_connector_id)},\n  object_name={repr(self.object_name)},\n  write_mode={repr(self.write_mode)},\n  database_feature_mapping={repr(self.database_feature_mapping)},\n  id_column={repr(self.id_column)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  export_completed_at={repr(self.export_completed_at)},\n  additional_id_columns={repr(self.additional_id_columns)})"
 
     def to_dict(self):
         """
@@ -48,7 +50,7 @@ class FeatureGroupExport(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_export_id': self.feature_group_export_id, 'feature_group_version': self.feature_group_version, 'connector_type': self.connector_type, 'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name, 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at}
+        return {'feature_group_export_id': self.feature_group_export_id, 'feature_group_version': self.feature_group_version, 'connector_type': self.connector_type, 'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name, 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at, 'additional_id_columns': self.additional_id_columns}
 
     def get_feature_group_version_export_download_url(self):
         """

@@ -176,14 +176,14 @@ class PredictionClient(BaseApiClient):
             queries (list): List of Mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See getKNearest for additional information about the supported parameters"""
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries})
 
-    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = 0.5) -> Dict:
+    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: None = None) -> Dict:
         """Returns a list of scored labels from
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted.
-            threshold (float): The minimum output probability that a predicted label must have in order for us to report it."""
+            threshold (None): Deprecated"""
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold})
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = [], score_field: str = '', scaling_factors: list = [], restrict_items: list = [], exclude_items: list = [], explore_fraction: float = 0.0) -> Dict:
@@ -277,6 +277,15 @@ class PredictionClient(BaseApiClient):
             document (str): # TODO"""
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
 
+    def get_classification(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+        """TODO
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            document (str): # TODO"""
+        return self._call_api('getClassification', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
+
     def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
@@ -295,11 +304,21 @@ class PredictionClient(BaseApiClient):
             query_data (str): # TODO"""
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None) -> Dict:
         """Get all positive assignments that match a query.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (dict): specifies the set of assignments being requested."""
-        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+            query_data (dict): specifies the set of assignments being requested.
+            forced_assignments (dict): set of assignments to force and resolve before returning query results."""
+        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments})
+
+    def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Check for any constraints violated by the overrides.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            query_data (dict): assignment overrides to the solution."""
+        return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})

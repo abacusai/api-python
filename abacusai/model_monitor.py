@@ -16,11 +16,15 @@ class ModelMonitor(AbstractApiClass):
             trainingFeatureGroupId (unique string identifiers): Feature group IDs that this model monitor is monitoring.
             predictionFeatureGroupId (unique string identifiers): Feature group IDs that this model monitor is monitoring.
             alertConfig (dict): Alerting configuration for this model monitor.
+            biasMetricId (str): 
+            latestBiasMetricVersionId (str): Lastest prediction metric instance for bias
+            predictionMetricId (str): 
+            latestPredictionMetricVersionId (str): Lastest prediction metric instance for decile and other analysis
             latestMonitorModelVersion (ModelMonitorVersion): The latest model monitor version.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained.
     """
 
-    def __init__(self, client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, refreshSchedules={}, latestMonitorModelVersion={}):
+    def __init__(self, client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, refreshSchedules={}, latestMonitorModelVersion={}):
         super().__init__(client, modelMonitorId)
         self.model_monitor_id = modelMonitorId
         self.name = name
@@ -29,13 +33,17 @@ class ModelMonitor(AbstractApiClass):
         self.training_feature_group_id = trainingFeatureGroupId
         self.prediction_feature_group_id = predictionFeatureGroupId
         self.alert_config = alertConfig
+        self.bias_metric_id = biasMetricId
+        self.latest_bias_metric_version_id = latestBiasMetricVersionId
+        self.prediction_metric_id = predictionMetricId
+        self.latest_prediction_metric_version_id = latestPredictionMetricVersionId
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
         self.latest_monitor_model_version = client._build_class(
             ModelMonitorVersion, latestMonitorModelVersion)
 
     def __repr__(self):
-        return f"ModelMonitor(model_monitor_id={repr(self.model_monitor_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  training_feature_group_id={repr(self.training_feature_group_id)},\n  prediction_feature_group_id={repr(self.prediction_feature_group_id)},\n  alert_config={repr(self.alert_config)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_monitor_model_version={repr(self.latest_monitor_model_version)})"
+        return f"ModelMonitor(model_monitor_id={repr(self.model_monitor_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  training_feature_group_id={repr(self.training_feature_group_id)},\n  prediction_feature_group_id={repr(self.prediction_feature_group_id)},\n  alert_config={repr(self.alert_config)},\n  bias_metric_id={repr(self.bias_metric_id)},\n  latest_bias_metric_version_id={repr(self.latest_bias_metric_version_id)},\n  prediction_metric_id={repr(self.prediction_metric_id)},\n  latest_prediction_metric_version_id={repr(self.latest_prediction_metric_version_id)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_monitor_model_version={repr(self.latest_monitor_model_version)})"
 
     def to_dict(self):
         """
@@ -44,7 +52,7 @@ class ModelMonitor(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_monitor_id': self.model_monitor_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'training_feature_group_id': self.training_feature_group_id, 'prediction_feature_group_id': self.prediction_feature_group_id, 'alert_config': self.alert_config, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_monitor_model_version': self._get_attribute_as_dict(self.latest_monitor_model_version)}
+        return {'model_monitor_id': self.model_monitor_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'training_feature_group_id': self.training_feature_group_id, 'prediction_feature_group_id': self.prediction_feature_group_id, 'alert_config': self.alert_config, 'bias_metric_id': self.bias_metric_id, 'latest_bias_metric_version_id': self.latest_bias_metric_version_id, 'prediction_metric_id': self.prediction_metric_id, 'latest_prediction_metric_version_id': self.latest_prediction_metric_version_id, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_monitor_model_version': self._get_attribute_as_dict(self.latest_monitor_model_version)}
 
     def rerun(self):
         """

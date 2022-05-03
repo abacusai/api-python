@@ -139,7 +139,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.35.6'
+    client_version = '0.36.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -263,8 +263,8 @@ class BaseApiClient:
         return obj.refresh()
 
     def _upload_from_df(self, upload, df):
-        with io.StringIO(df.to_csv(index=bool(any(df.index.names)), float_format='%.7f')) as csv_out:
-            return upload.upload_file(csv_out)
+        with io.BytesIO(df.to_parquet()) as parquet_out:
+            return upload.upload_file(parquet_out)
 
 
 class ReadOnlyClient(BaseApiClient):
@@ -380,15 +380,16 @@ class ReadOnlyClient(BaseApiClient):
             'This function (getSchema) is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
         return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
 
-    def validate_project(self, project_id: str) -> ProjectValidation:
+    def validate_project(self, project_id: str, feature_group_ids: list = None) -> ProjectValidation:
         """Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
         Args:
             project_id (str): The unique ID associated with the project.
+            feature_group_ids (list): The feature group IDS to validate
 
         Returns:
             ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group."""
-        return self._call_api('validateProject', 'GET', query_params={'projectId': project_id}, parse_type=ProjectValidation)
+        return self._call_api('validateProject', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=ProjectValidation)
 
     def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> List[Feature]:
         """Returns a schema given a specific FeatureGroup in a project.
@@ -663,7 +664,7 @@ class ReadOnlyClient(BaseApiClient):
             DatasetVersion: A list of dataset versions."""
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
 
-    def get_training_config_options(self, project_id: str) -> List[TrainingConfigOptions]:
+    def get_training_config_options(self, project_id: str, feature_group_ids: list = None) -> List[TrainingConfigOptions]:
         """Retrieves the full description of the model training configuration options available for the specified project.
 
         The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
@@ -671,10 +672,11 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             project_id (str): The unique ID associated with the project.
+            feature_group_ids (list): The feature group IDs to be used for training
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
-        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id}, parse_type=TrainingConfigOptions)
+        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=TrainingConfigOptions)
 
     def list_models(self, project_id: str) -> List[Model]:
         """Retrieves the list of models in the specified project.
@@ -974,7 +976,7 @@ class ApiClient(ReadOnlyClient):
             Dataset: The dataset object created
         """
         upload = self.create_dataset_from_upload(
-            name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='CSV')
+            name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='PARQUET')
         return self._upload_from_df(upload, df)
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame) -> Dataset:
@@ -1001,7 +1003,8 @@ class ApiClient(ReadOnlyClient):
                 raise ApiException(
                     'Feature Group is not source type DATASET', 409, 'ConflictError')
             dataset_id = feature_group.dataset_id
-        upload = self.create_dataset_version_from_upload(dataset_id)
+        upload = self.create_dataset_version_from_upload(
+            dataset_id, file_format='PARQUET')
         return self._upload_from_df(upload, df)
 
     def create_feature_group_from_spark_df(self, table_name: str, df, should_wait_for_upload: bool = False, timeout: int = 7200) -> FeatureGroup:
@@ -1038,7 +1041,7 @@ class ApiClient(ReadOnlyClient):
         feature_group_version_pandas_df = feature_group_version_object.load_as_pandas()
         return session.createDataFrame(feature_group_version_pandas_df)
 
-    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable, training_input_tables: list = None):
+    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable, training_input_tables: list = None, training_config: dict = None, exclusive_run: bool = False):
         '''
         Creates a model from a python function
 
@@ -1050,7 +1053,7 @@ class ApiClient(ReadOnlyClient):
         '''
         function_source_code = inspect.getsource(
             train_function) + '\n\n' + inspect.getsource(predict_function)
-        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function.__name__, predict_function_name=predict_function.__name__, training_input_tables=training_input_tables)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function.__name__, predict_function_name=predict_function.__name__, training_input_tables=training_input_tables, training_config=training_config, exclusive_run=exclusive_run)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -1136,7 +1139,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name
-            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING.
+            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING.
 
         Returns:
             Project: This object represents the newly created project. For details refer to"""
@@ -1640,6 +1643,13 @@ class ApiClient(ReadOnlyClient):
             skip_materialize (bool): If true, will not materialize the concatenated feature group"""
         return self._call_api('concatenateFeatureGroupData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'sourceFeatureGroupId': source_feature_group_id, 'mergeType': merge_type, 'replaceUntilTimestamp': replace_until_timestamp, 'skipMaterialize': skip_materialize})
 
+    def remove_concatenation_config(self, feature_group_id: str):
+        """Removes the concatenation config on a destination feature group.
+
+        Args:
+            feature_group_id (str): Removes the concatenation configuration on a destination feature group"""
+        return self._call_api('removeConcatenationConfig', 'DELETE', query_params={'featureGroupId': feature_group_id})
+
     def set_feature_group_indexing_config(self, feature_group_id: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None):
         """Sets various attributes of the feature group used for deployment lookups and streaming updates.
 
@@ -1728,7 +1738,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroupExport: The FeatureGroupExport instance"""
         return self._call_api('exportFeatureGroupVersionToFileConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'location': location, 'exportFileFormat': export_file_format, 'overwrite': overwrite}, parse_type=FeatureGroupExport)
 
-    def export_feature_group_version_to_database_connector(self, feature_group_version: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None) -> FeatureGroupExport:
+    def export_feature_group_version_to_database_connector(self, feature_group_version: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None) -> FeatureGroupExport:
         """Export Feature group to Database Connector.
 
         Args:
@@ -1738,10 +1748,11 @@ class ApiClient(ReadOnlyClient):
             write_mode (str): Either INSERT or UPSERT
             database_feature_mapping (dict): A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
             id_column (str): Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
+            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting
 
         Returns:
             FeatureGroupExport: The FeatureGroupExport instance"""
-        return self._call_api('exportFeatureGroupVersionToDatabaseConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column}, parse_type=FeatureGroupExport)
+        return self._call_api('exportFeatureGroupVersionToDatabaseConnector', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column, 'additionalIdColumns': additional_id_columns}, parse_type=FeatureGroupExport)
 
     def export_feature_group_version_to_console(self, feature_group_version: str, export_file_format: str) -> FeatureGroupExport:
         """Export Feature group to console.
@@ -1812,15 +1823,16 @@ class ApiClient(ReadOnlyClient):
             feature_group_id (str): The unique ID associated with the feature group."""
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
-    def create_feature_group_version(self, feature_group_id: str) -> FeatureGroupVersion:
+    def create_feature_group_version(self, feature_group_id: str, variable_bindings: dict = None) -> FeatureGroupVersion:
         """Creates a snapshot for a specified feature group.
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
+            variable_bindings (dict): (JSON Object): JSON object (aka map) defining variable bindings that override parent feature group values.
 
         Returns:
             FeatureGroupVersion: A feature group version."""
-        return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroupVersion)
+        return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'variableBindings': variable_bindings}, parse_type=FeatureGroupVersion)
 
     def cancel_upload(self, upload_id: str):
         """Cancels an upload
@@ -2199,7 +2211,7 @@ class ApiClient(ReadOnlyClient):
             Model: The new model which is being trained."""
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule}, parse_type=Model)
 
-    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None) -> Model:
+    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False) -> Model:
         """Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
         we will provide as arguments to the train and predict functions with the materialized feature groups for those
@@ -2220,10 +2232,12 @@ class ApiClient(ReadOnlyClient):
             name (str): The name you want your model to have. Defaults to "<Project Name> Model"
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
+            training_config (dict): Training configuration
+            exclusive_run (bool): Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
 
         Returns:
             Model: The new model, which has not been trained."""
-        return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainingInputTables': training_input_tables, 'name': name, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainingInputTables': training_input_tables, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'exclusiveRun': exclusive_run}, parse_type=Model)
 
     def create_model_from_zip(self, project_id: str, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None) -> Upload:
         """Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
@@ -2523,7 +2537,7 @@ class ApiClient(ReadOnlyClient):
             output_location (str): the file connector (cloud) location of where to export"""
         return self._call_api('setDeploymentFeatureGroupExportFileConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'fileFormat': file_format, 'outputLocation': output_location})
 
-    def set_deployment_feature_group_export_database_connector_output(self, deployment_id: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None):
+    def set_deployment_feature_group_export_database_connector_output(self, deployment_id: str, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None):
         """Sets the export output for the Feature Group Deployment to be a Database connector.
 
         Args:
@@ -2532,8 +2546,9 @@ class ApiClient(ReadOnlyClient):
             object_name (str): The database connector's object to write to
             write_mode (str): UPSERT or INSERT for writing to the database connector
             database_feature_mapping (dict): The column/feature pairs mapping the features to the database columns
-            id_column (str): The id column to use as the upsert key"""
-        return self._call_api('setDeploymentFeatureGroupExportDatabaseConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column})
+            id_column (str): The id column to use as the upsert key
+            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting"""
+        return self._call_api('setDeploymentFeatureGroupExportDatabaseConnectorOutput', 'POST', query_params={'deploymentId': deployment_id}, body={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'writeMode': write_mode, 'databaseFeatureMapping': database_feature_mapping, 'idColumn': id_column, 'additionalIdColumns': additional_id_columns})
 
     def remove_deployment_feature_group_export_output(self, deployment_id: str):
         """Removes the export type that is set for the Feature Group Deployment
@@ -2754,14 +2769,14 @@ class ApiClient(ReadOnlyClient):
             queries (list): List of Mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See getKNearest for additional information about the supported parameters"""
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries})
 
-    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = 0.5) -> Dict:
+    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: None = None) -> Dict:
         """Returns a list of scored labels from
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted.
-            threshold (float): The minimum output probability that a predicted label must have in order for us to report it."""
+            threshold (None): Deprecated"""
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold})
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = [], score_field: str = '', scaling_factors: list = [], restrict_items: list = [], exclude_items: list = [], explore_fraction: float = 0.0) -> Dict:
@@ -2855,6 +2870,15 @@ class ApiClient(ReadOnlyClient):
             document (str): # TODO"""
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
 
+    def get_classification(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+        """TODO
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            document (str): # TODO"""
+        return self._call_api('getClassification', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document})
+
     def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
@@ -2873,14 +2897,24 @@ class ApiClient(ReadOnlyClient):
             query_data (str): # TODO"""
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
-    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None) -> Dict:
         """Get all positive assignments that match a query.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (dict): specifies the set of assignments being requested."""
-        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
+            query_data (dict): specifies the set of assignments being requested.
+            forced_assignments (dict): set of assignments to force and resolve before returning query results."""
+        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments})
+
+    def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Check for any constraints violated by the overrides.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            query_data (dict): assignment overrides to the solution."""
+        return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data})
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.

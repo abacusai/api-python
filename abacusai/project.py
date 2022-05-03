@@ -120,17 +120,17 @@ class Project(AbstractApiClass):
         """
         return self.client.set_feature_mapping(self.project_id, feature_group_id, feature_name, feature_mapping, nested_column_name)
 
-    def validate(self):
+    def validate(self, feature_group_ids: list = None):
         """
         Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
         Args:
-            project_id (str): The unique ID associated with the project.
+            feature_group_ids (list): The feature group IDS to validate
 
         Returns:
             ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
         """
-        return self.client.validate_project(self.project_id)
+        return self.client.validate_project(self.project_id, feature_group_ids)
 
     def set_column_data_type(self, dataset_id: str, column: str, data_type: str):
         """
@@ -185,7 +185,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
 
-    def get_training_config_options(self):
+    def get_training_config_options(self, feature_group_ids: list = None):
         """
         Retrieves the full description of the model training configuration options available for the specified project.
 
@@ -193,12 +193,12 @@ class Project(AbstractApiClass):
 
 
         Args:
-            project_id (str): The unique ID associated with the project.
+            feature_group_ids (list): The feature group IDs to be used for training
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project.
         """
-        return self.client.get_training_config_options(self.project_id)
+        return self.client.get_training_config_options(self.project_id, feature_group_ids)
 
     def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None):
         """
@@ -218,7 +218,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False):
         """
         Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -239,11 +239,13 @@ class Project(AbstractApiClass):
             name (str): The name you want your model to have. Defaults to "<Project Name> Model"
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
+            training_config (dict): Training configuration
+            exclusive_run (bool): Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
 
         Returns:
             Model: The new model, which has not been trained.
         """
-        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name, cpu_size, memory)
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name, cpu_size, memory, training_config, exclusive_run)
 
     def create_model_from_zip(self, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None):
         """

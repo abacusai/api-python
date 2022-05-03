@@ -172,7 +172,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, file_format, output_location)
 
-    def set_feature_group_export_database_connector_output(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None):
+    def set_feature_group_export_database_connector_output(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None):
         """
         Sets the export output for the Feature Group Deployment to be a Database connector.
 
@@ -182,8 +182,9 @@ class Deployment(AbstractApiClass):
             write_mode (str): UPSERT or INSERT for writing to the database connector
             database_feature_mapping (dict): The column/feature pairs mapping the features to the database columns
             id_column (str): The id column to use as the upsert key
+            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting
         """
-        return self.client.set_deployment_feature_group_export_database_connector_output(self.deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
+        return self.client.set_deployment_feature_group_export_database_connector_output(self.deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column, additional_id_columns)
 
     def remove_feature_group_export_output(self):
         """

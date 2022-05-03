@@ -80,7 +80,7 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format, overwrite)
 
-    def export_to_database_connector(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None):
+    def export_to_database_connector(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None):
         """
         Export Feature group to Database Connector.
 
@@ -90,11 +90,12 @@ class FeatureGroupVersion(AbstractApiClass):
             write_mode (str): Either INSERT or UPSERT
             database_feature_mapping (dict): A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
             id_column (str): Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
+            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting
 
         Returns:
             FeatureGroupExport: The FeatureGroupExport instance
         """
-        return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column)
+        return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column, additional_id_columns)
 
     def export_to_console(self, export_file_format: str):
         """
