@@ -310,11 +310,11 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.validate">
-<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.validate" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.validate" title="Permalink to this definition"></a></dt>
 <dd><p>Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the project.</p>
+<dd class="field-odd"><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – The feature group IDS to validate</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.</p>
@@ -406,12 +406,12 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.get_training_config_options">
-<span class="sig-name descname"><span class="pre">get_training_config_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.get_training_config_options" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_training_config_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.get_training_config_options" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the full description of the model training configuration options available for the specified project.</p>
 <p>The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>] for more information on use cases and use case specific configuration options.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the project.</p>
+<dd class="field-odd"><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – The feature group IDs to be used for training</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An array of options that can be specified when training a model in this project.</p>
@@ -424,7 +424,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.train_model">
-<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.train_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.train_model" title="Permalink to this definition"></a></dt>
 <dd><p>Trains a model for the specified project.</p>
 <p>Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.</p>
 <dl class="field-list simple">
@@ -432,6 +432,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name you want your model to have. Defaults to “&lt;Project Name&gt; Model”.</p></li>
 <li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The training config key/value pairs used to train this model.</p></li>
+<li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature group ids provided by the user to train the model on.</p></li>
 <li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A cron-style string that describes a schedule in UTC to automatically retrain the created model.</p></li>
 </ul>
 </dd>
@@ -446,7 +447,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.create_model_from_python">
-<span class="sig-name descname"><span class="pre">create_model_from_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_input_tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_model_from_python" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_model_from_python</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_input_tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclusive_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_model_from_python" title="Permalink to this definition"></a></dt>
 <dd><p>Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,</p>
 <p>we will provide as arguments to the train and predict functions with the materialized feature groups for those
 input feature groups.</p>
@@ -464,6 +465,8 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name you want your model to have. Defaults to “&lt;Project Name&gt; Model”</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
+<li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Training configuration</p></li>
+<li><p><strong>exclusive_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Decides if this model will be run exclusively OR along with other Abacus.ai algorithms</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -471,6 +474,38 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="../model/index.html#abacusai.model.Model" title="abacusai.model.Model">Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.project.Project.create_model_from_zip">
+<span class="sig-name descname"><span class="pre">create_model_from_zip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict_module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_input_tables</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_model_from_zip" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,</p>
+<p>we will provide as arguments to the train and predict functions with the materialized feature groups for those
+input feature groups.</p>
+<p>This method expects <cite>trainModuleName</cite> and <cite>predictModuleName</cite> to be valid language source files which contains the functions named
+<cite>trainFunctionName</cite> and <cite>predictFunctionName</cite>, respectively. <cite>trainFunctionName</cite> returns the ModelVersion that is the result of
+training the model using <cite>trainFunctionName</cite> and <cite>predictFunctionName</cite> has no well defined return type,
+as it returns the prediction made by the <cite>predictFunctionName</cite>, which can be anything</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Full path of the module that contains the train function from the root of the zip.</p></li>
+<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Full path of the module that contains the predict function from the root of the zip.</p></li>
+<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name you want your model to have. Defaults to “&lt;Project Name&gt; Model”.</p></li>
+<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../upload/index.html#abacusai.upload.Upload" title="abacusai.upload.Upload">Upload</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -494,7 +529,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.create_model_monitor">
-<span class="sig-name descname"><span class="pre">create_model_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_model_monitor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_model_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_model_monitor" title="Permalink to this definition"></a></dt>
 <dd><p>Runs a model monitor for the specified project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -503,6 +538,8 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>prediction_feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID of the prediction data feature group</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name you want your model monitor to have. Defaults to “&lt;Project Name&gt; Model Monitor”.</p></li>
 <li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor</p></li>
+<li><p><strong>target_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A target positive value for the label to compute bias for</p></li>
+<li><p><strong>feature_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -585,7 +622,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.list_refresh_policies">
-<span class="sig-name descname"><span class="pre">list_refresh_policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_prediction_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.list_refresh_policies" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_refresh_policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_prediction_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_metric_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.list_refresh_policies" title="Permalink to this definition"></a></dt>
 <dd><p>List the refresh policies for the organization</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -593,8 +630,9 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>dataset_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Dataset IDs</p></li>
 <li><p><strong>model_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Model IDs</p></li>
 <li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Deployment IDs</p></li>
-<li><p><strong>batch_prediction_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Batch Predictions</p></li>
+<li><p><strong>batch_prediction_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Batch Prediction IDs</p></li>
 <li><p><strong>model_monitor_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Model Monitor IDs.</p></li>
+<li><p><strong>prediction_metric_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – Comma separated list of Prediction Metric IDs,</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

@@ -130,12 +130,12 @@ Classes
       :rtype: Feature
 
 
-   .. py:method:: validate(self)
+   .. py:method:: validate(self, feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
+      :param feature_group_ids: The feature group IDS to validate
+      :type feature_group_ids: list
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
@@ -195,21 +195,21 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: get_training_config_options(self)
+   .. py:method:: get_training_config_options(self, feature_group_ids = None)
 
       Retrieves the full description of the model training configuration options available for the specified project.
 
       The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
 
 
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
+      :param feature_group_ids: The feature group IDs to be used for training
+      :type feature_group_ids: list
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
 
 
-   .. py:method:: train_model(self, name = None, training_config = {}, refresh_schedule = None)
+   .. py:method:: train_model(self, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None)
 
       Trains a model for the specified project.
 
@@ -220,6 +220,8 @@ Classes
       :type name: str
       :param training_config: The training config key/value pairs used to train this model.
       :type training_config: dict
+      :param feature_group_ids: List of feature group ids provided by the user to train the model on.
+      :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
 
@@ -227,7 +229,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None)
+   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)
 
       Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -254,9 +256,47 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
+      :param training_config: Training configuration
+      :type training_config: dict
+      :param exclusive_run: Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
+      :type exclusive_run: bool
 
       :returns: The new model, which has not been trained.
       :rtype: Model
+
+
+   .. py:method:: create_model_from_zip(self, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name = None, cpu_size = None, memory = None)
+
+      Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
+      :type train_module_name: str
+      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
+      :type predict_module_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
+
+      :returns: None
+      :rtype: Upload
 
 
    .. py:method:: list_models(self)
@@ -270,7 +310,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_monitor(self, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None)
+   .. py:method:: create_model_monitor(self, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
@@ -282,6 +322,10 @@ Classes
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
       :type refresh_schedule: str
+      :param target_value: A target positive value for the label to compute bias for
+      :type target_value: str
+      :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+      :type feature_mappings: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -334,7 +378,7 @@ Classes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: list_refresh_policies(self, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [])
+   .. py:method:: list_refresh_policies(self, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [])
 
       List the refresh policies for the organization
 
@@ -344,10 +388,12 @@ Classes
       :type model_ids: list
       :param deployment_ids: Comma separated list of Deployment IDs
       :type deployment_ids: list
-      :param batch_prediction_ids: Comma separated list of Batch Predictions
+      :param batch_prediction_ids: Comma separated list of Batch Prediction IDs
       :type batch_prediction_ids: list
       :param model_monitor_ids: Comma separated list of Model Monitor IDs.
       :type model_monitor_ids: list
+      :param prediction_metric_ids: Comma separated list of Prediction Metric IDs,
+      :type prediction_metric_ids: list
 
       :returns: List of all refresh policies in the organization
       :rtype: RefreshPolicy

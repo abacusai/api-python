@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, useForTraining=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, isIncremental=None, mergeConfig=None, cpuSize=None, memory=None, streamingReady=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, isAboveDataLimitingThreshold=None, isCdsAvailable=None, isCdsActive=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51,8 +51,6 @@ Classes
    :type description: str
    :param featureGroupType: The Project Dataset Type when the Feature Group is used in the context of a project
    :type featureGroupType: str
-   :param useForTraining: used for training
-   :type useForTraining: bool
    :param sqlError: collects the error message with this FeatureGroup
    :type sqlError: str
    :param latestVersionOutdated: Is latest materialized feature group version outdated
@@ -69,16 +67,28 @@ Classes
    :type streamingEnabled: bool
    :param featureGroupUse: The user assigned feature group use which allows for organizing feature groups in a project
    :type featureGroupUse: str
-   :param isIncremental: If feature group corresponds to an incremental dataset.
-   :type isIncremental: bool
+   :param incremental: If feature group corresponds to an incremental dataset.
+   :type incremental: bool
    :param mergeConfig: The merge configuration settings for the feature group.
    :type mergeConfig: dict
+   :param transformConfig: The transform configuration settings for the feature group.
+   :type transformConfig: dict
    :param cpuSize: Cpu size specified for the python feature group.
    :type cpuSize: str
    :param memory: Memory in GB specified for the python feature group.
    :type memory: int
    :param streamingReady: If true, the feature group is ready to receive streaming data
    :type streamingReady: bool
+   :param featureTags:
+   :type featureTags: dict
+   :param moduleName: The path to the file with the feature group function.
+   :type moduleName: str
+   :param isAboveDataLimitingThreshold: Boolean indicating whether one of the source datasets dependencies for feature group instance has data (rows) above the threshold limit (1 million)
+   :type isAboveDataLimitingThreshold: bool
+   :param isCdsAvailable: Boolean indicating whether a custom dataserver (CDS) is available to be deployed
+   :type isCdsAvailable: bool
+   :param isCdsActive: Boolean indicating whether a custom dataserver (CDS) is present
+   :type isCdsActive: bool
    :param features: List of resolved features
    :type features: Feature
    :param duplicateFeatures: List of duplicate features
@@ -185,6 +195,14 @@ Classes
       :type merge_config: dict
 
 
+   .. py:method:: set_transform_config(self, transform_config)
+
+      Set a TransformFeatureGroup’s transform config to the values provided.
+
+      :param transform_config: A json object string specifying the pre-defined transformation.
+      :type transform_config: dict
+
+
    .. py:method:: set_schema(self, schema)
 
       Creates a new schema and points the feature group to the new feature group schema id.
@@ -230,6 +248,22 @@ Classes
       Removes a tag from the feature group
 
       :param tag: The tag to add to the feature group
+      :type tag: str
+
+
+   .. py:method:: add_feature_tag(self, feature, tag)
+
+      :param feature:
+      :type feature: str
+      :param tag:
+      :type tag: str
+
+
+   .. py:method:: remove_feature_tag(self, feature, tag)
+
+      :param feature:
+      :type feature: str
+      :param tag:
       :type tag: str
 
 
@@ -368,7 +402,7 @@ Classes
       :type history_window_key: str
       :param history_aggregation_keys: List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
       :type history_aggregation_keys: list
-      :param lookback_window: Number of seconds in the past from the current time for start of the window.
+      :param lookback_window: Number of seconds in the past from the current time for start of the window. If 0, the lookback will include all rows.
       :type lookback_window: float
       :param lookback_window_lag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
       :type lookback_window_lag: float
@@ -486,6 +520,14 @@ Classes
       :type skip_materialize: bool
 
 
+   .. py:method:: remove_concatenation_config(self)
+
+      Removes the concatenation config on a destination feature group.
+
+      :param feature_group_id: Removes the concatenation configuration on a destination feature group
+      :type feature_group_id: str
+
+
    .. py:method:: refresh(self)
 
       Calls describe and refreshes the current object's fields
@@ -556,6 +598,25 @@ Classes
 
       :returns: The updated feature group
       :rtype: FeatureGroup
+
+
+   .. py:method:: update_zip(self, function_name, module_name, input_feature_groups = None, cpu_size = None, memory = None)
+
+      Updates the zip for a feature group created using createFeatureGroupFromZip
+
+      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+      :type function_name: str
+      :param module_name: Path to the file with the feature group function.
+      :type module_name: str
+      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type input_feature_groups: list
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
+
+      :returns: The Upload to upload the zip file to
+      :rtype: Upload
 
 
    .. py:method:: update_feature(self, name, select_expression = None, new_name = None)
@@ -654,12 +715,12 @@ Classes
       :type feature_group_id: str
 
 
-   .. py:method:: create_version(self)
+   .. py:method:: create_version(self, variable_bindings = None)
 
       Creates a snapshot for a specified feature group.
 
-      :param feature_group_id: The unique ID associated with the feature group.
-      :type feature_group_id: str
+      :param variable_bindings: (JSON Object): JSON object (aka map) defining variable bindings that override parent feature group values.
+      :type variable_bindings: dict
 
       :returns: A feature group version.
       :rtype: FeatureGroupVersion
@@ -704,6 +765,22 @@ Classes
       :type streaming_token: str
       :param data: The data to record
       :type data: dict
+
+
+   .. py:method:: wait_for_dataset(self, timeout = 7200)
+
+          A waiting call until the feature group's dataset, if any, is ready for use.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
+      :type timeout: int, optional
+
+
+   .. py:method:: wait_for_upload(self, timeout = 7200)
+
+          Waits for a feature group created from a dataframe to be ready for materialization and version creation.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
+      :type timeout: int, optional
 
 
    .. py:method:: wait_for_materialization(self, timeout = 7200)

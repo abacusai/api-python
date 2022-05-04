@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={})
+.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={}, pointInTimeGroups={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27,6 +27,8 @@ Classes
    :type client: ApiClient
    :param featureGroupVersion: The unique identifier for this version of feature group.
    :type featureGroupVersion: str
+   :param featureGroupId:
+   :type featureGroupId: str
    :param sql: The sql definition creating this feature group.
    :type sql: str
    :param sourceTables: The source tables for this feature group.
@@ -45,6 +47,8 @@ Classes
    :type memory: int
    :param features: List of features.
    :type features: Feature
+   :param pointInTimeGroups: List of Point In Time Groups
+   :type pointInTimeGroups: PointInTimeGroup
 
    .. py:method:: __repr__(self)
 
@@ -57,6 +61,15 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+   .. py:method:: create_snapshot_feature_group(self, table_name)
+
+      :param table_name:
+      :type table_name: str
+
+      :returns: None
+      :rtype: FeatureGroup
 
 
    .. py:method:: export_to_file_connector(self, location, export_file_format, overwrite = False)
@@ -74,7 +87,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None)
+   .. py:method:: export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Export Feature group to Database Connector.
 
@@ -88,6 +101,8 @@ Classes
       :type database_feature_mapping: dict
       :param id_column: Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
       :type id_column: str
+      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+      :type additional_id_columns: list
 
       :returns: The FeatureGroupExport instance
       :rtype: FeatureGroupExport

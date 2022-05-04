@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: RefreshPipelineRun(client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, modelVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={})
+.. py:class:: RefreshPipelineRun(client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, modelVersions=None, predictionMetricVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43,6 +43,8 @@ Classes
    :type datasetVersions: list of string identifiers
    :param modelVersions: Comma separated list of Model version IDs that this refresh pipeline run is monitoring
    :type modelVersions: list of string identifiers
+   :param predictionMetricVersions:
+   :type predictionMetricVersions: list
    :param deploymentVersions: Comma separated list of Deployment version IDs that this refresh pipeline run is monitoring
    :type deploymentVersions: list of string identifiers
    :param batchPredictions: Comma separated list of batch predictionn IDs that this refresh pipeline run is monitoring

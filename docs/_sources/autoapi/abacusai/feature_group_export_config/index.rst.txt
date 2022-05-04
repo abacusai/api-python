@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupExportConfig(client, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None)
+.. py:class:: FeatureGroupExportConfig(client, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, additionalIdColumns=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39,6 +39,8 @@ Classes
    :type databaseFeatureMapping: dict
    :param idColumn: The id column to use as the upsert key
    :type idColumn: str
+   :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+   :type additionalIdColumns: str
 
    .. py:method:: __repr__(self)
 

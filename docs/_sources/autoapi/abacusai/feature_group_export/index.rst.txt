@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None)
+.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51,6 +51,8 @@ Classes
    :type createdAt: str
    :param exportCompletedAt: The timestamp at which the export completed
    :type exportCompletedAt: str
+   :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+   :type additionalIdColumns: list of string
 
    .. py:method:: __repr__(self)
 

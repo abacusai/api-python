@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Dataset(client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
+.. py:class:: Dataset(client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isAboveDataLimitingThreshold=None, isCdsAvailable=None, isCdsActive=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53,6 +53,14 @@ Classes
    :type applicationConnectorId: str
    :param applicationConnectorConfig: The application connector query used to retrieve data.
    :type applicationConnectorConfig: dict
+   :param incremental: If dataset is an incremental dataset.
+   :type incremental: bool
+   :param isAboveDataLimitingThreshold: Boolean indicating whether dataset has data (rows) above the threshold limit (1 million)
+   :type isAboveDataLimitingThreshold: bool
+   :param isCdsAvailable: Boolean indicating whether a custom dataserver (CDS) is available to be deployed
+   :type isCdsAvailable: bool
+   :param isCdsActive: Boolean indicating whether a custom dataserver (CDS) is present
+   :type isCdsActive: bool
    :param latestDatasetVersion: The latest version of this dataset.
    :type latestDatasetVersion: DatasetVersion
    :param schema: List of resolved columns.

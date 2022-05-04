@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, location={}, refreshSchedules={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, location={}, refreshSchedules={}, latestModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53,6 +53,8 @@ Classes
    :type cpuSize: str
    :param memory: Memory in GB specified for the python model training.
    :type memory: int
+   :param trainingFeatureGroupIds: The unique identifiers of the feature groups used as the inputs to train this model on.
+   :type trainingFeatureGroupIds: list of unique string identifiers
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -130,6 +132,38 @@ Classes
       :rtype: Model
 
 
+   .. py:method:: update_python_zip(self, train_function_name = None, predict_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None)
+
+      Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
+      :type train_module_name: str
+      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
+      :type predict_module_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
+
+      :returns: The updated model
+      :rtype: Upload
+
+
    .. py:method:: set_training_config(self, training_config)
 
       Edits the default model training config
@@ -181,12 +215,14 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: retrain(self, deployment_ids = [])
+   .. py:method:: retrain(self, deployment_ids = [], feature_group_ids = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
       :param deployment_ids: List of deployments to automatically deploy to.
       :type deployment_ids: list
+      :param feature_group_ids: List of feature group ids provided by the user to train the model on.
+      :type feature_group_ids: list
 
       :returns: The model that is being retrained.
       :rtype: Model

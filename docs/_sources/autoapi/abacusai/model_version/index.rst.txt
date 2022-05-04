@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None)
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55,6 +55,8 @@ Classes
    :type memory: int
    :param automlComplete: If true, all algorithms have compelted training
    :type automlComplete: bool
+   :param trainingFeatureGroupIds: The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
+   :type trainingFeatureGroupIds: list of unique string identifiers
 
    .. py:method:: __repr__(self)
 

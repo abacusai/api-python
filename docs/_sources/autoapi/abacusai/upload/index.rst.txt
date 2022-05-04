@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Upload(client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None)
+.. py:class:: Upload(client, uploadId=None, datasetUploadId=None, status=None, datasetId=None, datasetVersion=None, modelId=None, modelVersion=None, batchPredictionId=None, parts=None, createdAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,6 +35,8 @@ Classes
    :type datasetId: str
    :param datasetVersion: A reference to the dataset version the upload is adding data to.
    :type datasetVersion: str
+   :param modelId: A reference the model the upload is creating a version for
+   :type modelId: str
    :param modelVersion: A reference to the model version the upload is creating.
    :type modelVersion: str
    :param batchPredictionId: A reference to the batch prediction the upload is creating.

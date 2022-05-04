@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, invalidRecords=None)
+.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, invalidRecords=None, incrementalQueriedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41,6 +41,8 @@ Classes
    :type error: str
    :param invalidRecords:
    :type invalidRecords: str
+   :param incrementalQueriedAt: If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
+   :type incrementalQueriedAt: str
 
    .. py:method:: __repr__(self)
 

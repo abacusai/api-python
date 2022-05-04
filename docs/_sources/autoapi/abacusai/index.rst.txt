@@ -146,7 +146,33 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_model_from_functions(self, project_id, train_function, predict_function, training_input_tables = None)
+   .. py:method:: create_feature_group_from_spark_df(self, table_name, df, should_wait_for_upload = False, timeout = 7200)
+
+      Create an Abacus Feature Group from a local Spark DataFrame.
+
+      :param df: The dataframe to upload
+      :type df: pyspark.sql.DataFrame
+      :param table_name: The table name to assign to the feature group created by this call
+      :type table_name: str
+      :param should_wait_for_upload: Wait for dataframe to upload before returning. Some FeatureGroup methods, like materialization, may not work until upload is complete.
+      :type should_wait_for_upload: bool
+      :param timeout: If waiting for upload, time out after this limit.
+      :type timeout: int, optional
+
+
+   .. py:method:: create_spark_df_from_feature_group_version(self, session, feature_group_version)
+
+      Create a Spark Dataframe in the provided Spark Session context, for a materialized Abacus Feature Group Version.
+
+      :param session: Spark session
+      :type session: pyspark.sql.SparkSession
+      :param feature_group_version: Feature group version to load from
+      :type feature_group_version: str
+
+      :returns: pyspark.sql.DataFrame
+
+
+   .. py:method:: create_model_from_functions(self, project_id, train_function, predict_function, training_input_tables = None, training_config = None, exclusive_run = False)
 
       Creates a model from a python function
 
@@ -261,7 +287,7 @@ Attributes
 
       :param name: The project's name
       :type name: str
-      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  NLP_HYBRID,  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_DOCUMENT_VISUALIZATION,  ANOMALYEVENTSTREAM,  UCPLUGANDPLAY,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  DECO_REALTIME,  DECO_HOSTMON,  DECO_VECTOR,  DECO_EXPDEB,  VISION_SEGMENTATION,  VISION,  VISION_HYBRID,  FEATURE_DRIFT.
+      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details refer to
@@ -455,6 +481,29 @@ Attributes
       :rtype: FeatureGroup
 
 
+   .. py:method:: create_feature_group_from_zip(self, table_name, function_name, module_name, input_feature_groups = None, description = None, cpu_size = None, memory = None)
+
+      Creates a new feature group from a ZIP file.
+
+      :param table_name: The unique name to be given to the feature group.
+      :type table_name: str
+      :param function_name: Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
+      :type function_name: str
+      :param module_name: Path to the file with the feature group function.
+      :type module_name: str
+      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type input_feature_groups: list
+      :param description: The description about the feature group.
+      :type description: str
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
+
+      :returns: The Upload to upload the zip file to
+      :rtype: Upload
+
+
    .. py:method:: create_sampling_feature_group(self, feature_group_id, table_name, sampling_config, description = None)
 
       Creates a new feature group defined as a sample of rows from another feature group.
@@ -479,7 +528,7 @@ Attributes
 
       Creates a new feature group defined as the union of other feature group versions.
 
-      :param source_feature_group_id:
+      :param source_feature_group_id: ID corresponding to the dataset feature group that will have its versions merged into this feature group.
       :type source_feature_group_id: str
       :param table_name: The unique name to be given to this merge feature group.
       :type table_name: str
@@ -489,6 +538,34 @@ Attributes
       :type description: str
 
       :returns: The created feature group.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_transform_feature_group(self, source_feature_group_id, table_name, transform_config, description = None)
+
+      Creates a new feature group defined as a pre-defined transform on another feature group.
+
+      :param source_feature_group_id: ID corresponding to the feature group that will have the transformation applied.
+      :type source_feature_group_id: str
+      :param table_name: The unique name to be given to this transform feature group.
+      :type table_name: str
+      :param transform_config: JSON object (aka map) defining the transform and its parameters.
+      :type transform_config: dict
+      :param description: A human-readable description of this feature group.
+      :type description: str
+
+      :returns: The created feature group.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_snapshot_feature_group(self, feature_group_version, table_name)
+
+      :param feature_group_version:
+      :type feature_group_version: str
+      :param table_name:
+      :type table_name: str
+
+      :returns: None
       :rtype: FeatureGroup
 
 
@@ -516,6 +593,16 @@ Attributes
       :type feature_group_id: str
       :param merge_config: A json object string specifying the merge rule. An empty mergeConfig will default to only including the latest Dataset Version.
       :type merge_config: dict
+
+
+   .. py:method:: set_feature_group_transform_config(self, feature_group_id, transform_config)
+
+      Set a TransformFeatureGroup’s transform config to the values provided.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param transform_config: A json object string specifying the pre-defined transformation.
+      :type transform_config: dict
 
 
    .. py:method:: set_feature_group_schema(self, feature_group_id, schema)
@@ -560,6 +647,26 @@ Attributes
       :param feature_group_id: The feature group
       :type feature_group_id: str
       :param tag: The tag to add to the feature group
+      :type tag: str
+
+
+   .. py:method:: add_feature_tag(self, feature_group_id, feature, tag)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param feature:
+      :type feature: str
+      :param tag:
+      :type tag: str
+
+
+   .. py:method:: remove_feature_tag(self, feature_group_id, feature, tag)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param feature:
+      :type feature: str
+      :param tag:
       :type tag: str
 
 
@@ -710,7 +817,7 @@ Attributes
       :type history_window_key: str
       :param history_aggregation_keys: List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
       :type history_aggregation_keys: list
-      :param lookback_window: Number of seconds in the past from the current time for start of the window.
+      :param lookback_window: Number of seconds in the past from the current time for start of the window. If 0, the lookback will include all rows.
       :type lookback_window: float
       :param lookback_window_lag: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
       :type lookback_window_lag: float
@@ -842,6 +949,14 @@ Attributes
       :type skip_materialize: bool
 
 
+   .. py:method:: remove_concatenation_config(self, feature_group_id)
+
+      Removes the concatenation config on a destination feature group.
+
+      :param feature_group_id: Removes the concatenation configuration on a destination feature group
+      :type feature_group_id: str
+
+
    .. py:method:: set_feature_group_indexing_config(self, feature_group_id, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Sets various attributes of the feature group used for deployment lookups and streaming updates.
@@ -903,6 +1018,27 @@ Attributes
       :rtype: FeatureGroup
 
 
+   .. py:method:: update_feature_group_zip(self, feature_group_id, function_name, module_name, input_feature_groups = None, cpu_size = None, memory = None)
+
+      Updates the zip for a feature group created using createFeatureGroupFromZip
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+      :type function_name: str
+      :param module_name: Path to the file with the feature group function.
+      :type module_name: str
+      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type input_feature_groups: list
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
+
+      :returns: The Upload to upload the zip file to
+      :rtype: Upload
+
+
    .. py:method:: update_feature(self, feature_group_id, name, select_expression = None, new_name = None)
 
       Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
@@ -937,7 +1073,7 @@ Attributes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_feature_group_version_to_database_connector(self, feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None)
+   .. py:method:: export_feature_group_version_to_database_connector(self, feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Export Feature group to Database Connector.
 
@@ -953,6 +1089,8 @@ Attributes
       :type database_feature_mapping: dict
       :param id_column: Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
       :type id_column: str
+      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+      :type additional_id_columns: list
 
       :returns: The FeatureGroupExport instance
       :rtype: FeatureGroupExport
@@ -1042,12 +1180,14 @@ Attributes
       :type feature_group_id: str
 
 
-   .. py:method:: create_feature_group_version(self, feature_group_id)
+   .. py:method:: create_feature_group_version(self, feature_group_id, variable_bindings = None)
 
       Creates a snapshot for a specified feature group.
 
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
+      :param variable_bindings: (JSON Object): JSON object (aka map) defining variable bindings that override parent feature group values.
+      :type variable_bindings: dict
 
       :returns: A feature group version.
       :rtype: FeatureGroupVersion
@@ -1087,7 +1227,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(self, name, table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, merge_config = None)
+   .. py:method:: create_dataset_from_file_connector(self, name, table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -1113,8 +1253,8 @@ Attributes
       :type location_date_format: str
       :param date_format_lookback_days: The number of days to look back from the current day for import locations that are date partitioned. E.g., import date, 2021-06-04, with date_format_lookback_days = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
       :type date_format_lookback_days: int
-      :param merge_config: Struct for specifying an incremental dataset and the merge rule associated with it.
-      :type merge_config: dict
+      :param incremental: Signifies if the dataset is an incremental dataset.
+      :type incremental: bool
 
       :returns: The dataset created.
       :rtype: Dataset
@@ -1137,7 +1277,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_database_connector(self, name, table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None)
+   .. py:method:: create_dataset_from_database_connector(self, name, table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, timestamp_column = None)
 
       Creates a dataset from a Database Connector
 
@@ -1155,8 +1295,12 @@ Attributes
       :type query_arguments: str
       :param refresh_schedule: The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
       :type refresh_schedule: str
-      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, timestampColumn, and queryArguments
       :type sql_query: str
+      :param incremental: Signifies if the dataset is an incremental dataset.
+      :type incremental: bool
+      :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
+      :type timestamp_column: str
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -1409,6 +1553,32 @@ Attributes
       :rtype: FileConnectorVerification
 
 
+   .. py:method:: verify_streaming_connector(self, streaming_connector_id)
+
+      Checks to see if Abacus.AI can access the streaming connector.
+
+      :param streaming_connector_id: The unique identifier for the streaming connector.
+      :type streaming_connector_id: str
+
+
+   .. py:method:: rename_streaming_connector(self, streaming_connector_id, name)
+
+      Renames a Streaming Connector
+
+      :param streaming_connector_id: The unique identifier for the streaming connector.
+      :type streaming_connector_id: str
+      :param name: A new name for the streaming connector
+      :type name: str
+
+
+   .. py:method:: delete_streaming_connector(self, streaming_connector_id)
+
+      Delete a streaming connector.
+
+      :param streaming_connector_id: The unique identifier for the streaming connector.
+      :type streaming_connector_id: str
+
+
    .. py:method:: create_streaming_token(self)
 
       Creates a streaming token for the specified project. Streaming tokens are used to authenticate requests to append data to streaming datasets.
@@ -1474,7 +1644,7 @@ Attributes
       :type dataset_id: str
 
 
-   .. py:method:: train_model(self, project_id, name = None, training_config = {}, refresh_schedule = None)
+   .. py:method:: train_model(self, project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None)
 
       Trains a model for the specified project.
 
@@ -1487,6 +1657,8 @@ Attributes
       :type name: str
       :param training_config: The training config key/value pairs used to train this model.
       :type training_config: dict
+      :param feature_group_ids: List of feature group ids provided by the user to train the model on.
+      :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
 
@@ -1494,7 +1666,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(self, project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None)
+   .. py:method:: create_model_from_python(self, project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)
 
       Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -1523,9 +1695,49 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
+      :param training_config: Training configuration
+      :type training_config: dict
+      :param exclusive_run: Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
+      :type exclusive_run: bool
 
       :returns: The new model, which has not been trained.
       :rtype: Model
+
+
+   .. py:method:: create_model_from_zip(self, project_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name = None, cpu_size = None, memory = None)
+
+      Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
+      :type train_module_name: str
+      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
+      :type predict_module_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
+
+      :returns: None
+      :rtype: Upload
 
 
    .. py:method:: rename_model(self, model_id, name)
@@ -1570,6 +1782,40 @@ Attributes
       :rtype: Model
 
 
+   .. py:method:: update_python_model_zip(self, model_id, train_function_name = None, predict_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None)
+
+      Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param model_id: The unique ID associated with the Python model to be changed.
+      :type model_id: str
+      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
+      :type train_module_name: str
+      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
+      :type predict_module_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
+
+      :returns: The updated model
+      :rtype: Upload
+
+
    .. py:method:: set_model_training_config(self, model_id, training_config)
 
       Edits the default model training config
@@ -1596,7 +1842,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(self, model_id, deployment_ids = [])
+   .. py:method:: retrain_model(self, model_id, deployment_ids = [], feature_group_ids = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -1604,6 +1850,8 @@ Attributes
       :type model_id: str
       :param deployment_ids: List of deployments to automatically deploy to.
       :type deployment_ids: list
+      :param feature_group_ids: List of feature group ids provided by the user to train the model on.
+      :type feature_group_ids: list
 
       :returns: The model that is being retrained.
       :rtype: Model
@@ -1625,7 +1873,7 @@ Attributes
       :type model_version: str
 
 
-   .. py:method:: create_model_monitor(self, project_id, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None)
+   .. py:method:: create_model_monitor(self, project_id, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
@@ -1639,6 +1887,10 @@ Attributes
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
       :type refresh_schedule: str
+      :param target_value: A target positive value for the label to compute bias for
+      :type target_value: str
+      :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+      :type feature_mappings: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -1823,7 +2075,7 @@ Attributes
       :type output_location: str
 
 
-   .. py:method:: set_deployment_feature_group_export_database_connector_output(self, deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None)
+   .. py:method:: set_deployment_feature_group_export_database_connector_output(self, deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Sets the export output for the Feature Group Deployment to be a Database connector.
 
@@ -1839,6 +2091,8 @@ Attributes
       :type database_feature_mapping: dict
       :param id_column: The id column to use as the upsert key
       :type id_column: str
+      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+      :type additional_id_columns: list
 
 
    .. py:method:: remove_deployment_feature_group_export_output(self, deployment_id)
@@ -2022,9 +2276,9 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, explain_predictions = False, fixed_features = None, nested = None)
+   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None)
 
-      Returns a prediction for regression classification
+      Returns a classification prediction
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -2036,6 +2290,8 @@ Attributes
       :type threshold: float
       :param threshold_class: label upon which the threshold is added (Binary labels only)
       :type threshold_class: str
+      :param thresholds: maps labels to thresholds (Multi label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5
+      :type thresholds: list
       :param explain_predictions: If true, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
       :param fixed_features: Set of input features to treat as constant for explanations.
@@ -2136,7 +2392,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = 0.5)
+   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = None)
 
       Returns a list of scored labels from
 
@@ -2146,8 +2402,8 @@ Attributes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
-      :param threshold: The minimum output probability that a predicted label must have in order for us to report it.
-      :type threshold: float
+      :param threshold: Deprecated
+      :type threshold: None
 
 
    .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
@@ -2178,7 +2434,7 @@ Attributes
       :type explore_fraction: float
 
 
-   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
 
       Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -2190,11 +2446,13 @@ Attributes
       :type query_data: dict
       :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
       :type preserve_ranks: list
+      :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
+      :type preserve_unknown_items: bool
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -2206,6 +2464,8 @@ Attributes
       :type query_data: dict
       :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
       :type preserve_ranks: list
+      :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
+      :type preserve_unknown_items: bool
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
@@ -2278,6 +2538,30 @@ Attributes
       :type document: str
 
 
+   .. py:method:: get_classification(self, deployment_token, deployment_id, document)
+
+      TODO
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param document: # TODO
+      :type document: str
+
+
+   .. py:method:: get_summary(self, deployment_token, deployment_id, query_data)
+
+      Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Raw Data dictionary containing the required document data - must have a key document corresponding to a DOCUMENT type text as value.
+      :type query_data: dict
+
+
    .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
 
       TODO
@@ -2288,6 +2572,32 @@ Attributes
       :type deployment_id: str
       :param query_data: # TODO
       :type query_data: str
+
+
+   .. py:method:: get_assignments(self, deployment_token, deployment_id, query_data, forced_assignments = None)
+
+      Get all positive assignments that match a query.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: specifies the set of assignments being requested.
+      :type query_data: dict
+      :param forced_assignments: set of assignments to force and resolve before returning query results.
+      :type forced_assignments: dict
+
+
+   .. py:method:: check_constraints(self, deployment_token, deployment_id, query_data)
+
+      Check for any constraints violated by the overrides.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: assignment overrides to the solution.
+      :type query_data: dict
 
 
    .. py:method:: create_batch_prediction(self, deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
@@ -2788,12 +3098,14 @@ Attributes
       :rtype: Schema
 
 
-   .. py:method:: validate_project(self, project_id)
+   .. py:method:: validate_project(self, project_id, feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
+      :param feature_group_ids: The feature group IDS to validate
+      :type feature_group_ids: list
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
@@ -3114,7 +3426,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: get_training_config_options(self, project_id)
+   .. py:method:: get_training_config_options(self, project_id, feature_group_ids = None)
 
       Retrieves the full description of the model training configuration options available for the specified project.
 
@@ -3123,6 +3435,8 @@ Attributes
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
+      :param feature_group_ids: The feature group IDs to be used for training
+      :type feature_group_ids: list
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
@@ -3347,7 +3661,7 @@ Attributes
       :rtype: RefreshPipelineRun
 
 
-   .. py:method:: list_refresh_policies(self, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [])
+   .. py:method:: list_refresh_policies(self, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [])
 
       List the refresh policies for the organization
 
@@ -3359,10 +3673,12 @@ Attributes
       :type model_ids: list
       :param deployment_ids: Comma separated list of Deployment IDs
       :type deployment_ids: list
-      :param batch_prediction_ids: Comma separated list of Batch Predictions
+      :param batch_prediction_ids: Comma separated list of Batch Prediction IDs
       :type batch_prediction_ids: list
       :param model_monitor_ids: Comma separated list of Model Monitor IDs.
       :type model_monitor_ids: list
+      :param prediction_metric_ids: Comma separated list of Prediction Metric IDs,
+      :type prediction_metric_ids: list
 
       :returns: List of all refresh policies in the organization
       :rtype: RefreshPolicy
@@ -3456,6 +3772,18 @@ Attributes
 
    :param client_options: Optional API client configurations
    :type client_options: ClientOptions
+
+   .. py:method:: predict_raw(self, deployment_token, deployment_id, **kwargs)
+
+      Raw interface for returning predictions from Plug and Play deployments.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param \*\*kwargs: Arbitrary key/value pairs may be passed in and is sent as part of the request body.
+      :type \*\*kwargs: dict
+
 
    .. py:method:: lookup_features(self, deployment_token, deployment_id, query_data = {})
 
@@ -3553,9 +3881,9 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, explain_predictions = False, fixed_features = None, nested = None)
+   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None)
 
-      Returns a prediction for regression classification
+      Returns a classification prediction
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -3567,6 +3895,8 @@ Attributes
       :type threshold: float
       :param threshold_class: label upon which the threshold is added (Binary labels only)
       :type threshold_class: str
+      :param thresholds: maps labels to thresholds (Multi label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5
+      :type thresholds: list
       :param explain_predictions: If true, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
       :param fixed_features: Set of input features to treat as constant for explanations.
@@ -3667,7 +3997,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = 0.5)
+   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = None)
 
       Returns a list of scored labels from
 
@@ -3677,8 +4007,8 @@ Attributes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
-      :param threshold: The minimum output probability that a predicted label must have in order for us to report it.
-      :type threshold: float
+      :param threshold: Deprecated
+      :type threshold: None
 
 
    .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
@@ -3709,7 +4039,7 @@ Attributes
       :type explore_fraction: float
 
 
-   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
 
       Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -3721,11 +4051,13 @@ Attributes
       :type query_data: dict
       :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
       :type preserve_ranks: list
+      :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
+      :type preserve_unknown_items: bool
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], scaling_factors = [])
+   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -3737,6 +4069,8 @@ Attributes
       :type query_data: dict
       :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
       :type preserve_ranks: list
+      :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
+      :type preserve_unknown_items: bool
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
@@ -3809,6 +4143,30 @@ Attributes
       :type document: str
 
 
+   .. py:method:: get_classification(self, deployment_token, deployment_id, document)
+
+      TODO
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param document: # TODO
+      :type document: str
+
+
+   .. py:method:: get_summary(self, deployment_token, deployment_id, query_data)
+
+      Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Raw Data dictionary containing the required document data - must have a key document corresponding to a DOCUMENT type text as value.
+      :type query_data: dict
+
+
    .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
 
       TODO
@@ -3821,9 +4179,35 @@ Attributes
       :type query_data: str
 
 
+   .. py:method:: get_assignments(self, deployment_token, deployment_id, query_data, forced_assignments = None)
+
+      Get all positive assignments that match a query.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: specifies the set of assignments being requested.
+      :type query_data: dict
+      :param forced_assignments: set of assignments to force and resolve before returning query results.
+      :type forced_assignments: dict
+
+
+   .. py:method:: check_constraints(self, deployment_token, deployment_id, query_data)
+
+      Check for any constraints violated by the overrides.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: assignment overrides to the solution.
+      :type query_data: dict
+
+
 
 .. py:data:: __version__
-   :annotation: = 0.35.0
+   :annotation: = 0.36.0
 
    
 

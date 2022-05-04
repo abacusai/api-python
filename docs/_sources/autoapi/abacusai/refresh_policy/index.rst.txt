@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, paused=None)
+.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, paused=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,6 +45,8 @@ Classes
    :type modelIds: list of unique identifiers of type 'string'
    :param deploymentIds: Comma separated list of Deployment IDs that this refresh policy applies to
    :type deploymentIds: list of unique identifiers of type 'string'
+   :param predictionMetricIds: Comma separated list of Prediction Metric IDs that this refresh policy applies to
+   :type predictionMetricIds: list of unique identifiers of type 'string'
    :param paused: (Boolean): True if the refresh policy is paused
    :type paused: bool
 
