@@ -275,6 +275,37 @@ class Project(AbstractApiClass):
         """
         return self.client.create_model_from_zip(self.project_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name, cpu_size, memory)
 
+    def create_model_from_git(self, application_connector_id: str, branch_name: str, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, code_path: str = None, name: str = None, cpu_size: str = None, memory: int = None):
+        """
+        Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+        Args:
+            application_connector_id (str): The unique ID associated with the git application connector.
+            branch_name (str): Name of the branch in the git repository to be used for training.
+            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
+            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
+            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            code_path (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
+            cpu_size (str): Size of the cpu for the model training function
+            memory (int): Memory (in GB) for the model training function
+
+        Returns:
+            Model: None
+        """
+        return self.client.create_model_from_git(self.project_id, application_connector_id, branch_name, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, code_path, name, cpu_size, memory)
+
     def list_models(self):
         """
         Retrieves the list of models in the specified project.

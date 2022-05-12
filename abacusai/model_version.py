@@ -1,3 +1,4 @@
+from .code_source import CodeSource
 from .return_class import AbstractApiClass
 
 
@@ -23,9 +24,10 @@ class ModelVersion(AbstractApiClass):
             memory (int): Memory in GB specified for the python model training.
             automlComplete (bool): If true, all algorithms have compelted training
             trainingFeatureGroupIds (list of unique string identifiers): The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
+            codeSource (CodeSource): If a python model, information on where the source code
     """
 
-    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None):
+    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, codeSource={}):
         super().__init__(client, modelVersion)
         self.model_version = modelVersion
         self.status = status
@@ -43,9 +45,10 @@ class ModelVersion(AbstractApiClass):
         self.memory = memory
         self.automl_complete = automlComplete
         self.training_feature_group_ids = trainingFeatureGroupIds
+        self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)})"
+        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -54,7 +57,7 @@ class ModelVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids}
+        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'code_source': self._get_attribute_as_dict(self.code_source)}
 
     def delete(self):
         """

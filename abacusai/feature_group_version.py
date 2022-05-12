@@ -1,6 +1,7 @@
 import io
 from concurrent.futures import ThreadPoolExecutor
 
+from .code_source import CodeSource
 from .feature import Feature
 from .point_in_time_group import PointInTimeGroup
 from .return_class import AbstractApiClass
@@ -24,9 +25,10 @@ class FeatureGroupVersion(AbstractApiClass):
             memory (int): Memory in GB specified for the python feature group.
             features (Feature): List of features.
             pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
+            codeSource (CodeSource): If a python feature group, information on the source code
     """
 
-    def __init__(self, client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={}, pointInTimeGroups={}):
+    def __init__(self, client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={}, pointInTimeGroups={}, codeSource={}):
         super().__init__(client, featureGroupVersion)
         self.feature_group_version = featureGroupVersion
         self.feature_group_id = featureGroupId
@@ -41,9 +43,10 @@ class FeatureGroupVersion(AbstractApiClass):
         self.features = client._build_class(Feature, features)
         self.point_in_time_groups = client._build_class(
             PointInTimeGroup, pointInTimeGroups)
+        self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  features={repr(self.features)},\n  point_in_time_groups={repr(self.point_in_time_groups)})"
+        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  features={repr(self.features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -52,7 +55,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_version': self.feature_group_version, 'feature_group_id': self.feature_group_id, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups)}
+        return {'feature_group_version': self.feature_group_version, 'feature_group_id': self.feature_group_id, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'code_source': self._get_attribute_as_dict(self.code_source)}
 
     def create_snapshot_feature_group(self, table_name: str):
         """

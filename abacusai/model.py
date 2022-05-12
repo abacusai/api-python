@@ -1,5 +1,6 @@
 import time
 
+from .code_source import CodeSource
 from .model_location import ModelLocation
 from .model_version import ModelVersion
 from .refresh_schedule import RefreshSchedule
@@ -30,9 +31,10 @@ class Model(AbstractApiClass):
             latestModelVersion (ModelVersion): The latest model version.
             location (ModelLocation): Location information for models that are imported.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained
+            codeSource (CodeSource): If a python model, information on the source code
     """
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, location={}, refreshSchedules={}, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
         super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
@@ -52,11 +54,12 @@ class Model(AbstractApiClass):
         self.location = client._build_class(ModelLocation, location)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
+        self.code_source = client._build_class(CodeSource, codeSource)
         self.latest_model_version = client._build_class(
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
 
     def to_dict(self):
         """
@@ -65,7 +68,7 @@ class Model(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
     def refresh(self):
         """
@@ -150,6 +153,36 @@ class Model(AbstractApiClass):
             Upload: The updated model
         """
         return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
+
+    def update_python_git(self, application_connector_id: str = None, branch_name: str = None, code_path: str = None, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
+        """
+        Updates an existing python Model using an existing git application connector. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+        Args:
+            application_connector_id (str): The unique ID associated with the git application connector.
+            branch_name (str): Name of the branch in the git repository to be used for training.
+            code_path (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
+            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
+            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            cpu_size (str): Size of the cpu for the model training function
+            memory (int): Memory (in GB) for the model training function
+
+        Returns:
+            Model: The updated model
+        """
+        return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, code_path, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
 
     def set_training_config(self, training_config: dict):
         """

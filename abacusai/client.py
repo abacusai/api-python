@@ -139,7 +139,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.0'
+    client_version = '0.36.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -263,7 +263,9 @@ class BaseApiClient:
         return obj.refresh()
 
     def _upload_from_df(self, upload, df):
-        with io.BytesIO(df.to_parquet()) as parquet_out:
+        with io.BytesIO() as parquet_out:
+            df.to_parquet(parquet_out)
+            parquet_out.seek(0)
             return upload.upload_file(parquet_out)
 
 
@@ -2266,6 +2268,36 @@ class ApiClient(ReadOnlyClient):
             Upload: None"""
         return self._call_api('createModelFromZip', 'POST', query_params={}, body={'projectId': project_id, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'name': name, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Upload)
 
+    def create_model_from_git(self, project_id: str, application_connector_id: str, branch_name: str, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, code_path: str = None, name: str = None, cpu_size: str = None, memory: int = None) -> Model:
+        """Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            application_connector_id (str): The unique ID associated with the git application connector.
+            branch_name (str): Name of the branch in the git repository to be used for training.
+            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
+            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
+            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            code_path (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
+            cpu_size (str): Size of the cpu for the model training function
+            memory (int): Memory (in GB) for the model training function
+
+        Returns:
+            Model: None"""
+        return self._call_api('createModelFromGit', 'POST', query_params={}, body={'projectId': project_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'codePath': code_path, 'name': name, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+
     def rename_model(self, model_id: str, name: str):
         """Renames a model
 
@@ -2324,6 +2356,35 @@ class ApiClient(ReadOnlyClient):
         Returns:
             Upload: The updated model"""
         return self._call_api('updatePythonModelZip', 'POST', query_params={}, body={'modelId': model_id, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Upload)
+
+    def update_python_model_git(self, model_id: str, application_connector_id: str = None, branch_name: str = None, code_path: str = None, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None) -> Model:
+        """Updates an existing python Model using an existing git application connector. If a list of input feature groups are supplied,
+
+        we will provide as arguments to the train and predict functions with the materialized feature groups for those
+        input feature groups.
+
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+        as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+        Args:
+            model_id (str): The unique ID associated with the Python model to be changed.
+            application_connector_id (str): The unique ID associated with the git application connector.
+            branch_name (str): Name of the branch in the git repository to be used for training.
+            code_path (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
+            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
+            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            cpu_size (str): Size of the cpu for the model training function
+            memory (int): Memory (in GB) for the model training function
+
+        Returns:
+            Model: The updated model"""
+        return self._call_api('updatePythonModelGit', 'POST', query_params={}, body={'modelId': model_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'codePath': code_path, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
     def set_model_training_config(self, model_id: str, training_config: dict) -> Model:
         """Edits the default model training config
@@ -3172,3 +3233,21 @@ class ApiClient(ReadOnlyClient):
             streaming_token (str): The streaming token for authenticating requests
             data (dict): The data to record"""
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
+
+    def upsert_multiple_data(self, feature_group_id: str, streaming_token: str, data: dict):
+        """Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+
+        Args:
+            feature_group_id (str): The Streaming feature group to record data to
+            streaming_token (str): The streaming token for authenticating requests
+            data (dict): The data to record, as an array of JSON Objects"""
+        return self._call_api('upsertMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
+
+    def append_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
+        """Appends new data into the feature group for a given lookup key recordId.
+
+        Args:
+            feature_group_id (str): The Streaming feature group to record data to
+            streaming_token (str): The streaming token for authenticating requests
+            data (list): The data to record, as an array of JSON objects"""
+        return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})

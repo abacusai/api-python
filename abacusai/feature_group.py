@@ -1,3 +1,4 @@
+from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
 from .feature_group_version import FeatureGroupVersion
@@ -41,18 +42,16 @@ class FeatureGroup(AbstractApiClass):
             streamingReady (bool): If true, the feature group is ready to receive streaming data
             featureTags (dict): 
             moduleName (str): The path to the file with the feature group function.
-            isAboveDataLimitingThreshold (bool): Boolean indicating whether one of the source datasets dependencies for feature group instance has data (rows) above the threshold limit (1 million)
-            isCdsAvailable (bool): Boolean indicating whether a custom dataserver (CDS) is available to be deployed
-            isCdsActive (bool): Boolean indicating whether a custom dataserver (CDS) is present
             features (Feature): List of resolved features
             duplicateFeatures (Feature): List of duplicate features
             pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
             latestFeatureGroupVersion (FeatureGroupVersion): The latest feature group version
             concatenationConfig (ConcatenationConfig): The Feature Group ID whose data will be concatenated into this feature group
             indexingConfig (IndexingConfig): 
+            codeSource (CodeSource): If a python feature group, information on the source code
     """
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, isAboveDataLimitingThreshold=None, isCdsAvailable=None, isCdsActive=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, latestFeatureGroupVersion={}):
         super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
@@ -83,9 +82,6 @@ class FeatureGroup(AbstractApiClass):
         self.streaming_ready = streamingReady
         self.feature_tags = featureTags
         self.module_name = moduleName
-        self.is_above_data_limiting_threshold = isAboveDataLimitingThreshold
-        self.is_cds_available = isCdsAvailable
-        self.is_cds_active = isCdsActive
         self.features = client._build_class(Feature, features)
         self.duplicate_features = client._build_class(
             Feature, duplicateFeatures)
@@ -95,11 +91,12 @@ class FeatureGroup(AbstractApiClass):
             ConcatenationConfig, concatenationConfig)
         self.indexing_config = client._build_class(
             IndexingConfig, indexingConfig)
+        self.code_source = client._build_class(CodeSource, codeSource)
         self.latest_feature_group_version = client._build_class(
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  is_above_data_limiting_threshold={repr(self.is_above_data_limiting_threshold)},\n  is_cds_available={repr(self.is_cds_available)},\n  is_cds_active={repr(self.is_cds_active)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def to_dict(self):
         """
@@ -108,7 +105,7 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'is_above_data_limiting_threshold': self.is_above_data_limiting_threshold, 'is_cds_available': self.is_cds_available, 'is_cds_active': self.is_cds_active, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
         """
@@ -739,6 +736,26 @@ class FeatureGroup(AbstractApiClass):
             data (dict): The data to record
         """
         return self.client.append_data(self.feature_group_id, streaming_token, data)
+
+    def upsert_multiple_data(self, streaming_token: str, data: dict):
+        """
+        Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+
+        Args:
+            streaming_token (str): The streaming token for authenticating requests
+            data (dict): The data to record, as an array of JSON Objects
+        """
+        return self.client.upsert_multiple_data(self.feature_group_id, streaming_token, data)
+
+    def append_multiple_data(self, streaming_token: str, data: list):
+        """
+        Appends new data into the feature group for a given lookup key recordId.
+
+        Args:
+            streaming_token (str): The streaming token for authenticating requests
+            data (list): The data to record, as an array of JSON objects
+        """
+        return self.client.append_multiple_data(self.feature_group_id, streaming_token, data)
 
     def wait_for_dataset(self, timeout: int = 7200):
         """
