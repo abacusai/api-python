@@ -547,7 +547,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_sql_definition(self.feature_group_id, sql)
 
-    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None):
+    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -557,13 +557,14 @@ class FeatureGroup(AbstractApiClass):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             FeatureGroup: The updated feature group
         """
-        return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory)
+        return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements)
 
-    def update_zip(self, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None):
+    def update_zip(self, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Updates the zip for a feature group created using createFeatureGroupFromZip
 
@@ -573,11 +574,32 @@ class FeatureGroup(AbstractApiClass):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             Upload: The Upload to upload the zip file to
         """
-        return self.client.update_feature_group_zip(self.feature_group_id, function_name, module_name, input_feature_groups, cpu_size, memory)
+        return self.client.update_feature_group_zip(self.feature_group_id, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
+
+    def update_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+        """
+        Updates a feature group created using createFeatureGroupFromGit
+
+        Args:
+            application_connector_id (str): The unique ID associated with the git application connector.
+            branch_name (str): Name of the branch in the git repository to be used for training.
+            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+            module_name (str): Path to the file with the feature group function.
+            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            cpu_size (str): Size of the cpu for the feature group function
+            memory (int): Memory (in GB) for the feature group function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+
+        Returns:
+            FeatureGroup: The updated FeatureGroup
+        """
+        return self.client.update_feature_group_git(self.feature_group_id, application_connector_id, branch_name, python_root, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
 
     def update_feature(self, name: str, select_expression: str = None, new_name: str = None):
         """

@@ -101,7 +101,7 @@ class Model(AbstractApiClass):
         """
         return self.client.rename_model(self.model_id, name)
 
-    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
+    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
 
@@ -121,13 +121,14 @@ class Model(AbstractApiClass):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             Model: The updated model
         """
-        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, training_input_tables, cpu_size, memory)
+        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, training_input_tables, cpu_size, memory, package_requirements)
 
-    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
+    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
 
@@ -148,13 +149,14 @@ class Model(AbstractApiClass):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             Upload: The updated model
         """
-        return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
+        return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, package_requirements)
 
-    def update_python_git(self, application_connector_id: str = None, branch_name: str = None, code_path: str = None, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
+    def update_python_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
         """
         Updates an existing python Model using an existing git application connector. If a list of input feature groups are supplied,
 
@@ -170,7 +172,7 @@ class Model(AbstractApiClass):
         Args:
             application_connector_id (str): The unique ID associated with the git application connector.
             branch_name (str): Name of the branch in the git repository to be used for training.
-            code_path (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
             train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
             predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
             train_module_name (str): Full path of the module that contains the train function from the root of the zip.
@@ -182,7 +184,7 @@ class Model(AbstractApiClass):
         Returns:
             Model: The updated model
         """
-        return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, code_path, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
+        return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
 
     def set_training_config(self, training_config: dict):
         """

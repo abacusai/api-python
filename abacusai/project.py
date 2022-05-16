@@ -218,7 +218,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
         """
         Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -241,13 +241,14 @@ class Project(AbstractApiClass):
             memory (int): Memory (in GB) for the model training function
             training_config (dict): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             Model: The new model, which has not been trained.
         """
-        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name, cpu_size, memory, training_config, exclusive_run)
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name, cpu_size, memory, training_config, exclusive_run, package_requirements)
 
-    def create_model_from_zip(self, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None):
+    def create_model_from_zip(self, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
 
@@ -269,13 +270,14 @@ class Project(AbstractApiClass):
             name (str): The name you want your model to have. Defaults to "<Project Name> Model".
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             Upload: None
         """
-        return self.client.create_model_from_zip(self.project_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name, cpu_size, memory)
+        return self.client.create_model_from_zip(self.project_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name, cpu_size, memory, package_requirements)
 
-    def create_model_from_git(self, application_connector_id: str, branch_name: str, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, code_path: str = None, name: str = None, cpu_size: str = None, memory: int = None):
+    def create_model_from_git(self, application_connector_id: str, branch_name: str, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, python_root: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
 
@@ -296,15 +298,16 @@ class Project(AbstractApiClass):
             train_module_name (str): Full path of the module that contains the train function from the root of the zip.
             predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            code_path (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
             name (str): The name you want your model to have. Defaults to "<Project Name> Model".
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             Model: None
         """
-        return self.client.create_model_from_git(self.project_id, application_connector_id, branch_name, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, code_path, name, cpu_size, memory)
+        return self.client.create_model_from_git(self.project_id, application_connector_id, branch_name, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, python_root, name, cpu_size, memory, package_requirements)
 
     def list_models(self):
         """
