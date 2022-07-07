@@ -149,12 +149,21 @@ class FeatureGroupVersion(AbstractApiClass):
 
     def wait_for_results(self, timeout=3600):
         """
-        A waiting call until feature group version is created.
+        A waiting call until feature group version is materialized
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING'}, timeout=timeout)
+
+    def wait_for_materialization(self, timeout=3600):
+        """
+        A waiting call until feature group version is materialized.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.wait_for_results(timeout)
 
     def get_status(self):
         """
@@ -202,4 +211,7 @@ class FeatureGroupVersion(AbstractApiClass):
                 reader = fastavro.reader(data)
                 data_df = data_df.append(
                     pd.DataFrame.from_records([r for r in reader]))
+                for col in data_df.columns:
+                    if pd.core.dtypes.common.is_datetime64_ns_dtype(data_df[col]):
+                        data_df[col] = data_df[col].dt.tz_localize(None)
         return data_df

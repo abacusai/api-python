@@ -1,7 +1,7 @@
 from setuptools import setup
 
 
-__version__ = '0.36.4'
+__version__ = '0.36.9'
 
 
 setup(name='abacusai',

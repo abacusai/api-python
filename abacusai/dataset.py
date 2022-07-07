@@ -253,10 +253,16 @@ class Dataset(AbstractApiClass):
         A waiting call until dataset is imported.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
 
         """
-        return self.client._poll(self, {'PENDING', 'IMPORTING'}, timeout=timeout)
+        latest_dataset_version = self.describe().latest_dataset_version
+        if not latest_dataset_version:
+            from .client import ApiException
+            raise ApiException(409, 'This dataset does not have any versions')
+        self.latest_dataset_version = latest_dataset_version.wait_for_import(
+            timeout=timeout)
+        return self
 
     def wait_for_inspection(self, timeout=None):
         """
@@ -265,7 +271,13 @@ class Dataset(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
-        return self.client._poll(self, {'PENDING', 'UPLOADING', 'IMPORTING', 'CONVERTING', 'INSPECTING'}, timeout=timeout)
+        latest_dataset_version = self.describe().latest_dataset_version
+        if not latest_dataset_version:
+            from .client import ApiException
+            raise ApiException(409, 'This dataset does not have any versions')
+        self.latest_dataset_version = latest_dataset_version.wait_for_inspection(
+            timeout=timeout)
+        return self
 
     def get_status(self):
         """

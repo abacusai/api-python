@@ -1,3 +1,5 @@
+import time
+
 from .code_source import CodeSource
 from .return_class import AbstractApiClass
 
@@ -68,6 +70,19 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.delete_model_version(self.model_version)
 
+    def export_model_artifact_as_feature_group(self, table_name: str, artifact_type: str):
+        """
+        Exports metric artifact data for a model as a feature group.
+
+        Args:
+            table_name (str): The name of the feature group table to create.
+            artifact_type (str): An EvalArtifact enum of which artifact to export.
+
+        Returns:
+            FeatureGroup: The created feature group.
+        """
+        return self.client.export_model_artifact_as_feature_group(self.model_version, table_name, artifact_type)
+
     def refresh(self):
         """
         Calls describe and refreshes the current object's fields
@@ -90,6 +105,18 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.describe_model_version(self.model_version)
 
+    def get_training_data_logs(self):
+        """
+        Retrieves the data preparation logs during model training.
+
+        Args:
+            model_version (str): The unique version ID of the model version
+
+        Returns:
+            DataPrepLogs: A list of logs.
+        """
+        return self.client.get_training_data_logs(self.model_version)
+
     def get_training_logs(self, stdout: bool = False, stderr: bool = False):
         """
         Returns training logs for the model.
@@ -111,6 +138,24 @@ class ModelVersion(AbstractApiClass):
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
+
+    def wait_for_full_automl(self, timeout=None):
+        """
+        A waiting call until full AutoML cycle is completed.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        start_time = time.time()
+        while True:
+            if timeout and time.time() - start_time > timeout:
+                raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
+            model_version = self.client._call_api('describeModelVersion', 'GET', query_params={
+                                                  'modelVersion': self.id, 'waitForFullAutoml': True}, parse_type=ModelVersion)
+            if model_version.status not in {'PENDING', 'TRAINING'} and not model_version.pending_deployment_ids:
+                break
+            time.sleep(30)
+        return self.refresh()
 
     def get_status(self):
         """

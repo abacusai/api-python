@@ -200,7 +200,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids)
 
-    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None):
+    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_training_algorithms: list = None, custom_algorithms_only: bool = False, cpu_size: str = None, memory: int = None):
         """
         Trains a model for the specified project.
 
@@ -212,13 +212,17 @@ class Project(AbstractApiClass):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
+            custom_training_algorithms (list): List of the custom algorithm names that need to train together.
+            custom_algorithms_only (bool): Whether only run custom algorithms.
+            cpu_size (str): Size of the cpu for the model training function, only applicable to custom algorithms.
+            memory (int): Memory (in GB) for the model training function, only applicable to custom algorithms.
 
         Returns:
             Model: The new model which is being trained.
         """
-        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule)
+        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_training_algorithms, custom_algorithms_only, cpu_size, memory)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, predict_function_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
         """
         Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -234,8 +238,10 @@ class Project(AbstractApiClass):
         Args:
             function_source_code (str): Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             train_function_name (str): Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            predict_function_name (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+            predict_many_function_name (str): Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.
+            initialize_function_name (str): Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
             name (str): The name you want your model to have. Defaults to "<Project Name> Model"
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
@@ -246,9 +252,9 @@ class Project(AbstractApiClass):
         Returns:
             Model: The new model, which has not been trained.
         """
-        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, predict_function_name, training_input_tables, name, cpu_size, memory, training_config, exclusive_run, package_requirements)
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, training_input_tables, predict_function_name, predict_many_function_name, initialize_function_name, name, cpu_size, memory, training_config, exclusive_run, package_requirements)
 
-    def create_model_from_zip(self, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def create_model_from_zip(self, train_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
 
@@ -263,10 +269,11 @@ class Project(AbstractApiClass):
 
         Args:
             train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
             train_module_name (str): Full path of the module that contains the train function from the root of the zip.
             predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            predict_many_function_name (str): Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
             name (str): The name you want your model to have. Defaults to "<Project Name> Model".
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
@@ -275,9 +282,9 @@ class Project(AbstractApiClass):
         Returns:
             Upload: None
         """
-        return self.client.create_model_from_zip(self.project_id, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name, cpu_size, memory, package_requirements)
+        return self.client.create_model_from_zip(self.project_id, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name, predict_many_function_name, name, cpu_size, memory, package_requirements)
 
-    def create_model_from_git(self, application_connector_id: str, branch_name: str, train_function_name: str, predict_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, python_root: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def create_model_from_git(self, application_connector_id: str, branch_name: str, train_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, python_root: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
 
@@ -294,10 +301,11 @@ class Project(AbstractApiClass):
             application_connector_id (str): The unique ID associated with the git application connector.
             branch_name (str): Name of the branch in the git repository to be used for training.
             train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
             train_module_name (str): Full path of the module that contains the train function from the root of the zip.
             predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+            predict_many_function_name (str): 
             python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
             name (str): The name you want your model to have. Defaults to "<Project Name> Model".
             cpu_size (str): Size of the cpu for the model training function
@@ -307,7 +315,7 @@ class Project(AbstractApiClass):
         Returns:
             Model: None
         """
-        return self.client.create_model_from_git(self.project_id, application_connector_id, branch_name, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, python_root, name, cpu_size, memory, package_requirements)
+        return self.client.create_model_from_git(self.project_id, application_connector_id, branch_name, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name, predict_many_function_name, python_root, name, cpu_size, memory, package_requirements)
 
     def list_models(self):
         """
@@ -440,7 +448,7 @@ class Project(AbstractApiClass):
         """
         return self.client.remove_dataset_from_project(dataset_id, self.project_id)
 
-    def create_model_from_functions(self, train_function: callable, predict_function: callable, training_input_tables: list = None):
+    def create_model_from_functions(self, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False):
         """
         Creates a model using python.
 
@@ -448,8 +456,11 @@ class Project(AbstractApiClass):
             train_function (callable): The train function is passed.
             predict_function (callable): The prediction function is passed.
             training_input_tables (list, optional): The input tables to be used for training the model. Defaults to None.
+            predict_many_function (callable): Prediction function for batch input
+            cpu_size (str): Size of the cpu for the feature group function
+            memory (int): Memory (in GB) for the feature group function
 
         Returns:
             Model: The model object.
         """
-        return self.client.create_model_from_functions(self.project_id, train_function, predict_function, training_input_tables)
+        return self.client.create_model_from_functions(project_id=self.id, train_function=train_function, predict_function=predict_function, training_input_tables=training_input_tables, predict_many_function=predict_many_function, initialize_function=initialize_function, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)

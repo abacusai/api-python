@@ -69,7 +69,7 @@ class DatasetVersion(AbstractApiClass):
         A waiting call until dataset version is imported.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'IMPORTING'}, timeout=timeout)
 

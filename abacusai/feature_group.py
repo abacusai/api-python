@@ -37,11 +37,14 @@ class FeatureGroup(AbstractApiClass):
             incremental (bool): If feature group corresponds to an incremental dataset.
             mergeConfig (dict): The merge configuration settings for the feature group.
             transformConfig (dict): The transform configuration settings for the feature group.
+            samplingConfig (dict): The sampling configuration for the feature group
             cpuSize (str): Cpu size specified for the python feature group.
             memory (int): Memory in GB specified for the python feature group.
             streamingReady (bool): If true, the feature group is ready to receive streaming data
             featureTags (dict): 
             moduleName (str): The path to the file with the feature group function.
+            featureGroupTemplateId (str): The unique identifier of the feature group template this feature group was attached to, if any.
+            templateBindings (dict): Config specifying variable names and values to use when resolving a feature group template.
             features (Feature): List of resolved features
             duplicateFeatures (Feature): List of duplicate features
             pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
@@ -51,7 +54,7 @@ class FeatureGroup(AbstractApiClass):
             codeSource (CodeSource): If a python feature group, information on the source code
     """
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, featureGroupTemplateId=None, templateBindings=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, latestFeatureGroupVersion={}):
         super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
@@ -77,11 +80,14 @@ class FeatureGroup(AbstractApiClass):
         self.incremental = incremental
         self.merge_config = mergeConfig
         self.transform_config = transformConfig
+        self.sampling_config = samplingConfig
         self.cpu_size = cpuSize
         self.memory = memory
         self.streaming_ready = streamingReady
         self.feature_tags = featureTags
         self.module_name = moduleName
+        self.feature_group_template_id = featureGroupTemplateId
+        self.template_bindings = templateBindings
         self.features = client._build_class(Feature, features)
         self.duplicate_features = client._build_class(
             Feature, duplicateFeatures)
@@ -96,7 +102,7 @@ class FeatureGroup(AbstractApiClass):
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  sampling_config={repr(self.sampling_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  feature_group_template_id={repr(self.feature_group_template_id)},\n  template_bindings={repr(self.template_bindings)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def to_dict(self):
         """
@@ -105,7 +111,7 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'feature_group_template_id': self.feature_group_template_id, 'template_bindings': self.template_bindings, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
         """
@@ -535,6 +541,33 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group(self.feature_group_id, description)
 
+    def detach_from_template(self):
+        """
+        Update a feature group to detach it from a template.
+
+        Currently, this converts the feature group into a SQL feature group rather than a template feature group.
+
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            FeatureGroup: The updated feature group
+        """
+        return self.client.detach_feature_group_from_template(self.feature_group_id)
+
+    def update_template_bindings(self, template_bindings: dict = None):
+        """
+        Update the feature group template bindings for a template feature group.
+
+        Args:
+            template_bindings (dict): Values in these bindings override values set in the template.
+
+        Returns:
+            FeatureGroup: The updated feature group
+        """
+        return self.client.update_feature_group_template_bindings(self.feature_group_id, template_bindings)
+
     def update_sql_definition(self, sql: str):
         """
         Updates the SQL statement for a feature group.
@@ -730,6 +763,33 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
 
+    def create_template(self, name: str, template_sql: str, template_variables: dict, description: str = None):
+        """
+        Create a feature group template.
+
+        Args:
+            name (str): The user-friendly of for this feature group template.
+            template_sql (str): The template sql that will be resolved by applying values from the template variables to generate sql for a feature group.
+            template_variables (dict): The template variables for resolving the template.
+            description (str): A description of this feature group template
+
+        Returns:
+            FeatureGroupTemplate: The created feature group template
+        """
+        return self.client.create_feature_group_template(self.feature_group_id, name, template_sql, template_variables, description)
+
+    def suggest_template_for(self):
+        """
+        Suggest values for a feature gruop template, based on a feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group to use for suggesting values to use for the template.
+
+        Returns:
+            FeatureGroupTemplate: None
+        """
+        return self.client.suggest_feature_group_template_for_feature_group(self.feature_group_id)
+
     def get_recent_streamed_data(self):
         """
         Returns recently streamed data to a streaming feature group.
@@ -738,6 +798,55 @@ class FeatureGroup(AbstractApiClass):
             feature_group_id (str): The unique ID associated with the feature group.
         """
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
+
+    def create_prediction_metric(self, prediction_metric_config: dict, project_id: str = None):
+        """
+        Create a prediction metric job description for the given prediction and actual-labels data.
+
+        Args:
+            prediction_metric_config (dict): Specification for prediction metric to run in this job.
+            project_id (str): Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
+
+        Returns:
+            PredictionMetric: The Prediction Metric job description.
+        """
+        return self.client.create_prediction_metric(self.feature_group_id, prediction_metric_config, project_id)
+
+    def list_prediction_metrics(self, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None):
+        """
+        List the prediction metrics for a feature group.
+
+        Args:
+            limit (int): The the number of prediction metrics to be retrieved.
+            should_include_latest_version_description (bool): include the description of the latest prediction metric version for each prediction metric
+            start_after_id (str): An offset parameter to exclude all prediction metrics till the specified prediction metric ID.
+
+        Returns:
+            PredictionMetric: The prediction metrics for this feature group.
+        """
+        return self.client.list_prediction_metrics(self.feature_group_id, limit, should_include_latest_version_description, start_after_id)
+
+    def query_prediction_metrics(self, project_id: str = None, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None):
+        """
+        Query and return prediction metrics and extra data needed by the UI, constrained by the parameters provided.
+
+        feature_group_id (Unique String Identifier): [optional] The feature group used as input to the prediction metrics.
+            project_id (Unique String Identifier): [optional] The project_id of the prediction metrics.
+            limit (Integer): The the number of prediction metrics to be retrieved.
+            should_include_latest_version_description (Boolean): include the description of the latest prediction metric version for each prediction metric
+            start_after_id (Unique String Identifier): An offset parameter to exclude all prediction metrics till the specified prediction metric ID.
+
+
+        Args:
+            project_id (str): 
+            limit (int): 
+            should_include_latest_version_description (bool): 
+            start_after_id (str): 
+
+        Returns:
+            PredictionMetric: The prediction metrics for this feature group.
+        """
+        return self.client.query_prediction_metrics(self.feature_group_id, project_id, limit, should_include_latest_version_description, start_after_id)
 
     def upsert_data(self, streaming_token: str, data: dict):
         """
@@ -800,7 +909,8 @@ class FeatureGroup(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
         """
-        return self.wait_for_dataset(timeout=timeout)
+        self.wait_for_dataset(timeout=timeout)
+        return self.refresh()
 
     def wait_for_materialization(self, timeout: int = 7200):
         """
@@ -809,7 +919,14 @@ class FeatureGroup(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 7200 seconds.
         """
-        return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout)
+        latest_feature_group_version = self.describe().latest_feature_group_version
+        if not latest_feature_group_version:
+            from .client import ApiException
+            raise ApiException(
+                409, 'This feature group does not have any versions')
+        self.latest_feature_group_version = latest_feature_group_version.wait_for_materialization(
+            timeout=timeout)
+        return self
 
     def wait_for_streaming_ready(self, timeout: int = 600):
         """

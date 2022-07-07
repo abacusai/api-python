@@ -42,12 +42,43 @@ class PredictionMetricVersion(AbstractApiClass):
         """
         return {'created_at': self.created_at, 'error': self.error, 'feature_group_version': self.feature_group_version, 'prediction_metric_completed_at': self.prediction_metric_completed_at, 'prediction_metric_config': self.prediction_metric_config, 'prediction_metric_id': self.prediction_metric_id, 'prediction_metric_started_at': self.prediction_metric_started_at, 'prediction_metric_version': self.prediction_metric_version, 'status': self.status}
 
+    def refresh(self):
+        """
+        Calls describe and refreshes the current object's fields
+
+        Returns:
+            PredictionMetricVersion: The current object
+        """
+        self.__dict__.update(self.describe().__dict__)
+        return self
+
+    def describe(self):
+        """
+        Retrieves a full description of the specified prediction metric version
+
+        Args:
+            prediction_metric_version (str): The unique version ID of the prediction metric version
+
+        Returns:
+            PredictionMetricVersion: A prediction metric version. For more information, please refer to the details on the object (below).
+        """
+        return self.client.describe_prediction_metric_version(self.prediction_metric_version)
+
+    def delete(self):
+        """
+        Removes an existing prediction metric version.
+
+        Args:
+            prediction_metric_version (str): 
+        """
+        return self.client.delete_prediction_metric_version(self.prediction_metric_version)
+
     def wait_for_prediction_metric_version(self, timeout=1200):
         """
         A waiting call until the prediction metric version is ready.
 
         Args:
-            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'RUNNING'}, timeout=timeout)
 

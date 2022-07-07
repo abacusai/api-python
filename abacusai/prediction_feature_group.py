@@ -8,20 +8,22 @@ class PredictionFeatureGroup(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             featureGroupId (str): The unique identifier of the dataset
+            featureGroupVersion (str): 
             datasetType (str): dataset type
             default (bool): If true, this dataset is the default feature group in the model
             required (bool): If true...
     """
 
-    def __init__(self, client, featureGroupId=None, datasetType=None, default=None, required=None):
+    def __init__(self, client, featureGroupId=None, featureGroupVersion=None, datasetType=None, default=None, required=None):
         super().__init__(client, None)
         self.feature_group_id = featureGroupId
+        self.feature_group_version = featureGroupVersion
         self.dataset_type = datasetType
         self.default = default
         self.required = required
 
     def __repr__(self):
-        return f"PredictionFeatureGroup(feature_group_id={repr(self.feature_group_id)},\n  dataset_type={repr(self.dataset_type)},\n  default={repr(self.default)},\n  required={repr(self.required)})"
+        return f"PredictionFeatureGroup(feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  dataset_type={repr(self.dataset_type)},\n  default={repr(self.default)},\n  required={repr(self.required)})"
 
     def to_dict(self):
         """
@@ -30,4 +32,4 @@ class PredictionFeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_id': self.feature_group_id, 'dataset_type': self.dataset_type, 'default': self.default, 'required': self.required}
+        return {'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'dataset_type': self.dataset_type, 'default': self.default, 'required': self.required}
