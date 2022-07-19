@@ -27,12 +27,13 @@ class BatchPrediction(AbstractApiClass):
             csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
             csvExplanationsPrefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
             outputIncludesMetadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
+            resultInputColumns (list of string): If present, will limit result files or feature groups to only include columns present in this list
             batchInputs (PredictionInput): Inputs to the batch prediction
             latestBatchPredictionVersion (BatchPredictionVersion): The latest batch prediction version
             refreshSchedules (RefreshSchedule): List of refresh schedules that dictate the next time the batch prediction will be run
     """
 
-    def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}):
+    def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}):
         super().__init__(client, batchPredictionId)
         self.batch_prediction_id = batchPredictionId
         self.created_at = createdAt
@@ -51,6 +52,7 @@ class BatchPrediction(AbstractApiClass):
         self.csv_prediction_prefix = csvPredictionPrefix
         self.csv_explanations_prefix = csvExplanationsPrefix
         self.output_includes_metadata = outputIncludesMetadata
+        self.result_input_columns = resultInputColumns
         self.batch_inputs = client._build_class(PredictionInput, batchInputs)
         self.latest_batch_prediction_version = client._build_class(
             BatchPredictionVersion, latestBatchPredictionVersion)
@@ -58,7 +60,7 @@ class BatchPrediction(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
 
     def __repr__(self):
-        return f"BatchPrediction(batch_prediction_id={repr(self.batch_prediction_id)},\n  created_at={repr(self.created_at)},\n  name={repr(self.name)},\n  deployment_id={repr(self.deployment_id)},\n  file_connector_output_location={repr(self.file_connector_output_location)},\n  global_prediction_args={repr(self.global_prediction_args)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_output_configuration={repr(self.database_output_configuration)},\n  explanations={repr(self.explanations)},\n  file_output_format={repr(self.file_output_format)},\n  connector_type={repr(self.connector_type)},\n  legacy_input_location={repr(self.legacy_input_location)},\n  feature_group_table_name={repr(self.feature_group_table_name)},\n  csv_input_prefix={repr(self.csv_input_prefix)},\n  csv_prediction_prefix={repr(self.csv_prediction_prefix)},\n  csv_explanations_prefix={repr(self.csv_explanations_prefix)},\n  output_includes_metadata={repr(self.output_includes_metadata)},\n  batch_inputs={repr(self.batch_inputs)},\n  latest_batch_prediction_version={repr(self.latest_batch_prediction_version)},\n  refresh_schedules={repr(self.refresh_schedules)})"
+        return f"BatchPrediction(batch_prediction_id={repr(self.batch_prediction_id)},\n  created_at={repr(self.created_at)},\n  name={repr(self.name)},\n  deployment_id={repr(self.deployment_id)},\n  file_connector_output_location={repr(self.file_connector_output_location)},\n  global_prediction_args={repr(self.global_prediction_args)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_output_configuration={repr(self.database_output_configuration)},\n  explanations={repr(self.explanations)},\n  file_output_format={repr(self.file_output_format)},\n  connector_type={repr(self.connector_type)},\n  legacy_input_location={repr(self.legacy_input_location)},\n  feature_group_table_name={repr(self.feature_group_table_name)},\n  csv_input_prefix={repr(self.csv_input_prefix)},\n  csv_prediction_prefix={repr(self.csv_prediction_prefix)},\n  csv_explanations_prefix={repr(self.csv_explanations_prefix)},\n  output_includes_metadata={repr(self.output_includes_metadata)},\n  result_input_columns={repr(self.result_input_columns)},\n  batch_inputs={repr(self.batch_inputs)},\n  latest_batch_prediction_version={repr(self.latest_batch_prediction_version)},\n  refresh_schedules={repr(self.refresh_schedules)})"
 
     def to_dict(self):
         """
@@ -67,7 +69,7 @@ class BatchPrediction(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'global_prediction_args': self.global_prediction_args, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'feature_group_table_name': self.feature_group_table_name, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'output_includes_metadata': self.output_includes_metadata, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs), 'latest_batch_prediction_version': self._get_attribute_as_dict(self.latest_batch_prediction_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
+        return {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'global_prediction_args': self.global_prediction_args, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'feature_group_table_name': self.feature_group_table_name, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'output_includes_metadata': self.output_includes_metadata, 'result_input_columns': self.result_input_columns, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs), 'latest_batch_prediction_version': self._get_attribute_as_dict(self.latest_batch_prediction_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
 
     def start(self):
         """
@@ -116,7 +118,7 @@ class BatchPrediction(AbstractApiClass):
         """
         return self.client.list_batch_prediction_versions(self.batch_prediction_id, limit, start_after_version)
 
-    def update(self, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None):
+    def update(self, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None):
         """
         Updates a batch prediction job description
 
@@ -129,11 +131,12 @@ class BatchPrediction(AbstractApiClass):
             csv_prediction_prefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
             csv_explanations_prefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
+            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list
 
         Returns:
             BatchPrediction: The batch prediction description.
         """
-        return self.client.update_batch_prediction(self.batch_prediction_id, deployment_id, global_prediction_args, explanations, output_format, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata)
+        return self.client.update_batch_prediction(self.batch_prediction_id, deployment_id, global_prediction_args, explanations, output_format, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns)
 
     def set_file_connector_output(self, output_format: str = None, output_location: str = None):
         """
@@ -240,6 +243,16 @@ class BatchPrediction(AbstractApiClass):
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         return self.client._poll(self, {'PENDING', 'UPLOADING', 'PREDICTING'}, timeout=timeout)
+
+    def wait_for_drift_monitor(self, timeout=86400):
+        """
+        A waiting call until batch prediction drift monitor calculations are ready.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        if self.describe().latest_batch_prediction_version:
+            return self.describe().latest_batch_prediction_version.wait_for_drift_monitor(timeout=timeout)
 
     def get_status(self):
         """

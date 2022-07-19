@@ -3,6 +3,8 @@ import io
 import json
 import logging
 import os
+import tarfile
+import tempfile
 import time
 from functools import lru_cache
 from typing import Dict, List
@@ -44,6 +46,7 @@ from .modification_lock_info import ModificationLockInfo
 from .organization_group import OrganizationGroup
 from .prediction_metric import PredictionMetric
 from .prediction_metric_version import PredictionMetricVersion
+from .problem_type import ProblemType
 from .project import Project
 from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
@@ -148,7 +151,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.9'
+    client_version = '0.36.12'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -274,11 +277,23 @@ class BaseApiClient:
             time.sleep(delay)
         return obj.refresh()
 
-    def _upload_from_df(self, upload, df):
-        with io.BytesIO() as parquet_out:
+    def _upload_from_pandas(self, upload, df) -> Dataset:
+        with tempfile.TemporaryFile(mode='w+b') as parquet_out:
             df.to_parquet(parquet_out)
             parquet_out.seek(0)
             return upload.upload_file(parquet_out)
+
+    def _upload_from_spark(self, upload, df) -> Dataset:
+        with tempfile.TemporaryDirectory() as spark_out:
+            df.write.format('parquet').mode('overwrite').save(spark_out)
+            with tempfile.TemporaryFile(mode='w+b') as tar_out:
+                with tarfile.open(fileobj=tar_out, mode='w') as tar_file:
+                    for file_name in os.listdir(spark_out):
+                        if file_name.endswith('.parquet'):
+                            tar_file.add(os.path.join(
+                                spark_out, file_name), arcname=file_name)
+                tar_out.seek(0)
+                return upload.upload_file(tar_out)
 
 
 class ReadOnlyClient(BaseApiClient):
@@ -339,6 +354,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             UseCase: A list of UseCase objects describing all the use cases addressed by the platform. For details, please refer to"""
         return self._call_api('listUseCases', 'GET', query_params={}, parse_type=UseCase)
+
+    def describe_problem_type(self, problem_type: str) -> ProblemType:
+        """
+
+        Args:
+            problem_type (str): 
+
+        Returns:
+            ProblemType: None"""
+        return self._call_api('describeProblemType', 'GET', query_params={'problemType': problem_type}, parse_type=ProblemType)
 
     def describe_use_case_requirements(self, use_case: str) -> UseCaseRequirements:
         """This API call returns the feature requirements for a specified use case
@@ -556,18 +581,19 @@ class ReadOnlyClient(BaseApiClient):
             FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s)."""
         return self._call_api('listFeatureGroupTemplates', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupTemplate)
 
-    def preview_feature_group_template_resolution(self, feature_group_template_id: str = None, template_sql: str = None, template_bindings: dict = None, should_validate: bool = True) -> ResolvedFeatureGroupTemplate:
+    def preview_feature_group_template_resolution(self, feature_group_template_id: str = None, template_bindings: dict = None, template_sql: str = None, template_variables: dict = None, should_validate: bool = True) -> ResolvedFeatureGroupTemplate:
         """Resolve template sql using template variables and template bindings.
 
         Args:
             feature_group_template_id (str): If specified, use this template, otherwise assume an empty template.
-            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
             template_bindings (dict): Values that overide the template variable values specified by the template.
+            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
+            template_variables (dict): Template variables to use. If a template is provided, this overrides the template's template variables.
             should_validate (bool): 
 
         Returns:
             ResolvedFeatureGroupTemplate: None"""
-        return self._call_api('previewFeatureGroupTemplateResolution', 'GET', query_params={'featureGroupTemplateId': feature_group_template_id, 'templateSql': template_sql, 'templateBindings': template_bindings, 'shouldValidate': should_validate}, parse_type=ResolvedFeatureGroupTemplate)
+        return self._call_api('previewFeatureGroupTemplateResolution', 'GET', query_params={'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'templateSql': template_sql, 'templateVariables': template_variables, 'shouldValidate': should_validate}, parse_type=ResolvedFeatureGroupTemplate)
 
     def suggest_feature_group_template_for_feature_group(self, feature_group_id: str) -> FeatureGroupTemplate:
         """Suggest values for a feature gruop template, based on a feature group.
@@ -1085,6 +1111,24 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('describeAlgorithm', 'GET', query_params={'algorithmName': algorithm_name}, parse_type=Algorithm)
 
 
+def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None):
+    function_source_code = inspect.getsource(train_function)
+    predict_function_name, predict_many_function_name, initialize_function_name = None, None, None
+    if predict_function is not None:
+        predict_function_name = predict_function.__name__
+        function_source_code = function_source_code + \
+            '\n\n' + inspect.getsource(predict_function)
+    if predict_many_function is not None:
+        predict_many_function_name = predict_many_function.__name__
+        function_source_code = function_source_code + \
+            '\n\n' + inspect.getsource(predict_many_function)
+    if initialize_function is not None:
+        initialize_function_name = initialize_function.__name__
+        function_source_code = function_source_code + \
+            '\n\n' + inspect.getsource(initialize_function)
+    return function_source_code, train_function.__name__, predict_function_name, predict_many_function_name, initialize_function_name
+
+
 class ApiClient(ReadOnlyClient):
     """
     Abacus.AI API Client
@@ -1098,6 +1142,7 @@ class ApiClient(ReadOnlyClient):
 
     def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame, name: str = None) -> Dataset:
         """
+        [Deprecated]
         Creates a Dataset from a pandas dataframe
 
         Args:
@@ -1110,10 +1155,11 @@ class ApiClient(ReadOnlyClient):
         """
         upload = self.create_dataset_from_upload(
             name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='PARQUET')
-        return self._upload_from_df(upload, df)
+        return self._upload_from_pandas(upload, df)
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame) -> Dataset:
         """
+        [Deprecated]
         Updates an existing dataset from a pandas dataframe
 
         Args:
@@ -1138,10 +1184,49 @@ class ApiClient(ReadOnlyClient):
             dataset_id = feature_group.dataset_id
         upload = self.create_dataset_version_from_upload(
             dataset_id, file_format='PARQUET')
-        return self._upload_from_df(upload, df)
+        return self._upload_from_pandas(upload, df)
 
-    def create_feature_group_from_spark_df(self, table_name: str, df, should_wait_for_upload: bool = False, timeout: int = 7200) -> FeatureGroup:
-        """Create an Abacus Feature Group from a local Spark DataFrame.
+    def create_feature_group_from_pandas_df(self, table_name: str, df) -> FeatureGroup:
+        """Create a Feature Group from a local Pandas DataFrame.
+
+        Args:
+            table_name (str): The table name to assign to the feature group created by this call
+            df (pandas.DataFrame): The dataframe to upload
+        """
+        dataset = self.create_dataset_from_pandas(
+            feature_group_table_name=table_name, df=df)
+        return dataset.describe_feature_group()
+
+    def update_feature_group_from_pandas_df(self, table_name: str, df) -> FeatureGroup:
+        """Updates a DATASET Feature Group from a local Pandas DataFrame.
+
+        Args:
+            table_name (str): The table name to assign to the feature group created by this call
+            df (pandas.DataFrame): The dataframe to upload
+        """
+        feature_group = self.describe_feature_group_by_table_name(table_name)
+        if feature_group.feature_group_source_type != 'DATASET':
+            raise ApiException(
+                'Feature Group is not source type DATASET', 409, 'ConflictError')
+        dataset_id = feature_group.dataset_id
+        upload = self.create_dataset_version_from_upload(
+            dataset_id, file_format='PARQUET')
+        return self._upload_from_df(upload, df).describe_feature_group()
+
+    def create_feature_group_from_spark_df(self, table_name: str, df) -> FeatureGroup:
+        """Create a Feature Group from a local Spark DataFrame.
+
+        Args:
+            df (pyspark.sql.DataFrame): The dataframe to upload
+            table_name (str): The table name to assign to the feature group created by this call
+        """
+
+        upload = self.create_dataset_from_upload(
+            name=table_name, table_name=table_name, file_format='TAR')
+        return self._upload_from_spark(upload, df).describe_feature_group()
+
+    def update_feature_group_from_spark_df(self, table_name: str, df) -> FeatureGroup:
+        """Create a Feature Group from a local Spark DataFrame.
 
         Args:
             df (pyspark.sql.DataFrame): The dataframe to upload
@@ -1149,13 +1234,14 @@ class ApiClient(ReadOnlyClient):
             should_wait_for_upload (bool): Wait for dataframe to upload before returning. Some FeatureGroup methods, like materialization, may not work until upload is complete.
             timeout (int, optional): If waiting for upload, time out after this limit.
         """
-        pdf = df.toPandas()
-        dataset = self.create_dataset_from_pandas(
-            feature_group_table_name=table_name, df=pdf)
         feature_group = self.describe_feature_group_by_table_name(table_name)
-        if should_wait_for_upload:
-            feature_group.wait_for_upload(timeout=timeout)
-        return feature_group
+        if feature_group.feature_group_source_type != 'DATASET':
+            raise ApiException(
+                'Feature Group is not source type DATASET', 409, 'ConflictError')
+        dataset_id = feature_group.dataset_id
+        upload = self.create_dataset_version_from_upload(
+            dataset_id, file_format='TAR')
+        return self._upload_from_spark(upload, df).describe_feature_group()
 
     def create_spark_df_from_feature_group_version(self, session, feature_group_version: str):
         """Create a Spark Dataframe in the provided Spark Session context, for a materialized Abacus Feature Group Version.
@@ -1188,21 +1274,71 @@ class ApiClient(ReadOnlyClient):
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
         """
-        function_source_code = inspect.getsource(train_function)
-        predict_function_name, predict_many_function_name, initialize_function_name = None, None, None
-        if predict_function is not None:
-            predict_function_name = predict_function.__name__
-            function_source_code = function_source_code + \
-                '\n\n' + inspect.getsource(predict_function)
-        if predict_many_function is not None:
-            predict_many_function_name = predict_many_function.__name__
-            function_source_code = function_source_code + \
-                '\n\n' + inspect.getsource(predict_many_function)
-        if initialize_function is not None:
-            initialize_function_name = initialize_function.__name__
-            function_source_code = function_source_code + \
-                '\n\n' + inspect.getsource(initialize_function)
-        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function.__name__, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
+        function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
+            train_function, predict_function, predict_many_function, initialize_function)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
+
+    def create_algorithm_from_function(self, algorithm: str, display_name: str, problem_type: str, training_function_input_mappings, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
+        """
+        Create a new algorithm, or update existing algorithm if the name already exists
+
+        Args:
+            algorithm (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
+            display_name (String): More detailed name of the algorithm, with spaces allowed
+            problem_type (Enum string): The type of the problem this algorithm will work on
+            train_function (callable): The training fucntion callable to serialize and upload
+            predict_function (callable): The predict function callable to serialize and upload
+            predict_many_function (callable): The predict many function callable to serialize and upload
+            initialize_function (callable): The initialize function callable to serialize and upload
+            training_function_input_mappings (Dict): The mappings for train function parameters' names, e.g. names for training datasets, name for training config
+            config_options (Dict): Map dataset types and configs to train function parameter names
+            is_default_enabled: Whether train with the algorithm by default
+            project_id (Unique String Identifier): The unique version ID of the project
+        """
+        source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
+            train_function, predict_function, predict_many_function, initialize_function)
+        return self.create_algorithm(
+            name=algorithm,
+            display_name=display_name,
+            problem_type=problem_type,
+            source_code=source_code,
+            training_function_input_mappings=training_function_input_mappings,
+            train_function_name=train_function_name,
+            predict_function_name=predict_function_name,
+            predict_many_function_name=predict_many_function_name,
+            initialize_function_name=initialize_function_name,
+            config_options=config_options,
+            is_default_enabled=is_default_enabled,
+            project_id=project_id)
+
+    def update_algorithm_from_function(self, algorithm: str, display_name: str,  training_function_input_mappings, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
+        """
+        Create a new algorithm, or update existing algorithm if the name already exists
+
+        Args:
+            algorithm (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
+            display_name (String): More detailed name of the algorithm, with spaces allowed
+            train_function (callable): The training fucntion callable to serialize and upload
+            predict_function (callable): The predict function callable to serialize and upload
+            predict_many_function (callable): The predict many function callable to serialize and upload
+            initialize_function (callable): The initialize function callable to serialize and upload
+            training_function_input_mappings (Dict): The mappings for train function parameters' names, e.g. names for training datasets, name for training config
+            config_options (Dict): Map dataset types and configs to train function parameter names
+            is_default_enabled: Whether train with the algorithm by default
+        """
+        source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
+            train_function, predict_function, predict_many_function, initialize_function)
+        return self.update_algorithm(
+            algorithm_name=algorithm,
+            display_name=display_name,
+            source_code=source_code,
+            training_function_input_mappings=training_function_input_mappings,
+            train_function_name=train_function_name,
+            predict_function_name=predict_function_name,
+            predict_many_function_name=predict_many_function_name,
+            initialize_function_name=initialize_function_name,
+            config_options=config_options,
+            is_default_enabled=is_default_enabled)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -1288,7 +1424,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name
-            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING.
+            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
 
         Returns:
             Project: This object represents the newly created project. For details refer to"""
@@ -2457,7 +2593,7 @@ class ApiClient(ReadOnlyClient):
             dataset_id (str): The dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_training_algorithms: list = None, custom_algorithms_only: bool = False, cpu_size: str = None, memory: int = None) -> Model:
+    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms_only: bool = False) -> Model:
         """Trains a model for the specified project.
 
         Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
@@ -2469,14 +2605,11 @@ class ApiClient(ReadOnlyClient):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
-            custom_training_algorithms (list): List of the custom algorithm names that need to train together.
             custom_algorithms_only (bool): Whether only run custom algorithms.
-            cpu_size (str): Size of the cpu for the model training function, only applicable to custom algorithms.
-            memory (int): Memory (in GB) for the model training function, only applicable to custom algorithms.
 
         Returns:
             Model: The new model which is being trained."""
-        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customTrainingAlgorithms': custom_training_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithmsOnly': custom_algorithms_only}, parse_type=Model)
 
     def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None) -> Model:
         """Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
@@ -2686,19 +2819,17 @@ class ApiClient(ReadOnlyClient):
             Model: The model object correspoding after the prediction config is applied"""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, cpu_size: str = None, memory: int = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None) -> Model:
         """Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
             model_id (str): The model to retrain.
             deployment_ids (list): List of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
-            cpu_size (str): Size of the cpu for the model training function, only applicable to custom algorithms.
-            memory (int): Memory (in GB) for the model training function, only applicable to custom algorithms.
 
         Returns:
             Model: The model that is being retrained."""
-        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids}, parse_type=Model)
 
     def delete_model(self, model_id: str):
         """Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
@@ -3044,7 +3175,7 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): This will be a dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.)."""
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
-    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
+    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict = {}, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
         """Returns a classification prediction
 
         Args:
@@ -3056,10 +3187,11 @@ class ApiClient(ReadOnlyClient):
             thresholds (list): maps labels to thresholds (Multi label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5
             explain_predictions (bool): If true, returns the SHAP explanations for all input features.
             fixed_features (list): Set of input features to treat as constant for explanations.
-            nested (str): If specified generates prediction delta for each index of the specified nested feature."""
-        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'thresholds': thresholds, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested}, server_override=self.default_prediction_url)
+            nested (str): If specified generates prediction delta for each index of the specified nested feature.
+            explainer_type (str): """
+        return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'thresholds': thresholds, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=self.default_prediction_url)
 
-    def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict = {}, explain_predictions: bool = False, fixed_features: list = None, nested: str = None) -> Dict:
+    def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict = {}, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
         """Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
         Args:
@@ -3068,8 +3200,9 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
             explain_predictions (bool): If true, returns the SHAP explanations for all input features.
             fixed_features (list): Set of input features to treat as constant for explanations.
-            nested (str): If specified generates prediction delta for each index of the specified nested feature."""
-        return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested}, server_override=self.default_prediction_url)
+            nested (str): If specified generates prediction delta for each index of the specified nested feature.
+            explainer_type (str): """
+        return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=self.default_prediction_url)
 
     def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False) -> io.BytesIO:
         """Returns a list of anomalies from the training dataset
@@ -3332,7 +3465,7 @@ class ApiClient(ReadOnlyClient):
             PredictionMetricVersion: The prediction metric instances for this prediction metric."""
         return self._call_api('listPredictionMetricVersions', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=PredictionMetricVersion)
 
-    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None) -> BatchPrediction:
+    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
 
         Args:
@@ -3350,10 +3483,11 @@ class ApiClient(ReadOnlyClient):
             csv_prediction_prefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
             csv_explanations_prefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
+            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list
 
         Returns:
             BatchPrediction: The batch prediction description."""
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'tableName': table_name, 'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'tableName': table_name, 'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns}, parse_type=BatchPrediction)
 
     def start_batch_prediction(self, batch_prediction_id: str) -> BatchPredictionVersion:
         """Creates a new batch prediction version job for a given batch prediction job description
@@ -3365,7 +3499,7 @@ class ApiClient(ReadOnlyClient):
             BatchPredictionVersion: The batch prediction version started by this method call."""
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
 
-    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None) -> BatchPrediction:
+    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
         """Updates a batch prediction job description
 
         Args:
@@ -3378,10 +3512,11 @@ class ApiClient(ReadOnlyClient):
             csv_prediction_prefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
             csv_explanations_prefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
+            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list
 
         Returns:
             BatchPrediction: The batch prediction description."""
-        return self._call_api('updateBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'batchPredictionId': batch_prediction_id, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata}, parse_type=BatchPrediction)
+        return self._call_api('updateBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'batchPredictionId': batch_prediction_id, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns}, parse_type=BatchPrediction)
 
     def set_batch_prediction_file_connector_output(self, batch_prediction_id: str, output_format: str = None, output_location: str = None) -> BatchPrediction:
         """Updates the file connector output configuration of the batch prediction

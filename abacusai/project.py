@@ -10,20 +10,22 @@ class Project(AbstractApiClass):
             projectId (str): The ID of the project.
             name (str): The name of the project.
             useCase (str): The  Use Case associated with the project.
+            problemType (str): 
             createdAt (str): The date and time when the project was created.
             featureGroupsEnabled (bool): Project uses feature groups instead of datasets.
     """
 
-    def __init__(self, client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None):
+    def __init__(self, client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None):
         super().__init__(client, projectId)
         self.project_id = projectId
         self.name = name
         self.use_case = useCase
+        self.problem_type = problemType
         self.created_at = createdAt
         self.feature_groups_enabled = featureGroupsEnabled
 
     def __repr__(self):
-        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  created_at={repr(self.created_at)},\n  feature_groups_enabled={repr(self.feature_groups_enabled)})"
+        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  feature_groups_enabled={repr(self.feature_groups_enabled)})"
 
     def to_dict(self):
         """
@@ -32,7 +34,7 @@ class Project(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled}
+        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'problem_type': self.problem_type, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled}
 
     def refresh(self):
         """
@@ -200,7 +202,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids)
 
-    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_training_algorithms: list = None, custom_algorithms_only: bool = False, cpu_size: str = None, memory: int = None):
+    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms_only: bool = False):
         """
         Trains a model for the specified project.
 
@@ -212,15 +214,12 @@ class Project(AbstractApiClass):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
-            custom_training_algorithms (list): List of the custom algorithm names that need to train together.
             custom_algorithms_only (bool): Whether only run custom algorithms.
-            cpu_size (str): Size of the cpu for the model training function, only applicable to custom algorithms.
-            memory (int): Memory (in GB) for the model training function, only applicable to custom algorithms.
 
         Returns:
             Model: The new model which is being trained.
         """
-        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_training_algorithms, custom_algorithms_only, cpu_size, memory)
+        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms_only)
 
     def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
         """

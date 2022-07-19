@@ -1,6 +1,7 @@
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
+from .feature_group_template import FeatureGroupTemplate
 from .feature_group_version import FeatureGroupVersion
 from .indexing_config import IndexingConfig
 from .point_in_time_group import PointInTimeGroup
@@ -9,52 +10,52 @@ from .return_class import AbstractApiClass
 
 class FeatureGroup(AbstractApiClass):
     """
-        A feature group
+
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            modificationLock (bool): If feature groups is locked against a change or not
-            featureGroupId (str): The unique identifier for this feature group
-            name (str): [DEPRECATED] A user friendly name for the feature group
-            featureGroupSourceType (str): One of SQL, PYTHON, DATASET, BATCH_PREDICTION
-            tableName (str): The unique table name of this feature group
-            sql (str): The sql definition creating this feature group
-            datasetId (str): The datasetId the feature group is sourced from
-            functionSourceCode (str): The source definition creating this feature group
-            functionName (str): The function name to execute from the source code
-            sourceTables (list of string): The source tables for this feature group
-            createdAt (str): The timestamp at which the feature group was created.
-            description (str): Description of the feature group
-            featureGroupType (str): The Project Dataset Type when the Feature Group is used in the context of a project
-            sqlError (str): collects the error message with this FeatureGroup
-            latestVersionOutdated (bool): Is latest materialized feature group version outdated
-            tags (list of string): Tags added to this feature group
-            primaryKey (str): The primary index feature
-            updateTimestampKey (str): The primary timestamp feature
-            lookupKeys (list of string): Additional indexed features for this feature group
-            streamingEnabled (bool): If true, the feature group can have data streamed to it
-            featureGroupUse (str): The user assigned feature group use which allows for organizing feature groups in a project
-            incremental (bool): If feature group corresponds to an incremental dataset.
-            mergeConfig (dict): The merge configuration settings for the feature group.
-            transformConfig (dict): The transform configuration settings for the feature group.
-            samplingConfig (dict): The sampling configuration for the feature group
-            cpuSize (str): Cpu size specified for the python feature group.
-            memory (int): Memory in GB specified for the python feature group.
-            streamingReady (bool): If true, the feature group is ready to receive streaming data
+            modificationLock (bool): 
+            featureGroupId (str): 
+            name (str): 
+            featureGroupSourceType (str): 
+            tableName (str): 
+            sql (str): 
+            datasetId (str): 
+            functionSourceCode (str): 
+            functionName (str): 
+            sourceTables (list): 
+            createdAt (str): 
+            description (str): 
+            featureGroupType (str): 
+            sqlError (str): 
+            latestVersionOutdated (bool): 
+            tags (list): 
+            primaryKey (str): 
+            updateTimestampKey (str): 
+            lookupKeys (list): 
+            streamingEnabled (bool): 
+            featureGroupUse (str): 
+            incremental (bool): 
+            mergeConfig (dict): 
+            transformConfig (dict): 
+            samplingConfig (dict): 
+            cpuSize (str): 
+            memory (number(integer)): 
+            streamingReady (bool): 
             featureTags (dict): 
-            moduleName (str): The path to the file with the feature group function.
-            featureGroupTemplateId (str): The unique identifier of the feature group template this feature group was attached to, if any.
-            templateBindings (dict): Config specifying variable names and values to use when resolving a feature group template.
-            features (Feature): List of resolved features
-            duplicateFeatures (Feature): List of duplicate features
-            pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
-            latestFeatureGroupVersion (FeatureGroupVersion): The latest feature group version
-            concatenationConfig (ConcatenationConfig): The Feature Group ID whose data will be concatenated into this feature group
+            moduleName (str): 
+            templateBindings (list): 
+            features (Feature): 
+            duplicateFeatures (Feature): 
+            pointInTimeGroups (PointInTimeGroup): 
+            latestFeatureGroupVersion (FeatureGroupVersion): 
+            concatenationConfig (ConcatenationConfig): 
             indexingConfig (IndexingConfig): 
-            codeSource (CodeSource): If a python feature group, information on the source code
+            codeSource (CodeSource): 
+            featureGroupTemplate (FeatureGroupTemplate): 
     """
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, featureGroupTemplateId=None, templateBindings=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={}):
         super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
@@ -86,7 +87,6 @@ class FeatureGroup(AbstractApiClass):
         self.streaming_ready = streamingReady
         self.feature_tags = featureTags
         self.module_name = moduleName
-        self.feature_group_template_id = featureGroupTemplateId
         self.template_bindings = templateBindings
         self.features = client._build_class(Feature, features)
         self.duplicate_features = client._build_class(
@@ -98,11 +98,13 @@ class FeatureGroup(AbstractApiClass):
         self.indexing_config = client._build_class(
             IndexingConfig, indexingConfig)
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.feature_group_template = client._build_class(
+            FeatureGroupTemplate, featureGroupTemplate)
         self.latest_feature_group_version = client._build_class(
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  sampling_config={repr(self.sampling_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  feature_group_template_id={repr(self.feature_group_template_id)},\n  template_bindings={repr(self.template_bindings)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  feature_group_use={repr(self.feature_group_use)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  sampling_config={repr(self.sampling_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  template_bindings={repr(self.template_bindings)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  feature_group_template={repr(self.feature_group_template)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def to_dict(self):
         """
@@ -111,7 +113,7 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'feature_group_template_id': self.feature_group_template_id, 'template_bindings': self.template_bindings, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'template_bindings': self.template_bindings, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
         """

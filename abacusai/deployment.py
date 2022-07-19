@@ -197,7 +197,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
 
-    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None):
+    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None):
         """
         Creates a batch prediction job description for the given deployment.
 
@@ -215,11 +215,12 @@ class Deployment(AbstractApiClass):
             csv_prediction_prefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
             csv_explanations_prefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
+            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list
 
         Returns:
             BatchPrediction: The batch prediction description.
         """
-        return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata)
+        return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns)
 
     def wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480):
         """

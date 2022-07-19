@@ -84,16 +84,17 @@ class FeatureGroupTemplate(AbstractApiClass):
         """
         return self.client.update_feature_group_template(self.feature_group_template_id, template_sql, template_variables)
 
-    def preview_resolution(self, template_sql: str = None, template_bindings: dict = None, should_validate: bool = True):
+    def preview_resolution(self, template_bindings: dict = None, template_sql: str = None, template_variables: dict = None, should_validate: bool = True):
         """
         Resolve template sql using template variables and template bindings.
 
         Args:
-            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
             template_bindings (dict): Values that overide the template variable values specified by the template.
+            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
+            template_variables (dict): Template variables to use. If a template is provided, this overrides the template's template variables.
             should_validate (bool): 
 
         Returns:
             ResolvedFeatureGroupTemplate: None
         """
-        return self.client.preview_feature_group_template_resolution(self.feature_group_template_id, template_sql, template_bindings, should_validate)
+        return self.client.preview_feature_group_template_resolution(self.feature_group_template_id, template_bindings, template_sql, template_variables, should_validate)

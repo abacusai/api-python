@@ -13,9 +13,10 @@ class Schema(AbstractApiClass):
             featureType (str): The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/FeatureType] for more information.
             detectedFeatureType (str): 
             dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
+            detectedDataType (str): 
     """
 
-    def __init__(self, client, name=None, featureMapping=None, detectedFeatureMapping=None, featureType=None, detectedFeatureType=None, dataType=None):
+    def __init__(self, client, name=None, featureMapping=None, detectedFeatureMapping=None, featureType=None, detectedFeatureType=None, dataType=None, detectedDataType=None):
         super().__init__(client, None)
         self.name = name
         self.feature_mapping = featureMapping
@@ -23,9 +24,10 @@ class Schema(AbstractApiClass):
         self.feature_type = featureType
         self.detected_feature_type = detectedFeatureType
         self.data_type = dataType
+        self.detected_data_type = detectedDataType
 
     def __repr__(self):
-        return f"Schema(name={repr(self.name)},\n  feature_mapping={repr(self.feature_mapping)},\n  detected_feature_mapping={repr(self.detected_feature_mapping)},\n  feature_type={repr(self.feature_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  data_type={repr(self.data_type)})"
+        return f"Schema(name={repr(self.name)},\n  feature_mapping={repr(self.feature_mapping)},\n  detected_feature_mapping={repr(self.detected_feature_mapping)},\n  feature_type={repr(self.feature_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  data_type={repr(self.data_type)},\n  detected_data_type={repr(self.detected_data_type)})"
 
     def to_dict(self):
         """
@@ -34,4 +36,4 @@ class Schema(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'feature_mapping': self.feature_mapping, 'detected_feature_mapping': self.detected_feature_mapping, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type, 'data_type': self.data_type}
+        return {'name': self.name, 'feature_mapping': self.feature_mapping, 'detected_feature_mapping': self.detected_feature_mapping, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type}
