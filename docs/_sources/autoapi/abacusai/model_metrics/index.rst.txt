@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMetrics(client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None, trainValTestSplit=None)
+.. py:class:: ModelMetrics(client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None, trainValTestSplit=None, infoLogs=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37,13 +37,15 @@ Classes
    :type targetColumn: str
    :param trainValTestSplit:
    :type trainValTestSplit: dict
+   :param infoLogs:
+   :type infoLogs: list
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 

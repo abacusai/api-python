@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={}, pointInTimeGroups={})
+.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, features={}, pointInTimeGroups={}, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,13 +49,15 @@ Classes
    :type features: Feature
    :param pointInTimeGroups: List of Point In Time Groups
    :type pointInTimeGroups: PointInTimeGroup
+   :param codeSource: If a python feature group, information on the source code
+   :type codeSource: CodeSource
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -63,16 +65,18 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: create_snapshot_feature_group(self, table_name)
+   .. py:method:: create_snapshot_feature_group(table_name)
 
-      :param table_name:
+      Creates a Snapshot Feature Group corresponding to a specific feature group version.
+
+      :param table_name: The name for the newly created Snapshot Feature Group table.
       :type table_name: str
 
-      :returns: None
+      :returns: Feature Group corresponding to the newly created Snapshot.
       :rtype: FeatureGroup
 
 
-   .. py:method:: export_to_file_connector(self, location, export_file_format, overwrite = False)
+   .. py:method:: export_to_file_connector(location, export_file_format, overwrite = False)
 
       Export Feature group to File Connector.
 
@@ -87,7 +91,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_to_database_connector(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
+   .. py:method:: export_to_database_connector(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Export Feature group to Database Connector.
 
@@ -108,7 +112,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_to_console(self, export_file_format)
+   .. py:method:: export_to_console(export_file_format)
 
       Export Feature group to console.
 
@@ -119,7 +123,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: get_materialization_logs(self, stdout = False, stderr = False)
+   .. py:method:: get_materialization_logs(stdout = False, stderr = False)
 
       Returns logs for materialized feature group version.
 
@@ -132,7 +136,7 @@ Classes
       :rtype: FunctionLogs
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -140,7 +144,7 @@ Classes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Get a specific feature group version.
 
@@ -151,15 +155,23 @@ Classes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: wait_for_results(self, timeout=3600)
+   .. py:method:: wait_for_results(timeout=3600)
 
-      A waiting call until feature group version is created.
+      A waiting call until feature group version is materialized
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: wait_for_materialization(timeout=3600)
+
+      A waiting call until feature group version is materialized.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
 
       Gets the status of the feature group version.
 
@@ -167,10 +179,10 @@ Classes
       :rtype: str
 
 
-   .. py:method:: _get_avro_file(self, file_part)
+   .. py:method:: _download_avro_file(file_part, tmp_dir)
 
 
-   .. py:method:: load_as_pandas(self, max_workers=10)
+   .. py:method:: load_as_pandas(max_workers=10)
 
       Loads the feature group version into a pandas dataframe.
 

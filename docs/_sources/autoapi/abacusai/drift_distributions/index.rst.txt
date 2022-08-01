@@ -1,0 +1,46 @@
+:py:mod:`abacusai.drift_distributions`
+======================================
+
+.. py:module:: abacusai.drift_distributions
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.drift_distributions.DriftDistributions
+
+
+
+
+.. py:class:: DriftDistributions(client, labelDrift={}, predictionDrift={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   For either actuals or predicted values, how it has changed in the training data versus some specified window
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param labelDrift: A DriftDistribution describing column names and the range of values for label drift.
+   :type labelDrift: DriftDistribution
+   :param predictionDrift: A DriftDistribution describing column names and the range of values for prediction drift.
+   :type predictionDrift: DriftDistribution
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

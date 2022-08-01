@@ -1,0 +1,48 @@
+:py:mod:`abacusai.model_monitor_summary`
+========================================
+
+.. py:module:: abacusai.model_monitor_summary
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_monitor_summary.ModelMonitorSummary
+
+
+
+
+.. py:class:: ModelMonitorSummary(client, monitorAccuracy=None, modelDrift=None, dataIntegrity=None, biasViolations=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A summary of model monitor
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param monitorAccuracy:
+   :type monitorAccuracy: list
+   :param modelDrift:
+   :type modelDrift: list
+   :param dataIntegrity:
+   :type dataIntegrity: list
+   :param biasViolations:
+   :type biasViolations: list
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

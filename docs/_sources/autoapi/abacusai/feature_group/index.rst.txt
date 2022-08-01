@@ -17,97 +17,97 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, isAboveDataLimitingThreshold=None, isCdsAvailable=None, isCdsActive=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   A feature group
-
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param modificationLock: If feature groups is locked against a change or not
+   :param modificationLock:
    :type modificationLock: bool
-   :param featureGroupId: The unique identifier for this feature group
+   :param featureGroupId:
    :type featureGroupId: str
-   :param name: [DEPRECATED] A user friendly name for the feature group
+   :param name:
    :type name: str
-   :param featureGroupSourceType: One of SQL, PYTHON, DATASET, BATCH_PREDICTION
+   :param featureGroupSourceType:
    :type featureGroupSourceType: str
-   :param tableName: The unique table name of this feature group
+   :param tableName:
    :type tableName: str
-   :param sql: The sql definition creating this feature group
+   :param sql:
    :type sql: str
-   :param datasetId: The datasetId the feature group is sourced from
+   :param datasetId:
    :type datasetId: str
-   :param functionSourceCode: The source definition creating this feature group
+   :param functionSourceCode:
    :type functionSourceCode: str
-   :param functionName: The function name to execute from the source code
+   :param functionName:
    :type functionName: str
-   :param sourceTables: The source tables for this feature group
-   :type sourceTables: list of string
-   :param createdAt: The timestamp at which the feature group was created.
+   :param sourceTables:
+   :type sourceTables: list
+   :param createdAt:
    :type createdAt: str
-   :param description: Description of the feature group
+   :param description:
    :type description: str
-   :param featureGroupType: The Project Dataset Type when the Feature Group is used in the context of a project
+   :param featureGroupType:
    :type featureGroupType: str
-   :param sqlError: collects the error message with this FeatureGroup
+   :param sqlError:
    :type sqlError: str
-   :param latestVersionOutdated: Is latest materialized feature group version outdated
+   :param latestVersionOutdated:
    :type latestVersionOutdated: bool
-   :param tags: Tags added to this feature group
-   :type tags: list of string
-   :param primaryKey: The primary index feature
+   :param tags:
+   :type tags: list
+   :param primaryKey:
    :type primaryKey: str
-   :param updateTimestampKey: The primary timestamp feature
+   :param updateTimestampKey:
    :type updateTimestampKey: str
-   :param lookupKeys: Additional indexed features for this feature group
-   :type lookupKeys: list of string
-   :param streamingEnabled: If true, the feature group can have data streamed to it
+   :param lookupKeys:
+   :type lookupKeys: list
+   :param streamingEnabled:
    :type streamingEnabled: bool
-   :param featureGroupUse: The user assigned feature group use which allows for organizing feature groups in a project
+   :param featureGroupUse:
    :type featureGroupUse: str
-   :param incremental: If feature group corresponds to an incremental dataset.
+   :param incremental:
    :type incremental: bool
-   :param mergeConfig: The merge configuration settings for the feature group.
+   :param mergeConfig:
    :type mergeConfig: dict
-   :param transformConfig: The transform configuration settings for the feature group.
+   :param transformConfig:
    :type transformConfig: dict
-   :param cpuSize: Cpu size specified for the python feature group.
+   :param samplingConfig:
+   :type samplingConfig: dict
+   :param cpuSize:
    :type cpuSize: str
-   :param memory: Memory in GB specified for the python feature group.
-   :type memory: int
-   :param streamingReady: If true, the feature group is ready to receive streaming data
+   :param memory:
+   :type memory: number(integer)
+   :param streamingReady:
    :type streamingReady: bool
    :param featureTags:
    :type featureTags: dict
-   :param moduleName: The path to the file with the feature group function.
+   :param moduleName:
    :type moduleName: str
-   :param isAboveDataLimitingThreshold: Boolean indicating whether one of the source datasets dependencies for feature group instance has data (rows) above the threshold limit (1 million)
-   :type isAboveDataLimitingThreshold: bool
-   :param isCdsAvailable: Boolean indicating whether a custom dataserver (CDS) is available to be deployed
-   :type isCdsAvailable: bool
-   :param isCdsActive: Boolean indicating whether a custom dataserver (CDS) is present
-   :type isCdsActive: bool
-   :param features: List of resolved features
+   :param templateBindings:
+   :type templateBindings: list
+   :param features:
    :type features: Feature
-   :param duplicateFeatures: List of duplicate features
+   :param duplicateFeatures:
    :type duplicateFeatures: Feature
-   :param pointInTimeGroups: List of Point In Time Groups
+   :param pointInTimeGroups:
    :type pointInTimeGroups: PointInTimeGroup
-   :param latestFeatureGroupVersion: The latest feature group version
+   :param latestFeatureGroupVersion:
    :type latestFeatureGroupVersion: FeatureGroupVersion
-   :param concatenationConfig: The Feature Group ID whose data will be concatenated into this feature group
+   :param concatenationConfig:
    :type concatenationConfig: ConcatenationConfig
    :param indexingConfig:
    :type indexingConfig: IndexingConfig
+   :param codeSource:
+   :type codeSource: CodeSource
+   :param featureGroupTemplate:
+   :type featureGroupTemplate: FeatureGroupTemplate
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -115,7 +115,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: add_to_project(self, project_id, feature_group_type = 'CUSTOM_TABLE', feature_group_use = None)
+   .. py:method:: add_to_project(project_id, feature_group_type = 'CUSTOM_TABLE', feature_group_use = None)
 
       Adds a feature group to a project,
 
@@ -127,7 +127,7 @@ Classes
       :type feature_group_use: str
 
 
-   .. py:method:: remove_from_project(self, project_id)
+   .. py:method:: remove_from_project(project_id)
 
       Removes a feature group from a project.
 
@@ -135,7 +135,7 @@ Classes
       :type project_id: str
 
 
-   .. py:method:: set_type(self, project_id, feature_group_type = 'CUSTOM_TABLE')
+   .. py:method:: set_type(project_id, feature_group_type = 'CUSTOM_TABLE')
 
       Update the feature group type in a project. The feature group must already be added to the project.
 
@@ -145,7 +145,7 @@ Classes
       :type feature_group_type: str
 
 
-   .. py:method:: use_for_training(self, project_id, use_for_training = True)
+   .. py:method:: use_for_training(project_id, use_for_training = True)
 
       Use the feature group for model training input
 
@@ -155,7 +155,7 @@ Classes
       :type use_for_training: bool
 
 
-   .. py:method:: create_sampling(self, table_name, sampling_config, description = None)
+   .. py:method:: create_sampling(table_name, sampling_config, description = None)
 
       Creates a new feature group defined as a sample of rows from another feature group.
 
@@ -173,7 +173,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_sampling_config(self, sampling_config)
+   .. py:method:: set_sampling_config(sampling_config)
 
       Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
@@ -187,7 +187,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_merge_config(self, merge_config)
+   .. py:method:: set_merge_config(merge_config)
 
       Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
@@ -195,7 +195,7 @@ Classes
       :type merge_config: dict
 
 
-   .. py:method:: set_transform_config(self, transform_config)
+   .. py:method:: set_transform_config(transform_config)
 
       Set a TransformFeatureGroup’s transform config to the values provided.
 
@@ -203,7 +203,7 @@ Classes
       :type transform_config: dict
 
 
-   .. py:method:: set_schema(self, schema)
+   .. py:method:: set_schema(schema)
 
       Creates a new schema and points the feature group to the new feature group schema id.
 
@@ -211,7 +211,7 @@ Classes
       :type schema: list
 
 
-   .. py:method:: get_schema(self, project_id = None)
+   .. py:method:: get_schema(project_id = None)
 
       Returns a schema given a specific FeatureGroup in a project.
 
@@ -222,7 +222,7 @@ Classes
       :rtype: Feature
 
 
-   .. py:method:: create_feature(self, name, select_expression)
+   .. py:method:: create_feature(name, select_expression)
 
       Creates a new feature in a Feature Group from a SQL select statement
 
@@ -235,7 +235,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_tag(self, tag)
+   .. py:method:: add_tag(tag)
 
       Adds a tag to the feature group
 
@@ -243,7 +243,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: remove_tag(self, tag)
+   .. py:method:: remove_tag(tag)
 
       Removes a tag from the feature group
 
@@ -251,7 +251,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: add_feature_tag(self, feature, tag)
+   .. py:method:: add_feature_tag(feature, tag)
 
       :param feature:
       :type feature: str
@@ -259,7 +259,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: remove_feature_tag(self, feature, tag)
+   .. py:method:: remove_feature_tag(feature, tag)
 
       :param feature:
       :type feature: str
@@ -267,7 +267,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: create_nested_feature(self, nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
+   .. py:method:: create_nested_feature(nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
 
       Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.
 
@@ -286,7 +286,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_nested_feature(self, nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
+   .. py:method:: update_nested_feature(nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
 
       Updates a previously existing nested feature in a feature group.
 
@@ -307,7 +307,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_nested_feature(self, nested_feature_name)
+   .. py:method:: delete_nested_feature(nested_feature_name)
 
       Delete a nested feature.
 
@@ -318,7 +318,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_feature(self, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
+   .. py:method:: create_point_in_time_feature(feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
 
       Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
 
@@ -355,7 +355,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_feature(self, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
+   .. py:method:: update_point_in_time_feature(feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
 
       Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.
 
@@ -386,7 +386,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_group(self, group_name, window_key, aggregation_keys, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
+   .. py:method:: create_point_in_time_group(group_name, window_key, aggregation_keys, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
 
       Create point in time group
 
@@ -415,7 +415,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_group(self, group_name, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
+   .. py:method:: update_point_in_time_group(group_name, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
 
       Update point in time group
 
@@ -444,7 +444,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_point_in_time_group(self, group_name)
+   .. py:method:: delete_point_in_time_group(group_name)
 
       Delete point in time group
 
@@ -455,7 +455,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_group_feature(self, group_name, name, expression)
+   .. py:method:: create_point_in_time_group_feature(group_name, name, expression)
 
       Create point in time group feature
 
@@ -470,7 +470,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_group_feature(self, group_name, name, expression)
+   .. py:method:: update_point_in_time_group_feature(group_name, name, expression)
 
       Update a feature's SQL expression in a point in time group
 
@@ -485,7 +485,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_type(self, feature, feature_type)
+   .. py:method:: set_feature_type(feature, feature_type)
 
       Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
 
@@ -498,7 +498,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: invalidate_streaming_data(self, invalid_before_timestamp)
+   .. py:method:: invalidate_streaming_data(invalid_before_timestamp)
 
       Invalidates all streaming data with timestamp before invalidBeforeTimestamp
 
@@ -506,7 +506,7 @@ Classes
       :type invalid_before_timestamp: int
 
 
-   .. py:method:: concatenate_data(self, source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
+   .. py:method:: concatenate_data(source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
@@ -520,7 +520,7 @@ Classes
       :type skip_materialize: bool
 
 
-   .. py:method:: remove_concatenation_config(self)
+   .. py:method:: remove_concatenation_config()
 
       Removes the concatenation config on a destination feature group.
 
@@ -528,7 +528,7 @@ Classes
       :type feature_group_id: str
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -536,7 +536,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Describe a Feature Group.
 
@@ -547,7 +547,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_indexing_config(self, primary_key = None, update_timestamp_key = None, lookup_keys = None)
+   .. py:method:: set_indexing_config(primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Sets various attributes of the feature group used for deployment lookups and streaming updates.
 
@@ -559,7 +559,7 @@ Classes
       :type lookup_keys: list
 
 
-   .. py:method:: update(self, description = None)
+   .. py:method:: update(description = None)
 
       Modifies an existing feature group
 
@@ -570,7 +570,32 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_sql_definition(self, sql)
+   .. py:method:: detach_from_template()
+
+      Update a feature group to detach it from a template.
+
+      Currently, this converts the feature group into a SQL feature group rather than a template feature group.
+
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: The updated feature group
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_template_bindings(template_bindings = None)
+
+      Update the feature group template bindings for a template feature group.
+
+      :param template_bindings: Values in these bindings override values set in the template.
+      :type template_bindings: list
+
+      :returns: The updated feature group
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_sql_definition(sql)
 
       Updates the SQL statement for a feature group.
 
@@ -581,7 +606,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_function_definition(self, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None)
+   .. py:method:: update_function_definition(function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -595,12 +620,14 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The updated feature group
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_zip(self, function_name, module_name, input_feature_groups = None, cpu_size = None, memory = None)
+   .. py:method:: update_zip(function_name, module_name, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
 
       Updates the zip for a feature group created using createFeatureGroupFromZip
 
@@ -614,12 +641,41 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The Upload to upload the zip file to
       :rtype: Upload
 
 
-   .. py:method:: update_feature(self, name, select_expression = None, new_name = None)
+   .. py:method:: update_git(application_connector_id = None, branch_name = None, python_root = None, function_name = None, module_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
+
+      Updates a feature group created using createFeatureGroupFromGit
+
+      :param application_connector_id: The unique ID associated with the git application connector.
+      :type application_connector_id: str
+      :param branch_name: Name of the branch in the git repository to be used for training.
+      :type branch_name: str
+      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+      :type python_root: str
+      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+      :type function_name: str
+      :param module_name: Path to the file with the feature group function.
+      :type module_name: str
+      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type input_feature_groups: list
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
+
+      :returns: The updated FeatureGroup
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_feature(name, select_expression = None, new_name = None)
 
       Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
 
@@ -634,7 +690,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: list_exports(self)
+   .. py:method:: list_exports()
 
       Lists all of the feature group exports for a given feature group
 
@@ -645,7 +701,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: set_modifier_lock(self, locked = True)
+   .. py:method:: set_modifier_lock(locked = True)
 
       To lock a feature group to prevent it from being modified.
 
@@ -653,7 +709,7 @@ Classes
       :type locked: bool
 
 
-   .. py:method:: list_modifiers(self)
+   .. py:method:: list_modifiers()
 
       To list users who can modify a feature group.
 
@@ -664,7 +720,7 @@ Classes
       :rtype: ModificationLockInfo
 
 
-   .. py:method:: add_user_to_modifiers(self, email)
+   .. py:method:: add_user_to_modifiers(email)
 
       Adds user to a feature group.
 
@@ -672,7 +728,7 @@ Classes
       :type email: str
 
 
-   .. py:method:: add_organization_group_to_modifiers(self, organization_group_id)
+   .. py:method:: add_organization_group_to_modifiers(organization_group_id)
 
       Add Organization to a feature group.
 
@@ -680,7 +736,7 @@ Classes
       :type organization_group_id: str
 
 
-   .. py:method:: remove_user_from_modifiers(self, email)
+   .. py:method:: remove_user_from_modifiers(email)
 
       Removes user from a feature group.
 
@@ -688,7 +744,7 @@ Classes
       :type email: str
 
 
-   .. py:method:: remove_organization_group_from_modifiers(self, organization_group_id)
+   .. py:method:: remove_organization_group_from_modifiers(organization_group_id)
 
       Removes Organization from a feature group.
 
@@ -696,7 +752,7 @@ Classes
       :type organization_group_id: str
 
 
-   .. py:method:: delete_feature(self, name)
+   .. py:method:: delete_feature(name)
 
       Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.
 
@@ -707,7 +763,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Removes an existing feature group.
 
@@ -715,7 +771,7 @@ Classes
       :type feature_group_id: str
 
 
-   .. py:method:: create_version(self, variable_bindings = None)
+   .. py:method:: create_version(variable_bindings = None)
 
       Creates a snapshot for a specified feature group.
 
@@ -726,7 +782,7 @@ Classes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of all feature group versions for the specified feature group.
 
@@ -739,7 +795,39 @@ Classes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: get_recent_streamed_data(self)
+   .. py:method:: create_template(name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
+
+      Create a feature group template.
+
+      :param name: The user-friendly of for this feature group template.
+      :type name: str
+      :param template_sql: The template sql that will be resolved by applying values from the template variables to generate sql for a feature group.
+      :type template_sql: str
+      :param template_variables: The template variables for resolving the template.
+      :type template_variables: list
+      :param description: A description of this feature group template
+      :type description: str
+      :param template_bindings: If the feature group will be attached to the newly created template, set these variable bindings on that feature group.
+      :type template_bindings: list
+      :param should_attach_feature_group_to_template: Set to True to convert the feature group to a template feature group and attach it to the newly created template.
+      :type should_attach_feature_group_to_template: bool
+
+      :returns: The created feature group template
+      :rtype: FeatureGroupTemplate
+
+
+   .. py:method:: suggest_template_for()
+
+      Suggest values for a feature gruop template, based on a feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group to use for suggesting values to use for the template.
+      :type feature_group_id: str
+
+      :returns: None
+      :rtype: FeatureGroupTemplate
+
+
+   .. py:method:: get_recent_streamed_data()
 
       Returns recently streamed data to a streaming feature group.
 
@@ -747,7 +835,59 @@ Classes
       :type feature_group_id: str
 
 
-   .. py:method:: upsert_data(self, streaming_token, data)
+   .. py:method:: create_prediction_metric(prediction_metric_config, project_id = None)
+
+      Create a prediction metric job description for the given prediction and actual-labels data.
+
+      :param prediction_metric_config: Specification for prediction metric to run in this job.
+      :type prediction_metric_config: dict
+      :param project_id: Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
+      :type project_id: str
+
+      :returns: The Prediction Metric job description.
+      :rtype: PredictionMetric
+
+
+   .. py:method:: list_prediction_metrics(limit = 100, should_include_latest_version_description = True, start_after_id = None)
+
+      List the prediction metrics for a feature group.
+
+      :param limit: The the number of prediction metrics to be retrieved.
+      :type limit: int
+      :param should_include_latest_version_description: include the description of the latest prediction metric version for each prediction metric
+      :type should_include_latest_version_description: bool
+      :param start_after_id: An offset parameter to exclude all prediction metrics till the specified prediction metric ID.
+      :type start_after_id: str
+
+      :returns: The prediction metrics for this feature group.
+      :rtype: PredictionMetric
+
+
+   .. py:method:: query_prediction_metrics(project_id = None, limit = 100, should_include_latest_version_description = True, start_after_id = None)
+
+      Query and return prediction metrics and extra data needed by the UI, constrained by the parameters provided.
+
+      feature_group_id (Unique String Identifier): [optional] The feature group used as input to the prediction metrics.
+          project_id (Unique String Identifier): [optional] The project_id of the prediction metrics.
+          limit (Integer): The the number of prediction metrics to be retrieved.
+          should_include_latest_version_description (Boolean): include the description of the latest prediction metric version for each prediction metric
+          start_after_id (Unique String Identifier): An offset parameter to exclude all prediction metrics till the specified prediction metric ID.
+
+
+      :param project_id:
+      :type project_id: str
+      :param limit:
+      :type limit: int
+      :param should_include_latest_version_description:
+      :type should_include_latest_version_description: bool
+      :param start_after_id:
+      :type start_after_id: str
+
+      :returns: The prediction metrics for this feature group.
+      :rtype: PredictionMetric
+
+
+   .. py:method:: upsert_data(streaming_token, data)
 
       Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
 
@@ -757,7 +897,7 @@ Classes
       :type data: dict
 
 
-   .. py:method:: append_data(self, streaming_token, data)
+   .. py:method:: append_data(streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
 
@@ -767,7 +907,27 @@ Classes
       :type data: dict
 
 
-   .. py:method:: wait_for_dataset(self, timeout = 7200)
+   .. py:method:: upsert_multiple_data(streaming_token, data)
+
+      Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+
+      :param streaming_token: The streaming token for authenticating requests
+      :type streaming_token: str
+      :param data: The data to record, as an array of JSON Objects
+      :type data: dict
+
+
+   .. py:method:: append_multiple_data(streaming_token, data)
+
+      Appends new data into the feature group for a given lookup key recordId.
+
+      :param streaming_token: The streaming token for authenticating requests
+      :type streaming_token: str
+      :param data: The data to record, as an array of JSON objects
+      :type data: list
+
+
+   .. py:method:: wait_for_dataset(timeout = 7200)
 
           A waiting call until the feature group's dataset, if any, is ready for use.
 
@@ -775,7 +935,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_upload(self, timeout = 7200)
+   .. py:method:: wait_for_upload(timeout = 7200)
 
           Waits for a feature group created from a dataframe to be ready for materialization and version creation.
 
@@ -783,7 +943,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_materialization(self, timeout = 7200)
+   .. py:method:: wait_for_materialization(timeout = 7200)
 
       A waiting call until feature group is materialized.
 
@@ -791,7 +951,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_streaming_ready(self, timeout = 600)
+   .. py:method:: wait_for_streaming_ready(timeout = 600)
 
       Waits for the feature group indexing config to be applied for streaming
 
@@ -799,7 +959,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self, streaming_status = False)
+   .. py:method:: get_status(streaming_status = False)
 
       Gets the status of the feature group.
 
@@ -807,7 +967,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: load_as_pandas(self)
+   .. py:method:: load_as_pandas()
 
       Loads the feature groups into a python pandas dataframe.
 
@@ -815,7 +975,7 @@ Classes
       :rtype: DataFrame
 
 
-   .. py:method:: describe_dataset(self)
+   .. py:method:: describe_dataset()
 
       Displays the dataset attached to a feature group.
 

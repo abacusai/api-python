@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57,6 +57,10 @@ Classes
    :type csvPredictionPrefix: str
    :param csvExplanationsPrefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
    :type csvExplanationsPrefix: str
+   :param outputIncludesMetadata: If true, output will contain columns including prediction start time, batch prediction version, and model version
+   :type outputIncludesMetadata: bool
+   :param resultInputColumns: If present, will limit result files or feature groups to only include columns present in this list
+   :type resultInputColumns: list of string
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
    :param latestBatchPredictionVersion: The latest batch prediction version
@@ -64,12 +68,12 @@ Classes
    :param refreshSchedules: List of refresh schedules that dictate the next time the batch prediction will be run
    :type refreshSchedules: RefreshSchedule
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -77,7 +81,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: start(self)
+   .. py:method:: start()
 
       Creates a new batch prediction version job for a given batch prediction job description
 
@@ -88,7 +92,7 @@ Classes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -96,7 +100,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Describes the batch prediction
 
@@ -107,7 +111,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of versions of a given batch prediction
 
@@ -120,7 +124,7 @@ Classes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: update(self, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
+   .. py:method:: update(deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None)
 
       Updates a batch prediction job description
 
@@ -138,12 +142,16 @@ Classes
       :type csv_prediction_prefix: str
       :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
       :type csv_explanations_prefix: str
+      :param output_includes_metadata: If true, output will contain columns including prediction start time, batch prediction version, and model version
+      :type output_includes_metadata: bool
+      :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list
+      :type result_input_columns: list
 
       :returns: The batch prediction description.
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_file_connector_output(self, output_format = None, output_location = None)
+   .. py:method:: set_file_connector_output(output_format = None, output_location = None)
 
       Updates the file connector output configuration of the batch prediction
 
@@ -156,7 +164,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_database_connector_output(self, database_connector_id = None, database_output_config = None)
+   .. py:method:: set_database_connector_output(database_connector_id = None, database_output_config = None)
 
       Updates the database connector output configuration of the batch prediction
 
@@ -169,7 +177,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_feature_group_output(self, table_name)
+   .. py:method:: set_feature_group_output(table_name)
 
       Creates a feature group and sets it to be the batch prediction output
 
@@ -180,7 +188,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_output_to_console(self)
+   .. py:method:: set_output_to_console()
 
       Sets the batch prediction output to the console, clearing both the file connector and database connector config
 
@@ -191,7 +199,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_dataset(self, dataset_type, dataset_id = None)
+   .. py:method:: set_dataset(dataset_type, dataset_id = None)
 
       [Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects
 
@@ -204,7 +212,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_feature_group(self, feature_group_type, feature_group_id = None)
+   .. py:method:: set_feature_group(feature_group_type, feature_group_id = None)
 
       Sets the batch prediction input feature group.
 
@@ -217,7 +225,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_dataset_remap(self, dataset_id_remap)
+   .. py:method:: set_dataset_remap(dataset_id_remap)
 
       For the purpose of this batch prediction, will swap out datasets in the input feature groups
 
@@ -228,7 +236,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes a batch prediction
 
@@ -236,15 +244,23 @@ Classes
       :type batch_prediction_id: str
 
 
-   .. py:method:: wait_for_predictions(self, timeout=86400)
+   .. py:method:: wait_for_predictions(timeout=86400)
 
       A waiting call until batch predictions are ready.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 86400 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: wait_for_drift_monitor(timeout=86400)
+
+      A waiting call until batch prediction drift monitor calculations are ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
 
       Gets the status of the latest batch prediction version.
 
@@ -252,7 +268,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: create_refresh_policy(self, cron)
+   .. py:method:: create_refresh_policy(cron)
 
       To create a refresh policy for a batch prediction.
 
@@ -263,7 +279,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: list_refresh_policies(self)
+   .. py:method:: list_refresh_policies()
 
       Gets the refresh policies in a list.
 
@@ -271,7 +287,7 @@ Classes
       :rtype: List[RefreshPolicy]
 
 
-   .. py:method:: describe_output_feature_group(self)
+   .. py:method:: describe_output_feature_group()
 
       Gets the results feature group for this batch prediction
 

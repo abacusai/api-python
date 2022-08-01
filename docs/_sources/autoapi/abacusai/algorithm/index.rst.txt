@@ -1,0 +1,68 @@
+:py:mod:`abacusai.algorithm`
+============================
+
+.. py:module:: abacusai.algorithm
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.algorithm.Algorithm
+
+
+
+
+.. py:class:: Algorithm(client, name=None, problemType=None, externalProblemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Customer created algorithm
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
+   :type name: str
+   :param problemType: The type of the problem this algorithm will work on
+   :type problemType: str
+   :param externalProblemType: The problem type name shown to external user
+   :type externalProblemType: str
+   :param createdAt:
+   :type createdAt: str
+   :param updatedAt:
+   :type updatedAt: str
+   :param isDefaultEnabled: Whether train with the algorithm by default
+   :type isDefaultEnabled: bool
+   :param trainingInputMappings:
+   :type trainingInputMappings: dict
+   :param trainFunctionName: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
+   :type trainFunctionName: str
+   :param predictFunctionName: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+   :type predictFunctionName: str
+   :param predictManyFunctionName: Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.
+   :type predictManyFunctionName: str
+   :param initializeFunctionName: Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
+   :type initializeFunctionName: str
+   :param configOptions: Map dataset types and configs to train function parameter names
+   :type configOptions: dict
+   :param codeSource:
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

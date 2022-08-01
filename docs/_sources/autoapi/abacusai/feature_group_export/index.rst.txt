@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None)
+.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53,13 +53,13 @@ Classes
    :type exportCompletedAt: str
    :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting
    :type additionalIdColumns: list of string
+   :param error: If status is FAILED, this field will be populated with an error.
+   :type error: str
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -67,7 +67,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: get_feature_group_version_export_download_url(self)
+   .. py:method:: get_feature_group_version_export_download_url()
 
       Get a link to download the feature group version.
 
@@ -78,7 +78,7 @@ Classes
       :rtype: FeatureGroupExportDownloadUrl
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -86,7 +86,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       A feature group export
 
@@ -97,15 +97,15 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: wait_for_results(self, timeout=3600)
+   .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until feature group export is created.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Gets the status of the feature group export.
 
@@ -113,7 +113,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: get_results(self)
+   .. py:method:: get_results()
 
 
 

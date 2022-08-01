@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Project(client, projectId=None, name=None, useCase=None, createdAt=None, featureGroupsEnabled=None)
+.. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,17 +31,19 @@ Classes
    :type name: str
    :param useCase: The  Use Case associated with the project.
    :type useCase: str
+   :param problemType:
+   :type problemType: str
    :param createdAt: The date and time when the project was created.
    :type createdAt: str
    :param featureGroupsEnabled: Project uses feature groups instead of datasets.
    :type featureGroupsEnabled: bool
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -49,7 +51,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -57,7 +59,7 @@ Classes
       :rtype: Project
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Returns a description of a project.
 
@@ -68,7 +70,7 @@ Classes
       :rtype: Project
 
 
-   .. py:method:: list_datasets(self)
+   .. py:method:: list_datasets()
 
       Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
 
@@ -79,7 +81,7 @@ Classes
       :rtype: ProjectDataset
 
 
-   .. py:method:: get_schema(self, dataset_id)
+   .. py:method:: get_schema(dataset_id)
 
       [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
 
@@ -90,7 +92,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: rename(self, name)
+   .. py:method:: rename(name)
 
       This method renames a project after it is created.
 
@@ -98,7 +100,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes a specified project from your organization.
 
@@ -113,7 +115,7 @@ Classes
       :type project_id: str
 
 
-   .. py:method:: set_feature_mapping(self, feature_group_id, feature_name, feature_mapping, nested_column_name = None)
+   .. py:method:: set_feature_mapping(feature_group_id, feature_name, feature_mapping, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 
@@ -130,7 +132,7 @@ Classes
       :rtype: Feature
 
 
-   .. py:method:: validate(self, feature_group_ids = None)
+   .. py:method:: validate(feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
@@ -141,7 +143,7 @@ Classes
       :rtype: ProjectValidation
 
 
-   .. py:method:: set_column_data_type(self, dataset_id, column, data_type)
+   .. py:method:: set_column_data_type(dataset_id, column, data_type)
 
       Set a dataset's column type.
 
@@ -156,7 +158,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: set_column_mapping(self, dataset_id, column, column_mapping)
+   .. py:method:: set_column_mapping(dataset_id, column, column_mapping)
 
       Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
 
@@ -171,7 +173,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: remove_column_mapping(self, dataset_id, column)
+   .. py:method:: remove_column_mapping(dataset_id, column)
 
       Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
 
@@ -184,7 +186,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: list_feature_groups(self, filter_feature_group_use = None)
+   .. py:method:: list_feature_groups(filter_feature_group_use = None)
 
       List all the feature groups associated with a project
 
@@ -195,7 +197,20 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: get_training_config_options(self, feature_group_ids = None)
+   .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None)
+
+      List feature group templates for feature groups associated with the project.
+
+      :param limit: The maximum number of templates to be retrieved.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all templates till the specified feature group template ID.
+      :type start_after_id: str
+
+      :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
+      :rtype: FeatureGroupTemplate
+
+
+   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False)
 
       Retrieves the full description of the model training configuration options available for the specified project.
 
@@ -204,12 +219,14 @@ Classes
 
       :param feature_group_ids: The feature group IDs to be used for training
       :type feature_group_ids: list
+      :param for_retrain: If training config options are used for retrain
+      :type for_retrain: bool
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
 
 
-   .. py:method:: train_model(self, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None)
+   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms_only = False)
 
       Trains a model for the specified project.
 
@@ -224,12 +241,14 @@ Classes
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
+      :param custom_algorithms_only: Whether only run custom algorithms.
+      :type custom_algorithms_only: bool
 
       :returns: The new model which is being trained.
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(self, function_source_code, train_function_name, predict_function_name, training_input_tables, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)
+   .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None)
 
       Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -246,10 +265,14 @@ Classes
       :type function_source_code: str
       :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
       :type train_function_name: str
-      :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
       :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type training_input_tables: list
+      :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param predict_many_function_name: Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.
+      :type predict_many_function_name: str
+      :param initialize_function_name: Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
+      :type initialize_function_name: str
       :param name: The name you want your model to have. Defaults to "<Project Name> Model"
       :type name: str
       :param cpu_size: Size of the cpu for the model training function
@@ -260,12 +283,14 @@ Classes
       :type training_config: dict
       :param exclusive_run: Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
       :type exclusive_run: bool
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The new model, which has not been trained.
       :rtype: Model
 
 
-   .. py:method:: create_model_from_zip(self, train_function_name, predict_function_name, train_module_name, predict_module_name, training_input_tables, name = None, cpu_size = None, memory = None)
+   .. py:method:: create_model_from_zip(train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, name = None, cpu_size = None, memory = None, package_requirements = None)
 
       Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
 
@@ -280,26 +305,74 @@ Classes
 
       :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
       :type train_function_name: str
-      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
       :param train_module_name: Full path of the module that contains the train function from the root of the zip.
       :type train_module_name: str
       :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
       :type predict_module_name: str
       :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type training_input_tables: list
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param predict_many_function_name: Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
+      :type predict_many_function_name: str
       :param name: The name you want your model to have. Defaults to "<Project Name> Model".
       :type name: str
       :param cpu_size: Size of the cpu for the model training function
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: None
       :rtype: Upload
 
 
-   .. py:method:: list_models(self)
+   .. py:method:: create_model_from_git(application_connector_id, branch_name, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, python_root = None, name = None, cpu_size = None, memory = None, package_requirements = None)
+
+      Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param application_connector_id: The unique ID associated with the git application connector.
+      :type application_connector_id: str
+      :param branch_name: Name of the branch in the git repository to be used for training.
+      :type branch_name: str
+      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
+      :type train_module_name: str
+      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
+      :type predict_module_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param predict_many_function_name:
+      :type predict_many_function_name: str
+      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+      :type python_root: str
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
+
+      :returns: None
+      :rtype: Model
+
+
+   .. py:method:: list_models()
 
       Retrieves the list of models in the specified project.
 
@@ -310,7 +383,20 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_monitor(self, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None)
+   .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None)
+
+      Returns the information about how to call the custom train function.
+
+      :param feature_group_names_for_training: A list of feature group table names that will be used for training
+      :type feature_group_names_for_training: list
+      :param training_data_parameter_name_override: Override from feature group type to parameter name in train function.
+      :type training_data_parameter_name_override: dict
+
+      :returns: Information about how to call the customer provided train function.
+      :rtype: CustomTrainFunctionInfo
+
+
+   .. py:method:: create_model_monitor(training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
@@ -331,7 +417,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: list_model_monitors(self)
+   .. py:method:: list_model_monitors()
 
       Retrieves the list of models monitors in the specified project.
 
@@ -342,7 +428,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_deployment_token(self)
+   .. py:method:: create_deployment_token()
 
       Creates a deployment token for the specified project.
 
@@ -356,7 +442,7 @@ Classes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: list_deployments(self)
+   .. py:method:: list_deployments()
 
       Retrieves a list of all deployments in the specified project.
 
@@ -367,7 +453,7 @@ Classes
       :rtype: Deployment
 
 
-   .. py:method:: list_deployment_tokens(self)
+   .. py:method:: list_deployment_tokens()
 
       Retrieves a list of all deployment tokens in the specified project.
 
@@ -378,7 +464,7 @@ Classes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: list_refresh_policies(self, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [])
+   .. py:method:: list_refresh_policies(dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [])
 
       List the refresh policies for the organization
 
@@ -399,7 +485,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: list_batch_predictions(self)
+   .. py:method:: list_batch_predictions()
 
       Retrieves a list for the batch predictions in the project
 
@@ -410,7 +496,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: attach_dataset(self, dataset_id, project_dataset_type)
+   .. py:method:: attach_dataset(dataset_id, project_dataset_type)
 
       Attaches dataset to the project.
 
@@ -423,7 +509,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: remove_dataset(self, dataset_id)
+   .. py:method:: remove_dataset(dataset_id)
 
       Removes dataset from the project.
 
@@ -431,7 +517,7 @@ Classes
       :type dataset_id: unique string identifier
 
 
-   .. py:method:: create_model_from_functions(self, train_function, predict_function, training_input_tables = None)
+   .. py:method:: create_model_from_functions(train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)
 
       Creates a model using python.
 
@@ -441,6 +527,12 @@ Classes
       :type predict_function: callable
       :param training_input_tables: The input tables to be used for training the model. Defaults to None.
       :type training_input_tables: list, optional
+      :param predict_many_function: Prediction function for batch input
+      :type predict_many_function: callable
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
 
       :returns: The model object.
       :rtype: Model

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, refreshSchedules={}, latestMonitorModelVersion={})
+.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, metricTypes=None, refreshSchedules={}, latestMonitorModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -47,17 +47,21 @@ Classes
    :type predictionMetricId: str
    :param latestPredictionMetricVersionId: Lastest prediction metric instance for decile and other analysis
    :type latestPredictionMetricVersionId: str
+   :param metricConfigs: Configurations for model monitor
+   :type metricConfigs: dict
+   :param metricTypes: List of metric types
+   :type metricTypes: dict
    :param latestMonitorModelVersion: The latest model monitor version.
    :type latestMonitorModelVersion: ModelMonitorVersion
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
    :type refreshSchedules: RefreshSchedule
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -65,7 +69,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: rerun(self)
+   .. py:method:: rerun()
 
       Reruns the specified model monitor.
 
@@ -76,7 +80,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -84,7 +88,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified model monitor.
 
@@ -95,7 +99,16 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
+   .. py:method:: get_summary()
+
+      :param model_monitor_id:
+      :type model_monitor_id: str
+
+      :returns: None
+      :rtype: ModelMonitorSummary
+
+
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of the versions for a given model monitor.
 
@@ -108,7 +121,7 @@ Classes
       :rtype: ModelMonitorVersion
 
 
-   .. py:method:: rename(self, name)
+   .. py:method:: rename(name)
 
       Renames a model monitor
 
@@ -116,7 +129,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified model monitor and all its versions.
 

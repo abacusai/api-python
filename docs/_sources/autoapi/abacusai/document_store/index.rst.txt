@@ -1,0 +1,54 @@
+:py:mod:`abacusai.document_store`
+=================================
+
+.. py:module:: abacusai.document_store
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.document_store.DocumentStore
+
+
+
+
+.. py:class:: DocumentStore(client, documentStoreId=None, createdAt=None, name=None, documentType=None, documentCount=None, approximateSize=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A document store.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param documentStoreId: The unique identifier of the document store.
+   :type documentStoreId: str
+   :param createdAt: The timestamp at which the document store was created.
+   :type createdAt: str
+   :param name: The name of the document store
+   :type name: str
+   :param documentType: The type of documents stored in this document store
+   :type documentType: str
+   :param documentCount: The number of documents in the document store
+   :type documentCount: int
+   :param approximateSize: Approximately the number of bytes of all documents stored in the document store
+   :type approximateSize: int
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

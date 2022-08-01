@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Dataset(client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isAboveDataLimitingThreshold=None, isCdsAvailable=None, isCdsActive=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
+.. py:class:: Dataset(client, datasetId=None, name=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55,12 +55,6 @@ Classes
    :type applicationConnectorConfig: dict
    :param incremental: If dataset is an incremental dataset.
    :type incremental: bool
-   :param isAboveDataLimitingThreshold: Boolean indicating whether dataset has data (rows) above the threshold limit (1 million)
-   :type isAboveDataLimitingThreshold: bool
-   :param isCdsAvailable: Boolean indicating whether a custom dataserver (CDS) is available to be deployed
-   :type isCdsAvailable: bool
-   :param isCdsActive: Boolean indicating whether a custom dataserver (CDS) is present
-   :type isCdsActive: bool
    :param latestDatasetVersion: The latest version of this dataset.
    :type latestDatasetVersion: DatasetVersion
    :param schema: List of resolved columns.
@@ -68,12 +62,10 @@ Classes
    :param refreshSchedules: List of schedules that determines when the next version of the dataset will be created.
    :type refreshSchedules: RefreshSchedule
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -81,7 +73,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: create_version_from_file_connector(self, location = None, file_format = None, csv_delimiter = None)
+   .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None)
 
       Creates a new version of the specified dataset.
 
@@ -96,7 +88,7 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_version_from_database_connector(self, object_name = None, columns = None, query_arguments = None, sql_query = None)
+   .. py:method:: create_version_from_database_connector(object_name = None, columns = None, query_arguments = None, sql_query = None)
 
       Creates a new version of the specified dataset
 
@@ -113,7 +105,7 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_version_from_application_connector(self, object_id = None, start_timestamp = None, end_timestamp = None)
+   .. py:method:: create_version_from_application_connector(object_id = None, start_timestamp = None, end_timestamp = None)
 
       Creates a new version of the specified dataset
 
@@ -128,7 +120,7 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_version_from_upload(self, file_format = None)
+   .. py:method:: create_version_from_upload(file_format = None)
 
       Creates a new version of the specified dataset using a local file upload.
 
@@ -139,7 +131,7 @@ Classes
       :rtype: Upload
 
 
-   .. py:method:: snapshot_streaming_data(self)
+   .. py:method:: snapshot_streaming_data()
 
       Snapshots the current data in the streaming dataset for training.
 
@@ -150,7 +142,7 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: set_column_data_type(self, column, data_type)
+   .. py:method:: set_column_data_type(column, data_type)
 
       Set a column's type in a specified dataset.
 
@@ -163,7 +155,7 @@ Classes
       :rtype: Dataset
 
 
-   .. py:method:: set_streaming_retention_policy(self, retention_hours = None, retention_row_count = None)
+   .. py:method:: set_streaming_retention_policy(retention_hours = None, retention_row_count = None)
 
       Sets the streaming retention policy
 
@@ -173,7 +165,7 @@ Classes
       :type retention_row_count: int
 
 
-   .. py:method:: get_schema(self)
+   .. py:method:: get_schema()
 
       Retrieves the column schema of a dataset
 
@@ -184,7 +176,7 @@ Classes
       :rtype: DatasetColumn
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -192,7 +184,7 @@ Classes
       :rtype: Dataset
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
 
@@ -203,7 +195,7 @@ Classes
       :rtype: Dataset
 
 
-   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of all dataset versions for the specified dataset.
 
@@ -216,7 +208,7 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: attach_to_project(self, project_id, dataset_type)
+   .. py:method:: attach_to_project(project_id, dataset_type)
 
       [DEPRECATED] Attaches the dataset to the project.
 
@@ -232,7 +224,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: remove_from_project(self, project_id)
+   .. py:method:: remove_from_project(project_id)
 
       [DEPRECATED] Removes a dataset from a project.
 
@@ -240,7 +232,7 @@ Classes
       :type project_id: str
 
 
-   .. py:method:: rename(self, name)
+   .. py:method:: rename(name)
 
       Rename a dataset.
 
@@ -248,7 +240,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified dataset from the organization.
 
@@ -259,15 +251,15 @@ Classes
       :type dataset_id: str
 
 
-   .. py:method:: wait_for_import(self, timeout=900)
+   .. py:method:: wait_for_import(timeout=900)
 
       A waiting call until dataset is imported.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_inspection(self, timeout=None)
+   .. py:method:: wait_for_inspection(timeout=None)
 
       A waiting call until dataset is completely inspected.
 
@@ -275,7 +267,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Gets the status of the latest dataset version.
 
@@ -283,7 +275,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: describe_feature_group(self)
+   .. py:method:: describe_feature_group()
 
       Gets the feature group attached to the dataset.
 
@@ -291,7 +283,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_refresh_policy(self, cron)
+   .. py:method:: create_refresh_policy(cron)
 
       To create a refresh policy for a dataset.
 
@@ -302,7 +294,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: list_refresh_policies(self)
+   .. py:method:: list_refresh_policies()
 
       Gets the refresh policies in a list.
 

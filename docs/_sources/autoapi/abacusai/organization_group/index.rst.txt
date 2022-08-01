@@ -38,12 +38,12 @@ Classes
    :param createdAt: When the Organization Group was created.
    :type createdAt: str
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -51,7 +51,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -59,7 +59,7 @@ Classes
       :rtype: OrganizationGroup
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Returns the specific organization group passes in by the user.
 
@@ -70,7 +70,7 @@ Classes
       :rtype: OrganizationGroup
 
 
-   .. py:method:: add_permission(self, permission)
+   .. py:method:: add_permission(permission)
 
       Adds a permission to the specified Organization Group
 
@@ -78,7 +78,7 @@ Classes
       :type permission: str
 
 
-   .. py:method:: remove_permission(self, permission)
+   .. py:method:: remove_permission(permission)
 
       Removes a permission from the specified Organization Group
 
@@ -86,7 +86,7 @@ Classes
       :type permission: str
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified Organization Group from the organization.
 
@@ -94,7 +94,7 @@ Classes
       :type organization_group_id: str
 
 
-   .. py:method:: add_user_to(self, email)
+   .. py:method:: add_user_to(email)
 
       Adds a user to the specified Organization Group
 
@@ -102,7 +102,7 @@ Classes
       :type email: str
 
 
-   .. py:method:: remove_user_from(self, email)
+   .. py:method:: remove_user_from(email)
 
       Removes a user from an Organization Group
 
@@ -110,7 +110,7 @@ Classes
       :type email: str
 
 
-   .. py:method:: set_default(self)
+   .. py:method:: set_default()
 
       Sets the default Organization Group that all new users that join an organization are automatically added to
 

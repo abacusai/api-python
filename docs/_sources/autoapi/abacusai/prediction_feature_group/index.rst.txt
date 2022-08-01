@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PredictionFeatureGroup(client, featureGroupId=None, datasetType=None, default=None, required=None)
+.. py:class:: PredictionFeatureGroup(client, featureGroupId=None, featureGroupVersion=None, datasetType=None, default=None, required=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27,6 +27,8 @@ Classes
    :type client: ApiClient
    :param featureGroupId: The unique identifier of the dataset
    :type featureGroupId: str
+   :param featureGroupVersion:
+   :type featureGroupVersion: str
    :param datasetType: dataset type
    :type datasetType: str
    :param default: If true, this dataset is the default feature group in the model
@@ -34,12 +36,12 @@ Classes
    :param required: If true...
    :type required: bool
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 

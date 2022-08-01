@@ -50,12 +50,12 @@ Classes
    :param paused: (Boolean): True if the refresh policy is paused
    :type paused: bool
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -63,7 +63,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Delete a refresh policy
 
@@ -71,7 +71,7 @@ Classes
       :type refresh_policy_id: str
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -79,7 +79,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieve a single refresh policy
 
@@ -90,7 +90,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: list_refresh_pipeline_runs(self)
+   .. py:method:: list_refresh_pipeline_runs()
 
       List the the times that the refresh policy has been run
 
@@ -101,7 +101,7 @@ Classes
       :rtype: RefreshPipelineRun
 
 
-   .. py:method:: pause(self)
+   .. py:method:: pause()
 
       Pauses a refresh policy
 
@@ -109,7 +109,7 @@ Classes
       :type refresh_policy_id: str
 
 
-   .. py:method:: resume(self)
+   .. py:method:: resume()
 
       Resumes a refresh policy
 
@@ -117,7 +117,7 @@ Classes
       :type refresh_policy_id: str
 
 
-   .. py:method:: run(self)
+   .. py:method:: run()
 
       Force a run of the refresh policy.
 
@@ -125,7 +125,7 @@ Classes
       :type refresh_policy_id: str
 
 
-   .. py:method:: update(self, name = None, cron = None)
+   .. py:method:: update(name = None, cron = None)
 
       Update the name or cron string of a  refresh policy
 

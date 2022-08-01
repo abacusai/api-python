@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, batchStreamingUpdates=None, refreshSchedules={}, featureGroupExportConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55,17 +55,19 @@ Classes
    :type regions: list of strings
    :param error: Relevant error if the status is FAILED
    :type error: str
+   :param batchStreamingUpdates: Flag marking the feature group deployment as having enabled a background process which caches streamed in rows for quicker lookup
+   :type batchStreamingUpdates: bool
    :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: Export config (file connector or database connector information) for feature group deployment exports
    :type featureGroupExportConfig: FeatureGroupExportConfig
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -73,7 +75,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -81,7 +83,7 @@ Classes
       :rtype: Deployment
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified deployment.
 
@@ -92,7 +94,7 @@ Classes
       :rtype: Deployment
 
 
-   .. py:method:: update(self, description = None)
+   .. py:method:: update(description = None)
 
       Updates a deployment's description.
 
@@ -100,7 +102,7 @@ Classes
       :type description: str
 
 
-   .. py:method:: rename(self, name)
+   .. py:method:: rename(name)
 
       Updates a deployment's name and/or description.
 
@@ -108,7 +110,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: set_auto(self, enable = None)
+   .. py:method:: set_auto(enable = None)
 
       Enable/Disable auto deployment for the specified deployment.
 
@@ -122,7 +124,7 @@ Classes
       :type enable: bool
 
 
-   .. py:method:: set_model_version(self, model_version)
+   .. py:method:: set_model_version(model_version)
 
       Promotes a Model Version to be served in the Deployment
 
@@ -130,7 +132,7 @@ Classes
       :type model_version: str
 
 
-   .. py:method:: set_feature_group_version(self, feature_group_version)
+   .. py:method:: set_feature_group_version(feature_group_version)
 
       Promotes a Feature Group Version to be served in the Deployment
 
@@ -138,7 +140,7 @@ Classes
       :type feature_group_version: str
 
 
-   .. py:method:: start(self)
+   .. py:method:: start()
 
       Restarts the specified deployment that was previously suspended.
 
@@ -146,7 +148,7 @@ Classes
       :type deployment_id: str
 
 
-   .. py:method:: stop(self)
+   .. py:method:: stop()
 
       Stops the specified deployment.
 
@@ -154,7 +156,7 @@ Classes
       :type deployment_id: str
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
@@ -162,7 +164,7 @@ Classes
       :type deployment_id: str
 
 
-   .. py:method:: set_feature_group_export_file_connector_output(self, file_format = None, output_location = None)
+   .. py:method:: set_feature_group_export_file_connector_output(file_format = None, output_location = None)
 
       Sets the export output for the Feature Group Deployment to be a file connector.
 
@@ -172,7 +174,7 @@ Classes
       :type output_location: str
 
 
-   .. py:method:: set_feature_group_export_database_connector_output(self, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
+   .. py:method:: set_feature_group_export_database_connector_output(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Sets the export output for the Feature Group Deployment to be a Database connector.
 
@@ -190,7 +192,7 @@ Classes
       :type additional_id_columns: list
 
 
-   .. py:method:: remove_feature_group_export_output(self)
+   .. py:method:: remove_feature_group_export_output()
 
       Removes the export type that is set for the Feature Group Deployment
 
@@ -198,7 +200,7 @@ Classes
       :type deployment_id: str
 
 
-   .. py:method:: create_batch_prediction(self, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None)
+   .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -226,20 +228,24 @@ Classes
       :type csv_prediction_prefix: str
       :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
       :type csv_explanations_prefix: str
+      :param output_includes_metadata: If true, output will contain columns including prediction start time, batch prediction version, and model version
+      :type output_includes_metadata: bool
+      :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list
+      :type result_input_columns: list
 
       :returns: The batch prediction description.
       :rtype: BatchPrediction
 
 
-   .. py:method:: wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480)
+   .. py:method:: wait_for_deployment(wait_states={'PENDING', 'DEPLOYING'}, timeout=480)
 
       A waiting call until deployment is completed.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 480 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Gets the status of the deployment.
 
@@ -247,7 +253,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: create_refresh_policy(self, cron)
+   .. py:method:: create_refresh_policy(cron)
 
       To create a refresh policy for a deployment.
 
@@ -258,7 +264,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: list_refresh_policies(self)
+   .. py:method:: list_refresh_policies()
 
       Gets the refresh policies in a list.
 

@@ -44,12 +44,12 @@ Classes
    :param incrementalQueriedAt: If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
    :type incrementalQueriedAt: str
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -57,7 +57,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -65,7 +65,7 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified dataset version, with attributes such as its ID, name, source type, etc.
 
@@ -76,15 +76,15 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: wait_for_import(self, timeout=900)
+   .. py:method:: wait_for_import(timeout=900)
 
       A waiting call until dataset version is imported.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 900 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_inspection(self, timeout=None)
+   .. py:method:: wait_for_inspection(timeout=None)
 
       A waiting call until dataset version is completely inspected.
 
@@ -92,7 +92,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Gets the status of the dataset version.
 

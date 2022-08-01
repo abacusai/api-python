@@ -1,0 +1,48 @@
+:py:mod:`abacusai.custom_train_function_info`
+=============================================
+
+.. py:module:: abacusai.custom_train_function_info
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.custom_train_function_info.CustomTrainFunctionInfo
+
+
+
+
+.. py:class:: CustomTrainFunctionInfo(client, trainingDataParameterNameMapping=None, schemaMappings=None, trainDataParameterToFeatureGroupIds=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Information about how to call the customer provided train function.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param trainingDataParameterNameMapping: The mapping from feature group type to the dataframe parameter name
+   :type trainingDataParameterNameMapping: dict
+   :param schemaMappings: The feature type to feature name mapping for each dataframe
+   :type schemaMappings: dict
+   :param trainDataParameterToFeatureGroupIds: The mapping from the dataframe parameter name to the feature group id backing the data
+   :type trainDataParameterToFeatureGroupIds: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

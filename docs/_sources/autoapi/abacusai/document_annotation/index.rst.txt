@@ -1,0 +1,48 @@
+:py:mod:`abacusai.document_annotation`
+======================================
+
+.. py:module:: abacusai.document_annotation
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.document_annotation.DocumentAnnotation
+
+
+
+
+.. py:class:: DocumentAnnotation(client, annotation=None, boundingBox=None, createdAt=None, count=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An annotation for a document in a document store
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param annotation: The name of the annotation
+   :type annotation: str
+   :param boundingBox: The bounding box for this annotation
+   :type boundingBox: dict
+   :param createdAt: The timestamp at which the annotation was first used
+   :type createdAt: str
+   :param count: The number of this annotation used in the document store
+   :type count: int
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

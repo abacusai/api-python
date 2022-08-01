@@ -1,0 +1,50 @@
+:py:mod:`abacusai.document`
+===========================
+
+.. py:module:: abacusai.document
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.document.Document
+
+
+
+
+.. py:class:: Document(client, key=None, fileSize=None, createdAt=None, annotations={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A document in a document store
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param key:
+   :type key: str
+   :param fileSize:
+   :type fileSize: int
+   :param createdAt: The timestamp at which the document was created.
+   :type createdAt: str
+   :param annotations: the annotations for this document
+   :type annotations: DocumentAnnotation
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

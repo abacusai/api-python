@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None)
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57,13 +57,15 @@ Classes
    :type automlComplete: bool
    :param trainingFeatureGroupIds: The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
    :type trainingFeatureGroupIds: list of unique string identifiers
+   :param codeSource: If a python model, information on where the source code
+   :type codeSource: CodeSource
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -71,7 +73,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
 
@@ -79,7 +81,20 @@ Classes
       :type model_version: str
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: export_model_artifact_as_feature_group(table_name, artifact_type)
+
+      Exports metric artifact data for a model as a feature group.
+
+      :param table_name: The name of the feature group table to create.
+      :type table_name: str
+      :param artifact_type: An EvalArtifact enum of which artifact to export.
+      :type artifact_type: str
+
+      :returns: The created feature group.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -87,7 +102,7 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified model version
 
@@ -98,7 +113,18 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: get_training_logs(self, stdout = False, stderr = False)
+   .. py:method:: get_training_data_logs()
+
+      Retrieves the data preparation logs during model training.
+
+      :param model_version: The unique version ID of the model version
+      :type model_version: str
+
+      :returns: A list of logs.
+      :rtype: DataPrepLogs
+
+
+   .. py:method:: get_training_logs(stdout = False, stderr = False)
 
       Returns training logs for the model.
 
@@ -111,7 +137,7 @@ Classes
       :rtype: FunctionLogs
 
 
-   .. py:method:: wait_for_training(self, timeout=None)
+   .. py:method:: wait_for_training(timeout=None)
 
       A waiting call until model gets trained.
 
@@ -119,7 +145,15 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: wait_for_full_automl(timeout=None)
+
+      A waiting call until full AutoML cycle is completed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
 
       Gets the status of the model version under training.
 

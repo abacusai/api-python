@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,13 +45,17 @@ Classes
    :type pendingDeploymentIds: list
    :param failedDeploymentIds: List of failed deployment IDs.
    :type failedDeploymentIds: list
+   :param metricConfigs: List of metric configs for the model monitor instance.
+   :type metricConfigs: json field
+   :param metricTypes: List of metric types.
+   :type metricTypes: dict
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -59,7 +63,18 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: get_prediction_drift()
+
+      Gets the label and prediction drifts for a model monitor.
+
+      :param model_monitor_version: The unique identifier to a model monitor version created under the project.
+      :type model_monitor_version: str
+
+      :returns: An object describing training and prediction output label and prediction distributions.
+      :rtype: DriftDistributions
+
+
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -67,7 +82,7 @@ Classes
       :rtype: ModelMonitorVersion
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified model monitor version
 
@@ -78,7 +93,7 @@ Classes
       :rtype: ModelMonitorVersion
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified model monitor version.
 
@@ -86,7 +101,15 @@ Classes
       :type model_monitor_version: str
 
 
-   .. py:method:: get_model_monitoring_logs(self, stdout = False, stderr = False)
+   .. py:method:: metric_data(metric_type)
+
+      Returns the data needed for decile metrics associated with the model monitor.
+
+      :param metric_type:
+      :type metric_type: str
+
+
+   .. py:method:: get_model_monitoring_logs(stdout = False, stderr = False)
 
       Returns monitoring logs for the model.
 
@@ -99,7 +122,7 @@ Classes
       :rtype: FunctionLogs
 
 
-   .. py:method:: get_drift_for_feature(self, feature_name)
+   .. py:method:: get_drift_for_feature(feature_name)
 
       Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
@@ -107,7 +130,7 @@ Classes
       :type feature_name: str
 
 
-   .. py:method:: get_outliers_for_feature(self, feature_name = None)
+   .. py:method:: get_outliers_for_feature(feature_name = None)
 
       Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
 
@@ -115,15 +138,15 @@ Classes
       :type feature_name: str
 
 
-   .. py:method:: wait_for_monitor(self, timeout=1200)
+   .. py:method:: wait_for_monitor(timeout=1200)
 
       A waiting call until model monitor version is ready.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Gets the status of the model monitor version.
 

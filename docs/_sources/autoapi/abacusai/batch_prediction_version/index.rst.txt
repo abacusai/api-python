@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, batchInputs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, batchInputs={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +31,8 @@ Classes
    :type batchPredictionId: str
    :param status: The current status of the batch prediction
    :type status: str
+   :param driftMonitorStatus:
+   :type driftMonitorStatus: str
    :param deploymentId: The deployment used to make the predictions
    :type deploymentId: str
    :param modelId: The model used to make the predictions
@@ -65,6 +67,10 @@ Classes
    :type legacyInputLocation: str
    :param error: Relevant error if the status is FAILED
    :type error: str
+   :param driftMonitorError:
+   :type driftMonitorError: str
+   :param monitorWarnings: Relevant warning if there are issues found in drift or data integrity
+   :type monitorWarnings: str
    :param csvInputPrefix: A prefix to prepend to the input columns, only applies when output format is CSV
    :type csvInputPrefix: str
    :param csvPredictionPrefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
@@ -75,15 +81,17 @@ Classes
    :type databaseOutputTotalWrites: int
    :param databaseOutputFailedWrites: The number of failed writes to the Database Connector
    :type databaseOutputFailedWrites: int
+   :param outputIncludesMetadata: If true, output will contain columns including prediction start time, batch prediction version, and model version
+   :type outputIncludesMetadata: bool
+   :param resultInputColumns: If present, will limit result files or feature groups to only include columns present in this list
+   :type resultInputColumns: list of string
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -91,7 +99,15 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: download_batch_prediction_result_chunk(self, offset = 0, chunk_size = 10485760)
+   .. py:method:: get_outliers_for_batch_prediction_feature(feature_name = None)
+
+      Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
+
+      :param feature_name: Name of the feature to view the distribution of.
+      :type feature_name: str
+
+
+   .. py:method:: download_batch_prediction_result_chunk(offset = 0, chunk_size = 10485760)
 
       Returns a stream containing the batch prediction results
 
@@ -101,7 +117,7 @@ Classes
       :type chunk_size: int
 
 
-   .. py:method:: get_batch_prediction_connector_errors(self)
+   .. py:method:: get_batch_prediction_connector_errors()
 
       Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
 
@@ -109,7 +125,7 @@ Classes
       :type batch_prediction_version: str
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -117,7 +133,7 @@ Classes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Describes a batch prediction version
 
@@ -128,7 +144,7 @@ Classes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: download_result_to_file(self, file)
+   .. py:method:: download_result_to_file(file)
 
       Downloads the batch prediction version in a local file.
 
@@ -136,15 +152,23 @@ Classes
       :type file: file object
 
 
-   .. py:method:: wait_for_predictions(self, timeout=1200)
+   .. py:method:: wait_for_predictions(timeout=1200)
 
       A waiting call until batch prediction version is ready.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: wait_for_drift_monitor(timeout=86400)
+
+      A waiting call until batch prediction drift monitor calculations are ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status(drift_monitor_status = False)
 
       Gets the status of the batch prediction version.
 

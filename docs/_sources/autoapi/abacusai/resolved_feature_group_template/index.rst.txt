@@ -1,0 +1,50 @@
+:py:mod:`abacusai.resolved_feature_group_template`
+==================================================
+
+.. py:module:: abacusai.resolved_feature_group_template
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate
+
+
+
+
+.. py:class:: ResolvedFeatureGroupTemplate(client, featureGroupTemplateId=None, resolvedVariables=None, resolvedSql=None, templateSql=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Results from resolving a feature group template.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupTemplateId: The unique identifier for this feature group template.
+   :type featureGroupTemplateId: str
+   :param resolvedVariables: A map from template variable names to parameters that were available during template resolution.
+   :type resolvedVariables: dict
+   :param resolvedSql: The SQL resulting from resolving the sql template by applying the resolved bindings.
+   :type resolvedSql: str
+   :param templateSql: SQL that can include variables to be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.
+   :type templateSql: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

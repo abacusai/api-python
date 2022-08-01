@@ -26,7 +26,7 @@ Classes
    :param client_options: Optional API client configurations
    :type client_options: ClientOptions
 
-   .. py:method:: predict_raw(self, deployment_token, deployment_id, **kwargs)
+   .. py:method:: predict_raw(deployment_token, deployment_id, **kwargs)
 
       Raw interface for returning predictions from Plug and Play deployments.
 
@@ -38,7 +38,7 @@ Classes
       :type \*\*kwargs: dict
 
 
-   .. py:method:: lookup_features(self, deployment_token, deployment_id, query_data = {})
+   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {})
 
       Returns the feature group deployed in the feature store project.
 
@@ -50,7 +50,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict(self, deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict(deployment_token, deployment_id, query_data = {})
 
       Returns a prediction for Predictive Modeling
 
@@ -62,7 +62,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_multiple(self, deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data = {})
 
       Returns a list of predictions for Predictive Modeling
 
@@ -74,7 +74,7 @@ Classes
       :type query_data: list
 
 
-   .. py:method:: predict_from_datasets(self, deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data = {})
 
       Returns a list of predictions for Predictive Modeling
 
@@ -86,7 +86,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_lead(self, deployment_token, deployment_id, query_data)
+   .. py:method:: predict_lead(deployment_token, deployment_id, query_data)
 
       Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
@@ -98,7 +98,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_churn(self, deployment_token, deployment_id, query_data)
+   .. py:method:: predict_churn(deployment_token, deployment_id, query_data)
 
       Returns a probability of a user to churn out in response to his/her interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
 
@@ -110,7 +110,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_takeover(self, deployment_token, deployment_id, query_data)
+   .. py:method:: predict_takeover(deployment_token, deployment_id, query_data)
 
       Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
@@ -122,7 +122,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_fraud(self, deployment_token, deployment_id, query_data)
+   .. py:method:: predict_fraud(deployment_token, deployment_id, query_data)
 
       Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
 
@@ -134,7 +134,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(self, deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None)
+   .. py:method:: predict_class(deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a classification prediction
 
@@ -156,9 +156,11 @@ Classes
       :type fixed_features: list
       :param nested: If specified generates prediction delta for each index of the specified nested feature.
       :type nested: str
+      :param explainer_type:
+      :type explainer_type: str
 
 
-   .. py:method:: predict_target(self, deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None)
+   .. py:method:: predict_target(deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
@@ -174,9 +176,11 @@ Classes
       :type fixed_features: list
       :param nested: If specified generates prediction delta for each index of the specified nested feature.
       :type nested: str
+      :param explainer_type:
+      :type explainer_type: str
 
 
-   .. py:method:: get_anomalies(self, deployment_token, deployment_id, threshold = None, histogram = False)
+   .. py:method:: get_anomalies(deployment_token, deployment_id, threshold = None, histogram = False)
 
       Returns a list of anomalies from the training dataset
 
@@ -190,7 +194,7 @@ Classes
       :type histogram: bool
 
 
-   .. py:method:: is_anomaly(self, deployment_token, deployment_id, query_data = None)
+   .. py:method:: is_anomaly(deployment_token, deployment_id, query_data = None)
 
       Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
@@ -202,7 +206,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(self, deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
+   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -220,7 +224,7 @@ Classes
       :type prediction_start: str
 
 
-   .. py:method:: get_k_nearest(self, deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
+   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
 
       Returns the k nearest neighbors for the provided embedding vector.
 
@@ -238,7 +242,7 @@ Classes
       :type include_score: bool
 
 
-   .. py:method:: get_multiple_k_nearest(self, deployment_token, deployment_id, queries)
+   .. py:method:: get_multiple_k_nearest(deployment_token, deployment_id, queries)
 
       Returns the k nearest neighbors for the queries provided
 
@@ -250,7 +254,7 @@ Classes
       :type queries: list
 
 
-   .. py:method:: get_labels(self, deployment_token, deployment_id, query_data, threshold = None)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data, threshold = None)
 
       Returns a list of scored labels from
 
@@ -264,7 +268,7 @@ Classes
       :type threshold: None
 
 
-   .. py:method:: get_recommendations(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -292,7 +296,7 @@ Classes
       :type explore_fraction: float
 
 
-   .. py:method:: get_personalized_ranking(self, deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
+   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
 
       Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -310,7 +314,7 @@ Classes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(self, deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -328,7 +332,7 @@ Classes
       :type scaling_factors: list
 
 
-   .. py:method:: get_related_items(self, deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
+   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -350,7 +354,7 @@ Classes
       :type exclude_items: list
 
 
-   .. py:method:: get_feature_group_rows(self, deployment_token, deployment_id, query_data)
+   .. py:method:: get_feature_group_rows(deployment_token, deployment_id, query_data)
 
       :param deployment_token:
       :type deployment_token: str
@@ -360,7 +364,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_search_results(self, deployment_token, deployment_id, query_data)
+   .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
 
       TODO
 
@@ -372,7 +376,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_sentiment(self, deployment_token, deployment_id, document)
+   .. py:method:: get_sentiment(deployment_token, deployment_id, document)
 
       TODO
 
@@ -384,7 +388,7 @@ Classes
       :type document: str
 
 
-   .. py:method:: get_entailment(self, deployment_token, deployment_id, document)
+   .. py:method:: get_entailment(deployment_token, deployment_id, document)
 
       TODO
 
@@ -396,7 +400,7 @@ Classes
       :type document: str
 
 
-   .. py:method:: get_classification(self, deployment_token, deployment_id, document)
+   .. py:method:: get_classification(deployment_token, deployment_id, document)
 
       TODO
 
@@ -408,7 +412,7 @@ Classes
       :type document: str
 
 
-   .. py:method:: get_summary(self, deployment_token, deployment_id, query_data)
+   .. py:method:: get_summary(deployment_token, deployment_id, query_data)
 
       Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
@@ -420,7 +424,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_language(self, deployment_token, deployment_id, query_data)
+   .. py:method:: predict_language(deployment_token, deployment_id, query_data)
 
       TODO
 
@@ -432,7 +436,7 @@ Classes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(self, deployment_token, deployment_id, query_data, forced_assignments = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None)
 
       Get all positive assignments that match a query.
 
@@ -446,7 +450,7 @@ Classes
       :type forced_assignments: dict
 
 
-   .. py:method:: check_constraints(self, deployment_token, deployment_id, query_data)
+   .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
 
       Check for any constraints violated by the overrides.
 

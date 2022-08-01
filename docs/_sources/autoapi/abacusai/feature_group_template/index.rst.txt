@@ -1,0 +1,115 @@
+:py:mod:`abacusai.feature_group_template`
+=========================================
+
+.. py:module:: abacusai.feature_group_template
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_template.FeatureGroupTemplate
+
+
+
+
+.. py:class:: FeatureGroupTemplate(client, featureGroupTemplateId=None, description=None, featureGroupId=None, name=None, templateSql=None, templateVariables=None, createdAt=None, updatedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A template for creating feature groups.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupTemplateId: The unique identifier for this feature group template.
+   :type featureGroupTemplateId: str
+   :param description: A user-friendly text description of this feature group template.
+   :type description: str
+   :param featureGroupId: The unique identifier for the feature group used to create this template.
+   :type featureGroupId: str
+   :param name: The user-friendly name of this feature group template.
+   :type name: str
+   :param templateSql: SQL that can include variables which will be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.
+   :type templateSql: str
+   :param templateVariables: A map, from template variable names to parameters for replacing those template variables with values (e.g. to values and metadata on how to resolve those values).
+   :type templateVariables: dict
+   :param createdAt: When the feature group template was created.
+   :type createdAt: str
+   :param updatedAt: When the feature group template was updated.
+   :type updatedAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: delete()
+
+      Delete an existing feature group template.
+
+      :param feature_group_template_id: The unique ID associated with the feature group template.
+      :type feature_group_template_id: str
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: FeatureGroupTemplate
+
+
+   .. py:method:: describe()
+
+      Describe a Feature Group Template.
+
+      :param feature_group_template_id: The unique ID of a feature group template.
+      :type feature_group_template_id: str
+
+      :returns: The feature group template object.
+      :rtype: FeatureGroupTemplate
+
+
+   .. py:method:: update(template_sql = None, template_variables = None)
+
+      Update a feature group template.
+
+      :param template_sql: If provided, the new value to use for the template sql.
+      :type template_sql: str
+      :param template_variables: If provided, the new value to use for the template variables.
+      :type template_variables: list
+
+      :returns: The updated feature group template.
+      :rtype: FeatureGroupTemplate
+
+
+   .. py:method:: preview_resolution(template_bindings = None, template_sql = None, template_variables = None, should_validate = True)
+
+      Resolve template sql using template variables and template bindings.
+
+      :param template_bindings: Values that overide the template variable values specified by the template.
+      :type template_bindings: list
+      :param template_sql: If specified, use this as the template sql instead of the feature group template's sql.
+      :type template_sql: str
+      :param template_variables: Template variables to use. If a template is provided, this overrides the template's template variables.
+      :type template_variables: list
+      :param should_validate:
+      :type should_validate: bool
+
+      :returns: None
+      :rtype: ResolvedFeatureGroupTemplate
+
+
+

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DatasetColumn(client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None)
+.. py:class:: DatasetColumn(client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None, validDataTypes=None, timeFormat=None, timestampFrequency=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37,13 +37,17 @@ Classes
    :type detectedFeatureType: str
    :param originalName: The original name of the column
    :type originalName: str
+   :param validDataTypes: The valid data type options for this column
+   :type validDataTypes: list of enum string
+   :param timeFormat: The detected time format of the column
+   :type timeFormat: str
+   :param timestampFrequency: The detected frequency of the timestamps in the dataset
+   :type timestampFrequency: str
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 

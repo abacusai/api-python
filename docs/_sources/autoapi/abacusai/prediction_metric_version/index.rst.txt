@@ -44,12 +44,10 @@ Classes
    :param status: The current status of the computations for this job version.
    :type status: str
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -57,15 +55,42 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: wait_for_prediction_metric_version(self, timeout=1200)
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: PredictionMetricVersion
+
+
+   .. py:method:: describe()
+
+      Retrieves a full description of the specified prediction metric version
+
+      :param prediction_metric_version: The unique version ID of the prediction metric version
+      :type prediction_metric_version: str
+
+      :returns: A prediction metric version. For more information, please refer to the details on the object (below).
+      :rtype: PredictionMetricVersion
+
+
+   .. py:method:: delete()
+
+      Removes an existing prediction metric version.
+
+      :param prediction_metric_version:
+      :type prediction_metric_version: str
+
+
+   .. py:method:: wait_for_prediction_metric_version(timeout=1200)
 
       A waiting call until the prediction metric version is ready.
 
-      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 1200 milliseconds.
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Get the lifecycle status of this version.
 

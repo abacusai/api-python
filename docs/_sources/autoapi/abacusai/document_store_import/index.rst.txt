@@ -1,0 +1,58 @@
+:py:mod:`abacusai.document_store_import`
+========================================
+
+.. py:module:: abacusai.document_store_import
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.document_store_import.DocumentStoreImport
+
+
+
+
+.. py:class:: DocumentStoreImport(client, documentStoreImportId=None, documentStoreId=None, importingStartedAt=None, status=None, error=None, documentsImported=None, documentsSkipped=None, uploadId=None, replaceExistingFiles=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A document store import
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param documentStoreImportId: The unique identifier of the import
+   :type documentStoreImportId: str
+   :param documentStoreId: The unique identifier of the notebook.
+   :type documentStoreId: str
+   :param importingStartedAt: The timestamp at which the notebook was created.
+   :type importingStartedAt: str
+   :param status: The current status of the dataset version
+   :type status: str
+   :param error: If status is FAILED, this field will be populated with an error.
+   :type error: str
+   :param documentsImported: The number of documents in the document store
+   :type documentsImported: int
+   :param documentsSkipped: The number of documents in the document store
+   :type documentsSkipped: int
+   :param uploadId:
+   :type uploadId: str
+   :param replaceExistingFiles: If false, documents that match the same key path in the document store will be skipped
+   :type replaceExistingFiles: bool
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

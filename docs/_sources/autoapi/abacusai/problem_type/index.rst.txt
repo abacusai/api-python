@@ -1,0 +1,48 @@
+:py:mod:`abacusai.problem_type`
+===============================
+
+.. py:module:: abacusai.problem_type
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.problem_type.ProblemType
+
+
+
+
+.. py:class:: ProblemType(client, problemType=None, requiredFeatureGroupType=None, optionalFeatureGroupTypes=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Description of a problem type which is the common underlying problem for different use cases.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param problemType:
+   :type problemType: str
+   :param requiredFeatureGroupType: The required feature group types to train for this problem type
+   :type requiredFeatureGroupType: str
+   :param optionalFeatureGroupTypes: The optional feature group types can be used to train for this problem type
+   :type optionalFeatureGroupTypes: list of string
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

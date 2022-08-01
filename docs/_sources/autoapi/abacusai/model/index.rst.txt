@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, location={}, refreshSchedules={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,6 +45,10 @@ Classes
    :type trainFunctionName: str
    :param predictFunctionName: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
    :type predictFunctionName: str
+   :param predictManyFunctionName: Name of the function found in the source code that will be executed to run batch predictions trhough the model.
+   :type predictManyFunctionName: str
+   :param initializeFunctionName: Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
+   :type initializeFunctionName: str
    :param trainingInputTables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
    :type trainingInputTables: list
    :param sourceCode: Python code used to make the model.
@@ -55,19 +59,23 @@ Classes
    :type memory: int
    :param trainingFeatureGroupIds: The unique identifiers of the feature groups used as the inputs to train this model on.
    :type trainingFeatureGroupIds: list of unique string identifiers
+   :param isPythonModel: If this model is handled as python model
+   :type isPythonModel: bool
+   :param defaultAlgorithm: If set, this algorithm will always be used when deploying the model regardless of the model metrics
+   :type defaultAlgorithm: str
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
    :type location: ModelLocation
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained
    :type refreshSchedules: RefreshSchedule
+   :param codeSource: If a python model, information on the source code
+   :type codeSource: CodeSource
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -75,7 +83,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -83,7 +91,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves a full description of the specified model.
 
@@ -94,7 +102,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: rename(self, name)
+   .. py:method:: rename(name)
 
       Renames a model
 
@@ -102,7 +110,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: update_python(self, function_source_code = None, train_function_name = None, predict_function_name = None, training_input_tables = None, cpu_size = None, memory = None)
+   .. py:method:: update_python(function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None)
 
       Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
 
@@ -121,18 +129,24 @@ Classes
       :type train_function_name: str
       :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
       :type predict_function_name: str
+      :param predict_many_function_name: Name of the function found in the source code that will be executed to run batch predictions through model. It is not executed when this function is run.
+      :type predict_many_function_name: str
+      :param initialize_function_name: Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
+      :type initialize_function_name: str
       :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type training_input_tables: list
       :param cpu_size: Size of the cpu for the model training function
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The updated model
       :rtype: Model
 
 
-   .. py:method:: update_python_zip(self, train_function_name = None, predict_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None)
+   .. py:method:: update_python_zip(train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None)
 
       Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
 
@@ -149,6 +163,50 @@ Classes
       :type train_function_name: str
       :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
       :type predict_function_name: str
+      :param predict_many_function_name: Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
+      :type predict_many_function_name: str
+      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
+      :type train_module_name: str
+      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
+      :type predict_module_name: str
+      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :type training_input_tables: list
+      :param cpu_size: Size of the cpu for the model training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the model training function
+      :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
+
+      :returns: The updated model
+      :rtype: Upload
+
+
+   .. py:method:: update_python_git(application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None)
+
+      Updates an existing python Model using an existing git application connector. If a list of input feature groups are supplied,
+
+      we will provide as arguments to the train and predict functions with the materialized feature groups for those
+      input feature groups.
+
+      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
+      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
+      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
+      as it returns the prediction made by the `predictFunctionName`, which can be anything
+
+
+      :param application_connector_id: The unique ID associated with the git application connector.
+      :type application_connector_id: str
+      :param branch_name: Name of the branch in the git repository to be used for training.
+      :type branch_name: str
+      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+      :type python_root: str
+      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
+      :type train_function_name: str
+      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
+      :type predict_function_name: str
+      :param predict_many_function_name: Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
+      :type predict_many_function_name: str
       :param train_module_name: Full path of the module that contains the train function from the root of the zip.
       :type train_module_name: str
       :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
@@ -161,10 +219,10 @@ Classes
       :type memory: int
 
       :returns: The updated model
-      :rtype: Upload
+      :rtype: Model
 
 
-   .. py:method:: set_training_config(self, training_config)
+   .. py:method:: set_training_config(training_config)
 
       Edits the default model training config
 
@@ -175,7 +233,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: set_prediction_params(self, prediction_config)
+   .. py:method:: set_prediction_params(prediction_config)
 
       Sets the model prediction config for the model
 
@@ -186,7 +244,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: get_metrics(self, model_version = None, baseline_metrics = False)
+   .. py:method:: get_metrics(model_version = None, baseline_metrics = False)
 
       Retrieves a full list of the metrics for the specified model.
 
@@ -202,7 +260,7 @@ Classes
       :rtype: ModelMetrics
 
 
-   .. py:method:: list_versions(self, limit = 100, start_after_version = None)
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       Retrieves a list of the version for a given model.
 
@@ -215,7 +273,7 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: retrain(self, deployment_ids = [], feature_group_ids = None)
+   .. py:method:: retrain(deployment_ids = [], feature_group_ids = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -228,7 +286,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
 
@@ -236,7 +294,20 @@ Classes
       :type model_id: str
 
 
-   .. py:method:: wait_for_training(self, timeout=None)
+   .. py:method:: set_default_algorithm(algorithm = None)
+
+      Sets the model's algorithm to default for all new deployments
+
+      :param model_id: The model to set
+      :type model_id: Unique String Identifier
+      :param algorithm: the algorithm to pin in the model
+      :type algorithm: Enum String
+
+      :param algorithm:
+      :type algorithm: str
+
+
+   .. py:method:: wait_for_training(timeout=None)
 
       A waiting call until model is trained.
 
@@ -244,7 +315,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_evaluation(self, timeout=None)
+   .. py:method:: wait_for_evaluation(timeout=None)
 
       A waiting call until model is evaluated completely.
 
@@ -252,7 +323,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: wait_for_full_automl(self, timeout=None)
+   .. py:method:: wait_for_full_automl(timeout=None)
 
       A waiting call until full AutoML cycle is completed.
 
@@ -260,7 +331,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self, get_automl_status = False)
+   .. py:method:: get_status(get_automl_status = False)
 
       Gets the status of the model training.
 
@@ -268,7 +339,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: create_refresh_policy(self, cron)
+   .. py:method:: create_refresh_policy(cron)
 
       To create a refresh policy for a model.
 
@@ -279,7 +350,7 @@ Classes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: list_refresh_policies(self)
+   .. py:method:: list_refresh_policies()
 
       Gets the refresh policies in a list.
 

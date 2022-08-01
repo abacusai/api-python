@@ -38,12 +38,10 @@ Classes
    :param createdAt: When the API key was created
    :type createdAt: str
 
-   .. py:method:: __repr__(self)
-
-      Return repr(self).
+   .. py:method:: __repr__()
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -51,7 +49,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: list_objects(self)
+   .. py:method:: list_objects()
 
       Lists querable objects in the database connector.
 
@@ -59,7 +57,7 @@ Classes
       :type database_connector_id: str
 
 
-   .. py:method:: get_object_schema(self, object_name = None)
+   .. py:method:: get_object_schema(object_name = None)
 
       Get the schema of an object in an database connector.
 
@@ -67,7 +65,7 @@ Classes
       :type object_name: str
 
 
-   .. py:method:: rename(self, name)
+   .. py:method:: rename(name)
 
       Renames a Database Connector
 
@@ -75,7 +73,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: verify(self)
+   .. py:method:: verify()
 
       Checks to see if Abacus.AI can access the database.
 
@@ -83,7 +81,7 @@ Classes
       :type database_connector_id: str
 
 
-   .. py:method:: delete(self)
+   .. py:method:: delete()
 
       Delete a database connector.
 

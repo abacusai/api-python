@@ -46,12 +46,12 @@ Classes
    :param createdAt: The timestamp at which the upload was created.
    :type createdAt: str
 
-   .. py:method:: __repr__(self)
+   .. py:method:: __repr__()
 
       Return repr(self).
 
 
-   .. py:method:: to_dict(self)
+   .. py:method:: to_dict()
 
       Get a dict representation of the parameters in this class
 
@@ -59,7 +59,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: cancel(self)
+   .. py:method:: cancel()
 
       Cancels an upload
 
@@ -67,7 +67,7 @@ Classes
       :type upload_id: str
 
 
-   .. py:method:: part(self, part_number, part_data)
+   .. py:method:: part(part_number, part_data)
 
       Uploads a part of a large dataset file from your bucket to our system. Our system currently supports a size of up to 5GB for a part of a full file and a size of up to 5TB for the full file. Note that each part must be >=5MB in size, unless it is the last part in the sequence of parts for the full file.
 
@@ -80,7 +80,7 @@ Classes
       :rtype: UploadPart
 
 
-   .. py:method:: mark_complete(self)
+   .. py:method:: mark_complete()
 
       Marks an upload process as complete.
 
@@ -91,7 +91,7 @@ Classes
       :rtype: Upload
 
 
-   .. py:method:: refresh(self)
+   .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
 
@@ -99,7 +99,7 @@ Classes
       :rtype: Upload
 
 
-   .. py:method:: describe(self)
+   .. py:method:: describe()
 
       Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
 
@@ -110,7 +110,7 @@ Classes
       :rtype: Upload
 
 
-   .. py:method:: upload_part(self, upload_args)
+   .. py:method:: upload_part(upload_args)
 
       Uploads a file part. If the upload fails, it will retry up to 3 times with a short backoff before raising an exception.
 
@@ -118,7 +118,7 @@ Classes
       :rtype: UploadPart
 
 
-   .. py:method:: upload_file(self, file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
+   .. py:method:: upload_file(file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600)
 
       Uploads the file in the specified chunk size using the specified number of workers.
 
@@ -135,10 +135,10 @@ Classes
       :rtype: Upload
 
 
-   .. py:method:: _yield_upload_part(self, file, chunksize)
+   .. py:method:: _yield_upload_part(file, chunksize)
 
 
-   .. py:method:: wait_for_join(self, timeout=600)
+   .. py:method:: wait_for_join(timeout=600)
 
       A waiting call until the upload parts are joined.
 
@@ -146,7 +146,7 @@ Classes
       :type timeout: int, optional
 
 
-   .. py:method:: get_status(self)
+   .. py:method:: get_status()
 
       Gets the status of the upload.
 
