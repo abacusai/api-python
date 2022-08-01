@@ -13,9 +13,12 @@ class DatasetColumn(AbstractApiClass):
             featureType (str): Feature Type of the column
             detectedFeatureType (str): The feature type of the column
             originalName (str): The original name of the column
+            validDataTypes (list of enum string): The valid data type options for this column
+            timeFormat (str): The detected time format of the column
+            timestampFrequency (str): The detected frequency of the timestamps in the dataset
     """
 
-    def __init__(self, client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None):
+    def __init__(self, client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None, validDataTypes=None, timeFormat=None, timestampFrequency=None):
         super().__init__(client, None)
         self.name = name
         self.data_type = dataType
@@ -23,9 +26,12 @@ class DatasetColumn(AbstractApiClass):
         self.feature_type = featureType
         self.detected_feature_type = detectedFeatureType
         self.original_name = originalName
+        self.valid_data_types = validDataTypes
+        self.time_format = timeFormat
+        self.timestamp_frequency = timestampFrequency
 
     def __repr__(self):
-        return f"DatasetColumn(name={repr(self.name)},\n  data_type={repr(self.data_type)},\n  detected_data_type={repr(self.detected_data_type)},\n  feature_type={repr(self.feature_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  original_name={repr(self.original_name)})"
+        return f"DatasetColumn(name={repr(self.name)},\n  data_type={repr(self.data_type)},\n  detected_data_type={repr(self.detected_data_type)},\n  feature_type={repr(self.feature_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  original_name={repr(self.original_name)},\n  valid_data_types={repr(self.valid_data_types)},\n  time_format={repr(self.time_format)},\n  timestamp_frequency={repr(self.timestamp_frequency)})"
 
     def to_dict(self):
         """
@@ -34,4 +40,4 @@ class DatasetColumn(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type, 'original_name': self.original_name}
+        return {'name': self.name, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type, 'original_name': self.original_name, 'valid_data_types': self.valid_data_types, 'time_format': self.time_format, 'timestamp_frequency': self.timestamp_frequency}

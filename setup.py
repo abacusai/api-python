@@ -1,7 +1,7 @@
 from setuptools import setup
 
 
-__version__ = '0.36.12'
+__version__ = '0.36.14'
 
 
 setup(name='abacusai',
@@ -22,8 +22,5 @@ setup(name='abacusai',
           'Topic :: Utilities',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.4',
-          'Programming Language :: Python :: 3.5',
-          'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
       ])

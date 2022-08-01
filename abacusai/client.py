@@ -20,6 +20,7 @@ from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
+from .custom_train_function_info import CustomTrainFunctionInfo
 from .data_prep_logs import DataPrepLogs
 from .database_connector import DatabaseConnector
 from .dataset import Dataset
@@ -27,6 +28,7 @@ from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
+from .drift_distributions import DriftDistributions
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
@@ -40,6 +42,7 @@ from .function_logs import FunctionLogs
 from .model import Model
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
+from .model_monitor_summary import ModelMonitorSummary
 from .model_monitor_version import ModelMonitorVersion
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
@@ -151,7 +154,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.12'
+    client_version = '0.36.13'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -573,27 +576,25 @@ class ReadOnlyClient(BaseApiClient):
         """List feature group templates, optionally scoped by the feature group that created the templates.
 
         Args:
-            limit (int): The maximum number of feature groups to be retrieved.
-            start_after_id (str): An offset parameter to exclude all feature groups till the specified feature group template ID.
+            limit (int): The maximum number of templates to be retrieved.
+            start_after_id (str): An offset parameter to exclude all templates till the specified feature group template ID.
             feature_group_id (str): If specified, limit to templates created from this feature group.
 
         Returns:
             FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s)."""
         return self._call_api('listFeatureGroupTemplates', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupTemplate)
 
-    def preview_feature_group_template_resolution(self, feature_group_template_id: str = None, template_bindings: dict = None, template_sql: str = None, template_variables: dict = None, should_validate: bool = True) -> ResolvedFeatureGroupTemplate:
-        """Resolve template sql using template variables and template bindings.
+    def list_project_feature_group_templates(self, project_id: str, limit: int = 100, start_after_id: str = None) -> List[FeatureGroupTemplate]:
+        """List feature group templates for feature groups associated with the project.
 
         Args:
-            feature_group_template_id (str): If specified, use this template, otherwise assume an empty template.
-            template_bindings (dict): Values that overide the template variable values specified by the template.
-            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
-            template_variables (dict): Template variables to use. If a template is provided, this overrides the template's template variables.
-            should_validate (bool): 
+            project_id (str): Limit to templates associated with this project, e.g. templates associated with feature groups in this project.
+            limit (int): The maximum number of templates to be retrieved.
+            start_after_id (str): An offset parameter to exclude all templates till the specified feature group template ID.
 
         Returns:
-            ResolvedFeatureGroupTemplate: None"""
-        return self._call_api('previewFeatureGroupTemplateResolution', 'GET', query_params={'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'templateSql': template_sql, 'templateVariables': template_variables, 'shouldValidate': should_validate}, parse_type=ResolvedFeatureGroupTemplate)
+            FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s)."""
+        return self._call_api('listProjectFeatureGroupTemplates', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroupTemplate)
 
     def suggest_feature_group_template_for_feature_group(self, feature_group_id: str) -> FeatureGroupTemplate:
         """Suggest values for a feature gruop template, based on a feature group.
@@ -751,7 +752,7 @@ class ReadOnlyClient(BaseApiClient):
             DatasetVersion: A list of dataset versions."""
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
 
-    def get_training_config_options(self, project_id: str, feature_group_ids: list = None) -> List[TrainingConfigOptions]:
+    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False) -> List[TrainingConfigOptions]:
         """Retrieves the full description of the model training configuration options available for the specified project.
 
         The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
@@ -760,10 +761,11 @@ class ReadOnlyClient(BaseApiClient):
         Args:
             project_id (str): The unique ID associated with the project.
             feature_group_ids (list): The feature group IDs to be used for training
+            for_retrain (bool): If training config options are used for retrain
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
-        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=TrainingConfigOptions)
+        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain}, parse_type=TrainingConfigOptions)
 
     def list_models(self, project_id: str) -> List[Model]:
         """Retrieves the list of models in the specified project.
@@ -832,6 +834,19 @@ class ReadOnlyClient(BaseApiClient):
             DataPrepLogs: A list of logs."""
         return self._call_api('getTrainingDataLogs', 'GET', query_params={'modelVersion': model_version}, parse_type=DataPrepLogs)
 
+    def set_default_model_algorithm(self, model_id: str = None, algorithm: str = None):
+        """Sets the model's algorithm to default for all new deployments
+
+        Args:
+            model_id (Unique String Identifier): The model to set
+            algorithm (Enum String): the algorithm to pin in the model
+
+
+        Args:
+            model_id (str): 
+            algorithm (str): """
+        return self._call_api('setDefaultModelAlgorithm', 'GET', query_params={'modelId': model_id, 'algorithm': algorithm})
+
     def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns training logs for the model.
 
@@ -843,6 +858,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
+
+    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None) -> CustomTrainFunctionInfo:
+        """Returns the information about how to call the custom train function.
+
+        Args:
+            project_id (str): The unique version ID of the project
+            feature_group_names_for_training (list): A list of feature group table names that will be used for training
+            training_data_parameter_name_override (dict): Override from feature group type to parameter name in train function.
+
+        Returns:
+            CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
+        return self._call_api('getCustomTrainFunctionInfo', 'GET', query_params={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override}, parse_type=CustomTrainFunctionInfo)
 
     def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
         """Retrieves the list of models monitors in the specified project.
@@ -863,6 +890,26 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ModelMonitor: The description of the model monitor."""
         return self._call_api('describeModelMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+
+    def get_prediction_drift(self, model_monitor_version: str) -> DriftDistributions:
+        """Gets the label and prediction drifts for a model monitor.
+
+        Args:
+            model_monitor_version (str): The unique identifier to a model monitor version created under the project.
+
+        Returns:
+            DriftDistributions: An object describing training and prediction output label and prediction distributions."""
+        return self._call_api('getPredictionDrift', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=DriftDistributions)
+
+    def get_model_monitor_summary(self, model_monitor_id: str) -> ModelMonitorSummary:
+        """
+
+        Args:
+            model_monitor_id (str): 
+
+        Returns:
+            ModelMonitorSummary: None"""
+        return self._call_api('getModelMonitorSummary', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitorSummary)
 
     def list_model_monitor_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
         """Retrieves a list of the versions for a given model monitor.
@@ -885,6 +932,14 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ModelMonitorVersion: A model monitor version."""
         return self._call_api('describeModelMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
+
+    def model_monitor_version_metric_data(self, model_monitor_version: str, metric_type: str) -> None:
+        """Returns the data needed for decile metrics associated with the model monitor.
+
+        Args:
+            model_monitor_version (str): Model Monitor Version ID
+            metric_type (str): """
+        return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type})
 
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns monitoring logs for the model.
@@ -1271,20 +1326,33 @@ class ApiClient(ReadOnlyClient):
             predict_many_function (callable): The predict many function callable to serialize and upload
             initialize_function (callable): The initialize function callable to serialize and upload
             training_input_tables (list): The input table names of the feature groups to pass to the train function
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
+            cpu_size (str): Size of the cpu for the training function
+            memory (int): Memory (in GB) for the training function
         """
         function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
         return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
 
-    def create_algorithm_from_function(self, algorithm: str, display_name: str, problem_type: str, training_function_input_mappings, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
+    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list, cpu_size: str = None, memory: int = None):
+        """
+        Creates a feature group from a python function
+
+        Args:
+            function (callable): The function callable for the feature group
+            table_name (str): The table name to give the feature group
+            input_tables (list): The input table names of the feature groups as input to the feature group function
+            cpu_size (str): Size of the cpu for the feature group function
+            memory (int): Memory (in GB) for the feature group function
+        """
+        function_source = inspect.getsource(function)
+        return self.create_feature_group_from_function(function_source_code=function_source, function_name=function.__name__, table_name=table_name, input_feature_groups=input_tables, cpu_size=cpu_size, memory=memory)
+
+    def create_algorithm_from_function(self, algorithm: str, problem_type: str, training_function_input_mappings, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
         Args:
             algorithm (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
-            display_name (String): More detailed name of the algorithm, with spaces allowed
             problem_type (Enum string): The type of the problem this algorithm will work on
             train_function (callable): The training fucntion callable to serialize and upload
             predict_function (callable): The predict function callable to serialize and upload
@@ -1299,7 +1367,6 @@ class ApiClient(ReadOnlyClient):
             train_function, predict_function, predict_many_function, initialize_function)
         return self.create_algorithm(
             name=algorithm,
-            display_name=display_name,
             problem_type=problem_type,
             source_code=source_code,
             training_function_input_mappings=training_function_input_mappings,
@@ -1311,7 +1378,7 @@ class ApiClient(ReadOnlyClient):
             is_default_enabled=is_default_enabled,
             project_id=project_id)
 
-    def update_algorithm_from_function(self, algorithm: str, display_name: str,  training_function_input_mappings, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
+    def update_algorithm_from_function(self, algorithm: str, training_function_input_mappings: dict = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None, project_id: str = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1330,7 +1397,6 @@ class ApiClient(ReadOnlyClient):
             train_function, predict_function, predict_many_function, initialize_function)
         return self.update_algorithm(
             algorithm_name=algorithm,
-            display_name=display_name,
             source_code=source_code,
             training_function_input_mappings=training_function_input_mappings,
             train_function_name=train_function_name,
@@ -1339,6 +1405,23 @@ class ApiClient(ReadOnlyClient):
             initialize_function_name=initialize_function_name,
             config_options=config_options,
             is_default_enabled=is_default_enabled)
+
+    def get_train_function_input(self, project_id: str, training_table_names: list = None, training_data_parameter_name_override: dict = None, training_config_parameter_name_override: str = None, training_config: dict = None):
+        train_function_info = self.get_custom_train_function_info(
+            project_id=project_id, feature_group_names_for_training=training_table_names, training_data_parameter_name_override=training_data_parameter_name_override)
+        train_data_parameter_to_feature_group_ids = train_function_info.train_data_parameter_to_feature_group_ids
+
+        input = {parameter_name: self.describe_feature_group(fgid).load_as_pandas(
+        ) for parameter_name, fgid in train_data_parameter_to_feature_group_ids.items()}
+        input['schema_mappings'] = train_function_info.schema_mappings
+        training_config_parameter_name = training_config_parameter_name_override or 'training_config'
+        input[training_config_parameter_name] = training_config
+        return input
+
+    def train_byoa_model(self, project_id: str, model_name: str, algorithm_name: str, training_table_names: list, cpu_size='SMALL', memory=3, custom_algorithms_only=False):
+        feature_group_ids = [self.describe_feature_group_by_table_name(
+            table_name).feature_group_id for table_name in training_table_names]
+        return self.train_model(project_id=project_id, name=model_name, training_config={'ALGORITHMS': [algorithm_name], 'CPU_SIZE': cpu_size.upper(), 'TRAINING_MEMORY_GB': memory}, feature_group_ids=feature_group_ids, custom_algorithms_only=custom_algorithms_only)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -1552,14 +1635,14 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'sql': sql, 'description': description}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_template(self, table_name: str, feature_group_template_id: str, template_bindings: dict = None, should_attach_feature_group_to_template: bool = True, description: str = None) -> FeatureGroup:
+    def create_feature_group_from_template(self, table_name: str, feature_group_template_id: str, template_bindings: list = None, should_attach_feature_group_to_template: bool = True, description: str = None) -> FeatureGroup:
         """Creates a new feature group from a SQL statement.
 
         Args:
             table_name (str): The unique name to be given to the feature group.
             feature_group_template_id (str): template_info.template_sqlThe unique ID associated with the template that will be used to create this feature group.
-            template_bindings (dict): Variable bindings that override the template's variable values.
-            should_attach_feature_group_to_template (bool): Set if to False to create a feature group but not leave it attached the template that created it.
+            template_bindings (list): Variable bindings that override the template's variable values.
+            should_attach_feature_group_to_template (bool): Set to False to create a feature group but not leave it attached the template that created it.
             description (str): A user-friendly description of this feature group.
 
         Returns:
@@ -1671,14 +1754,14 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('createTransformFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'transformConfig': transform_config, 'description': description}, parse_type=FeatureGroup)
 
     def create_snapshot_feature_group(self, feature_group_version: str, table_name: str) -> FeatureGroup:
-        """
+        """Creates a Snapshot Feature Group corresponding to a specific feature group version.
 
         Args:
-            feature_group_version (str): 
-            table_name (str): 
+            feature_group_version (str): The unique ID associated with the feature group version being snapshotted.
+            table_name (str): The name for the newly created Snapshot Feature Group table.
 
         Returns:
-            FeatureGroup: None"""
+            FeatureGroup: Feature Group corresponding to the newly created Snapshot."""
         return self._call_api('createSnapshotFeatureGroup', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'tableName': table_name}, parse_type=FeatureGroup)
 
     def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: dict) -> FeatureGroup:
@@ -2005,12 +2088,12 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The updated feature group"""
         return self._call_api('detachFeatureGroupFromTemplate', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
 
-    def update_feature_group_template_bindings(self, feature_group_id: str, template_bindings: dict = None) -> FeatureGroup:
+    def update_feature_group_template_bindings(self, feature_group_id: str, template_bindings: list = None) -> FeatureGroup:
         """Update the feature group template bindings for a template feature group.
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
-            template_bindings (dict): Values in these bindings override values set in the template.
+            template_bindings (list): Values in these bindings override values set in the template.
 
         Returns:
             FeatureGroup: The updated feature group"""
@@ -2200,19 +2283,21 @@ class ApiClient(ReadOnlyClient):
             FeatureGroupVersion: A feature group version."""
         return self._call_api('createFeatureGroupVersion', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'variableBindings': variable_bindings}, parse_type=FeatureGroupVersion)
 
-    def create_feature_group_template(self, feature_group_id: str, name: str, template_sql: str, template_variables: dict, description: str = None) -> FeatureGroupTemplate:
+    def create_feature_group_template(self, feature_group_id: str, name: str, template_sql: str, template_variables: list, description: str = None, template_bindings: list = None, should_attach_feature_group_to_template: bool = False) -> FeatureGroupTemplate:
         """Create a feature group template.
 
         Args:
             feature_group_id (str): Identifier of the feature group this template was created from.
             name (str): The user-friendly of for this feature group template.
             template_sql (str): The template sql that will be resolved by applying values from the template variables to generate sql for a feature group.
-            template_variables (dict): The template variables for resolving the template.
+            template_variables (list): The template variables for resolving the template.
             description (str): A description of this feature group template
+            template_bindings (list): If the feature group will be attached to the newly created template, set these variable bindings on that feature group.
+            should_attach_feature_group_to_template (bool): Set to True to convert the feature group to a template feature group and attach it to the newly created template.
 
         Returns:
             FeatureGroupTemplate: The created feature group template"""
-        return self._call_api('createFeatureGroupTemplate', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'templateSql': template_sql, 'templateVariables': template_variables, 'description': description}, parse_type=FeatureGroupTemplate)
+        return self._call_api('createFeatureGroupTemplate', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'templateSql': template_sql, 'templateVariables': template_variables, 'description': description, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template}, parse_type=FeatureGroupTemplate)
 
     def delete_feature_group_template(self, feature_group_template_id: str):
         """Delete an existing feature group template.
@@ -2221,17 +2306,31 @@ class ApiClient(ReadOnlyClient):
             feature_group_template_id (str): The unique ID associated with the feature group template."""
         return self._call_api('deleteFeatureGroupTemplate', 'DELETE', query_params={'featureGroupTemplateId': feature_group_template_id})
 
-    def update_feature_group_template(self, feature_group_template_id: str, template_sql: str = None, template_variables: dict = None) -> FeatureGroupTemplate:
+    def update_feature_group_template(self, feature_group_template_id: str, template_sql: str = None, template_variables: list = None) -> FeatureGroupTemplate:
         """Update a feature group template.
 
         Args:
             feature_group_template_id (str): Identifier of the feature group template to update.
             template_sql (str): If provided, the new value to use for the template sql.
-            template_variables (dict): If provided, the new value to use for the template variables.
+            template_variables (list): If provided, the new value to use for the template variables.
 
         Returns:
             FeatureGroupTemplate: The updated feature group template."""
         return self._call_api('updateFeatureGroupTemplate', 'POST', query_params={}, body={'featureGroupTemplateId': feature_group_template_id, 'templateSql': template_sql, 'templateVariables': template_variables}, parse_type=FeatureGroupTemplate)
+
+    def preview_feature_group_template_resolution(self, feature_group_template_id: str = None, template_bindings: list = None, template_sql: str = None, template_variables: list = None, should_validate: bool = True) -> ResolvedFeatureGroupTemplate:
+        """Resolve template sql using template variables and template bindings.
+
+        Args:
+            feature_group_template_id (str): If specified, use this template, otherwise assume an empty template.
+            template_bindings (list): Values that overide the template variable values specified by the template.
+            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
+            template_variables (list): Template variables to use. If a template is provided, this overrides the template's template variables.
+            should_validate (bool): 
+
+        Returns:
+            ResolvedFeatureGroupTemplate: None"""
+        return self._call_api('previewFeatureGroupTemplateResolution', 'POST', query_params={}, body={'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'templateSql': template_sql, 'templateVariables': template_variables, 'shouldValidate': should_validate}, parse_type=ResolvedFeatureGroupTemplate)
 
     def cancel_upload(self, upload_id: str):
         """Cancels an upload
@@ -3744,12 +3843,11 @@ class ApiClient(ReadOnlyClient):
             data (list): The data to record, as an array of JSON objects"""
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
 
-    def create_algorithm(self, name: str, display_name: str, problem_type: str, source_code: str, training_function_input_mappings: dict, train_function_name: str, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None) -> Algorithm:
+    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_function_input_mappings: dict = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training
 
         Args:
             name (str): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
-            display_name (str): More detailed name of the algorithm, with spaces allowed
             problem_type (str): The type of the problem this algorithm will work on
             source_code (str): Contents of a valid python source code file. The source code should contain the train/predict/predict_many/initialize functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             training_function_input_mappings (dict): 
@@ -3763,7 +3861,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'displayName': display_name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingFunctionInputMappings': training_function_input_mappings, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id}, parse_type=Algorithm)
+        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingFunctionInputMappings': training_function_input_mappings, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id}, parse_type=Algorithm)
 
     def delete_algorithm(self, algorithm_name: str):
         """Deletes the specified customer algorithm.
@@ -3772,12 +3870,11 @@ class ApiClient(ReadOnlyClient):
             algorithm_name (str): The name of the algorithm to delete."""
         return self._call_api('deleteAlgorithm', 'DELETE', query_params={'algorithmName': algorithm_name})
 
-    def update_algorithm(self, algorithm_name: str, display_name: str = None, source_code: str = None, training_function_input_mappings: dict = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None) -> Algorithm:
+    def update_algorithm(self, algorithm_name: str, source_code: str = None, training_function_input_mappings: dict = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None) -> Algorithm:
         """Update custome algorithm for the given algorithm name
 
         Args:
             algorithm_name (str): 
-            display_name (str): More detailed name of the algorithm, with spaces allowed
             source_code (str): Contents of a valid python source code file. The source code should contain the train/predict/predict_many/initialize functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             training_function_input_mappings (dict): 
             train_function_name (str): Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
@@ -3789,4 +3886,4 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithmName': algorithm_name, 'displayName': display_name, 'sourceCode': source_code, 'trainingFunctionInputMappings': training_function_input_mappings, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled}, parse_type=Algorithm)
+        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithmName': algorithm_name, 'sourceCode': source_code, 'trainingFunctionInputMappings': training_function_input_mappings, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled}, parse_type=Algorithm)

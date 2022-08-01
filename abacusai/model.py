@@ -29,13 +29,14 @@ class Model(AbstractApiClass):
             memory (int): Memory in GB specified for the python model training.
             trainingFeatureGroupIds (list of unique string identifiers): The unique identifiers of the feature groups used as the inputs to train this model on.
             isPythonModel (bool): If this model is handled as python model
+            defaultAlgorithm (str): If set, this algorithm will always be used when deploying the model regardless of the model metrics
             latestModelVersion (ModelVersion): The latest model version.
             location (ModelLocation): Location information for models that are imported.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained
             codeSource (CodeSource): If a python model, information on the source code
     """
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
         super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
@@ -55,6 +56,7 @@ class Model(AbstractApiClass):
         self.memory = memory
         self.training_feature_group_ids = trainingFeatureGroupIds
         self.is_python_model = isPythonModel
+        self.default_algorithm = defaultAlgorithm
         self.location = client._build_class(ModelLocation, location)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
@@ -63,7 +65,7 @@ class Model(AbstractApiClass):
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  is_python_model={repr(self.is_python_model)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  is_python_model={repr(self.is_python_model)},\n  default_algorithm={repr(self.default_algorithm)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
 
     def to_dict(self):
         """
@@ -72,7 +74,7 @@ class Model(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'is_python_model': self.is_python_model, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
     def refresh(self):
         """
@@ -268,6 +270,20 @@ class Model(AbstractApiClass):
             model_id (str): The ID of the model to delete.
         """
         return self.client.delete_model(self.model_id)
+
+    def set_default_algorithm(self, algorithm: str = None):
+        """
+        Sets the model's algorithm to default for all new deployments
+
+        Args:
+            model_id (Unique String Identifier): The model to set
+            algorithm (Enum String): the algorithm to pin in the model
+
+
+        Args:
+            algorithm (str): 
+        """
+        return self.client.set_default_model_algorithm(self.model_id, algorithm)
 
     def wait_for_training(self, timeout=None):
         """

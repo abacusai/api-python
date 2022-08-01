@@ -558,12 +558,12 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.detach_feature_group_from_template(self.feature_group_id)
 
-    def update_template_bindings(self, template_bindings: dict = None):
+    def update_template_bindings(self, template_bindings: list = None):
         """
         Update the feature group template bindings for a template feature group.
 
         Args:
-            template_bindings (dict): Values in these bindings override values set in the template.
+            template_bindings (list): Values in these bindings override values set in the template.
 
         Returns:
             FeatureGroup: The updated feature group
@@ -765,20 +765,22 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
 
-    def create_template(self, name: str, template_sql: str, template_variables: dict, description: str = None):
+    def create_template(self, name: str, template_sql: str, template_variables: list, description: str = None, template_bindings: list = None, should_attach_feature_group_to_template: bool = False):
         """
         Create a feature group template.
 
         Args:
             name (str): The user-friendly of for this feature group template.
             template_sql (str): The template sql that will be resolved by applying values from the template variables to generate sql for a feature group.
-            template_variables (dict): The template variables for resolving the template.
+            template_variables (list): The template variables for resolving the template.
             description (str): A description of this feature group template
+            template_bindings (list): If the feature group will be attached to the newly created template, set these variable bindings on that feature group.
+            should_attach_feature_group_to_template (bool): Set to True to convert the feature group to a template feature group and attach it to the newly created template.
 
         Returns:
             FeatureGroupTemplate: The created feature group template
         """
-        return self.client.create_feature_group_template(self.feature_group_id, name, template_sql, template_variables, description)
+        return self.client.create_feature_group_template(self.feature_group_id, name, template_sql, template_variables, description, template_bindings, should_attach_feature_group_to_template)
 
     def suggest_template_for(self):
         """

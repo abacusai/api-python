@@ -60,13 +60,13 @@ class FeatureGroupVersion(AbstractApiClass):
 
     def create_snapshot_feature_group(self, table_name: str):
         """
-
+        Creates a Snapshot Feature Group corresponding to a specific feature group version.
 
         Args:
-            table_name (str): 
+            table_name (str): The name for the newly created Snapshot Feature Group table.
 
         Returns:
-            FeatureGroup: None
+            FeatureGroup: Feature Group corresponding to the newly created Snapshot.
         """
         return self.client.create_snapshot_feature_group(self.feature_group_version, table_name)
 

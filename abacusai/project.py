@@ -187,7 +187,20 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
 
-    def get_training_config_options(self, feature_group_ids: list = None):
+    def list_feature_group_templates(self, limit: int = 100, start_after_id: str = None):
+        """
+        List feature group templates for feature groups associated with the project.
+
+        Args:
+            limit (int): The maximum number of templates to be retrieved.
+            start_after_id (str): An offset parameter to exclude all templates till the specified feature group template ID.
+
+        Returns:
+            FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
+        """
+        return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id)
+
+    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False):
         """
         Retrieves the full description of the model training configuration options available for the specified project.
 
@@ -196,11 +209,12 @@ class Project(AbstractApiClass):
 
         Args:
             feature_group_ids (list): The feature group IDs to be used for training
+            for_retrain (bool): If training config options are used for retrain
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project.
         """
-        return self.client.get_training_config_options(self.project_id, feature_group_ids)
+        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain)
 
     def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms_only: bool = False):
         """
@@ -327,6 +341,19 @@ class Project(AbstractApiClass):
             Model: An array of models.
         """
         return self.client.list_models(self.project_id)
+
+    def get_custom_train_function_info(self, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None):
+        """
+        Returns the information about how to call the custom train function.
+
+        Args:
+            feature_group_names_for_training (list): A list of feature group table names that will be used for training
+            training_data_parameter_name_override (dict): Override from feature group type to parameter name in train function.
+
+        Returns:
+            CustomTrainFunctionInfo: Information about how to call the customer provided train function.
+        """
+        return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override)
 
     def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None):
         """
