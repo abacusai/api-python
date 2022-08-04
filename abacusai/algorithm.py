@@ -14,7 +14,7 @@ class Algorithm(AbstractApiClass):
             createdAt (str): 
             updatedAt (str): 
             isDefaultEnabled (bool): Whether train with the algorithm by default
-            trainingInputMappings (dict): 
+            trainingInputMappings (dict): The mappings for train function parameters' names, e.g. names for training data, name for training config
             trainFunctionName (str): Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
             predictFunctionName (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
             predictManyFunctionName (str): Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.

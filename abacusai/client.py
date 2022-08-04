@@ -154,7 +154,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.13'
+    client_version = '0.36.15'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -859,18 +859,6 @@ class ReadOnlyClient(BaseApiClient):
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
-    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None) -> CustomTrainFunctionInfo:
-        """Returns the information about how to call the custom train function.
-
-        Args:
-            project_id (str): The unique version ID of the project
-            feature_group_names_for_training (list): A list of feature group table names that will be used for training
-            training_data_parameter_name_override (dict): Override from feature group type to parameter name in train function.
-
-        Returns:
-            CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
-        return self._call_api('getCustomTrainFunctionInfo', 'GET', query_params={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override}, parse_type=CustomTrainFunctionInfo)
-
     def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
         """Retrieves the list of models monitors in the specified project.
 
@@ -1155,18 +1143,20 @@ class ReadOnlyClient(BaseApiClient):
             BatchPredictionVersion: The batch prediction version."""
         return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
 
-    def describe_algorithm(self, algorithm_name: str) -> Algorithm:
+    def describe_algorithm(self, algorithm: str) -> Algorithm:
         """Retrieves a full description of the specified algorithm.
 
         Args:
-            algorithm_name (str): The name of the algorithm.
+            algorithm (str): The name of the algorithm.
 
         Returns:
             Algorithm: The description of the Algorithm."""
-        return self._call_api('describeAlgorithm', 'GET', query_params={'algorithmName': algorithm_name}, parse_type=Algorithm)
+        return self._call_api('describeAlgorithm', 'GET', query_params={'algorithm': algorithm}, parse_type=Algorithm)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None):
+    if not train_function:
+        return None, None, None, None, None
     function_source_code = inspect.getsource(train_function)
     predict_function_name, predict_many_function_name, initialize_function_name = None, None, None
     if predict_function is not None:
@@ -1347,18 +1337,19 @@ class ApiClient(ReadOnlyClient):
         function_source = inspect.getsource(function)
         return self.create_feature_group_from_function(function_source_code=function_source, function_name=function.__name__, table_name=table_name, input_feature_groups=input_tables, cpu_size=cpu_size, memory=memory)
 
-    def create_algorithm_from_function(self, algorithm: str, problem_type: str, training_function_input_mappings, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
+    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
         Args:
-            algorithm (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
+            name (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
             problem_type (Enum string): The type of the problem this algorithm will work on
             train_function (callable): The training fucntion callable to serialize and upload
             predict_function (callable): The predict function callable to serialize and upload
             predict_many_function (callable): The predict many function callable to serialize and upload
             initialize_function (callable): The initialize function callable to serialize and upload
-            training_function_input_mappings (Dict): The mappings for train function parameters' names, e.g. names for training datasets, name for training config
+            training_data_parameter_names_mapping (Dict): The mapping from feature group types to training data parameter names in the train function
+            training_config_parameter_name (string): The train config parameter name in the train function
             config_options (Dict): Map dataset types and configs to train function parameter names
             is_default_enabled: Whether train with the algorithm by default
             project_id (Unique String Identifier): The unique version ID of the project
@@ -1366,10 +1357,11 @@ class ApiClient(ReadOnlyClient):
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
         return self.create_algorithm(
-            name=algorithm,
+            name=name,
             problem_type=problem_type,
             source_code=source_code,
-            training_function_input_mappings=training_function_input_mappings,
+            training_data_parameter_names_mapping=training_data_parameter_names_mapping,
+            training_config_parameter_name=training_config_parameter_name,
             train_function_name=train_function_name,
             predict_function_name=predict_function_name,
             predict_many_function_name=predict_many_function_name,
@@ -1378,27 +1370,28 @@ class ApiClient(ReadOnlyClient):
             is_default_enabled=is_default_enabled,
             project_id=project_id)
 
-    def update_algorithm_from_function(self, algorithm: str, training_function_input_mappings: dict = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None, project_id: str = None):
+    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
         Args:
             algorithm (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
-            display_name (String): More detailed name of the algorithm, with spaces allowed
             train_function (callable): The training fucntion callable to serialize and upload
             predict_function (callable): The predict function callable to serialize and upload
             predict_many_function (callable): The predict many function callable to serialize and upload
             initialize_function (callable): The initialize function callable to serialize and upload
-            training_function_input_mappings (Dict): The mappings for train function parameters' names, e.g. names for training datasets, name for training config
+            training_data_parameter_names_mapping (Dict): The mapping from feature group types to training data parameter names in the train function
+            training_config_parameter_name (string): The train config parameter name in the train function
             config_options (Dict): Map dataset types and configs to train function parameter names
             is_default_enabled: Whether train with the algorithm by default
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
         return self.update_algorithm(
-            algorithm_name=algorithm,
+            algorithm=algorithm,
             source_code=source_code,
-            training_function_input_mappings=training_function_input_mappings,
+            training_data_parameter_names_mapping=training_data_parameter_names_mapping,
+            training_config_parameter_name=training_config_parameter_name,
             train_function_name=train_function_name,
             predict_function_name=predict_function_name,
             predict_many_function_name=predict_many_function_name,
@@ -1418,10 +1411,10 @@ class ApiClient(ReadOnlyClient):
         input[training_config_parameter_name] = training_config
         return input
 
-    def train_byoa_model(self, project_id: str, model_name: str, algorithm_name: str, training_table_names: list, cpu_size='SMALL', memory=3, custom_algorithms_only=False):
+    def train_model_with_algorithms(self, project_id: str, model_name: str, user_defined_algorithms: list, training_table_names: list, cpu_size='SMALL', memory=3, user_defined_algorithms_only=False):
         feature_group_ids = [self.describe_feature_group_by_table_name(
             table_name).feature_group_id for table_name in training_table_names]
-        return self.train_model(project_id=project_id, name=model_name, training_config={'ALGORITHMS': [algorithm_name], 'CPU_SIZE': cpu_size.upper(), 'TRAINING_MEMORY_GB': memory}, feature_group_ids=feature_group_ids, custom_algorithms_only=custom_algorithms_only)
+        return self.train_model(project_id=project_id, name=model_name, training_config={'ALGORITHMS': user_defined_algorithms, 'CPU_SIZE': cpu_size.upper(), 'TRAINING_MEMORY_GB': memory}, feature_group_ids=feature_group_ids, custom_algorithms_only=user_defined_algorithms_only)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2956,6 +2949,18 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group."""
         return self._call_api('exportModelArtifactAsFeatureGroup', 'POST', query_params={}, body={'modelVersion': model_version, 'tableName': table_name, 'artifactType': artifact_type}, parse_type=FeatureGroup)
 
+    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None) -> CustomTrainFunctionInfo:
+        """Returns the information about how to call the custom train function.
+
+        Args:
+            project_id (str): The unique version ID of the project
+            feature_group_names_for_training (list): A list of feature group table names that will be used for training
+            training_data_parameter_name_override (dict): Override from feature group type to parameter name in train function.
+
+        Returns:
+            CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
+        return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override}, parse_type=CustomTrainFunctionInfo)
+
     def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
@@ -3843,14 +3848,15 @@ class ApiClient(ReadOnlyClient):
             data (list): The data to record, as an array of JSON objects"""
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
 
-    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_function_input_mappings: dict = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None) -> Algorithm:
+    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training
 
         Args:
             name (str): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
             problem_type (str): The type of the problem this algorithm will work on
             source_code (str): Contents of a valid python source code file. The source code should contain the train/predict/predict_many/initialize functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-            training_function_input_mappings (dict): 
+            training_data_parameter_names_mapping (dict): The mapping from feature group types to training data parameter names in the train function
+            training_config_parameter_name (str): The train config parameter name in the train function
             train_function_name (str): Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
             predict_function_name (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
             predict_many_function_name (str): Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.
@@ -3861,22 +3867,23 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingFunctionInputMappings': training_function_input_mappings, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id}, parse_type=Algorithm)
+        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id}, parse_type=Algorithm)
 
-    def delete_algorithm(self, algorithm_name: str):
+    def delete_algorithm(self, algorithm: str):
         """Deletes the specified customer algorithm.
 
         Args:
-            algorithm_name (str): The name of the algorithm to delete."""
-        return self._call_api('deleteAlgorithm', 'DELETE', query_params={'algorithmName': algorithm_name})
+            algorithm (str): The name of the algorithm to delete."""
+        return self._call_api('deleteAlgorithm', 'DELETE', query_params={'algorithm': algorithm})
 
-    def update_algorithm(self, algorithm_name: str, source_code: str = None, training_function_input_mappings: dict = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None) -> Algorithm:
+    def update_algorithm(self, algorithm: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None) -> Algorithm:
         """Update custome algorithm for the given algorithm name
 
         Args:
-            algorithm_name (str): 
+            algorithm (str): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
             source_code (str): Contents of a valid python source code file. The source code should contain the train/predict/predict_many/initialize functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
-            training_function_input_mappings (dict): 
+            training_data_parameter_names_mapping (dict): The mapping from feature group types to training data parameter names in the train function
+            training_config_parameter_name (str): The train config parameter name in the train function
             train_function_name (str): Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
             predict_function_name (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
             predict_many_function_name (str): Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.
@@ -3886,4 +3893,4 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithmName': algorithm_name, 'sourceCode': source_code, 'trainingFunctionInputMappings': training_function_input_mappings, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled}, parse_type=Algorithm)
+        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled}, parse_type=Algorithm)
