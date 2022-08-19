@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None, modelVersion=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,6 +49,8 @@ Classes
    :type metricConfigs: json field
    :param metricTypes: List of metric types.
    :type metricTypes: dict
+   :param modelVersion: Model version IDs that this refresh pipeline run is monitoring.
+   :type modelVersion: unique string identifiers
 
    .. py:method:: __repr__()
 
@@ -103,10 +105,13 @@ Classes
 
    .. py:method:: metric_data(metric_type)
 
-      Returns the data needed for decile metrics associated with the model monitor.
+      Provides the data needed for decile metrics associated with the model monitor.
 
-      :param metric_type:
+      :param metric_type: The metric type to get data for.
       :type metric_type: str
+
+      :returns: Data associated with the metric.
+      :rtype: ModelMonitorVersionMetricData
 
 
    .. py:method:: get_model_monitoring_logs(stdout = False, stderr = False)

@@ -226,7 +226,7 @@ Classes
       :rtype: TrainingConfigOptions
 
 
-   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms_only = False)
+   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, cpu_size = None, memory = None)
 
       Trains a model for the specified project.
 
@@ -241,8 +241,16 @@ Classes
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
+      :param custom_algorithms: List of user-defined algorithms to train.
+      :type custom_algorithms: list
       :param custom_algorithms_only: Whether only run custom algorithms.
       :type custom_algorithms_only: bool
+      :param custom_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+      :type custom_algorithm_configs: dict
+      :param cpu_size: Size of the cpu for the user-defined algorithms during train.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the user-defined algorithms during train.
+      :type memory: int
 
       :returns: The new model which is being trained.
       :rtype: Model
@@ -396,7 +404,7 @@ Classes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None)
+   .. py:method:: create_model_monitor(training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
@@ -412,6 +420,10 @@ Classes
       :type target_value: str
       :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
+      :param model_id: The Unique ID of the Model
+      :type model_id: str
+      :param training_feature_mappings: " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+      :type training_feature_mappings: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor

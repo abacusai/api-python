@@ -216,7 +216,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain)
 
-    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms_only: bool = False):
+    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None):
         """
         Trains a model for the specified project.
 
@@ -228,12 +228,16 @@ class Project(AbstractApiClass):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
+            custom_algorithms (list): List of user-defined algorithms to train.
             custom_algorithms_only (bool): Whether only run custom algorithms.
+            custom_algorithm_configs (dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+            cpu_size (str): Size of the cpu for the user-defined algorithms during train.
+            memory (int): Memory (in GB) for the user-defined algorithms during train.
 
         Returns:
             Model: The new model which is being trained.
         """
-        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms_only)
+        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, cpu_size, memory)
 
     def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
         """
@@ -355,7 +359,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override)
 
-    def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None):
+    def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None):
         """
         Runs a model monitor for the specified project.
 
@@ -366,11 +370,13 @@ class Project(AbstractApiClass):
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
             target_value (str): A target positive value for the label to compute bias for
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+            model_id (str): The Unique ID of the Model
+            training_feature_mappings (dict): " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, training_feature_group_id, prediction_feature_group_id, name, refresh_schedule, target_value, feature_mappings)
+        return self.client.create_model_monitor(self.project_id, training_feature_group_id, prediction_feature_group_id, name, refresh_schedule, target_value, feature_mappings, model_id, training_feature_mappings)
 
     def list_model_monitors(self):
         """

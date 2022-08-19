@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.36.13
+      :annotation: = 0.36.17
 
       
 
@@ -768,21 +768,6 @@ Attributes
       :rtype: FunctionLogs
 
 
-   .. py:method:: get_custom_train_function_info(project_id, feature_group_names_for_training = None, training_data_parameter_name_override = None)
-
-      Returns the information about how to call the custom train function.
-
-      :param project_id: The unique version ID of the project
-      :type project_id: str
-      :param feature_group_names_for_training: A list of feature group table names that will be used for training
-      :type feature_group_names_for_training: list
-      :param training_data_parameter_name_override: Override from feature group type to parameter name in train function.
-      :type training_data_parameter_name_override: dict
-
-      :returns: Information about how to call the customer provided train function.
-      :rtype: CustomTrainFunctionInfo
-
-
    .. py:method:: list_model_monitors(project_id)
 
       Retrieves the list of models monitors in the specified project.
@@ -853,12 +838,15 @@ Attributes
 
    .. py:method:: model_monitor_version_metric_data(model_monitor_version, metric_type)
 
-      Returns the data needed for decile metrics associated with the model monitor.
+      Provides the data needed for decile metrics associated with the model monitor.
 
-      :param model_monitor_version: Model Monitor Version ID
+      :param model_monitor_version: Model monitor version id.
       :type model_monitor_version: str
-      :param metric_type:
+      :param metric_type: The metric type to get data for.
       :type metric_type: str
+
+      :returns: Data associated with the metric.
+      :rtype: ModelMonitorVersionMetricData
 
 
    .. py:method:: get_model_monitoring_logs(model_monitor_version, stdout = False, stderr = False)
@@ -1117,12 +1105,12 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: describe_algorithm(algorithm_name)
+   .. py:method:: describe_algorithm(algorithm)
 
       Retrieves a full description of the specified algorithm.
 
-      :param algorithm_name: The name of the algorithm.
-      :type algorithm_name: str
+      :param algorithm: The name of the algorithm.
+      :type algorithm: str
 
       :returns: The description of the Algorithm.
       :rtype: Algorithm
@@ -1271,12 +1259,12 @@ Attributes
       :type memory: int
 
 
-   .. py:method:: create_algorithm_from_function(algorithm, problem_type, training_function_input_mappings, train_function, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None)
+   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
-      :param algorithm: The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
-      :type algorithm: String
+      :param name: The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
+      :type name: String
       :param problem_type: The type of the problem this algorithm will work on
       :type problem_type: Enum string
       :param train_function: The training fucntion callable to serialize and upload
@@ -1287,8 +1275,10 @@ Attributes
       :type predict_many_function: callable
       :param initialize_function: The initialize function callable to serialize and upload
       :type initialize_function: callable
-      :param training_function_input_mappings: The mappings for train function parameters' names, e.g. names for training datasets, name for training config
-      :type training_function_input_mappings: Dict
+      :param training_data_parameter_names_mapping: The mapping from feature group types to training data parameter names in the train function
+      :type training_data_parameter_names_mapping: Dict
+      :param training_config_parameter_name: The train config parameter name in the train function
+      :type training_config_parameter_name: string
       :param config_options: Map dataset types and configs to train function parameter names
       :type config_options: Dict
       :param is_default_enabled: Whether train with the algorithm by default
@@ -1296,14 +1286,12 @@ Attributes
       :type project_id: Unique String Identifier
 
 
-   .. py:method:: update_algorithm_from_function(algorithm, training_function_input_mappings = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None, project_id = None)
+   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
       :param algorithm: The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
       :type algorithm: String
-      :param display_name: More detailed name of the algorithm, with spaces allowed
-      :type display_name: String
       :param train_function: The training fucntion callable to serialize and upload
       :type train_function: callable
       :param predict_function: The predict function callable to serialize and upload
@@ -1312,8 +1300,10 @@ Attributes
       :type predict_many_function: callable
       :param initialize_function: The initialize function callable to serialize and upload
       :type initialize_function: callable
-      :param training_function_input_mappings: The mappings for train function parameters' names, e.g. names for training datasets, name for training config
-      :type training_function_input_mappings: Dict
+      :param training_data_parameter_names_mapping: The mapping from feature group types to training data parameter names in the train function
+      :type training_data_parameter_names_mapping: Dict
+      :param training_config_parameter_name: The train config parameter name in the train function
+      :type training_config_parameter_name: string
       :param config_options: Map dataset types and configs to train function parameter names
       :type config_options: Dict
       :param is_default_enabled: Whether train with the algorithm by default
@@ -1321,8 +1311,42 @@ Attributes
 
    .. py:method:: get_train_function_input(project_id, training_table_names = None, training_data_parameter_name_override = None, training_config_parameter_name_override = None, training_config = None)
 
+      Get the input data for the train function to test locally.
 
-   .. py:method:: train_byoa_model(project_id, model_name, algorithm_name, training_table_names, cpu_size='SMALL', memory=3, custom_algorithms_only=False)
+      :param project_id: The id of the project
+      :type project_id: String
+      :param training_table_names: A list of feature group tables used for training
+      :type training_table_names: List
+      :param training_data_parameter_name_override: The mapping from feature group types to training data parameter names in the train function
+      :type training_data_parameter_name_override: Dict
+      :param training_config_parameter_name_override: The train config parameter name in the train function
+      :type training_config_parameter_name_override: String
+      :param training_config: A dictionary for training parameters for the algorithm
+      :type training_config: Dict
+
+
+   .. py:method:: train_model_with_algorithms(project_id, model_name, user_defined_algorithms, training_table_names, cpu_size = 'SMALL', memory = 3, user_defined_algorithms_only = False, training_config = None, user_defined_algorithm_configs = None)
+
+      Train a model with provided user-defined algorithms.
+
+      :param project_id: The id of the project
+      :type project_id: String
+      :param model_name: The name of the model to train
+      :type model_name: String
+      :param user_defined_algorithms: A list of user-defined algorithm names
+      :type user_defined_algorithms: List
+      :param training_table_names: A list of feature group tables used for training
+      :type training_table_names: List
+      :param cpu_size: How much cpu is needed for the user-defined algorithms during training
+      :type cpu_size: Enum
+      :param memory: How much memory in GB is needed for the user-defined algorithms during training
+      :type memory: Int
+      :param user_defined_algorithms_only: Whether only train with user-defined algorithms, or also include Abacus.AI algorithms
+      :type user_defined_algorithms_only: Boolean
+      :param training_config: A dictionary for model training parameters
+      :type training_config: Dict
+      :param user_defined_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+      :type user_defined_algorithm_configs: Dict
 
 
    .. py:method:: add_user_to_organization(email)
@@ -2219,6 +2243,19 @@ Attributes
       :rtype: FeatureGroup
 
 
+   .. py:method:: update_dataset_feature_group_feature_expression(feature_group_id, feature_expression)
+
+      Updates the SQL feature expression for a dataset feature group's custom features
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param feature_expression: Input SQL statement for the feature group.
+      :type feature_expression: str
+
+      :returns: The updated feature group
+      :rtype: FeatureGroup
+
+
    .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
@@ -2964,7 +3001,7 @@ Attributes
       :type dataset_id: str
 
 
-   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms_only = False)
+   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, cpu_size = None, memory = None)
 
       Trains a model for the specified project.
 
@@ -2981,8 +3018,16 @@ Attributes
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
+      :param custom_algorithms: List of user-defined algorithms to train.
+      :type custom_algorithms: list
       :param custom_algorithms_only: Whether only run custom algorithms.
       :type custom_algorithms_only: bool
+      :param custom_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+      :type custom_algorithm_configs: dict
+      :param cpu_size: Size of the cpu for the user-defined algorithms during train.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the user-defined algorithms during train.
+      :type memory: int
 
       :returns: The new model which is being trained.
       :rtype: Model
@@ -3272,7 +3317,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None)
+   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None, custom_algorithm_configs = None, cpu_size = None, memory = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -3282,6 +3327,12 @@ Attributes
       :type deployment_ids: list
       :param feature_group_ids: List of feature group ids provided by the user to train the model on.
       :type feature_group_ids: list
+      :param custom_algorithm_configs: The user-defined training configs for each custom algorithm.
+      :type custom_algorithm_configs: dict
+      :param cpu_size: Size of the cpu for the user-defined algorithms during train.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the user-defined algorithms during train.
+      :type memory: int
 
       :returns: The model that is being retrained.
       :rtype: Model
@@ -3318,7 +3369,22 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_model_monitor(project_id, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None)
+   .. py:method:: get_custom_train_function_info(project_id, feature_group_names_for_training = None, training_data_parameter_name_override = None)
+
+      Returns the information about how to call the custom train function.
+
+      :param project_id: The unique version ID of the project
+      :type project_id: str
+      :param feature_group_names_for_training: A list of feature group table names that will be used for training
+      :type feature_group_names_for_training: list
+      :param training_data_parameter_name_override: Override from feature group type to parameter name in train function.
+      :type training_data_parameter_name_override: dict
+
+      :returns: Information about how to call the customer provided train function.
+      :rtype: CustomTrainFunctionInfo
+
+
+   .. py:method:: create_model_monitor(project_id, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
@@ -3336,6 +3402,10 @@ Attributes
       :type target_value: str
       :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
+      :param model_id: The Unique ID of the Model
+      :type model_id: str
+      :param training_feature_mappings: " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+      :type training_feature_mappings: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -4496,7 +4566,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_function_input_mappings = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None)
+   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None)
 
       Creates a custome algorithm that's re-usable for model training
 
@@ -4506,8 +4576,10 @@ Attributes
       :type problem_type: str
       :param source_code: Contents of a valid python source code file. The source code should contain the train/predict/predict_many/initialize functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
-      :param training_function_input_mappings:
-      :type training_function_input_mappings: dict
+      :param training_data_parameter_names_mapping: The mapping from feature group types to training data parameter names in the train function
+      :type training_data_parameter_names_mapping: dict
+      :param training_config_parameter_name: The train config parameter name in the train function
+      :type training_config_parameter_name: str
       :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
       :type train_function_name: str
       :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
@@ -4527,24 +4599,26 @@ Attributes
       :rtype: Algorithm
 
 
-   .. py:method:: delete_algorithm(algorithm_name)
+   .. py:method:: delete_algorithm(algorithm)
 
       Deletes the specified customer algorithm.
 
-      :param algorithm_name: The name of the algorithm to delete.
-      :type algorithm_name: str
+      :param algorithm: The name of the algorithm to delete.
+      :type algorithm: str
 
 
-   .. py:method:: update_algorithm(algorithm_name, source_code = None, training_function_input_mappings = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None)
+   .. py:method:: update_algorithm(algorithm, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None)
 
-      Update custome algorithm for the given algorithm name
+      Update custome algorithm for the given algorithm name. If source_code is provided, also need to provide all the function names in the source_code.
 
-      :param algorithm_name:
-      :type algorithm_name: str
+      :param algorithm: The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
+      :type algorithm: str
       :param source_code: Contents of a valid python source code file. The source code should contain the train/predict/predict_many/initialize functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
-      :param training_function_input_mappings:
-      :type training_function_input_mappings: dict
+      :param training_data_parameter_names_mapping: The mapping from feature group types to training data parameter names in the train function
+      :type training_data_parameter_names_mapping: dict
+      :param training_config_parameter_name: The train config parameter name in the train function
+      :type training_config_parameter_name: str
       :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
       :type train_function_name: str
       :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.

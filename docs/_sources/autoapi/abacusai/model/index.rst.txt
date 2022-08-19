@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -63,6 +63,8 @@ Classes
    :type isPythonModel: bool
    :param defaultAlgorithm: If set, this algorithm will always be used when deploying the model regardless of the model metrics
    :type defaultAlgorithm: str
+   :param customAlgorithmConfigs: User-defined configs for each of the user-defined custom algorithm
+   :type customAlgorithmConfigs: dict
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -73,6 +75,8 @@ Classes
    :type codeSource: CodeSource
 
    .. py:method:: __repr__()
+
+      Return repr(self).
 
 
    .. py:method:: to_dict()
@@ -273,7 +277,7 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: retrain(deployment_ids = [], feature_group_ids = None)
+   .. py:method:: retrain(deployment_ids = [], feature_group_ids = None, custom_algorithm_configs = None, cpu_size = None, memory = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -281,6 +285,12 @@ Classes
       :type deployment_ids: list
       :param feature_group_ids: List of feature group ids provided by the user to train the model on.
       :type feature_group_ids: list
+      :param custom_algorithm_configs: The user-defined training configs for each custom algorithm.
+      :type custom_algorithm_configs: dict
+      :param cpu_size: Size of the cpu for the user-defined algorithms during train.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the user-defined algorithms during train.
+      :type memory: int
 
       :returns: The model that is being retrained.
       :rtype: Model

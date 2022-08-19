@@ -44,6 +44,7 @@ from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
 from .model_monitor_summary import ModelMonitorSummary
 from .model_monitor_version import ModelMonitorVersion
+from .model_monitor_version_metric_data import ModelMonitorVersionMetricData
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
 from .organization_group import OrganizationGroup
@@ -154,7 +155,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.15'
+    client_version = '0.36.17'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -220,10 +221,10 @@ class BaseApiClient:
         success = False
         error_message = None
         error_type = None
+        json_data = None
         if streamable_response and response.status_code == 200:
             return response.raw
         try:
-            json_data = 'NOT SET YET'
             json_data = response.json()
             success = json_data['success']
             error_message = json_data.get('error')
@@ -921,13 +922,16 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorVersion: A model monitor version."""
         return self._call_api('describeModelMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
 
-    def model_monitor_version_metric_data(self, model_monitor_version: str, metric_type: str) -> None:
-        """Returns the data needed for decile metrics associated with the model monitor.
+    def model_monitor_version_metric_data(self, model_monitor_version: str, metric_type: str) -> ModelMonitorVersionMetricData:
+        """Provides the data needed for decile metrics associated with the model monitor.
 
         Args:
-            model_monitor_version (str): Model Monitor Version ID
-            metric_type (str): """
-        return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type})
+            model_monitor_version (str): Model monitor version id.
+            metric_type (str): The metric type to get data for.
+
+        Returns:
+            ModelMonitorVersionMetricData: Data associated with the metric."""
+        return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type}, parse_type=ModelMonitorVersionMetricData)
 
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns monitoring logs for the model.
@@ -1400,6 +1404,17 @@ class ApiClient(ReadOnlyClient):
             is_default_enabled=is_default_enabled)
 
     def get_train_function_input(self, project_id: str, training_table_names: list = None, training_data_parameter_name_override: dict = None, training_config_parameter_name_override: str = None, training_config: dict = None):
+        """
+        Get the input data for the train function to test locally.
+
+        Args:
+            project_id (String): The id of the project
+            training_table_names (List): A list of feature group tables used for training
+            training_data_parameter_name_override (Dict): The mapping from feature group types to training data parameter names in the train function
+            training_config_parameter_name_override (String): The train config parameter name in the train function
+            training_config (Dict): A dictionary for training parameters for the algorithm
+        """
+
         train_function_info = self.get_custom_train_function_info(
             project_id=project_id, feature_group_names_for_training=training_table_names, training_data_parameter_name_override=training_data_parameter_name_override)
         train_data_parameter_to_feature_group_ids = train_function_info.train_data_parameter_to_feature_group_ids
@@ -1411,10 +1426,28 @@ class ApiClient(ReadOnlyClient):
         input[training_config_parameter_name] = training_config
         return input
 
-    def train_model_with_algorithms(self, project_id: str, model_name: str, user_defined_algorithms: list, training_table_names: list, cpu_size='SMALL', memory=3, user_defined_algorithms_only=False):
+    def train_model_with_algorithms(self, project_id: str, model_name: str, user_defined_algorithms: list, training_table_names: list, cpu_size: str = 'SMALL', memory: int = 3, user_defined_algorithms_only: bool = False, training_config: dict = None, user_defined_algorithm_configs: dict = None):
+        """
+        Train a model with provided user-defined algorithms.
+
+        Args:
+            project_id (String): The id of the project
+            model_name (String): The name of the model to train
+            user_defined_algorithms (List): A list of user-defined algorithm names
+            training_table_names (List): A list of feature group tables used for training
+            cpu_size (Enum): How much cpu is needed for the user-defined algorithms during training
+            memory (Int): How much memory in GB is needed for the user-defined algorithms during training
+            user_defined_algorithms_only (Boolean): Whether only train with user-defined algorithms, or also include Abacus.AI algorithms
+            training_config (Dict): A dictionary for model training parameters
+            user_defined_algorithm_configs (Dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+        """
         feature_group_ids = [self.describe_feature_group_by_table_name(
             table_name).feature_group_id for table_name in training_table_names]
-        return self.train_model(project_id=project_id, name=model_name, training_config={'ALGORITHMS': user_defined_algorithms, 'CPU_SIZE': cpu_size.upper(), 'TRAINING_MEMORY_GB': memory}, feature_group_ids=feature_group_ids, custom_algorithms_only=user_defined_algorithms_only)
+        training_config = training_config or {}
+        training_config['ALGORITHMS'] = user_defined_algorithms
+        training_config['CPU_SIZE'] = cpu_size.upper()
+        training_config['TRAINING_MEMORY_GB'] = memory
+        return self.train_model(project_id=project_id, name=model_name, training_config=training_config, feature_group_ids=feature_group_ids, custom_algorithms_only=user_defined_algorithms_only, custom_algorithm_configs=user_defined_algorithm_configs)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2103,6 +2136,17 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The updated feature group"""
         return self._call_api('updateFeatureGroupSqlDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'sql': sql}, parse_type=FeatureGroup)
 
+    def update_dataset_feature_group_feature_expression(self, feature_group_id: str, feature_expression: str) -> FeatureGroup:
+        """Updates the SQL feature expression for a dataset feature group's custom features
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            feature_expression (str): Input SQL statement for the feature group.
+
+        Returns:
+            FeatureGroup: The updated feature group"""
+        return self._call_api('updateDatasetFeatureGroupFeatureExpression', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureExpression': feature_expression}, parse_type=FeatureGroup)
+
     def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
         """Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -2685,7 +2729,7 @@ class ApiClient(ReadOnlyClient):
             dataset_id (str): The dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms_only: bool = False) -> Model:
+    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None) -> Model:
         """Trains a model for the specified project.
 
         Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
@@ -2697,11 +2741,15 @@ class ApiClient(ReadOnlyClient):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
+            custom_algorithms (list): List of user-defined algorithms to train.
             custom_algorithms_only (bool): Whether only run custom algorithms.
+            custom_algorithm_configs (dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+            cpu_size (str): Size of the cpu for the user-defined algorithms during train.
+            memory (int): Memory (in GB) for the user-defined algorithms during train.
 
         Returns:
             Model: The new model which is being trained."""
-        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithmsOnly': custom_algorithms_only}, parse_type=Model)
+        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
     def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None) -> Model:
         """Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
@@ -2911,17 +2959,20 @@ class ApiClient(ReadOnlyClient):
             Model: The model object correspoding after the prediction config is applied"""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None) -> Model:
         """Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
             model_id (str): The model to retrain.
             deployment_ids (list): List of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
+            custom_algorithm_configs (dict): The user-defined training configs for each custom algorithm.
+            cpu_size (str): Size of the cpu for the user-defined algorithms during train.
+            memory (int): Memory (in GB) for the user-defined algorithms during train.
 
         Returns:
             Model: The model that is being retrained."""
-        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids}, parse_type=Model)
+        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
     def delete_model(self, model_id: str):
         """Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
@@ -2961,7 +3012,7 @@ class ApiClient(ReadOnlyClient):
             CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
         return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override}, parse_type=CustomTrainFunctionInfo)
 
-    def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
@@ -2972,10 +3023,12 @@ class ApiClient(ReadOnlyClient):
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
             target_value (str): A target positive value for the label to compute bias for
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+            model_id (str): The Unique ID of the Model
+            training_feature_mappings (dict): " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'trainingFeatureGroupId': training_feature_group_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'featureMappings': feature_mappings}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'trainingFeatureGroupId': training_feature_group_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Reruns the specified model monitor.
@@ -3877,7 +3930,7 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('deleteAlgorithm', 'DELETE', query_params={'algorithm': algorithm})
 
     def update_algorithm(self, algorithm: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None) -> Algorithm:
-        """Update custome algorithm for the given algorithm name
+        """Update custome algorithm for the given algorithm name. If source_code is provided, also need to provide all the function names in the source_code.
 
         Args:
             algorithm (str): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed

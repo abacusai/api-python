@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -85,6 +85,8 @@ Classes
    :type moduleName: str
    :param templateBindings:
    :type templateBindings: list
+   :param featureExpression:
+   :type featureExpression: str
    :param features:
    :type features: Feature
    :param duplicateFeatures:
@@ -601,6 +603,17 @@ Classes
 
       :param sql: Input SQL statement for the feature group.
       :type sql: str
+
+      :returns: The updated feature group
+      :rtype: FeatureGroup
+
+
+   .. py:method:: update_dataset_feature_expression(feature_expression)
+
+      Updates the SQL feature expression for a dataset feature group's custom features
+
+      :param feature_expression: Input SQL statement for the feature group.
+      :type feature_expression: str
 
       :returns: The updated feature group
       :rtype: FeatureGroup

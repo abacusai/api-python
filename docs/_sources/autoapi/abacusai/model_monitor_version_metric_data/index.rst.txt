@@ -1,0 +1,64 @@
+:py:mod:`abacusai.model_monitor_version_metric_data`
+====================================================
+
+.. py:module:: abacusai.model_monitor_version_metric_data
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_monitor_version_metric_data.ModelMonitorVersionMetricData
+
+
+
+
+.. py:class:: ModelMonitorVersionMetricData(client, name=None, algoName=None, featureGroupVersion=None, modelMonitor=None, modelMonitorVersion=None, metricInfos=None, metricNames=None, metrics=None, metricCharts=None, otherMetrics=None, actualValuesSupportedForDrilldown=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Data for displaying model monitor version metric data
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the metric type
+   :type name: str
+   :param algoName: The name of the algo used for the prediction metric
+   :type algoName: str
+   :param featureGroupVersion: The prediction feature group used for analysis
+   :type featureGroupVersion: str
+   :param modelMonitor: The id of the model monitor
+   :type modelMonitor: str
+   :param modelMonitorVersion: The id of the model monitor version
+   :type modelMonitorVersion: str
+   :param metricInfos: Name and description for metrics
+   :type metricInfos: dict
+   :param metricNames: Internal name to external name mapping
+   :type metricNames: dict
+   :param metrics: Metric name to metric data
+   :type metrics: dict
+   :param metricCharts: List of different metric charts
+   :type metricCharts: list
+   :param otherMetrics: List of other metrics to optionally plot
+   :type otherMetrics: list
+   :param actualValuesSupportedForDrilldown: List of values support for drilldown
+   :type actualValuesSupportedForDrilldown: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

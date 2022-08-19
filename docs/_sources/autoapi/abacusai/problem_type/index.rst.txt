@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ProblemType(client, problemType=None, requiredFeatureGroupType=None, optionalFeatureGroupTypes=None)
+.. py:class:: ProblemType(client, problemType=None, requiredFeatureGroupType=None, optionalFeatureGroupTypes=None, useCasesSupportCustomAlgorithm=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +31,8 @@ Classes
    :type requiredFeatureGroupType: str
    :param optionalFeatureGroupTypes: The optional feature group types can be used to train for this problem type
    :type optionalFeatureGroupTypes: list of string
+   :param useCasesSupportCustomAlgorithm: A list of use cases that support custom algorithms
+   :type useCasesSupportCustomAlgorithm: list
 
    .. py:method:: __repr__()
 
