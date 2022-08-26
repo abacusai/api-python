@@ -197,7 +197,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None)
+   .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, should_include_all_system_templates = False)
 
       List feature group templates for feature groups associated with the project.
 
@@ -205,6 +205,8 @@ Classes
       :type limit: int
       :param start_after_id: An offset parameter to exclude all templates till the specified feature group template ID.
       :type start_after_id: str
+      :param should_include_all_system_templates:
+      :type should_include_all_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
       :rtype: FeatureGroupTemplate
@@ -391,7 +393,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None)
+   .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
 
       Returns the information about how to call the custom train function.
 
@@ -399,6 +401,10 @@ Classes
       :type feature_group_names_for_training: list
       :param training_data_parameter_name_override: Override from feature group type to parameter name in train function.
       :type training_data_parameter_name_override: dict
+      :param training_config: Training config names to values for the options supported by Abacus.ai platform.
+      :type training_config: dict
+      :param custom_algorithm_config: User-defined config that can be serialized by JSON.
+      :type custom_algorithm_config: dict
 
       :returns: Information about how to call the customer provided train function.
       :rtype: CustomTrainFunctionInfo

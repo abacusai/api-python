@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: CustomTrainFunctionInfo(client, trainingDataParameterNameMapping=None, schemaMappings=None, trainDataParameterToFeatureGroupIds=None)
+.. py:class:: CustomTrainFunctionInfo(client, trainingDataParameterNameMapping=None, schemaMappings=None, trainDataParameterToFeatureGroupIds=None, trainingConfig=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +31,8 @@ Classes
    :type schemaMappings: dict
    :param trainDataParameterToFeatureGroupIds: The mapping from the dataframe parameter name to the feature group id backing the data
    :type trainDataParameterToFeatureGroupIds: dict
+   :param trainingConfig: The configs for training
+   :type trainingConfig: dict
 
    .. py:method:: __repr__()
 

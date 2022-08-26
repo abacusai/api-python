@@ -187,18 +187,19 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
 
-    def list_feature_group_templates(self, limit: int = 100, start_after_id: str = None):
+    def list_feature_group_templates(self, limit: int = 100, start_after_id: str = None, should_include_all_system_templates: bool = False):
         """
         List feature group templates for feature groups associated with the project.
 
         Args:
             limit (int): The maximum number of templates to be retrieved.
             start_after_id (str): An offset parameter to exclude all templates till the specified feature group template ID.
+            should_include_all_system_templates (bool): 
 
         Returns:
             FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
         """
-        return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id)
+        return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
     def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False):
         """
@@ -346,18 +347,20 @@ class Project(AbstractApiClass):
         """
         return self.client.list_models(self.project_id)
 
-    def get_custom_train_function_info(self, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None):
+    def get_custom_train_function_info(self, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: dict = None, custom_algorithm_config: dict = None):
         """
         Returns the information about how to call the custom train function.
 
         Args:
             feature_group_names_for_training (list): A list of feature group table names that will be used for training
             training_data_parameter_name_override (dict): Override from feature group type to parameter name in train function.
+            training_config (dict): Training config names to values for the options supported by Abacus.ai platform.
+            custom_algorithm_config (dict): User-defined config that can be serialized by JSON.
 
         Returns:
             CustomTrainFunctionInfo: Information about how to call the customer provided train function.
         """
-        return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override)
+        return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
     def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None):
         """

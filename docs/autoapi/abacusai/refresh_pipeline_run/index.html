@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.refresh_pipeline_run &mdash; AbacusAI  documentation</title>
@@ -86,6 +86,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_metrics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_summary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary_from_org/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_summary_from_org</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_version_metric_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_version_metric_data</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
@@ -166,10 +167,6 @@
 <section id="classes">
 <h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.refresh_pipeline_run.RefreshPipelineRun" title="abacusai.refresh_pipeline_run.RefreshPipelineRun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefreshPipelineRun</span></code></a></p></td>
 <td><p>A refresh policy run or a project refresh run.</p></td>
@@ -182,7 +179,7 @@
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>A refresh policy run or a project refresh run.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>refreshPipelineRunId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier for the refresh pipeline run</p></li>
@@ -192,11 +189,11 @@
 <li><p><strong>completedAt</strong> (<em>is-8601 string</em>) – The time when the refresh pipeline run was completed</p></li>
 <li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The status of the refresh pipeline run</p></li>
 <li><p><strong>refreshType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The type of refresh policy to be run</p></li>
-<li><p><strong>datasetVersions</strong> (<em>list of string identifiers</em>) – Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring</p></li>
-<li><p><strong>modelVersions</strong> (<em>list of string identifiers</em>) – Comma separated list of Model version IDs that this refresh pipeline run is monitoring</p></li>
+<li><p><strong>datasetVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>string identifiers</em>) – Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring</p></li>
+<li><p><strong>modelVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>string identifiers</em>) – Comma separated list of Model version IDs that this refresh pipeline run is monitoring</p></li>
 <li><p><strong>predictionMetricVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – </p></li>
-<li><p><strong>deploymentVersions</strong> (<em>list of string identifiers</em>) – Comma separated list of Deployment version IDs that this refresh pipeline run is monitoring</p></li>
-<li><p><strong>batchPredictions</strong> (<em>list of string identifiers</em>) – Comma separated list of batch predictionn IDs that this refresh pipeline run is monitoring</p></li>
+<li><p><strong>deploymentVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>string identifiers</em>) – Comma separated list of Deployment version IDs that this refresh pipeline run is monitoring</p></li>
+<li><p><strong>batchPredictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>string identifiers</em>) – Comma separated list of batch predictionn IDs that this refresh pipeline run is monitoring</p></li>
 <li><p><strong>refreshPolicy</strong> (<a class="reference internal" href="../refresh_policy/index.html#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy"><em>RefreshPolicy</em></a>) – </p></li>
 </ul>
 </dd>
@@ -212,10 +209,10 @@
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.refresh_pipeline_run.RefreshPipelineRun.to_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Get a dict representation of the parameters in this class</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
 </dd>
 </dl>
@@ -226,10 +223,10 @@
 <span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.refresh_pipeline_run.RefreshPipelineRun.refresh" title="Permalink to this definition"></a></dt>
 <dd><p>Calls describe and refreshes the current object’s fields</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The current object</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="#abacusai.refresh_pipeline_run.RefreshPipelineRun" title="abacusai.refresh_pipeline_run.RefreshPipelineRun">RefreshPipelineRun</a></p>
 </dd>
 </dl>
@@ -240,13 +237,13 @@
 <span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.refresh_pipeline_run.RefreshPipelineRun.describe" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieve a single refresh pipeline run</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>refresh_pipeline_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with this refresh pipeline_run</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A refresh pipeline run object</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.refresh_pipeline_run.RefreshPipelineRun" title="abacusai.refresh_pipeline_run.RefreshPipelineRun">RefreshPipelineRun</a></p>
 </dd>
 </dl>

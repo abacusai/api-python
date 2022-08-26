@@ -38,7 +38,7 @@ Classes
       :type \*\*kwargs: dict
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {})
+   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {}, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
@@ -48,6 +48,10 @@ Classes
       :type deployment_id: str
       :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
       :type query_data: dict
+      :param limit_results: If present, will limit the number of results to the value provided.
+      :type limit_results: int
+      :param result_columns: If present, will limit the columns present in each result to the columns specified in this list
+      :type result_columns: list
 
 
    .. py:method:: predict(deployment_token, deployment_id, query_data = {})

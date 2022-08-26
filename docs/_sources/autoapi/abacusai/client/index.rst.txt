@@ -37,10 +37,16 @@ Attributes
 .. autoapisummary::
 
    abacusai.client.DEFAULT_SERVER
+   abacusai.client.INVALID_PANDAS_COLUMN_NAME_CHARACTERS
 
 
 .. py:data:: DEFAULT_SERVER
    :annotation: = https://api.abacus.ai
+
+   
+
+.. py:data:: INVALID_PANDAS_COLUMN_NAME_CHARACTERS
+   :annotation: = [^A-Za-z0-9_]
 
    
 
@@ -96,7 +102,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.36.17
+      :annotation: = 0.36.19
 
       
 
@@ -115,7 +121,7 @@ Attributes
    .. py:method:: _poll(obj, wait_states, delay = 5, timeout = 300, poll_args = {}, status_field=None)
 
 
-   .. py:method:: _upload_from_pandas(upload, df)
+   .. py:method:: _upload_from_pandas(upload, df, clean_column_names=False)
 
 
    .. py:method:: _upload_from_spark(upload, df)
@@ -433,7 +439,7 @@ Attributes
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, feature_group_id = None)
+   .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, feature_group_id = None, should_include_system_templates = False)
 
       List feature group templates, optionally scoped by the feature group that created the templates.
 
@@ -443,12 +449,14 @@ Attributes
       :type start_after_id: str
       :param feature_group_id: If specified, limit to templates created from this feature group.
       :type feature_group_id: str
+      :param should_include_system_templates:
+      :type should_include_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: list_project_feature_group_templates(project_id, limit = 100, start_after_id = None)
+   .. py:method:: list_project_feature_group_templates(project_id, limit = 100, start_after_id = None, should_include_all_system_templates = False)
 
       List feature group templates for feature groups associated with the project.
 
@@ -458,6 +466,8 @@ Attributes
       :type limit: int
       :param start_after_id: An offset parameter to exclude all templates till the specified feature group template ID.
       :type start_after_id: str
+      :param should_include_all_system_templates:
+      :type should_include_all_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
       :rtype: FeatureGroupTemplate
@@ -768,6 +778,14 @@ Attributes
       :rtype: FunctionLogs
 
 
+   .. py:method:: export_model_artifacts(model_version)
+
+      Returns model artifacts zip.
+
+      :param model_version: The version of the model.
+      :type model_version: str
+
+
    .. py:method:: list_model_monitors(project_id)
 
       Retrieves the list of models monitors in the specified project.
@@ -803,10 +821,12 @@ Attributes
 
    .. py:method:: get_model_monitor_summary(model_monitor_id)
 
-      :param model_monitor_id:
+      Gets the summary of a model monitor across versions.
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
       :type model_monitor_id: str
 
-      :returns: None
+      :returns: An object describing integrity, bias violations, model accuracy, and drift for a model monitor.
       :rtype: ModelMonitorSummary
 
 
@@ -847,6 +867,21 @@ Attributes
 
       :returns: Data associated with the metric.
       :rtype: ModelMonitorVersionMetricData
+
+
+   .. py:method:: get_model_monitor_chart_from_organization(organization_id, chart_type, limit = 15)
+
+      Gets a list of model monitor summaries across monitors for an organization.
+
+      :param organization_id: The unique ID associated with the organization.
+      :type organization_id: str
+      :param chart_type: The type of chart (model_accuracy, bias_violations, data_integrity, or model_drift) to return.
+      :type chart_type: str
+      :param limit: The max length of the model monitors.
+      :type limit: int
+
+      :returns: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, or integrity for all model monitors in an organization.
+      :rtype: ModelMonitorSummaryFromOrg
 
 
    .. py:method:: get_model_monitoring_logs(model_monitor_version, stdout = False, stderr = False)
@@ -1135,7 +1170,7 @@ Attributes
    :param skip_version_check: If true, will skip checking the server's current API version on initializing the client
    :type skip_version_check: bool
 
-   .. py:method:: create_dataset_from_pandas(feature_group_table_name, df, name = None)
+   .. py:method:: create_dataset_from_pandas(feature_group_table_name, df, name = None, clean_column_names = False)
 
       [Deprecated]
       Creates a Dataset from a pandas dataframe
@@ -1151,7 +1186,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_version_from_pandas(table_name_or_id, df)
+   .. py:method:: create_dataset_version_from_pandas(table_name_or_id, df, clean_column_names = False)
 
       [Deprecated]
       Updates an existing dataset from a pandas dataframe
@@ -1309,7 +1344,7 @@ Attributes
       :param is_default_enabled: Whether train with the algorithm by default
 
 
-   .. py:method:: get_train_function_input(project_id, training_table_names = None, training_data_parameter_name_override = None, training_config_parameter_name_override = None, training_config = None)
+   .. py:method:: get_train_function_input(project_id, training_table_names = None, training_data_parameter_name_override = None, training_config_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
 
       Get the input data for the train function to test locally.
 
@@ -1321,8 +1356,12 @@ Attributes
       :type training_data_parameter_name_override: Dict
       :param training_config_parameter_name_override: The train config parameter name in the train function
       :type training_config_parameter_name_override: String
-      :param training_config: A dictionary for training parameters for the algorithm
+      :param training_config: A dictionary for Abacus.AI defined training options and values
       :type training_config: Dict
+      :param custom_algorithm_config: User-defined config that can be serialized by JSON
+      :type custom_algorithm_config: Any
+
+      :returns: A dictionary that maps train function parameter names to their values.
 
 
    .. py:method:: train_model_with_algorithms(project_id, model_name, user_defined_algorithms, training_table_names, cpu_size = 'SMALL', memory = 3, user_defined_algorithms_only = False, training_config = None, user_defined_algorithm_configs = None)
@@ -1343,7 +1382,7 @@ Attributes
       :type memory: Int
       :param user_defined_algorithms_only: Whether only train with user-defined algorithms, or also include Abacus.AI algorithms
       :type user_defined_algorithms_only: Boolean
-      :param training_config: A dictionary for model training parameters
+      :param training_config: A dictionary for Abacus.AI defined training options and values
       :type training_config: Dict
       :param user_defined_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
       :type user_defined_algorithm_configs: Dict
@@ -2516,7 +2555,7 @@ Attributes
       :type feature_group_template_id: str
 
 
-   .. py:method:: update_feature_group_template(feature_group_template_id, template_sql = None, template_variables = None)
+   .. py:method:: update_feature_group_template(feature_group_template_id, template_sql = None, template_variables = None, description = None, name = None)
 
       Update a feature group template.
 
@@ -2526,6 +2565,10 @@ Attributes
       :type template_sql: str
       :param template_variables: If provided, the new value to use for the template variables.
       :type template_variables: list
+      :param description: A description of this feature group template
+      :type description: str
+      :param name: The user-friendly of for this feature group template.
+      :type name: str
 
       :returns: The updated feature group template.
       :rtype: FeatureGroupTemplate
@@ -3369,7 +3412,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: get_custom_train_function_info(project_id, feature_group_names_for_training = None, training_data_parameter_name_override = None)
+   .. py:method:: get_custom_train_function_info(project_id, feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
 
       Returns the information about how to call the custom train function.
 
@@ -3379,6 +3422,10 @@ Attributes
       :type feature_group_names_for_training: list
       :param training_data_parameter_name_override: Override from feature group type to parameter name in train function.
       :type training_data_parameter_name_override: dict
+      :param training_config: Training config names to values for the options supported by Abacus.ai platform.
+      :type training_config: dict
+      :param custom_algorithm_config: User-defined config that can be serialized by JSON.
+      :type custom_algorithm_config: dict
 
       :returns: Information about how to call the customer provided train function.
       :rtype: CustomTrainFunctionInfo
@@ -3697,7 +3744,7 @@ Attributes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {})
+   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {}, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
@@ -3707,6 +3754,10 @@ Attributes
       :type deployment_id: str
       :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
       :type query_data: dict
+      :param limit_results: If present, will limit the number of results to the value provided.
+      :type limit_results: int
+      :param result_columns: If present, will limit the columns present in each result to the columns specified in this list
+      :type result_columns: list
 
 
    .. py:method:: predict(deployment_token, deployment_id, query_data = {})

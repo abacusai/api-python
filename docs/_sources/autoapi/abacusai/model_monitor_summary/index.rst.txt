@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorSummary(client, monitorAccuracy=None, modelDrift=None, dataIntegrity=None, biasViolations=None)
+.. py:class:: ModelMonitorSummary(client, modelAccuracy=None, modelDrift=None, dataIntegrity=None, biasViolations=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25,13 +25,13 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param monitorAccuracy:
-   :type monitorAccuracy: list
-   :param modelDrift:
+   :param modelAccuracy: A list of model accuracy objects including accuracy and monitor version information.
+   :type modelAccuracy: list
+   :param modelDrift: A list of model drift objects including label and prediction drifts and monitor version information.
    :type modelDrift: list
-   :param dataIntegrity:
+   :param dataIntegrity: A list of data integrity objects including counts of violations and monitor version information.
    :type dataIntegrity: list
-   :param biasViolations:
+   :param biasViolations: A list of bias objects including bias counts and monitor version information.
    :type biasViolations: list
 
    .. py:method:: __repr__()
