@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, metricTypes=None, modelId=None, refreshSchedules={}, latestMonitorModelVersion={})
+.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, metricTypes=None, modelId=None, starred=None, refreshSchedules={}, latestMonitorModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53,6 +53,8 @@ Classes
    :type metricTypes: dict
    :param modelId: Model ID that this model monitor is monitoring.
    :type modelId: unique string identifiers
+   :param starred: Whether this model monitor is starred.
+   :type starred: bool
    :param latestMonitorModelVersion: The latest model monitor version.
    :type latestMonitorModelVersion: ModelMonitorVersion
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
@@ -103,10 +105,12 @@ Classes
 
    .. py:method:: get_summary()
 
-      :param model_monitor_id:
+      Gets the summary of a model monitor across versions.
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
       :type model_monitor_id: str
 
-      :returns: None
+      :returns: An object describing integrity, bias violations, model accuracy, and drift for a model monitor.
       :rtype: ModelMonitorSummary
 
 

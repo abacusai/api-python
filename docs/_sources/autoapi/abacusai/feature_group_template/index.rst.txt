@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupTemplate(client, featureGroupTemplateId=None, description=None, featureGroupId=None, name=None, templateSql=None, templateVariables=None, createdAt=None, updatedAt=None)
+.. py:class:: FeatureGroupTemplate(client, featureGroupTemplateId=None, description=None, featureGroupId=None, isSystemTemplate=None, name=None, templateSql=None, templateVariables=None, createdAt=None, updatedAt=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +31,8 @@ Classes
    :type description: str
    :param featureGroupId: The unique identifier for the feature group used to create this template.
    :type featureGroupId: str
+   :param isSystemTemplate: True if this is a system template returned from a user organization.
+   :type isSystemTemplate: bool
    :param name: The user-friendly name of this feature group template.
    :type name: str
    :param templateSql: SQL that can include variables which will be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.
@@ -82,7 +84,7 @@ Classes
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: update(template_sql = None, template_variables = None)
+   .. py:method:: update(template_sql = None, template_variables = None, description = None, name = None)
 
       Update a feature group template.
 
@@ -90,6 +92,10 @@ Classes
       :type template_sql: str
       :param template_variables: If provided, the new value to use for the template variables.
       :type template_variables: list
+      :param description: A description of this feature group template
+      :type description: str
+      :param name: The user-friendly of for this feature group template.
+      :type name: str
 
       :returns: The updated feature group template.
       :rtype: FeatureGroupTemplate

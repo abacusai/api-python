@@ -3,6 +3,7 @@ import io
 import json
 import logging
 import os
+import re
 import tarfile
 import tempfile
 import time
@@ -43,6 +44,7 @@ from .model import Model
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
 from .model_monitor_summary import ModelMonitorSummary
+from .model_monitor_summary_from_org import ModelMonitorSummaryFromOrg
 from .model_monitor_version import ModelMonitorVersion
 from .model_monitor_version_metric_data import ModelMonitorVersionMetricData
 from .model_version import ModelVersion
@@ -70,6 +72,7 @@ from .user import User
 
 
 DEFAULT_SERVER = 'https://api.abacus.ai'
+INVALID_PANDAS_COLUMN_NAME_CHARACTERS = '[^A-Za-z0-9_]'
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
@@ -155,7 +158,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.17'
+    client_version = '0.36.19'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -281,9 +284,18 @@ class BaseApiClient:
             time.sleep(delay)
         return obj.refresh()
 
-    def _upload_from_pandas(self, upload, df) -> Dataset:
+    def _upload_from_pandas(self, upload, df, clean_column_names=False) -> Dataset:
+        if clean_column_names:
+            df = df.rename(columns={col: re.sub(
+                INVALID_PANDAS_COLUMN_NAME_CHARACTERS, '_', col) for col in df.columns})
+        bad_column_names = [col for col in df.columns if bool(
+            re.search(INVALID_PANDAS_COLUMN_NAME_CHARACTERS, col))]
+        if bad_column_names:
+            raise ValueError(
+                f'The dataframe\'s Column(s): {bad_column_names} contain illegal characters. Please rename the columns such that they only contain alphanumeric characters and underscores.')
         with tempfile.TemporaryFile(mode='w+b') as parquet_out:
-            df.to_parquet(parquet_out)
+            df.to_parquet(parquet_out, index=all(
+                index for index in df.index.names))
             parquet_out.seek(0)
             return upload.upload_file(parquet_out)
 
@@ -573,29 +585,31 @@ class ReadOnlyClient(BaseApiClient):
             FeatureGroupTemplate: The feature group template object."""
         return self._call_api('describeFeatureGroupTemplate', 'GET', query_params={'featureGroupTemplateId': feature_group_template_id}, parse_type=FeatureGroupTemplate)
 
-    def list_feature_group_templates(self, limit: int = 100, start_after_id: str = None, feature_group_id: str = None) -> List[FeatureGroupTemplate]:
+    def list_feature_group_templates(self, limit: int = 100, start_after_id: str = None, feature_group_id: str = None, should_include_system_templates: bool = False) -> List[FeatureGroupTemplate]:
         """List feature group templates, optionally scoped by the feature group that created the templates.
 
         Args:
             limit (int): The maximum number of templates to be retrieved.
             start_after_id (str): An offset parameter to exclude all templates till the specified feature group template ID.
             feature_group_id (str): If specified, limit to templates created from this feature group.
+            should_include_system_templates (bool): 
 
         Returns:
             FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s)."""
-        return self._call_api('listFeatureGroupTemplates', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroupTemplate)
+        return self._call_api('listFeatureGroupTemplates', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupId': feature_group_id, 'shouldIncludeSystemTemplates': should_include_system_templates}, parse_type=FeatureGroupTemplate)
 
-    def list_project_feature_group_templates(self, project_id: str, limit: int = 100, start_after_id: str = None) -> List[FeatureGroupTemplate]:
+    def list_project_feature_group_templates(self, project_id: str, limit: int = 100, start_after_id: str = None, should_include_all_system_templates: bool = False) -> List[FeatureGroupTemplate]:
         """List feature group templates for feature groups associated with the project.
 
         Args:
             project_id (str): Limit to templates associated with this project, e.g. templates associated with feature groups in this project.
             limit (int): The maximum number of templates to be retrieved.
             start_after_id (str): An offset parameter to exclude all templates till the specified feature group template ID.
+            should_include_all_system_templates (bool): 
 
         Returns:
             FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s)."""
-        return self._call_api('listProjectFeatureGroupTemplates', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=FeatureGroupTemplate)
+        return self._call_api('listProjectFeatureGroupTemplates', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id, 'shouldIncludeAllSystemTemplates': should_include_all_system_templates}, parse_type=FeatureGroupTemplate)
 
     def suggest_feature_group_template_for_feature_group(self, feature_group_id: str) -> FeatureGroupTemplate:
         """Suggest values for a feature gruop template, based on a feature group.
@@ -860,6 +874,13 @@ class ReadOnlyClient(BaseApiClient):
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
+    def export_model_artifacts(self, model_version: str) -> io.BytesIO:
+        """Returns model artifacts zip.
+
+        Args:
+            model_version (str): The version of the model."""
+        return self._call_api('exportModelArtifacts', 'GET', query_params={'modelVersion': model_version}, streamable_response=True)
+
     def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
         """Retrieves the list of models monitors in the specified project.
 
@@ -891,13 +912,13 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('getPredictionDrift', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=DriftDistributions)
 
     def get_model_monitor_summary(self, model_monitor_id: str) -> ModelMonitorSummary:
-        """
+        """Gets the summary of a model monitor across versions.
 
         Args:
-            model_monitor_id (str): 
+            model_monitor_id (str): The unique ID associated with the model monitor.
 
         Returns:
-            ModelMonitorSummary: None"""
+            ModelMonitorSummary: An object describing integrity, bias violations, model accuracy, and drift for a model monitor."""
         return self._call_api('getModelMonitorSummary', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitorSummary)
 
     def list_model_monitor_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
@@ -932,6 +953,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ModelMonitorVersionMetricData: Data associated with the metric."""
         return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type}, parse_type=ModelMonitorVersionMetricData)
+
+    def get_model_monitor_chart_from_organization(self, organization_id: str, chart_type: str, limit: int = 15) -> List[ModelMonitorSummaryFromOrg]:
+        """Gets a list of model monitor summaries across monitors for an organization.
+
+        Args:
+            organization_id (str): The unique ID associated with the organization.
+            chart_type (str): The type of chart (model_accuracy, bias_violations, data_integrity, or model_drift) to return.
+            limit (int): The max length of the model monitors.
+
+        Returns:
+            ModelMonitorSummaryFromOrg: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, or integrity for all model monitors in an organization."""
+        return self._call_api('getModelMonitorChartFromOrganization', 'GET', query_params={'organizationId': organization_id, 'chartType': chart_type, 'limit': limit}, parse_type=ModelMonitorSummaryFromOrg)
 
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns monitoring logs for the model.
@@ -1189,7 +1222,7 @@ class ApiClient(ReadOnlyClient):
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
 
-    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame, name: str = None) -> Dataset:
+    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame, name: str = None, clean_column_names: bool = False) -> Dataset:
         """
         [Deprecated]
         Creates a Dataset from a pandas dataframe
@@ -1204,9 +1237,9 @@ class ApiClient(ReadOnlyClient):
         """
         upload = self.create_dataset_from_upload(
             name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='PARQUET')
-        return self._upload_from_pandas(upload, df)
+        return self._upload_from_pandas(upload, df, clean_column_names)
 
-    def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame) -> Dataset:
+    def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
         """
         [Deprecated]
         Updates an existing dataset from a pandas dataframe
@@ -1233,7 +1266,7 @@ class ApiClient(ReadOnlyClient):
             dataset_id = feature_group.dataset_id
         upload = self.create_dataset_version_from_upload(
             dataset_id, file_format='PARQUET')
-        return self._upload_from_pandas(upload, df)
+        return self._upload_from_pandas(upload, df, clean_column_names)
 
     def create_feature_group_from_pandas_df(self, table_name: str, df) -> FeatureGroup:
         """Create a Feature Group from a local Pandas DataFrame.
@@ -1403,7 +1436,7 @@ class ApiClient(ReadOnlyClient):
             config_options=config_options,
             is_default_enabled=is_default_enabled)
 
-    def get_train_function_input(self, project_id: str, training_table_names: list = None, training_data_parameter_name_override: dict = None, training_config_parameter_name_override: str = None, training_config: dict = None):
+    def get_train_function_input(self, project_id: str, training_table_names: list = None, training_data_parameter_name_override: dict = None, training_config_parameter_name_override: str = None, training_config: dict = None, custom_algorithm_config: any = None):
         """
         Get the input data for the train function to test locally.
 
@@ -1412,18 +1445,22 @@ class ApiClient(ReadOnlyClient):
             training_table_names (List): A list of feature group tables used for training
             training_data_parameter_name_override (Dict): The mapping from feature group types to training data parameter names in the train function
             training_config_parameter_name_override (String): The train config parameter name in the train function
-            training_config (Dict): A dictionary for training parameters for the algorithm
+            training_config (Dict): A dictionary for Abacus.AI defined training options and values
+            custom_algorithm_config (Any): User-defined config that can be serialized by JSON
+
+        Returns:
+            A dictionary that maps train function parameter names to their values.
         """
 
-        train_function_info = self.get_custom_train_function_info(
-            project_id=project_id, feature_group_names_for_training=training_table_names, training_data_parameter_name_override=training_data_parameter_name_override)
+        train_function_info = self.get_custom_train_function_info(project_id=project_id, feature_group_names_for_training=training_table_names,
+                                                                  training_data_parameter_name_override=training_data_parameter_name_override, training_config=training_config, custom_algorithm_config=custom_algorithm_config)
         train_data_parameter_to_feature_group_ids = train_function_info.train_data_parameter_to_feature_group_ids
 
         input = {parameter_name: self.describe_feature_group(fgid).load_as_pandas(
         ) for parameter_name, fgid in train_data_parameter_to_feature_group_ids.items()}
         input['schema_mappings'] = train_function_info.schema_mappings
         training_config_parameter_name = training_config_parameter_name_override or 'training_config'
-        input[training_config_parameter_name] = training_config
+        input[training_config_parameter_name] = train_function_info.training_config
         return input
 
     def train_model_with_algorithms(self, project_id: str, model_name: str, user_defined_algorithms: list, training_table_names: list, cpu_size: str = 'SMALL', memory: int = 3, user_defined_algorithms_only: bool = False, training_config: dict = None, user_defined_algorithm_configs: dict = None):
@@ -1438,16 +1475,12 @@ class ApiClient(ReadOnlyClient):
             cpu_size (Enum): How much cpu is needed for the user-defined algorithms during training
             memory (Int): How much memory in GB is needed for the user-defined algorithms during training
             user_defined_algorithms_only (Boolean): Whether only train with user-defined algorithms, or also include Abacus.AI algorithms
-            training_config (Dict): A dictionary for model training parameters
+            training_config (Dict): A dictionary for Abacus.AI defined training options and values
             user_defined_algorithm_configs (Dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
         """
         feature_group_ids = [self.describe_feature_group_by_table_name(
             table_name).feature_group_id for table_name in training_table_names]
-        training_config = training_config or {}
-        training_config['ALGORITHMS'] = user_defined_algorithms
-        training_config['CPU_SIZE'] = cpu_size.upper()
-        training_config['TRAINING_MEMORY_GB'] = memory
-        return self.train_model(project_id=project_id, name=model_name, training_config=training_config, feature_group_ids=feature_group_ids, custom_algorithms_only=user_defined_algorithms_only, custom_algorithm_configs=user_defined_algorithm_configs)
+        return self.train_model(project_id=project_id, name=model_name, training_config=training_config, feature_group_ids=feature_group_ids, custom_algorithms=user_defined_algorithms, custom_algorithms_only=user_defined_algorithms_only, custom_algorithm_configs=user_defined_algorithm_configs, cpu_size=cpu_size, memory=memory)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2343,17 +2376,19 @@ class ApiClient(ReadOnlyClient):
             feature_group_template_id (str): The unique ID associated with the feature group template."""
         return self._call_api('deleteFeatureGroupTemplate', 'DELETE', query_params={'featureGroupTemplateId': feature_group_template_id})
 
-    def update_feature_group_template(self, feature_group_template_id: str, template_sql: str = None, template_variables: list = None) -> FeatureGroupTemplate:
+    def update_feature_group_template(self, feature_group_template_id: str, template_sql: str = None, template_variables: list = None, description: str = None, name: str = None) -> FeatureGroupTemplate:
         """Update a feature group template.
 
         Args:
             feature_group_template_id (str): Identifier of the feature group template to update.
             template_sql (str): If provided, the new value to use for the template sql.
             template_variables (list): If provided, the new value to use for the template variables.
+            description (str): A description of this feature group template
+            name (str): The user-friendly of for this feature group template.
 
         Returns:
             FeatureGroupTemplate: The updated feature group template."""
-        return self._call_api('updateFeatureGroupTemplate', 'POST', query_params={}, body={'featureGroupTemplateId': feature_group_template_id, 'templateSql': template_sql, 'templateVariables': template_variables}, parse_type=FeatureGroupTemplate)
+        return self._call_api('updateFeatureGroupTemplate', 'POST', query_params={}, body={'featureGroupTemplateId': feature_group_template_id, 'templateSql': template_sql, 'templateVariables': template_variables, 'description': description, 'name': name}, parse_type=FeatureGroupTemplate)
 
     def preview_feature_group_template_resolution(self, feature_group_template_id: str = None, template_bindings: list = None, template_sql: str = None, template_variables: list = None, should_validate: bool = True) -> ResolvedFeatureGroupTemplate:
         """Resolve template sql using template variables and template bindings.
@@ -3000,17 +3035,19 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group."""
         return self._call_api('exportModelArtifactAsFeatureGroup', 'POST', query_params={}, body={'modelVersion': model_version, 'tableName': table_name, 'artifactType': artifact_type}, parse_type=FeatureGroup)
 
-    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None) -> CustomTrainFunctionInfo:
+    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: dict = None, custom_algorithm_config: dict = None) -> CustomTrainFunctionInfo:
         """Returns the information about how to call the custom train function.
 
         Args:
             project_id (str): The unique version ID of the project
             feature_group_names_for_training (list): A list of feature group table names that will be used for training
             training_data_parameter_name_override (dict): Override from feature group type to parameter name in train function.
+            training_config (dict): Training config names to values for the options supported by Abacus.ai platform.
+            custom_algorithm_config (dict): User-defined config that can be serialized by JSON.
 
         Returns:
             CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
-        return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override}, parse_type=CustomTrainFunctionInfo)
+        return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override, 'trainingConfig': training_config, 'customAlgorithmConfig': custom_algorithm_config}, parse_type=CustomTrainFunctionInfo)
 
     def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
@@ -3260,14 +3297,16 @@ class ApiClient(ReadOnlyClient):
             RefreshPolicy: The updated refresh policy"""
         return self._call_api('updateRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id, 'name': name, 'cron': cron}, parse_type=RefreshPolicy)
 
-    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
+    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict = {}, limit_results: int = None, result_columns: list = None) -> Dict:
         """Returns the feature group deployed in the feature store project.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity."""
-        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
+            query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+            limit_results (int): If present, will limit the number of results to the value provided.
+            result_columns (list): If present, will limit the columns present in each result to the columns specified in this list"""
+        return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=self.default_prediction_url)
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict = {}) -> Dict:
         """Returns a prediction for Predictive Modeling
