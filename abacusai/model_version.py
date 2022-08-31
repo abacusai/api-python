@@ -130,15 +130,6 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.get_training_logs(self.model_version, stdout, stderr)
 
-    def export_model_artifacts(self):
-        """
-        Returns model artifacts zip.
-
-        Args:
-            model_version (str): The version of the model.
-        """
-        return self.client.export_model_artifacts(self.model_version)
-
     def wait_for_training(self, timeout=None):
         """
         A waiting call until model gets trained.

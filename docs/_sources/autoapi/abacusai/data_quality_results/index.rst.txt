@@ -1,0 +1,46 @@
+:py:mod:`abacusai.data_quality_results`
+=======================================
+
+.. py:module:: abacusai.data_quality_results
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.data_quality_results.DataQualityResults
+
+
+
+
+.. py:class:: DataQualityResults(client, results=None, success=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Data Quality results from normalization stage
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param results: A list with different pairs of quality parameters and their values
+   :type results: dict
+   :param success:
+   :type success: bool
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

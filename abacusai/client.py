@@ -17,6 +17,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 from .algorithm import Algorithm
+from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
@@ -72,7 +73,6 @@ from .user import User
 
 
 DEFAULT_SERVER = 'https://api.abacus.ai'
-INVALID_PANDAS_COLUMN_NAME_CHARACTERS = '[^A-Za-z0-9_]'
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
@@ -158,7 +158,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.19'
+    client_version = '0.36.20'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -286,8 +286,16 @@ class BaseApiClient:
 
     def _upload_from_pandas(self, upload, df, clean_column_names=False) -> Dataset:
         if clean_column_names:
-            df = df.rename(columns={col: re.sub(
-                INVALID_PANDAS_COLUMN_NAME_CHARACTERS, '_', col) for col in df.columns})
+            new_col_mapping = {}
+            cleaned_cols = {}
+            for col in df.columns:
+                cleaned_col = clean_column_name(col)
+                new_col_mapping[col] = cleaned_col
+                if cleaned_col in cleaned_cols:
+                    raise ValueError(
+                        f'The following columns have the same cleaned column name: "{col}" and "{cleaned_cols[col]}". Please rename these columns such that they are not the same name when cleaned. To see the cleaned version of a column name, refer to the function api_client_utils.clean_column_name in the abacusai package.')
+                cleaned_cols[cleaned_col] = col
+            df = df.rename(columns=new_col_mapping)
         bad_column_names = [col for col in df.columns if bool(
             re.search(INVALID_PANDAS_COLUMN_NAME_CHARACTERS, col))]
         if bad_column_names:
@@ -873,13 +881,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
-    def export_model_artifacts(self, model_version: str) -> io.BytesIO:
-        """Returns model artifacts zip.
-
-        Args:
-            model_version (str): The version of the model."""
-        return self._call_api('exportModelArtifacts', 'GET', query_params={'modelVersion': model_version}, streamable_response=True)
 
     def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
         """Retrieves the list of models monitors in the specified project.

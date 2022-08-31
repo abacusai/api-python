@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abacusai.function_logs &mdash; AbacusAI  documentation</title>
+  <title>abacusai.api_client_utils &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -20,8 +20,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="abacusai.indexing_config" href="../indexing_config/index.html" />
-    <link rel="prev" title="abacusai.file_connector_verification" href="../file_connector_verification/index.html" /> 
+    <link rel="next" title="abacusai.api_key" href="../api_key/index.html" />
+    <link rel="prev" title="abacusai.algorithm" href="../algorithm/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,7 +43,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_key</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.application_connector</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.batch_prediction</span></code></a></li>
@@ -81,10 +84,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../file_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.indexing_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_location/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_location</span></code></a></li>
@@ -152,9 +152,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/autoapi/abacusai/function_logs/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/autoapi/abacusai/api_client_utils/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -162,57 +162,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-abacusai.function_logs">
-<span id="abacusai-function-logs"></span><h1><a class="reference internal" href="#module-abacusai.function_logs" title="abacusai.function_logs"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a><a class="headerlink" href="#module-abacusai.function_logs" title="Permalink to this heading"></a></h1>
+  <section id="module-abacusai.api_client_utils">
+<span id="abacusai-api-client-utils"></span><h1><a class="reference internal" href="#module-abacusai.api_client_utils" title="abacusai.api_client_utils"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></a><a class="headerlink" href="#module-abacusai.api_client_utils" title="Permalink to this heading"></a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.function_logs.FunctionLogs" title="abacusai.function_logs.FunctionLogs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunctionLogs</span></code></a></p></td>
-<td><p>Logs from an invocation of a function.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.clean_column_name" title="abacusai.api_client_utils.clean_column_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_column_name</span></code></a>(column)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
-<dl class="py class">
-<dt class="sig sig-object py" id="abacusai.function_logs.FunctionLogs">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.function_logs.</span></span><span class="sig-name descname"><span class="pre">FunctionLogs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.function_logs.FunctionLogs" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
-<p>Logs from an invocation of a function.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>function</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>stats</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – </p></li>
-<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>exception</strong> (<a class="reference internal" href="../user_exception/index.html#abacusai.user_exception.UserException" title="abacusai.user_exception.UserException"><em>UserException</em></a>) – </p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.function_logs.FunctionLogs.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.function_logs.FunctionLogs.__repr__" title="Permalink to this definition"></a></dt>
-<dd><p>Return repr(self).</p>
-</dd></dl>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS" title="abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INVALID_PANDAS_COLUMN_NAME_CHARACTERS</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">INVALID_PANDAS_COLUMN_NAME_CHARACTERS</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[^A-Za-z0-9_]</span></em><a class="headerlink" href="#abacusai.api_client_utils.INVALID_PANDAS_COLUMN_NAME_CHARACTERS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.function_logs.FunctionLogs.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.function_logs.FunctionLogs.to_dict" title="Permalink to this definition"></a></dt>
-<dd><p>Get a dict representation of the parameters in this class</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The dict value representation of the class parameters</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.clean_column_name">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">clean_column_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.clean_column_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 </section>
@@ -222,8 +203,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../file_connector_verification/index.html" class="btn btn-neutral float-left" title="abacusai.file_connector_verification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../indexing_config/index.html" class="btn btn-neutral float-right" title="abacusai.indexing_config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../algorithm/index.html" class="btn btn-neutral float-left" title="abacusai.algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api_key/index.html" class="btn btn-neutral float-right" title="abacusai.api_key" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

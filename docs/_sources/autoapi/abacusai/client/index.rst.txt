@@ -37,16 +37,10 @@ Attributes
 .. autoapisummary::
 
    abacusai.client.DEFAULT_SERVER
-   abacusai.client.INVALID_PANDAS_COLUMN_NAME_CHARACTERS
 
 
 .. py:data:: DEFAULT_SERVER
    :annotation: = https://api.abacus.ai
-
-   
-
-.. py:data:: INVALID_PANDAS_COLUMN_NAME_CHARACTERS
-   :annotation: = [^A-Za-z0-9_]
 
    
 
@@ -102,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.36.19
+      :annotation: = 0.36.20
 
       
 
@@ -776,14 +770,6 @@ Attributes
 
       :returns: A function logs.
       :rtype: FunctionLogs
-
-
-   .. py:method:: export_model_artifacts(model_version)
-
-      Returns model artifacts zip.
-
-      :param model_version: The version of the model.
-      :type model_version: str
 
 
    .. py:method:: list_model_monitors(project_id)

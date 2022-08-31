@@ -43,6 +43,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_key</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.application_connector</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.batch_prediction</span></code></a></li>
@@ -58,6 +59,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_train_function_info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_filter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_quality_results/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_quality_results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../database_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_column/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_column</span></code></a></li>
@@ -209,19 +211,11 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.client.DEFAULT_SERVER" title="abacusai.client.DEFAULT_SERVER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DEFAULT_SERVER</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.client.INVALID_PANDAS_COLUMN_NAME_CHARACTERS" title="abacusai.client.INVALID_PANDAS_COLUMN_NAME_CHARACTERS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">INVALID_PANDAS_COLUMN_NAME_CHARACTERS</span></code></a></p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.client.DEFAULT_SERVER">
 <span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">DEFAULT_SERVER</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">https://api.abacus.ai</span></em><a class="headerlink" href="#abacusai.client.DEFAULT_SERVER" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt class="sig sig-object py" id="abacusai.client.INVALID_PANDAS_COLUMN_NAME_CHARACTERS">
-<span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">INVALID_PANDAS_COLUMN_NAME_CHARACTERS</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">[^A-Za-z0-9_]</span></em><a class="headerlink" href="#abacusai.client.INVALID_PANDAS_COLUMN_NAME_CHARACTERS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -291,7 +285,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.36.19</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.36.20</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1318,20 +1312,6 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../function_logs/index.html#abacusai.function_logs.FunctionLogs" title="abacusai.function_logs.FunctionLogs">FunctionLogs</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.export_model_artifacts">
-<span class="sig-name descname"><span class="pre">export_model_artifacts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.export_model_artifacts" title="Permalink to this definition"></a></dt>
-<dd><p>Returns model artifacts zip.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The version of the model.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.10)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
