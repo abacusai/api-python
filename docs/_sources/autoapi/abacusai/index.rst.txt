@@ -147,6 +147,8 @@ Attributes
       :type df: pandas.DataFrame
       :param name: The name to give to the dataset
       :type name: str
+      :param clean_column_names: If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
+      :type clean_column_names: bool
 
       :returns: The dataset object created
       :rtype: Dataset
@@ -161,12 +163,14 @@ Attributes
       :type table_name_or_id: str
       :param df: The dataframe to upload
       :type df: pandas.DataFrame
+      :param clean_column_names: If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
+      :type clean_column_names: bool
 
       :returns: The dataset updated
       :rtype: Dataset
 
 
-   .. py:method:: create_feature_group_from_pandas_df(table_name, df)
+   .. py:method:: create_feature_group_from_pandas_df(table_name, df, clean_column_names = False)
 
       Create a Feature Group from a local Pandas DataFrame.
 
@@ -174,9 +178,11 @@ Attributes
       :type table_name: str
       :param df: The dataframe to upload
       :type df: pandas.DataFrame
+      :param clean_column_names: If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
+      :type clean_column_names: bool
 
 
-   .. py:method:: update_feature_group_from_pandas_df(table_name, df)
+   .. py:method:: update_feature_group_from_pandas_df(table_name, df, clean_column_names = False)
 
       Updates a DATASET Feature Group from a local Pandas DataFrame.
 
@@ -184,6 +190,8 @@ Attributes
       :type table_name: str
       :param df: The dataframe to upload
       :type df: pandas.DataFrame
+      :param clean_column_names: If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
+      :type clean_column_names: bool
 
 
    .. py:method:: create_feature_group_from_spark_df(table_name, df)
@@ -328,30 +336,6 @@ Attributes
       :type custom_algorithm_config: Any
 
       :returns: A dictionary that maps train function parameter names to their values.
-
-
-   .. py:method:: train_model_with_algorithms(project_id, model_name, user_defined_algorithms, training_table_names, cpu_size = 'SMALL', memory = 3, user_defined_algorithms_only = False, training_config = None, user_defined_algorithm_configs = None)
-
-      Train a model with provided user-defined algorithms.
-
-      :param project_id: The id of the project
-      :type project_id: String
-      :param model_name: The name of the model to train
-      :type model_name: String
-      :param user_defined_algorithms: A list of user-defined algorithm names
-      :type user_defined_algorithms: List
-      :param training_table_names: A list of feature group tables used for training
-      :type training_table_names: List
-      :param cpu_size: How much cpu is needed for the user-defined algorithms during training
-      :type cpu_size: Enum
-      :param memory: How much memory in GB is needed for the user-defined algorithms during training
-      :type memory: Int
-      :param user_defined_algorithms_only: Whether only train with user-defined algorithms, or also include Abacus.AI algorithms
-      :type user_defined_algorithms_only: Boolean
-      :param training_config: A dictionary for Abacus.AI defined training options and values
-      :type training_config: Dict
-      :param user_defined_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
-      :type user_defined_algorithm_configs: Dict
 
 
    .. py:method:: add_user_to_organization(email)
@@ -5150,7 +5134,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.36.20
+   :annotation: = 0.36.21
 
    
 

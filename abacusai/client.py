@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import string
 import tarfile
 import tempfile
 import time
@@ -158,7 +159,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.20'
+    client_version = '0.36.21'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -284,7 +285,7 @@ class BaseApiClient:
             time.sleep(delay)
         return obj.refresh()
 
-    def _upload_from_pandas(self, upload, df, clean_column_names=False) -> Dataset:
+    def _validate_pandas_df(self, df, clean_column_names: bool):
         if clean_column_names:
             new_col_mapping = {}
             cleaned_cols = {}
@@ -296,11 +297,14 @@ class BaseApiClient:
                         f'The following columns have the same cleaned column name: "{col}" and "{cleaned_cols[col]}". Please rename these columns such that they are not the same name when cleaned. To see the cleaned version of a column name, refer to the function api_client_utils.clean_column_name in the abacusai package.')
                 cleaned_cols[cleaned_col] = col
             df = df.rename(columns=new_col_mapping)
-        bad_column_names = [col for col in df.columns if bool(
-            re.search(INVALID_PANDAS_COLUMN_NAME_CHARACTERS, col))]
+        bad_column_names = [col for col in df.columns if bool(re.search(
+            INVALID_PANDAS_COLUMN_NAME_CHARACTERS, col)) or not col[0] in string.ascii_letters]
         if bad_column_names:
             raise ValueError(
-                f'The dataframe\'s Column(s): {bad_column_names} contain illegal characters. Please rename the columns such that they only contain alphanumeric characters and underscores.')
+                f'The dataframe\'s Column(s): {bad_column_names} contain illegal characters. Please rename the columns such that they only contain alphanumeric characters and underscores, and must start with an alpha character.')
+        return df
+
+    def _upload_from_pandas(self, upload, df, clean_column_names=False) -> Dataset:
         with tempfile.TemporaryFile(mode='w+b') as parquet_out:
             df.to_parquet(parquet_out, index=all(
                 index for index in df.index.names))
@@ -1232,13 +1236,15 @@ class ApiClient(ReadOnlyClient):
             feature_group_table_name (str): The table name to assign to the feature group created by this call
             df (pandas.DataFrame): The dataframe to upload
             name (str): The name to give to the dataset
+            clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
 
         Returns:
             Dataset: The dataset object created
         """
+        df = self._validate_pandas_df(df, clean_column_names)
         upload = self.create_dataset_from_upload(
             name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='PARQUET')
-        return self._upload_from_pandas(upload, df, clean_column_names)
+        return self._upload_from_pandas(upload, df)
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
         """
@@ -1248,10 +1254,12 @@ class ApiClient(ReadOnlyClient):
         Args:
             table_name_or_id (str): The table name of the feature group or the ID of the dataset to update
             df (pandas.DataFrame): The dataframe to upload
+            clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
 
         Returns:
             Dataset: The dataset updated
         """
+        df = self._validate_pandas_df(df, clean_column_names)
         dataset_id = None
         try:
             self.describe_dataset(table_name_or_id)
@@ -1267,26 +1275,30 @@ class ApiClient(ReadOnlyClient):
             dataset_id = feature_group.dataset_id
         upload = self.create_dataset_version_from_upload(
             dataset_id, file_format='PARQUET')
-        return self._upload_from_pandas(upload, df, clean_column_names)
+        return self._upload_from_pandas(upload, df)
 
-    def create_feature_group_from_pandas_df(self, table_name: str, df) -> FeatureGroup:
+    def create_feature_group_from_pandas_df(self, table_name: str, df, clean_column_names: bool = False) -> FeatureGroup:
         """Create a Feature Group from a local Pandas DataFrame.
 
         Args:
             table_name (str): The table name to assign to the feature group created by this call
             df (pandas.DataFrame): The dataframe to upload
+            clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
         """
+        df = self._validate_pandas_df(df, clean_column_names)
         dataset = self.create_dataset_from_pandas(
             feature_group_table_name=table_name, df=df)
         return dataset.describe_feature_group()
 
-    def update_feature_group_from_pandas_df(self, table_name: str, df) -> FeatureGroup:
+    def update_feature_group_from_pandas_df(self, table_name: str, df, clean_column_names: bool = False) -> FeatureGroup:
         """Updates a DATASET Feature Group from a local Pandas DataFrame.
 
         Args:
             table_name (str): The table name to assign to the feature group created by this call
             df (pandas.DataFrame): The dataframe to upload
+            clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
         """
+        df = self._validate_pandas_df(df, clean_column_names)
         feature_group = self.describe_feature_group_by_table_name(table_name)
         if feature_group.feature_group_source_type != 'DATASET':
             raise ApiException(
@@ -1463,25 +1475,6 @@ class ApiClient(ReadOnlyClient):
         training_config_parameter_name = training_config_parameter_name_override or 'training_config'
         input[training_config_parameter_name] = train_function_info.training_config
         return input
-
-    def train_model_with_algorithms(self, project_id: str, model_name: str, user_defined_algorithms: list, training_table_names: list, cpu_size: str = 'SMALL', memory: int = 3, user_defined_algorithms_only: bool = False, training_config: dict = None, user_defined_algorithm_configs: dict = None):
-        """
-        Train a model with provided user-defined algorithms.
-
-        Args:
-            project_id (String): The id of the project
-            model_name (String): The name of the model to train
-            user_defined_algorithms (List): A list of user-defined algorithm names
-            training_table_names (List): A list of feature group tables used for training
-            cpu_size (Enum): How much cpu is needed for the user-defined algorithms during training
-            memory (Int): How much memory in GB is needed for the user-defined algorithms during training
-            user_defined_algorithms_only (Boolean): Whether only train with user-defined algorithms, or also include Abacus.AI algorithms
-            training_config (Dict): A dictionary for Abacus.AI defined training options and values
-            user_defined_algorithm_configs (Dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
-        """
-        feature_group_ids = [self.describe_feature_group_by_table_name(
-            table_name).feature_group_id for table_name in training_table_names]
-        return self.train_model(project_id=project_id, name=model_name, training_config=training_config, feature_group_ids=feature_group_ids, custom_algorithms=user_defined_algorithms, custom_algorithms_only=user_defined_algorithms_only, custom_algorithm_configs=user_defined_algorithm_configs, cpu_size=cpu_size, memory=memory)
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.

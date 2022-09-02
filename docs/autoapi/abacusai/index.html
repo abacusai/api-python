@@ -320,7 +320,7 @@ Creates a Dataset from a pandas dataframe</p>
 <li><p><strong>feature_group_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The table name to assign to the feature group created by this call</p></li>
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name to give to the dataset</p></li>
-<li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+<li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, the dataframe’s column names will be automatically cleaned to be complaint with Abacus.AI’s column requirements. Otherwise it will raise a ValueError.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -342,7 +342,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name_or_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The table name of the feature group or the ID of the dataset to update</p></li>
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload</p></li>
-<li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p></li>
+<li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, the dataframe’s column names will be automatically cleaned to be complaint with Abacus.AI’s column requirements. Otherwise it will raise a ValueError.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -356,13 +356,14 @@ Updates an existing dataset from a pandas dataframe</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_feature_group_from_pandas_df">
-<span class="sig-name descname"><span class="pre">create_feature_group_from_pandas_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_feature_group_from_pandas_df" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_feature_group_from_pandas_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_column_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_feature_group_from_pandas_df" title="Permalink to this definition"></a></dt>
 <dd><p>Create a Feature Group from a local Pandas DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The table name to assign to the feature group created by this call</p></li>
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload</p></li>
+<li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, the dataframe’s column names will be automatically cleaned to be complaint with Abacus.AI’s column requirements. Otherwise it will raise a ValueError.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -373,13 +374,14 @@ Updates an existing dataset from a pandas dataframe</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.update_feature_group_from_pandas_df">
-<span class="sig-name descname"><span class="pre">update_feature_group_from_pandas_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_feature_group_from_pandas_df" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_feature_group_from_pandas_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_column_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_feature_group_from_pandas_df" title="Permalink to this definition"></a></dt>
 <dd><p>Updates a DATASET Feature Group from a local Pandas DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The table name to assign to the feature group created by this call</p></li>
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload</p></li>
+<li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, the dataframe’s column names will be automatically cleaned to be complaint with Abacus.AI’s column requirements. Otherwise it will raise a ValueError.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -541,27 +543,6 @@ Updates an existing dataset from a pandas dataframe</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary that maps train function parameter names to their values.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ApiClient.train_model_with_algorithms">
-<span class="sig-name descname"><span class="pre">train_model_with_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_defined_algorithms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_table_names</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SMALL'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_defined_algorithms_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_defined_algorithm_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.train_model_with_algorithms" title="Permalink to this definition"></a></dt>
-<dd><p>Train a model with provided user-defined algorithms.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>project_id</strong> (<em>String</em>) – The id of the project</p></li>
-<li><p><strong>model_name</strong> (<em>String</em>) – The name of the model to train</p></li>
-<li><p><strong>user_defined_algorithms</strong> (<em>List</em>) – A list of user-defined algorithm names</p></li>
-<li><p><strong>training_table_names</strong> (<em>List</em>) – A list of feature group tables used for training</p></li>
-<li><p><strong>cpu_size</strong> (<em>Enum</em>) – How much cpu is needed for the user-defined algorithms during training</p></li>
-<li><p><strong>memory</strong> (<em>Int</em>) – How much memory in GB is needed for the user-defined algorithms during training</p></li>
-<li><p><strong>user_defined_algorithms_only</strong> (<em>Boolean</em>) – Whether only train with user-defined algorithms, or also include Abacus.AI algorithms</p></li>
-<li><p><strong>training_config</strong> (<em>Dict</em>) – A dictionary for Abacus.AI defined training options and values</p></li>
-<li><p><strong>user_defined_algorithm_configs</strong> (<em>Dict</em>) – Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json</p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -6709,7 +6690,7 @@ start_after_id (Unique String Identifier): An offset parameter to exclude all pr
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.36.20</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.36.21</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
