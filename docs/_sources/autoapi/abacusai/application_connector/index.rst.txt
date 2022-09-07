@@ -51,35 +51,6 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: create_feature_group_from_git(branch_name, table_name, function_name, module_name, python_root = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Creates a new feature group from a ZIP file.
-
-      :param branch_name: Name of the branch in the git repository to be used for training.
-      :type branch_name: str
-      :param table_name: The unique name to be given to the feature group.
-      :type table_name: str
-      :param function_name: Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: Path to the file with the feature group function.
-      :type module_name: str
-      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-      :type python_root: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param description: The description about the feature group.
-      :type description: str
-      :param cpu_size: Size of the cpu for the feature group function
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function
-      :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
-
-      :returns: The created feature group
-      :rtype: FeatureGroup
-
-
    .. py:method:: rename(name)
 
       Renames an Application Connector

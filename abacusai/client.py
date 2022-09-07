@@ -159,7 +159,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.21'
+    client_version = '0.36.22'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -263,7 +263,9 @@ class BaseApiClient:
     def _request(self, url, method, query_params=None, headers=None,
                  body=None, files=None, stream=False):
         if method == 'GET':
-            return _requests_retry_session().get(url, params=query_params, headers=headers, stream=stream)
+            cleaned_params = {key: ','.join([str(item) for item in val]) if isinstance(
+                val, list) else val for key, val in query_params.items()} if query_params else query_params
+            return _requests_retry_session().get(url, params=cleaned_params, headers=headers, stream=stream)
         elif method == 'POST':
             return _requests_retry_session().post(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
         elif method == 'PUT':
@@ -1727,43 +1729,6 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_zip(self, table_name: str, function_name: str, module_name: str, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Upload:
-        """Creates a new feature group from a ZIP file.
-
-        Args:
-            table_name (str): The unique name to be given to the feature group.
-            function_name (str): Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
-            module_name (str): Path to the file with the feature group function.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            description (str): The description about the feature group.
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
-
-        Returns:
-            Upload: The Upload to upload the zip file to"""
-        return self._call_api('createFeatureGroupFromZip', 'POST', query_params={}, body={'tableName': table_name, 'functionName': function_name, 'moduleName': module_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Upload)
-
-    def create_feature_group_from_git(self, application_connector_id: str, branch_name: str, table_name: str, function_name: str, module_name: str, python_root: str = None, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
-        """Creates a new feature group from a ZIP file.
-
-        Args:
-            application_connector_id (str): The unique ID associated with the git application connector.
-            branch_name (str): Name of the branch in the git repository to be used for training.
-            table_name (str): The unique name to be given to the feature group.
-            function_name (str): Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
-            module_name (str): Path to the file with the feature group function.
-            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            description (str): The description about the feature group.
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
-
-        Returns:
-            FeatureGroup: The created feature group"""
-        return self._call_api('createFeatureGroupFromGit', 'POST', query_params={}, body={'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'tableName': table_name, 'functionName': function_name, 'moduleName': module_name, 'pythonRoot': python_root, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
-
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
         """Creates a new feature group defined as a sample of rows from another feature group.
 
@@ -2810,67 +2775,6 @@ class ApiClient(ReadOnlyClient):
         Returns:
             Model: The new model, which has not been trained."""
         return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'exclusiveRun': exclusive_run, 'packageRequirements': package_requirements}, parse_type=Model)
-
-    def create_model_from_zip(self, project_id: str, train_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Upload:
-        """Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
-
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
-
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
-            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
-
-        Returns:
-            Upload: None"""
-        return self._call_api('createModelFromZip', 'POST', query_params={}, body={'projectId': project_id, 'trainFunctionName': train_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Upload)
-
-    def create_model_from_git(self, project_id: str, application_connector_id: str, branch_name: str, train_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, python_root: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Model:
-        """Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
-
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
-
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            application_connector_id (str): The unique ID associated with the git application connector.
-            branch_name (str): Name of the branch in the git repository to be used for training.
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): 
-            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
-
-        Returns:
-            Model: None"""
-        return self._call_api('createModelFromGit', 'POST', query_params={}, body={'projectId': project_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'trainFunctionName': train_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'pythonRoot': python_root, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
 
     def rename_model(self, model_id: str, name: str):
         """Renames a model

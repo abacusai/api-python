@@ -991,3 +991,16 @@ class FeatureGroup(AbstractApiClass):
         """
         if self.dataset_id:
             return self.client.describe_dataset(self.dataset_id)
+
+    def materialize(self):
+        """
+        Returns the feature group that materializes the latest change at the api call time. It'll skip materialization if it's already the latest.
+        """
+        current = self.describe()
+        if not current.latest_feature_group_version or current.latest_version_outdated:
+            latest_version = self.create_version().wait_for_materialization()
+            current = self.describe()
+            if current.latest_feature_group_version.feature_group_version != latest_version.feature_group_version:
+                raise ApiException(
+                    409, 'Feature group has been materialzed again, please check if the latest feature group version is expected.')
+        return current

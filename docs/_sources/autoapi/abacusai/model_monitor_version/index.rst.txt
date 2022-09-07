@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None, modelVersion=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51,6 +51,8 @@ Classes
    :type metricTypes: dict
    :param modelVersion: Model version IDs that this refresh pipeline run is monitoring.
    :type modelVersion: unique string identifiers
+   :param batchPredictionVersion:
+   :type batchPredictionVersion: str
 
    .. py:method:: __repr__()
 

@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.36.21
+      :annotation: = 0.36.22
 
       
 
@@ -1677,62 +1677,6 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_zip(table_name, function_name, module_name, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Creates a new feature group from a ZIP file.
-
-      :param table_name: The unique name to be given to the feature group.
-      :type table_name: str
-      :param function_name: Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: Path to the file with the feature group function.
-      :type module_name: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param description: The description about the feature group.
-      :type description: str
-      :param cpu_size: Size of the cpu for the feature group function
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function
-      :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
-
-      :returns: The Upload to upload the zip file to
-      :rtype: Upload
-
-
-   .. py:method:: create_feature_group_from_git(application_connector_id, branch_name, table_name, function_name, module_name, python_root = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Creates a new feature group from a ZIP file.
-
-      :param application_connector_id: The unique ID associated with the git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the git repository to be used for training.
-      :type branch_name: str
-      :param table_name: The unique name to be given to the feature group.
-      :type table_name: str
-      :param function_name: Name of the function found in the module that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: Path to the file with the feature group function.
-      :type module_name: str
-      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-      :type python_root: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param description: The description about the feature group.
-      :type description: str
-      :param cpu_size: Size of the cpu for the feature group function
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function
-      :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
-
-      :returns: The created feature group
-      :rtype: FeatureGroup
-
-
    .. py:method:: create_sampling_feature_group(feature_group_id, table_name, sampling_config, description = None)
 
       Creates a new feature group defined as a sample of rows from another feature group.
@@ -3090,92 +3034,6 @@ Attributes
       :type package_requirements: dict
 
       :returns: The new model, which has not been trained.
-      :rtype: Model
-
-
-   .. py:method:: create_model_from_zip(project_id, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, name = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
-
-      we will provide as arguments to the train and predict functions with the materialized feature groups for those
-      input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-      as it returns the prediction made by the `predictFunctionName`, which can be anything
-
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type training_input_tables: list
-      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name: Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
-      :type predict_many_function_name: str
-      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
-      :type name: str
-      :param cpu_size: Size of the cpu for the model training function
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function
-      :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
-
-      :returns: None
-      :rtype: Upload
-
-
-   .. py:method:: create_model_from_git(project_id, application_connector_id, branch_name, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, python_root = None, name = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
-
-      we will provide as arguments to the train and predict functions with the materialized feature groups for those
-      input feature groups.
-
-      This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-      `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-      as it returns the prediction made by the `predictFunctionName`, which can be anything
-
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param application_connector_id: The unique ID associated with the git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the git repository to be used for training.
-      :type branch_name: str
-      :param train_function_name: Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-      :type train_function_name: str
-      :param train_module_name: Full path of the module that contains the train function from the root of the zip.
-      :type train_module_name: str
-      :param predict_module_name: Full path of the module that contains the predict function from the root of the zip.
-      :type predict_module_name: str
-      :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type training_input_tables: list
-      :param predict_function_name: Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-      :type predict_function_name: str
-      :param predict_many_function_name:
-      :type predict_many_function_name: str
-      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-      :type python_root: str
-      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
-      :type name: str
-      :param cpu_size: Size of the cpu for the model training function
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the model training function
-      :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
-
-      :returns: None
       :rtype: Model
 
 

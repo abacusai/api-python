@@ -20,9 +20,10 @@ class ModelMonitorVersion(AbstractApiClass):
             metricConfigs (json field): List of metric configs for the model monitor instance.
             metricTypes (dict): List of metric types.
             modelVersion (unique string identifiers): Model version IDs that this refresh pipeline run is monitoring.
+            batchPredictionVersion (str): 
     """
 
-    def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None, modelVersion=None):
+    def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None):
         super().__init__(client, modelMonitorVersion)
         self.model_monitor_version = modelMonitorVersion
         self.status = status
@@ -37,9 +38,10 @@ class ModelMonitorVersion(AbstractApiClass):
         self.metric_configs = metricConfigs
         self.metric_types = metricTypes
         self.model_version = modelVersion
+        self.batch_prediction_version = batchPredictionVersion
 
     def __repr__(self):
-        return f"ModelMonitorVersion(model_monitor_version={repr(self.model_monitor_version)},\n  status={repr(self.status)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  monitoring_started_at={repr(self.monitoring_started_at)},\n  monitoring_completed_at={repr(self.monitoring_completed_at)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  metric_configs={repr(self.metric_configs)},\n  metric_types={repr(self.metric_types)},\n  model_version={repr(self.model_version)})"
+        return f"ModelMonitorVersion(model_monitor_version={repr(self.model_monitor_version)},\n  status={repr(self.status)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  monitoring_started_at={repr(self.monitoring_started_at)},\n  monitoring_completed_at={repr(self.monitoring_completed_at)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  metric_configs={repr(self.metric_configs)},\n  metric_types={repr(self.metric_types)},\n  model_version={repr(self.model_version)},\n  batch_prediction_version={repr(self.batch_prediction_version)})"
 
     def to_dict(self):
         """
@@ -48,7 +50,7 @@ class ModelMonitorVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs, 'metric_types': self.metric_types, 'model_version': self.model_version}
+        return {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs, 'metric_types': self.metric_types, 'model_version': self.model_version, 'batch_prediction_version': self.batch_prediction_version}
 
     def get_prediction_drift(self):
         """

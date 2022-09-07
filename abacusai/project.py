@@ -272,69 +272,6 @@ class Project(AbstractApiClass):
         """
         return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, training_input_tables, predict_function_name, predict_many_function_name, initialize_function_name, name, cpu_size, memory, training_config, exclusive_run, package_requirements)
 
-    def create_model_from_zip(self, train_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
-        """
-        Initializes a new Model from a user provided zip file containing Python code. If a list of input feature groups are supplied,
-
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
-
-
-        Args:
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
-            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
-
-        Returns:
-            Upload: None
-        """
-        return self.client.create_model_from_zip(self.project_id, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name, predict_many_function_name, name, cpu_size, memory, package_requirements)
-
-    def create_model_from_git(self, application_connector_id: str, branch_name: str, train_function_name: str, train_module_name: str, predict_module_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, python_root: str = None, name: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
-        """
-        Initializes a new Model from a user provided git repository containing Python code. If a list of input feature groups are supplied,
-
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
-
-
-        Args:
-            application_connector_id (str): The unique ID associated with the git application connector.
-            branch_name (str): Name of the branch in the git repository to be used for training.
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            train_module_name (str): Full path of the module that contains the train function from the root of the zip.
-            predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): 
-            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
-
-        Returns:
-            Model: None
-        """
-        return self.client.create_model_from_git(self.project_id, application_connector_id, branch_name, train_function_name, train_module_name, predict_module_name, training_input_tables, predict_function_name, predict_many_function_name, python_root, name, cpu_size, memory, package_requirements)
-
     def list_models(self):
         """
         Retrieves the list of models in the specified project.
