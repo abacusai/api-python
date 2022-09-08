@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.36.22
+      :annotation: = 0.36.23
 
       
 
@@ -1644,7 +1644,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_function(table_name, function_source_code, function_name, input_feature_groups = [], description = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: create_feature_group_from_function(table_name, function_source_code, function_name, input_feature_groups = [], description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False)
 
       Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
@@ -1672,6 +1672,8 @@ Attributes
       :type memory: int
       :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
       :type package_requirements: dict
+      :param use_original_csv_names: Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
+      :type use_original_csv_names: bool
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -2212,7 +2214,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -2230,6 +2232,8 @@ Attributes
       :type memory: int
       :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
       :type package_requirements: dict
+      :param use_original_csv_names: If set to true, feature group uses the original column names for input feature groups from csv datasets.
+      :type use_original_csv_names: bool
 
       :returns: The updated feature group
       :rtype: FeatureGroup

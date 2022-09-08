@@ -159,7 +159,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.22'
+    client_version = '0.36.23'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -243,6 +243,8 @@ class BaseApiClient:
         if not success:
             if response.status_code == 504:
                 error_message = 'Gateway timeout, please try again later'
+            elif response.status_code == 429:
+                error_message = 'Too many requests. Please slow down your API requests'
             elif response.status_code > 502 and response.status_code not in (501, 503):
                 error_message = 'Internal Server Error, please contact dev@abacus.ai for support'
             elif response.status_code == 404 and not self.client_options.exception_on_404:
@@ -1704,7 +1706,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromTemplate', 'POST', query_params={}, body={'tableName': table_name, 'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template, 'description': description}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_function(self, table_name: str, function_source_code: str, function_name: str, input_feature_groups: list = [], description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str, function_name: str, input_feature_groups: list = [], description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False) -> FeatureGroup:
         """Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
         If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
@@ -1724,10 +1726,11 @@ class ApiClient(ReadOnlyClient):
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
             package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            use_original_csv_names (bool): Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
 
         Returns:
             FeatureGroup: The created feature group"""
-        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
+        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names}, parse_type=FeatureGroup)
 
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
         """Creates a new feature group defined as a sample of rows from another feature group.
@@ -2139,7 +2142,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The updated feature group"""
         return self._call_api('updateDatasetFeatureGroupFeatureExpression', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureExpression': feature_expression}, parse_type=FeatureGroup)
 
-    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
+    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False) -> FeatureGroup:
         """Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
         Args:
@@ -2150,10 +2153,11 @@ class ApiClient(ReadOnlyClient):
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
             package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            use_original_csv_names (bool): If set to true, feature group uses the original column names for input feature groups from csv datasets.
 
         Returns:
             FeatureGroup: The updated feature group"""
-        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
+        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names}, parse_type=FeatureGroup)
 
     def update_feature_group_zip(self, feature_group_id: str, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Upload:
         """Updates the zip for a feature group created using createFeatureGroupFromZip
