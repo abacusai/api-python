@@ -78,6 +78,18 @@ class Model(AbstractApiClass):
         """
         return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
+    def describe_train_test_data_split_feature_group(self):
+        """
+        Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
+
+        Args:
+            model_id (str): The unique ID of the model. By default will return for latest model version if version is not specified.
+
+        Returns:
+            FeatureGroup: The feature group containing the training data and folds information.
+        """
+        return self.client.describe_train_test_data_split_feature_group(self.model_id)
+
     def refresh(self):
         """
         Calls describe and refreshes the current object's fields
@@ -360,3 +372,12 @@ class Model(AbstractApiClass):
             List[RefreshPolicy]: A list of refresh policy objects.
         """
         return self.client.list_refresh_policies(model_ids=[self.id])
+
+    def get_train_test_feature_group_as_pandas(self):
+        """
+        Get the model train test data split feature group as pandas.
+
+        Returns:
+            pandas.Dataframe: A pandas dataframe for the training data with fold column.
+        """
+        return self.client.describe_train_test_data_split_feature_group(self.model_id).load_as_pandas()

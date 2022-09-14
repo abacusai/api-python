@@ -8,6 +8,7 @@ import string
 import tarfile
 import tempfile
 import time
+import warnings
 from functools import lru_cache
 from typing import Dict, List
 
@@ -159,7 +160,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.23'
+    client_version = '0.36.24'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -177,9 +178,9 @@ class BaseApiClient:
                 self.web_version = self._call_api(
                     'version', 'GET', server_override=DEFAULT_SERVER)
                 if version.parse(self.web_version) > version.parse(self.client_version):
-                    logging.warning(
+                    warnings.warn(
                         'A new version of the Abacus.AI library is available')
-                    logging.warning(
+                    warnings.warn(
                         f'Current Version: {self.client_version} -> New Version: {self.web_version}')
             except Exception:
                 logging.error(
@@ -797,6 +798,26 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
         return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain}, parse_type=TrainingConfigOptions)
+
+    def describe_train_test_data_split_feature_group(self, model_id: str) -> FeatureGroup:
+        """Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
+
+        Args:
+            model_id (str): The unique ID of the model. By default will return for latest model version if version is not specified.
+
+        Returns:
+            FeatureGroup: The feature group containing the training data and folds information."""
+        return self._call_api('describeTrainTestDataSplitFeatureGroup', 'GET', query_params={'modelId': model_id}, parse_type=FeatureGroup)
+
+    def describe_train_test_data_split_feature_group_version(self, model_version: str) -> FeatureGroupVersion:
+        """Get the train and test data split for a trained model by model_version. Only supported for models with custom algorithms.
+
+        Args:
+            model_version (str): The unique version ID of the model version
+
+        Returns:
+            FeatureGroupVersion: The feature group version containing the training data and folds information."""
+        return self._call_api('describeTrainTestDataSplitFeatureGroupVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=FeatureGroupVersion)
 
     def list_models(self, project_id: str) -> List[Model]:
         """Retrieves the list of models in the specified project.
@@ -2727,6 +2748,18 @@ class ApiClient(ReadOnlyClient):
             dataset_id (str): The dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
+    def create_train_test_data_split_feature_group(self, project_id: str, training_config: dict, feature_group_ids: list) -> FeatureGroup:
+        """Get the train and test data split without training the model. Only supported for models with custom algorithms.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            training_config (dict): The training config key/value pairs used to influence how split is calculated.
+            feature_group_ids (list): List of feature group ids provided by the user, including the required one for data split and others to influence how to split.
+
+        Returns:
+            FeatureGroup: The feature group containing the training data and folds information."""
+        return self._call_api('createTrainTestDataSplitFeatureGroup', 'POST', query_params={}, body={'projectId': project_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=FeatureGroup)
+
     def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None) -> Model:
         """Trains a model for the specified project.
 
@@ -2951,13 +2984,13 @@ class ApiClient(ReadOnlyClient):
             CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
         return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override, 'trainingConfig': training_config, 'customAlgorithmConfig': custom_algorithm_config}, parse_type=CustomTrainFunctionInfo)
 
-    def create_model_monitor(self, project_id: str, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
             project_id (str): The unique ID associated with the project.
-            training_feature_group_id (str): The unique ID of the training data feature group
             prediction_feature_group_id (str): The unique ID of the prediction data feature group
+            training_feature_group_id (str): The unique ID of the training data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
             target_value (str): A target positive value for the label to compute bias for
@@ -2967,7 +3000,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'trainingFeatureGroupId': training_feature_group_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Reruns the specified model monitor.

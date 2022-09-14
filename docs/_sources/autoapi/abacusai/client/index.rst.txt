@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.36.23
+      :annotation: = 0.36.24
 
       
 
@@ -666,6 +666,28 @@ Attributes
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
+
+
+   .. py:method:: describe_train_test_data_split_feature_group(model_id)
+
+      Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
+
+      :param model_id: The unique ID of the model. By default will return for latest model version if version is not specified.
+      :type model_id: str
+
+      :returns: The feature group containing the training data and folds information.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: describe_train_test_data_split_feature_group_version(model_version)
+
+      Get the train and test data split for a trained model by model_version. Only supported for models with custom algorithms.
+
+      :param model_version: The unique version ID of the model version
+      :type model_version: str
+
+      :returns: The feature group version containing the training data and folds information.
+      :rtype: FeatureGroupVersion
 
 
    .. py:method:: list_models(project_id)
@@ -2965,6 +2987,21 @@ Attributes
       :type dataset_id: str
 
 
+   .. py:method:: create_train_test_data_split_feature_group(project_id, training_config, feature_group_ids)
+
+      Get the train and test data split without training the model. Only supported for models with custom algorithms.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param training_config: The training config key/value pairs used to influence how split is calculated.
+      :type training_config: dict
+      :param feature_group_ids: List of feature group ids provided by the user, including the required one for data split and others to influence how to split.
+      :type feature_group_ids: list
+
+      :returns: The feature group containing the training data and folds information.
+      :rtype: FeatureGroup
+
+
    .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, cpu_size = None, memory = None)
 
       Trains a model for the specified project.
@@ -3266,16 +3303,16 @@ Attributes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(project_id, training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
+   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
-      :param training_feature_group_id: The unique ID of the training data feature group
-      :type training_feature_group_id: str
       :param prediction_feature_group_id: The unique ID of the prediction data feature group
       :type prediction_feature_group_id: str
+      :param training_feature_group_id: The unique ID of the training data feature group
+      :type training_feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor

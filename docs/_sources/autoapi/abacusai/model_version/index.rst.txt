@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57,6 +57,8 @@ Classes
    :type automlComplete: bool
    :param trainingFeatureGroupIds: The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
    :type trainingFeatureGroupIds: list of unique string identifiers
+   :param deployableAlgorithms: List of deployable algorithms
+   :type deployableAlgorithms: dict
    :param codeSource: If a python model, information on where the source code
    :type codeSource: CodeSource
 
@@ -71,6 +73,17 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+   .. py:method:: describe_train_test_data_split_feature_group_version()
+
+      Get the train and test data split for a trained model by model_version. Only supported for models with custom algorithms.
+
+      :param model_version: The unique version ID of the model version
+      :type model_version: str
+
+      :returns: The feature group version containing the training data and folds information.
+      :rtype: FeatureGroupVersion
 
 
    .. py:method:: delete()
@@ -159,6 +172,14 @@ Classes
 
       :returns: A string describing the status of a model training (pending, complete, etc.).
       :rtype: str
+
+
+   .. py:method:: get_train_test_feature_group_as_pandas()
+
+      Get the model train test data split feature group of the model version as pandas data frame.
+
+      :returns: A pandas dataframe for the training data with fold column.
+      :rtype: pandas.Dataframe
 
 
 

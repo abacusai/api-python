@@ -87,6 +87,17 @@ Classes
       :rtype: dict
 
 
+   .. py:method:: describe_train_test_data_split_feature_group()
+
+      Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
+
+      :param model_id: The unique ID of the model. By default will return for latest model version if version is not specified.
+      :type model_id: str
+
+      :returns: The feature group containing the training data and folds information.
+      :rtype: FeatureGroup
+
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields
@@ -366,6 +377,14 @@ Classes
 
       :returns: A list of refresh policy objects.
       :rtype: List[RefreshPolicy]
+
+
+   .. py:method:: get_train_test_feature_group_as_pandas()
+
+      Get the model train test data split feature group as pandas.
+
+      :returns: A pandas dataframe for the training data with fold column.
+      :rtype: pandas.Dataframe
 
 
 

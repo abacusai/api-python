@@ -217,6 +217,19 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain)
 
+    def create_train_test_data_split_feature_group(self, training_config: dict, feature_group_ids: list):
+        """
+        Get the train and test data split without training the model. Only supported for models with custom algorithms.
+
+        Args:
+            training_config (dict): The training config key/value pairs used to influence how split is calculated.
+            feature_group_ids (list): List of feature group ids provided by the user, including the required one for data split and others to influence how to split.
+
+        Returns:
+            FeatureGroup: The feature group containing the training data and folds information.
+        """
+        return self.client.create_train_test_data_split_feature_group(self.project_id, training_config, feature_group_ids)
+
     def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None):
         """
         Trains a model for the specified project.
@@ -299,13 +312,13 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
-    def create_model_monitor(self, training_feature_group_id: str, prediction_feature_group_id: str, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None):
+    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None):
         """
         Runs a model monitor for the specified project.
 
         Args:
-            training_feature_group_id (str): The unique ID of the training data feature group
             prediction_feature_group_id (str): The unique ID of the prediction data feature group
+            training_feature_group_id (str): The unique ID of the training data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
             target_value (str): A target positive value for the label to compute bias for
@@ -316,7 +329,7 @@ class Project(AbstractApiClass):
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, training_feature_group_id, prediction_feature_group_id, name, refresh_schedule, target_value, feature_mappings, model_id, training_feature_mappings)
+        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, feature_mappings, model_id, training_feature_mappings)
 
     def list_model_monitors(self):
         """

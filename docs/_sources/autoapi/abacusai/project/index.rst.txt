@@ -228,6 +228,19 @@ Classes
       :rtype: TrainingConfigOptions
 
 
+   .. py:method:: create_train_test_data_split_feature_group(training_config, feature_group_ids)
+
+      Get the train and test data split without training the model. Only supported for models with custom algorithms.
+
+      :param training_config: The training config key/value pairs used to influence how split is calculated.
+      :type training_config: dict
+      :param feature_group_ids: List of feature group ids provided by the user, including the required one for data split and others to influence how to split.
+      :type feature_group_ids: list
+
+      :returns: The feature group containing the training data and folds information.
+      :rtype: FeatureGroup
+
+
    .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, cpu_size = None, memory = None)
 
       Trains a model for the specified project.
@@ -328,14 +341,14 @@ Classes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(training_feature_group_id, prediction_feature_group_id, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
+   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
 
       Runs a model monitor for the specified project.
 
-      :param training_feature_group_id: The unique ID of the training data feature group
-      :type training_feature_group_id: str
       :param prediction_feature_group_id: The unique ID of the prediction data feature group
       :type prediction_feature_group_id: str
+      :param training_feature_group_id: The unique ID of the training data feature group
+      :type training_feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
