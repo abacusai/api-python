@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -59,6 +59,10 @@ Classes
    :type trainingFeatureGroupIds: list of unique string identifiers
    :param deployableAlgorithms: List of deployable algorithms
    :type deployableAlgorithms: dict
+   :param bestAlgorithm: Best performing algorithm
+   :type bestAlgorithm: dict
+   :param defaultAlgorithm: Default algorithm that the user has selected
+   :type defaultAlgorithm: dict
    :param codeSource: If a python model, information on where the source code
    :type codeSource: CodeSource
 

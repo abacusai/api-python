@@ -160,7 +160,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.36.24'
+    client_version = '0.36.25'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -3034,7 +3034,7 @@ class ApiClient(ReadOnlyClient):
             model_monitor_version (str): The ID of the model monitor version to delete."""
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
 
-    def create_deployment(self, name: str = None, model_id: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False) -> Deployment:
+    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
 
         A Deployment makes the trained model or feature group available for prediction requests.
@@ -3043,6 +3043,8 @@ class ApiClient(ReadOnlyClient):
         Args:
             name (str): The name of the deployment.
             model_id (str): The unique ID associated with the model.
+            model_version (str): The unique ID associated with the model version to deploy.
+            algorithm (str): The unique ID associated with the algorithm to deploy.
             feature_group_id (str): The unique ID associated with a feature group.
             project_id (str): The unique ID associated with a project.
             description (str): The description for the deployment.
@@ -3053,7 +3055,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Deployment: The new model or feature group deployment."""
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str) -> DeploymentAuthToken:
         """Creates a deployment token for the specified project.
@@ -3098,13 +3100,14 @@ class ApiClient(ReadOnlyClient):
             enable (bool): Enable/disable the autoDeploy property of the Deployment."""
         return self._call_api('setAutoDeployment', 'POST', query_params={'deploymentId': deployment_id}, body={'enable': enable})
 
-    def set_deployment_model_version(self, deployment_id: str, model_version: str):
+    def set_deployment_model_version(self, deployment_id: str, model_version: str, algorithm: str = None):
         """Promotes a Model Version to be served in the Deployment
 
         Args:
             deployment_id (str): The unique ID for the Deployment
-            model_version (str): The unique ID for the Model Version"""
-        return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version})
+            model_version (str): The unique ID for the Model Version
+            algorithm (str): """
+        return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version, 'algorithm': algorithm})
 
     def set_deployment_feature_group_version(self, deployment_id: str, feature_group_version: str):
         """Promotes a Feature Group Version to be served in the Deployment

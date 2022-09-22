@@ -25,11 +25,13 @@ class Deployment(AbstractApiClass):
             regions (list of strings): List of regions that a deployment has been deployed to
             error (str): Relevant error if the status is FAILED
             batchStreamingUpdates (bool): Flag marking the feature group deployment as having enabled a background process which caches streamed in rows for quicker lookup
+            algorithm (str): The algorithm that is currently deployed.
+            externalModelVersion (str): 
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the deployment will be updated to the latest model version
             featureGroupExportConfig (FeatureGroupExportConfig): Export config (file connector or database connector information) for feature group deployment exports
     """
 
-    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, batchStreamingUpdates=None, refreshSchedules={}, featureGroupExportConfig={}):
+    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, externalModelVersion=None, refreshSchedules={}, featureGroupExportConfig={}):
         super().__init__(client, deploymentId)
         self.deployment_id = deploymentId
         self.name = name
@@ -47,13 +49,15 @@ class Deployment(AbstractApiClass):
         self.regions = regions
         self.error = error
         self.batch_streaming_updates = batchStreamingUpdates
+        self.algorithm = algorithm
+        self.external_model_version = externalModelVersion
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
         self.feature_group_export_config = client._build_class(
             FeatureGroupExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  batch_streaming_updates={repr(self.batch_streaming_updates)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
+        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  batch_streaming_updates={repr(self.batch_streaming_updates)},\n  algorithm={repr(self.algorithm)},\n  external_model_version={repr(self.external_model_version)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
 
     def to_dict(self):
         """
@@ -62,7 +66,7 @@ class Deployment(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
+        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates, 'algorithm': self.algorithm, 'external_model_version': self.external_model_version, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
 
     def refresh(self):
         """
@@ -119,14 +123,15 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_auto_deployment(self.deployment_id, enable)
 
-    def set_model_version(self, model_version: str):
+    def set_model_version(self, model_version: str, algorithm: str = None):
         """
         Promotes a Model Version to be served in the Deployment
 
         Args:
             model_version (str): The unique ID for the Model Version
+            algorithm (str): 
         """
-        return self.client.set_deployment_model_version(self.deployment_id, model_version)
+        return self.client.set_deployment_model_version(self.deployment_id, model_version, algorithm)
 
     def set_feature_group_version(self, feature_group_version: str):
         """

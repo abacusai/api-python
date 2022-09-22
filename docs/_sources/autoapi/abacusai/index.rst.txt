@@ -2322,7 +2322,7 @@ Attributes
       :type model_monitor_version: str
 
 
-   .. py:method:: create_deployment(name = None, model_id = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False)
+   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False)
 
       Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -2333,6 +2333,10 @@ Attributes
       :type name: str
       :param model_id: The unique ID associated with the model.
       :type model_id: str
+      :param model_version: The unique ID associated with the model version to deploy.
+      :type model_version: str
+      :param algorithm: The unique ID associated with the algorithm to deploy.
+      :type algorithm: str
       :param feature_group_id: The unique ID associated with a feature group.
       :type feature_group_id: str
       :param project_id: The unique ID associated with a project.
@@ -2402,7 +2406,7 @@ Attributes
       :type enable: bool
 
 
-   .. py:method:: set_deployment_model_version(deployment_id, model_version)
+   .. py:method:: set_deployment_model_version(deployment_id, model_version, algorithm = None)
 
       Promotes a Model Version to be served in the Deployment
 
@@ -2410,6 +2414,8 @@ Attributes
       :type deployment_id: str
       :param model_version: The unique ID for the Model Version
       :type model_version: str
+      :param algorithm:
+      :type algorithm: str
 
 
    .. py:method:: set_deployment_feature_group_version(deployment_id, feature_group_version)
@@ -5033,7 +5039,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.36.24
+   :annotation: = 0.36.25
 
    
 
