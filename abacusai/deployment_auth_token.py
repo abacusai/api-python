@@ -9,15 +9,17 @@ class DeploymentAuthToken(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             deploymentToken (str): The unique token used to authenticate requests
             createdAt (str): When the token was created
+            name (str): 
     """
 
-    def __init__(self, client, deploymentToken=None, createdAt=None):
+    def __init__(self, client, deploymentToken=None, createdAt=None, name=None):
         super().__init__(client, None)
         self.deployment_token = deploymentToken
         self.created_at = createdAt
+        self.name = name
 
     def __repr__(self):
-        return f"DeploymentAuthToken(deployment_token={repr(self.deployment_token)},\n  created_at={repr(self.created_at)})"
+        return f"DeploymentAuthToken(deployment_token={repr(self.deployment_token)},\n  created_at={repr(self.created_at)},\n  name={repr(self.name)})"
 
     def to_dict(self):
         """
@@ -26,4 +28,4 @@ class DeploymentAuthToken(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'deployment_token': self.deployment_token, 'created_at': self.created_at}
+        return {'deployment_token': self.deployment_token, 'created_at': self.created_at, 'name': self.name}

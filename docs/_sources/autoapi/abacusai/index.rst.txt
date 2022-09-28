@@ -2356,7 +2356,7 @@ Attributes
       :rtype: Deployment
 
 
-   .. py:method:: create_deployment_token(project_id)
+   .. py:method:: create_deployment_token(project_id, name = None)
 
       Creates a deployment token for the specified project.
 
@@ -2365,6 +2365,8 @@ Attributes
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
+      :param name: The name of the deployement token
+      :type name: str
 
       :returns: The deployment token.
       :rtype: DeploymentAuthToken
@@ -2629,7 +2631,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_lead(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_lead(deployment_token, deployment_id, query_data, explain_predictions = False, explainer_type = None)
 
       Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
@@ -2639,6 +2641,10 @@ Attributes
       :type deployment_id: str
       :param query_data: This will be a dictionary containing user attributes and/or user's interaction data with the product/service (e.g. number of click, items in cart, etc.).
       :type query_data: dict
+      :param explain_predictions: Will explain predictions for lead
+      :type explain_predictions: bool
+      :param explainer_type: Type of explainer to use for explanations
+      :type explainer_type: str
 
 
    .. py:method:: predict_churn(deployment_token, deployment_id, query_data)
@@ -2749,7 +2755,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
+   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -2765,6 +2771,10 @@ Attributes
       :type num_predictions: int
       :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
       :type prediction_start: str
+      :param explain_predictions: Will explain predictions for forecasting
+      :type explain_predictions: bool
+      :param explainer_type: Type of explainer to use for explanations
+      :type explainer_type: str
 
 
    .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
@@ -4661,7 +4671,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_lead(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_lead(deployment_token, deployment_id, query_data, explain_predictions = False, explainer_type = None)
 
       Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
@@ -4671,6 +4681,10 @@ Attributes
       :type deployment_id: str
       :param query_data: This will be a dictionary containing user attributes and/or user's interaction data with the product/service (e.g. number of click, items in cart, etc.).
       :type query_data: dict
+      :param explain_predictions: Will explain predictions for lead
+      :type explain_predictions: bool
+      :param explainer_type: Type of explainer to use for explanations
+      :type explainer_type: str
 
 
    .. py:method:: predict_churn(deployment_token, deployment_id, query_data)
@@ -4781,7 +4795,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None)
+   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -4797,6 +4811,10 @@ Attributes
       :type num_predictions: int
       :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
       :type prediction_start: str
+      :param explain_predictions: Will explain predictions for forecasting
+      :type explain_predictions: bool
+      :param explainer_type: Type of explainer to use for explanations
+      :type explainer_type: str
 
 
    .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
@@ -5039,7 +5057,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.36.25
+   :annotation: = 0.37.0
 
    
 

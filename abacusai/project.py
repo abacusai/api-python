@@ -343,7 +343,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_model_monitors(self.project_id)
 
-    def create_deployment_token(self):
+    def create_deployment_token(self, name: str = None):
         """
         Creates a deployment token for the specified project.
 
@@ -351,12 +351,12 @@ class Project(AbstractApiClass):
 
 
         Args:
-            project_id (str): The unique ID associated with the project.
+            name (str): The name of the deployement token
 
         Returns:
             DeploymentAuthToken: The deployment token.
         """
-        return self.client.create_deployment_token(self.project_id)
+        return self.client.create_deployment_token(self.project_id, name)
 
     def list_deployments(self):
         """

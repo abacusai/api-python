@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, externalModelVersion=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, refreshSchedules={}, featureGroupExportConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -59,8 +59,6 @@ Classes
    :type batchStreamingUpdates: bool
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
-   :param externalModelVersion:
-   :type externalModelVersion: str
    :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: Export config (file connector or database connector information) for feature group deployment exports
