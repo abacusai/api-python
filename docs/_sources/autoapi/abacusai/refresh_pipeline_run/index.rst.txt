@@ -84,4 +84,20 @@ Classes
       :rtype: RefreshPipelineRun
 
 
+   .. py:method:: wait_for_complete(timeout=None)
+
+      A waiting call until refresh pipeline run has completed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the refresh pipeline run.
+
+      :returns: A string describing the status of a refresh pipeline run (pending, complete, etc.).
+      :rtype: str
+
+
 

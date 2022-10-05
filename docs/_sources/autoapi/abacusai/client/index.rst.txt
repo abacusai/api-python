@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.37.0
+      :annotation: = 0.37.1
 
       
 
@@ -184,6 +184,28 @@ Attributes
 
       :returns: Information about a specific Organization Group
       :rtype: OrganizationGroup
+
+
+   .. py:method:: describe_webhook(webhook_id)
+
+      Describe the webhook with a given id.
+
+      :param webhook_id: ID of target webhook.
+      :type webhook_id: str
+
+      :returns: The Webhook with the given id.
+      :rtype: Webhook
+
+
+   .. py:method:: list_deployment_webhooks(deployment_id)
+
+      List and describe all the webhooks attached to a given deployment ID.
+
+      :param deployment_id: ID of target deployment.
+      :type deployment_id: str
+
+      :returns: The webhooks attached to the given deployment id.
+      :rtype: Webhook
 
 
    .. py:method:: list_use_cases()
@@ -867,7 +889,7 @@ Attributes
       :rtype: ModelMonitorVersion
 
 
-   .. py:method:: model_monitor_version_metric_data(model_monitor_version, metric_type)
+   .. py:method:: model_monitor_version_metric_data(model_monitor_version, metric_type, actual_values_to_detail = None)
 
       Provides the data needed for decile metrics associated with the model monitor.
 
@@ -875,6 +897,8 @@ Attributes
       :type model_monitor_version: str
       :param metric_type: The metric type to get data for.
       :type metric_type: str
+      :param actual_values_to_detail:
+      :type actual_values_to_detail: list
 
       :returns: Data associated with the metric.
       :rtype: ModelMonitorVersionMetricData
@@ -1151,6 +1175,25 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
+   .. py:method:: describe_python_function(name)
+
+      Describe a Python Function.
+
+      :param name: The name to identify the python function
+      :type name: str
+
+      :returns: The python_function object.
+      :rtype: PythonFunction
+
+
+   .. py:method:: list_python_functions()
+
+      List all python functions within the organization.
+
+      :returns: A list of python functions.
+      :rtype: PythonFunction
+
+
    .. py:method:: describe_algorithm(algorithm)
 
       Retrieves a full description of the specified algorithm.
@@ -1159,6 +1202,19 @@ Attributes
       :type algorithm: str
 
       :returns: The description of the Algorithm.
+      :rtype: Algorithm
+
+
+   .. py:method:: list_algorithms(problem_type = None, project_id = None)
+
+      List all algorithms within the org, with filtering on problem_type and project_id
+
+      :param problem_type: the problem type to query. Return all algorithms in the org if problem_type is None
+      :type problem_type: str
+      :param project_id: the id of the project
+      :type project_id: str
+
+      :returns: A list of algorithms
       :rtype: Algorithm
 
 
@@ -1476,6 +1532,45 @@ Attributes
 
       :param email: The email address of the user to remove from the Organization.
       :type email: str
+
+
+   .. py:method:: create_deployment_webhook(deployment_id, endpoint, webhook_event_type, payload_template = None)
+
+      Create a webhook attached to a given deployment id.
+
+      :param deployment_id: ID of the deployment this webhook will attach to.
+      :type deployment_id: str
+      :param endpoint: URI that the webhook will send HTTP POST requests to.
+      :type endpoint: str
+      :param webhook_event_type: One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', 'DEPLOYMENT_FAILED'
+      :type webhook_event_type: str
+      :param payload_template: Template for the body of the HTTP POST requests. Defaults to {}.
+      :type payload_template: dict
+
+      :returns: The Webhook attached to the deployment
+      :rtype: Webhook
+
+
+   .. py:method:: update_webhook(webhook_id, endpoint = None, webhook_event_type = None, payload_template = None)
+
+      Update the webhook associated with a given webhook id.
+
+      :param webhook_id: ID of the webhook to be updated.
+      :type webhook_id: str
+      :param endpoint: If set, changes the webhook's endpoint.
+      :type endpoint: str
+      :param webhook_event_type: If set, changes event type.
+      :type webhook_event_type: str
+      :param payload_template: If set, changes payload template.
+      :type payload_template: dict
+
+
+   .. py:method:: delete_webhook(webhook_id)
+
+      Delete the webhook with a given id.
+
+      :param webhook_id: ID of target webhook.
+      :type webhook_id: str
 
 
    .. py:method:: create_project(name, use_case)
@@ -3232,7 +3327,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None, custom_algorithm_configs = None, cpu_size = None, memory = None)
+   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -3248,6 +3343,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the user-defined algorithms during train.
       :type memory: int
+      :param training_config: The training config key/value pairs used to train this model.
+      :type training_config: dict
 
       :returns: The model that is being retrained.
       :rtype: Model
@@ -4503,6 +4600,46 @@ Attributes
       :type streaming_token: str
       :param data: The data to record, as an array of JSON objects
       :type data: list
+
+
+   .. py:method:: create_python_function(name, source_code = None, function_name = None)
+
+      Creates a custom python function that's re-usable
+
+      :param name: The name to identify the python function
+      :type name: str
+      :param source_code: Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type source_code: str
+      :param function_name: The name of the python function.
+      :type function_name: str
+
+      :returns: The python function that can be used (i.e. for feature group transform)
+      :rtype: PythonFunction
+
+
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None)
+
+      Update custom python function with user inputs for the given python function.
+
+      :param name: The name to identify the python function
+      :type name: str
+      :param source_code: Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type source_code: str
+      :param function_name: The name of the python function.
+      :type function_name: str
+      :param function_variable_mappings: List of python function arguments
+      :type function_variable_mappings: list
+
+      :returns: The python_function object.
+      :rtype: PythonFunction
+
+
+   .. py:method:: delete_python_function(name)
+
+      Removes an existing python function.
+
+      :param name: The name to identify the python function
+      :type name: str
 
 
    .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None)

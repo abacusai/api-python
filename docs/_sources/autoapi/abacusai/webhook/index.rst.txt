@@ -1,0 +1,93 @@
+:py:mod:`abacusai.webhook`
+==========================
+
+.. py:module:: abacusai.webhook
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.webhook.Webhook
+
+
+
+
+.. py:class:: Webhook(client, webhookId=None, deploymentId=None, endpoint=None, webhookEventType=None, payloadTemplate=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Abacus.AI Webhook attached to an endpoint and event trigger for a given object.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param webhookId: Unique identifier for this webhook.
+   :type webhookId: str
+   :param deploymentId: Identifier for the deployment this webhook is attached to.
+   :type deploymentId: str
+   :param endpoint: The URI this webhook will send HTTP POST requests to.
+   :type endpoint: str
+   :param webhookEventType: The event that triggers the webhook action.
+   :type webhookEventType: str
+   :param payloadTemplate: Template for JSON Dictionary to be sent as the body of the POST request.
+   :type payloadTemplate: str
+   :param createdAt: The date and time this webhook was created.
+   :type createdAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: Webhook
+
+
+   .. py:method:: describe()
+
+      Describe the webhook with a given id.
+
+      :param webhook_id: ID of target webhook.
+      :type webhook_id: str
+
+      :returns: The Webhook with the given id.
+      :rtype: Webhook
+
+
+   .. py:method:: update(endpoint = None, webhook_event_type = None, payload_template = None)
+
+      Update the webhook associated with a given webhook id.
+
+      :param endpoint: If set, changes the webhook's endpoint.
+      :type endpoint: str
+      :param webhook_event_type: If set, changes event type.
+      :type webhook_event_type: str
+      :param payload_template: If set, changes payload template.
+      :type payload_template: dict
+
+
+   .. py:method:: delete()
+
+      Delete the webhook with a given id.
+
+      :param webhook_id: ID of target webhook.
+      :type webhook_id: str
+
+
+

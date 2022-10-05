@@ -8,16 +8,14 @@ class DataQualityResults(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             results (dict): A list with different pairs of quality parameters and their values
-            success (bool): 
     """
 
-    def __init__(self, client, results=None, success=None):
+    def __init__(self, client, results=None):
         super().__init__(client, None)
         self.results = results
-        self.success = success
 
     def __repr__(self):
-        return f"DataQualityResults(results={repr(self.results)},\n  success={repr(self.success)})"
+        return f"DataQualityResults(results={repr(self.results)})"
 
     def to_dict(self):
         """
@@ -26,4 +24,4 @@ class DataQualityResults(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'results': self.results, 'success': self.success}
+        return {'results': self.results}

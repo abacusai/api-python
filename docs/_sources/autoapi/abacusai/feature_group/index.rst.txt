@@ -1002,7 +1002,10 @@ Classes
 
    .. py:method:: materialize()
 
-      Returns the feature group that materializes the latest change at the api call time. It'll skip materialization if it's already the latest.
+      Materializes the feature group's latest change at the api call time. It'll skip materialization if no change since the current latest version.
+
+      :returns: A feature group object with the lastest changes materialized.
+      :rtype: FeatureGroup
 
 
 

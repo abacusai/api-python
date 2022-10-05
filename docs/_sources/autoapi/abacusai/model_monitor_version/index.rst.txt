@@ -105,12 +105,14 @@ Classes
       :type model_monitor_version: str
 
 
-   .. py:method:: metric_data(metric_type)
+   .. py:method:: metric_data(metric_type, actual_values_to_detail = None)
 
       Provides the data needed for decile metrics associated with the model monitor.
 
       :param metric_type: The metric type to get data for.
       :type metric_type: str
+      :param actual_values_to_detail:
+      :type actual_values_to_detail: list
 
       :returns: Data associated with the metric.
       :rtype: ModelMonitorVersionMetricData

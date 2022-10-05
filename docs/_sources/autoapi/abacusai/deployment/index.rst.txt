@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, refreshSchedules={}, featureGroupExportConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51,6 +51,8 @@ Classes
    :type callsPerSecond: int
    :param autoDeploy: Flag marking the deployment eligible for auto deployments whenever any model in the project finishes training.
    :type autoDeploy: bool
+   :param algoName:
+   :type algoName: str
    :param regions: List of regions that a deployment has been deployed to
    :type regions: list of strings
    :param error: Relevant error if the status is FAILED
@@ -59,6 +61,8 @@ Classes
    :type batchStreamingUpdates: bool
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
+   :param pendingModelVersion: The model that the deployment is switching to.
+   :type pendingModelVersion: dict
    :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: Export config (file connector or database connector information) for feature group deployment exports
@@ -75,6 +79,32 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+   .. py:method:: create_webhook(endpoint, webhook_event_type, payload_template = None)
+
+      Create a webhook attached to a given deployment id.
+
+      :param endpoint: URI that the webhook will send HTTP POST requests to.
+      :type endpoint: str
+      :param webhook_event_type: One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', 'DEPLOYMENT_FAILED'
+      :type webhook_event_type: str
+      :param payload_template: Template for the body of the HTTP POST requests. Defaults to {}.
+      :type payload_template: dict
+
+      :returns: The Webhook attached to the deployment
+      :rtype: Webhook
+
+
+   .. py:method:: list_webhooks()
+
+      List and describe all the webhooks attached to a given deployment ID.
+
+      :param deployment_id: ID of target deployment.
+      :type deployment_id: str
+
+      :returns: The webhooks attached to the given deployment id.
+      :rtype: Webhook
 
 
    .. py:method:: refresh()
@@ -247,6 +277,17 @@ Classes
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional
+
+
+   .. py:method:: wait_for_pending_deployment_update(timeout=600)
+
+      A waiting call until pending model switch is completed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+      :returns: the latest deployment object.
+      :rtype: Deployment
 
 
    .. py:method:: get_status()

@@ -95,17 +95,18 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.delete_model_monitor_version(self.model_monitor_version)
 
-    def metric_data(self, metric_type: str):
+    def metric_data(self, metric_type: str, actual_values_to_detail: list = None):
         """
         Provides the data needed for decile metrics associated with the model monitor.
 
         Args:
             metric_type (str): The metric type to get data for.
+            actual_values_to_detail (list): 
 
         Returns:
             ModelMonitorVersionMetricData: Data associated with the metric.
         """
-        return self.client.model_monitor_version_metric_data(self.model_monitor_version, metric_type)
+        return self.client.model_monitor_version_metric_data(self.model_monitor_version, metric_type, actual_values_to_detail)
 
     def get_model_monitoring_logs(self, stdout: bool = False, stderr: bool = False):
         """

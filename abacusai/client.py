@@ -59,6 +59,7 @@ from .problem_type import ProblemType
 from .project import Project
 from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
+from .python_function import PythonFunction
 from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
@@ -72,6 +73,7 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
+from .webhook import Webhook
 
 
 DEFAULT_SERVER = 'https://api.abacus.ai'
@@ -160,7 +162,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.37.0'
+    client_version = '0.37.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -380,6 +382,26 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             OrganizationGroup: Information about a specific Organization Group"""
         return self._call_api('describeOrganizationGroup', 'GET', query_params={'organizationGroupId': organization_group_id}, parse_type=OrganizationGroup)
+
+    def describe_webhook(self, webhook_id: str) -> Webhook:
+        """Describe the webhook with a given id.
+
+        Args:
+            webhook_id (str): ID of target webhook.
+
+        Returns:
+            Webhook: The Webhook with the given id."""
+        return self._call_api('describeWebhook', 'GET', query_params={'webhookId': webhook_id}, parse_type=Webhook)
+
+    def list_deployment_webhooks(self, deployment_id: str) -> Webhook:
+        """List and describe all the webhooks attached to a given deployment ID.
+
+        Args:
+            deployment_id (str): ID of target deployment.
+
+        Returns:
+            Webhook: The webhooks attached to the given deployment id."""
+        return self._call_api('listDeploymentWebhooks', 'GET', query_params={'deploymentId': deployment_id}, parse_type=Webhook)
 
     def list_use_cases(self) -> List[UseCase]:
         """Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.
@@ -973,16 +995,17 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorVersion: A model monitor version."""
         return self._call_api('describeModelMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
 
-    def model_monitor_version_metric_data(self, model_monitor_version: str, metric_type: str) -> ModelMonitorVersionMetricData:
+    def model_monitor_version_metric_data(self, model_monitor_version: str, metric_type: str, actual_values_to_detail: list = None) -> ModelMonitorVersionMetricData:
         """Provides the data needed for decile metrics associated with the model monitor.
 
         Args:
             model_monitor_version (str): Model monitor version id.
             metric_type (str): The metric type to get data for.
+            actual_values_to_detail (list): 
 
         Returns:
             ModelMonitorVersionMetricData: Data associated with the metric."""
-        return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type}, parse_type=ModelMonitorVersionMetricData)
+        return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type, 'actualValuesToDetail': actual_values_to_detail}, parse_type=ModelMonitorVersionMetricData)
 
     def get_model_monitor_chart_from_organization(self, organization_id: str, chart_type: str, limit: int = 15) -> List[ModelMonitorSummaryFromOrg]:
         """Gets a list of model monitor summaries across monitors for an organization.
@@ -1210,6 +1233,23 @@ class ReadOnlyClient(BaseApiClient):
             BatchPredictionVersion: The batch prediction version."""
         return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
 
+    def describe_python_function(self, name: str) -> PythonFunction:
+        """Describe a Python Function.
+
+        Args:
+            name (str): The name to identify the python function
+
+        Returns:
+            PythonFunction: The python_function object."""
+        return self._call_api('describePythonFunction', 'GET', query_params={'name': name}, parse_type=PythonFunction)
+
+    def list_python_functions(self) -> PythonFunction:
+        """List all python functions within the organization.
+
+        Returns:
+            PythonFunction: A list of python functions."""
+        return self._call_api('listPythonFunctions', 'GET', query_params={}, parse_type=PythonFunction)
+
     def describe_algorithm(self, algorithm: str) -> Algorithm:
         """Retrieves a full description of the specified algorithm.
 
@@ -1219,6 +1259,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             Algorithm: The description of the Algorithm."""
         return self._call_api('describeAlgorithm', 'GET', query_params={'algorithm': algorithm}, parse_type=Algorithm)
+
+    def list_algorithms(self, problem_type: str = None, project_id: str = None) -> Algorithm:
+        """List all algorithms within the org, with filtering on problem_type and project_id
+
+        Args:
+            problem_type (str): the problem type to query. Return all algorithms in the org if problem_type is None
+            project_id (str): the id of the project
+
+        Returns:
+            Algorithm: A list of algorithms"""
+        return self._call_api('listAlgorithms', 'GET', query_params={'problemType': problem_type, 'projectId': project_id}, parse_type=Algorithm)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None):
@@ -1579,6 +1630,36 @@ class ApiClient(ReadOnlyClient):
         Args:
             email (str): The email address of the user to remove from the Organization."""
         return self._call_api('removeUserFromOrganization', 'DELETE', query_params={'email': email})
+
+    def create_deployment_webhook(self, deployment_id: str, endpoint: str, webhook_event_type: str, payload_template: dict = None) -> Webhook:
+        """Create a webhook attached to a given deployment id.
+
+        Args:
+            deployment_id (str): ID of the deployment this webhook will attach to.
+            endpoint (str): URI that the webhook will send HTTP POST requests to.
+            webhook_event_type (str): One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', 'DEPLOYMENT_FAILED'
+            payload_template (dict): Template for the body of the HTTP POST requests. Defaults to {}.
+
+        Returns:
+            Webhook: The Webhook attached to the deployment"""
+        return self._call_api('createDeploymentWebhook', 'POST', query_params={'deploymentId': deployment_id}, body={'endpoint': endpoint, 'webhookEventType': webhook_event_type, 'payloadTemplate': payload_template}, parse_type=Webhook)
+
+    def update_webhook(self, webhook_id: str, endpoint: str = None, webhook_event_type: str = None, payload_template: dict = None):
+        """Update the webhook associated with a given webhook id.
+
+        Args:
+            webhook_id (str): ID of the webhook to be updated.
+            endpoint (str): If set, changes the webhook's endpoint.
+            webhook_event_type (str): If set, changes event type.
+            payload_template (dict): If set, changes payload template."""
+        return self._call_api('updateWebhook', 'PATCH', query_params={}, body={'webhookId': webhook_id, 'endpoint': endpoint, 'webhookEventType': webhook_event_type, 'payloadTemplate': payload_template})
+
+    def delete_webhook(self, webhook_id: str):
+        """Delete the webhook with a given id.
+
+        Args:
+            webhook_id (str): ID of target webhook."""
+        return self._call_api('deleteWebhook', 'DELETE', query_params={'webhookId': webhook_id})
 
     def create_project(self, name: str, use_case: str) -> Project:
         """Creates a project with your specified project name and use case. Creating a project creates a container for all of the datasets and the models that are associated with a particular problem/project that you would like to work on. For example, if you want to create a model to detect fraud, you have to first create a project, upload datasets, create feature groups, and then create one or more models to get predictions for your use case.
@@ -2929,7 +3010,7 @@ class ApiClient(ReadOnlyClient):
             Model: The model object correspoding after the prediction config is applied"""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None) -> Model:
         """Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
@@ -2939,10 +3020,11 @@ class ApiClient(ReadOnlyClient):
             custom_algorithm_configs (dict): The user-defined training configs for each custom algorithm.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
+            training_config (dict): The training config key/value pairs used to train this model.
 
         Returns:
             Model: The model that is being retrained."""
-        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config}, parse_type=Model)
 
     def delete_model(self, model_id: str):
         """Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
@@ -3882,6 +3964,38 @@ class ApiClient(ReadOnlyClient):
             streaming_token (str): The streaming token for authenticating requests
             data (list): The data to record, as an array of JSON objects"""
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
+
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None) -> PythonFunction:
+        """Creates a custom python function that's re-usable
+
+        Args:
+            name (str): The name to identify the python function
+            source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            function_name (str): The name of the python function.
+
+        Returns:
+            PythonFunction: The python function that can be used (i.e. for feature group transform)"""
+        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name}, parse_type=PythonFunction)
+
+    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None) -> PythonFunction:
+        """Update custom python function with user inputs for the given python function.
+
+        Args:
+            name (str): The name to identify the python function
+            source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            function_name (str): The name of the python function.
+            function_variable_mappings (list): List of python function arguments
+
+        Returns:
+            PythonFunction: The python_function object."""
+        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings}, parse_type=PythonFunction)
+
+    def delete_python_function(self, name: str):
+        """Removes an existing python function.
+
+        Args:
+            name (str): The name to identify the python function"""
+        return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
     def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training

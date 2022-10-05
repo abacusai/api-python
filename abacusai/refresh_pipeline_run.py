@@ -72,3 +72,21 @@ class RefreshPipelineRun(AbstractApiClass):
             RefreshPipelineRun: A refresh pipeline run object
         """
         return self.client.describe_refresh_pipeline_run(self.refresh_pipeline_run_id)
+
+    def wait_for_complete(self, timeout=None):
+        """
+        A waiting call until refresh pipeline run has completed.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.client._poll(self, {'PENDING', 'RUNNING'}, delay=30, timeout=timeout)
+
+    def get_status(self):
+        """
+        Gets the status of the refresh pipeline run.
+
+        Returns:
+            str: A string describing the status of a refresh pipeline run (pending, complete, etc.).
+        """
+        return self.describe().status

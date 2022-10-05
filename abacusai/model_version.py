@@ -172,7 +172,7 @@ class ModelVersion(AbstractApiClass):
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
             model_version = self.client._call_api('describeModelVersion', 'GET', query_params={
                                                   'modelVersion': self.id, 'waitForFullAutoml': True}, )
-            if model_version.get('status') not in {'PENDING', 'TRAINING'} and not model_version.get('pending_deployment_ids') and model_version.get('feature_analysis_lifecycle') not in {'ANALYZING', 'PENDING'}:
+            if model_version.get('status') not in {'PENDING', 'TRAINING'} and not model_version.get('pending_deployment_ids') and model_version.get('feature_analysis_status') not in {'ANALYZING', 'PENDING'}:
                 break
             time.sleep(30)
         return self.refresh()
