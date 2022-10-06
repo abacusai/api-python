@@ -11,6 +11,8 @@ $ pip install abacusai
 
 ## Documentation
 
+Function Documentation: https://abacusai.github.io/api-python/autoapi/abacusai/index.html
+
 For a full list of APIs and code snippet examples, see the [Abacus.AI Documentation](https://abacus.ai/app/help/ref/overview).
 
 ## Getting Started
