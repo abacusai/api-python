@@ -480,7 +480,7 @@ Attributes
 
       :param name: The project's name
       :type name: str
-      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
+      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details refer to
@@ -692,6 +692,36 @@ Attributes
       :type package_requirements: dict
       :param use_original_csv_names: Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
+
+      :returns: The created feature group
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_feature_group_from_python_function(table_name, python_function_name, python_function_bindings, description = None, cpu_size = None, memory = None, package_requirements = None)
+
+      Creates a new feature in a Feature Group from a user provided Python Function. Code language currently supported is Python.
+
+      If a list of feature groups are supplied within the python function bindings, we will provide as arguments to the function DataFrame's
+      (pandas in the case of Python) with the materialized feature groups for those input feature groups.
+
+      This method expects `python_function_name` to be a valid Python Function and `python_function_bindings` to match the function arguments
+      of the Python Function.
+
+
+      :param table_name: The unique name to be given to the feature group.
+      :type table_name: str
+      :param python_function_name: Name of Python Function that contains the source code and function arguments.
+      :type python_function_name: str
+      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type python_function_bindings: list
+      :param description: The description for this feature group.
+      :type description: str
+      :param cpu_size: Size of the cpu for the feature group function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the feature group function
+      :type memory: int
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -2365,7 +2395,7 @@ Attributes
       :type model_monitor_version: str
 
 
-   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False)
+   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None)
 
       Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -2394,6 +2424,8 @@ Attributes
       :type start: bool
       :param enable_batch_streaming_updates: Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup
       :type enable_batch_streaming_updates: bool
+      :param model_deployment_config: The deployment config for model to deploy
+      :type model_deployment_config: dict
 
       :returns: The new model or feature group deployment.
       :rtype: Deployment
@@ -5196,7 +5228,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.37.1
+   :annotation: = 0.37.3
 
    
 

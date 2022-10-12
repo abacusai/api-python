@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, refreshSchedules={}, featureGroupExportConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -63,6 +63,8 @@ Classes
    :type algorithm: str
    :param pendingModelVersion: The model that the deployment is switching to.
    :type pendingModelVersion: dict
+   :param modelDeploymentConfig: The config for what model to be deployed
+   :type modelDeploymentConfig: dict
    :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: Export config (file connector or database connector information) for feature group deployment exports

@@ -167,15 +167,18 @@ class ModelVersion(AbstractApiClass):
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
         start_time = time.time()
+        model_version = None
         while True:
             if timeout and time.time() - start_time > timeout:
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
             model_version = self.client._call_api('describeModelVersion', 'GET', query_params={
-                                                  'modelVersion': self.id, 'waitForFullAutoml': True}, )
-            if model_version.get('status') not in {'PENDING', 'TRAINING'} and not model_version.get('pending_deployment_ids') and model_version.get('feature_analysis_status') not in {'ANALYZING', 'PENDING'}:
+                                                  'modelVersion': self.id, 'waitForFullAutoml': True}, parse_type=ModelVersion)
+            if model_version.status not in {'PENDING', 'TRAINING'} and not model_version.pending_deployment_ids and model_version.feature_analysis_status not in {'ANALYZING', 'PENDING'}:
                 break
             time.sleep(30)
-        return self.refresh()
+        # not calling self.refresh() due to that doesn't accept waitForFullAutoml=True and result may be inconsistent
+        self.__dict__.update(model_version.__dict__)
+        return self
 
     def get_status(self):
         """
