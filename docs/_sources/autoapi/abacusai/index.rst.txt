@@ -270,6 +270,21 @@ Attributes
       :type memory: int
 
 
+   .. py:method:: update_python_function_code(name, function = None, function_variable_mappings = None)
+
+      Update custom python function with user inputs for the given python function.
+
+      :param name: The unique name to identify the python function in an organization.
+      :type name: String
+      :param function: The function callable to serialize and upload.
+      :type function: callable
+      :param function_variable_mappings: List of python function arguments
+      :type function_variable_mappings: List<PythonFunctionArguments>
+
+      :returns: The python_function object.
+      :rtype: PythonFunction
+
+
    .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
@@ -278,7 +293,7 @@ Attributes
       :type name: String
       :param problem_type: The type of the problem this algorithm will work on
       :type problem_type: Enum string
-      :param train_function: The training fucntion callable to serialize and upload
+      :param train_function: The training function callable to serialize and upload
       :type train_function: callable
       :param predict_function: The predict function callable to serialize and upload
       :type predict_function: callable
@@ -697,7 +712,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_python_function(table_name, python_function_name, python_function_bindings, description = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: create_feature_group_from_python_function_template(table_name, python_function_name, python_function_bindings, description = None, cpu_size = None, memory = None, package_requirements = None)
 
       Creates a new feature in a Feature Group from a user provided Python Function. Code language currently supported is Python.
 
@@ -5228,7 +5243,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.37.3
+   :annotation: = 0.37.4
 
    
 

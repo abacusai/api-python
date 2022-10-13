@@ -162,7 +162,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.37.3'
+    client_version = '0.37.4'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1463,6 +1463,21 @@ class ApiClient(ReadOnlyClient):
         function_source = inspect.getsource(function)
         return self.create_feature_group_from_function(function_source_code=function_source, function_name=function.__name__, table_name=table_name, input_feature_groups=input_tables, cpu_size=cpu_size, memory=memory)
 
+    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None):
+        """
+        Update custom python function with user inputs for the given python function.
+
+        Args:
+            name (String): The unique name to identify the python function in an organization.
+            function (callable): The function callable to serialize and upload.
+            function_variable_mappings (List<PythonFunctionArguments>): List of python function arguments
+
+        Returns:
+            PythonFunction: The python_function object.
+        """
+        source_code = inspect.getsource(function)
+        return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings)
+
     def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
@@ -1470,7 +1485,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             name (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
             problem_type (Enum string): The type of the problem this algorithm will work on
-            train_function (callable): The training fucntion callable to serialize and upload
+            train_function (callable): The training function callable to serialize and upload
             predict_function (callable): The predict function callable to serialize and upload
             predict_many_function (callable): The predict many function callable to serialize and upload
             initialize_function (callable): The initialize function callable to serialize and upload
@@ -1834,7 +1849,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_python_function(self, table_name: str, python_function_name: str, python_function_bindings: list, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
+    def create_feature_group_from_python_function_template(self, table_name: str, python_function_name: str, python_function_bindings: list, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
         """Creates a new feature in a Feature Group from a user provided Python Function. Code language currently supported is Python.
 
         If a list of feature groups are supplied within the python function bindings, we will provide as arguments to the function DataFrame's
@@ -1855,7 +1870,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             FeatureGroup: The created feature group"""
-        return self._call_api('createFeatureGroupFromPythonFunction', 'POST', query_params={}, body={'tableName': table_name, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
+        return self._call_api('createFeatureGroupFromPythonFunctionTemplate', 'POST', query_params={}, body={'tableName': table_name, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
 
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
         """Creates a new feature group defined as a sample of rows from another feature group.

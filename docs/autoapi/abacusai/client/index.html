@@ -287,7 +287,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.37.3</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.37.4</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2184,14 +2184,28 @@ Updates an existing dataset from a pandas dataframe</p>
 <li><p><strong>input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – The input table names of the feature groups as input to the feature group function</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the feature group function</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the feature group function</p></li>
-<li><p><strong>python_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – </p></li>
-<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">abacusai.feature_group.FeatureGroup</a></p>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.update_python_function_code">
+<span class="sig-name descname"><span class="pre">update_python_function_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_python_function_code" title="Permalink to this definition"></a></dt>
+<dd><p>Update custom python function with user inputs for the given python function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>String</em>) – The unique name to identify the python function in an organization.</p></li>
+<li><p><strong>function</strong> (<em>callable</em>) – The function callable to serialize and upload.</p></li>
+<li><p><strong>function_variable_mappings</strong> (<em>List&lt;PythonFunctionArguments&gt;</em>) – List of python function arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The python_function object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../python_function/index.html#abacusai.python_function.PythonFunction" title="abacusai.python_function.PythonFunction">PythonFunction</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2205,7 +2219,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>String</em>) – The name to identify the algorithm, only uppercase letters, numbers and underscore allowed</p></li>
 <li><p><strong>problem_type</strong> (<em>Enum string</em>) – The type of the problem this algorithm will work on</p></li>
-<li><p><strong>train_function</strong> (<em>callable</em>) – The training fucntion callable to serialize and upload</p></li>
+<li><p><strong>train_function</strong> (<em>callable</em>) – The training function callable to serialize and upload</p></li>
 <li><p><strong>predict_function</strong> (<em>callable</em>) – The predict function callable to serialize and upload</p></li>
 <li><p><strong>predict_many_function</strong> (<em>callable</em>) – The predict many function callable to serialize and upload</p></li>
 <li><p><strong>initialize_function</strong> (<em>callable</em>) – The initialize function callable to serialize and upload</p></li>
@@ -2715,8 +2729,8 @@ as the materialized version of this feature group table.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">create_feature_group_from_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_feature_group_from_python_function_template">
+<span class="sig-name descname"><span class="pre">create_feature_group_from_python_function_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_feature_group_from_python_function_template" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a new feature in a Feature Group from a user provided Python Function. Code language currently supported is Python.</p>
 <p>If a list of feature groups are supplied within the python function bindings, we will provide as arguments to the function DataFrame’s
 (pandas in the case of Python) with the materialized feature groups for those input feature groups.</p>
