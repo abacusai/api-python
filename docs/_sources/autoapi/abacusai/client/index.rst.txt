@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.37.4
+      :annotation: = 0.38.0
 
       
 
@@ -359,6 +359,19 @@ Attributes
       :type filter_feature_group_use: str
 
       :returns: All the Feature Groups in the Organization
+      :rtype: FeatureGroup
+
+
+   .. py:method:: list_python_function_feature_groups(name, limit = 100)
+
+      Enlist all the feature groups associated with a python function. A user needs to specify the unique python function ID to fetch all attached feature groups.
+
+      :param name: The name to identify the python function.
+      :type name: str
+      :param limit: The the number of feature groups to be retrieved.
+      :type limit: int
+
+      :returns: All the feature groups associated with a python function id.
       :rtype: FeatureGroup
 
 
@@ -819,6 +832,16 @@ Attributes
       :rtype: FunctionLogs
 
 
+   .. py:method:: ignore_lofo_features(model_version, threshold = None, top_n = 0)
+
+      :param model_version:
+      :type model_version: str
+      :param threshold:
+      :type threshold: float
+      :param top_n:
+      :type top_n: int
+
+
    .. py:method:: list_model_monitors(project_id)
 
       Retrieves the list of models monitors in the specified project.
@@ -919,6 +942,19 @@ Attributes
       :rtype: ModelMonitorSummaryFromOrg
 
 
+   .. py:method:: get_model_monitor_summary_from_organization(organization_id, lookback_days = 90)
+
+      Gets a consolidated summary of model monitors for an organization.
+
+      :param organization_id: The unique ID associated with the organization.
+      :type organization_id: str
+      :param lookback_days: The number of days in the past to look back for model monitors.
+      :type lookback_days: int
+
+      :returns: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization.
+      :rtype: ModelMonitorOrgSummary
+
+
    .. py:method:: get_model_monitoring_logs(model_monitor_version, stdout = False, stderr = False)
 
       Returns monitoring logs for the model.
@@ -995,6 +1031,21 @@ Attributes
 
       :returns: An array of deployment tokens.
       :rtype: DeploymentAuthToken
+
+
+   .. py:method:: get_model_training_types_for_deployment(model_id, model_version = None, algorithm = None)
+
+      Returns types of models we can deploy for given model instance id
+
+      :param model_id: The unique ID associated with the model.
+      :type model_id: str
+      :param model_version: The unique ID associated with the model version to deploy.
+      :type model_version: str
+      :param algorithm: The unique ID associated with the algorithm to deploy.
+      :type algorithm: str
+
+      :returns: Model training types for deployment
+      :rtype: ModelTrainingTypeForDeployment
 
 
    .. py:method:: describe_refresh_policy(refresh_policy_id)
@@ -1353,7 +1404,7 @@ Attributes
       :type memory: int
 
 
-   .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables, cpu_size = None, memory = None)
+   .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None)
 
       Creates a feature group from a python function
 
@@ -1363,6 +1414,10 @@ Attributes
       :type table_name: str
       :param input_tables: The input table names of the feature groups as input to the feature group function
       :type input_tables: list
+      :param python_function_name: The name of the python function to create a feature group from.
+      :type python_function_name: str
+      :param python_function_bindings: List of python function arguments
+      :type python_function_bindings: List<PythonFunctionArguments>
       :param cpu_size: Size of the cpu for the feature group function
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
@@ -1594,7 +1649,7 @@ Attributes
 
       :param name: The project's name
       :type name: str
-      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
+      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details refer to
@@ -1703,7 +1758,7 @@ Attributes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+      :param data_type: The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
       :type data_type: str
 
       :returns: A list of objects that describes the resulting dataset's schema after the column's dataType is set.
@@ -1742,6 +1797,44 @@ Attributes
       :rtype: Schema
 
 
+   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui')
+
+      Add an annotation entry to the database.
+
+      :param annotation: The annotation to add. Format of the annotation is determined by its annotation type.
+      :type annotation: dict
+      :param feature_group_id: The ID of the feature group the annotation is on.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param doc_id: The ID of the primary document the annotation is on.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group primary key value.
+      :type feature_group_row_identifier: str
+      :param annotation_source: Indicator of whether the annotation came from the UI, bulk upload, etc.
+      :type annotation_source: str
+
+      :returns: The annotation entry that was added
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: describe_annotation(feature_group_id, feature_name = None, doc_id = None, feature_group_row_identifier = None)
+
+      Get the latest annotation entry for a given feature group, feature, and document.
+
+      :param feature_group_id: The ID of the feature group the annotation is on.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param doc_id: The ID of the primary document the annotation is on.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
+      :type feature_group_row_identifier: str
+
+      :returns: The latest annotation entry for the given feature group, feature, and document and/or annotation key value
+      :rtype: AnnotationEntry
+
+
    .. py:method:: create_feature_group(table_name, sql, description = None)
 
       Creates a new feature group from a SQL statement.
@@ -1776,16 +1869,16 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_function(table_name, function_source_code, function_name, input_feature_groups = [], description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False)
+   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None)
 
       Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
       If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
       (pandas in the case of Python) with the materialized feature groups for those input feature groups.
 
-      This method expects `function_source_code to be a valid language source file which contains a function named
-      `function_name`. This function needs return a DataFrame when it is executed and this DataFrame will be used
-      as the materialized version of this feature group table.
+      This method expects the source code to be a valid language source file which contains a function. This function
+      needs return a DataFrame when it is executed and this DataFrame will be used as the materialized version
+      of this feature group table.
 
 
       :param table_name: The unique name to be given to the feature group.
@@ -1806,36 +1899,10 @@ Attributes
       :type package_requirements: dict
       :param use_original_csv_names: Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
-
-      :returns: The created feature group
-      :rtype: FeatureGroup
-
-
-   .. py:method:: create_feature_group_from_python_function_template(table_name, python_function_name, python_function_bindings, description = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Creates a new feature in a Feature Group from a user provided Python Function. Code language currently supported is Python.
-
-      If a list of feature groups are supplied within the python function bindings, we will provide as arguments to the function DataFrame's
-      (pandas in the case of Python) with the materialized feature groups for those input feature groups.
-
-      This method expects `python_function_name` to be a valid Python Function and `python_function_bindings` to match the function arguments
-      of the Python Function.
-
-
-      :param table_name: The unique name to be given to the feature group.
-      :type table_name: str
       :param python_function_name: Name of Python Function that contains the source code and function arguments.
       :type python_function_name: str
       :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
       :type python_function_bindings: list
-      :param description: The description for this feature group.
-      :type description: str
-      :param cpu_size: Size of the cpu for the feature group function
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function
-      :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -1987,6 +2054,34 @@ Attributes
       :type feature_group_id: str
       :param tag: The tag to add to the feature group
       :type tag: str
+
+
+   .. py:method:: set_feature_as_annotatable_feature(feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param feature_name:
+      :type feature_name: str
+      :param annotation_type:
+      :type annotation_type: str
+      :param feature_group_row_identifier_feature:
+      :type feature_group_row_identifier_feature: str
+      :param doc_id_feature:
+      :type doc_id_feature: str
+
+      :returns: None
+      :rtype: FeatureGroup
+
+
+   .. py:method:: unset_feature_as_annotatable_feature(feature_group_id, feature_name)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param feature_name:
+      :type feature_name: str
+
+      :returns: None
+      :rtype: FeatureGroup
 
 
    .. py:method:: add_feature_tag(feature_group_id, feature, tag)
@@ -2255,7 +2350,7 @@ Attributes
       :type feature_group_id: str
       :param feature: The name of the feature.
       :type feature: str
-      :param feature_type: The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
+      :param feature_type: The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
       :type feature_type: str
 
       :returns: The feature group after the data_type is applied
@@ -2348,6 +2443,20 @@ Attributes
 
       :returns: The updated feature group
       :rtype: FeatureGroup
+
+
+   .. py:method:: update_feature_group_python_function_bindings(feature_group_id, python_function_bindings)
+
+      Updates an existing Feature Group's python function bindings from a user provided Python Function. If a list of feature groups are supplied within the python function
+
+      bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
+      feature groups for those input feature groups.
+
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type python_function_bindings: list
 
 
    .. py:method:: update_feature_group_sql_definition(feature_group_id, sql)
@@ -2455,7 +2564,7 @@ Attributes
 
    .. py:method:: update_feature(feature_group_id, name, select_expression = None, new_name = None)
 
-      Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
+      Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name to update the feature.
 
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
@@ -2861,7 +2970,7 @@ Attributes
       :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
       :type csv_delimiter: str
 
-      :returns: A refernce to be used when uploading file parts.
+      :returns: A reference to be used when uploading file parts.
       :rtype: Upload
 
 
@@ -2914,7 +3023,7 @@ Attributes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
       :type data_type: str
 
       :returns: The dataset and schema after the data_type has been set

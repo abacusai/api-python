@@ -43,6 +43,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation_entry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation_entry</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../api_key/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_key</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.application_connector</span></code></a></li>
@@ -90,10 +92,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_location/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_location</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_metrics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_org_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_org_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary_from_org/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_summary_from_org</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor_version_metric_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_version_metric_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_training_type_for_deployment/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_training_type_for_deployment</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
@@ -514,6 +518,26 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the algorithm to pin in the model</p></li>
 <li><p><strong>algorithm</strong> – </p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.model.Model.get_training_types_for_deployment">
+<span class="sig-name descname"><span class="pre">get_training_types_for_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.get_training_types_for_deployment" title="Permalink to this definition"></a></dt>
+<dd><p>Returns types of models we can deploy for given model instance id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the model version to deploy.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the algorithm to deploy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Model training types for deployment</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../model_training_type_for_deployment/index.html#abacusai.model_training_type_for_deployment.ModelTrainingTypeForDeployment" title="abacusai.model_training_type_for_deployment.ModelTrainingTypeForDeployment">ModelTrainingTypeForDeployment</a></p>
 </dd>
 </dl>
 </dd></dl>

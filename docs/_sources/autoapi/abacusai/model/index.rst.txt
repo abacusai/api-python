@@ -330,6 +330,19 @@ Classes
       :type algorithm: str
 
 
+   .. py:method:: get_training_types_for_deployment(model_version = None, algorithm = None)
+
+      Returns types of models we can deploy for given model instance id
+
+      :param model_version: The unique ID associated with the model version to deploy.
+      :type model_version: str
+      :param algorithm: The unique ID associated with the algorithm to deploy.
+      :type algorithm: str
+
+      :returns: Model training types for deployment
+      :rtype: ModelTrainingTypeForDeployment
+
+
    .. py:method:: wait_for_training(timeout=None)
 
       A waiting call until model is trained.

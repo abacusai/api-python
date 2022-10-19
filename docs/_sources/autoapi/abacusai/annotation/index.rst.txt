@@ -1,0 +1,46 @@
+:py:mod:`abacusai.annotation`
+=============================
+
+.. py:module:: abacusai.annotation
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.annotation.Annotation
+
+
+
+
+.. py:class:: Annotation(client, annotationType=None, annotationValue=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An Annotation Store Annotation
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param annotationType: A name determinig the type of annotation and how to interpret the annotation value data, e.g. as a label, bounding box, etc.
+   :type annotationType: str
+   :param annotationValue: JSON-compatible value of the annotation. The format of the value is determined by the annotation type.
+   :type annotationValue: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

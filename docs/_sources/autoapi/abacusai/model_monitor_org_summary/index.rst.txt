@@ -1,0 +1,56 @@
+:py:mod:`abacusai.model_monitor_org_summary`
+============================================
+
+.. py:module:: abacusai.model_monitor_org_summary
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_monitor_org_summary.ModelMonitorOrgSummary
+
+
+
+
+.. py:class:: ModelMonitorOrgSummary(client, summary=None, featureDrift=None, labelDrift=None, dataIntegrity=None, performance=None, alerts=None, mostRecentMonitorInfo=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A summary of an organization's model monitors
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param summary: Count of monitors, count of versions, count of total rows of prediction data, count of failed versions.
+   :type summary: dict
+   :param featureDrift: Percentage of monitors with and without KL divergence > 2.
+   :type featureDrift: dict
+   :param labelDrift: Histogram of label drift across versions.
+   :type labelDrift: dict
+   :param dataIntegrity: Counts of violations.
+   :type dataIntegrity: dict
+   :param performance: Model accuracy information.
+   :type performance: dict
+   :param alerts: Count of alerts that are raised.
+   :type alerts: dict
+   :param mostRecentMonitorInfo: Most recent monitor information.
+   :type mostRecentMonitorInfo: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

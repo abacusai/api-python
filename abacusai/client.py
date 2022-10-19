@@ -19,6 +19,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 from .algorithm import Algorithm
+from .annotation_entry import AnnotationEntry
 from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
@@ -46,10 +47,12 @@ from .function_logs import FunctionLogs
 from .model import Model
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
+from .model_monitor_org_summary import ModelMonitorOrgSummary
 from .model_monitor_summary import ModelMonitorSummary
 from .model_monitor_summary_from_org import ModelMonitorSummaryFromOrg
 from .model_monitor_version import ModelMonitorVersion
 from .model_monitor_version_metric_data import ModelMonitorVersionMetricData
+from .model_training_type_for_deployment import ModelTrainingTypeForDeployment
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
 from .organization_group import OrganizationGroup
@@ -162,7 +165,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.37.4'
+    client_version = '0.38.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -539,6 +542,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FeatureGroup: All the Feature Groups in the Organization"""
         return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=FeatureGroup)
+
+    def list_python_function_feature_groups(self, name: str, limit: int = 100) -> List[FeatureGroup]:
+        """Enlist all the feature groups associated with a python function. A user needs to specify the unique python function ID to fetch all attached feature groups.
+
+        Args:
+            name (str): The name to identify the python function.
+            limit (int): The the number of feature groups to be retrieved.
+
+        Returns:
+            FeatureGroup: All the feature groups associated with a python function id."""
+        return self._call_api('listPythonFunctionFeatureGroups', 'GET', query_params={'name': name, 'limit': limit}, parse_type=FeatureGroup)
 
     def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
         """Get a link to download the feature group version.
@@ -933,6 +947,15 @@ class ReadOnlyClient(BaseApiClient):
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
+    def ignore_lofo_features(self, model_version: str, threshold: float = None, top_n: int = 0):
+        """
+
+        Args:
+            model_version (str): 
+            threshold (float): 
+            top_n (int): """
+        return self._call_api('ignoreLofoFeatures', 'GET', query_params={'modelVersion': model_version, 'threshold': threshold, 'topN': top_n})
+
     def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
         """Retrieves the list of models monitors in the specified project.
 
@@ -1019,6 +1042,17 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorSummaryFromOrg: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, or integrity for all model monitors in an organization."""
         return self._call_api('getModelMonitorChartFromOrganization', 'GET', query_params={'organizationId': organization_id, 'chartType': chart_type, 'limit': limit}, parse_type=ModelMonitorSummaryFromOrg)
 
+    def get_model_monitor_summary_from_organization(self, organization_id: str, lookback_days: int = 90) -> List[ModelMonitorOrgSummary]:
+        """Gets a consolidated summary of model monitors for an organization.
+
+        Args:
+            organization_id (str): The unique ID associated with the organization.
+            lookback_days (int): The number of days in the past to look back for model monitors.
+
+        Returns:
+            ModelMonitorOrgSummary: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization."""
+        return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={'organizationId': organization_id, 'lookbackDays': lookback_days}, parse_type=ModelMonitorOrgSummary)
+
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns monitoring logs for the model.
 
@@ -1084,6 +1118,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DeploymentAuthToken: An array of deployment tokens."""
         return self._call_api('listDeploymentTokens', 'GET', query_params={'projectId': project_id}, parse_type=DeploymentAuthToken)
+
+    def get_model_training_types_for_deployment(self, model_id: str, model_version: str = None, algorithm: str = None) -> ModelTrainingTypeForDeployment:
+        """Returns types of models we can deploy for given model instance id
+
+        Args:
+            model_id (str): The unique ID associated with the model.
+            model_version (str): The unique ID associated with the model version to deploy.
+            algorithm (str): The unique ID associated with the algorithm to deploy.
+
+        Returns:
+            ModelTrainingTypeForDeployment: Model training types for deployment"""
+        return self._call_api('getModelTrainingTypesForDeployment', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=ModelTrainingTypeForDeployment)
 
     def describe_refresh_policy(self, refresh_policy_id: str) -> RefreshPolicy:
         """Retrieve a single refresh policy
@@ -1449,7 +1495,7 @@ class ApiClient(ReadOnlyClient):
             train_function, predict_function, predict_many_function, initialize_function)
         return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
 
-    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list, cpu_size: str = None, memory: int = None):
+    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None):
         """
         Creates a feature group from a python function
 
@@ -1457,11 +1503,23 @@ class ApiClient(ReadOnlyClient):
             function (callable): The function callable for the feature group
             table_name (str): The table name to give the feature group
             input_tables (list): The input table names of the feature groups as input to the feature group function
+            python_function_name (str): The name of the python function to create a feature group from.
+            python_function_bindings (List<PythonFunctionArguments>): List of python function arguments
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
         """
         function_source = inspect.getsource(function)
-        return self.create_feature_group_from_function(function_source_code=function_source, function_name=function.__name__, table_name=table_name, input_feature_groups=input_tables, cpu_size=cpu_size, memory=memory)
+        if not python_function_name:
+            python_function = self.create_python_function(
+                name=table_name, source_code=function_source, function_name=function.__name__)
+            python_function_name = python_function.name
+            if not python_function_bindings and input_tables:
+                python_function_bindings = []
+                for index, feature_group_table_name in enumerate(input_tables):
+                    variable = python_function.function_variable_mappings[index]
+                    python_function_bindings.append(
+                        {'name': variable['name'], 'variable_type': variable['variable_type'], 'value': feature_group_table_name})
+        return self.create_feature_group_from_function(table_name=table_name, python_function_name=python_function_name, python_function_bindings=python_function_bindings, cpu_size=cpu_size, memory=memory)
 
     def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None):
         """
@@ -1681,7 +1739,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name
-            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION_SEGMENTATION,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
+            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING.
 
         Returns:
             Project: This object represents the newly created project. For details refer to"""
@@ -1766,7 +1824,7 @@ class ApiClient(ReadOnlyClient):
             project_id (str): The unique ID associated with the project.
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+            data_type (str): The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
 
         Returns:
             Schema: A list of objects that describes the resulting dataset's schema after the column's dataType is set."""
@@ -1797,6 +1855,34 @@ class ApiClient(ReadOnlyClient):
             Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set."""
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
+    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui') -> AnnotationEntry:
+        """Add an annotation entry to the database.
+
+        Args:
+            annotation (dict): The annotation to add. Format of the annotation is determined by its annotation type.
+            feature_group_id (str): The ID of the feature group the annotation is on.
+            feature_name (str): The name of the feature the annotation is on.
+            doc_id (str): The ID of the primary document the annotation is on.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group primary key value.
+            annotation_source (str): Indicator of whether the annotation came from the UI, bulk upload, etc.
+
+        Returns:
+            AnnotationEntry: The annotation entry that was added"""
+        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source}, parse_type=AnnotationEntry)
+
+    def describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
+        """Get the latest annotation entry for a given feature group, feature, and document.
+
+        Args:
+            feature_group_id (str): The ID of the feature group the annotation is on.
+            feature_name (str): The name of the feature the annotation is on.
+            doc_id (str): The ID of the primary document the annotation is on.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
+
+        Returns:
+            AnnotationEntry: The latest annotation entry for the given feature group, feature, and document and/or annotation key value"""
+        return self._call_api('describeAnnotation', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
+
     def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
         """Creates a new feature group from a SQL statement.
 
@@ -1823,15 +1909,15 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromTemplate', 'POST', query_params={}, body={'tableName': table_name, 'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template, 'description': description}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_function(self, table_name: str, function_source_code: str, function_name: str, input_feature_groups: list = [], description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False) -> FeatureGroup:
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: list = None) -> FeatureGroup:
         """Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
         If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
         (pandas in the case of Python) with the materialized feature groups for those input feature groups.
 
-        This method expects `function_source_code to be a valid language source file which contains a function named
-        `function_name`. This function needs return a DataFrame when it is executed and this DataFrame will be used
-        as the materialized version of this feature group table.
+        This method expects the source code to be a valid language source file which contains a function. This function
+        needs return a DataFrame when it is executed and this DataFrame will be used as the materialized version
+        of this feature group table.
 
 
         Args:
@@ -1844,33 +1930,12 @@ class ApiClient(ReadOnlyClient):
             memory (int): Memory (in GB) for the feature group function
             package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
             use_original_csv_names (bool): Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
-
-        Returns:
-            FeatureGroup: The created feature group"""
-        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names}, parse_type=FeatureGroup)
-
-    def create_feature_group_from_python_function_template(self, table_name: str, python_function_name: str, python_function_bindings: list, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
-        """Creates a new feature in a Feature Group from a user provided Python Function. Code language currently supported is Python.
-
-        If a list of feature groups are supplied within the python function bindings, we will provide as arguments to the function DataFrame's
-        (pandas in the case of Python) with the materialized feature groups for those input feature groups.
-
-        This method expects `python_function_name` to be a valid Python Function and `python_function_bindings` to match the function arguments
-        of the Python Function.
-
-
-        Args:
-            table_name (str): The unique name to be given to the feature group.
             python_function_name (str): Name of Python Function that contains the source code and function arguments.
             python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-            description (str): The description for this feature group.
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             FeatureGroup: The created feature group"""
-        return self._call_api('createFeatureGroupFromPythonFunctionTemplate', 'POST', query_params={}, body={'tableName': table_name, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
+        return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings}, parse_type=FeatureGroup)
 
     def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
         """Creates a new feature group defined as a sample of rows from another feature group.
@@ -1990,6 +2055,31 @@ class ApiClient(ReadOnlyClient):
             feature_group_id (str): The feature group
             tag (str): The tag to add to the feature group"""
         return self._call_api('removeFeatureGroupTag', 'DELETE', query_params={'featureGroupId': feature_group_id, 'tag': tag})
+
+    def set_feature_as_annotatable_feature(self, feature_group_id: str, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None) -> FeatureGroup:
+        """
+
+        Args:
+            feature_group_id (str): 
+            feature_name (str): 
+            annotation_type (str): 
+            feature_group_row_identifier_feature (str): 
+            doc_id_feature (str): 
+
+        Returns:
+            FeatureGroup: None"""
+        return self._call_api('setFeatureAsAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'annotationType': annotation_type, 'featureGroupRowIdentifierFeature': feature_group_row_identifier_feature, 'docIdFeature': doc_id_feature}, parse_type=FeatureGroup)
+
+    def unset_feature_as_annotatable_feature(self, feature_group_id: str, feature_name: str) -> FeatureGroup:
+        """
+
+        Args:
+            feature_group_id (str): 
+            feature_name (str): 
+
+        Returns:
+            FeatureGroup: None"""
+        return self._call_api('unsetFeatureAsAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name}, parse_type=FeatureGroup)
 
     def add_feature_tag(self, feature_group_id: str, feature: str, tag: str):
         """
@@ -2183,7 +2273,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
             feature (str): The name of the feature.
-            feature_type (str): The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
+            feature_type (str): The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
 
         Returns:
             Schema: The feature group after the data_type is applied"""
@@ -2260,6 +2350,18 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The updated feature group"""
         return self._call_api('updateFeatureGroupTemplateBindings', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'templateBindings': template_bindings}, parse_type=FeatureGroup)
 
+    def update_feature_group_python_function_bindings(self, feature_group_id: str, python_function_bindings: list):
+        """Updates an existing Feature Group's python function bindings from a user provided Python Function. If a list of feature groups are supplied within the python function
+
+        bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
+        feature groups for those input feature groups.
+
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}]."""
+        return self._call_api('updateFeatureGroupPythonFunctionBindings', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionBindings': python_function_bindings})
+
     def update_feature_group_sql_definition(self, feature_group_id: str, sql: str) -> FeatureGroup:
         """Updates the SQL statement for a feature group.
 
@@ -2335,7 +2437,7 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('updateFeatureGroupGit', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'pythonRoot': python_root, 'functionName': function_name, 'moduleName': module_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=FeatureGroup)
 
     def update_feature(self, feature_group_id: str, name: str, select_expression: str = None, new_name: str = None) -> FeatureGroup:
-        """Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
+        """Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name to update the feature.
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
@@ -2642,7 +2744,7 @@ class ApiClient(ReadOnlyClient):
             csv_delimiter (str): If the file format is CSV, use a specific csv delimiter.
 
         Returns:
-            Upload: A refernce to be used when uploading file parts."""
+            Upload: A reference to be used when uploading file parts."""
         return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
@@ -2685,7 +2787,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicity set the DataType.
+            data_type (str): The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
 
         Returns:
             Dataset: The dataset and schema after the data_type has been set"""

@@ -150,6 +150,16 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.get_training_logs(self.model_version, stdout, stderr)
 
+    def ignore_lofo_features(self, threshold: float = None, top_n: int = 0):
+        """
+
+
+        Args:
+            threshold (float): 
+            top_n (int): 
+        """
+        return self.client.ignore_lofo_features(self.model_version, threshold, top_n)
+
     def wait_for_training(self, timeout=None):
         """
         A waiting call until model gets trained.

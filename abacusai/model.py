@@ -303,6 +303,19 @@ class Model(AbstractApiClass):
         """
         return self.client.set_default_model_algorithm(self.model_id, algorithm)
 
+    def get_training_types_for_deployment(self, model_version: str = None, algorithm: str = None):
+        """
+        Returns types of models we can deploy for given model instance id
+
+        Args:
+            model_version (str): The unique ID associated with the model version to deploy.
+            algorithm (str): The unique ID associated with the algorithm to deploy.
+
+        Returns:
+            ModelTrainingTypeForDeployment: Model training types for deployment
+        """
+        return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
+
     def wait_for_training(self, timeout=None):
         """
         A waiting call until model is trained.

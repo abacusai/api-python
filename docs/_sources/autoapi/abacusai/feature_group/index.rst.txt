@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, annotationConfig=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -91,6 +91,8 @@ Classes
    :type useOriginalCsvNames: bool
    :param pythonFunctionBindings:
    :type pythonFunctionBindings: list
+   :param annotationConfig:
+   :type annotationConfig: dict
    :param features:
    :type features: Feature
    :param duplicateFeatures:
@@ -159,6 +161,21 @@ Classes
       :type project_id: str
       :param use_for_training: Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training
       :type use_for_training: bool
+
+
+   .. py:method:: describe_annotation(feature_name = None, doc_id = None, feature_group_row_identifier = None)
+
+      Get the latest annotation entry for a given feature group, feature, and document.
+
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param doc_id: The ID of the primary document the annotation is on.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
+      :type feature_group_row_identifier: str
+
+      :returns: The latest annotation entry for the given feature group, feature, and document and/or annotation key value
+      :rtype: AnnotationEntry
 
 
    .. py:method:: create_sampling(table_name, sampling_config, description = None)
@@ -255,6 +272,30 @@ Classes
 
       :param tag: The tag to add to the feature group
       :type tag: str
+
+
+   .. py:method:: set_feature_as_annotatable_feature(feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
+
+      :param feature_name:
+      :type feature_name: str
+      :param annotation_type:
+      :type annotation_type: str
+      :param feature_group_row_identifier_feature:
+      :type feature_group_row_identifier_feature: str
+      :param doc_id_feature:
+      :type doc_id_feature: str
+
+      :returns: None
+      :rtype: FeatureGroup
+
+
+   .. py:method:: unset_feature_as_annotatable_feature(feature_name)
+
+      :param feature_name:
+      :type feature_name: str
+
+      :returns: None
+      :rtype: FeatureGroup
 
 
    .. py:method:: add_feature_tag(feature, tag)
@@ -497,7 +538,7 @@ Classes
 
       :param feature: The name of the feature.
       :type feature: str
-      :param feature_type: The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
+      :param feature_type: The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
       :type feature_type: str
 
       :returns: The feature group after the data_type is applied
@@ -601,6 +642,18 @@ Classes
       :rtype: FeatureGroup
 
 
+   .. py:method:: update_python_function_bindings(python_function_bindings)
+
+      Updates an existing Feature Group's python function bindings from a user provided Python Function. If a list of feature groups are supplied within the python function
+
+      bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
+      feature groups for those input feature groups.
+
+
+      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type python_function_bindings: list
+
+
    .. py:method:: update_sql_definition(sql)
 
       Updates the SQL statement for a feature group.
@@ -696,7 +749,7 @@ Classes
 
    .. py:method:: update_feature(name, select_expression = None, new_name = None)
 
-      Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name tp update the feature.
+      Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name to update the feature.
 
       :param name: The name of the feature to be updated.
       :type name: str

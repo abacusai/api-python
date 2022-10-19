@@ -1,0 +1,56 @@
+:py:mod:`abacusai.annotation_entry`
+===================================
+
+.. py:module:: abacusai.annotation_entry
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.annotation_entry.AnnotationEntry
+
+
+
+
+.. py:class:: AnnotationEntry(client, featureGroupId=None, featureName=None, docId=None, featureGroupRowIdentifier=None, updatedAt=None, annotationEntryMarker=None, annotation={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An Annotation Store entry for an Annotation
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupId: id of the feature group this annotation belongs to
+   :type featureGroupId: str
+   :param featureName: name of the feature this annotation is on
+   :type featureName: str
+   :param docId: The ID of the primary document the annotation is on.
+   :type docId: str
+   :param featureGroupRowIdentifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value.
+   :type featureGroupRowIdentifier: str
+   :param updatedAt: Most recent time the annotation entry was modified, e.g. creation or update time.
+   :type updatedAt: str
+   :param annotationEntryMarker:
+   :type annotationEntryMarker: str
+   :param annotation: json-compatible structure holding the type and value of the annotation
+   :type annotation: Annotation
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
