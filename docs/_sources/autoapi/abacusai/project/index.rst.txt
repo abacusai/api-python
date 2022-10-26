@@ -241,7 +241,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, cpu_size = None, memory = None)
+   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None)
 
       Trains a model for the specified project.
 
@@ -256,12 +256,14 @@ Classes
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
-      :param custom_algorithms: List of user-defined algorithms to train.
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
       :type custom_algorithms: list
       :param custom_algorithms_only: Whether only run custom algorithms.
       :type custom_algorithms_only: bool
       :param custom_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
       :type custom_algorithm_configs: dict
+      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :type builtin_algorithms: list
       :param cpu_size: Size of the cpu for the user-defined algorithms during train.
       :type cpu_size: str
       :param memory: Memory (in GB) for the user-defined algorithms during train.
@@ -443,6 +445,15 @@ Classes
 
       :returns: A list of batch prediction jobs.
       :rtype: BatchPrediction
+
+
+   .. py:method:: list_builtin_algorithms()
+
+      :param project_id:
+      :type project_id: str
+
+      :returns: None
+      :rtype: Algorithm
 
 
    .. py:method:: attach_dataset(dataset_id, project_dataset_type)

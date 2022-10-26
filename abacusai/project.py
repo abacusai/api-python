@@ -230,7 +230,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_train_test_data_split_feature_group(self.project_id, training_config, feature_group_ids)
 
-    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None):
+    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None):
         """
         Trains a model for the specified project.
 
@@ -242,16 +242,17 @@ class Project(AbstractApiClass):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
-            custom_algorithms (list): List of user-defined algorithms to train.
+            custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
             custom_algorithms_only (bool): Whether only run custom algorithms.
             custom_algorithm_configs (dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
 
         Returns:
             Model: The new model which is being trained.
         """
-        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, cpu_size, memory)
+        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory)
 
     def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
         """
@@ -410,6 +411,18 @@ class Project(AbstractApiClass):
             BatchPrediction: A list of batch prediction jobs.
         """
         return self.client.list_batch_predictions(self.project_id)
+
+    def list_builtin_algorithms(self):
+        """
+
+
+        Args:
+            project_id (str): 
+
+        Returns:
+            Algorithm: None
+        """
+        return self.client.list_builtin_algorithms(self.project_id)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

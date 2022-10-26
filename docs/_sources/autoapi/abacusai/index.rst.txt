@@ -23,6 +23,7 @@ Submodules
    code_source/index.rst
    concatenation_config/index.rst
    cryptography/index.rst
+   custom_loss_function/index.rst
    custom_train_function_info/index.rst
    data_filter/index.rst
    data_prep_logs/index.rst
@@ -361,6 +362,40 @@ Attributes
       :type custom_algorithm_config: Any
 
       :returns: A dictionary that maps train function parameter names to their values.
+
+
+   .. py:method:: create_custom_loss_function(name, loss_function_type, loss_function)
+
+      Registers a new custom loss function which can be used as an objective function during model training.
+
+      :param name: A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
+      :type name: String
+      :param loss_function_type: The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+      :type loss_function_type: String
+      :param loss_function: A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)
+      :type loss_function: Callable
+
+      :returns: A description of the registered custom loss function
+      :rtype: CustomLossFunction
+
+      :raises InvalidParameterError: If either loss function name or type or the passed function is invalid/incompatible
+      :raises AlreadyExistsError: If the loss function with the same name already exists in the organization
+
+
+   .. py:method:: update_custom_loss_function(name, loss_function)
+
+      Updates a previously registered custom loss function with a new function implementation.
+
+      :param name: name of the registered custom loss.
+      :type name: String
+      :param loss_function: A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)
+      :type loss_function: Callable
+
+      :returns: A description of the updated custom loss function
+      :rtype: CustomLossFunction
+
+      :raises InvalidParameterError: If either loss function name or type or the passed function is invalid/incompatible
+      :raises DataNotFoundError: If a loss function with given name is not found in the organization
 
 
    .. py:method:: add_user_to_organization(email)
@@ -933,6 +968,32 @@ Attributes
       :type feature_group_id: str
       :param feature_name:
       :type feature_name: str
+
+      :returns: None
+      :rtype: FeatureGroup
+
+
+   .. py:method:: add_feature_group_annotation_tag(feature_group_id, tag_name, annotation_type, tag_definition = None)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param tag_name:
+      :type tag_name: str
+      :param annotation_type:
+      :type annotation_type: str
+      :param tag_definition:
+      :type tag_definition: str
+
+      :returns: None
+      :rtype: FeatureGroup
+
+
+   .. py:method:: remove_feature_group_annotation_tag(feature_group_id, tag_name)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param tag_name:
+      :type tag_name: str
 
       :returns: None
       :rtype: FeatureGroup
@@ -2105,7 +2166,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, cpu_size = None, memory = None)
+   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None)
 
       Trains a model for the specified project.
 
@@ -2122,12 +2183,14 @@ Attributes
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
-      :param custom_algorithms: List of user-defined algorithms to train.
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
       :type custom_algorithms: list
       :param custom_algorithms_only: Whether only run custom algorithms.
       :type custom_algorithms_only: bool
       :param custom_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
       :type custom_algorithm_configs: dict
+      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :type builtin_algorithms: list
       :param cpu_size: Size of the cpu for the user-defined algorithms during train.
       :type cpu_size: str
       :param memory: Memory (in GB) for the user-defined algorithms during train.
@@ -2335,7 +2398,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
+   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -2345,6 +2408,10 @@ Attributes
       :type deployment_ids: list
       :param feature_group_ids: List of feature group ids provided by the user to train the model on.
       :type feature_group_ids: list
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
+      :type custom_algorithms: list
+      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :type builtin_algorithms: list
       :param custom_algorithm_configs: The user-defined training configs for each custom algorithm.
       :type custom_algorithm_configs: dict
       :param cpu_size: Size of the cpu for the user-defined algorithms during train.
@@ -3722,6 +3789,46 @@ Attributes
       :rtype: Algorithm
 
 
+   .. py:method:: create_custom_loss_function_with_source_code(name, loss_function_type, loss_function_name, loss_function_source_code)
+
+      Registers a new custom loss function which can be used as an objective function during model training.
+
+      :param name: A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
+      :type name: str
+      :param loss_function_type: The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+      :type loss_function_type: str
+      :param loss_function_name: The name of the function whose full source code is passed in loss_function_source_code
+      :type loss_function_name: str
+      :param loss_function_source_code: Python source code string of the function
+      :type loss_function_source_code: str
+
+      :returns: A description of the registered custom loss function
+      :rtype: CustomLossFunction
+
+
+   .. py:method:: update_custom_loss_function_with_source_code(name, loss_function_name, loss_function_source_code)
+
+      Updates a previously registered custom loss function with a new function implementation.
+
+      :param name: name of the registered custom loss.
+      :type name: str
+      :param loss_function_name: The name of the function whose full source code is passed in loss_function_source_code
+      :type loss_function_name: str
+      :param loss_function_source_code: Python source code string of the function
+      :type loss_function_source_code: str
+
+      :returns: A description of the updated custom loss function
+      :rtype: CustomLossFunction
+
+
+   .. py:method:: delete_custom_loss_function(name)
+
+      Deletes a previously registered custom loss function.
+
+      :param name: The name of the custom loss function to be deleted
+      :type name: str
+
+
 
 .. py:exception:: ApiException(message, http_status, exception = None)
 
@@ -4554,6 +4661,17 @@ Attributes
       :rtype: ModelMonitorVersionMetricData
 
 
+   .. py:method:: list_organization_model_monitors(only_starred = False)
+
+      Gets a list of model monitors for an organization.
+
+      :param only_starred: Return only starred model monitors. Defaults to False.
+      :type only_starred: None
+
+      :returns: An array of model monitors.
+      :rtype: ModelMonitor
+
+
    .. py:method:: get_model_monitor_chart_from_organization(organization_id, chart_type, limit = 15)
 
       Gets a list of model monitor summaries across monitors for an organization.
@@ -4569,12 +4687,10 @@ Attributes
       :rtype: ModelMonitorSummaryFromOrg
 
 
-   .. py:method:: get_model_monitor_summary_from_organization(organization_id, lookback_days = 90)
+   .. py:method:: get_model_monitor_summary_from_organization(lookback_days = 90)
 
       Gets a consolidated summary of model monitors for an organization.
 
-      :param organization_id: The unique ID associated with the organization.
-      :type organization_id: str
       :param lookback_days: The number of days in the past to look back for model monitors.
       :type lookback_days: int
 
@@ -4885,7 +5001,7 @@ Attributes
 
    .. py:method:: list_algorithms(problem_type = None, project_id = None)
 
-      List all algorithms within the org, with filtering on problem_type and project_id
+      List all custom algorithms within the org, with filtering on problem_type and project_id
 
       :param problem_type: the problem type to query. Return all algorithms in the org if problem_type is None
       :type problem_type: str
@@ -4894,6 +5010,39 @@ Attributes
 
       :returns: A list of algorithms
       :rtype: Algorithm
+
+
+   .. py:method:: list_builtin_algorithms(project_id)
+
+      :param project_id:
+      :type project_id: str
+
+      :returns: None
+      :rtype: Algorithm
+
+
+   .. py:method:: describe_custom_loss_function(name)
+
+      Retrieves a full description of a previously resgistered custom loss function.
+
+      :param name: Registered name of the custom loss function.
+      :type name: str
+
+      :returns: The description of the custom loss function with given name.
+      :rtype: CustomLossFunction
+
+
+   .. py:method:: list_custom_loss_functions(name_prefix = None, loss_function_type = None)
+
+      Retrieves a list of registered custom loss functions' descriptions
+
+      :param name_prefix: The prefix of the names of the loss functions to list
+      :type name_prefix: str
+      :param loss_function_type: The category of loss functions to search in.
+      :type loss_function_type: str
+
+      :returns: The description of the custom loss function with given name.
+      :rtype: CustomLossFunction
 
 
 
@@ -5356,7 +5505,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.38.0
+   :annotation: = 0.39.0
 
    
 

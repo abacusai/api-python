@@ -263,13 +263,15 @@ class Model(AbstractApiClass):
         """
         return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
-    def retrain(self, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None):
+    def retrain(self, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None):
         """
         Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
             deployment_ids (list): List of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
+            custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
+            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
             custom_algorithm_configs (dict): The user-defined training configs for each custom algorithm.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
@@ -278,7 +280,7 @@ class Model(AbstractApiClass):
         Returns:
             Model: The model that is being retrained.
         """
-        return self.client.retrain_model(self.model_id, deployment_ids, feature_group_ids, custom_algorithm_configs, cpu_size, memory, training_config)
+        return self.client.retrain_model(self.model_id, deployment_ids, feature_group_ids, custom_algorithms, builtin_algorithms, custom_algorithm_configs, cpu_size, memory, training_config)
 
     def delete(self):
         """

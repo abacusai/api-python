@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abacusai.resolved_feature_group_template &mdash; AbacusAI  documentation</title>
+  <title>abacusai.custom_loss_function &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -20,8 +20,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="abacusai.return_class" href="../return_class/index.html" />
-    <link rel="prev" title="abacusai.refresh_schedule" href="../refresh_schedule/index.html" /> 
+    <link rel="next" title="abacusai.custom_train_function_info" href="../custom_train_function_info/index.html" />
+    <link rel="prev" title="abacusai.cryptography" href="../cryptography/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,7 +55,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../code_source/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.code_source</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.concatenation_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../cryptography/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.cryptography</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../custom_loss_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_train_function_info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_filter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
@@ -120,10 +123,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_schedule</span></code></a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.resolved_feature_group_template</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../resolved_feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.resolved_feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../return_class/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.return_class</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../schema/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.schema</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_auth_token</span></code></a></li>
@@ -159,9 +159,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a> &raquo;</li>
-      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.resolved_feature_group_template</span></code></li>
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/autoapi/abacusai/resolved_feature_group_template/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/autoapi/abacusai/custom_loss_function/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -169,45 +169,46 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-abacusai.resolved_feature_group_template">
-<span id="abacusai-resolved-feature-group-template"></span><h1><a class="reference internal" href="#module-abacusai.resolved_feature_group_template" title="abacusai.resolved_feature_group_template"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.resolved_feature_group_template</span></code></a><a class="headerlink" href="#module-abacusai.resolved_feature_group_template" title="Permalink to this heading"></a></h1>
+  <section id="module-abacusai.custom_loss_function">
+<span id="abacusai-custom-loss-function"></span><h1><a class="reference internal" href="#module-abacusai.custom_loss_function" title="abacusai.custom_loss_function"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></a><a class="headerlink" href="#module-abacusai.custom_loss_function" title="Permalink to this heading"></a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
 <section id="classes">
 <h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate" title="abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ResolvedFeatureGroupTemplate</span></code></a></p></td>
-<td><p>Results from resolving a feature group template.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomLossFunction</span></code></a></p></td>
+<td><p>Custom loss function</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.resolved_feature_group_template.</span></span><span class="sig-name descname"><span class="pre">ResolvedFeatureGroupTemplate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupTemplateId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolvedVariables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolvedSql</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">templateSql</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sqlError</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.custom_loss_function.CustomLossFunction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.custom_loss_function.</span></span><span class="sig-name descname"><span class="pre">CustomLossFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notebookId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lossFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lossFunctionType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.custom_loss_function.CustomLossFunction" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
-<p>Results from resolving a feature group template.</p>
+<p>Custom loss function</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>featureGroupTemplateId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier for this feature group template.</p></li>
-<li><p><strong>resolvedVariables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – A map from template variable names to parameters that were available during template resolution.</p></li>
-<li><p><strong>resolvedSql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The SQL resulting from resolving the sql template by applying the resolved bindings.</p></li>
-<li><p><strong>templateSql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – SQL that can include variables to be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.</p></li>
-<li><p><strong>sqlError</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – if invalid, the sql error message</p></li>
+<li><p><strong>notebookId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier of the notebook used to create/edit the loss function</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name assigned to the custom loss function</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – When the loss function was created</p></li>
+<li><p><strong>lossFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the function defined in the source code</p></li>
+<li><p><strong>lossFunctionType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The category of problems that this loss would be applicable to. Ex - regression, multi-label classification, etc.</p></li>
+<li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – Info about the source code of the loss function</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate.__repr__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.custom_loss_function.CustomLossFunction.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.custom_loss_function.CustomLossFunction.__repr__" title="Permalink to this definition"></a></dt>
 <dd><p>Return repr(self).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.resolved_feature_group_template.ResolvedFeatureGroupTemplate.to_dict" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.custom_loss_function.CustomLossFunction.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.custom_loss_function.CustomLossFunction.to_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Get a dict representation of the parameters in this class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -229,8 +230,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../refresh_schedule/index.html" class="btn btn-neutral float-left" title="abacusai.refresh_schedule" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../return_class/index.html" class="btn btn-neutral float-right" title="abacusai.return_class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../cryptography/index.html" class="btn btn-neutral float-left" title="abacusai.cryptography" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../custom_train_function_info/index.html" class="btn btn-neutral float-right" title="abacusai.custom_train_function_info" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -1,0 +1,54 @@
+:py:mod:`abacusai.custom_loss_function`
+=======================================
+
+.. py:module:: abacusai.custom_loss_function
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.custom_loss_function.CustomLossFunction
+
+
+
+
+.. py:class:: CustomLossFunction(client, notebookId=None, name=None, createdAt=None, lossFunctionName=None, lossFunctionType=None, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Custom loss function
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param notebookId: The unique identifier of the notebook used to create/edit the loss function
+   :type notebookId: str
+   :param name: Name assigned to the custom loss function
+   :type name: str
+   :param createdAt: When the loss function was created
+   :type createdAt: str
+   :param lossFunctionName: The name of the function defined in the source code
+   :type lossFunctionName: str
+   :param lossFunctionType: The category of problems that this loss would be applicable to. Ex - regression, multi-label classification, etc.
+   :type lossFunctionType: str
+   :param codeSource: Info about the source code of the loss function
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

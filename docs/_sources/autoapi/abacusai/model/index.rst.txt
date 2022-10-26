@@ -288,7 +288,7 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: retrain(deployment_ids = [], feature_group_ids = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
+   .. py:method:: retrain(deployment_ids = [], feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
 
       Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
@@ -296,6 +296,10 @@ Classes
       :type deployment_ids: list
       :param feature_group_ids: List of feature group ids provided by the user to train the model on.
       :type feature_group_ids: list
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
+      :type custom_algorithms: list
+      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :type builtin_algorithms: list
       :param custom_algorithm_configs: The user-defined training configs for each custom algorithm.
       :type custom_algorithm_configs: dict
       :param cpu_size: Size of the cpu for the user-defined algorithms during train.

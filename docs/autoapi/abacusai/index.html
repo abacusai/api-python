@@ -55,6 +55,7 @@
 <li class="toctree-l3"><a class="reference internal" href="code_source/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.code_source</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="concatenation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.concatenation_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="cryptography/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.cryptography</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_loss_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="custom_train_function_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_train_function_info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_filter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
@@ -195,6 +196,7 @@
 <li class="toctree-l1"><a class="reference internal" href="code_source/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.code_source</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="concatenation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.concatenation_config</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="cryptography/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.cryptography</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_loss_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_train_function_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_train_function_info</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_filter</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
@@ -578,6 +580,59 @@ Updates an existing dataset from a pandas dataframe</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dictionary that maps train function parameter names to their values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.create_custom_loss_function">
+<span class="sig-name descname"><span class="pre">create_custom_loss_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_custom_loss_function" title="Permalink to this definition"></a></dt>
+<dd><p>Registers a new custom loss function which can be used as an objective function during model training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>String</em>) – A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed</p></li>
+<li><p><strong>loss_function_type</strong> (<em>String</em>) – The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.</p></li>
+<li><p><strong>loss_function</strong> (<em>Callable</em>) – A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A description of the registered custom loss function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="custom_loss_function/index.html#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction">CustomLossFunction</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>InvalidParameterError</strong> – If either loss function name or type or the passed function is invalid/incompatible</p></li>
+<li><p><strong>AlreadyExistsError</strong> – If the loss function with the same name already exists in the organization</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.update_custom_loss_function">
+<span class="sig-name descname"><span class="pre">update_custom_loss_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_custom_loss_function" title="Permalink to this definition"></a></dt>
+<dd><p>Updates a previously registered custom loss function with a new function implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>String</em>) – name of the registered custom loss.</p></li>
+<li><p><strong>loss_function</strong> (<em>Callable</em>) – A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A description of the updated custom loss function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="custom_loss_function/index.html#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction">CustomLossFunction</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>InvalidParameterError</strong> – If either loss function name or type or the passed function is invalid/incompatible</p></li>
+<li><p><strong>DataNotFoundError</strong> – If a loss function with given name is not found in the organization</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1318,6 +1373,46 @@ of this feature group table.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
 <li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.add_feature_group_annotation_tag">
+<span class="sig-name descname"><span class="pre">add_feature_group_annotation_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.add_feature_group_annotation_tag" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>tag_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>annotation_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>tag_definition</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.remove_feature_group_annotation_tag">
+<span class="sig-name descname"><span class="pre">remove_feature_group_annotation_tag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.remove_feature_group_annotation_tag" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>tag_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2782,7 +2877,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.train_model">
-<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithm_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.train_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithm_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builtin_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.train_model" title="Permalink to this definition"></a></dt>
 <dd><p>Trains a model for the specified project.</p>
 <p>Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.</p>
 <dl class="field-list simple">
@@ -2793,9 +2888,10 @@ feature groups for those input feature groups.</p>
 <li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The training config key/value pairs used to train this model.</p></li>
 <li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature group ids provided by the user to train the model on.</p></li>
 <li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A cron-style string that describes a schedule in UTC to automatically retrain the created model.</p></li>
-<li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of user-defined algorithms to train.</p></li>
+<li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.</p></li>
 <li><p><strong>custom_algorithms_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Whether only run custom algorithms.</p></li>
 <li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json</p></li>
+<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the user-defined algorithms during train.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during train.</p></li>
 </ul>
@@ -3006,7 +3102,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.retrain_model">
-<span class="sig-name descname"><span class="pre">retrain_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithm_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.retrain_model" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">retrain_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builtin_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithm_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.retrain_model" title="Permalink to this definition"></a></dt>
 <dd><p>Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -3014,6 +3110,8 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The model to retrain.</p></li>
 <li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of deployments to automatically deploy to.</p></li>
 <li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature group ids provided by the user to train the model on.</p></li>
+<li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.</p></li>
+<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.</p></li>
 <li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The user-defined training configs for each custom algorithm.</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the user-defined algorithms during train.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during train.</p></li>
@@ -4708,6 +4806,60 @@ it will be marked as a failed model version promotion with an error indicating p
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.create_custom_loss_function_with_source_code">
+<span class="sig-name descname"><span class="pre">create_custom_loss_function_with_source_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_source_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_custom_loss_function_with_source_code" title="Permalink to this definition"></a></dt>
+<dd><p>Registers a new custom loss function which can be used as an objective function during model training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed</p></li>
+<li><p><strong>loss_function_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.</p></li>
+<li><p><strong>loss_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the function whose full source code is passed in loss_function_source_code</p></li>
+<li><p><strong>loss_function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Python source code string of the function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A description of the registered custom loss function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="custom_loss_function/index.html#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction">CustomLossFunction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.update_custom_loss_function_with_source_code">
+<span class="sig-name descname"><span class="pre">update_custom_loss_function_with_source_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_source_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_custom_loss_function_with_source_code" title="Permalink to this definition"></a></dt>
+<dd><p>Updates a previously registered custom loss function with a new function implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – name of the registered custom loss.</p></li>
+<li><p><strong>loss_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the function whose full source code is passed in loss_function_source_code</p></li>
+<li><p><strong>loss_function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Python source code string of the function</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A description of the updated custom loss function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="custom_loss_function/index.html#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction">CustomLossFunction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.delete_custom_loss_function">
+<span class="sig-name descname"><span class="pre">delete_custom_loss_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.delete_custom_loss_function" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes a previously registered custom loss function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the custom loss function to be deleted</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py exception">
@@ -5947,6 +6099,23 @@ it will be marked as a failed model version promotion with an error indicating p
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.list_organization_model_monitors">
+<span class="sig-name descname"><span class="pre">list_organization_model_monitors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">only_starred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.list_organization_model_monitors" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a list of model monitors for an organization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>only_starred</strong> (<em>None</em>) – Return only starred model monitors. Defaults to False.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An array of model monitors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="model_monitor/index.html#abacusai.model_monitor.ModelMonitor" title="abacusai.model_monitor.ModelMonitor">ModelMonitor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_model_monitor_chart_from_organization">
 <span class="sig-name descname"><span class="pre">get_model_monitor_chart_from_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">organization_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chart_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">15</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_model_monitor_chart_from_organization" title="Permalink to this definition"></a></dt>
 <dd><p>Gets a list of model monitor summaries across monitors for an organization.</p>
@@ -5969,14 +6138,11 @@ it will be marked as a failed model version promotion with an error indicating p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_model_monitor_summary_from_organization">
-<span class="sig-name descname"><span class="pre">get_model_monitor_summary_from_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">organization_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">90</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_model_monitor_summary_from_organization" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_model_monitor_summary_from_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lookback_days</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">90</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_model_monitor_summary_from_organization" title="Permalink to this definition"></a></dt>
 <dd><p>Gets a consolidated summary of model monitors for an organization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>organization_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the organization.</p></li>
-<li><p><strong>lookback_days</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The number of days in the past to look back for model monitors.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>lookback_days</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The number of days in the past to look back for model monitors.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization.</p>
@@ -6431,7 +6597,7 @@ start_after_id (Unique String Identifier): An offset parameter to exclude all pr
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.list_algorithms">
 <span class="sig-name descname"><span class="pre">list_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.list_algorithms" title="Permalink to this definition"></a></dt>
-<dd><p>List all algorithms within the org, with filtering on problem_type and project_id</p>
+<dd><p>List all custom algorithms within the org, with filtering on problem_type and project_id</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -6444,6 +6610,59 @@ start_after_id (Unique String Identifier): An offset parameter to exclude all pr
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="algorithm/index.html#abacusai.algorithm.Algorithm" title="abacusai.algorithm.Algorithm">Algorithm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.list_builtin_algorithms">
+<span class="sig-name descname"><span class="pre">list_builtin_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.list_builtin_algorithms" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="algorithm/index.html#abacusai.algorithm.Algorithm" title="abacusai.algorithm.Algorithm">Algorithm</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.describe_custom_loss_function">
+<span class="sig-name descname"><span class="pre">describe_custom_loss_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.describe_custom_loss_function" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves a full description of a previously resgistered custom loss function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Registered name of the custom loss function.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The description of the custom loss function with given name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="custom_loss_function/index.html#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction">CustomLossFunction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.list_custom_loss_functions">
+<span class="sig-name descname"><span class="pre">list_custom_loss_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_function_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.list_custom_loss_functions" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves a list of registered custom loss functions’ descriptions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The prefix of the names of the loss functions to list</p></li>
+<li><p><strong>loss_function_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The category of loss functions to search in.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The description of the custom loss function with given name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="custom_loss_function/index.html#abacusai.custom_loss_function.CustomLossFunction" title="abacusai.custom_loss_function.CustomLossFunction">CustomLossFunction</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -7039,7 +7258,7 @@ start_after_id (Unique String Identifier): An offset parameter to exclude all pr
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.38.0</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.39.0</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

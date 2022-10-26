@@ -10,7 +10,7 @@ import tempfile
 import time
 import warnings
 from functools import lru_cache
-from typing import Dict, List
+from typing import Callable, Dict, List
 
 import pandas as pd
 import requests
@@ -20,11 +20,12 @@ from requests.packages.urllib3.util.retry import Retry
 
 from .algorithm import Algorithm
 from .annotation_entry import AnnotationEntry
-from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name
+from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name, get_clean_function_source_code
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
+from .custom_loss_function import CustomLossFunction
 from .custom_train_function_info import CustomTrainFunctionInfo
 from .data_prep_logs import DataPrepLogs
 from .database_connector import DatabaseConnector
@@ -165,7 +166,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.38.0'
+    client_version = '0.39.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1030,6 +1031,16 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorVersionMetricData: Data associated with the metric."""
         return self._call_api('modelMonitorVersionMetricData', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'metricType': metric_type, 'actualValuesToDetail': actual_values_to_detail}, parse_type=ModelMonitorVersionMetricData)
 
+    def list_organization_model_monitors(self, only_starred: None = False) -> List[ModelMonitor]:
+        """Gets a list of model monitors for an organization.
+
+        Args:
+            only_starred (None): Return only starred model monitors. Defaults to False.
+
+        Returns:
+            ModelMonitor: An array of model monitors."""
+        return self._call_api('listOrganizationModelMonitors', 'GET', query_params={'onlyStarred': only_starred}, parse_type=ModelMonitor)
+
     def get_model_monitor_chart_from_organization(self, organization_id: str, chart_type: str, limit: int = 15) -> List[ModelMonitorSummaryFromOrg]:
         """Gets a list of model monitor summaries across monitors for an organization.
 
@@ -1042,16 +1053,15 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorSummaryFromOrg: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, or integrity for all model monitors in an organization."""
         return self._call_api('getModelMonitorChartFromOrganization', 'GET', query_params={'organizationId': organization_id, 'chartType': chart_type, 'limit': limit}, parse_type=ModelMonitorSummaryFromOrg)
 
-    def get_model_monitor_summary_from_organization(self, organization_id: str, lookback_days: int = 90) -> List[ModelMonitorOrgSummary]:
+    def get_model_monitor_summary_from_organization(self, lookback_days: int = 90) -> List[ModelMonitorOrgSummary]:
         """Gets a consolidated summary of model monitors for an organization.
 
         Args:
-            organization_id (str): The unique ID associated with the organization.
             lookback_days (int): The number of days in the past to look back for model monitors.
 
         Returns:
             ModelMonitorOrgSummary: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization."""
-        return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={'organizationId': organization_id, 'lookbackDays': lookback_days}, parse_type=ModelMonitorOrgSummary)
+        return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={'lookbackDays': lookback_days}, parse_type=ModelMonitorOrgSummary)
 
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns monitoring logs for the model.
@@ -1307,7 +1317,7 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('describeAlgorithm', 'GET', query_params={'algorithm': algorithm}, parse_type=Algorithm)
 
     def list_algorithms(self, problem_type: str = None, project_id: str = None) -> Algorithm:
-        """List all algorithms within the org, with filtering on problem_type and project_id
+        """List all custom algorithms within the org, with filtering on problem_type and project_id
 
         Args:
             problem_type (str): the problem type to query. Return all algorithms in the org if problem_type is None
@@ -1316,6 +1326,37 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             Algorithm: A list of algorithms"""
         return self._call_api('listAlgorithms', 'GET', query_params={'problemType': problem_type, 'projectId': project_id}, parse_type=Algorithm)
+
+    def list_builtin_algorithms(self, project_id: str) -> Algorithm:
+        """
+
+        Args:
+            project_id (str): 
+
+        Returns:
+            Algorithm: None"""
+        return self._call_api('listBuiltinAlgorithms', 'GET', query_params={'projectId': project_id}, parse_type=Algorithm)
+
+    def describe_custom_loss_function(self, name: str) -> CustomLossFunction:
+        """Retrieves a full description of a previously resgistered custom loss function.
+
+        Args:
+            name (str): Registered name of the custom loss function.
+
+        Returns:
+            CustomLossFunction: The description of the custom loss function with given name."""
+        return self._call_api('describeCustomLossFunction', 'GET', query_params={'name': name}, parse_type=CustomLossFunction)
+
+    def list_custom_loss_functions(self, name_prefix: str = None, loss_function_type: str = None) -> CustomLossFunction:
+        """Retrieves a list of registered custom loss functions' descriptions
+
+        Args:
+            name_prefix (str): The prefix of the names of the loss functions to list
+            loss_function_type (str): The category of loss functions to search in.
+
+        Returns:
+            CustomLossFunction: The description of the custom loss function with given name."""
+        return self._call_api('listCustomLossFunctions', 'GET', query_params={'namePrefix': name_prefix, 'lossFunctionType': loss_function_type}, parse_type=CustomLossFunction)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None):
@@ -1624,6 +1665,53 @@ class ApiClient(ReadOnlyClient):
         training_config_parameter_name = training_config_parameter_name_override or 'training_config'
         input[training_config_parameter_name] = train_function_info.training_config
         return input
+
+    def create_custom_loss_function(self, name: str, loss_function_type: str, loss_function: Callable):
+        """
+        Registers a new custom loss function which can be used as an objective function during model training.
+
+        Args:
+            name (String): A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
+            loss_function_type (String): The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+            loss_function (Callable): A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)
+
+        Returns:
+            CustomLossFunction: A description of the registered custom loss function
+
+        Raises:
+            InvalidParameterError: If either loss function name or type or the passed function is invalid/incompatible
+            AlreadyExistsError: If the loss function with the same name already exists in the organization
+        """
+        loss_function_name = loss_function.__name__
+        loss_function_source_code = get_clean_function_source_code(
+            loss_function)
+        # Register the loss function
+        clf = self.create_custom_loss_function_with_source_code(
+            name, loss_function_type, loss_function_name, loss_function_source_code)
+        return clf
+
+    def update_custom_loss_function(self, name: str, loss_function: Callable):
+        """
+        Updates a previously registered custom loss function with a new function implementation.
+
+        Args:
+            name (String): name of the registered custom loss.
+            loss_function (Callable): A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)
+
+        Returns:
+            CustomLossFunction: A description of the updated custom loss function
+
+        Raises:
+            InvalidParameterError: If either loss function name or type or the passed function is invalid/incompatible
+            DataNotFoundError: If a loss function with given name is not found in the organization
+        """
+        loss_function_name = loss_function.__name__
+        loss_function_source_code = get_clean_function_source_code(
+            loss_function)
+        # Register the loss function
+        clf = self.update_custom_loss_function_with_source_code(
+            name, loss_function_name, loss_function_source_code)
+        return clf
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2080,6 +2168,30 @@ class ApiClient(ReadOnlyClient):
         Returns:
             FeatureGroup: None"""
         return self._call_api('unsetFeatureAsAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name}, parse_type=FeatureGroup)
+
+    def add_feature_group_annotation_tag(self, feature_group_id: str, tag_name: str, annotation_type: str, tag_definition: str = None) -> FeatureGroup:
+        """
+
+        Args:
+            feature_group_id (str): 
+            tag_name (str): 
+            annotation_type (str): 
+            tag_definition (str): 
+
+        Returns:
+            FeatureGroup: None"""
+        return self._call_api('addFeatureGroupAnnotationTag', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tagName': tag_name, 'annotationType': annotation_type, 'tagDefinition': tag_definition}, parse_type=FeatureGroup)
+
+    def remove_feature_group_annotation_tag(self, feature_group_id: str, tag_name: str) -> FeatureGroup:
+        """
+
+        Args:
+            feature_group_id (str): 
+            tag_name (str): 
+
+        Returns:
+            FeatureGroup: None"""
+        return self._call_api('removeFeatureGroupAnnotationTag', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tagName': tag_name}, parse_type=FeatureGroup)
 
     def add_feature_tag(self, feature_group_id: str, feature: str, tag: str):
         """
@@ -2981,7 +3093,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The feature group containing the training data and folds information."""
         return self._call_api('createTrainTestDataSplitFeatureGroup', 'POST', query_params={}, body={'projectId': project_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=FeatureGroup)
 
-    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None) -> Model:
+    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None) -> Model:
         """Trains a model for the specified project.
 
         Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
@@ -2993,15 +3105,16 @@ class ApiClient(ReadOnlyClient):
             training_config (dict): The training config key/value pairs used to train this model.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
-            custom_algorithms (list): List of user-defined algorithms to train.
+            custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
             custom_algorithms_only (bool): Whether only run custom algorithms.
             custom_algorithm_configs (dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
 
         Returns:
             Model: The new model which is being trained."""
-        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
     def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None) -> Model:
         """Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
@@ -3150,13 +3263,15 @@ class ApiClient(ReadOnlyClient):
             Model: The model object correspoding after the prediction config is applied"""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None) -> Model:
         """Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
 
         Args:
             model_id (str): The model to retrain.
             deployment_ids (list): List of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
+            custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
+            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
             custom_algorithm_configs (dict): The user-defined training configs for each custom algorithm.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
@@ -3164,7 +3279,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Model: The model that is being retrained."""
-        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config}, parse_type=Model)
+        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithms': custom_algorithms, 'builtinAlgorithms': builtin_algorithms, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config}, parse_type=Model)
 
     def delete_model(self, model_id: str):
         """Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
@@ -4184,3 +4299,35 @@ class ApiClient(ReadOnlyClient):
         Returns:
             Algorithm: The new customer model can be used for training"""
         return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled}, parse_type=Algorithm)
+
+    def create_custom_loss_function_with_source_code(self, name: str, loss_function_type: str, loss_function_name: str, loss_function_source_code: str) -> CustomLossFunction:
+        """Registers a new custom loss function which can be used as an objective function during model training.
+
+        Args:
+            name (str): A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
+            loss_function_type (str): The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+            loss_function_name (str): The name of the function whose full source code is passed in loss_function_source_code
+            loss_function_source_code (str): Python source code string of the function
+
+        Returns:
+            CustomLossFunction: A description of the registered custom loss function"""
+        return self._call_api('createCustomLossFunctionWithSourceCode', 'POST', query_params={}, body={'name': name, 'lossFunctionType': loss_function_type, 'lossFunctionName': loss_function_name, 'lossFunctionSourceCode': loss_function_source_code}, parse_type=CustomLossFunction)
+
+    def update_custom_loss_function_with_source_code(self, name: str, loss_function_name: str, loss_function_source_code: str) -> CustomLossFunction:
+        """Updates a previously registered custom loss function with a new function implementation.
+
+        Args:
+            name (str): name of the registered custom loss.
+            loss_function_name (str): The name of the function whose full source code is passed in loss_function_source_code
+            loss_function_source_code (str): Python source code string of the function
+
+        Returns:
+            CustomLossFunction: A description of the updated custom loss function"""
+        return self._call_api('updateCustomLossFunctionWithSourceCode', 'PATCH', query_params={}, body={'name': name, 'lossFunctionName': loss_function_name, 'lossFunctionSourceCode': loss_function_source_code}, parse_type=CustomLossFunction)
+
+    def delete_custom_loss_function(self, name: str):
+        """Deletes a previously registered custom loss function.
+
+        Args:
+            name (str): The name of the custom loss function to be deleted"""
+        return self._call_api('deleteCustomLossFunction', 'DELETE', query_params={'name': name})

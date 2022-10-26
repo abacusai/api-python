@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Algorithm(client, name=None, problemType=None, externalProblemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, codeSource={})
+.. py:class:: Algorithm(client, name=None, problemType=None, externalProblemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, displayName=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,6 +49,8 @@ Classes
    :type initializeFunctionName: str
    :param configOptions: Map dataset types and configs to train function parameter names
    :type configOptions: dict
+   :param displayName: The descriptive non-unique name of the algorithm
+   :type displayName: str
    :param codeSource:
    :type codeSource: CodeSource
 
