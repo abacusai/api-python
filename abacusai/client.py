@@ -56,6 +56,8 @@ from .model_monitor_version_metric_data import ModelMonitorVersionMetricData
 from .model_training_type_for_deployment import ModelTrainingTypeForDeployment
 from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
+from .monitor_alert import MonitorAlert
+from .monitor_alert_version import MonitorAlertVersion
 from .organization_group import OrganizationGroup
 from .prediction_metric import PredictionMetric
 from .prediction_metric_version import PredictionMetricVersion
@@ -166,7 +168,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.39.0'
+    client_version = '0.40.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -288,7 +290,7 @@ class BaseApiClient:
                 'HTTP method must be `GET`, `POST`, `PATCH`, `PUT` or `DELETE`'
             )
 
-    def _poll(self, obj, wait_states: set, delay: int = 5, timeout: int = 300, poll_args: dict = {}, status_field=None):
+    def _poll(self, obj, wait_states: set, delay: int = 15, timeout: int = 300, poll_args: dict = {}, status_field=None):
         start_time = time.time()
         while obj.get_status(**poll_args) in wait_states:
             if timeout and time.time() - start_time > timeout:
@@ -585,6 +587,13 @@ class ReadOnlyClient(BaseApiClient):
             FeatureGroupExport: The feature group exports"""
         return self._call_api('listFeatureGroupExports', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupExport)
 
+    def get_feature_group_export_connector_errors(self, feature_group_export_id: str) -> io.BytesIO:
+        """Returns a stream containing the feature group export database connection write errors, if any writes failed to the database connector
+
+        Args:
+            feature_group_export_id (str): The ID of the feature group export to get the errors for"""
+        return self._call_api('getFeatureGroupExportConnectorErrors', 'GET', query_params={'featureGroupExportId': feature_group_export_id}, streamable_response=True)
+
     def list_feature_group_modifiers(self, feature_group_id: str) -> ModificationLockInfo:
         """To list users who can modify a feature group.
 
@@ -821,21 +830,6 @@ class ReadOnlyClient(BaseApiClient):
             DatasetVersion: A list of dataset versions."""
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
 
-    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False) -> List[TrainingConfigOptions]:
-        """Retrieves the full description of the model training configuration options available for the specified project.
-
-        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
-
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            feature_group_ids (list): The feature group IDs to be used for training
-            for_retrain (bool): If training config options are used for retrain
-
-        Returns:
-            TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
-        return self._call_api('getTrainingConfigOptions', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain}, parse_type=TrainingConfigOptions)
-
     def describe_train_test_data_split_feature_group(self, model_id: str) -> FeatureGroup:
         """Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
 
@@ -1053,15 +1047,52 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorSummaryFromOrg: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, or integrity for all model monitors in an organization."""
         return self._call_api('getModelMonitorChartFromOrganization', 'GET', query_params={'organizationId': organization_id, 'chartType': chart_type, 'limit': limit}, parse_type=ModelMonitorSummaryFromOrg)
 
-    def get_model_monitor_summary_from_organization(self, lookback_days: int = 90) -> List[ModelMonitorOrgSummary]:
+    def get_model_monitor_summary_from_organization(self) -> List[ModelMonitorOrgSummary]:
         """Gets a consolidated summary of model monitors for an organization.
-
-        Args:
-            lookback_days (int): The number of days in the past to look back for model monitors.
 
         Returns:
             ModelMonitorOrgSummary: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization."""
-        return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={'lookbackDays': lookback_days}, parse_type=ModelMonitorOrgSummary)
+        return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={}, parse_type=ModelMonitorOrgSummary)
+
+    def describe_monitor_alert(self, monitor_alert_id: str) -> MonitorAlert:
+        """Describes a given monitor alert id
+
+        Args:
+            monitor_alert_id (str): The unique identifier to a monitor alert
+
+        Returns:
+            MonitorAlert: An object describing the monitor alert"""
+        return self._call_api('describeMonitorAlert', 'GET', query_params={'monitorAlertId': monitor_alert_id}, parse_type=MonitorAlert)
+
+    def describe_monitor_alert_version(self, monitor_alert_version: str) -> MonitorAlertVersion:
+        """Describes a given monitor alert version id
+
+        Args:
+            monitor_alert_version (str): The unique identifier to a monitor alert
+
+        Returns:
+            MonitorAlertVersion: An object describing the monitor alert version"""
+        return self._call_api('describeMonitorAlertVersion', 'GET', query_params={'monitorAlertVersion': monitor_alert_version}, parse_type=MonitorAlertVersion)
+
+    def list_monitor_alerts_for_monitor(self, model_monitor_id: str) -> List[MonitorAlert]:
+        """Retrieves the list of monitor alerts for a specified monitor
+
+        Args:
+            model_monitor_id (str): The unique ID associated with the model monitor.
+
+        Returns:
+            MonitorAlert: An array of monitor alerts."""
+        return self._call_api('listMonitorAlertsForMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=MonitorAlert)
+
+    def list_monitor_alert_versions_for_monitor_version(self, model_monitor_version: str) -> List[MonitorAlertVersion]:
+        """Retrieves the list of monitor alerts version for a specified monitor instance
+
+        Args:
+            model_monitor_version (str): The unique ID associated with the model monitor.
+
+        Returns:
+            MonitorAlertVersion: An array of monitor alerts."""
+        return self._call_api('listMonitorAlertVersionsForMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=MonitorAlertVersion)
 
     def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns monitoring logs for the model.
@@ -1327,15 +1358,17 @@ class ReadOnlyClient(BaseApiClient):
             Algorithm: A list of algorithms"""
         return self._call_api('listAlgorithms', 'GET', query_params={'problemType': problem_type, 'projectId': project_id}, parse_type=Algorithm)
 
-    def list_builtin_algorithms(self, project_id: str) -> Algorithm:
-        """
+    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list = None, training_config: dict = None) -> Algorithm:
+        """Return list of builtin algorithms based on given input.
 
         Args:
-            project_id (str): 
+            project_id (str): The unique ID associated with the project.
+            feature_group_ids (list): List of feature group ids applied to the algorithms.
+            training_config (dict): The training config key/value pairs used to train with the algorithm.
 
         Returns:
-            Algorithm: None"""
-        return self._call_api('listBuiltinAlgorithms', 'GET', query_params={'projectId': project_id}, parse_type=Algorithm)
+            Algorithm: A list of applicable builtin algorithms."""
+        return self._call_api('listBuiltinAlgorithms', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'trainingConfig': training_config}, parse_type=Algorithm)
 
     def describe_custom_loss_function(self, name: str) -> CustomLossFunction:
         """Retrieves a full description of a previously resgistered custom loss function.
@@ -1390,7 +1423,7 @@ class ApiClient(ReadOnlyClient):
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
 
-    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame, name: str = None, clean_column_names: bool = False) -> Dataset:
+    def create_dataset_from_pandas(self, feature_group_table_name: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
         """
         [Deprecated]
         Creates a Dataset from a pandas dataframe
@@ -1398,7 +1431,6 @@ class ApiClient(ReadOnlyClient):
         Args:
             feature_group_table_name (str): The table name to assign to the feature group created by this call
             df (pandas.DataFrame): The dataframe to upload
-            name (str): The name to give to the dataset
             clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
 
         Returns:
@@ -1406,7 +1438,7 @@ class ApiClient(ReadOnlyClient):
         """
         df = self._validate_pandas_df(df, clean_column_names)
         upload = self.create_dataset_from_upload(
-            name=name or feature_group_table_name, table_name=feature_group_table_name, file_format='PARQUET')
+            table_name=feature_group_table_name, file_format='PARQUET')
         return self._upload_from_pandas(upload, df)
 
     def create_dataset_version_from_pandas(self, table_name_or_id: str, df: pd.DataFrame, clean_column_names: bool = False) -> Dataset:
@@ -1480,7 +1512,7 @@ class ApiClient(ReadOnlyClient):
         """
 
         upload = self.create_dataset_from_upload(
-            name=table_name, table_name=table_name, file_format='TAR')
+            table_name=table_name, file_format='TAR')
         return self._upload_from_spark(upload, df).describe_feature_group()
 
     def update_feature_group_from_spark_df(self, table_name: str, df) -> FeatureGroup:
@@ -1672,7 +1704,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (String): A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
-            loss_function_type (String): The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+            loss_function_type (String): The category of problems that this loss would be applicable to. Ex - REGRESSION_DL_TF, CLASSIFICATION_DL_TF, etc.
             loss_function (Callable): A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)
 
         Returns:
@@ -2144,6 +2176,18 @@ class ApiClient(ReadOnlyClient):
             tag (str): The tag to add to the feature group"""
         return self._call_api('removeFeatureGroupTag', 'DELETE', query_params={'featureGroupId': feature_group_id, 'tag': tag})
 
+    def add_annotatable_feature(self, feature_group_id: str, name: str, annotation_type: str) -> FeatureGroup:
+        """
+
+        Args:
+            feature_group_id (str): 
+            name (str): 
+            annotation_type (str): 
+
+        Returns:
+            FeatureGroup: None"""
+        return self._call_api('addAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'annotationType': annotation_type}, parse_type=FeatureGroup)
+
     def set_feature_as_annotatable_feature(self, feature_group_id: str, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None) -> FeatureGroup:
         """
 
@@ -2169,29 +2213,29 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: None"""
         return self._call_api('unsetFeatureAsAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name}, parse_type=FeatureGroup)
 
-    def add_feature_group_annotation_tag(self, feature_group_id: str, tag_name: str, annotation_type: str, tag_definition: str = None) -> FeatureGroup:
+    def add_feature_group_annotation_label(self, feature_group_id: str, label_name: str, annotation_type: str, label_definition: str = None) -> FeatureGroup:
         """
 
         Args:
             feature_group_id (str): 
-            tag_name (str): 
+            label_name (str): 
             annotation_type (str): 
-            tag_definition (str): 
+            label_definition (str): 
 
         Returns:
             FeatureGroup: None"""
-        return self._call_api('addFeatureGroupAnnotationTag', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tagName': tag_name, 'annotationType': annotation_type, 'tagDefinition': tag_definition}, parse_type=FeatureGroup)
+        return self._call_api('addFeatureGroupAnnotationLabel', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'labelName': label_name, 'annotationType': annotation_type, 'labelDefinition': label_definition}, parse_type=FeatureGroup)
 
-    def remove_feature_group_annotation_tag(self, feature_group_id: str, tag_name: str) -> FeatureGroup:
+    def remove_feature_group_annotation_label(self, feature_group_id: str, label_name: str) -> FeatureGroup:
         """
 
         Args:
             feature_group_id (str): 
-            tag_name (str): 
+            label_name (str): 
 
         Returns:
             FeatureGroup: None"""
-        return self._call_api('removeFeatureGroupAnnotationTag', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tagName': tag_name}, parse_type=FeatureGroup)
+        return self._call_api('removeFeatureGroupAnnotationLabel', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'labelName': label_name}, parse_type=FeatureGroup)
 
     def add_feature_tag(self, feature_group_id: str, feature: str, tag: str):
         """
@@ -2750,11 +2794,10 @@ class ApiClient(ReadOnlyClient):
             Upload: The upload object associated with the upload process for the full file. The details of the object are described below:"""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, name: str, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
-            name (str): The name for the dataset.
             table_name (str): Organization-unique table name or the name of the feature group table to create using the source table.
             location (str): The URI location format of the dataset source. The URI location format needs to be specified to match the location_date_format when location_date_format is specified. Ex. Location = s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/* when The URI location format needs to include both the start_prefix and until_prefix when both are specified. Ex. Location s3://bucket1/dir1/* includes both s3://bucket1/dir1/dir2/event_date=2021-08-02/* and s3://bucket1/dir1/dir2/event_date=2021-08-08/*
             file_format (str): The file format of the dataset.
@@ -2769,7 +2812,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -2784,11 +2827,10 @@ class ApiClient(ReadOnlyClient):
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, name: str, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, timestamp_column: str = None) -> Dataset:
+    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, timestamp_column: str = None) -> Dataset:
         """Creates a dataset from a Database Connector
 
         Args:
-            name (str): The name for the dataset to be attached.
             table_name (str): Organization-unique table name
             database_connector_id (str): The Database Connector to import the dataset from
             object_name (str): If applicable, the name/id of the object in the service to query.
@@ -2801,13 +2843,12 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'timestampColumn': timestamp_column}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'timestampColumn': timestamp_column}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, name: str, table_name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from an Application Connector
 
         Args:
-            name (str): The name for the dataset
             table_name (str): Organization-unique table name
             application_connector_id (str): The unique application connector to download data from
             object_id (str): If applicable, the id of the object in the service to query.
@@ -2817,7 +2858,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         """Creates a new version of the specified dataset
@@ -2846,18 +2887,17 @@ class ApiClient(ReadOnlyClient):
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, name: str, table_name: str, file_format: str = None, csv_delimiter: str = None) -> Upload:
+    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None) -> Upload:
         """Creates a dataset and return an upload Id that can be used to upload a file.
 
         Args:
-            name (str): The name for the dataset.
             table_name (str): Organization-unique table name for this dataset.
             file_format (str): The file format of the dataset.
             csv_delimiter (str): If the file format is CSV, use a specific csv delimiter.
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         """Creates a new version of the specified dataset using a local file upload.
@@ -2870,18 +2910,17 @@ class ApiClient(ReadOnlyClient):
             Upload: A token to be used when uploading file parts."""
         return self._call_api('createDatasetVersionFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
 
-    def create_streaming_dataset(self, name: str, table_name: str, project_id: str = None, dataset_type: str = None) -> Dataset:
+    def create_streaming_dataset(self, table_name: str, project_id: str = None, dataset_type: str = None) -> Dataset:
         """Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
         Args:
-            name (str): The name for the dataset.
             table_name (str): The feature group table name to create for this dataset
             project_id (str): The project to create the streaming dataset for.
             dataset_type (str): The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for the datasetTypes that are supported per use case.
 
         Returns:
             Dataset: The streaming dataset created."""
-        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Dataset)
+        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'projectId': project_id, 'datasetType': dataset_type}, parse_type=Dataset)
 
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         """Snapshots the current data in the streaming dataset for training.
@@ -2905,11 +2944,10 @@ class ApiClient(ReadOnlyClient):
             Dataset: The dataset and schema after the data_type has been set"""
         return self._call_api('setDatasetColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'column': column, 'dataType': data_type}, parse_type=Dataset)
 
-    def create_dataset_from_streaming_connector(self, name: str, table_name: str, streaming_connector_id: str, streaming_args: dict = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_streaming_connector(self, table_name: str, streaming_connector_id: str, streaming_args: dict = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from a Streaming Connector
 
         Args:
-            name (str): The name for the dataset to be attached.
             table_name (str): Organization-unique table name
             streaming_connector_id (str): The Streaming Connector to import the dataset from
             streaming_args (dict): Dict of arguments to read data from the streaming connector
@@ -2917,7 +2955,7 @@ class ApiClient(ReadOnlyClient):
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'name': name, 'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'streamingArgs': streaming_args, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'streamingArgs': streaming_args, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
     def set_streaming_retention_policy(self, dataset_id: str, retention_hours: int = None, retention_row_count: int = None):
         """Sets the streaming retention policy
@@ -3063,14 +3101,6 @@ class ApiClient(ReadOnlyClient):
             'This function (removeDatasetFromProject) is deprecated and will be removed in a future version.')
         return self._call_api('removeDatasetFromProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id})
 
-    def rename_dataset(self, dataset_id: str, name: str):
-        """Rename a dataset.
-
-        Args:
-            dataset_id (str): The unique ID associated with the dataset.
-            name (str): The new name for the dataset."""
-        return self._call_api('renameDataset', 'PATCH', query_params={'datasetId': dataset_id}, body={'name': name})
-
     def delete_dataset(self, dataset_id: str):
         """Deletes the specified dataset from the organization.
 
@@ -3080,6 +3110,22 @@ class ApiClient(ReadOnlyClient):
         Args:
             dataset_id (str): The dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
+
+    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: dict = None) -> List[TrainingConfigOptions]:
+        """Retrieves the full initial description of the model training configuration options available for the specified project.
+
+        The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
+
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            feature_group_ids (list): The feature group IDs to be used for training
+            for_retrain (bool): If training config options are used for retrain
+            current_training_config (dict): This is None by default initially and represents the current state of the training config, with some options set, which shall be used to get new options after refresh.
+
+        Returns:
+            TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
+        return self._call_api('getTrainingConfigOptions', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain, 'currentTrainingConfig': current_training_config}, parse_type=TrainingConfigOptions)
 
     def create_train_test_data_split_feature_group(self, project_id: str, training_config: dict, feature_group_ids: list) -> FeatureGroup:
         """Get the train and test data split without training the model. Only supported for models with custom algorithms.
@@ -3241,16 +3287,17 @@ class ApiClient(ReadOnlyClient):
             Model: The updated model"""
         return self._call_api('updatePythonModelGit', 'POST', query_params={}, body={'modelId': model_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'pythonRoot': python_root, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
-    def set_model_training_config(self, model_id: str, training_config: dict) -> Model:
+    def set_model_training_config(self, model_id: str, training_config: dict, feature_group_ids: list = None) -> Model:
         """Edits the default model training config
 
         Args:
             model_id (str): The unique ID of the model to update
             training_config (dict): The training config key/value pairs used to train this model.
+            feature_group_ids (list): 
 
         Returns:
             Model: The model object correspoding after the training config is applied"""
-        return self._call_api('setModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config}, parse_type=Model)
+        return self._call_api('setModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=Model)
 
     def set_model_prediction_params(self, model_id: str, prediction_config: dict) -> Model:
         """Sets the model prediction config for the model
@@ -3270,8 +3317,8 @@ class ApiClient(ReadOnlyClient):
             model_id (str): The model to retrain.
             deployment_ids (list): List of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group ids provided by the user to train the model on.
-            custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
-            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+            custom_algorithms (list): List of user-defined algorithms to train. If not set, will honor the runs from last time and applicable new custom algorithms.
+            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, honor the runs from last time and applicable new builtin algorithms.
             custom_algorithm_configs (dict): The user-defined training configs for each custom algorithm.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
@@ -3321,7 +3368,7 @@ class ApiClient(ReadOnlyClient):
             CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
         return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override, 'trainingConfig': training_config, 'customAlgorithmConfig': custom_algorithm_config}, parse_type=CustomTrainFunctionInfo)
 
-    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_monitor_config: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
@@ -3330,14 +3377,17 @@ class ApiClient(ReadOnlyClient):
             training_feature_group_id (str): The unique ID of the training data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
-            target_value (str): A target positive value for the label to compute bias for
+            target_value (str): A target positive value for the label to compute bias and pr/auc for performance page (old style until UI is on prod) (TODO: @sheetal)
+            target_value_bias (str): A target positive value for the label to compute bias
+            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             model_id (str): The Unique ID of the Model
-            training_feature_mappings (dict): " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            feature_group_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'targetValueBias': target_value_bias, 'targetValuePerformance': target_value_performance, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings, 'featureGroupMonitorConfig': feature_group_monitor_config}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Reruns the specified model monitor.
@@ -3370,6 +3420,50 @@ class ApiClient(ReadOnlyClient):
         Args:
             model_monitor_version (str): The ID of the model monitor version to delete."""
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
+
+    def create_monitor_alert(self, project_id: str, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict) -> MonitorAlert:
+        """Create a monitor alert for the given conditions and monitor
+
+        Args:
+            project_id (str): 
+            model_monitor_id (str): The unique identifier to a model monitor created under the project.
+            alert_name (str): The alert name.
+            condition_config (dict): The condition to run the actions for the alert.
+            action_config (dict): The configuration for the action of the alert
+
+        Returns:
+            MonitorAlert: An object describing the monitor alert"""
+        return self._call_api('createMonitorAlert', 'POST', query_params={}, body={'projectId': project_id, 'modelMonitorId': model_monitor_id, 'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config}, parse_type=MonitorAlert)
+
+    def update_monitor_alert(self, monitor_alert_id: str, alert_name: str = None, condition_config: dict = None, action_config: dict = None) -> MonitorAlert:
+        """
+
+        Args:
+            monitor_alert_id (str): 
+            alert_name (str): 
+            condition_config (dict): 
+            action_config (dict): 
+
+        Returns:
+            MonitorAlert: None"""
+        return self._call_api('updateMonitorAlert', 'POST', query_params={}, body={'monitorAlertId': monitor_alert_id, 'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config}, parse_type=MonitorAlert)
+
+    def run_monitor_alert(self, monitor_alert_id: str) -> MonitorAlert:
+        """Reruns a given monitor alert from latest monitor instance
+
+        Args:
+            monitor_alert_id (str): The unique identifier to a monitor alert
+
+        Returns:
+            MonitorAlert: An object describing the monitor alert"""
+        return self._call_api('runMonitorAlert', 'POST', query_params={}, body={'monitorAlertId': monitor_alert_id}, parse_type=MonitorAlert)
+
+    def delete_monitor_alert(self, monitor_alert_id: str):
+        """
+
+        Args:
+            monitor_alert_id (str): """
+        return self._call_api('deleteMonitorAlert', 'DELETE', query_params={'monitorAlertId': monitor_alert_id})
 
     def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
@@ -3880,6 +3974,16 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): assignment overrides to the solution."""
         return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
+    def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, blob_key_name: str = 'blob') -> Dict:
+        """Make predictions for a given blob, e.g. image, audio
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            blob (io.TextIOBase): The multipart/form-data of the data
+            blob_key_name (str): the key to access this blob data in the model query data"""
+        return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'blobKeyName': blob_key_name}, files={'blob': blob}, server_override=self.default_prediction_url)
+
     def create_prediction_metric(self, feature_group_id: str, prediction_metric_config: dict, project_id: str = None) -> PredictionMetric:
         """Create a prediction metric job description for the given prediction and actual-labels data.
 
@@ -4076,7 +4180,7 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('setBatchPredictionDatasetRemap', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id, 'datasetIdRemap': dataset_id_remap}, parse_type=BatchPrediction)
 
     def delete_batch_prediction(self, batch_prediction_id: str):
-        """Deletes a batch prediction
+        """Deletes a batch prediction and associated data such as associated monitors.
 
         Args:
             batch_prediction_id (str): The unique identifier of the batch prediction"""
@@ -4221,19 +4325,21 @@ class ApiClient(ReadOnlyClient):
             data (list): The data to record, as an array of JSON objects"""
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None) -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None) -> PythonFunction:
         """Creates a custom python function that's re-usable
 
         Args:
             name (str): The name to identify the python function
             source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the python function.
+            function_variable_mappings (list): List of python function arguments.
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             PythonFunction: The python function that can be used (i.e. for feature group transform)"""
-        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name}, parse_type=PythonFunction)
+        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements}, parse_type=PythonFunction)
 
-    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None) -> PythonFunction:
+    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None) -> PythonFunction:
         """Update custom python function with user inputs for the given python function.
 
         Args:
@@ -4241,10 +4347,11 @@ class ApiClient(ReadOnlyClient):
             source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the python function.
             function_variable_mappings (list): List of python function arguments
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
 
         Returns:
             PythonFunction: The python_function object."""
-        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings}, parse_type=PythonFunction)
+        return self._call_api('updatePythonFunction', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements}, parse_type=PythonFunction)
 
     def delete_python_function(self, name: str):
         """Removes an existing python function.
@@ -4305,7 +4412,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
-            loss_function_type (str): The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+            loss_function_type (str): The category of problems that this loss would be applicable to. Ex - REGRESSION_DL_TF, CLASSIFICATION_DL_TF, etc
             loss_function_name (str): The name of the function whose full source code is passed in loss_function_source_code
             loss_function_source_code (str): Python source code string of the function
 

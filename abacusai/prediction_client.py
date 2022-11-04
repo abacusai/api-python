@@ -330,3 +330,13 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): assignment overrides to the solution."""
         return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
+
+    def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, blob_key_name: str = 'blob') -> Dict:
+        """Make predictions for a given blob, e.g. image, audio
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            blob (io.TextIOBase): The multipart/form-data of the data
+            blob_key_name (str): the key to access this blob data in the model query data"""
+        return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'blobKeyName': blob_key_name}, files={'blob': blob}, server_override=self.default_prediction_url)

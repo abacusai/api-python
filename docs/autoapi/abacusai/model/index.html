@@ -102,6 +102,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
@@ -184,33 +186,34 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.model.Model">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelPredictionConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharedAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictManyFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializeFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainingInputTables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourceCode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpuSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainingFeatureGroupIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isPythonModel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaultAlgorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customAlgorithmConfigs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshSchedules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latestModelVersion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelPredictionConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shared</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharedAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictManyFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initializeFunctionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainingInputTables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourceCode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpuSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainingFeatureGroupIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isPythonModel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaultAlgorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">customAlgorithmConfigs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restrictedAlgorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshSchedules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latestModelVersion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>A model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The user-friendly name for the model.</p></li>
-<li><p><strong>modelId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier of the model.</p></li>
-<li><p><strong>modelConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The training config options used to train this model.</p></li>
-<li><p><strong>modelPredictionConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The prediction config options for the model.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Date and time at which the model was created.</p></li>
-<li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The project this model belongs to.</p></li>
-<li><p><strong>shared</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If model is shared to the Abacus.AI model showcase.</p></li>
-<li><p><strong>sharedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The date and time at which the model was shared to the model showcase</p></li>
-<li><p><strong>trainFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.</p></li>
-<li><p><strong>predictFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>predictManyFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code that will be executed to run batch predictions trhough the model.</p></li>
-<li><p><strong>initializeFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code to initialize the trained model before using it to make predictions using the model</p></li>
-<li><p><strong>trainingInputTables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
-<li><p><strong>sourceCode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Python code used to make the model.</p></li>
-<li><p><strong>cpuSize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Cpu size specified for the python model training.</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory in GB specified for the python model training.</p></li>
-<li><p><strong>trainingFeatureGroupIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>unique string identifiers</em>) – The unique identifiers of the feature groups used as the inputs to train this model on.</p></li>
-<li><p><strong>isPythonModel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If this model is handled as python model</p></li>
-<li><p><strong>defaultAlgorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – If set, this algorithm will always be used when deploying the model regardless of the model metrics</p></li>
-<li><p><strong>customAlgorithmConfigs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – User-defined configs for each of the user-defined custom algorithm</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The user-friendly name for the model.</p></li>
+<li><p><strong>modelId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the model.</p></li>
+<li><p><strong>modelConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The training config options used to train this model.</p></li>
+<li><p><strong>modelPredictionConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The prediction config options for the model.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Date and time at which the model was created.</p></li>
+<li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The project this model belongs to.</p></li>
+<li><p><strong>shared</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If model is shared to the Abacus.AI model showcase.</p></li>
+<li><p><strong>sharedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The date and time at which the model was shared to the model showcase</p></li>
+<li><p><strong>trainFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.</p></li>
+<li><p><strong>predictFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>predictManyFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code that will be executed to run batch predictions trhough the model.</p></li>
+<li><p><strong>initializeFunctionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code to initialize the trained model before using it to make predictions using the model</p></li>
+<li><p><strong>trainingInputTables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
+<li><p><strong>sourceCode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Python code used to make the model.</p></li>
+<li><p><strong>cpuSize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cpu size specified for the python model training.</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory in GB specified for the python model training.</p></li>
+<li><p><strong>trainingFeatureGroupIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique string identifiers</em>) – The unique identifiers of the feature groups used as the inputs to train this model on.</p></li>
+<li><p><strong>isPythonModel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If this model is handled as python model</p></li>
+<li><p><strong>defaultAlgorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If set, this algorithm will always be used when deploying the model regardless of the model metrics</p></li>
+<li><p><strong>customAlgorithmConfigs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – User-defined configs for each of the user-defined custom algorithm</p></li>
+<li><p><strong>restrictedAlgorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – User-selected algorithms to train.</p></li>
 <li><p><strong>latestModelVersion</strong> (<a class="reference internal" href="../model_version/index.html#abacusai.model_version.ModelVersion" title="abacusai.model_version.ModelVersion"><em>ModelVersion</em></a>) – The latest model version.</p></li>
 <li><p><strong>location</strong> (<a class="reference internal" href="../model_location/index.html#abacusai.model_location.ModelLocation" title="abacusai.model_location.ModelLocation"><em>ModelLocation</em></a>) – Location information for models that are imported.</p></li>
 <li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of refresh schedules that indicate when the next model version will be trained</p></li>
@@ -233,7 +236,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -244,7 +247,7 @@
 <dd><p>Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID of the model. By default will return for latest model version if version is not specified.</p>
+<dd class="field-odd"><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID of the model. By default will return for latest model version if version is not specified.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The feature group containing the training data and folds information.</p>
@@ -275,7 +278,7 @@
 <dd><p>Retrieves a full description of the specified model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the model.</p>
+<dd class="field-odd"><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the model.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The description of the model.</p>
@@ -292,7 +295,7 @@
 <dd><p>Renames a model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name to apply to the model</p>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name to apply to the model</p>
 </dd>
 </dl>
 </dd></dl>
@@ -310,15 +313,15 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.</p></li>
-<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.</p></li>
-<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code that will be executed to run batch predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>initialize_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the source code to initialize the trained model before using it to make predictions using the model</p></li>
-<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
-<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Json with key value pairs corresponding to package: version for each dependency</p></li>
+<li><p><strong>function_source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.</p></li>
+<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code that will be executed to run batch predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>initialize_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the source code to initialize the trained model before using it to make predictions using the model</p></li>
+<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
+<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Json with key value pairs corresponding to package: version for each dependency</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -343,15 +346,15 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.</p></li>
-<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Full path of the module that contains the train function from the root of the zip.</p></li>
-<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Full path of the module that contains the predict function from the root of the zip.</p></li>
-<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
-<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Json with key value pairs corresponding to package: version for each dependency</p></li>
+<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Full path of the module that contains the train function from the root of the zip.</p></li>
+<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Full path of the module that contains the predict function from the root of the zip.</p></li>
+<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
+<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Json with key value pairs corresponding to package: version for each dependency</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -376,17 +379,17 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the git application connector.</p></li>
-<li><p><strong>branch_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the branch in the git repository to be used for training.</p></li>
-<li><p><strong>python_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.</p></li>
-<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.</p></li>
-<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.</p></li>
-<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Full path of the module that contains the train function from the root of the zip.</p></li>
-<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Full path of the module that contains the predict function from the root of the zip.</p></li>
-<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
-<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
+<li><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the git application connector.</p></li>
+<li><p><strong>branch_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the branch in the git repository to be used for training.</p></li>
+<li><p><strong>python_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.</p></li>
+<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.</p></li>
+<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Full path of the module that contains the train function from the root of the zip.</p></li>
+<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Full path of the module that contains the predict function from the root of the zip.</p></li>
+<li><p><strong>training_input_tables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).</p></li>
+<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the cpu for the model training function</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -400,11 +403,14 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model.Model.set_training_config">
-<span class="sig-name descname"><span class="pre">set_training_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">training_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.set_training_config" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_training_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">training_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.set_training_config" title="Permalink to this definition"></a></dt>
 <dd><p>Edits the default model training config</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The training config key/value pairs used to train this model.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The training config key/value pairs used to train this model.</p></li>
+<li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – </p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The model object correspoding after the training config is applied</p>
@@ -421,7 +427,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd><p>Sets the model prediction config for the model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>prediction_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The prediction config for the model</p>
+<dd class="field-odd"><p><strong>prediction_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The prediction config for the model</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The model object correspoding after the prediction config is applied</p>
@@ -440,8 +446,8 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The version of the model.</p></li>
-<li><p><strong>baseline_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, will also return the baseline model metrics for comparison.</p></li>
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The version of the model.</p></li>
+<li><p><strong>baseline_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, will also return the baseline model metrics for comparison.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -460,8 +466,8 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The max length of the list of all dataset versions.</p></li>
-<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The id of the version after which the list starts.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The max length of the list of all dataset versions.</p></li>
+<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The id of the version after which the list starts.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -480,14 +486,14 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of deployments to automatically deploy to.</p></li>
-<li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of feature group ids provided by the user to train the model on.</p></li>
-<li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.</p></li>
-<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.</p></li>
-<li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The user-defined training configs for each custom algorithm.</p></li>
-<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Size of the cpu for the user-defined algorithms during train.</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during train.</p></li>
-<li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The training config key/value pairs used to train this model.</p></li>
+<li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of deployments to automatically deploy to.</p></li>
+<li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of feature group ids provided by the user to train the model on.</p></li>
+<li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, will honor the runs from last time and applicable new custom algorithms.</p></li>
+<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of the builtin algorithms provided by Abacus.AI to train. If not set, honor the runs from last time and applicable new builtin algorithms.</p></li>
+<li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The user-defined training configs for each custom algorithm.</p></li>
+<li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the cpu for the user-defined algorithms during train.</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during train.</p></li>
+<li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The training config key/value pairs used to train this model.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -505,7 +511,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd><p>Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The ID of the model to delete.</p>
+<dd class="field-odd"><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the model to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -518,7 +524,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_id</strong> (<em>Unique String Identifier</em>) – The model to set</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the algorithm to pin in the model</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – the algorithm to pin in the model</p></li>
 <li><p><strong>algorithm</strong> – </p></li>
 </ul>
 </dd>
@@ -532,8 +538,8 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the model version to deploy.</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the algorithm to deploy.</p></li>
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the model version to deploy.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the algorithm to deploy.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -551,7 +557,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd><p>A waiting call until model is trained.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -562,7 +568,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd><p>A waiting call until model is evaluated completely.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -573,7 +579,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd><p>A waiting call until full AutoML cycle is completed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -587,10 +593,10 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd class="field-odd"><p>A string describing the status of a model training (pending, complete, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>get_automl_status</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – </p>
+<dd class="field-odd"><p><strong>get_automl_status</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – </p>
 </dd>
 </dl>
 </dd></dl>
@@ -601,7 +607,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd><p>To create a refresh policy for a model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
+<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The refresh policy object.</p>

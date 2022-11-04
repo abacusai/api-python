@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -47,6 +47,8 @@ Classes
    :type failedDeploymentIds: list
    :param metricConfigs: List of metric configs for the model monitor instance.
    :type metricConfigs: json field
+   :param featureGroupMonitorConfigs: Configurations for feature group monitor
+   :type featureGroupMonitorConfigs: dict
    :param metricTypes: List of metric types.
    :type metricTypes: dict
    :param modelVersion: Model version IDs that this refresh pipeline run is monitoring.
@@ -116,6 +118,17 @@ Classes
 
       :returns: Data associated with the metric.
       :rtype: ModelMonitorVersionMetricData
+
+
+   .. py:method:: list_monitor_alert_versions_for_monitor_version()
+
+      Retrieves the list of monitor alerts version for a specified monitor instance
+
+      :param model_monitor_version: The unique ID associated with the model monitor.
+      :type model_monitor_version: str
+
+      :returns: An array of monitor alerts.
+      :rtype: MonitorAlertVersion
 
 
    .. py:method:: get_model_monitoring_logs(stdout = False, stderr = False)

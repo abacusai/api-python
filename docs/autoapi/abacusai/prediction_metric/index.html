@@ -99,6 +99,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
@@ -191,12 +193,12 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Date and time when this prediction metric was created.</p></li>
-<li><p><strong>featureGroupId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The feature group used as input to this prediction metric.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Date and time when this prediction metric was created.</p></li>
+<li><p><strong>featureGroupId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The feature group used as input to this prediction metric.</p></li>
 <li><p><strong>predictionMetricConfig</strong> (<em>json</em>) – Specification for the prediction metric to run in this job.</p></li>
-<li><p><strong>predictionMetricId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier of the prediction metric.</p></li>
-<li><p><strong>modelMonitorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – unique string identifier for model monitor that created prediction metric</p></li>
-<li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The project this prediction metric belongs to.</p></li>
+<li><p><strong>predictionMetricId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the prediction metric.</p></li>
+<li><p><strong>modelMonitorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – unique string identifier for model monitor that created prediction metric</p></li>
+<li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The project this prediction metric belongs to.</p></li>
 <li><p><strong>latestPredictionMetricVersionDescription</strong> (<a class="reference internal" href="../prediction_metric_version/index.html#abacusai.prediction_metric_version.PredictionMetricVersion" title="abacusai.prediction_metric_version.PredictionMetricVersion"><em>PredictionMetricVersion</em></a>) – Description of the latest prediction metric version (if any).</p></li>
 <li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of schedules that determines when the next version of the dataset will be created.</p></li>
 </ul>
@@ -217,7 +219,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -242,7 +244,7 @@
 <dd><p>Describe a Prediction Metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>should_include_latest_version_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – include the description of the latest prediction metric version</p>
+<dd class="field-odd"><p><strong>should_include_latest_version_description</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – include the description of the latest prediction metric version</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The prediction metric object.</p>
@@ -259,7 +261,7 @@
 <dd><p>Removes an existing PredictionMetric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>prediction_metric_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the prediction metric.</p>
+<dd class="field-odd"><p><strong>prediction_metric_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the prediction metric.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -271,7 +273,7 @@
 <p>Configures and starts the computations running to compute the prediciton metric.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>prediction_metric_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The prediction metric job description to apply for configuring a prediction metric job.</p>
+<dd class="field-odd"><p><strong>prediction_metric_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The prediction metric job description to apply for configuring a prediction metric job.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A prediction metric version. For more information, please refer to the details on the object (below).</p>
@@ -289,8 +291,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The the number of prediction metric instances to be retrieved.</p></li>
-<li><p><strong>start_after_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – An offset parameter to exclude all prediction metric versions till the specified prediction metric ID.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The the number of prediction metric instances to be retrieved.</p></li>
+<li><p><strong>start_after_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An offset parameter to exclude all prediction metric versions till the specified prediction metric ID.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

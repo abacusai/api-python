@@ -102,6 +102,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
@@ -191,17 +193,17 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>featureGroupVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier for this version of feature group.</p></li>
-<li><p><strong>featureGroupId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>sql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The sql definition creating this feature group.</p></li>
-<li><p><strong>sourceTables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>string</em>) – The source tables for this feature group.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The timestamp at which the feature group was created.</p></li>
-<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The current status of the feature group version.</p></li>
-<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Relevant error if the status is FAILED.</p></li>
-<li><p><strong>deployable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether feature group is deployable or not.</p></li>
-<li><p><strong>cpuSize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Cpu size specified for the python feature group.</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory in GB specified for the python feature group.</p></li>
-<li><p><strong>useOriginalCsvNames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, the feature group will use the original column names in the source dataset.</p></li>
+<li><p><strong>featureGroupVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for this version of feature group.</p></li>
+<li><p><strong>featureGroupId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
+<li><p><strong>sql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The sql definition creating this feature group.</p></li>
+<li><p><strong>sourceTables</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>string</em>) – The source tables for this feature group.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The timestamp at which the feature group was created.</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The current status of the feature group version.</p></li>
+<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Relevant error if the status is FAILED.</p></li>
+<li><p><strong>deployable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – whether feature group is deployable or not.</p></li>
+<li><p><strong>cpuSize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cpu size specified for the python feature group.</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory in GB specified for the python feature group.</p></li>
+<li><p><strong>useOriginalCsvNames</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, the feature group will use the original column names in the source dataset.</p></li>
 <li><p><strong>features</strong> (<a class="reference internal" href="../feature/index.html#abacusai.feature.Feature" title="abacusai.feature.Feature"><em>Feature</em></a>) – List of features.</p></li>
 <li><p><strong>pointInTimeGroups</strong> (<a class="reference internal" href="../point_in_time_group/index.html#abacusai.point_in_time_group.PointInTimeGroup" title="abacusai.point_in_time_group.PointInTimeGroup"><em>PointInTimeGroup</em></a>) – List of Point In Time Groups</p></li>
 <li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – If a python feature group, information on the source code</p></li>
@@ -223,7 +225,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -234,7 +236,7 @@
 <dd><p>Creates a Snapshot Feature Group corresponding to a specific feature group version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name for the newly created Snapshot Feature Group table.</p>
+<dd class="field-odd"><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name for the newly created Snapshot Feature Group table.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Feature Group corresponding to the newly created Snapshot.</p>
@@ -252,9 +254,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Cloud file location to export to.</p></li>
-<li><p><strong>export_file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File format to export to.</p></li>
-<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true and a file exists at this location, this process will overwrite the file.</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cloud file location to export to.</p></li>
+<li><p><strong>export_file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – File format to export to.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true and a file exists at this location, this process will overwrite the file.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -273,12 +275,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Database connector to export to.</p></li>
-<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The database object to write to</p></li>
-<li><p><strong>write_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Either INSERT or UPSERT</p></li>
-<li><p><strong>database_feature_mapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – A key/value pair JSON Object of “database connector column” -&gt; “feature name” pairs.</p></li>
-<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT</p></li>
-<li><p><strong>additional_id_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – For database connectors which support it, additional ID columns to use as a complex key for upserting</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Database connector to export to.</p></li>
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The database object to write to</p></li>
+<li><p><strong>write_mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Either INSERT or UPSERT</p></li>
+<li><p><strong>database_feature_mapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A key/value pair JSON Object of “database connector column” -&gt; “feature name” pairs.</p></li>
+<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT</p></li>
+<li><p><strong>additional_id_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – For database connectors which support it, additional ID columns to use as a complex key for upserting</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -296,7 +298,7 @@
 <dd><p>Export Feature group to console.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>export_file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – File format to export to.</p>
+<dd class="field-odd"><p><strong>export_file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – File format to export to.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The FeatureGroupExport instance</p>
@@ -314,8 +316,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Set True to get info logs</p></li>
-<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Set True to get error logs</p></li>
+<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set True to get info logs</p></li>
+<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set True to get error logs</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -347,7 +349,7 @@
 <dd><p>Get a specific feature group version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the feature group version.</p>
+<dd class="field-odd"><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the feature group version.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A feature group version.</p>
@@ -364,7 +366,7 @@
 <dd><p>A waiting call until feature group version is materialized</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -375,7 +377,7 @@
 <dd><p>A waiting call until feature group version is materialized.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -389,7 +391,7 @@
 <dd class="field-odd"><p>A string describing the status of a feature group version (pending, complete, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -405,7 +407,7 @@
 <dd><p>Loads the feature group version into a pandas dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The number of threads.</p>
+<dd class="field-odd"><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The number of threads.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A pandas dataframe displaying the data in the feature group version.</p>

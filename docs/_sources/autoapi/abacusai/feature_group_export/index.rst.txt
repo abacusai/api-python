@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None)
+.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55,6 +55,8 @@ Classes
    :type additionalIdColumns: list of string
    :param error: If status is FAILED, this field will be populated with an error.
    :type error: str
+   :param databaseOutputError: If true, there were errors reported by the database connector while writing
+   :type databaseOutputError: bool
 
    .. py:method:: __repr__()
 
@@ -97,6 +99,14 @@ Classes
 
       :returns: The feature group export
       :rtype: FeatureGroupExport
+
+
+   .. py:method:: get_connector_errors()
+
+      Returns a stream containing the feature group export database connection write errors, if any writes failed to the database connector
+
+      :param feature_group_export_id: The ID of the feature group export to get the errors for
+      :type feature_group_export_id: str
 
 
    .. py:method:: wait_for_results(timeout=3600)

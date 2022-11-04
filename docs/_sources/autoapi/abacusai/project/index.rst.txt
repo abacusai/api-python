@@ -212,9 +212,9 @@ Classes
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False)
+   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None)
 
-      Retrieves the full description of the model training configuration options available for the specified project.
+      Retrieves the full initial description of the model training configuration options available for the specified project.
 
       The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
 
@@ -223,6 +223,8 @@ Classes
       :type feature_group_ids: list
       :param for_retrain: If training config options are used for retrain
       :type for_retrain: bool
+      :param current_training_config: This is None by default initially and represents the current state of the training config, with some options set, which shall be used to get new options after refresh.
+      :type current_training_config: dict
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
@@ -343,7 +345,7 @@ Classes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
+   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_monitor_config = None)
 
       Runs a model monitor for the specified project.
 
@@ -355,14 +357,20 @@ Classes
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
       :type refresh_schedule: str
-      :param target_value: A target positive value for the label to compute bias for
+      :param target_value: A target positive value for the label to compute bias and pr/auc for performance page (old style until UI is on prod) (TODO: @sheetal)
       :type target_value: str
+      :param target_value_bias: A target positive value for the label to compute bias
+      :type target_value_bias: str
+      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
+      :type target_value_performance: str
       :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
       :param model_id: The Unique ID of the Model
       :type model_id: str
-      :param training_feature_mappings: " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+      :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
+      :param feature_group_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
+      :type feature_group_monitor_config: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -377,6 +385,23 @@ Classes
 
       :returns: An array of model monitors.
       :rtype: ModelMonitor
+
+
+   .. py:method:: create_monitor_alert(model_monitor_id, alert_name, condition_config, action_config)
+
+      Create a monitor alert for the given conditions and monitor
+
+      :param model_monitor_id: The unique identifier to a model monitor created under the project.
+      :type model_monitor_id: str
+      :param alert_name: The alert name.
+      :type alert_name: str
+      :param condition_config: The condition to run the actions for the alert.
+      :type condition_config: dict
+      :param action_config: The configuration for the action of the alert
+      :type action_config: dict
+
+      :returns: An object describing the monitor alert
+      :rtype: MonitorAlert
 
 
    .. py:method:: create_deployment_token(name = None)
@@ -447,12 +472,16 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: list_builtin_algorithms()
+   .. py:method:: list_builtin_algorithms(feature_group_ids = None, training_config = None)
 
-      :param project_id:
-      :type project_id: str
+      Return list of builtin algorithms based on given input.
 
-      :returns: None
+      :param feature_group_ids: List of feature group ids applied to the algorithms.
+      :type feature_group_ids: list
+      :param training_config: The training config key/value pairs used to train with the algorithm.
+      :type training_config: dict
+
+      :returns: A list of applicable builtin algorithms.
       :rtype: Algorithm
 
 

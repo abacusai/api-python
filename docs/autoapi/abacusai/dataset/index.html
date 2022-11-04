@@ -102,6 +102,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
@@ -184,28 +186,27 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.dataset.Dataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasetId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourceType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignoreBefore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ephemeral</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookbackDays</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseConnectorId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseConnectorConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectorType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupTableName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">applicationConnectorId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">applicationConnectorConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshSchedules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latestDatasetVersion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.dataset.Dataset" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasetId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sourceType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignoreBefore</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ephemeral</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookbackDays</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseConnectorId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseConnectorConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectorType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupTableName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">applicationConnectorId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">applicationConnectorConfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">incremental</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshSchedules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latestDatasetVersion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.dataset.Dataset" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>A dataset reference</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>datasetId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier of the dataset.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The user-friendly name of the dataset.</p></li>
-<li><p><strong>sourceType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The source of the Dataset. EXTERNAL_SERVICE, UPLOAD, or STREAMING.</p></li>
-<li><p><strong>dataSource</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Location of data. It may be a URI such as an s3 bucket or the database table.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The timestamp at which this dataset was created.</p></li>
-<li><p><strong>ignoreBefore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The timestamp at which all previous events are ignored when training.</p></li>
-<li><p><strong>ephemeral</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – The dataset is ephemeral and not used for training.</p></li>
-<li><p><strong>lookbackDays</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Specific to streaming datasets, this specifies how many days worth of data to include when generating a snapshot. Value of 0 indicates leaves this selection to the system.</p></li>
-<li><p><strong>databaseConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The Database Connector used.</p></li>
-<li><p><strong>databaseConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The database connector query used to retrieve data.</p></li>
-<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The type of connector used to get this dataset FILE or DATABASE.</p></li>
-<li><p><strong>featureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The table name of the dataset’s feature group</p></li>
-<li><p><strong>applicationConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The Application Connector used.</p></li>
-<li><p><strong>applicationConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The application connector query used to retrieve data.</p></li>
-<li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If dataset is an incremental dataset.</p></li>
+<li><p><strong>datasetId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the dataset.</p></li>
+<li><p><strong>sourceType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The source of the Dataset. EXTERNAL_SERVICE, UPLOAD, or STREAMING.</p></li>
+<li><p><strong>dataSource</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Location of data. It may be a URI such as an s3 bucket or the database table.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The timestamp at which this dataset was created.</p></li>
+<li><p><strong>ignoreBefore</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The timestamp at which all previous events are ignored when training.</p></li>
+<li><p><strong>ephemeral</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – The dataset is ephemeral and not used for training.</p></li>
+<li><p><strong>lookbackDays</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Specific to streaming datasets, this specifies how many days worth of data to include when generating a snapshot. Value of 0 indicates leaves this selection to the system.</p></li>
+<li><p><strong>databaseConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The Database Connector used.</p></li>
+<li><p><strong>databaseConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The database connector query used to retrieve data.</p></li>
+<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of connector used to get this dataset FILE or DATABASE.</p></li>
+<li><p><strong>featureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The table name of the dataset’s feature group</p></li>
+<li><p><strong>applicationConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The Application Connector used.</p></li>
+<li><p><strong>applicationConnectorConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The application connector query used to retrieve data.</p></li>
+<li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If dataset is an incremental dataset.</p></li>
 <li><p><strong>latestDatasetVersion</strong> (<a class="reference internal" href="../dataset_version/index.html#abacusai.dataset_version.DatasetVersion" title="abacusai.dataset_version.DatasetVersion"><em>DatasetVersion</em></a>) – The latest version of this dataset.</p></li>
 <li><p><strong>schema</strong> (<a class="reference internal" href="../dataset_column/index.html#abacusai.dataset_column.DatasetColumn" title="abacusai.dataset_column.DatasetColumn"><em>DatasetColumn</em></a>) – List of resolved columns.</p></li>
 <li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of schedules that determines when the next version of the dataset will be created.</p></li>
@@ -227,7 +228,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -239,9 +240,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A new external URI to import the dataset from. If not specified, the last location will be used.</p></li>
-<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The fileFormat to be used. If not specified, the service will try to detect the file format.</p></li>
-<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter.</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A new external URI to import the dataset from. If not specified, the last location will be used.</p></li>
+<li><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The fileFormat to be used. If not specified, the service will try to detect the file format.</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If the file format is CSV, use a specific csv delimiter.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -260,10 +261,10 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – If applicable, the name/id of the object in the service to query. If not specified, the last name will be used.</p></li>
-<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The columns to query from the external service object. If not specified, the last columns will be used.</p></li>
-<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Additional query arguments to filter the data. If not specified, the last arguments will be used.</p></li>
-<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments</p></li>
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If applicable, the name/id of the object in the service to query. If not specified, the last name will be used.</p></li>
+<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The columns to query from the external service object. If not specified, the last columns will be used.</p></li>
+<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional query arguments to filter the data. If not specified, the last arguments will be used.</p></li>
+<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -282,9 +283,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>object_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – If applicable, the id of the object in the service to query. If not specified, the last name will be used.</p></li>
-<li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The Unix timestamp of the start of the period that will be queried.</p></li>
-<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The Unix timestamp of the end of the period that will be queried.</p></li>
+<li><p><strong>object_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If applicable, the id of the object in the service to query. If not specified, the last name will be used.</p></li>
+<li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The Unix timestamp of the start of the period that will be queried.</p></li>
+<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The Unix timestamp of the end of the period that will be queried.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -302,7 +303,7 @@
 <dd><p>Creates a new version of the specified dataset using a local file upload.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The file_format to be used. If not specified, the service will try to detect the file format.</p>
+<dd class="field-odd"><p><strong>file_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The file_format to be used. If not specified, the service will try to detect the file format.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A token to be used when uploading file parts.</p>
@@ -319,7 +320,7 @@
 <dd><p>Snapshots the current data in the streaming dataset for training.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The new Dataset Version created.</p>
@@ -337,8 +338,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the column.</p></li>
-<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/DataType">https://api.abacus.ai/app/help/class/DataType</a>] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.</p></li>
+<li><p><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the column.</p></li>
+<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/DataType">https://api.abacus.ai/app/help/class/DataType</a>] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -357,8 +358,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>retention_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The number of hours to retain streamed data in memory</p></li>
-<li><p><strong>retention_row_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The number of rows to retain streamed data in memory</p></li>
+<li><p><strong>retention_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of hours to retain streamed data in memory</p></li>
+<li><p><strong>retention_row_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of rows to retain streamed data in memory</p></li>
 </ul>
 </dd>
 </dl>
@@ -370,7 +371,7 @@
 <dd><p>Retrieves the column schema of a dataset</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The Dataset schema to lookup.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The Dataset schema to lookup.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of Column schema definitions</p>
@@ -401,7 +402,7 @@
 <dd><p>Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the dataset.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The dataset.</p>
@@ -419,8 +420,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – The max length of the list of all dataset versions.</p></li>
-<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The id of the version after which the list starts.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The max length of the list of all dataset versions.</p></li>
+<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The id of the version after which the list starts.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -440,8 +441,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The project to attach the dataset to.</p></li>
-<li><p><strong>dataset_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>] for the datasetTypes that are supported per use case.</p></li>
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The project to attach the dataset to.</p></li>
+<li><p><strong>dataset_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>] for the datasetTypes that are supported per use case.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -459,18 +460,7 @@
 <dd><p>[DEPRECATED] Removes a dataset from a project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique ID associated with the project.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.dataset.Dataset.rename">
-<span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.dataset.Dataset.rename" title="Permalink to this definition"></a></dt>
-<dd><p>Rename a dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The new name for the dataset.</p>
+<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the project.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -482,7 +472,7 @@
 <p>The dataset cannot be deleted if it is currently attached to a project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The dataset to delete.</p>
+<dd class="field-odd"><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The dataset to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -493,7 +483,7 @@
 <dd><p>A waiting call until dataset is imported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -504,7 +494,7 @@
 <dd><p>A waiting call until dataset is completely inspected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -518,7 +508,7 @@
 <dd class="field-odd"><p>A string describing the status of a dataset (importing, inspecting, complete, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -543,7 +533,7 @@
 <dd><p>To create a refresh policy for a dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
+<dd class="field-odd"><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron style string to set the refresh time.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The refresh policy object.</p>

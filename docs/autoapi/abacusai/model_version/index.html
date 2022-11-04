@@ -102,6 +102,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
@@ -191,26 +193,26 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique identifier of a model version.</p></li>
-<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The current status of the model.</p></li>
-<li><p><strong>modelId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – A reference to the model this version belongs to.</p></li>
-<li><p><strong>modelConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The training config options used to train this model.</p></li>
-<li><p><strong>modelPredictionConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – The prediction config options for the model.</p></li>
-<li><p><strong>trainingStartedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The start time and date of the training process.</p></li>
-<li><p><strong>trainingCompletedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The end time and date of the training process.</p></li>
-<li><p><strong>datasetVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>unique string identifiers</em>) – Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.</p></li>
-<li><p><strong>featureGroupVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – </p></li>
-<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Relevant error if the status is FAILED.</p></li>
-<li><p><strong>pendingDeploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of deployment IDs where deployment is pending.</p></li>
-<li><p><strong>failedDeploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of failed deployment IDs.</p></li>
-<li><p><strong>cpuSize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – Cpu size specified for the python model training.</p></li>
-<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – Memory in GB specified for the python model training.</p></li>
-<li><p><strong>automlComplete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – If true, all algorithms have compelted training</p></li>
-<li><p><strong>trainingFeatureGroupIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a><em> of </em><em>unique string identifiers</em>) – The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.</p></li>
-<li><p><strong>deployableAlgorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – List of deployable algorithms</p></li>
-<li><p><strong>bestAlgorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Best performing algorithm</p></li>
-<li><p><strong>defaultAlgorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><em>dict</em></a>) – Default algorithm that the user has selected</p></li>
-<li><p><strong>featureAnalysisStatus</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – lifecycle of the feature analysis stage</p></li>
+<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of a model version.</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The current status of the model.</p></li>
+<li><p><strong>modelId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A reference to the model this version belongs to.</p></li>
+<li><p><strong>modelConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The training config options used to train this model.</p></li>
+<li><p><strong>modelPredictionConfig</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The prediction config options for the model.</p></li>
+<li><p><strong>trainingStartedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The start time and date of the training process.</p></li>
+<li><p><strong>trainingCompletedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The end time and date of the training process.</p></li>
+<li><p><strong>datasetVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique string identifiers</em>) – Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.</p></li>
+<li><p><strong>featureGroupVersions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – </p></li>
+<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Relevant error if the status is FAILED.</p></li>
+<li><p><strong>pendingDeploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of deployment IDs where deployment is pending.</p></li>
+<li><p><strong>failedDeploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of failed deployment IDs.</p></li>
+<li><p><strong>cpuSize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cpu size specified for the python model training.</p></li>
+<li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory in GB specified for the python model training.</p></li>
+<li><p><strong>automlComplete</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, all algorithms have compelted training</p></li>
+<li><p><strong>trainingFeatureGroupIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique string identifiers</em>) – The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.</p></li>
+<li><p><strong>deployableAlgorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – List of deployable algorithms</p></li>
+<li><p><strong>bestAlgorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Best performing algorithm</p></li>
+<li><p><strong>defaultAlgorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Default algorithm that the user has selected</p></li>
+<li><p><strong>featureAnalysisStatus</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – lifecycle of the feature analysis stage</p></li>
 <li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – If a python model, information on where the source code</p></li>
 </ul>
 </dd>
@@ -230,7 +232,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -241,7 +243,7 @@
 <dd><p>Get the train and test data split for a trained model by model_version. Only supported for models with custom algorithms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique version ID of the model version</p>
+<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique version ID of the model version</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The feature group version containing the training data and folds information.</p>
@@ -258,7 +260,7 @@
 <dd><p>Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The ID of the model version to delete.</p>
+<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the model version to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -270,8 +272,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the feature group table to create.</p></li>
-<li><p><strong>artifact_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – An EvalArtifact enum of which artifact to export.</p></li>
+<li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the feature group table to create.</p></li>
+<li><p><strong>artifact_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An EvalArtifact enum of which artifact to export.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -303,7 +305,7 @@
 <dd><p>Retrieves a full description of the specified model version</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique version ID of the model version</p>
+<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique version ID of the model version</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A model version.</p>
@@ -320,7 +322,7 @@
 <dd><p>Retrieves the data preparation logs during model training.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique version ID of the model version</p>
+<dd class="field-odd"><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique version ID of the model version</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of logs.</p>
@@ -338,8 +340,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Set True to get info logs</p></li>
-<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Set True to get error logs</p></li>
+<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set True to get info logs</p></li>
+<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set True to get error logs</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -357,8 +359,8 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – </p></li>
-<li><p><strong>top_n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – </p></li>
+<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – </p></li>
+<li><p><strong>top_n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -370,7 +372,7 @@
 <dd><p>A waiting call until model gets trained.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -381,7 +383,7 @@
 <dd><p>A waiting call until full AutoML cycle is completed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -395,7 +397,7 @@
 <dd class="field-odd"><p>A string describing the status of a model training (pending, complete, etc.).</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
 </dd>
 </dl>
 </dd></dl>

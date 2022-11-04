@@ -474,4 +474,18 @@ Classes
       :type query_data: dict
 
 
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = 'blob')
+
+      Make predictions for a given blob, e.g. image, audio
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param blob: The multipart/form-data of the data
+      :type blob: io.TextIOBase
+      :param blob_key_name: the key to access this blob data in the model query data
+      :type blob_key_name: str
+
+
 

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, refreshSchedules={}, latestMonitorModelVersion={})
+.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, refreshSchedules={}, latestMonitorModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27,7 +27,7 @@ Classes
    :type client: ApiClient
    :param modelMonitorId: The unique identifier of the model monitor.
    :type modelMonitorId: str
-   :param name: The user-friendly name for the model.
+   :param name: The user-friendly name for the model monitor.
    :type name: str
    :param createdAt: Date and time at which the model was created.
    :type createdAt: str
@@ -49,6 +49,8 @@ Classes
    :type latestPredictionMetricVersionId: str
    :param metricConfigs: Configurations for model monitor
    :type metricConfigs: dict
+   :param featureGroupMonitorConfigs: Configurations for feature group monitor
+   :type featureGroupMonitorConfigs: dict
    :param metricTypes: List of metric types
    :type metricTypes: dict
    :param modelId: Model ID that this model monitor is monitoring.
@@ -57,6 +59,8 @@ Classes
    :type starred: bool
    :param batchPredictionId:
    :type batchPredictionId: str
+   :param monitorType: The type of the monitor, one of MODEL_MONITOR, or FEATURE_GROUP_MONITOR
+   :type monitorType: str
    :param latestMonitorModelVersion: The latest model monitor version.
    :type latestMonitorModelVersion: ModelMonitorVersion
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
@@ -143,6 +147,17 @@ Classes
 
       :param model_monitor_id: The ID of the model monitor to delete.
       :type model_monitor_id: str
+
+
+   .. py:method:: list_monitor_alerts_for_monitor()
+
+      Retrieves the list of monitor alerts for a specified monitor
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
+      :type model_monitor_id: str
+
+      :returns: An array of monitor alerts.
+      :rtype: MonitorAlert
 
 
 

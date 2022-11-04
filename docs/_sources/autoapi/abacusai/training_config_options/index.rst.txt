@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: TrainingConfigOptions(client, name=None, dataType=None, valueType=None, valueOptions=None, value=None, default=None, options=None, description=None, required=None, lastModelValue=None)
+.. py:class:: TrainingConfigOptions(client, name=None, dataType=None, valueType=None, valueOptions=None, value=None, default=None, options=None, description=None, required=None, lastModelValue=None, needsRefresh=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,6 +45,8 @@ Classes
    :type required: bool
    :param lastModelValue: The last value used to train a model in this project
    :type lastModelValue: string/number
+   :param needsRefresh:
+   :type needsRefresh: bool
 
    .. py:method:: __repr__()
 

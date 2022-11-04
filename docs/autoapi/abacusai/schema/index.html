@@ -99,6 +99,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
@@ -191,13 +193,13 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The unique name of the feature.</p></li>
-<li><p><strong>featureMapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The mapping of the feature. The possible values will be based on the project’s use-case. See the (Use Case Documentation)[<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>] for more details.</p></li>
-<li><p><strong>detectedFeatureMapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>featureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST.  Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/FeatureType">https://api.abacus.ai/app/help/class/FeatureType</a>] for more information.</p></li>
-<li><p><strong>detectedFeatureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
-<li><p><strong>dataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/DataType">https://api.abacus.ai/app/help/class/DataType</a>] for more information.</p></li>
-<li><p><strong>detectedDataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – </p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique name of the feature.</p></li>
+<li><p><strong>featureMapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The mapping of the feature. The possible values will be based on the project’s use-case. See the (Use Case Documentation)[<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>] for more details.</p></li>
+<li><p><strong>detectedFeatureMapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
+<li><p><strong>featureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST.  Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/FeatureType">https://api.abacus.ai/app/help/class/FeatureType</a>] for more information.</p></li>
+<li><p><strong>detectedFeatureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
+<li><p><strong>dataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[<a class="reference external" href="https://api.abacus.ai/app/help/class/DataType">https://api.abacus.ai/app/help/class/DataType</a>] for more information.</p></li>
+<li><p><strong>detectedDataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
 </ul>
 </dd>
 </dl>
@@ -216,7 +218,7 @@
 <dd class="field-odd"><p>The dict value representation of the class parameters</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)">dict</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
 </dd>
 </dl>
 </dd></dl>

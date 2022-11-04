@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -65,6 +65,8 @@ Classes
    :type defaultAlgorithm: str
    :param customAlgorithmConfigs: User-defined configs for each of the user-defined custom algorithm
    :type customAlgorithmConfigs: dict
+   :param restrictedAlgorithms: User-selected algorithms to train.
+   :type restrictedAlgorithms: dict
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -237,12 +239,14 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: set_training_config(training_config)
+   .. py:method:: set_training_config(training_config, feature_group_ids = None)
 
       Edits the default model training config
 
       :param training_config: The training config key/value pairs used to train this model.
       :type training_config: dict
+      :param feature_group_ids:
+      :type feature_group_ids: list
 
       :returns: The model object correspoding after the training config is applied
       :rtype: Model
@@ -296,9 +300,9 @@ Classes
       :type deployment_ids: list
       :param feature_group_ids: List of feature group ids provided by the user to train the model on.
       :type feature_group_ids: list
-      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, will honor the runs from last time and applicable new custom algorithms.
       :type custom_algorithms: list
-      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, honor the runs from last time and applicable new builtin algorithms.
       :type builtin_algorithms: list
       :param custom_algorithm_configs: The user-defined training configs for each custom algorithm.
       :type custom_algorithm_configs: dict

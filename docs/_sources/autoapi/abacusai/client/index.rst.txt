@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.39.0
+      :annotation: = 0.40.0
 
       
 
@@ -112,7 +112,7 @@ Attributes
    .. py:method:: _request(url, method, query_params=None, headers=None, body=None, files=None, stream=False)
 
 
-   .. py:method:: _poll(obj, wait_states, delay = 5, timeout = 300, poll_args = {}, status_field=None)
+   .. py:method:: _poll(obj, wait_states, delay = 15, timeout = 300, poll_args = {}, status_field=None)
 
 
    .. py:method:: _validate_pandas_df(df, clean_column_names)
@@ -408,6 +408,14 @@ Attributes
       :rtype: FeatureGroupExport
 
 
+   .. py:method:: get_feature_group_export_connector_errors(feature_group_export_id)
+
+      Returns a stream containing the feature group export database connection write errors, if any writes failed to the database connector
+
+      :param feature_group_export_id: The ID of the feature group export to get the errors for
+      :type feature_group_export_id: str
+
+
    .. py:method:: list_feature_group_modifiers(feature_group_id)
 
       To list users who can modify a feature group.
@@ -685,24 +693,6 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False)
-
-      Retrieves the full description of the model training configuration options available for the specified project.
-
-      The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
-
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param feature_group_ids: The feature group IDs to be used for training
-      :type feature_group_ids: list
-      :param for_retrain: If training config options are used for retrain
-      :type for_retrain: bool
-
-      :returns: An array of options that can be specified when training a model in this project.
-      :rtype: TrainingConfigOptions
-
-
    .. py:method:: describe_train_test_data_split_feature_group(model_id)
 
       Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
@@ -953,15 +943,56 @@ Attributes
       :rtype: ModelMonitorSummaryFromOrg
 
 
-   .. py:method:: get_model_monitor_summary_from_organization(lookback_days = 90)
+   .. py:method:: get_model_monitor_summary_from_organization()
 
       Gets a consolidated summary of model monitors for an organization.
 
-      :param lookback_days: The number of days in the past to look back for model monitors.
-      :type lookback_days: int
-
       :returns: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization.
       :rtype: ModelMonitorOrgSummary
+
+
+   .. py:method:: describe_monitor_alert(monitor_alert_id)
+
+      Describes a given monitor alert id
+
+      :param monitor_alert_id: The unique identifier to a monitor alert
+      :type monitor_alert_id: str
+
+      :returns: An object describing the monitor alert
+      :rtype: MonitorAlert
+
+
+   .. py:method:: describe_monitor_alert_version(monitor_alert_version)
+
+      Describes a given monitor alert version id
+
+      :param monitor_alert_version: The unique identifier to a monitor alert
+      :type monitor_alert_version: str
+
+      :returns: An object describing the monitor alert version
+      :rtype: MonitorAlertVersion
+
+
+   .. py:method:: list_monitor_alerts_for_monitor(model_monitor_id)
+
+      Retrieves the list of monitor alerts for a specified monitor
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
+      :type model_monitor_id: str
+
+      :returns: An array of monitor alerts.
+      :rtype: MonitorAlert
+
+
+   .. py:method:: list_monitor_alert_versions_for_monitor_version(model_monitor_version)
+
+      Retrieves the list of monitor alerts version for a specified monitor instance
+
+      :param model_monitor_version: The unique ID associated with the model monitor.
+      :type model_monitor_version: str
+
+      :returns: An array of monitor alerts.
+      :rtype: MonitorAlertVersion
 
 
    .. py:method:: get_model_monitoring_logs(model_monitor_version, stdout = False, stderr = False)
@@ -1278,12 +1309,18 @@ Attributes
       :rtype: Algorithm
 
 
-   .. py:method:: list_builtin_algorithms(project_id)
+   .. py:method:: list_builtin_algorithms(project_id, feature_group_ids = None, training_config = None)
 
-      :param project_id:
+      Return list of builtin algorithms based on given input.
+
+      :param project_id: The unique ID associated with the project.
       :type project_id: str
+      :param feature_group_ids: List of feature group ids applied to the algorithms.
+      :type feature_group_ids: list
+      :param training_config: The training config key/value pairs used to train with the algorithm.
+      :type training_config: dict
 
-      :returns: None
+      :returns: A list of applicable builtin algorithms.
       :rtype: Algorithm
 
 
@@ -1330,7 +1367,7 @@ Attributes
    :param skip_version_check: If true, will skip checking the server's current API version on initializing the client
    :type skip_version_check: bool
 
-   .. py:method:: create_dataset_from_pandas(feature_group_table_name, df, name = None, clean_column_names = False)
+   .. py:method:: create_dataset_from_pandas(feature_group_table_name, df, clean_column_names = False)
 
       [Deprecated]
       Creates a Dataset from a pandas dataframe
@@ -1339,8 +1376,6 @@ Attributes
       :type feature_group_table_name: str
       :param df: The dataframe to upload
       :type df: pandas.DataFrame
-      :param name: The name to give to the dataset
-      :type name: str
       :param clean_column_names: If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
       :type clean_column_names: bool
 
@@ -1557,7 +1592,7 @@ Attributes
 
       :param name: A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
       :type name: String
-      :param loss_function_type: The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+      :param loss_function_type: The category of problems that this loss would be applicable to. Ex - REGRESSION_DL_TF, CLASSIFICATION_DL_TF, etc.
       :type loss_function_type: String
       :param loss_function: A python functor which can take required arguments (Ex - (y_true, y_pred)) and returns loss value(s) (Ex - An array of loss values of size batch size)
       :type loss_function: Callable
@@ -2132,6 +2167,19 @@ Attributes
       :type tag: str
 
 
+   .. py:method:: add_annotatable_feature(feature_group_id, name, annotation_type)
+
+      :param feature_group_id:
+      :type feature_group_id: str
+      :param name:
+      :type name: str
+      :param annotation_type:
+      :type annotation_type: str
+
+      :returns: None
+      :rtype: FeatureGroup
+
+
    .. py:method:: set_feature_as_annotatable_feature(feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
 
       :param feature_group_id:
@@ -2160,27 +2208,27 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_feature_group_annotation_tag(feature_group_id, tag_name, annotation_type, tag_definition = None)
+   .. py:method:: add_feature_group_annotation_label(feature_group_id, label_name, annotation_type, label_definition = None)
 
       :param feature_group_id:
       :type feature_group_id: str
-      :param tag_name:
-      :type tag_name: str
+      :param label_name:
+      :type label_name: str
       :param annotation_type:
       :type annotation_type: str
-      :param tag_definition:
-      :type tag_definition: str
+      :param label_definition:
+      :type label_definition: str
 
       :returns: None
       :rtype: FeatureGroup
 
 
-   .. py:method:: remove_feature_group_annotation_tag(feature_group_id, tag_name)
+   .. py:method:: remove_feature_group_annotation_label(feature_group_id, label_name)
 
       :param feature_group_id:
       :type feature_group_id: str
-      :param tag_name:
-      :type tag_name: str
+      :param label_name:
+      :type label_name: str
 
       :returns: None
       :rtype: FeatureGroup
@@ -2921,12 +2969,10 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(name, table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
-      :param name: The name for the dataset.
-      :type name: str
       :param table_name: Organization-unique table name or the name of the feature group table to create using the source table.
       :type table_name: str
       :param location: The URI location format of the dataset source. The URI location format needs to be specified to match the location_date_format when location_date_format is specified. Ex. Location = s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/* when The URI location format needs to include both the start_prefix and until_prefix when both are specified. Ex. Location s3://bucket1/dir1/* includes both s3://bucket1/dir1/dir2/event_date=2021-08-02/* and s3://bucket1/dir1/dir2/event_date=2021-08-08/*
@@ -2971,12 +3017,10 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_database_connector(name, table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, timestamp_column = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, timestamp_column = None)
 
       Creates a dataset from a Database Connector
 
-      :param name: The name for the dataset to be attached.
-      :type name: str
       :param table_name: Organization-unique table name
       :type table_name: str
       :param database_connector_id: The Database Connector to import the dataset from
@@ -3000,12 +3044,10 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_from_application_connector(name, table_name, application_connector_id, object_id = None, start_timestamp = None, end_timestamp = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, object_id = None, start_timestamp = None, end_timestamp = None, refresh_schedule = None)
 
       Creates a dataset from an Application Connector
 
-      :param name: The name for the dataset
-      :type name: str
       :param table_name: Organization-unique table name
       :type table_name: str
       :param application_connector_id: The unique application connector to download data from
@@ -3059,12 +3101,10 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(name, table_name, file_format = None, csv_delimiter = None)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None)
 
       Creates a dataset and return an upload Id that can be used to upload a file.
 
-      :param name: The name for the dataset.
-      :type name: str
       :param table_name: Organization-unique table name for this dataset.
       :type table_name: str
       :param file_format: The file format of the dataset.
@@ -3089,12 +3129,10 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_streaming_dataset(name, table_name, project_id = None, dataset_type = None)
+   .. py:method:: create_streaming_dataset(table_name, project_id = None, dataset_type = None)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
-      :param name: The name for the dataset.
-      :type name: str
       :param table_name: The feature group table name to create for this dataset
       :type table_name: str
       :param project_id: The project to create the streaming dataset for.
@@ -3132,12 +3170,10 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_from_streaming_connector(name, table_name, streaming_connector_id, streaming_args = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_streaming_connector(table_name, streaming_connector_id, streaming_args = None, refresh_schedule = None)
 
       Creates a dataset from a Streaming Connector
 
-      :param name: The name for the dataset to be attached.
-      :type name: str
       :param table_name: Organization-unique table name
       :type table_name: str
       :param streaming_connector_id: The Streaming Connector to import the dataset from
@@ -3317,16 +3353,6 @@ Attributes
       :type project_id: str
 
 
-   .. py:method:: rename_dataset(dataset_id, name)
-
-      Rename a dataset.
-
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param name: The new name for the dataset.
-      :type name: str
-
-
    .. py:method:: delete_dataset(dataset_id)
 
       Deletes the specified dataset from the organization.
@@ -3336,6 +3362,26 @@ Attributes
 
       :param dataset_id: The dataset to delete.
       :type dataset_id: str
+
+
+   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None)
+
+      Retrieves the full initial description of the model training configuration options available for the specified project.
+
+      The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
+
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_ids: The feature group IDs to be used for training
+      :type feature_group_ids: list
+      :param for_retrain: If training config options are used for retrain
+      :type for_retrain: bool
+      :param current_training_config: This is None by default initially and represents the current state of the training config, with some options set, which shall be used to get new options after refresh.
+      :type current_training_config: dict
+
+      :returns: An array of options that can be specified when training a model in this project.
+      :rtype: TrainingConfigOptions
 
 
    .. py:method:: create_train_test_data_split_feature_group(project_id, training_config, feature_group_ids)
@@ -3559,7 +3605,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: set_model_training_config(model_id, training_config)
+   .. py:method:: set_model_training_config(model_id, training_config, feature_group_ids = None)
 
       Edits the default model training config
 
@@ -3567,6 +3613,8 @@ Attributes
       :type model_id: str
       :param training_config: The training config key/value pairs used to train this model.
       :type training_config: dict
+      :param feature_group_ids:
+      :type feature_group_ids: list
 
       :returns: The model object correspoding after the training config is applied
       :rtype: Model
@@ -3595,9 +3643,9 @@ Attributes
       :type deployment_ids: list
       :param feature_group_ids: List of feature group ids provided by the user to train the model on.
       :type feature_group_ids: list
-      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms and those from last run.
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, will honor the runs from last time and applicable new custom algorithms.
       :type custom_algorithms: list
-      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, honor the runs from last time and applicable new builtin algorithms.
       :type builtin_algorithms: list
       :param custom_algorithm_configs: The user-defined training configs for each custom algorithm.
       :type custom_algorithm_configs: dict
@@ -3662,7 +3710,7 @@ Attributes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, feature_mappings = None, model_id = None, training_feature_mappings = None)
+   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_monitor_config = None)
 
       Runs a model monitor for the specified project.
 
@@ -3676,14 +3724,20 @@ Attributes
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
       :type refresh_schedule: str
-      :param target_value: A target positive value for the label to compute bias for
+      :param target_value: A target positive value for the label to compute bias and pr/auc for performance page (old style until UI is on prod) (TODO: @sheetal)
       :type target_value: str
+      :param target_value_bias: A target positive value for the label to compute bias
+      :type target_value_bias: str
+      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
+      :type target_value_performance: str
       :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
       :param model_id: The Unique ID of the Model
       :type model_id: str
-      :param training_feature_mappings: " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+      :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
+      :param feature_group_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
+      :type feature_group_monitor_config: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -3724,6 +3778,57 @@ Attributes
 
       :param model_monitor_version: The ID of the model monitor version to delete.
       :type model_monitor_version: str
+
+
+   .. py:method:: create_monitor_alert(project_id, model_monitor_id, alert_name, condition_config, action_config)
+
+      Create a monitor alert for the given conditions and monitor
+
+      :param project_id:
+      :type project_id: str
+      :param model_monitor_id: The unique identifier to a model monitor created under the project.
+      :type model_monitor_id: str
+      :param alert_name: The alert name.
+      :type alert_name: str
+      :param condition_config: The condition to run the actions for the alert.
+      :type condition_config: dict
+      :param action_config: The configuration for the action of the alert
+      :type action_config: dict
+
+      :returns: An object describing the monitor alert
+      :rtype: MonitorAlert
+
+
+   .. py:method:: update_monitor_alert(monitor_alert_id, alert_name = None, condition_config = None, action_config = None)
+
+      :param monitor_alert_id:
+      :type monitor_alert_id: str
+      :param alert_name:
+      :type alert_name: str
+      :param condition_config:
+      :type condition_config: dict
+      :param action_config:
+      :type action_config: dict
+
+      :returns: None
+      :rtype: MonitorAlert
+
+
+   .. py:method:: run_monitor_alert(monitor_alert_id)
+
+      Reruns a given monitor alert from latest monitor instance
+
+      :param monitor_alert_id: The unique identifier to a monitor alert
+      :type monitor_alert_id: str
+
+      :returns: An object describing the monitor alert
+      :rtype: MonitorAlert
+
+
+   .. py:method:: delete_monitor_alert(monitor_alert_id)
+
+      :param monitor_alert_id:
+      :type monitor_alert_id: str
 
 
    .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None)
@@ -4421,6 +4526,20 @@ Attributes
       :type query_data: dict
 
 
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = 'blob')
+
+      Make predictions for a given blob, e.g. image, audio
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param blob: The multipart/form-data of the data
+      :type blob: io.TextIOBase
+      :param blob_key_name: the key to access this blob data in the model query data
+      :type blob_key_name: str
+
+
    .. py:method:: create_prediction_metric(feature_group_id, prediction_metric_config, project_id = None)
 
       Create a prediction metric job description for the given prediction and actual-labels data.
@@ -4672,7 +4791,7 @@ Attributes
 
    .. py:method:: delete_batch_prediction(batch_prediction_id)
 
-      Deletes a batch prediction
+      Deletes a batch prediction and associated data such as associated monitors.
 
       :param batch_prediction_id: The unique identifier of the batch prediction
       :type batch_prediction_id: str
@@ -4866,7 +4985,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None)
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
 
       Creates a custom python function that's re-usable
 
@@ -4876,12 +4995,16 @@ Attributes
       :type source_code: str
       :param function_name: The name of the python function.
       :type function_name: str
+      :param function_variable_mappings: List of python function arguments.
+      :type function_variable_mappings: list
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The python function that can be used (i.e. for feature group transform)
       :rtype: PythonFunction
 
 
-   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -4893,6 +5016,8 @@ Attributes
       :type function_name: str
       :param function_variable_mappings: List of python function arguments
       :type function_variable_mappings: list
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: dict
 
       :returns: The python_function object.
       :rtype: PythonFunction
@@ -4982,7 +5107,7 @@ Attributes
 
       :param name: A name for the loss. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed
       :type name: str
-      :param loss_function_type: The category of problems that this loss would be applicable to. Ex - regression_dl_tf, classification_dl_pytorch, etc.
+      :param loss_function_type: The category of problems that this loss would be applicable to. Ex - REGRESSION_DL_TF, CLASSIFICATION_DL_TF, etc
       :type loss_function_type: str
       :param loss_function_name: The name of the function whose full source code is passed in loss_function_source_code
       :type loss_function_name: str

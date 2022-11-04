@@ -1,0 +1,109 @@
+:py:mod:`abacusai.monitor_alert_version`
+========================================
+
+.. py:module:: abacusai.monitor_alert_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.monitor_alert_version.MonitorAlertVersion
+
+
+
+
+.. py:class:: MonitorAlertVersion(client, name=None, monitorAlertVersion=None, monitorAlertId=None, status=None, createdAt=None, alertingStartedAt=None, alertingCompletedAt=None, error=None, modelMonitorVersion=None, conditionConfig=None, actionConfig=None, alertResult=None, actionStatus=None, actionError=None, actionStartedAt=None, actionCompletedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A monitor alert version
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The user-friendly name for the monitor alert.
+   :type name: str
+   :param monitorAlertVersion: The identifier for the alert version.
+   :type monitorAlertVersion: str
+   :param monitorAlertId: The identifier for the alert.
+   :type monitorAlertId: str
+   :param status: The current status of the monitor alert.
+   :type status: str
+   :param createdAt: Date and time at which the monitor alert was created.
+   :type createdAt: str
+   :param alertingStartedAt: The start time and date of the monitor alerting process.
+   :type alertingStartedAt: str
+   :param alertingCompletedAt: The end time and date of the monitor alerting process.
+   :type alertingCompletedAt: str
+   :param error: Relevant error if the status is FAILED.
+   :type error: str
+   :param modelMonitorVersion: The model monitor version associated with the monitor alert version.
+   :type modelMonitorVersion: str
+   :param conditionConfig: The condition configuration for this alert.
+   :type conditionConfig: dict
+   :param actionConfig: The action configuration for this alert.
+   :type actionConfig: dict
+   :param alertResult: The current result of the alert
+   :type alertResult: str
+   :param actionStatus: The current status of the action as a result of the monitor alert.
+   :type actionStatus: str
+   :param actionError: Relevant error if the action status is FAILED.
+   :type actionError: str
+   :param actionStartedAt: The start time and date of the actionfor the alerting process.
+   :type actionStartedAt: str
+   :param actionCompletedAt: The end time and date of the actionfor the alerting process.
+   :type actionCompletedAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: MonitorAlertVersion
+
+
+   .. py:method:: describe()
+
+      Describes a given monitor alert version id
+
+      :param monitor_alert_version: The unique identifier to a monitor alert
+      :type monitor_alert_version: str
+
+      :returns: An object describing the monitor alert version
+      :rtype: MonitorAlertVersion
+
+
+   .. py:method:: wait_for_monitor_alert(timeout=1200)
+
+      A waiting call until model monitor version is ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the monitor alert version.
+
+      :returns: A string describing the status of a monitor alert version (pending, running, complete, etc.).
+      :rtype: str
+
+
+

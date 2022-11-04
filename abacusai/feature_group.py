@@ -281,6 +281,19 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_feature_group_tag(self.feature_group_id, tag)
 
+    def add_annotatable_feature(self, name: str, annotation_type: str):
+        """
+
+
+        Args:
+            name (str): 
+            annotation_type (str): 
+
+        Returns:
+            FeatureGroup: None
+        """
+        return self.client.add_annotatable_feature(self.feature_group_id, name, annotation_type)
+
     def set_feature_as_annotatable_feature(self, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None):
         """
 
@@ -308,31 +321,31 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.unset_feature_as_annotatable_feature(self.feature_group_id, feature_name)
 
-    def add_annotation_tag(self, tag_name: str, annotation_type: str, tag_definition: str = None):
+    def add_annotation_label(self, label_name: str, annotation_type: str, label_definition: str = None):
         """
 
 
         Args:
-            tag_name (str): 
+            label_name (str): 
             annotation_type (str): 
-            tag_definition (str): 
+            label_definition (str): 
 
         Returns:
             FeatureGroup: None
         """
-        return self.client.add_feature_group_annotation_tag(self.feature_group_id, tag_name, annotation_type, tag_definition)
+        return self.client.add_feature_group_annotation_label(self.feature_group_id, label_name, annotation_type, label_definition)
 
-    def remove_annotation_tag(self, tag_name: str):
+    def remove_annotation_label(self, label_name: str):
         """
 
 
         Args:
-            tag_name (str): 
+            label_name (str): 
 
         Returns:
             FeatureGroup: None
         """
-        return self.client.remove_feature_group_annotation_tag(self.feature_group_id, tag_name)
+        return self.client.remove_feature_group_annotation_label(self.feature_group_id, label_name)
 
     def add_feature_tag(self, feature: str, tag: str):
         """

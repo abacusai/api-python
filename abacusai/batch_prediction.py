@@ -232,7 +232,7 @@ class BatchPrediction(AbstractApiClass):
 
     def delete(self):
         """
-        Deletes a batch prediction
+        Deletes a batch prediction and associated data such as associated monitors.
 
         Args:
             batch_prediction_id (str): The unique identifier of the batch prediction

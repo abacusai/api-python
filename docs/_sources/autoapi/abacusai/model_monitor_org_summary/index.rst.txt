@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorOrgSummary(client, summary=None, featureDrift=None, labelDrift=None, dataIntegrity=None, performance=None, alerts=None, mostRecentMonitorInfo=None, totalStarredMonitors=None)
+.. py:class:: ModelMonitorOrgSummary(client, summary=None, featureDrift=None, labelDrift=None, dataIntegrity=None, performance=None, alerts=None, monitorData=None, totalStarredMonitors=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37,8 +37,8 @@ Classes
    :type performance: dict
    :param alerts: Count of alerts that are raised.
    :type alerts: dict
-   :param mostRecentMonitorInfo: Most recent monitor information.
-   :type mostRecentMonitorInfo: list
+   :param monitorData: Information about monitors used in the summary for each time period.
+   :type monitorData: dict
    :param totalStarredMonitors: Total number of starred monitors.
    :type totalStarredMonitors: int
 

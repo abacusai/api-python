@@ -201,9 +201,9 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
-    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False):
+    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: dict = None):
         """
-        Retrieves the full description of the model training configuration options available for the specified project.
+        Retrieves the full initial description of the model training configuration options available for the specified project.
 
         The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
 
@@ -211,11 +211,12 @@ class Project(AbstractApiClass):
         Args:
             feature_group_ids (list): The feature group IDs to be used for training
             for_retrain (bool): If training config options are used for retrain
+            current_training_config (dict): This is None by default initially and represents the current state of the training config, with some options set, which shall be used to get new options after refresh.
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project.
         """
-        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain)
+        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config)
 
     def create_train_test_data_split_feature_group(self, training_config: dict, feature_group_ids: list):
         """
@@ -313,7 +314,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
-    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None):
+    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_monitor_config: dict = None):
         """
         Runs a model monitor for the specified project.
 
@@ -322,15 +323,18 @@ class Project(AbstractApiClass):
             training_feature_group_id (str): The unique ID of the training data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
-            target_value (str): A target positive value for the label to compute bias for
+            target_value (str): A target positive value for the label to compute bias and pr/auc for performance page (old style until UI is on prod) (TODO: @sheetal)
+            target_value_bias (str): A target positive value for the label to compute bias
+            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             model_id (str): The Unique ID of the Model
-            training_feature_mappings (dict): " A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            feature_group_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, feature_mappings, model_id, training_feature_mappings)
+        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_monitor_config)
 
     def list_model_monitors(self):
         """
@@ -343,6 +347,21 @@ class Project(AbstractApiClass):
             ModelMonitor: An array of model monitors.
         """
         return self.client.list_model_monitors(self.project_id)
+
+    def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict):
+        """
+        Create a monitor alert for the given conditions and monitor
+
+        Args:
+            model_monitor_id (str): The unique identifier to a model monitor created under the project.
+            alert_name (str): The alert name.
+            condition_config (dict): The condition to run the actions for the alert.
+            action_config (dict): The configuration for the action of the alert
+
+        Returns:
+            MonitorAlert: An object describing the monitor alert
+        """
+        return self.client.create_monitor_alert(self.project_id, model_monitor_id, alert_name, condition_config, action_config)
 
     def create_deployment_token(self, name: str = None):
         """
@@ -412,17 +431,18 @@ class Project(AbstractApiClass):
         """
         return self.client.list_batch_predictions(self.project_id)
 
-    def list_builtin_algorithms(self):
+    def list_builtin_algorithms(self, feature_group_ids: list = None, training_config: dict = None):
         """
-
+        Return list of builtin algorithms based on given input.
 
         Args:
-            project_id (str): 
+            feature_group_ids (list): List of feature group ids applied to the algorithms.
+            training_config (dict): The training config key/value pairs used to train with the algorithm.
 
         Returns:
-            Algorithm: None
+            Algorithm: A list of applicable builtin algorithms.
         """
-        return self.client.list_builtin_algorithms(self.project_id)
+        return self.client.list_builtin_algorithms(self.project_id, feature_group_ids, training_config)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """
