@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: MonitorAlertVersion(client, name=None, monitorAlertVersion=None, monitorAlertId=None, status=None, createdAt=None, alertingStartedAt=None, alertingCompletedAt=None, error=None, modelMonitorVersion=None, conditionConfig=None, actionConfig=None, alertResult=None, actionStatus=None, actionError=None, actionStartedAt=None, actionCompletedAt=None)
+.. py:class:: MonitorAlertVersion(client, name=None, monitorAlertVersion=None, monitorAlertId=None, status=None, createdAt=None, alertingStartedAt=None, alertingCompletedAt=None, error=None, modelMonitorVersion=None, conditionConfig=None, actionConfig=None, alertResult=None, actionStatus=None, actionError=None, actionStartedAt=None, actionCompletedAt=None, conditionDescription=None, actionDescription=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -57,6 +57,10 @@ Classes
    :type actionStartedAt: str
    :param actionCompletedAt: The end time and date of the actionfor the alerting process.
    :type actionCompletedAt: str
+   :param conditionDescription: User friendly description of the condition
+   :type conditionDescription: str
+   :param actionDescription: User friendly description of the action
+   :type actionDescription: str
 
    .. py:method:: __repr__()
 

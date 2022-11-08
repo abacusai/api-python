@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.40.0
+      :annotation: = 0.40.1
 
       
 
@@ -1516,7 +1516,7 @@ Attributes
       :rtype: PythonFunction
 
 
-   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None)
+   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1541,9 +1541,11 @@ Attributes
       :param is_default_enabled: Whether train with the algorithm by default
       :param project_id: The unique version ID of the project
       :type project_id: Unique String Identifier
+      :param use_gpu: Whether this algorithm needs to run on GPU
+      :type use_gpu: Boolean
 
 
-   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None)
+   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None, use_gpu = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1564,6 +1566,9 @@ Attributes
       :param config_options: Map dataset types and configs to train function parameter names
       :type config_options: Dict
       :param is_default_enabled: Whether train with the algorithm by default
+      :type is_default_enabled: Boolean
+      :param use_gpu: Whether this algorithm needs to run on GPU
+      :type use_gpu: Boolean
 
 
    .. py:method:: get_train_function_input(project_id, training_table_names = None, training_data_parameter_name_override = None, training_config_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -5031,7 +5036,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None)
+   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False)
 
       Creates a custome algorithm that's re-usable for model training
 
@@ -5059,6 +5064,8 @@ Attributes
       :type is_default_enabled: bool
       :param project_id: The unique version ID of the project
       :type project_id: str
+      :param use_gpu: Whether this algorithm needs to run on GPU
+      :type use_gpu: bool
 
       :returns: The new customer model can be used for training
       :rtype: Algorithm
@@ -5072,7 +5079,7 @@ Attributes
       :type algorithm: str
 
 
-   .. py:method:: update_algorithm(algorithm, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None)
+   .. py:method:: update_algorithm(algorithm, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None, use_gpu = None)
 
       Update custome algorithm for the given algorithm name. If source_code is provided, also need to provide all the function names in the source_code.
 
@@ -5096,6 +5103,8 @@ Attributes
       :type config_options: dict
       :param is_default_enabled: Whether train with the algorithm by default
       :type is_default_enabled: bool
+      :param use_gpu: Whether this algorithm needs to run on GPU
+      :type use_gpu: bool
 
       :returns: The new customer model can be used for training
       :rtype: Algorithm

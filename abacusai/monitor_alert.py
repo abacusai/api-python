@@ -15,10 +15,12 @@ class MonitorAlert(AbstractApiClass):
             modelMonitorId (unique string identifiers): The monitor id that this alert is associated with
             conditionConfig (dict): The condition configuration for this alert.
             actionConfig (dict): The action configuration for this alert.
+            conditionDescription (str): User friendly description of the condition
+            actionDescription (str): User friendly description of the action
             latestMonitorAlertVersion (MonitorAlertVersion): The latest monitor alert version.
     """
 
-    def __init__(self, client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, conditionConfig=None, actionConfig=None, latestMonitorAlertVersion={}):
+    def __init__(self, client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, conditionConfig=None, actionConfig=None, conditionDescription=None, actionDescription=None, latestMonitorAlertVersion={}):
         super().__init__(client, monitorAlertId)
         self.name = name
         self.monitor_alert_id = monitorAlertId
@@ -27,11 +29,13 @@ class MonitorAlert(AbstractApiClass):
         self.model_monitor_id = modelMonitorId
         self.condition_config = conditionConfig
         self.action_config = actionConfig
+        self.condition_description = conditionDescription
+        self.action_description = actionDescription
         self.latest_monitor_alert_version = client._build_class(
             MonitorAlertVersion, latestMonitorAlertVersion)
 
     def __repr__(self):
-        return f"MonitorAlert(name={repr(self.name)},\n  monitor_alert_id={repr(self.monitor_alert_id)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  condition_config={repr(self.condition_config)},\n  action_config={repr(self.action_config)},\n  latest_monitor_alert_version={repr(self.latest_monitor_alert_version)})"
+        return f"MonitorAlert(name={repr(self.name)},\n  monitor_alert_id={repr(self.monitor_alert_id)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  condition_config={repr(self.condition_config)},\n  action_config={repr(self.action_config)},\n  condition_description={repr(self.condition_description)},\n  action_description={repr(self.action_description)},\n  latest_monitor_alert_version={repr(self.latest_monitor_alert_version)})"
 
     def to_dict(self):
         """
@@ -40,7 +44,7 @@ class MonitorAlert(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'monitor_alert_id': self.monitor_alert_id, 'created_at': self.created_at, 'project_id': self.project_id, 'model_monitor_id': self.model_monitor_id, 'condition_config': self.condition_config, 'action_config': self.action_config, 'latest_monitor_alert_version': self._get_attribute_as_dict(self.latest_monitor_alert_version)}
+        return {'name': self.name, 'monitor_alert_id': self.monitor_alert_id, 'created_at': self.created_at, 'project_id': self.project_id, 'model_monitor_id': self.model_monitor_id, 'condition_config': self.condition_config, 'action_config': self.action_config, 'condition_description': self.condition_description, 'action_description': self.action_description, 'latest_monitor_alert_version': self._get_attribute_as_dict(self.latest_monitor_alert_version)}
 
     def update(self, alert_name: str = None, condition_config: dict = None, action_config: dict = None):
         """

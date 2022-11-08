@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: MonitorAlert(client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, conditionConfig=None, actionConfig=None, latestMonitorAlertVersion={})
+.. py:class:: MonitorAlert(client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, conditionConfig=None, actionConfig=None, conditionDescription=None, actionDescription=None, latestMonitorAlertVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39,6 +39,10 @@ Classes
    :type conditionConfig: dict
    :param actionConfig: The action configuration for this alert.
    :type actionConfig: dict
+   :param conditionDescription: User friendly description of the condition
+   :type conditionDescription: str
+   :param actionDescription: User friendly description of the action
+   :type actionDescription: str
    :param latestMonitorAlertVersion: The latest monitor alert version.
    :type latestMonitorAlertVersion: MonitorAlertVersion
 

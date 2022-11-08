@@ -168,7 +168,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.40.0'
+    client_version = '0.40.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1609,7 +1609,7 @@ class ApiClient(ReadOnlyClient):
         source_code = inspect.getsource(function)
         return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings)
 
-    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None):
+    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1625,6 +1625,7 @@ class ApiClient(ReadOnlyClient):
             config_options (Dict): Map dataset types and configs to train function parameter names
             is_default_enabled: Whether train with the algorithm by default
             project_id (Unique String Identifier): The unique version ID of the project
+            use_gpu (Boolean): Whether this algorithm needs to run on GPU
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
@@ -1640,9 +1641,10 @@ class ApiClient(ReadOnlyClient):
             initialize_function_name=initialize_function_name,
             config_options=config_options,
             is_default_enabled=is_default_enabled,
-            project_id=project_id)
+            project_id=project_id,
+            use_gpu=use_gpu)
 
-    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None):
+    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1655,7 +1657,8 @@ class ApiClient(ReadOnlyClient):
             training_data_parameter_names_mapping (Dict): The mapping from feature group types to training data parameter names in the train function
             training_config_parameter_name (string): The train config parameter name in the train function
             config_options (Dict): Map dataset types and configs to train function parameter names
-            is_default_enabled: Whether train with the algorithm by default
+            is_default_enabled (Boolean): Whether train with the algorithm by default
+            use_gpu (Boolean): Whether this algorithm needs to run on GPU
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
@@ -1669,7 +1672,8 @@ class ApiClient(ReadOnlyClient):
             predict_many_function_name=predict_many_function_name,
             initialize_function_name=initialize_function_name,
             config_options=config_options,
-            is_default_enabled=is_default_enabled)
+            is_default_enabled=is_default_enabled,
+            use_gpu=use_gpu)
 
     def get_train_function_input(self, project_id: str, training_table_names: list = None, training_data_parameter_name_override: dict = None, training_config_parameter_name_override: str = None, training_config: dict = None, custom_algorithm_config: any = None):
         """
@@ -4360,7 +4364,7 @@ class ApiClient(ReadOnlyClient):
             name (str): The name to identify the python function"""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
-    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None) -> Algorithm:
+    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training
 
         Args:
@@ -4376,10 +4380,11 @@ class ApiClient(ReadOnlyClient):
             config_options (dict): Map dataset types and configs to train function parameter names
             is_default_enabled (bool): Whether train with the algorithm by default
             project_id (str): The unique version ID of the project
+            use_gpu (bool): Whether this algorithm needs to run on GPU
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id}, parse_type=Algorithm)
+        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id, 'useGpu': use_gpu}, parse_type=Algorithm)
 
     def delete_algorithm(self, algorithm: str):
         """Deletes the specified customer algorithm.
@@ -4388,7 +4393,7 @@ class ApiClient(ReadOnlyClient):
             algorithm (str): The name of the algorithm to delete."""
         return self._call_api('deleteAlgorithm', 'DELETE', query_params={'algorithm': algorithm})
 
-    def update_algorithm(self, algorithm: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None) -> Algorithm:
+    def update_algorithm(self, algorithm: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None) -> Algorithm:
         """Update custome algorithm for the given algorithm name. If source_code is provided, also need to provide all the function names in the source_code.
 
         Args:
@@ -4402,10 +4407,11 @@ class ApiClient(ReadOnlyClient):
             initialize_function_name (str): Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
             config_options (dict): Map dataset types and configs to train function parameter names
             is_default_enabled (bool): Whether train with the algorithm by default
+            use_gpu (bool): Whether this algorithm needs to run on GPU
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled}, parse_type=Algorithm)
+        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'useGpu': use_gpu}, parse_type=Algorithm)
 
     def create_custom_loss_function_with_source_code(self, name: str, loss_function_type: str, loss_function_name: str, loss_function_source_code: str) -> CustomLossFunction:
         """Registers a new custom loss function which can be used as an objective function during model training.

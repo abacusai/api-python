@@ -23,9 +23,11 @@ class MonitorAlertVersion(AbstractApiClass):
             actionError (str): Relevant error if the action status is FAILED.
             actionStartedAt (str): The start time and date of the actionfor the alerting process.
             actionCompletedAt (str): The end time and date of the actionfor the alerting process.
+            conditionDescription (str): User friendly description of the condition
+            actionDescription (str): User friendly description of the action
     """
 
-    def __init__(self, client, name=None, monitorAlertVersion=None, monitorAlertId=None, status=None, createdAt=None, alertingStartedAt=None, alertingCompletedAt=None, error=None, modelMonitorVersion=None, conditionConfig=None, actionConfig=None, alertResult=None, actionStatus=None, actionError=None, actionStartedAt=None, actionCompletedAt=None):
+    def __init__(self, client, name=None, monitorAlertVersion=None, monitorAlertId=None, status=None, createdAt=None, alertingStartedAt=None, alertingCompletedAt=None, error=None, modelMonitorVersion=None, conditionConfig=None, actionConfig=None, alertResult=None, actionStatus=None, actionError=None, actionStartedAt=None, actionCompletedAt=None, conditionDescription=None, actionDescription=None):
         super().__init__(client, monitorAlertVersion)
         self.name = name
         self.monitor_alert_version = monitorAlertVersion
@@ -43,9 +45,11 @@ class MonitorAlertVersion(AbstractApiClass):
         self.action_error = actionError
         self.action_started_at = actionStartedAt
         self.action_completed_at = actionCompletedAt
+        self.condition_description = conditionDescription
+        self.action_description = actionDescription
 
     def __repr__(self):
-        return f"MonitorAlertVersion(name={repr(self.name)},\n  monitor_alert_version={repr(self.monitor_alert_version)},\n  monitor_alert_id={repr(self.monitor_alert_id)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  alerting_started_at={repr(self.alerting_started_at)},\n  alerting_completed_at={repr(self.alerting_completed_at)},\n  error={repr(self.error)},\n  model_monitor_version={repr(self.model_monitor_version)},\n  condition_config={repr(self.condition_config)},\n  action_config={repr(self.action_config)},\n  alert_result={repr(self.alert_result)},\n  action_status={repr(self.action_status)},\n  action_error={repr(self.action_error)},\n  action_started_at={repr(self.action_started_at)},\n  action_completed_at={repr(self.action_completed_at)})"
+        return f"MonitorAlertVersion(name={repr(self.name)},\n  monitor_alert_version={repr(self.monitor_alert_version)},\n  monitor_alert_id={repr(self.monitor_alert_id)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  alerting_started_at={repr(self.alerting_started_at)},\n  alerting_completed_at={repr(self.alerting_completed_at)},\n  error={repr(self.error)},\n  model_monitor_version={repr(self.model_monitor_version)},\n  condition_config={repr(self.condition_config)},\n  action_config={repr(self.action_config)},\n  alert_result={repr(self.alert_result)},\n  action_status={repr(self.action_status)},\n  action_error={repr(self.action_error)},\n  action_started_at={repr(self.action_started_at)},\n  action_completed_at={repr(self.action_completed_at)},\n  condition_description={repr(self.condition_description)},\n  action_description={repr(self.action_description)})"
 
     def to_dict(self):
         """
@@ -54,7 +58,7 @@ class MonitorAlertVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'monitor_alert_version': self.monitor_alert_version, 'monitor_alert_id': self.monitor_alert_id, 'status': self.status, 'created_at': self.created_at, 'alerting_started_at': self.alerting_started_at, 'alerting_completed_at': self.alerting_completed_at, 'error': self.error, 'model_monitor_version': self.model_monitor_version, 'condition_config': self.condition_config, 'action_config': self.action_config, 'alert_result': self.alert_result, 'action_status': self.action_status, 'action_error': self.action_error, 'action_started_at': self.action_started_at, 'action_completed_at': self.action_completed_at}
+        return {'name': self.name, 'monitor_alert_version': self.monitor_alert_version, 'monitor_alert_id': self.monitor_alert_id, 'status': self.status, 'created_at': self.created_at, 'alerting_started_at': self.alerting_started_at, 'alerting_completed_at': self.alerting_completed_at, 'error': self.error, 'model_monitor_version': self.model_monitor_version, 'condition_config': self.condition_config, 'action_config': self.action_config, 'alert_result': self.alert_result, 'action_status': self.action_status, 'action_error': self.action_error, 'action_started_at': self.action_started_at, 'action_completed_at': self.action_completed_at, 'condition_description': self.condition_description, 'action_description': self.action_description}
 
     def refresh(self):
         """
