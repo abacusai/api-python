@@ -168,7 +168,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.40.1'
+    client_version = '0.40.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -3372,7 +3372,7 @@ class ApiClient(ReadOnlyClient):
             CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
         return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override, 'trainingConfig': training_config, 'customAlgorithmConfig': custom_algorithm_config}, parse_type=CustomTrainFunctionInfo)
 
-    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_monitor_config: dict = None) -> ModelMonitor:
+    def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
         Args:
@@ -3387,11 +3387,12 @@ class ApiClient(ReadOnlyClient):
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             model_id (str): The Unique ID of the Model
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
-            feature_group_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
+            feature_group_base_monitor_config (dict): 
+            feature_group_comparison_monitor_config (dict): 
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'targetValueBias': target_value_bias, 'targetValuePerformance': target_value_performance, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings, 'featureGroupMonitorConfig': feature_group_monitor_config}, parse_type=ModelMonitor)
+        return self._call_api('createModelMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'targetValue': target_value, 'targetValueBias': target_value_bias, 'targetValuePerformance': target_value_performance, 'featureMappings': feature_mappings, 'modelId': model_id, 'trainingFeatureMappings': training_feature_mappings, 'featureGroupBaseMonitorConfig': feature_group_base_monitor_config, 'featureGroupComparisonMonitorConfig': feature_group_comparison_monitor_config}, parse_type=ModelMonitor)
 
     def rerun_model_monitor(self, model_monitor_id: str) -> ModelMonitor:
         """Reruns the specified model monitor.

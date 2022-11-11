@@ -2493,7 +2493,7 @@ Attributes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_monitor_config = None)
+   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
 
       Runs a model monitor for the specified project.
 
@@ -2519,8 +2519,10 @@ Attributes
       :type model_id: str
       :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
-      :param feature_group_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
-      :type feature_group_monitor_config: dict
+      :param feature_group_base_monitor_config:
+      :type feature_group_base_monitor_config: dict
+      :param feature_group_comparison_monitor_config:
+      :type feature_group_comparison_monitor_config: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -5655,7 +5657,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.40.1
+   :annotation: = 0.40.2
 
    
 

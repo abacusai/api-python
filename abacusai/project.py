@@ -314,7 +314,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
-    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_monitor_config: dict = None):
+    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None):
         """
         Runs a model monitor for the specified project.
 
@@ -329,12 +329,13 @@ class Project(AbstractApiClass):
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             model_id (str): The Unique ID of the Model
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
-            feature_group_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
+            feature_group_base_monitor_config (dict): 
+            feature_group_comparison_monitor_config (dict): 
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_monitor_config)
+        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_base_monitor_config, feature_group_comparison_monitor_config)
 
     def list_model_monitors(self):
         """
