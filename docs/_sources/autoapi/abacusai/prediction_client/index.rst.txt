@@ -488,4 +488,18 @@ Classes
       :type blob_key_name: str
 
 
+   .. py:method:: describe_image(deployment_token, deployment_id, image, categories)
+
+      Describe the similarity between image and categories.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param image: The image to describe
+      :type image: io.TextIOBase
+      :param categories: A list of candidate categories to compare with the image
+      :type categories: list
+
+
 
