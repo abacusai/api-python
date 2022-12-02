@@ -18,10 +18,11 @@ class RefreshPolicy(AbstractApiClass):
             modelIds (list of unique identifiers of type 'string'): Comma separated list of Model IDs that this refresh policy applies to
             deploymentIds (list of unique identifiers of type 'string'): Comma separated list of Deployment IDs that this refresh policy applies to
             predictionMetricIds (list of unique identifiers of type 'string'): Comma separated list of Prediction Metric IDs that this refresh policy applies to
+            modelMonitorIds (list of unique identifiers of type 'string'): Comma separated list of Model Monitor IDs that this refresh policy applies to
             paused (bool): (Boolean): True if the refresh policy is paused
     """
 
-    def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, paused=None):
+    def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, paused=None):
         super().__init__(client, refreshPolicyId)
         self.refresh_policy_id = refreshPolicyId
         self.name = name
@@ -34,10 +35,11 @@ class RefreshPolicy(AbstractApiClass):
         self.model_ids = modelIds
         self.deployment_ids = deploymentIds
         self.prediction_metric_ids = predictionMetricIds
+        self.model_monitor_ids = modelMonitorIds
         self.paused = paused
 
     def __repr__(self):
-        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  paused={repr(self.paused)})"
+        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  model_monitor_ids={repr(self.model_monitor_ids)},\n  paused={repr(self.paused)})"
 
     def to_dict(self):
         """
@@ -46,7 +48,7 @@ class RefreshPolicy(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'paused': self.paused}
+        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'paused': self.paused}
 
     def delete(self):
         """

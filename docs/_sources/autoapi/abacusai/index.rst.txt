@@ -1418,7 +1418,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False)
+   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -1438,6 +1438,8 @@ Attributes
       :type package_requirements: dict
       :param use_original_csv_names: If set to true, feature group uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
+      :param python_function_bindings: python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type python_function_bindings: list
 
       :returns: The updated feature group
       :rtype: FeatureGroup
@@ -2798,7 +2800,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [])
+   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [])
 
       Creates a refresh policy with a particular cron pattern and refresh type.
 
@@ -2823,6 +2825,8 @@ Attributes
       :type batch_prediction_ids: list
       :param prediction_metric_ids: Comma separated list of Prediction Metrics
       :type prediction_metric_ids: list
+      :param model_monitor_ids: Comma separated list of Model Monitor IDs
+      :type model_monitor_ids: list
 
       :returns: The refresh policy created
       :rtype: RefreshPolicy
@@ -4641,7 +4645,7 @@ Attributes
       :rtype: DataPrepLogs
 
 
-   .. py:method:: set_default_model_algorithm(model_id = None, algorithm = None)
+   .. py:method:: set_default_model_algorithm(model_id = None, algorithm = None, data_cluster_type = None)
 
       Sets the model's algorithm to default for all new deployments
 
@@ -4649,11 +4653,15 @@ Attributes
       :type model_id: Unique String Identifier
       :param algorithm: the algorithm to pin in the model
       :type algorithm: Enum String
+      :param data_cluster_type: the data cluster type to set the lead model for
+      :type data_cluster_type: String
 
       :param model_id:
       :type model_id: str
       :param algorithm:
       :type algorithm: str
+      :param data_cluster_type:
+      :type data_cluster_type: str
 
 
    .. py:method:: get_training_logs(model_version, stdout = False, stderr = False)
@@ -5197,6 +5205,19 @@ Attributes
       :rtype: CustomLossFunction
 
 
+   .. py:method:: get_notebook_cell_completion(previous_cells, completion_type = None)
+
+      Calls OpenAI model with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
+
+      :param previous_cells: A list of cells from Notebook for OpenAI to autocomplete.
+      :type previous_cells: list
+      :param completion_type: Specify the type based on which the completion is done.
+      :type completion_type: str
+
+      :returns: The text to insert into the notebook cell.
+      :rtype: NotebookCompletion
+
+
 
 .. py:class:: PredictionClient(client_options = None)
 
@@ -5685,7 +5706,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.40.3
+   :annotation: = 0.41.0
 
    
 

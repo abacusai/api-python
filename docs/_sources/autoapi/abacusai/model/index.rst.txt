@@ -325,7 +325,7 @@ Classes
       :type model_id: str
 
 
-   .. py:method:: set_default_algorithm(algorithm = None)
+   .. py:method:: set_default_algorithm(algorithm = None, data_cluster_type = None)
 
       Sets the model's algorithm to default for all new deployments
 
@@ -333,9 +333,13 @@ Classes
       :type model_id: Unique String Identifier
       :param algorithm: the algorithm to pin in the model
       :type algorithm: Enum String
+      :param data_cluster_type: the data cluster type to set the lead model for
+      :type data_cluster_type: String
 
       :param algorithm:
       :type algorithm: str
+      :param data_cluster_type:
+      :type data_cluster_type: str
 
 
    .. py:method:: get_training_types_for_deployment(model_version = None, algorithm = None)

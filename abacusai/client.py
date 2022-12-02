@@ -58,6 +58,7 @@ from .model_version import ModelVersion
 from .modification_lock_info import ModificationLockInfo
 from .monitor_alert import MonitorAlert
 from .monitor_alert_version import MonitorAlertVersion
+from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
 from .prediction_metric import PredictionMetric
 from .prediction_metric_version import PredictionMetricVersion
@@ -168,7 +169,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.40.3'
+    client_version = '0.41.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -917,18 +918,20 @@ class ReadOnlyClient(BaseApiClient):
             DataPrepLogs: A list of logs."""
         return self._call_api('getTrainingDataLogs', 'GET', query_params={'modelVersion': model_version}, parse_type=DataPrepLogs)
 
-    def set_default_model_algorithm(self, model_id: str = None, algorithm: str = None):
+    def set_default_model_algorithm(self, model_id: str = None, algorithm: str = None, data_cluster_type: str = None):
         """Sets the model's algorithm to default for all new deployments
 
         Args:
             model_id (Unique String Identifier): The model to set
             algorithm (Enum String): the algorithm to pin in the model
+            data_cluster_type (String): the data cluster type to set the lead model for
 
 
         Args:
             model_id (str): 
-            algorithm (str): """
-        return self._call_api('setDefaultModelAlgorithm', 'GET', query_params={'modelId': model_id, 'algorithm': algorithm})
+            algorithm (str): 
+            data_cluster_type (str): """
+        return self._call_api('setDefaultModelAlgorithm', 'GET', query_params={'modelId': model_id, 'algorithm': algorithm, 'dataClusterType': data_cluster_type})
 
     def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns training logs for the model.
@@ -1390,6 +1393,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             CustomLossFunction: The description of the custom loss function with given name."""
         return self._call_api('listCustomLossFunctions', 'GET', query_params={'namePrefix': name_prefix, 'lossFunctionType': loss_function_type}, parse_type=CustomLossFunction)
+
+    def get_notebook_cell_completion(self, previous_cells: list, completion_type: str = None) -> NotebookCompletion:
+        """Calls OpenAI model with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
+
+        Args:
+            previous_cells (list): A list of cells from Notebook for OpenAI to autocomplete.
+            completion_type (str): Specify the type based on which the completion is done.
+
+        Returns:
+            NotebookCompletion: The text to insert into the notebook cell."""
+        return self._call_api('getNotebookCellCompletion', 'GET', query_params={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None):
@@ -2544,7 +2558,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The updated feature group"""
         return self._call_api('updateDatasetFeatureGroupFeatureExpression', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureExpression': feature_expression}, parse_type=FeatureGroup)
 
-    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False) -> FeatureGroup:
+    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False, python_function_bindings: list = None) -> FeatureGroup:
         """Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
         Args:
@@ -2556,10 +2570,11 @@ class ApiClient(ReadOnlyClient):
             memory (int): Memory (in GB) for the feature group function
             package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
             use_original_csv_names (bool): If set to true, feature group uses the original column names for input feature groups from csv datasets.
+            python_function_bindings (list): python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
 
         Returns:
             FeatureGroup: The updated feature group"""
-        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names}, parse_type=FeatureGroup)
+        return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionBindings': python_function_bindings}, parse_type=FeatureGroup)
 
     def update_feature_group_zip(self, feature_group_id: str, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Upload:
         """Updates the zip for a feature group created using createFeatureGroupFromZip
@@ -3612,7 +3627,7 @@ class ApiClient(ReadOnlyClient):
             deployment_id (str): The deployment for which the export type is set"""
         return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
-    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = []) -> RefreshPolicy:
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = []) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type.
 
         A refresh policy allows for the scheduling of a particular set of actions at regular intervals. This can be useful for periodically updated data which needs to be re-imported into the project for re-training.
@@ -3628,10 +3643,11 @@ class ApiClient(ReadOnlyClient):
             deployment_ids (list): Comma separated list of Deployment IDs
             batch_prediction_ids (list): Comma separated list of Batch Predictions
             prediction_metric_ids (list): Comma separated list of Prediction Metrics
+            model_monitor_ids (list): Comma separated list of Model Monitor IDs
 
         Returns:
             RefreshPolicy: The refresh policy created"""
-        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids}, parse_type=RefreshPolicy)
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids}, parse_type=RefreshPolicy)
 
     def delete_refresh_policy(self, refresh_policy_id: str):
         """Delete a refresh policy

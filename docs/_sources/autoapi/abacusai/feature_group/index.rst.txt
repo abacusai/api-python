@@ -713,7 +713,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_function_definition(function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False)
+   .. py:method:: update_function_definition(function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None)
 
       Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -731,6 +731,8 @@ Classes
       :type package_requirements: dict
       :param use_original_csv_names: If set to true, feature group uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
+      :param python_function_bindings: python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type python_function_bindings: list
 
       :returns: The updated feature group
       :rtype: FeatureGroup

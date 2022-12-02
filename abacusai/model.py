@@ -294,19 +294,21 @@ class Model(AbstractApiClass):
         """
         return self.client.delete_model(self.model_id)
 
-    def set_default_algorithm(self, algorithm: str = None):
+    def set_default_algorithm(self, algorithm: str = None, data_cluster_type: str = None):
         """
         Sets the model's algorithm to default for all new deployments
 
         Args:
             model_id (Unique String Identifier): The model to set
             algorithm (Enum String): the algorithm to pin in the model
+            data_cluster_type (String): the data cluster type to set the lead model for
 
 
         Args:
             algorithm (str): 
+            data_cluster_type (str): 
         """
-        return self.client.set_default_model_algorithm(self.model_id, algorithm)
+        return self.client.set_default_model_algorithm(self.model_id, algorithm, data_cluster_type)
 
     def get_training_types_for_deployment(self, model_version: str = None, algorithm: str = None):
         """
