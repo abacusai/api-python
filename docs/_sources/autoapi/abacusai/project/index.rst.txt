@@ -369,9 +369,9 @@ Classes
       :type model_id: str
       :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
-      :param feature_group_base_monitor_config:
+      :param feature_group_base_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
       :type feature_group_base_monitor_config: dict
-      :param feature_group_comparison_monitor_config:
+      :param feature_group_comparison_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
       :type feature_group_comparison_monitor_config: dict
 
       :returns: The new model monitor that was created.
@@ -381,6 +381,42 @@ Classes
    .. py:method:: list_model_monitors()
 
       Retrieves the list of models monitors in the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of model monitors.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_leakage = False, primary_keys = None, leakage_base_config = None, leakage_comparison_config = None)
+
+      Runs an eda (exploratory data analysis) for the specified project.
+
+      :param feature_group_id: The unique ID of the prediction data feature group
+      :type feature_group_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> EDA".
+      :type name: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
+      :type refresh_schedule: str
+      :param include_collinearity: Set to True if the eda type is collinearity
+      :type include_collinearity: bool
+      :param include_leakage: Set to True if the eda type is Leakage detector
+      :type include_leakage: bool
+      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for leakage detection
+      :type primary_keys: list
+      :param leakage_base_config: Base feature group version selection strategy for leakage eda type
+      :type leakage_base_config: dict
+      :param leakage_comparison_config: Comparison feature group version selection strategy for leakage eda type
+      :type leakage_comparison_config: dict
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: list_eda()
+
+      Retrieves the list of EDA (exploratory data analysis) in the specified project.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str

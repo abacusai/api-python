@@ -1,0 +1,50 @@
+:py:mod:`abacusai.feature_importance`
+=====================================
+
+.. py:module:: abacusai.feature_importance
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_importance.FeatureImportance
+
+
+
+
+.. py:class:: FeatureImportance(client, shapFeatureImportance=None, permutationFeatureImportance=None, nullFeatureImportance=None, lofoFeatureImportance=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Feature importance for a specified model monitor
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param shapFeatureImportance: A feature name, feature importance map for importance determined by shap values on a sample dataset
+   :type shapFeatureImportance: dict
+   :param permutationFeatureImportance: A feature name, feature importance map for importance determined by permutation importance
+   :type permutationFeatureImportance: dict
+   :param nullFeatureImportance: A feature name, feature importance map for importance determined by null feature importance
+   :type nullFeatureImportance: dict
+   :param lofoFeatureImportance: A feature name, feature importance map for importance determined by Leave One Feature Out method
+   :type lofoFeatureImportance: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

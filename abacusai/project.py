@@ -329,8 +329,8 @@ class Project(AbstractApiClass):
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             model_id (str): The Unique ID of the Model
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
-            feature_group_base_monitor_config (dict): 
-            feature_group_comparison_monitor_config (dict): 
+            feature_group_base_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
+            feature_group_comparison_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
 
         Returns:
             ModelMonitor: The new model monitor that was created.
@@ -348,6 +348,37 @@ class Project(AbstractApiClass):
             ModelMonitor: An array of model monitors.
         """
         return self.client.list_model_monitors(self.project_id)
+
+    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_leakage: bool = False, primary_keys: list = None, leakage_base_config: dict = None, leakage_comparison_config: dict = None):
+        """
+        Runs an eda (exploratory data analysis) for the specified project.
+
+        Args:
+            feature_group_id (str): The unique ID of the prediction data feature group
+            name (str): The name you want your model monitor to have. Defaults to "<Project Name> EDA".
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
+            include_collinearity (bool): Set to True if the eda type is collinearity
+            include_leakage (bool): Set to True if the eda type is Leakage detector
+            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for leakage detection
+            leakage_base_config (dict): Base feature group version selection strategy for leakage eda type
+            leakage_comparison_config (dict): Comparison feature group version selection strategy for leakage eda type
+
+        Returns:
+            ModelMonitor: The new model monitor that was created.
+        """
+        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_leakage, primary_keys, leakage_base_config, leakage_comparison_config)
+
+    def list_eda(self):
+        """
+        Retrieves the list of EDA (exploratory data analysis) in the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            ModelMonitor: An array of model monitors.
+        """
+        return self.client.list_eda(self.project_id)
 
     def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict):
         """

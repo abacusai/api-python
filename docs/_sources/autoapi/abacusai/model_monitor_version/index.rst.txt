@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -55,6 +55,8 @@ Classes
    :type modelVersion: unique string identifiers
    :param batchPredictionVersion:
    :type batchPredictionVersion: str
+   :param edaConfigs:
+   :type edaConfigs: list
 
    .. py:method:: __repr__()
 
@@ -118,6 +120,58 @@ Classes
 
       :returns: Data associated with the metric.
       :rtype: ModelMonitorVersionMetricData
+
+
+   .. py:method:: describe_eda_version()
+
+      Retrieves a full description of the specified model monitor version
+
+      :param model_monitor_version: The unique version ID of the model monitor version
+      :type model_monitor_version: str
+
+      :returns: A model monitor version.
+      :rtype: ModelMonitorVersion
+
+
+   .. py:method:: delete_eda_version()
+
+      Deletes the specified model monitor version.
+
+      :param model_monitor_version: The ID of the model monitor version to delete.
+      :type model_monitor_version: str
+
+
+   .. py:method:: get_eda_collinearity()
+
+      Gets the Collinearity between all features for the Exploratory Data Analysis.
+
+      :param model_monitor_version: The unique ID associated with the EDA instance.
+      :type model_monitor_version: str
+
+      :returns: An object with a record of correlations between each feature for an eda.
+      :rtype: EdaCollinearity
+
+
+   .. py:method:: get_eda_leakage_detection(transformation_feature = None)
+
+      Gets the leakage detection for the Exploratory Data Analysis.
+
+      :param transformation_feature:
+      :type transformation_feature: str
+
+      :returns: An object with duplication, deletion and transformation data for leakage detection for an eda.
+      :rtype: EdaLeakageDetection
+
+
+   .. py:method:: get_collinearity_for_feature(feature_name = None)
+
+      Gets the Collinearity for the given feature from the Exploratory Data Analysis.
+
+      :param feature_name: The name of the feature for which correlation shown
+      :type feature_name: str
+
+      :returns: An object with a record of correlations for the provided feature for an eda.
+      :rtype: EdaFeatureCollinearity
 
 
    .. py:method:: list_monitor_alert_versions_for_monitor_version()

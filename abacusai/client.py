@@ -35,12 +35,16 @@ from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .drift_distributions import DriftDistributions
+from .eda_collinearity import EdaCollinearity
+from .eda_feature_collinearity import EdaFeatureCollinearity
+from .eda_leakage_detection import EdaLeakageDetection
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
 from .feature_group_export_download_url import FeatureGroupExportDownloadUrl
 from .feature_group_template import FeatureGroupTemplate
 from .feature_group_version import FeatureGroupVersion
+from .feature_importance import FeatureImportance
 from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
@@ -169,7 +173,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.41.0'
+    client_version = '0.42.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -908,6 +912,16 @@ class ReadOnlyClient(BaseApiClient):
             ModelVersion: A model version."""
         return self._call_api('describeModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersion)
 
+    def get_feature_importance_by_model_version(self, model_version: str) -> FeatureImportance:
+        """Gets the feature importance calculated by various methods for the model
+
+        Args:
+            model_version (str): The version of the model.
+
+        Returns:
+            FeatureImportance: The feature importances for the model."""
+        return self._call_api('getFeatureImportanceByModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=FeatureImportance)
+
     def get_training_data_logs(self, model_version: str) -> DataPrepLogs:
         """Retrieves the data preparation logs during model training.
 
@@ -1056,6 +1070,80 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ModelMonitorOrgSummary: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization."""
         return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={}, parse_type=ModelMonitorOrgSummary)
+
+    def list_eda(self, project_id: str) -> List[ModelMonitor]:
+        """Retrieves the list of EDA (exploratory data analysis) in the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+
+        Returns:
+            ModelMonitor: An array of model monitors."""
+        return self._call_api('listEda', 'GET', query_params={'projectId': project_id}, parse_type=ModelMonitor)
+
+    def describe_eda(self, model_monitor_id: str) -> ModelMonitor:
+        """Retrieves a full description of the specified model monitor.
+
+        Args:
+            model_monitor_id (str): The unique ID associated with the model monitor.
+
+        Returns:
+            ModelMonitor: The description of the model monitor."""
+        return self._call_api('describeEda', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+
+    def list_eda_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
+        """Retrieves a list of the versions for a given model monitor.
+
+        Args:
+            model_monitor_id (str): The unique ID associated with the model monitor.
+            limit (int): The max length of the list of all model monitor versions.
+            start_after_version (str): The id of the version after which the list starts.
+
+        Returns:
+            ModelMonitorVersion: An array of model monitor versions."""
+        return self._call_api('listEdaVersions', 'GET', query_params={'modelMonitorId': model_monitor_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelMonitorVersion)
+
+    def describe_eda_version(self, model_monitor_version: str) -> ModelMonitorVersion:
+        """Retrieves a full description of the specified model monitor version
+
+        Args:
+            model_monitor_version (str): The unique version ID of the model monitor version
+
+        Returns:
+            ModelMonitorVersion: A model monitor version."""
+        return self._call_api('describeEdaVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
+
+    def get_eda_collinearity(self, model_monitor_version: str) -> EdaCollinearity:
+        """Gets the Collinearity between all features for the Exploratory Data Analysis.
+
+        Args:
+            model_monitor_version (str): The unique ID associated with the EDA instance.
+
+        Returns:
+            EdaCollinearity: An object with a record of correlations between each feature for an eda."""
+        return self._call_api('getEdaCollinearity', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=EdaCollinearity)
+
+    def get_eda_leakage_detection(self, model_monitor_version: str, transformation_feature: str = None) -> EdaLeakageDetection:
+        """Gets the leakage detection for the Exploratory Data Analysis.
+
+        Args:
+            model_monitor_version (str): The unique ID associated with the EDA insatnce.
+            transformation_feature (str): 
+
+        Returns:
+            EdaLeakageDetection: An object with duplication, deletion and transformation data for leakage detection for an eda."""
+        return self._call_api('getEdaLeakageDetection', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'transformationFeature': transformation_feature}, parse_type=EdaLeakageDetection)
+
+    def get_collinearity_for_feature(self, model_monitor_version: str, feature_name: str = None) -> EdaFeatureCollinearity:
+        """Gets the Collinearity for the given feature from the Exploratory Data Analysis.
+
+        Args:
+            model_monitor_version (str): The unique ID associated with the EDA instance.
+            feature_name (str): The name of the feature for which correlation shown
+
+        Returns:
+            EdaFeatureCollinearity: An object with a record of correlations for the provided feature for an eda."""
+        return self._call_api('getCollinearityForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name}, parse_type=EdaFeatureCollinearity)
 
     def describe_monitor_alert(self, monitor_alert_id: str) -> MonitorAlert:
         """Describes a given monitor alert id
@@ -1582,7 +1670,7 @@ class ApiClient(ReadOnlyClient):
             train_function, predict_function, predict_many_function, initialize_function)
         return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
 
-    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None):
+    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
         """
         Creates a feature group from a python function
 
@@ -1594,11 +1682,12 @@ class ApiClient(ReadOnlyClient):
             python_function_bindings (List<PythonFunctionArguments>): List of python function arguments
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
+            package_requirements (Dict): Dictionary with key value pairs corresponding to package: version for each dependency
         """
         function_source = inspect.getsource(function)
         if not python_function_name:
             python_function = self.create_python_function(
-                name=table_name, source_code=function_source, function_name=function.__name__)
+                name=table_name, source_code=function_source, function_name=function.__name__, package_requirements=package_requirements)
             python_function_name = python_function.name
             if not python_function_bindings and input_tables:
                 python_function_bindings = []
@@ -1608,7 +1697,7 @@ class ApiClient(ReadOnlyClient):
                         {'name': variable['name'], 'variable_type': variable['variable_type'], 'value': feature_group_table_name})
         return self.create_feature_group_from_function(table_name=table_name, python_function_name=python_function_name, python_function_bindings=python_function_bindings, cpu_size=cpu_size, memory=memory)
 
-    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None):
+    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None, package_requirements: dict = None):
         """
         Update custom python function with user inputs for the given python function.
 
@@ -1616,12 +1705,13 @@ class ApiClient(ReadOnlyClient):
             name (String): The unique name to identify the python function in an organization.
             function (callable): The function callable to serialize and upload.
             function_variable_mappings (List<PythonFunctionArguments>): List of python function arguments
+            package_requirements (Dict): Dictionary with key value pairs corresponding to package: version for each dependency
 
         Returns:
             PythonFunction: The python_function object.
         """
         source_code = inspect.getsource(function)
-        return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings)
+        return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings, package_requirements=package_requirements)
 
     def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False):
         """
@@ -3402,8 +3492,8 @@ class ApiClient(ReadOnlyClient):
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             model_id (str): The Unique ID of the Model
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
-            feature_group_base_monitor_config (dict): 
-            feature_group_comparison_monitor_config (dict): 
+            feature_group_base_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
+            feature_group_comparison_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
@@ -3440,6 +3530,56 @@ class ApiClient(ReadOnlyClient):
         Args:
             model_monitor_version (str): The ID of the model monitor version to delete."""
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
+
+    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_leakage: bool = False, primary_keys: list = None, leakage_base_config: dict = None, leakage_comparison_config: dict = None) -> ModelMonitor:
+        """Runs an eda (exploratory data analysis) for the specified project.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            feature_group_id (str): The unique ID of the prediction data feature group
+            name (str): The name you want your model monitor to have. Defaults to "<Project Name> EDA".
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
+            include_collinearity (bool): Set to True if the eda type is collinearity
+            include_leakage (bool): Set to True if the eda type is Leakage detector
+            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for leakage detection
+            leakage_base_config (dict): Base feature group version selection strategy for leakage eda type
+            leakage_comparison_config (dict): Comparison feature group version selection strategy for leakage eda type
+
+        Returns:
+            ModelMonitor: The new model monitor that was created."""
+        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeLeakage': include_leakage, 'primaryKeys': primary_keys, 'leakageBaseConfig': leakage_base_config, 'leakageComparisonConfig': leakage_comparison_config}, parse_type=ModelMonitor)
+
+    def rerun_eda(self, model_monitor_id: str) -> ModelMonitor:
+        """Reruns the specified model monitor.
+
+        Args:
+            model_monitor_id (str): The model monitor to rerun.
+
+        Returns:
+            ModelMonitor: The model monitor that is being rerun."""
+        return self._call_api('rerunEda', 'POST', query_params={}, body={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+
+    def rename_eda(self, model_monitor_id: str, name: str):
+        """Renames a model monitor
+
+        Args:
+            model_monitor_id (str): The ID of the model monitor to rename
+            name (str): The name to apply to the model monitor"""
+        return self._call_api('renameEda', 'PATCH', query_params={}, body={'modelMonitorId': model_monitor_id, 'name': name})
+
+    def delete_eda(self, model_monitor_id: str):
+        """Deletes the specified model monitor and all its versions.
+
+        Args:
+            model_monitor_id (str): The ID of the model monitor to delete."""
+        return self._call_api('deleteEda', 'DELETE', query_params={'modelMonitorId': model_monitor_id})
+
+    def delete_eda_version(self, model_monitor_version: str):
+        """Deletes the specified model monitor version.
+
+        Args:
+            model_monitor_version (str): The ID of the model monitor version to delete."""
+        return self._call_api('deleteEdaVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
 
     def create_monitor_alert(self, project_id: str, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict) -> MonitorAlert:
         """Create a monitor alert for the given conditions and monitor
@@ -4005,15 +4145,16 @@ class ApiClient(ReadOnlyClient):
             blob_key_name (str): the key to access this blob data in the model query data"""
         return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'blobKeyName': blob_key_name}, files={'blob': blob}, server_override=self.default_prediction_url)
 
-    def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list) -> Dict:
+    def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list, top_n: int = None) -> Dict:
         """Describe the similarity between image and categories.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             image (io.TextIOBase): The image to describe
-            categories (list): A list of candidate categories to compare with the image"""
-        return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories}, files={'image': image}, server_override=self.default_prediction_url)
+            categories (list): A list of candidate categories to compare with the image
+            top_n (int): Return the N most similar categories"""
+        return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=self.default_prediction_url)
 
     def create_prediction_metric(self, feature_group_id: str, prediction_metric_config: dict, project_id: str = None) -> PredictionMetric:
         """Create a prediction metric job description for the given prediction and actual-labels data.

@@ -127,6 +127,18 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.describe_model_version(self.model_version)
 
+    def get_feature_importance_by(self):
+        """
+        Gets the feature importance calculated by various methods for the model
+
+        Args:
+            model_version (str): The version of the model.
+
+        Returns:
+            FeatureImportance: The feature importances for the model.
+        """
+        return self.client.get_feature_importance_by_model_version(self.model_version)
+
     def get_training_data_logs(self):
         """
         Retrieves the data preparation logs during model training.

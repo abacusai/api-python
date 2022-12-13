@@ -40,6 +40,9 @@ Submodules
    document_store_import/index.rst
    drift_distribution/index.rst
    drift_distributions/index.rst
+   eda_collinearity/index.rst
+   eda_feature_collinearity/index.rst
+   eda_leakage_detection/index.rst
    feature/index.rst
    feature_drift_summary/index.rst
    feature_group/index.rst
@@ -48,12 +51,14 @@ Submodules
    feature_group_export_download_url/index.rst
    feature_group_template/index.rst
    feature_group_version/index.rst
+   feature_importance/index.rst
    feature_record/index.rst
    file_connector/index.rst
    file_connector_instructions/index.rst
    file_connector_verification/index.rst
    function_logs/index.rst
    indexing_config/index.rst
+   leakage_duplication/index.rst
    model/index.rst
    model_location/index.rst
    model_metrics/index.rst
@@ -259,7 +264,7 @@ Attributes
       :type memory: int
 
 
-   .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None)
+   .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None)
 
       Creates a feature group from a python function
 
@@ -277,9 +282,11 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
+      :param package_requirements: Dictionary with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: Dict
 
 
-   .. py:method:: update_python_function_code(name, function = None, function_variable_mappings = None)
+   .. py:method:: update_python_function_code(name, function = None, function_variable_mappings = None, package_requirements = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -289,6 +296,8 @@ Attributes
       :type function: callable
       :param function_variable_mappings: List of python function arguments
       :type function_variable_mappings: List<PythonFunctionArguments>
+      :param package_requirements: Dictionary with key value pairs corresponding to package: version for each dependency
+      :type package_requirements: Dict
 
       :returns: The python_function object.
       :rtype: PythonFunction
@@ -2521,9 +2530,9 @@ Attributes
       :type model_id: str
       :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
-      :param feature_group_base_monitor_config:
+      :param feature_group_base_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
       :type feature_group_base_monitor_config: dict
-      :param feature_group_comparison_monitor_config:
+      :param feature_group_comparison_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
       :type feature_group_comparison_monitor_config: dict
 
       :returns: The new model monitor that was created.
@@ -2560,6 +2569,70 @@ Attributes
 
 
    .. py:method:: delete_model_monitor_version(model_monitor_version)
+
+      Deletes the specified model monitor version.
+
+      :param model_monitor_version: The ID of the model monitor version to delete.
+      :type model_monitor_version: str
+
+
+   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_leakage = False, primary_keys = None, leakage_base_config = None, leakage_comparison_config = None)
+
+      Runs an eda (exploratory data analysis) for the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_id: The unique ID of the prediction data feature group
+      :type feature_group_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> EDA".
+      :type name: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
+      :type refresh_schedule: str
+      :param include_collinearity: Set to True if the eda type is collinearity
+      :type include_collinearity: bool
+      :param include_leakage: Set to True if the eda type is Leakage detector
+      :type include_leakage: bool
+      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for leakage detection
+      :type primary_keys: list
+      :param leakage_base_config: Base feature group version selection strategy for leakage eda type
+      :type leakage_base_config: dict
+      :param leakage_comparison_config: Comparison feature group version selection strategy for leakage eda type
+      :type leakage_comparison_config: dict
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: rerun_eda(model_monitor_id)
+
+      Reruns the specified model monitor.
+
+      :param model_monitor_id: The model monitor to rerun.
+      :type model_monitor_id: str
+
+      :returns: The model monitor that is being rerun.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: rename_eda(model_monitor_id, name)
+
+      Renames a model monitor
+
+      :param model_monitor_id: The ID of the model monitor to rename
+      :type model_monitor_id: str
+      :param name: The name to apply to the model monitor
+      :type name: str
+
+
+   .. py:method:: delete_eda(model_monitor_id)
+
+      Deletes the specified model monitor and all its versions.
+
+      :param model_monitor_id: The ID of the model monitor to delete.
+      :type model_monitor_id: str
+
+
+   .. py:method:: delete_eda_version(model_monitor_version)
 
       Deletes the specified model monitor version.
 
@@ -3329,7 +3402,7 @@ Attributes
       :type blob_key_name: str
 
 
-   .. py:method:: describe_image(deployment_token, deployment_id, image, categories)
+   .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
 
       Describe the similarity between image and categories.
 
@@ -3341,6 +3414,8 @@ Attributes
       :type image: io.TextIOBase
       :param categories: A list of candidate categories to compare with the image
       :type categories: list
+      :param top_n: Return the N most similar categories
+      :type top_n: int
 
 
    .. py:method:: create_prediction_metric(feature_group_id, prediction_metric_config, project_id = None)
@@ -4634,6 +4709,17 @@ Attributes
       :rtype: ModelVersion
 
 
+   .. py:method:: get_feature_importance_by_model_version(model_version)
+
+      Gets the feature importance calculated by various methods for the model
+
+      :param model_version: The version of the model.
+      :type model_version: str
+
+      :returns: The feature importances for the model.
+      :rtype: FeatureImportance
+
+
    .. py:method:: get_training_data_logs(model_version)
 
       Retrieves the data preparation logs during model training.
@@ -4806,6 +4892,91 @@ Attributes
 
       :returns: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization.
       :rtype: ModelMonitorOrgSummary
+
+
+   .. py:method:: list_eda(project_id)
+
+      Retrieves the list of EDA (exploratory data analysis) in the specified project.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+
+      :returns: An array of model monitors.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: describe_eda(model_monitor_id)
+
+      Retrieves a full description of the specified model monitor.
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
+      :type model_monitor_id: str
+
+      :returns: The description of the model monitor.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: list_eda_versions(model_monitor_id, limit = 100, start_after_version = None)
+
+      Retrieves a list of the versions for a given model monitor.
+
+      :param model_monitor_id: The unique ID associated with the model monitor.
+      :type model_monitor_id: str
+      :param limit: The max length of the list of all model monitor versions.
+      :type limit: int
+      :param start_after_version: The id of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: An array of model monitor versions.
+      :rtype: ModelMonitorVersion
+
+
+   .. py:method:: describe_eda_version(model_monitor_version)
+
+      Retrieves a full description of the specified model monitor version
+
+      :param model_monitor_version: The unique version ID of the model monitor version
+      :type model_monitor_version: str
+
+      :returns: A model monitor version.
+      :rtype: ModelMonitorVersion
+
+
+   .. py:method:: get_eda_collinearity(model_monitor_version)
+
+      Gets the Collinearity between all features for the Exploratory Data Analysis.
+
+      :param model_monitor_version: The unique ID associated with the EDA instance.
+      :type model_monitor_version: str
+
+      :returns: An object with a record of correlations between each feature for an eda.
+      :rtype: EdaCollinearity
+
+
+   .. py:method:: get_eda_leakage_detection(model_monitor_version, transformation_feature = None)
+
+      Gets the leakage detection for the Exploratory Data Analysis.
+
+      :param model_monitor_version: The unique ID associated with the EDA insatnce.
+      :type model_monitor_version: str
+      :param transformation_feature:
+      :type transformation_feature: str
+
+      :returns: An object with duplication, deletion and transformation data for leakage detection for an eda.
+      :rtype: EdaLeakageDetection
+
+
+   .. py:method:: get_collinearity_for_feature(model_monitor_version, feature_name = None)
+
+      Gets the Collinearity for the given feature from the Exploratory Data Analysis.
+
+      :param model_monitor_version: The unique ID associated with the EDA instance.
+      :type model_monitor_version: str
+      :param feature_name: The name of the feature for which correlation shown
+      :type feature_name: str
+
+      :returns: An object with a record of correlations for the provided feature for an eda.
+      :rtype: EdaFeatureCollinearity
 
 
    .. py:method:: describe_monitor_alert(monitor_alert_id)
@@ -5690,7 +5861,7 @@ Attributes
       :type blob_key_name: str
 
 
-   .. py:method:: describe_image(deployment_token, deployment_id, image, categories)
+   .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
 
       Describe the similarity between image and categories.
 
@@ -5702,11 +5873,13 @@ Attributes
       :type image: io.TextIOBase
       :param categories: A list of candidate categories to compare with the image
       :type categories: list
+      :param top_n: Return the N most similar categories
+      :type top_n: int
 
 
 
 .. py:data:: __version__
-   :annotation: = 0.41.0
+   :annotation: = 0.42.0
 
    
 

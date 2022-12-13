@@ -488,7 +488,7 @@ Classes
       :type blob_key_name: str
 
 
-   .. py:method:: describe_image(deployment_token, deployment_id, image, categories)
+   .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
 
       Describe the similarity between image and categories.
 
@@ -500,6 +500,8 @@ Classes
       :type image: io.TextIOBase
       :param categories: A list of candidate categories to compare with the image
       :type categories: list
+      :param top_n: Return the N most similar categories
+      :type top_n: int
 
 
 

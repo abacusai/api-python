@@ -22,9 +22,10 @@ class ModelMonitorVersion(AbstractApiClass):
             metricTypes (dict): List of metric types.
             modelVersion (unique string identifiers): Model version IDs that this refresh pipeline run is monitoring.
             batchPredictionVersion (str): 
+            edaConfigs (list): 
     """
 
-    def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None):
+    def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None):
         super().__init__(client, modelMonitorVersion)
         self.model_monitor_version = modelMonitorVersion
         self.status = status
@@ -41,9 +42,10 @@ class ModelMonitorVersion(AbstractApiClass):
         self.metric_types = metricTypes
         self.model_version = modelVersion
         self.batch_prediction_version = batchPredictionVersion
+        self.eda_configs = edaConfigs
 
     def __repr__(self):
-        return f"ModelMonitorVersion(model_monitor_version={repr(self.model_monitor_version)},\n  status={repr(self.status)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  monitoring_started_at={repr(self.monitoring_started_at)},\n  monitoring_completed_at={repr(self.monitoring_completed_at)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  metric_configs={repr(self.metric_configs)},\n  feature_group_monitor_configs={repr(self.feature_group_monitor_configs)},\n  metric_types={repr(self.metric_types)},\n  model_version={repr(self.model_version)},\n  batch_prediction_version={repr(self.batch_prediction_version)})"
+        return f"ModelMonitorVersion(model_monitor_version={repr(self.model_monitor_version)},\n  status={repr(self.status)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  monitoring_started_at={repr(self.monitoring_started_at)},\n  monitoring_completed_at={repr(self.monitoring_completed_at)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  metric_configs={repr(self.metric_configs)},\n  feature_group_monitor_configs={repr(self.feature_group_monitor_configs)},\n  metric_types={repr(self.metric_types)},\n  model_version={repr(self.model_version)},\n  batch_prediction_version={repr(self.batch_prediction_version)},\n  eda_configs={repr(self.eda_configs)})"
 
     def to_dict(self):
         """
@@ -52,7 +54,7 @@ class ModelMonitorVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_version': self.model_version, 'batch_prediction_version': self.batch_prediction_version}
+        return {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_version': self.model_version, 'batch_prediction_version': self.batch_prediction_version, 'eda_configs': self.eda_configs}
 
     def get_prediction_drift(self):
         """
@@ -109,6 +111,63 @@ class ModelMonitorVersion(AbstractApiClass):
             ModelMonitorVersionMetricData: Data associated with the metric.
         """
         return self.client.model_monitor_version_metric_data(self.model_monitor_version, metric_type, actual_values_to_detail)
+
+    def describe_eda_version(self):
+        """
+        Retrieves a full description of the specified model monitor version
+
+        Args:
+            model_monitor_version (str): The unique version ID of the model monitor version
+
+        Returns:
+            ModelMonitorVersion: A model monitor version.
+        """
+        return self.client.describe_eda_version(self.model_monitor_version)
+
+    def delete_eda_version(self):
+        """
+        Deletes the specified model monitor version.
+
+        Args:
+            model_monitor_version (str): The ID of the model monitor version to delete.
+        """
+        return self.client.delete_eda_version(self.model_monitor_version)
+
+    def get_eda_collinearity(self):
+        """
+        Gets the Collinearity between all features for the Exploratory Data Analysis.
+
+        Args:
+            model_monitor_version (str): The unique ID associated with the EDA instance.
+
+        Returns:
+            EdaCollinearity: An object with a record of correlations between each feature for an eda.
+        """
+        return self.client.get_eda_collinearity(self.model_monitor_version)
+
+    def get_eda_leakage_detection(self, transformation_feature: str = None):
+        """
+        Gets the leakage detection for the Exploratory Data Analysis.
+
+        Args:
+            transformation_feature (str): 
+
+        Returns:
+            EdaLeakageDetection: An object with duplication, deletion and transformation data for leakage detection for an eda.
+        """
+        return self.client.get_eda_leakage_detection(self.model_monitor_version, transformation_feature)
+
+    def get_collinearity_for_feature(self, feature_name: str = None):
+        """
+        Gets the Collinearity for the given feature from the Exploratory Data Analysis.
+
+        Args:
+            feature_name (str): The name of the feature for which correlation shown
+
+        Returns:
+            EdaFeatureCollinearity: An object with a record of correlations for the provided feature for an eda.
+        """
+        return self.client.get_collinearity_for_feature(self.model_monitor_version, feature_name)
 
     def list_monitor_alert_versions_for_monitor_version(self):
         """

@@ -341,12 +341,13 @@ class PredictionClient(BaseApiClient):
             blob_key_name (str): the key to access this blob data in the model query data"""
         return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'blobKeyName': blob_key_name}, files={'blob': blob}, server_override=self.default_prediction_url)
 
-    def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list) -> Dict:
+    def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list, top_n: int = None) -> Dict:
         """Describe the similarity between image and categories.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             image (io.TextIOBase): The image to describe
-            categories (list): A list of candidate categories to compare with the image"""
-        return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories}, files={'image': image}, server_override=self.default_prediction_url)
+            categories (list): A list of candidate categories to compare with the image
+            top_n (int): Return the N most similar categories"""
+        return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=self.default_prediction_url)
