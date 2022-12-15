@@ -314,7 +314,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
-    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None):
+    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None, img_url_prefixes: dict = None):
         """
         Runs a model monitor for the specified project.
 
@@ -331,11 +331,12 @@ class Project(AbstractApiClass):
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
             feature_group_base_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
             feature_group_comparison_monitor_config (dict): selection startegy for the feature_group 1 with the feature group version if selected
+            img_url_prefixes (dict): 
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_base_monitor_config, feature_group_comparison_monitor_config)
+        return self.client.create_model_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, refresh_schedule, target_value, target_value_bias, target_value_performance, feature_mappings, model_id, training_feature_mappings, feature_group_base_monitor_config, feature_group_comparison_monitor_config, img_url_prefixes)
 
     def list_model_monitors(self):
         """
@@ -348,6 +349,25 @@ class Project(AbstractApiClass):
             ModelMonitor: An array of model monitors.
         """
         return self.client.list_model_monitors(self.project_id)
+
+    def create_vision_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, target_value_performance: str, feature_mappings: dict, training_feature_mappings: dict, refresh_schedule: str = None, model_id: str = None):
+        """
+        Runs a vision drift monitor for the specified project.
+
+        Args:
+            prediction_feature_group_id (str): The unique ID of the prediction data feature group
+            training_feature_group_id (str): The unique ID of the training data feature group
+            name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
+            feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+            training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor
+            model_id (str): The unique ID of the model to monitor
+
+        Returns:
+            ModelMonitor: The new model monitor that was created.
+        """
+        return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, target_value_performance, feature_mappings, training_feature_mappings, refresh_schedule, model_id)
 
     def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_leakage: bool = False, primary_keys: list = None, leakage_base_config: dict = None, leakage_comparison_config: dict = None):
         """

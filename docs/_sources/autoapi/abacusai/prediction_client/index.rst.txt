@@ -504,4 +504,28 @@ Classes
       :type top_n: int
 
 
+   .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
+
+      Transcribe the audio
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param audio: The audio to transcribe
+      :type audio: io.TextIOBase
+
+
+   .. py:method:: classify_image(deployment_token, deployment_id, image)
+
+      Classify the image
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param image: The image to classify
+      :type image: io.TextIOBase
+
+
 
