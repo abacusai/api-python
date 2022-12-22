@@ -391,7 +391,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_vision_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, target_value_performance, feature_mappings, training_feature_mappings, refresh_schedule = None, model_id = None)
+   .. py:method:: create_vision_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
 
       Runs a vision drift monitor for the specified project.
 
@@ -401,22 +401,20 @@ Classes
       :type training_feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
       :type name: str
-      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
-      :type target_value_performance: str
       :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
       :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
+      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
+      :type target_value_performance: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor
       :type refresh_schedule: str
-      :param model_id: The unique ID of the model to monitor
-      :type model_id: str
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_leakage = False, primary_keys = None, leakage_base_config = None, leakage_comparison_config = None)
+   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
 
       Runs an eda (exploratory data analysis) for the specified project.
 
@@ -428,14 +426,14 @@ Classes
       :type refresh_schedule: str
       :param include_collinearity: Set to True if the eda type is collinearity
       :type include_collinearity: bool
-      :param include_leakage: Set to True if the eda type is Leakage detector
-      :type include_leakage: bool
-      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for leakage detection
+      :param include_data_consistency: Set to True if the eda type is Data consistency
+      :type include_data_consistency: bool
+      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
       :type primary_keys: list
-      :param leakage_base_config: Base feature group version selection strategy for leakage eda type
-      :type leakage_base_config: dict
-      :param leakage_comparison_config: Comparison feature group version selection strategy for leakage eda type
-      :type leakage_comparison_config: dict
+      :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
+      :type data_consistency_test_config: dict
+      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
+      :type data_consistency_reference_config: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -535,6 +533,30 @@ Classes
 
       :returns: A list of batch prediction jobs.
       :rtype: BatchPrediction
+
+
+   .. py:method:: create_graph_dashboard(name, python_function_ids)
+
+      Create a plot dashboard given selected python plots
+
+      :param name: The name of the dashboard
+      :type name: str
+      :param python_function_ids: The list of python function ids to use in the graph dashboard
+      :type python_function_ids: list
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+   .. py:method:: list_graph_dashboards()
+
+      Lists the graph dashboards for a project
+
+      :param project_id: The project id to list graph dashboards
+      :type project_id: str
+
+      :returns: An aray of graph dashboards
+      :rtype: GraphDashboard
 
 
    .. py:method:: list_builtin_algorithms(feature_group_ids = None, training_config = None)

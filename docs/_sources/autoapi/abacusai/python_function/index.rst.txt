@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, functionName=None, codeSource={})
+.. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,6 +35,10 @@ Classes
    :type functionVariableMappings: dict
    :param functionName: The name of the python function to be used
    :type functionName: str
+   :param pythonFunctionId: The unique identifier of the python function
+   :type pythonFunctionId: str
+   :param functionType: The type of the python function
+   :type functionType: str
    :param codeSource:
    :type codeSource: CodeSource
 

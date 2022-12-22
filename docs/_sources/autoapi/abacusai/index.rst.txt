@@ -24,7 +24,10 @@ Submodules
    concatenation_config/index.rst
    cryptography/index.rst
    custom_loss_function/index.rst
+   custom_metric/index.rst
+   custom_metric_version/index.rst
    custom_train_function_info/index.rst
+   data_consistency_duplication/index.rst
    data_filter/index.rst
    data_prep_logs/index.rst
    data_quality_results/index.rst
@@ -41,8 +44,9 @@ Submodules
    drift_distribution/index.rst
    drift_distributions/index.rst
    eda_collinearity/index.rst
+   eda_data_consistency/index.rst
    eda_feature_collinearity/index.rst
-   eda_leakage_detection/index.rst
+   embedding_feature_drift_distribution/index.rst
    feature/index.rst
    feature_drift_summary/index.rst
    feature_group/index.rst
@@ -57,8 +61,8 @@ Submodules
    file_connector_instructions/index.rst
    file_connector_verification/index.rst
    function_logs/index.rst
+   graph_dashboard/index.rst
    indexing_config/index.rst
-   leakage_duplication/index.rst
    model/index.rst
    model_location/index.rst
    model_metrics/index.rst
@@ -410,6 +414,40 @@ Attributes
 
       :raises InvalidParameterError: If either loss function name or type or the passed function is invalid/incompatible
       :raises DataNotFoundError: If a loss function with given name is not found in the organization
+
+
+   .. py:method:: create_custom_metric_from_function(name, problem_type, custom_metric_function)
+
+      Registers a new custom metric which can be used as an evaluation metric for the trained model.
+
+      :param name: A name for the metric. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed.
+      :type name: String
+      :param problem_type: The problem type that this metric would be applicable to. e.g. - REGRESSION, FORECASTING, etc.
+      :type problem_type: String
+      :param custom_metric_function: A python functor which can take required arguments e.g. (y_true, y_pred) and returns the metric value.
+      :type custom_metric_function: Callable
+
+      :returns: The newly created custom metric.
+      :rtype: CustomMetric
+
+      :raises InvalidParameterError: If either custom metric name or type or the passed function is invalid/incompatible.
+      :raises AlreadyExistsError: If a custom metric with given name already exists in the organization.
+
+
+   .. py:method:: update_custom_metric_from_function(name, custom_metric_function)
+
+      Updates a previously registered custom metric.
+
+      :param name: A name for the metric. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed.
+      :type name: String
+      :param custom_metric_function: A python functor which can take required arguments e.g. (y_true, y_pred) and returns the metric value.
+      :type custom_metric_function: Callable
+
+      :returns: The updated custom metric.
+      :rtype: CustomMetric
+
+      :raises InvalidParameterError: If either custom metric name or type or the passed function is invalid/incompatible.
+      :raises DataNotFoundError: If a custom metric with given name is not found in the organization.
 
 
    .. py:method:: add_user_to_organization(email)
@@ -2582,7 +2620,7 @@ Attributes
       :type model_monitor_version: str
 
 
-   .. py:method:: create_vision_drift_monitor(project_id, prediction_feature_group_id, training_feature_group_id, name, target_value_performance, feature_mappings, training_feature_mappings, refresh_schedule = None, model_id = None)
+   .. py:method:: create_vision_drift_monitor(project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
 
       Runs a vision drift monitor for the specified project.
 
@@ -2594,22 +2632,20 @@ Attributes
       :type training_feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
       :type name: str
-      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
-      :type target_value_performance: str
       :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
       :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
+      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
+      :type target_value_performance: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor
       :type refresh_schedule: str
-      :param model_id: The unique ID of the model to monitor
-      :type model_id: str
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_leakage = False, primary_keys = None, leakage_base_config = None, leakage_comparison_config = None)
+   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
 
       Runs an eda (exploratory data analysis) for the specified project.
 
@@ -2623,14 +2659,14 @@ Attributes
       :type refresh_schedule: str
       :param include_collinearity: Set to True if the eda type is collinearity
       :type include_collinearity: bool
-      :param include_leakage: Set to True if the eda type is Leakage detector
-      :type include_leakage: bool
-      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for leakage detection
+      :param include_data_consistency: Set to True if the eda type is Data consistency
+      :type include_data_consistency: bool
+      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
       :type primary_keys: list
-      :param leakage_base_config: Base feature group version selection strategy for leakage eda type
-      :type leakage_base_config: dict
-      :param leakage_comparison_config: Comparison feature group version selection strategy for leakage eda type
-      :type leakage_comparison_config: dict
+      :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
+      :type data_consistency_test_config: dict
+      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
+      :type data_consistency_reference_config: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -3920,7 +3956,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
 
       Creates a custom python function that's re-usable
 
@@ -3932,8 +3968,10 @@ Attributes
       :type function_name: str
       :param function_variable_mappings: List of python function arguments.
       :type function_variable_mappings: list
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
+      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency.
       :type package_requirements: dict
+      :param function_type: Type of python function to create
+      :type function_type: str
 
       :returns: The python function that can be used (i.e. for feature group transform)
       :rtype: PythonFunction
@@ -3964,6 +4002,44 @@ Attributes
 
       :param name: The name to identify the python function
       :type name: str
+
+
+   .. py:method:: create_graph_dashboard(project_id, name, python_function_ids)
+
+      Create a plot dashboard given selected python plots
+
+      :param project_id: The project id for the plot dashboard
+      :type project_id: str
+      :param name: The name of the dashboard
+      :type name: str
+      :param python_function_ids: The list of python function ids to use in the graph dashboard
+      :type python_function_ids: list
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+   .. py:method:: delete_graph_dashboard(graph_dashboard_id)
+
+      Deletes a graph dashboard
+
+      :param graph_dashboard_id: The graph dashboard id to delete
+      :type graph_dashboard_id: str
+
+
+   .. py:method:: update_graph_dashboard(graph_dashboard_id, name = None, python_function_ids = None)
+
+      Updates a graph dashboard
+
+      :param graph_dashboard_id: The graph dashboard id to update
+      :type graph_dashboard_id: str
+      :param name: The name of the dashboard
+      :type name: str
+      :param python_function_ids: The list of python function ids to use in the graph dashboard
+      :type python_function_ids: list
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
 
 
    .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False)
@@ -4077,6 +4153,46 @@ Attributes
       Deletes a previously registered custom loss function.
 
       :param name: The name of the custom loss function to be deleted
+      :type name: str
+
+
+   .. py:method:: create_custom_metric(name, problem_type, custom_metric_function_name = None, source_code = None)
+
+      Registers a new custom metric which can be used as an evaluation metric for the trained model.
+
+      :param name: A name for the metric. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed.
+      :type name: str
+      :param problem_type: The problem type that this metric would be applicable to. e.g. - REGRESSION, FORECASTING, etc.
+      :type problem_type: str
+      :param custom_metric_function_name: The name of the function whose full source code is passed in source_code.
+      :type custom_metric_function_name: str
+      :param source_code: The full source code of the custom metric function. This is required if custom_metric_function_name is passed.
+      :type source_code: str
+
+      :returns: The newly created custom metric.
+      :rtype: CustomMetric
+
+
+   .. py:method:: update_custom_metric(name, custom_metric_function_name, source_code)
+
+      Updates a previously registered custom metric with a new function implementation.
+
+      :param name: name of the registered custom metric.
+      :type name: str
+      :param custom_metric_function_name: The name of the function whose full source code is passed in `source_code`.
+      :type custom_metric_function_name: str
+      :param source_code: Python source code string of the function.
+      :type source_code: str
+
+      :returns: A description of the updated custom metric.
+      :rtype: CustomMetric
+
+
+   .. py:method:: delete_custom_metric(name)
+
+      Deletes a previously registered custom metric.
+
+      :param name: The name of the custom metric to be deleted.
       :type name: str
 
 
@@ -5030,17 +5146,17 @@ Attributes
       :rtype: EdaCollinearity
 
 
-   .. py:method:: get_eda_leakage_detection(model_monitor_version, transformation_feature = None)
+   .. py:method:: get_eda_data_consistency(model_monitor_version, transformation_feature = None)
 
-      Gets the leakage detection for the Exploratory Data Analysis.
+      Gets the data consistency for the Exploratory Data Analysis.
 
       :param model_monitor_version: The unique ID associated with the EDA insatnce.
       :type model_monitor_version: str
       :param transformation_feature:
       :type transformation_feature: str
 
-      :returns: An object with duplication, deletion and transformation data for leakage detection for an eda.
-      :rtype: EdaLeakageDetection
+      :returns: An object with duplication, deletion and transformation data for Data Consistency Analysis for an eda.
+      :rtype: EdaDataConsistency
 
 
    .. py:method:: get_collinearity_for_feature(model_monitor_version, feature_name = None)
@@ -5382,12 +5498,37 @@ Attributes
       :rtype: PythonFunction
 
 
-   .. py:method:: list_python_functions()
+   .. py:method:: list_python_functions(function_type = 'FEATURE_GROUP')
 
       List all python functions within the organization.
 
-      :returns: A list of python functions.
+      :param function_type: Optional argument to specify function type to list python functions for - default is FEATURE_GROUP.
+      :type function_type: str
+
+      :returns: A list of python functions objects.
       :rtype: PythonFunction
+
+
+   .. py:method:: describe_graph_dashboard(graph_dashboard_id)
+
+      Describes a given graph dashboard.
+
+      :param graph_dashboard_id: The graph dashboard id
+      :type graph_dashboard_id: str
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+   .. py:method:: list_graph_dashboards(project_id)
+
+      Lists the graph dashboards for a project
+
+      :param project_id: The project id to list graph dashboards
+      :type project_id: str
+
+      :returns: An aray of graph dashboards
+      :rtype: GraphDashboard
 
 
    .. py:method:: describe_algorithm(algorithm)
@@ -5451,6 +5592,41 @@ Attributes
 
       :returns: The description of the custom loss function with given name.
       :rtype: CustomLossFunction
+
+
+   .. py:method:: describe_custom_metric(name)
+
+      Retrieves a full description of a previously resgistered custom metric function.
+
+      :param name: Registered name of the custom metric.
+      :type name: str
+
+      :returns: The description of the custom metric with given name.
+      :rtype: CustomMetric
+
+
+   .. py:method:: describe_custom_metric_version(custom_metric_version)
+
+      Describes a given custom metric version
+
+      :param custom_metric_version: The unique identifier to a custom metric version.
+      :type custom_metric_version: str
+
+      :returns: An object describing the custom metric version.
+      :rtype: CustomMetricVersion
+
+
+   .. py:method:: list_custom_metrics(name_prefix = None, problem_type = None)
+
+      Retrieves a list of registered custom metrics.
+
+      :param name_prefix: The prefix of the names of the custom metrics.
+      :type name_prefix: str
+      :param problem_type: The associated problem type of the custom metrics.
+      :type problem_type: str
+
+      :returns: A list of custom metrics.
+      :rtype: CustomMetric
 
 
    .. py:method:: get_notebook_cell_completion(previous_cells, completion_type = None)
@@ -5980,7 +6156,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.43.0
+   :annotation: = 0.44.0
 
    
 

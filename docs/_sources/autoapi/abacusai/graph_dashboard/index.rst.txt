@@ -1,0 +1,94 @@
+:py:mod:`abacusai.graph_dashboard`
+==================================
+
+.. py:module:: abacusai.graph_dashboard
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.graph_dashboard.GraphDashboard
+
+
+
+
+.. py:class:: GraphDashboard(client, name=None, graphDashboardId=None, createdAt=None, projectId=None, pythonFunctionIds=None, pythonFunctionNames=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Graph Dashboard
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The user-friendly name for the model monitor.
+   :type name: str
+   :param graphDashboardId: The unique identifier of the graph dashboard.
+   :type graphDashboardId: str
+   :param createdAt: Date and time at which the graph dashboard was created.
+   :type createdAt: str
+   :param projectId: The project this model belongs to.
+   :type projectId: str
+   :param pythonFunctionIds: List of python graph ids included in the dashboard
+   :type pythonFunctionIds: list<unique string identifier>)
+   :param pythonFunctionNames: List of names of each of the python functions
+   :type pythonFunctionNames: list<string>
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: GraphDashboard
+
+
+   .. py:method:: describe()
+
+      Describes a given graph dashboard.
+
+      :param graph_dashboard_id: The graph dashboard id
+      :type graph_dashboard_id: str
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+   .. py:method:: delete()
+
+      Deletes a graph dashboard
+
+      :param graph_dashboard_id: The graph dashboard id to delete
+      :type graph_dashboard_id: str
+
+
+   .. py:method:: update(name = None, python_function_ids = None)
+
+      Updates a graph dashboard
+
+      :param name: The name of the dashboard
+      :type name: str
+      :param python_function_ids: The list of python function ids to use in the graph dashboard
+      :type python_function_ids: list
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+

@@ -145,17 +145,17 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.get_eda_collinearity(self.model_monitor_version)
 
-    def get_eda_leakage_detection(self, transformation_feature: str = None):
+    def get_eda_data_consistency(self, transformation_feature: str = None):
         """
-        Gets the leakage detection for the Exploratory Data Analysis.
+        Gets the data consistency for the Exploratory Data Analysis.
 
         Args:
             transformation_feature (str): 
 
         Returns:
-            EdaLeakageDetection: An object with duplication, deletion and transformation data for leakage detection for an eda.
+            EdaDataConsistency: An object with duplication, deletion and transformation data for Data Consistency Analysis for an eda.
         """
-        return self.client.get_eda_leakage_detection(self.model_monitor_version, transformation_feature)
+        return self.client.get_eda_data_consistency(self.model_monitor_version, transformation_feature)
 
     def get_collinearity_for_feature(self, feature_name: str = None):
         """

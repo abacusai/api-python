@@ -350,7 +350,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_model_monitors(self.project_id)
 
-    def create_vision_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, target_value_performance: str, feature_mappings: dict, training_feature_mappings: dict, refresh_schedule: str = None, model_id: str = None):
+    def create_vision_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, feature_mappings: dict, training_feature_mappings: dict, target_value_performance: str = None, refresh_schedule: str = None):
         """
         Runs a vision drift monitor for the specified project.
 
@@ -358,18 +358,17 @@ class Project(AbstractApiClass):
             prediction_feature_group_id (str): The unique ID of the prediction data feature group
             training_feature_group_id (str): The unique ID of the training data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
-            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor
-            model_id (str): The unique ID of the model to monitor
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, target_value_performance, feature_mappings, training_feature_mappings, refresh_schedule, model_id)
+        return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
-    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_leakage: bool = False, primary_keys: list = None, leakage_base_config: dict = None, leakage_comparison_config: dict = None):
+    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None):
         """
         Runs an eda (exploratory data analysis) for the specified project.
 
@@ -378,15 +377,15 @@ class Project(AbstractApiClass):
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> EDA".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
             include_collinearity (bool): Set to True if the eda type is collinearity
-            include_leakage (bool): Set to True if the eda type is Leakage detector
-            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for leakage detection
-            leakage_base_config (dict): Base feature group version selection strategy for leakage eda type
-            leakage_comparison_config (dict): Comparison feature group version selection strategy for leakage eda type
+            include_data_consistency (bool): Set to True if the eda type is Data consistency
+            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
+            data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency eda type
+            data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency eda type
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
-        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_leakage, primary_keys, leakage_base_config, leakage_comparison_config)
+        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_data_consistency, primary_keys, data_consistency_test_config, data_consistency_reference_config)
 
     def list_eda(self):
         """
@@ -482,6 +481,31 @@ class Project(AbstractApiClass):
             BatchPrediction: A list of batch prediction jobs.
         """
         return self.client.list_batch_predictions(self.project_id)
+
+    def create_graph_dashboard(self, name: str, python_function_ids: list):
+        """
+        Create a plot dashboard given selected python plots
+
+        Args:
+            name (str): The name of the dashboard
+            python_function_ids (list): The list of python function ids to use in the graph dashboard
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard
+        """
+        return self.client.create_graph_dashboard(self.project_id, name, python_function_ids)
+
+    def list_graph_dashboards(self):
+        """
+        Lists the graph dashboards for a project
+
+        Args:
+            project_id (str): The project id to list graph dashboards
+
+        Returns:
+            GraphDashboard: An aray of graph dashboards
+        """
+        return self.client.list_graph_dashboards(self.project_id)
 
     def list_builtin_algorithms(self, feature_group_ids: list = None, training_config: dict = None):
         """

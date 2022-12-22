@@ -1,0 +1,54 @@
+:py:mod:`abacusai.custom_metric`
+================================
+
+.. py:module:: abacusai.custom_metric
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.custom_metric.CustomMetric
+
+
+
+
+.. py:class:: CustomMetric(client, customMetricId=None, name=None, createdAt=None, problemType=None, notebookId=None, latestCustomMetricVersion={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Custom metric
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param customMetricId:
+   :type customMetricId: str
+   :param name: Name assigned to the custom metric
+   :type name: str
+   :param createdAt: When the custom metric was created
+   :type createdAt: str
+   :param problemType: The problem type that this custom metric would be applicable to. e.g. - regression.
+   :type problemType: str
+   :param notebookId:
+   :type notebookId: str
+   :param latestCustomMetricVersion: The latest version of the custom metric
+   :type latestCustomMetricVersion: CustomMetricVersion
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

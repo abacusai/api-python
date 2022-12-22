@@ -1,0 +1,71 @@
+:py:mod:`abacusai.custom_metric_version`
+========================================
+
+.. py:module:: abacusai.custom_metric_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.custom_metric_version.CustomMetricVersion
+
+
+
+
+.. py:class:: CustomMetricVersion(client, customMetricVersion=None, name=None, createdAt=None, customMetricFunctionName=None, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Custom metric version
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param customMetricVersion:
+   :type customMetricVersion: str
+   :param name:
+   :type name: str
+   :param createdAt: When the custom metric was created
+   :type createdAt: str
+   :param customMetricFunctionName: The name of the function defined in the source code
+   :type customMetricFunctionName: str
+   :param codeSource: Info about the source code of the custom metric
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: CustomMetricVersion
+
+
+   .. py:method:: describe()
+
+      Describes a given custom metric version
+
+      :param custom_metric_version: The unique identifier to a custom metric version.
+      :type custom_metric_version: str
+
+      :returns: An object describing the custom metric version.
+      :rtype: CustomMetricVersion
+
+
+

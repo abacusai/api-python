@@ -1,0 +1,56 @@
+:py:mod:`abacusai.eda_data_consistency`
+=======================================
+
+.. py:module:: abacusai.eda_data_consistency
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.eda_data_consistency.EdaDataConsistency
+
+
+
+
+.. py:class:: EdaDataConsistency(client, columnNames=None, primaryKeys=None, transformationColumnNames=None, baseDuplicates={}, compareDuplicates={}, deletions={}, transformations={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Eda Data Consistency, contained the duplicates in the base version, Comparison version, Deletions between the base and comparison and feature transformations between the base and comparison data.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param columnNames: Name of all the features in the data
+   :type columnNames: list
+   :param primaryKeys: Name of the primary keys in the data
+   :type primaryKeys: list
+   :param transformationColumnNames: Name of all the features that are not the primary keys
+   :type transformationColumnNames: list
+   :param baseDuplicates: A DataConsistencyDuplication describing the number of duplicates within the data
+   :type baseDuplicates: DataConsistencyDuplication
+   :param compareDuplicates: A DataConsistencyDuplication describing the number of duplicates within the data
+   :type compareDuplicates: DataConsistencyDuplication
+   :param deletions: A DataConsistencyDeletion describing the number of deletion between two versions in the data
+   :type deletions: DataConsistencyDuplication
+   :param transformations: A DataConsistencyTransformation the number of changes that occured per feature in the data
+   :type transformations: DataConsistencyTransformation
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

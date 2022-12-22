@@ -214,8 +214,8 @@ class FeatureGroupVersion(AbstractApiClass):
                     part_path = future.result()
                     with open(part_path, 'rb') as part_data:
                         reader = fastavro.reader(part_data)
-                        data_df = pd.concat(
-                            [data_df, pd.DataFrame([r for r in reader])])
+                        data_df = pd.concat([data_df, pd.DataFrame(
+                            [r for r in reader])], ignore_index=True)
             for col in data_df.columns:
                 if pd.core.dtypes.common.is_datetime64_ns_dtype(data_df[col]):
                     data_df[col] = data_df[col].dt.tz_localize(None)

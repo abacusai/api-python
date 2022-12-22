@@ -26,6 +26,8 @@ from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .custom_loss_function import CustomLossFunction
+from .custom_metric import CustomMetric
+from .custom_metric_version import CustomMetricVersion
 from .custom_train_function_info import CustomTrainFunctionInfo
 from .data_prep_logs import DataPrepLogs
 from .database_connector import DatabaseConnector
@@ -36,8 +38,8 @@ from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .drift_distributions import DriftDistributions
 from .eda_collinearity import EdaCollinearity
+from .eda_data_consistency import EdaDataConsistency
 from .eda_feature_collinearity import EdaFeatureCollinearity
-from .eda_leakage_detection import EdaLeakageDetection
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
@@ -49,6 +51,7 @@ from .file_connector import FileConnector
 from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
+from .graph_dashboard import GraphDashboard
 from .model import Model
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
@@ -173,7 +176,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.43.0'
+    client_version = '0.44.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1139,16 +1142,16 @@ class ReadOnlyClient(BaseApiClient):
             EdaCollinearity: An object with a record of correlations between each feature for an eda."""
         return self._call_api('getEdaCollinearity', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=EdaCollinearity)
 
-    def get_eda_leakage_detection(self, model_monitor_version: str, transformation_feature: str = None) -> EdaLeakageDetection:
-        """Gets the leakage detection for the Exploratory Data Analysis.
+    def get_eda_data_consistency(self, model_monitor_version: str, transformation_feature: str = None) -> EdaDataConsistency:
+        """Gets the data consistency for the Exploratory Data Analysis.
 
         Args:
             model_monitor_version (str): The unique ID associated with the EDA insatnce.
             transformation_feature (str): 
 
         Returns:
-            EdaLeakageDetection: An object with duplication, deletion and transformation data for leakage detection for an eda."""
-        return self._call_api('getEdaLeakageDetection', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'transformationFeature': transformation_feature}, parse_type=EdaLeakageDetection)
+            EdaDataConsistency: An object with duplication, deletion and transformation data for Data Consistency Analysis for an eda."""
+        return self._call_api('getEdaDataConsistency', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'transformationFeature': transformation_feature}, parse_type=EdaDataConsistency)
 
     def get_collinearity_for_feature(self, model_monitor_version: str, feature_name: str = None) -> EdaFeatureCollinearity:
         """Gets the Collinearity for the given feature from the Exploratory Data Analysis.
@@ -1437,12 +1440,35 @@ class ReadOnlyClient(BaseApiClient):
             PythonFunction: The python_function object."""
         return self._call_api('describePythonFunction', 'GET', query_params={'name': name}, parse_type=PythonFunction)
 
-    def list_python_functions(self) -> PythonFunction:
+    def list_python_functions(self, function_type: str = 'FEATURE_GROUP') -> PythonFunction:
         """List all python functions within the organization.
 
+        Args:
+            function_type (str): Optional argument to specify function type to list python functions for - default is FEATURE_GROUP.
+
         Returns:
-            PythonFunction: A list of python functions."""
-        return self._call_api('listPythonFunctions', 'GET', query_params={}, parse_type=PythonFunction)
+            PythonFunction: A list of python functions objects."""
+        return self._call_api('listPythonFunctions', 'GET', query_params={'functionType': function_type}, parse_type=PythonFunction)
+
+    def describe_graph_dashboard(self, graph_dashboard_id: str) -> GraphDashboard:
+        """Describes a given graph dashboard.
+
+        Args:
+            graph_dashboard_id (str): The graph dashboard id
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard"""
+        return self._call_api('describeGraphDashboard', 'GET', query_params={'graphDashboardId': graph_dashboard_id}, parse_type=GraphDashboard)
+
+    def list_graph_dashboards(self, project_id: str) -> List[GraphDashboard]:
+        """Lists the graph dashboards for a project
+
+        Args:
+            project_id (str): The project id to list graph dashboards
+
+        Returns:
+            GraphDashboard: An aray of graph dashboards"""
+        return self._call_api('listGraphDashboards', 'GET', query_params={'projectId': project_id}, parse_type=GraphDashboard)
 
     def describe_algorithm(self, algorithm: str) -> Algorithm:
         """Retrieves a full description of the specified algorithm.
@@ -1497,6 +1523,37 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             CustomLossFunction: The description of the custom loss function with given name."""
         return self._call_api('listCustomLossFunctions', 'GET', query_params={'namePrefix': name_prefix, 'lossFunctionType': loss_function_type}, parse_type=CustomLossFunction)
+
+    def describe_custom_metric(self, name: str) -> CustomMetric:
+        """Retrieves a full description of a previously resgistered custom metric function.
+
+        Args:
+            name (str): Registered name of the custom metric.
+
+        Returns:
+            CustomMetric: The description of the custom metric with given name."""
+        return self._call_api('describeCustomMetric', 'GET', query_params={'name': name}, parse_type=CustomMetric)
+
+    def describe_custom_metric_version(self, custom_metric_version: str) -> CustomMetricVersion:
+        """Describes a given custom metric version
+
+        Args:
+            custom_metric_version (str): The unique identifier to a custom metric version.
+
+        Returns:
+            CustomMetricVersion: An object describing the custom metric version."""
+        return self._call_api('describeCustomMetricVersion', 'GET', query_params={'customMetricVersion': custom_metric_version}, parse_type=CustomMetricVersion)
+
+    def list_custom_metrics(self, name_prefix: str = None, problem_type: str = None) -> CustomMetric:
+        """Retrieves a list of registered custom metrics.
+
+        Args:
+            name_prefix (str): The prefix of the names of the custom metrics.
+            problem_type (str): The associated problem type of the custom metrics.
+
+        Returns:
+            CustomMetric: A list of custom metrics."""
+        return self._call_api('listCustomMetrics', 'GET', query_params={'namePrefix': name_prefix, 'problemType': problem_type}, parse_type=CustomMetric)
 
     def get_notebook_cell_completion(self, previous_cells: list, completion_type: str = None) -> NotebookCompletion:
         """Calls OpenAI model with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
@@ -1868,6 +1925,52 @@ class ApiClient(ReadOnlyClient):
         clf = self.update_custom_loss_function_with_source_code(
             name, loss_function_name, loss_function_source_code)
         return clf
+
+    def create_custom_metric_from_function(self, name: str, problem_type: str, custom_metric_function: Callable):
+        """
+        Registers a new custom metric which can be used as an evaluation metric for the trained model.
+
+        Args:
+            name (String): A name for the metric. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed.
+            problem_type (String): The problem type that this metric would be applicable to. e.g. - REGRESSION, FORECASTING, etc.
+            custom_metric_function (Callable): A python functor which can take required arguments e.g. (y_true, y_pred) and returns the metric value.
+
+        Returns:
+            CustomMetric: The newly created custom metric.
+
+        Raises:
+            InvalidParameterError: If either custom metric name or type or the passed function is invalid/incompatible.
+            AlreadyExistsError: If a custom metric with given name already exists in the organization.
+        """
+        custom_metric_function_name = custom_metric_function.__name__
+        source_code = get_clean_function_source_code(custom_metric_function)
+
+        # Register the custom metric
+        custom_metric = self.create_custom_metric(
+            name, problem_type, custom_metric_function_name, source_code)
+        return custom_metric
+
+    def update_custom_metric_from_function(self, name: str, custom_metric_function: Callable):
+        """
+        Updates a previously registered custom metric.
+
+        Args:
+            name (String): A name for the metric. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed.
+            custom_metric_function (Callable): A python functor which can take required arguments e.g. (y_true, y_pred) and returns the metric value.
+
+        Returns:
+            CustomMetric: The updated custom metric.
+
+        Raises:
+            InvalidParameterError: If either custom metric name or type or the passed function is invalid/incompatible.
+            DataNotFoundError: If a custom metric with given name is not found in the organization.
+        """
+        custom_metric_function_name = custom_metric_function.__name__
+        source_code = get_clean_function_source_code(custom_metric_function)
+
+        custom_metric = self.update_custom_metric(
+            name, custom_metric_function_name, source_code)
+        return custom_metric
 
     def add_user_to_organization(self, email: str):
         """Invites a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -3550,7 +3653,7 @@ class ApiClient(ReadOnlyClient):
             model_monitor_version (str): The ID of the model monitor version to delete."""
         return self._call_api('deleteModelMonitorVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
 
-    def create_vision_drift_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str, name: str, target_value_performance: str, feature_mappings: dict, training_feature_mappings: dict, refresh_schedule: str = None, model_id: str = None) -> ModelMonitor:
+    def create_vision_drift_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str, name: str, feature_mappings: dict, training_feature_mappings: dict, target_value_performance: str = None, refresh_schedule: str = None) -> ModelMonitor:
         """Runs a vision drift monitor for the specified project.
 
         Args:
@@ -3558,17 +3661,16 @@ class ApiClient(ReadOnlyClient):
             prediction_feature_group_id (str): The unique ID of the prediction data feature group
             training_feature_group_id (str): The unique ID of the training data feature group
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
-            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
             feature_mappings (dict): A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             training_feature_mappings (dict): A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+            target_value_performance (str): A target positive value for the label to compute pr curve/ auc for performance page
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor
-            model_id (str): The unique ID of the model to monitor
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createVisionDriftMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'targetValuePerformance': target_value_performance, 'featureMappings': feature_mappings, 'trainingFeatureMappings': training_feature_mappings, 'refreshSchedule': refresh_schedule, 'modelId': model_id}, parse_type=ModelMonitor)
+        return self._call_api('createVisionDriftMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'featureMappings': feature_mappings, 'trainingFeatureMappings': training_feature_mappings, 'targetValuePerformance': target_value_performance, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
 
-    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_leakage: bool = False, primary_keys: list = None, leakage_base_config: dict = None, leakage_comparison_config: dict = None) -> ModelMonitor:
+    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None) -> ModelMonitor:
         """Runs an eda (exploratory data analysis) for the specified project.
 
         Args:
@@ -3577,14 +3679,14 @@ class ApiClient(ReadOnlyClient):
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> EDA".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
             include_collinearity (bool): Set to True if the eda type is collinearity
-            include_leakage (bool): Set to True if the eda type is Leakage detector
-            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for leakage detection
-            leakage_base_config (dict): Base feature group version selection strategy for leakage eda type
-            leakage_comparison_config (dict): Comparison feature group version selection strategy for leakage eda type
+            include_data_consistency (bool): Set to True if the eda type is Data consistency
+            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
+            data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency eda type
+            data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency eda type
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeLeakage': include_leakage, 'primaryKeys': primary_keys, 'leakageBaseConfig': leakage_base_config, 'leakageComparisonConfig': leakage_comparison_config}, parse_type=ModelMonitor)
+        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeDataConsistency': include_data_consistency, 'primaryKeys': primary_keys, 'dataConsistencyTestConfig': data_consistency_test_config, 'dataConsistencyReferenceConfig': data_consistency_reference_config}, parse_type=ModelMonitor)
 
     def rerun_eda(self, model_monitor_id: str) -> ModelMonitor:
         """Reruns the specified model monitor.
@@ -4552,7 +4654,7 @@ class ApiClient(ReadOnlyClient):
             data (list): The data to record, as an array of JSON objects"""
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None) -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None, function_type: str = 'FEATURE_GROUP') -> PythonFunction:
         """Creates a custom python function that's re-usable
 
         Args:
@@ -4560,11 +4662,12 @@ class ApiClient(ReadOnlyClient):
             source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the python function.
             function_variable_mappings (list): List of python function arguments.
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency.
+            function_type (str): Type of python function to create
 
         Returns:
             PythonFunction: The python function that can be used (i.e. for feature group transform)"""
-        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements}, parse_type=PythonFunction)
+        return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type}, parse_type=PythonFunction)
 
     def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None) -> PythonFunction:
         """Update custom python function with user inputs for the given python function.
@@ -4586,6 +4689,37 @@ class ApiClient(ReadOnlyClient):
         Args:
             name (str): The name to identify the python function"""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
+
+    def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list) -> GraphDashboard:
+        """Create a plot dashboard given selected python plots
+
+        Args:
+            project_id (str): The project id for the plot dashboard
+            name (str): The name of the dashboard
+            python_function_ids (list): The list of python function ids to use in the graph dashboard
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard"""
+        return self._call_api('createGraphDashboard', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
+
+    def delete_graph_dashboard(self, graph_dashboard_id: str):
+        """Deletes a graph dashboard
+
+        Args:
+            graph_dashboard_id (str): The graph dashboard id to delete"""
+        return self._call_api('deleteGraphDashboard', 'DELETE', query_params={'graphDashboardId': graph_dashboard_id})
+
+    def update_graph_dashboard(self, graph_dashboard_id: str, name: str = None, python_function_ids: list = None) -> GraphDashboard:
+        """Updates a graph dashboard
+
+        Args:
+            graph_dashboard_id (str): The graph dashboard id to update
+            name (str): The name of the dashboard
+            python_function_ids (list): The list of python function ids to use in the graph dashboard
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard"""
+        return self._call_api('updateGraphDashboard', 'POST', query_params={}, body={'graphDashboardId': graph_dashboard_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
 
     def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training
@@ -4667,3 +4801,35 @@ class ApiClient(ReadOnlyClient):
         Args:
             name (str): The name of the custom loss function to be deleted"""
         return self._call_api('deleteCustomLossFunction', 'DELETE', query_params={'name': name})
+
+    def create_custom_metric(self, name: str, problem_type: str, custom_metric_function_name: str = None, source_code: str = None) -> CustomMetric:
+        """Registers a new custom metric which can be used as an evaluation metric for the trained model.
+
+        Args:
+            name (str): A name for the metric. Should be unique per organization. Limit - 50 chars. Only underscores, numbers, uppercase alphabets allowed.
+            problem_type (str): The problem type that this metric would be applicable to. e.g. - REGRESSION, FORECASTING, etc.
+            custom_metric_function_name (str): The name of the function whose full source code is passed in source_code.
+            source_code (str): The full source code of the custom metric function. This is required if custom_metric_function_name is passed.
+
+        Returns:
+            CustomMetric: The newly created custom metric."""
+        return self._call_api('createCustomMetric', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'customMetricFunctionName': custom_metric_function_name, 'sourceCode': source_code}, parse_type=CustomMetric)
+
+    def update_custom_metric(self, name: str, custom_metric_function_name: str, source_code: str) -> CustomMetric:
+        """Updates a previously registered custom metric with a new function implementation.
+
+        Args:
+            name (str): name of the registered custom metric.
+            custom_metric_function_name (str): The name of the function whose full source code is passed in `source_code`.
+            source_code (str): Python source code string of the function.
+
+        Returns:
+            CustomMetric: A description of the updated custom metric."""
+        return self._call_api('updateCustomMetric', 'PATCH', query_params={}, body={'name': name, 'customMetricFunctionName': custom_metric_function_name, 'sourceCode': source_code}, parse_type=CustomMetric)
+
+    def delete_custom_metric(self, name: str):
+        """Deletes a previously registered custom metric.
+
+        Args:
+            name (str): The name of the custom metric to be deleted."""
+        return self._call_api('deleteCustomMetric', 'DELETE', query_params={'name': name})

@@ -1,9 +1,9 @@
 from .return_class import AbstractApiClass
 
 
-class LeakageDuplication(AbstractApiClass):
+class DataConsistencyDuplication(AbstractApiClass):
     """
-        Leakage detection for duplication within data
+        Data Consistency for duplication within data
 
         Args:
             client (ApiClient): An authenticated API Client instance
@@ -19,7 +19,7 @@ class LeakageDuplication(AbstractApiClass):
         self.sample = client._build_class(FeatureRecord, sample)
 
     def __repr__(self):
-        return f"LeakageDuplication(total_count={repr(self.total_count)},\n  num_duplicates={repr(self.num_duplicates)},\n  sample={repr(self.sample)})"
+        return f"DataConsistencyDuplication(total_count={repr(self.total_count)},\n  num_duplicates={repr(self.num_duplicates)},\n  sample={repr(self.sample)})"
 
     def to_dict(self):
         """
