@@ -51,7 +51,7 @@ Classes
    :type callsPerSecond: int
    :param autoDeploy: Flag marking the deployment eligible for auto deployments whenever any model in the project finishes training.
    :type autoDeploy: bool
-   :param algoName:
+   :param algoName: The name of the algorithm that is currently deployed
    :type algoName: str
    :param regions: List of regions that a deployment has been deployed to
    :type regions: list of strings
@@ -158,14 +158,16 @@ Classes
       :type enable: bool
 
 
-   .. py:method:: set_model_version(model_version, algorithm = None)
+   .. py:method:: set_model_version(model_version, algorithm = None, model_deployment_config = None)
 
-      Promotes a Model Version to be served in the Deployment
+      Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.
 
-      :param model_version: The unique ID for the Model Version
+      :param model_version: The unique ID for the model version
       :type model_version: str
-      :param algorithm:
+      :param algorithm: The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.
       :type algorithm: str
+      :param model_deployment_config: The deployment config for model to deploy
+      :type model_deployment_config: dict
 
 
    .. py:method:: set_feature_group_version(feature_group_version)

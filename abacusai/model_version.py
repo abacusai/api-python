@@ -17,14 +17,14 @@ class ModelVersion(AbstractApiClass):
             modelPredictionConfig (dict): The prediction config options for the model.
             trainingStartedAt (str): The start time and date of the training process.
             trainingCompletedAt (str): The end time and date of the training process.
-            datasetVersions (list of unique string identifiers): Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring.
-            featureGroupVersions (list): 
+            datasetVersions (list of unique string identifiers): Comma separated list of Dataset version IDs used for model training.
+            featureGroupVersions (list of unique string identifiers): Comma separated list of Feature Group version IDs used for model training.
             error (str): Relevant error if the status is FAILED.
             pendingDeploymentIds (list): List of deployment IDs where deployment is pending.
             failedDeploymentIds (list): List of failed deployment IDs.
             cpuSize (str): Cpu size specified for the python model training.
             memory (int): Memory in GB specified for the python model training.
-            automlComplete (bool): If true, all algorithms have compelted training
+            automlComplete (bool): If true, all algorithms have completed training
             trainingFeatureGroupIds (list of unique string identifiers): The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
             deployableAlgorithms (dict): List of deployable algorithms
             bestAlgorithm (dict): Best performing algorithm

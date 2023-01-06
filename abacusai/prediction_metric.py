@@ -13,7 +13,7 @@ class PredictionMetric(AbstractApiClass):
             featureGroupId (str): The feature group used as input to this prediction metric.
             predictionMetricConfig (json): Specification for the prediction metric to run in this job.
             predictionMetricId (str): The unique identifier of the prediction metric.
-            modelMonitorId (str): unique string identifier for model monitor that created prediction metric
+            modelMonitorId (str): The unique string identifier for model monitor that created this prediction metric
             projectId (str): The project this prediction metric belongs to.
             latestPredictionMetricVersionDescription (PredictionMetricVersion): Description of the latest prediction metric version (if any).
             refreshSchedules (RefreshSchedule): List of schedules that determines when the next version of the dataset will be created.

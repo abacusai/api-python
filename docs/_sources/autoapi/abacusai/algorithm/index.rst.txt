@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Algorithm(client, name=None, problemType=None, externalProblemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, algorithm=None, useGpu=None, codeSource={})
+.. py:class:: Algorithm(client, name=None, problemType=None, externalProblemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, algorithmId=None, useGpu=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,9 +31,9 @@ Classes
    :type problemType: str
    :param externalProblemType: The problem type name shown to external user
    :type externalProblemType: str
-   :param createdAt:
+   :param createdAt: When the algorithm was created
    :type createdAt: str
-   :param updatedAt:
+   :param updatedAt: When the algorithm was last updated
    :type updatedAt: str
    :param isDefaultEnabled: Whether train with the algorithm by default
    :type isDefaultEnabled: bool
@@ -49,11 +49,11 @@ Classes
    :type initializeFunctionName: str
    :param configOptions: Map dataset types and configs to train function parameter names
    :type configOptions: dict
-   :param algorithm: The unique identifier of the algorithm
-   :type algorithm: str
-   :param useGpu:
+   :param algorithmId: The unique identifier of the algorithm
+   :type algorithmId: str
+   :param useGpu: Whether to use gpu for model training
    :type useGpu: bool
-   :param codeSource:
+   :param codeSource: Info about the source code of the algorithm
    :type codeSource: CodeSource
 
    .. py:method:: __repr__()

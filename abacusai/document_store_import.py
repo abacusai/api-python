@@ -14,7 +14,7 @@ class DocumentStoreImport(AbstractApiClass):
             error (str): If status is FAILED, this field will be populated with an error.
             documentsImported (int): The number of documents in the document store
             documentsSkipped (int): The number of documents in the document store
-            uploadId (str): 
+            uploadId (str): The unique identifier to be used for documents upload
             replaceExistingFiles (bool): If false, documents that match the same key path in the document store will be skipped
     """
 

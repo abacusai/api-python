@@ -12,8 +12,8 @@ class ModelMetrics(AbstractApiClass):
             metrics (dict): Key/value pairs of metrics and their values
             baselineMetrics (dict): Key/value pairs of the baseline model metrics and their values
             targetColumn (str): The target column the model is predicting
-            trainValTestSplit (dict): 
-            infoLogs (list): 
+            trainValTestSplit (dict): Info on train, val and test split
+            infoLogs (list): Model training logs
     """
 
     def __init__(self, client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None, trainValTestSplit=None, infoLogs=None):

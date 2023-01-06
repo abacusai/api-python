@@ -15,7 +15,7 @@ class PythonFunction(AbstractApiClass):
             functionName (str): The name of the python function to be used
             pythonFunctionId (str): The unique identifier of the python function
             functionType (str): The type of the python function
-            codeSource (CodeSource): 
+            codeSource (CodeSource): Info about the source code of the python function
     """
 
     def __init__(self, client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, codeSource={}):

@@ -14,11 +14,11 @@ class FeatureGroupVersion(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureGroupVersion (str): The unique identifier for this version of feature group.
-            featureGroupId (str): 
+            featureGroupVersion (str): The unique identifier for this materialized version of feature group.
+            featureGroupId (str): The unique identifier of the feature group this version belongs to.
             sql (str): The sql definition creating this feature group.
             sourceTables (list of string): The source tables for this feature group.
-            createdAt (str): The timestamp at which the feature group was created.
+            createdAt (str): The timestamp at which the feature group version was created.
             status (str): The current status of the feature group version.
             error (str): Relevant error if the status is FAILED.
             deployable (bool): whether feature group is deployable or not.

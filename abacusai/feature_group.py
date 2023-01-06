@@ -10,55 +10,55 @@ from .return_class import AbstractApiClass
 
 class FeatureGroup(AbstractApiClass):
     """
-
+        A feature group
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            modificationLock (bool): 
-            featureGroupId (str): 
-            name (str): 
-            featureGroupSourceType (str): 
-            tableName (str): 
-            sql (str): 
-            datasetId (str): 
-            functionSourceCode (str): 
-            functionName (str): 
-            sourceTables (list): 
-            createdAt (str): 
-            description (str): 
-            featureGroupType (str): 
-            sqlError (str): 
-            latestVersionOutdated (bool): 
-            referencedFeatureGroups (list): 
-            tags (list): 
-            primaryKey (str): 
-            updateTimestampKey (str): 
-            lookupKeys (list): 
-            streamingEnabled (bool): 
-            featureGroupUse (str): 
-            incremental (bool): 
-            mergeConfig (dict): 
-            transformConfig (dict): 
-            samplingConfig (dict): 
-            cpuSize (str): 
-            memory (number(integer)): 
-            streamingReady (bool): 
+            modificationLock (bool): If feature groups is locked against a change or not
+            featureGroupId (str): The unique identifier for this feature group
+            name (str): [DEPRECATED] A user friendly name for the feature group
+            featureGroupSourceType (str): One of SQL, PYTHON, DATASET, BATCH_PREDICTION
+            tableName (str): The unique table name of this feature group
+            sql (str): The sql definition creating this feature group
+            datasetId (str): The datasetId the feature group is sourced from
+            functionSourceCode (str): The source definition creating this feature group
+            functionName (str): The function name to execute from the source code
+            sourceTables (list of string): The source tables for this feature group
+            createdAt (str): The timestamp at which the feature group was created.
+            description (str): Description of the feature group
+            featureGroupType (str): The Project Dataset Type when the Feature Group is used in the context of a project
+            sqlError (str): collects the error message with this FeatureGroup
+            latestVersionOutdated (bool): Is latest materialized feature group version outdated
+            referencedFeatureGroups (list of string): The feature groups this feature group is used in
+            tags (list of string): Tags added to this feature group
+            primaryKey (str): The primary index feature
+            updateTimestampKey (str): The primary timestamp feature
+            lookupKeys (list of string): Additional indexed features for this feature group
+            streamingEnabled (bool): If true, the feature group can have data streamed to it
+            featureGroupUse (str): The user assigned feature group use which allows for organizing feature groups in a project
+            incremental (bool): If feature group corresponds to an incremental dataset.
+            mergeConfig (dict): The merge configuration settings for the feature group.
+            transformConfig (dict): The transform configuration settings for the feature group.
+            samplingConfig (dict): The sampling configuration for the feature group
+            cpuSize (str): Cpu size specified for the python feature group.
+            memory (int): Memory in GB specified for the python feature group.
+            streamingReady (bool): If true, the feature group is ready to receive streaming data
             featureTags (dict): 
-            moduleName (str): 
-            templateBindings (list): 
-            featureExpression (str): 
-            useOriginalCsvNames (bool): 
-            pythonFunctionBindings (list): 
-            pythonFunctionName (str): 
-            annotationConfig (dict): 
-            features (Feature): 
-            duplicateFeatures (Feature): 
-            pointInTimeGroups (PointInTimeGroup): 
-            latestFeatureGroupVersion (FeatureGroupVersion): 
-            concatenationConfig (ConcatenationConfig): 
+            moduleName (str): The path to the file with the feature group function.
+            templateBindings (dict): Config specifying variable names and values to use when resolving a feature group template.
+            featureExpression (str): If the dataset feature group has custom features, the sql select expression creating those features
+            useOriginalCsvNames (bool): If true, the feature group will use the original column names in the source dataset.
+            pythonFunctionBindings (dict): Config specifying variable names, types, and values to use when resolving a python feature group.
+            pythonFunctionName (str): The name of the python function the feature group was built from.
+            annotationConfig (annotationconfig): The annotation config for this feature group.
+            features (Feature): List of resolved features
+            duplicateFeatures (Feature): List of duplicate features
+            pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
+            latestFeatureGroupVersion (FeatureGroupVersion): The latest feature group version
+            concatenationConfig (ConcatenationConfig): The Feature Group ID whose data will be concatenated into this feature group
             indexingConfig (IndexingConfig): 
-            codeSource (CodeSource): 
-            featureGroupTemplate (FeatureGroupTemplate): 
+            codeSource (CodeSource): If a python feature group, information on the source code
+            featureGroupTemplate (FeatureGroupTemplate): The FeatureGroupTemplate to use when this FeatureGroup is attached to a template.
     """
 
     def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, annotationConfig=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={}):

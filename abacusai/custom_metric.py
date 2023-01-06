@@ -8,11 +8,11 @@ class CustomMetric(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            customMetricId (str): 
+            customMetricId (str): The unique identifier of the custom metric
             name (str): Name assigned to the custom metric
             createdAt (str): When the custom metric was created
             problemType (str): The problem type that this custom metric would be applicable to. e.g. - regression.
-            notebookId (str): 
+            notebookId (str): The unique identifier of the notebook used to create/edit the custom metric
             latestCustomMetricVersion (CustomMetricVersion): The latest version of the custom metric
     """
 

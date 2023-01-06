@@ -2258,7 +2258,7 @@ Attributes
       :type custom_algorithms_only: bool
       :param custom_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
       :type custom_algorithm_configs: dict
-      :param builtin_algorithms: List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :param builtin_algorithms: List of ids of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
       :type builtin_algorithms: list
       :param cpu_size: Size of the cpu for the user-defined algorithms during train.
       :type cpu_size: str
@@ -2848,16 +2848,18 @@ Attributes
       :type enable: bool
 
 
-   .. py:method:: set_deployment_model_version(deployment_id, model_version, algorithm = None)
+   .. py:method:: set_deployment_model_version(deployment_id, model_version, algorithm = None, model_deployment_config = None)
 
-      Promotes a Model Version to be served in the Deployment
+      Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.
 
-      :param deployment_id: The unique ID for the Deployment
+      :param deployment_id: The unique ID for the deployment
       :type deployment_id: str
-      :param model_version: The unique ID for the Model Version
+      :param model_version: The unique ID for the model version
       :type model_version: str
-      :param algorithm:
+      :param algorithm: The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.
       :type algorithm: str
+      :param model_deployment_config: The deployment config for model to deploy
+      :type model_deployment_config: dict
 
 
    .. py:method:: set_deployment_feature_group_version(deployment_id, feature_group_version)
@@ -6156,7 +6158,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.44.0
+   :annotation: = 0.44.1
 
    
 

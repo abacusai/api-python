@@ -176,7 +176,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.44.0'
+    client_version = '0.44.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -3384,7 +3384,7 @@ class ApiClient(ReadOnlyClient):
             custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
             custom_algorithms_only (bool): Whether only run custom algorithms.
             custom_algorithm_configs (dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
-            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+            builtin_algorithms (list): List of ids of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
 
@@ -3832,14 +3832,15 @@ class ApiClient(ReadOnlyClient):
             enable (bool): Enable/disable the autoDeploy property of the Deployment."""
         return self._call_api('setAutoDeployment', 'POST', query_params={'deploymentId': deployment_id}, body={'enable': enable})
 
-    def set_deployment_model_version(self, deployment_id: str, model_version: str, algorithm: str = None):
-        """Promotes a Model Version to be served in the Deployment
+    def set_deployment_model_version(self, deployment_id: str, model_version: str, algorithm: str = None, model_deployment_config: dict = None):
+        """Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.
 
         Args:
-            deployment_id (str): The unique ID for the Deployment
-            model_version (str): The unique ID for the Model Version
-            algorithm (str): """
-        return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version, 'algorithm': algorithm})
+            deployment_id (str): The unique ID for the deployment
+            model_version (str): The unique ID for the model version
+            algorithm (str): The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.
+            model_deployment_config (dict): The deployment config for model to deploy"""
+        return self._call_api('setDeploymentModelVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'modelVersion': model_version, 'algorithm': algorithm, 'modelDeploymentConfig': model_deployment_config})
 
     def set_deployment_feature_group_version(self, deployment_id: str, feature_group_version: str):
         """Promotes a Feature Group Version to be served in the Deployment

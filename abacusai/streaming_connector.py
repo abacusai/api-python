@@ -12,7 +12,7 @@ class StreamingConnector(AbstractApiClass):
             name (str): A user-friendly name for the service
             createdAt (str): When the API key was created
             status (str): The status of the Database Connector
-            auth (dict): 
+            auth (dict): Non-secret connection information for this connector
     """
 
     def __init__(self, client, streamingConnectorId=None, service=None, name=None, createdAt=None, status=None, auth=None):

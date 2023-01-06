@@ -11,7 +11,7 @@ class PredictionDataset(AbstractApiClass):
             datasetType (str): dataset type
             datasetVersion (str): The unique identifier of the dataset version used for predictions
             default (bool): If true, this dataset is the default dataset in the model
-            required (bool): If true...
+            required (bool): If true, this dataset is required for the batch prediction
     """
 
     def __init__(self, client, datasetId=None, datasetType=None, datasetVersion=None, default=None, required=None):

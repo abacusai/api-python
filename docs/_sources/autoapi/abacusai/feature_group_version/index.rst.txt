@@ -25,15 +25,15 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param featureGroupVersion: The unique identifier for this version of feature group.
+   :param featureGroupVersion: The unique identifier for this materialized version of feature group.
    :type featureGroupVersion: str
-   :param featureGroupId:
+   :param featureGroupId: The unique identifier of the feature group this version belongs to.
    :type featureGroupId: str
    :param sql: The sql definition creating this feature group.
    :type sql: str
    :param sourceTables: The source tables for this feature group.
    :type sourceTables: list of string
-   :param createdAt: The timestamp at which the feature group was created.
+   :param createdAt: The timestamp at which the feature group version was created.
    :type createdAt: str
    :param status: The current status of the feature group version.
    :type status: str

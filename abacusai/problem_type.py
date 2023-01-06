@@ -7,7 +7,7 @@ class ProblemType(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            problemType (str): 
+            problemType (str): Name of the problem type
             requiredFeatureGroupType (str): The required feature group types to train for this problem type
             optionalFeatureGroupTypes (list of string): The optional feature group types can be used to train for this problem type
             useCasesSupportCustomAlgorithm (list): A list of use cases that support custom algorithms

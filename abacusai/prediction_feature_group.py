@@ -7,11 +7,11 @@ class PredictionFeatureGroup(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureGroupId (str): The unique identifier of the dataset
-            featureGroupVersion (str): 
+            featureGroupId (str): The unique identifier of the feature group
+            featureGroupVersion (str): The unique identifier of the feature group version used for predictions
             datasetType (str): dataset type
-            default (bool): If true, this dataset is the default feature group in the model
-            required (bool): If true...
+            default (bool): If true, this feature group is the default feature group in the model
+            required (bool): If true, this feature group is required for the batch prediction
     """
 
     def __init__(self, client, featureGroupId=None, featureGroupVersion=None, datasetType=None, default=None, required=None):

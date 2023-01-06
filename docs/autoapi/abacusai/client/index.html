@@ -303,7 +303,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.44.0</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.44.1</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -5177,7 +5177,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.</p></li>
 <li><p><strong>custom_algorithms_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether only run custom algorithms.</p></li>
 <li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json</p></li>
-<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.</p></li>
+<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of ids of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the cpu for the user-defined algorithms during train.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during train.</p></li>
 </ul>
@@ -5842,14 +5842,15 @@ it will be marked as a failed model version promotion with an error indicating p
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.set_deployment_model_version">
-<span class="sig-name descname"><span class="pre">set_deployment_model_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_deployment_model_version" title="Permalink to this definition"></a></dt>
-<dd><p>Promotes a Model Version to be served in the Deployment</p>
+<span class="sig-name descname"><span class="pre">set_deployment_model_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_deployment_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_deployment_model_version" title="Permalink to this definition"></a></dt>
+<dd><p>Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID for the Deployment</p></li>
-<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID for the Model Version</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID for the deployment</p></li>
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID for the model version</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.</p></li>
+<li><p><strong>model_deployment_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The deployment config for model to deploy</p></li>
 </ul>
 </dd>
 </dl>

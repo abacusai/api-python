@@ -22,7 +22,7 @@ class Deployment(AbstractApiClass):
             featureGroupVersion (str): The feature group version ID that is currently deployed.
             callsPerSecond (int): The number of calls per second the deployment could handle.
             autoDeploy (bool): Flag marking the deployment eligible for auto deployments whenever any model in the project finishes training.
-            algoName (str): 
+            algoName (str): The name of the algorithm that is currently deployed
             regions (list of strings): List of regions that a deployment has been deployed to
             error (str): Relevant error if the status is FAILED
             batchStreamingUpdates (bool): Flag marking the feature group deployment as having enabled a background process which caches streamed in rows for quicker lookup
@@ -153,15 +153,16 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_auto_deployment(self.deployment_id, enable)
 
-    def set_model_version(self, model_version: str, algorithm: str = None):
+    def set_model_version(self, model_version: str, algorithm: str = None, model_deployment_config: dict = None):
         """
-        Promotes a Model Version to be served in the Deployment
+        Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.
 
         Args:
-            model_version (str): The unique ID for the Model Version
-            algorithm (str): 
+            model_version (str): The unique ID for the model version
+            algorithm (str): The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.
+            model_deployment_config (dict): The deployment config for model to deploy
         """
-        return self.client.set_deployment_model_version(self.deployment_id, model_version, algorithm)
+        return self.client.set_deployment_model_version(self.deployment_id, model_version, algorithm, model_deployment_config)
 
     def set_feature_group_version(self, feature_group_version: str):
         """

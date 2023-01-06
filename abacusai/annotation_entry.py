@@ -8,7 +8,7 @@ class AnnotationEntry(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureGroupId (str): id of the feature group this annotation belongs to
+            featureGroupId (str): The ID of the feature group this annotation belongs to
             featureName (str): name of the feature this annotation is on
             docId (str): The ID of the primary document the annotation is on.
             featureGroupRowIdentifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value.

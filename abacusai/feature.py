@@ -19,8 +19,8 @@ class Feature(AbstractApiClass):
             whereClause (str): Nested Column Where Clause
             featureType (str): Feature Type of the Feature
             dataType (str): Data Type of the Feature
-            detectedFeatureType (str): 
-            detectedDataType (str): 
+            detectedFeatureType (str): The detected feature type of the column
+            detectedDataType (str): The detected data type of the column
             columns (NestedFeature): Nested Features
             pointInTimeInfo (PointInTimeFeature): Point in time column information
     """

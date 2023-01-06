@@ -21,97 +21,99 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   A feature group
+
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param modificationLock:
+   :param modificationLock: If feature groups is locked against a change or not
    :type modificationLock: bool
-   :param featureGroupId:
+   :param featureGroupId: The unique identifier for this feature group
    :type featureGroupId: str
-   :param name:
+   :param name: [DEPRECATED] A user friendly name for the feature group
    :type name: str
-   :param featureGroupSourceType:
+   :param featureGroupSourceType: One of SQL, PYTHON, DATASET, BATCH_PREDICTION
    :type featureGroupSourceType: str
-   :param tableName:
+   :param tableName: The unique table name of this feature group
    :type tableName: str
-   :param sql:
+   :param sql: The sql definition creating this feature group
    :type sql: str
-   :param datasetId:
+   :param datasetId: The datasetId the feature group is sourced from
    :type datasetId: str
-   :param functionSourceCode:
+   :param functionSourceCode: The source definition creating this feature group
    :type functionSourceCode: str
-   :param functionName:
+   :param functionName: The function name to execute from the source code
    :type functionName: str
-   :param sourceTables:
-   :type sourceTables: list
-   :param createdAt:
+   :param sourceTables: The source tables for this feature group
+   :type sourceTables: list of string
+   :param createdAt: The timestamp at which the feature group was created.
    :type createdAt: str
-   :param description:
+   :param description: Description of the feature group
    :type description: str
-   :param featureGroupType:
+   :param featureGroupType: The Project Dataset Type when the Feature Group is used in the context of a project
    :type featureGroupType: str
-   :param sqlError:
+   :param sqlError: collects the error message with this FeatureGroup
    :type sqlError: str
-   :param latestVersionOutdated:
+   :param latestVersionOutdated: Is latest materialized feature group version outdated
    :type latestVersionOutdated: bool
-   :param referencedFeatureGroups:
-   :type referencedFeatureGroups: list
-   :param tags:
-   :type tags: list
-   :param primaryKey:
+   :param referencedFeatureGroups: The feature groups this feature group is used in
+   :type referencedFeatureGroups: list of string
+   :param tags: Tags added to this feature group
+   :type tags: list of string
+   :param primaryKey: The primary index feature
    :type primaryKey: str
-   :param updateTimestampKey:
+   :param updateTimestampKey: The primary timestamp feature
    :type updateTimestampKey: str
-   :param lookupKeys:
-   :type lookupKeys: list
-   :param streamingEnabled:
+   :param lookupKeys: Additional indexed features for this feature group
+   :type lookupKeys: list of string
+   :param streamingEnabled: If true, the feature group can have data streamed to it
    :type streamingEnabled: bool
-   :param featureGroupUse:
+   :param featureGroupUse: The user assigned feature group use which allows for organizing feature groups in a project
    :type featureGroupUse: str
-   :param incremental:
+   :param incremental: If feature group corresponds to an incremental dataset.
    :type incremental: bool
-   :param mergeConfig:
+   :param mergeConfig: The merge configuration settings for the feature group.
    :type mergeConfig: dict
-   :param transformConfig:
+   :param transformConfig: The transform configuration settings for the feature group.
    :type transformConfig: dict
-   :param samplingConfig:
+   :param samplingConfig: The sampling configuration for the feature group
    :type samplingConfig: dict
-   :param cpuSize:
+   :param cpuSize: Cpu size specified for the python feature group.
    :type cpuSize: str
-   :param memory:
-   :type memory: number(integer)
-   :param streamingReady:
+   :param memory: Memory in GB specified for the python feature group.
+   :type memory: int
+   :param streamingReady: If true, the feature group is ready to receive streaming data
    :type streamingReady: bool
    :param featureTags:
    :type featureTags: dict
-   :param moduleName:
+   :param moduleName: The path to the file with the feature group function.
    :type moduleName: str
-   :param templateBindings:
-   :type templateBindings: list
-   :param featureExpression:
+   :param templateBindings: Config specifying variable names and values to use when resolving a feature group template.
+   :type templateBindings: dict
+   :param featureExpression: If the dataset feature group has custom features, the sql select expression creating those features
    :type featureExpression: str
-   :param useOriginalCsvNames:
+   :param useOriginalCsvNames: If true, the feature group will use the original column names in the source dataset.
    :type useOriginalCsvNames: bool
-   :param pythonFunctionBindings:
-   :type pythonFunctionBindings: list
-   :param pythonFunctionName:
+   :param pythonFunctionBindings: Config specifying variable names, types, and values to use when resolving a python feature group.
+   :type pythonFunctionBindings: dict
+   :param pythonFunctionName: The name of the python function the feature group was built from.
    :type pythonFunctionName: str
-   :param annotationConfig:
-   :type annotationConfig: dict
-   :param features:
+   :param annotationConfig: The annotation config for this feature group.
+   :type annotationConfig: annotationconfig
+   :param features: List of resolved features
    :type features: Feature
-   :param duplicateFeatures:
+   :param duplicateFeatures: List of duplicate features
    :type duplicateFeatures: Feature
-   :param pointInTimeGroups:
+   :param pointInTimeGroups: List of Point In Time Groups
    :type pointInTimeGroups: PointInTimeGroup
-   :param latestFeatureGroupVersion:
+   :param latestFeatureGroupVersion: The latest feature group version
    :type latestFeatureGroupVersion: FeatureGroupVersion
-   :param concatenationConfig:
+   :param concatenationConfig: The Feature Group ID whose data will be concatenated into this feature group
    :type concatenationConfig: ConcatenationConfig
    :param indexingConfig:
    :type indexingConfig: IndexingConfig
-   :param codeSource:
+   :param codeSource: If a python feature group, information on the source code
    :type codeSource: CodeSource
-   :param featureGroupTemplate:
+   :param featureGroupTemplate: The FeatureGroupTemplate to use when this FeatureGroup is attached to a template.
    :type featureGroupTemplate: FeatureGroupTemplate
 
    .. py:method:: __repr__()

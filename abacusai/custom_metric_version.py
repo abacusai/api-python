@@ -8,8 +8,8 @@ class CustomMetricVersion(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            customMetricVersion (str): 
-            name (str): 
+            customMetricVersion (str): The unique identifier of the custom metric version
+            name (str): Name assigned to the custom metric
             createdAt (str): When the custom metric was created
             customMetricFunctionName (str): The name of the function defined in the source code
             codeSource (CodeSource): Info about the source code of the custom metric

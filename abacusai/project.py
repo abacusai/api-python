@@ -9,8 +9,8 @@ class Project(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             projectId (str): The ID of the project.
             name (str): The name of the project.
-            useCase (str): The  Use Case associated with the project.
-            problemType (str): 
+            useCase (str): The use case associated with the project.
+            problemType (str): The problem type associated with the project.
             createdAt (str): The date and time when the project was created.
             featureGroupsEnabled (bool): Project uses feature groups instead of datasets.
     """
@@ -246,7 +246,7 @@ class Project(AbstractApiClass):
             custom_algorithms (list): List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
             custom_algorithms_only (bool): Whether only run custom algorithms.
             custom_algorithm_configs (dict): Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
-            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+            builtin_algorithms (list): List of ids of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
             cpu_size (str): Size of the cpu for the user-defined algorithms during train.
             memory (int): Memory (in GB) for the user-defined algorithms during train.
 

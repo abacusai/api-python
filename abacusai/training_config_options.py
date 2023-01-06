@@ -17,7 +17,7 @@ class TrainingConfigOptions(AbstractApiClass):
             description (str): A description of the parameter
             required (bool): True if the parameter is required for training
             lastModelValue (string/number): The last value used to train a model in this project
-            needsRefresh (bool): 
+            needsRefresh (bool): True if training config needs to be fetched again when this config option is changed
     """
 
     def __init__(self, client, name=None, dataType=None, valueType=None, valueOptions=None, value=None, default=None, options=None, description=None, required=None, lastModelValue=None, needsRefresh=None):

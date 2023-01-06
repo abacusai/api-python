@@ -11,7 +11,7 @@ class DatasetColumn(AbstractApiClass):
             dataType (str): The underlying data type of each column:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
             detectedDataType (str): The detected data type of the column
             featureType (str): Feature Type of the column
-            detectedFeatureType (str): The feature type of the column
+            detectedFeatureType (str): The detected feature type of the column
             originalName (str): The original name of the column
             validDataTypes (list of enum string): The valid data type options for this column
             timeFormat (str): The detected time format of the column
