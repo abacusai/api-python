@@ -11,7 +11,7 @@ class CodeSource(AbstractApiClass):
             sourceCode (str): If the type of the source is TEXT, the raw text of the function
             applicationConnectorId (str): The Application Connector to fetch the code from
             applicationConnectorInfo (str): Args passed to the application connector to fetch the code
-            packageRequirements (dict): The pip package dependencies required to run the code
+            packageRequirements (list): The pip package dependencies required to run the code
             status (str): The status of the code and validations
             error (str): If the status is failed, an error message describing what went wrong
     """

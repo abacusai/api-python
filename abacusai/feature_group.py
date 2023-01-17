@@ -699,7 +699,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_dataset_feature_group_feature_expression(self.feature_group_id, feature_expression)
 
-    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False, python_function_bindings: list = None):
+    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None):
         """
         Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
@@ -709,16 +709,16 @@ class FeatureGroup(AbstractApiClass):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_original_csv_names (bool): If set to true, feature group uses the original column names for input feature groups from csv datasets.
-            python_function_bindings (list): python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
 
         Returns:
             FeatureGroup: The updated feature group
         """
         return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements, use_original_csv_names, python_function_bindings)
 
-    def update_zip(self, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def update_zip(self, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
         Updates the zip for a feature group created using createFeatureGroupFromZip
 
@@ -728,14 +728,14 @@ class FeatureGroup(AbstractApiClass):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Upload: The Upload to upload the zip file to
         """
         return self.client.update_feature_group_zip(self.feature_group_id, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
 
-    def update_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def update_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
         Updates a feature group created using createFeatureGroupFromGit
 
@@ -748,7 +748,7 @@ class FeatureGroup(AbstractApiClass):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             FeatureGroup: The updated FeatureGroup
@@ -1103,5 +1103,5 @@ class FeatureGroup(AbstractApiClass):
         """
         self.refresh()
         if not self.latest_feature_group_version or self.latest_version_outdated:
-            self.latest_feature_group_version = self.create_version().wait_for_materialization()
-        return self
+            self.latest_feature_group_version = self.create_version()
+        return self.wait_for_materialization()

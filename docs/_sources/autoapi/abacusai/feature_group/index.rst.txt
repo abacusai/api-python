@@ -729,11 +729,11 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
       :param use_original_csv_names: If set to true, feature group uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
-      :param python_function_bindings: python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
       :type python_function_bindings: list
 
       :returns: The updated feature group
@@ -754,8 +754,8 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The Upload to upload the zip file to
       :rtype: Upload
@@ -781,8 +781,8 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The updated FeatureGroup
       :rtype: FeatureGroup

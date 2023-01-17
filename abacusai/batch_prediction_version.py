@@ -158,7 +158,7 @@ class BatchPredictionVersion(AbstractApiClass):
                 break
             offset += bytes_written
 
-    def wait_for_predictions(self, timeout=1200):
+    def wait_for_predictions(self, timeout=86400):
         """
         A waiting call until batch prediction version is ready.
 

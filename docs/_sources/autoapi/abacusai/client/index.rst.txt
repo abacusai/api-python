@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.44.1
+      :annotation: = 0.45.0
 
       
 
@@ -1692,8 +1692,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Dictionary with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: Dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
 
 
    .. py:method:: update_python_function_code(name, function = None, function_variable_mappings = None, package_requirements = None)
@@ -1706,14 +1706,14 @@ Attributes
       :type function: callable
       :param function_variable_mappings: List of python function arguments
       :type function_variable_mappings: List<PythonFunctionArguments>
-      :param package_requirements: Dictionary with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: Dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
 
       :returns: The python_function object.
       :rtype: PythonFunction
 
 
-   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False)
+   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1740,9 +1740,11 @@ Attributes
       :type project_id: Unique String Identifier
       :param use_gpu: Whether this algorithm needs to run on GPU
       :type use_gpu: Boolean
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
 
 
-   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None, use_gpu = None)
+   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1766,6 +1768,8 @@ Attributes
       :type is_default_enabled: Boolean
       :param use_gpu: Whether this algorithm needs to run on GPU
       :type use_gpu: Boolean
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
 
 
    .. py:method:: get_train_function_input(project_id, training_table_names = None, training_data_parameter_name_override = None, training_config_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -2242,8 +2246,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirements for the feature group function. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
       :param use_original_csv_names: Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
       :param python_function_name: Name of Python Function that contains the source code and function arguments.
@@ -2887,11 +2891,11 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
       :param use_original_csv_names: If set to true, feature group uses the original column names for input feature groups from csv datasets.
       :type use_original_csv_names: bool
-      :param python_function_bindings: python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
       :type python_function_bindings: list
 
       :returns: The updated feature group
@@ -2914,8 +2918,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The Upload to upload the zip file to
       :rtype: Upload
@@ -2943,8 +2947,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the feature group function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The updated FeatureGroup
       :rtype: FeatureGroup
@@ -3207,7 +3211,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, merge_file_schemas = False)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -3233,14 +3237,16 @@ Attributes
       :type date_format_lookback_days: int
       :param incremental: Signifies if the dataset is an incremental dataset.
       :type incremental: bool
-      :param is_documentset: Signifies if the dataset is docstore dataset
+      :param is_documentset: Signifies if the dataset is docstore dataset.
       :type is_documentset: bool
+      :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
+      :type merge_file_schemas: bool
 
       :returns: The dataset created.
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_version_from_file_connector(dataset_id, location = None, file_format = None, csv_delimiter = None)
+   .. py:method:: create_dataset_version_from_file_connector(dataset_id, location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None)
 
       Creates a new version of the specified dataset.
 
@@ -3252,6 +3258,8 @@ Attributes
       :type file_format: str
       :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
       :type csv_delimiter: str
+      :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
+      :type merge_file_schemas: bool
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion
@@ -3712,8 +3720,8 @@ Attributes
       :type training_config: dict
       :param exclusive_run: Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
       :type exclusive_run: bool
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -3760,8 +3768,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The updated model
       :rtype: Model
@@ -3798,8 +3806,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The updated model
       :rtype: Upload
@@ -4071,7 +4079,7 @@ Attributes
       :type primary_keys: list
       :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
       :type data_consistency_test_config: dict
-      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
+      :param data_consistency_reference_config: Reference (Control) feature group version selection strategy for Data Consistency eda type
       :type data_consistency_reference_config: dict
 
       :returns: The new model monitor that was created.
@@ -4671,7 +4679,7 @@ Attributes
       :type threshold: None
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -4699,7 +4707,7 @@ Attributes
       :type explore_fraction: float
 
 
-   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
+   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
       Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -4717,7 +4725,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -4735,7 +4743,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
+   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = None, restrict_items = None, exclude_items = None)
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -5376,8 +5384,8 @@ Attributes
       :type function_name: str
       :param function_variable_mappings: List of python function arguments.
       :type function_variable_mappings: list
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency.
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
       :param function_type: Type of python function to create
       :type function_type: str
 
@@ -5397,8 +5405,8 @@ Attributes
       :type function_name: str
       :param function_variable_mappings: List of python function arguments
       :type function_variable_mappings: list
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The python_function object.
       :rtype: PythonFunction
@@ -5450,7 +5458,7 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False)
+   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
 
       Creates a custome algorithm that's re-usable for model training
 
@@ -5480,6 +5488,8 @@ Attributes
       :type project_id: str
       :param use_gpu: Whether this algorithm needs to run on GPU
       :type use_gpu: bool
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The new customer model can be used for training
       :rtype: Algorithm
@@ -5493,7 +5503,7 @@ Attributes
       :type algorithm: str
 
 
-   .. py:method:: update_algorithm(algorithm, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None, use_gpu = None)
+   .. py:method:: update_algorithm(algorithm, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
 
       Update custome algorithm for the given algorithm name. If source_code is provided, also need to provide all the function names in the source_code.
 
@@ -5519,6 +5529,8 @@ Attributes
       :type is_default_enabled: bool
       :param use_gpu: Whether this algorithm needs to run on GPU
       :type use_gpu: bool
+      :param package_requirements:
+      :type package_requirements: list
 
       :returns: The new customer model can be used for training
       :rtype: Algorithm

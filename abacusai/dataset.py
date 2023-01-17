@@ -25,12 +25,13 @@ class Dataset(AbstractApiClass):
             applicationConnectorConfig (dict): The application connector query used to retrieve data.
             incremental (bool): If dataset is an incremental dataset.
             isDocumentset (bool): If dataset is a documentset.
+            mergeFileSchemas (bool): If the merge file schemas policy is enabled.
             latestDatasetVersion (DatasetVersion): The latest version of this dataset.
             schema (DatasetColumn): List of resolved columns.
             refreshSchedules (RefreshSchedule): List of schedules that determines when the next version of the dataset will be created.
     """
 
-    def __init__(self, client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={}):
+    def __init__(self, client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, mergeFileSchemas=None, schema={}, refreshSchedules={}, latestDatasetVersion={}):
         super().__init__(client, datasetId)
         self.dataset_id = datasetId
         self.source_type = sourceType
@@ -47,6 +48,7 @@ class Dataset(AbstractApiClass):
         self.application_connector_config = applicationConnectorConfig
         self.incremental = incremental
         self.is_documentset = isDocumentset
+        self.merge_file_schemas = mergeFileSchemas
         self.schema = client._build_class(DatasetColumn, schema)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
@@ -54,7 +56,7 @@ class Dataset(AbstractApiClass):
             DatasetVersion, latestDatasetVersion)
 
     def __repr__(self):
-        return f"Dataset(dataset_id={repr(self.dataset_id)},\n  source_type={repr(self.source_type)},\n  data_source={repr(self.data_source)},\n  created_at={repr(self.created_at)},\n  ignore_before={repr(self.ignore_before)},\n  ephemeral={repr(self.ephemeral)},\n  lookback_days={repr(self.lookback_days)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_connector_config={repr(self.database_connector_config)},\n  connector_type={repr(self.connector_type)},\n  feature_group_table_name={repr(self.feature_group_table_name)},\n  application_connector_id={repr(self.application_connector_id)},\n  application_connector_config={repr(self.application_connector_config)},\n  incremental={repr(self.incremental)},\n  is_documentset={repr(self.is_documentset)},\n  schema={repr(self.schema)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_dataset_version={repr(self.latest_dataset_version)})"
+        return f"Dataset(dataset_id={repr(self.dataset_id)},\n  source_type={repr(self.source_type)},\n  data_source={repr(self.data_source)},\n  created_at={repr(self.created_at)},\n  ignore_before={repr(self.ignore_before)},\n  ephemeral={repr(self.ephemeral)},\n  lookback_days={repr(self.lookback_days)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_connector_config={repr(self.database_connector_config)},\n  connector_type={repr(self.connector_type)},\n  feature_group_table_name={repr(self.feature_group_table_name)},\n  application_connector_id={repr(self.application_connector_id)},\n  application_connector_config={repr(self.application_connector_config)},\n  incremental={repr(self.incremental)},\n  is_documentset={repr(self.is_documentset)},\n  merge_file_schemas={repr(self.merge_file_schemas)},\n  schema={repr(self.schema)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_dataset_version={repr(self.latest_dataset_version)})"
 
     def to_dict(self):
         """
@@ -63,9 +65,9 @@ class Dataset(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'dataset_id': self.dataset_id, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'incremental': self.incremental, 'is_documentset': self.is_documentset, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version)}
+        return {'dataset_id': self.dataset_id, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'incremental': self.incremental, 'is_documentset': self.is_documentset, 'merge_file_schemas': self.merge_file_schemas, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version)}
 
-    def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None):
+    def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None):
         """
         Creates a new version of the specified dataset.
 
@@ -73,11 +75,12 @@ class Dataset(AbstractApiClass):
             location (str): A new external URI to import the dataset from. If not specified, the last location will be used.
             file_format (str): The fileFormat to be used. If not specified, the service will try to detect the file format.
             csv_delimiter (str): If the file format is CSV, use a specific csv delimiter.
+            merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
 
         Returns:
             DatasetVersion: The new Dataset Version created.
         """
-        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter)
+        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter, merge_file_schemas)
 
     def create_version_from_database_connector(self, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
         """

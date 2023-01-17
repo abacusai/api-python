@@ -555,7 +555,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Memory (in GB) for the model training function</p></li>
 <li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Training configuration</p></li>
 <li><p><strong>exclusive_run</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Decides if this model will be run exclusively OR along with other Abacus.ai algorithms</p></li>
-<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Json with key value pairs corresponding to package: version for each dependency</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’]</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -693,7 +693,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>include_data_consistency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set to True if the eda type is Data consistency</p></li>
 <li><p><strong>primary_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis</p></li>
 <li><p><strong>data_consistency_test_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Test feature group version selection strategy for Data Consistency eda type</p></li>
-<li><p><strong>data_consistency_reference_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Reference feature group version selection strategy for Data Consistency eda type</p></li>
+<li><p><strong>data_consistency_reference_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Reference (Control) feature group version selection strategy for Data Consistency eda type</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

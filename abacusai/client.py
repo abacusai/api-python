@@ -176,12 +176,13 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.44.1'
+    client_version = '0.45.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
         if self.api_key is None:
             self.api_key = os.getenv('ABACUS_API_KEY')
+        self.notebook_id = os.getenv('ABACUS_NOTEBOOK_ID')
         self.web_version = None
         self.client_options = client_options or ClientOptions()
         self.server = server or self.client_options.server
@@ -226,7 +227,7 @@ class BaseApiClient:
             self, action, method, query_params=None,
             body=None, files=None, parse_type=None, streamable_response=False, server_override=None):
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
-                   'User-Agent': f'python-abacusai-{self.client_version}'}
+                   'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id}
         url = (server_override or self.server) + '/api/v0/' + action
         self._clean_api_objects(query_params)
         self._clean_api_objects(body)
@@ -1743,7 +1744,7 @@ class ApiClient(ReadOnlyClient):
             train_function, predict_function, predict_many_function, initialize_function)
         return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
 
-    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
         Creates a feature group from a python function
 
@@ -1755,13 +1756,13 @@ class ApiClient(ReadOnlyClient):
             python_function_bindings (List<PythonFunctionArguments>): List of python function arguments
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (Dict): Dictionary with key value pairs corresponding to package: version for each dependency
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
         """
-        function_source = inspect.getsource(function)
-        if not python_function_name:
+        if function:
+            function_source = inspect.getsource(function)
             python_function = self.create_python_function(
                 name=table_name, source_code=function_source, function_name=function.__name__, package_requirements=package_requirements)
-            python_function_name = python_function.name
+            python_function_name = python_function_name or python_function.name
             if not python_function_bindings and input_tables:
                 python_function_bindings = []
                 for index, feature_group_table_name in enumerate(input_tables):
@@ -1770,7 +1771,7 @@ class ApiClient(ReadOnlyClient):
                         {'name': variable['name'], 'variable_type': variable['variable_type'], 'value': feature_group_table_name})
         return self.create_feature_group_from_function(table_name=table_name, python_function_name=python_function_name, python_function_bindings=python_function_bindings, cpu_size=cpu_size, memory=memory)
 
-    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None, package_requirements: dict = None):
+    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None, package_requirements: list = None):
         """
         Update custom python function with user inputs for the given python function.
 
@@ -1778,7 +1779,7 @@ class ApiClient(ReadOnlyClient):
             name (String): The unique name to identify the python function in an organization.
             function (callable): The function callable to serialize and upload.
             function_variable_mappings (List<PythonFunctionArguments>): List of python function arguments
-            package_requirements (Dict): Dictionary with key value pairs corresponding to package: version for each dependency
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             PythonFunction: The python_function object.
@@ -1786,7 +1787,7 @@ class ApiClient(ReadOnlyClient):
         source_code = inspect.getsource(function)
         return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings, package_requirements=package_requirements)
 
-    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False):
+    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1803,6 +1804,7 @@ class ApiClient(ReadOnlyClient):
             is_default_enabled: Whether train with the algorithm by default
             project_id (Unique String Identifier): The unique version ID of the project
             use_gpu (Boolean): Whether this algorithm needs to run on GPU
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
@@ -1819,9 +1821,10 @@ class ApiClient(ReadOnlyClient):
             config_options=config_options,
             is_default_enabled=is_default_enabled,
             project_id=project_id,
-            use_gpu=use_gpu)
+            use_gpu=use_gpu,
+            package_requirements=package_requirements)
 
-    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None):
+    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None, package_requirements: list = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1836,6 +1839,7 @@ class ApiClient(ReadOnlyClient):
             config_options (Dict): Map dataset types and configs to train function parameter names
             is_default_enabled (Boolean): Whether train with the algorithm by default
             use_gpu (Boolean): Whether this algorithm needs to run on GPU
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
@@ -1850,7 +1854,8 @@ class ApiClient(ReadOnlyClient):
             initialize_function_name=initialize_function_name,
             config_options=config_options,
             is_default_enabled=is_default_enabled,
-            use_gpu=use_gpu)
+            use_gpu=use_gpu,
+            package_requirements=package_requirements)
 
     def get_train_function_input(self, project_id: str, training_table_names: list = None, training_data_parameter_name_override: dict = None, training_config_parameter_name_override: str = None, training_config: dict = None, custom_algorithm_config: any = None):
         """
@@ -2256,7 +2261,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromTemplate', 'POST', query_params={}, body={'tableName': table_name, 'featureGroupTemplateId': feature_group_template_id, 'templateBindings': template_bindings, 'shouldAttachFeatureGroupToTemplate': should_attach_feature_group_to_template, 'description': description}, parse_type=FeatureGroup)
 
-    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: list = None) -> FeatureGroup:
+    def create_feature_group_from_function(self, table_name: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, description: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_name: str = None, python_function_bindings: list = None) -> FeatureGroup:
         """Creates a new feature in a Feature Group from user provided code. Code language currently supported is Python.
 
         If a list of input feature groups are supplied, we will provide as arguments to the function DataFrame's
@@ -2275,7 +2280,7 @@ class ApiClient(ReadOnlyClient):
             description (str): The description for this feature group.
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirements for the feature group function. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_original_csv_names (bool): Defaults to False, if set it uses the original column names for input feature groups from csv datasets.
             python_function_name (str): Name of Python Function that contains the source code and function arguments.
             python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
@@ -2767,7 +2772,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The updated feature group"""
         return self._call_api('updateDatasetFeatureGroupFeatureExpression', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'featureExpression': feature_expression}, parse_type=FeatureGroup)
 
-    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None, use_original_csv_names: bool = False, python_function_bindings: list = None) -> FeatureGroup:
+    def update_feature_group_function_definition(self, feature_group_id: str, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None) -> FeatureGroup:
         """Updates the function definition for a feature group created using createFeatureGroupFromFunction
 
         Args:
@@ -2777,15 +2782,15 @@ class ApiClient(ReadOnlyClient):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_original_csv_names (bool): If set to true, feature group uses the original column names for input feature groups from csv datasets.
-            python_function_bindings (list): python_function_bindings (List[Python Function Arguments]): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
 
         Returns:
             FeatureGroup: The updated feature group"""
         return self._call_api('updateFeatureGroupFunctionDefinition', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionBindings': python_function_bindings}, parse_type=FeatureGroup)
 
-    def update_feature_group_zip(self, feature_group_id: str, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Upload:
+    def update_feature_group_zip(self, feature_group_id: str, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None) -> Upload:
         """Updates the zip for a feature group created using createFeatureGroupFromZip
 
         Args:
@@ -2795,13 +2800,13 @@ class ApiClient(ReadOnlyClient):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Upload: The Upload to upload the zip file to"""
         return self._call_api('updateFeatureGroupZip', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'functionName': function_name, 'moduleName': module_name, 'inputFeatureGroups': input_feature_groups, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Upload)
 
-    def update_feature_group_git(self, feature_group_id: str, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> FeatureGroup:
+    def update_feature_group_git(self, feature_group_id: str, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None) -> FeatureGroup:
         """Updates a feature group created using createFeatureGroupFromGit
 
         Args:
@@ -2814,7 +2819,7 @@ class ApiClient(ReadOnlyClient):
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             FeatureGroup: The updated FeatureGroup"""
@@ -3022,7 +3027,7 @@ class ApiClient(ReadOnlyClient):
             Upload: The upload object associated with the upload process for the full file. The details of the object are described below:"""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, merge_file_schemas: bool = False) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -3037,13 +3042,14 @@ class ApiClient(ReadOnlyClient):
             location_date_format (str): The date format in which the data is partitioned in the cloud storage location. E.g., if the data is partitioned as s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/dir4/filename.parquet, then the location_date_format is YYYY-MM-DD This format needs to be consistent across all files within the specified location.
             date_format_lookback_days (int): The number of days to look back from the current day for import locations that are date partitioned. E.g., import date, 2021-06-04, with date_format_lookback_days = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
             incremental (bool): Signifies if the dataset is an incremental dataset.
-            is_documentset (bool): Signifies if the dataset is docstore dataset
+            is_documentset (bool): Signifies if the dataset is docstore dataset.
+            merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'mergeFileSchemas': merge_file_schemas}, parse_type=Dataset)
 
-    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None) -> DatasetVersion:
+    def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
 
         Args:
@@ -3051,10 +3057,11 @@ class ApiClient(ReadOnlyClient):
             location (str): A new external URI to import the dataset from. If not specified, the last location will be used.
             file_format (str): The fileFormat to be used. If not specified, the service will try to detect the file format.
             csv_delimiter (str): If the file format is CSV, use a specific csv delimiter.
+            merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
 
         Returns:
             DatasetVersion: The new Dataset Version created."""
-        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas}, parse_type=DatasetVersion)
 
     def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, timestamp_column: str = None) -> Dataset:
         """Creates a dataset from a Database Connector
@@ -3392,7 +3399,7 @@ class ApiClient(ReadOnlyClient):
             Model: The new model which is being trained."""
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
-    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None) -> Model:
+    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None) -> Model:
         """Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
         we will provide as arguments to the train and predict functions with the materialized feature groups for those
@@ -3417,7 +3424,7 @@ class ApiClient(ReadOnlyClient):
             memory (int): Memory (in GB) for the model training function
             training_config (dict): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Model: The new model, which has not been trained."""
@@ -3431,7 +3438,7 @@ class ApiClient(ReadOnlyClient):
             name (str): The name to apply to the model"""
         return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
 
-    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Model:
+    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None) -> Model:
         """Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
 
         we will provide as arguments to the train and predict functions with the materialized feature groups for those
@@ -3453,13 +3460,13 @@ class ApiClient(ReadOnlyClient):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Model: The updated model"""
         return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
 
-    def update_python_model_zip(self, model_id: str, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None) -> Upload:
+    def update_python_model_zip(self, model_id: str, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None) -> Upload:
         """Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
 
         we will provide as arguments to the train and predict functions with the materialized feature groups for those
@@ -3481,7 +3488,7 @@ class ApiClient(ReadOnlyClient):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Upload: The updated model"""
@@ -3682,7 +3689,7 @@ class ApiClient(ReadOnlyClient):
             include_data_consistency (bool): Set to True if the eda type is Data consistency
             primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
             data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency eda type
-            data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency eda type
+            data_consistency_reference_config (dict): Reference (Control) feature group version selection strategy for Data Consistency eda type
 
         Returns:
             ModelMonitor: The new model monitor that was created."""
@@ -4138,7 +4145,7 @@ class ApiClient(ReadOnlyClient):
             threshold (None): Deprecated"""
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=self.default_prediction_url)
 
-    def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = [], score_field: str = '', scaling_factors: list = [], restrict_items: list = [], exclude_items: list = [], explore_fraction: float = 0.0) -> Dict:
+    def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = None, score_field: str = '', scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = 0.0) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
         Args:
@@ -4155,7 +4162,7 @@ class ApiClient(ReadOnlyClient):
             explore_fraction (float): The fraction of recommendations that is to be new items."""
         return self._call_api('getRecommendations', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'excludeItemIds': exclude_item_ids, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items, 'exploreFraction': explore_fraction}, server_override=self.default_prediction_url)
 
-    def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = [], preserve_unknown_items: bool = False, scaling_factors: list = []) -> Dict:
+    def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
         """Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -4167,7 +4174,7 @@ class ApiClient(ReadOnlyClient):
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
         return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=self.default_prediction_url)
 
-    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = [], preserve_unknown_items: bool = False, scaling_factors: list = []) -> Dict:
+    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
         """Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -4179,7 +4186,7 @@ class ApiClient(ReadOnlyClient):
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
         return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=self.default_prediction_url)
 
-    def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, scaling_factors: list = [], restrict_items: list = [], exclude_items: list = []) -> Dict:
+    def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None) -> Dict:
         """Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -4655,7 +4662,7 @@ class ApiClient(ReadOnlyClient):
             data (list): The data to record, as an array of JSON objects"""
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data})
 
-    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None, function_type: str = 'FEATURE_GROUP') -> PythonFunction:
+    def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP') -> PythonFunction:
         """Creates a custom python function that's re-usable
 
         Args:
@@ -4663,14 +4670,14 @@ class ApiClient(ReadOnlyClient):
             source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the python function.
             function_variable_mappings (list): List of python function arguments.
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             function_type (str): Type of python function to create
 
         Returns:
             PythonFunction: The python function that can be used (i.e. for feature group transform)"""
         return self._call_api('createPythonFunction', 'POST', query_params={}, body={'name': name, 'sourceCode': source_code, 'functionName': function_name, 'functionVariableMappings': function_variable_mappings, 'packageRequirements': package_requirements, 'functionType': function_type}, parse_type=PythonFunction)
 
-    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: dict = None) -> PythonFunction:
+    def update_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: list = None) -> PythonFunction:
         """Update custom python function with user inputs for the given python function.
 
         Args:
@@ -4678,7 +4685,7 @@ class ApiClient(ReadOnlyClient):
             source_code (str): Contents of a valid python source code file. The source code should contain the transform feature group functions. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the python function.
             function_variable_mappings (list): List of python function arguments
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             PythonFunction: The python_function object."""
@@ -4722,7 +4729,7 @@ class ApiClient(ReadOnlyClient):
             GraphDashboard: An object describing the graph dashboard"""
         return self._call_api('updateGraphDashboard', 'POST', query_params={}, body={'graphDashboardId': graph_dashboard_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
 
-    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False) -> Algorithm:
+    def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training
 
         Args:
@@ -4739,10 +4746,11 @@ class ApiClient(ReadOnlyClient):
             is_default_enabled (bool): Whether train with the algorithm by default
             project_id (str): The unique version ID of the project
             use_gpu (bool): Whether this algorithm needs to run on GPU
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id, 'useGpu': use_gpu}, parse_type=Algorithm)
+        return self._call_api('createAlgorithm', 'POST', query_params={}, body={'name': name, 'problemType': problem_type, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'projectId': project_id, 'useGpu': use_gpu, 'packageRequirements': package_requirements}, parse_type=Algorithm)
 
     def delete_algorithm(self, algorithm: str):
         """Deletes the specified customer algorithm.
@@ -4751,7 +4759,7 @@ class ApiClient(ReadOnlyClient):
             algorithm (str): The name of the algorithm to delete."""
         return self._call_api('deleteAlgorithm', 'DELETE', query_params={'algorithm': algorithm})
 
-    def update_algorithm(self, algorithm: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None) -> Algorithm:
+    def update_algorithm(self, algorithm: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None, package_requirements: list = None) -> Algorithm:
         """Update custome algorithm for the given algorithm name. If source_code is provided, also need to provide all the function names in the source_code.
 
         Args:
@@ -4766,10 +4774,11 @@ class ApiClient(ReadOnlyClient):
             config_options (dict): Map dataset types and configs to train function parameter names
             is_default_enabled (bool): Whether train with the algorithm by default
             use_gpu (bool): Whether this algorithm needs to run on GPU
+            package_requirements (list): 
 
         Returns:
             Algorithm: The new customer model can be used for training"""
-        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'useGpu': use_gpu}, parse_type=Algorithm)
+        return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'useGpu': use_gpu, 'packageRequirements': package_requirements}, parse_type=Algorithm)
 
     def create_custom_loss_function_with_source_code(self, name: str, loss_function_type: str, loss_function_name: str, loss_function_source_code: str) -> CustomLossFunction:
         """Registers a new custom loss function which can be used as an objective function during model training.

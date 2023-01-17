@@ -280,7 +280,7 @@ Classes
       :type threshold: None
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = [], score_field = '', scaling_factors = [], restrict_items = [], exclude_items = [], explore_fraction = 0.0)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -308,7 +308,7 @@ Classes
       :type explore_fraction: float
 
 
-   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
+   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
       Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -326,7 +326,7 @@ Classes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = [], preserve_unknown_items = False, scaling_factors = [])
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -344,7 +344,7 @@ Classes
       :type scaling_factors: list
 
 
-   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = [], restrict_items = [], exclude_items = [])
+   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = None, restrict_items = None, exclude_items = None)
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 

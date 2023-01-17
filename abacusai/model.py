@@ -123,7 +123,7 @@ class Model(AbstractApiClass):
         """
         return self.client.rename_model(self.model_id, name)
 
-    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
         Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
 
@@ -145,14 +145,14 @@ class Model(AbstractApiClass):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Model: The updated model
         """
         return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements)
 
-    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: dict = None):
+    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
         Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
 
@@ -174,7 +174,7 @@ class Model(AbstractApiClass):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the cpu for the model training function
             memory (int): Memory (in GB) for the model training function
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Upload: The updated model

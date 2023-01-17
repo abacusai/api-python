@@ -310,8 +310,8 @@ Classes
       :type training_config: dict
       :param exclusive_run: Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
       :type exclusive_run: bool
-      :param package_requirements: Json with key value pairs corresponding to package: version for each dependency
-      :type package_requirements: dict
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -432,7 +432,7 @@ Classes
       :type primary_keys: list
       :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
       :type data_consistency_test_config: dict
-      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
+      :param data_consistency_reference_config: Reference (Control) feature group version selection strategy for Data Consistency eda type
       :type data_consistency_reference_config: dict
 
       :returns: The new model monitor that was created.

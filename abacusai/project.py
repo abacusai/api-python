@@ -255,7 +255,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: dict = None):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None):
         """
         Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
 
@@ -280,7 +280,7 @@ class Project(AbstractApiClass):
             memory (int): Memory (in GB) for the model training function
             training_config (dict): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
-            package_requirements (dict): Json with key value pairs corresponding to package: version for each dependency
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
 
         Returns:
             Model: The new model, which has not been trained.
@@ -380,7 +380,7 @@ class Project(AbstractApiClass):
             include_data_consistency (bool): Set to True if the eda type is Data consistency
             primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
             data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency eda type
-            data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency eda type
+            data_consistency_reference_config (dict): Reference (Control) feature group version selection strategy for Data Consistency eda type
 
         Returns:
             ModelMonitor: The new model monitor that was created.
