@@ -482,18 +482,19 @@ class Project(AbstractApiClass):
         """
         return self.client.list_batch_predictions(self.project_id)
 
-    def create_graph_dashboard(self, name: str, python_function_ids: list):
+    def create_graph_dashboard(self, name: str, python_function_ids: list, variable_mappings: dict = None):
         """
         Create a plot dashboard given selected python plots
 
         Args:
             name (str): The name of the dashboard
             python_function_ids (list): The list of python function ids to use in the graph dashboard
+            variable_mappings (dict): 
 
         Returns:
             GraphDashboard: An object describing the graph dashboard
         """
-        return self.client.create_graph_dashboard(self.project_id, name, python_function_ids)
+        return self.client.create_graph_dashboard(self.project_id, name, python_function_ids, variable_mappings)
 
     def list_graph_dashboards(self):
         """

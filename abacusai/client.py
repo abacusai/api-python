@@ -176,7 +176,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.45.0'
+    client_version = '0.46.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1461,7 +1461,7 @@ class ReadOnlyClient(BaseApiClient):
             GraphDashboard: An object describing the graph dashboard"""
         return self._call_api('describeGraphDashboard', 'GET', query_params={'graphDashboardId': graph_dashboard_id}, parse_type=GraphDashboard)
 
-    def list_graph_dashboards(self, project_id: str) -> List[GraphDashboard]:
+    def list_graph_dashboards(self, project_id: str = None) -> List[GraphDashboard]:
         """Lists the graph dashboards for a project
 
         Args:
@@ -1470,6 +1470,41 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             GraphDashboard: An aray of graph dashboards"""
         return self._call_api('listGraphDashboards', 'GET', query_params={'projectId': project_id}, parse_type=GraphDashboard)
+
+    def add_graph_to_dashboard(self, python_function_id: str, graph_dashboard_id: str, function_variable_mappings: dict = None) -> GraphDashboard:
+        """Add a python plot function to a dashboard
+
+        Args:
+            python_function_id (str): The python function id for the graph
+            graph_dashboard_id (str): The graph dashboard id to update
+            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard"""
+        return self._call_api('addGraphToDashboard', 'GET', query_params={'pythonFunctionId': python_function_id, 'graphDashboardId': graph_dashboard_id, 'functionVariableMappings': function_variable_mappings}, parse_type=GraphDashboard)
+
+    def update_graph_to_dashboard(self, python_function_id: str, graph_dashboard_id: str, function_variable_mappings: dict = None) -> GraphDashboard:
+        """Update a python plot function to a dashboard
+
+        Args:
+            python_function_id (str): The python function id for the graph
+            graph_dashboard_id (str): The graph dashboard id to update
+            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard"""
+        return self._call_api('updateGraphToDashboard', 'GET', query_params={'pythonFunctionId': python_function_id, 'graphDashboardId': graph_dashboard_id, 'functionVariableMappings': function_variable_mappings}, parse_type=GraphDashboard)
+
+    def describe_graph_for_dashboard(self, python_function_id: str, graph_dashboard_id: str) -> PythonFunction:
+        """Describes a python plot to a graph dashboard
+
+        Args:
+            python_function_id (str): The python function id for the graph
+            graph_dashboard_id (str): The graph dashboard id to update
+
+        Returns:
+            PythonFunction: An object describing the graph dashboard"""
+        return self._call_api('describeGraphForDashboard', 'GET', query_params={'pythonFunctionId': python_function_id, 'graphDashboardId': graph_dashboard_id}, parse_type=PythonFunction)
 
     def describe_algorithm(self, algorithm: str) -> Algorithm:
         """Retrieves a full description of the specified algorithm.
@@ -1568,7 +1603,7 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('getNotebookCellCompletion', 'GET', query_params={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
 
 
-def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None):
+def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
     if not train_function:
         return None, None, None, None, None
     function_source_code = inspect.getsource(train_function)
@@ -1585,6 +1620,10 @@ def get_source_code_info(train_function: callable, predict_function: callable = 
         initialize_function_name = initialize_function.__name__
         function_source_code = function_source_code + \
             '\n\n' + inspect.getsource(initialize_function)
+    if common_functions:
+        for func in common_functions:
+            function_source_code = function_source_code + \
+                '\n\n' + inspect.getsource(func)
     return function_source_code, train_function.__name__, predict_function_name, predict_many_function_name, initialize_function_name
 
 
@@ -1787,7 +1826,7 @@ class ApiClient(ReadOnlyClient):
         source_code = inspect.getsource(function)
         return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings, package_requirements=package_requirements)
 
-    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None):
+    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1798,6 +1837,7 @@ class ApiClient(ReadOnlyClient):
             predict_function (callable): The predict function callable to serialize and upload
             predict_many_function (callable): The predict many function callable to serialize and upload
             initialize_function (callable): The initialize function callable to serialize and upload
+            common_functions (List of callables): A list of functions that will be used by both train and predict functions, e.g. some data processing utilities
             training_data_parameter_names_mapping (Dict): The mapping from feature group types to training data parameter names in the train function
             training_config_parameter_name (string): The train config parameter name in the train function
             config_options (Dict): Map dataset types and configs to train function parameter names
@@ -1807,7 +1847,7 @@ class ApiClient(ReadOnlyClient):
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
-            train_function, predict_function, predict_many_function, initialize_function)
+            train_function, predict_function, predict_many_function, initialize_function, common_functions)
         return self.create_algorithm(
             name=name,
             problem_type=problem_type,
@@ -1824,7 +1864,7 @@ class ApiClient(ReadOnlyClient):
             use_gpu=use_gpu,
             package_requirements=package_requirements)
 
-    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None, package_requirements: list = None):
+    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None, package_requirements: list = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1834,6 +1874,7 @@ class ApiClient(ReadOnlyClient):
             predict_function (callable): The predict function callable to serialize and upload
             predict_many_function (callable): The predict many function callable to serialize and upload
             initialize_function (callable): The initialize function callable to serialize and upload
+            common_functions (List of callables): A list of functions that will be used by both train and predict functions, e.g. some data processing utilities
             training_data_parameter_names_mapping (Dict): The mapping from feature group types to training data parameter names in the train function
             training_config_parameter_name (string): The train config parameter name in the train function
             config_options (Dict): Map dataset types and configs to train function parameter names
@@ -1842,7 +1883,7 @@ class ApiClient(ReadOnlyClient):
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
-            train_function, predict_function, predict_many_function, initialize_function)
+            train_function, predict_function, predict_many_function, initialize_function, common_functions)
         return self.update_algorithm(
             algorithm=algorithm,
             source_code=source_code,
@@ -2091,7 +2132,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name
-            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  THEME_ANALYSIS.
+            use_case (str): The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  THEME_ANALYSIS.
 
         Returns:
             Project: This object represents the newly created project. For details refer to"""
@@ -4209,6 +4250,16 @@ class ApiClient(ReadOnlyClient):
             query_data (dict): """
         return self._call_api('getFeatureGroupRows', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None) -> Dict:
+        """TODO
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            messages (list): List of chornologically ordered messages. Starts with a user message and alternates sources. A message is a dict with attributes: is_user (Bool): Whether the message is from the user. text (String): The message's text
+            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes: msg_id (Integer): The corresponding messages index result: List[NlpSearchPrediction]"""
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results}, server_override=self.default_prediction_url)
+
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """TODO
 
@@ -4698,17 +4749,18 @@ class ApiClient(ReadOnlyClient):
             name (str): The name to identify the python function"""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
-    def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list) -> GraphDashboard:
+    def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list, variable_mappings: dict = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
 
         Args:
             project_id (str): The project id for the plot dashboard
             name (str): The name of the dashboard
             python_function_ids (list): The list of python function ids to use in the graph dashboard
+            variable_mappings (dict): 
 
         Returns:
             GraphDashboard: An object describing the graph dashboard"""
-        return self._call_api('createGraphDashboard', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
+        return self._call_api('createGraphDashboard', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'pythonFunctionIds': python_function_ids, 'variableMappings': variable_mappings}, parse_type=GraphDashboard)
 
     def delete_graph_dashboard(self, graph_dashboard_id: str):
         """Deletes a graph dashboard
@@ -4717,17 +4769,18 @@ class ApiClient(ReadOnlyClient):
             graph_dashboard_id (str): The graph dashboard id to delete"""
         return self._call_api('deleteGraphDashboard', 'DELETE', query_params={'graphDashboardId': graph_dashboard_id})
 
-    def update_graph_dashboard(self, graph_dashboard_id: str, name: str = None, python_function_ids: list = None) -> GraphDashboard:
+    def update_graph_dashboard(self, graph_dashboard_id: str, name: str = None, python_function_ids: list = None, variable_mappings: dict = None) -> GraphDashboard:
         """Updates a graph dashboard
 
         Args:
             graph_dashboard_id (str): The graph dashboard id to update
             name (str): The name of the dashboard
             python_function_ids (list): The list of python function ids to use in the graph dashboard
+            variable_mappings (dict): 
 
         Returns:
             GraphDashboard: An object describing the graph dashboard"""
-        return self._call_api('updateGraphDashboard', 'POST', query_params={}, body={'graphDashboardId': graph_dashboard_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
+        return self._call_api('updateGraphDashboard', 'POST', query_params={}, body={'graphDashboardId': graph_dashboard_id, 'name': name, 'pythonFunctionIds': python_function_ids, 'variableMappings': variable_mappings}, parse_type=GraphDashboard)
 
     def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None) -> Algorithm:
         """Creates a custome algorithm that's re-usable for model training

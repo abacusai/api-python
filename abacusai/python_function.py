@@ -40,3 +40,41 @@ class PythonFunction(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         return {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
+
+    def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None):
+        """
+        Add a python plot function to a dashboard
+
+        Args:
+            graph_dashboard_id (str): The graph dashboard id to update
+            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard
+        """
+        return self.client.add_graph_to_dashboard(self.python_function_id, graph_dashboard_id, function_variable_mappings)
+
+    def update_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None):
+        """
+        Update a python plot function to a dashboard
+
+        Args:
+            graph_dashboard_id (str): The graph dashboard id to update
+            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard
+        """
+        return self.client.update_graph_to_dashboard(self.python_function_id, graph_dashboard_id, function_variable_mappings)
+
+    def describe_graph_for_dashboard(self, graph_dashboard_id: str):
+        """
+        Describes a python plot to a graph dashboard
+
+        Args:
+            graph_dashboard_id (str): The graph dashboard id to update
+
+        Returns:
+            PythonFunction: An object describing the graph dashboard
+        """
+        return self.client.describe_graph_for_dashboard(self.python_function_id, graph_dashboard_id)

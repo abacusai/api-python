@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: GraphDashboard(client, name=None, graphDashboardId=None, createdAt=None, projectId=None, pythonFunctionIds=None, pythonFunctionNames=None)
+.. py:class:: GraphDashboard(client, name=None, graphDashboardId=None, createdAt=None, projectId=None, pythonFunctionIds=None, pythonFunctionNames=None, projectName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25,7 +25,7 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param name: The user-friendly name for the model monitor.
+   :param name: The user-friendly name for the plot dashboard
    :type name: str
    :param graphDashboardId: The unique identifier of the graph dashboard.
    :type graphDashboardId: str
@@ -37,6 +37,8 @@ Classes
    :type pythonFunctionIds: list<unique string identifier>)
    :param pythonFunctionNames: List of names of each of the python functions
    :type pythonFunctionNames: list<string>
+   :param projectName: The name the plot dashboard belongs to
+   :type projectName: str
 
    .. py:method:: __repr__()
 
@@ -78,7 +80,7 @@ Classes
       :type graph_dashboard_id: str
 
 
-   .. py:method:: update(name = None, python_function_ids = None)
+   .. py:method:: update(name = None, python_function_ids = None, variable_mappings = None)
 
       Updates a graph dashboard
 
@@ -86,6 +88,8 @@ Classes
       :type name: str
       :param python_function_ids: The list of python function ids to use in the graph dashboard
       :type python_function_ids: list
+      :param variable_mappings:
+      :type variable_mappings: dict
 
       :returns: An object describing the graph dashboard
       :rtype: GraphDashboard

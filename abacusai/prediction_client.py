@@ -258,6 +258,16 @@ class PredictionClient(BaseApiClient):
             query_data (dict): """
         return self._call_api('getFeatureGroupRows', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None) -> Dict:
+        """TODO
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            messages (list): List of chornologically ordered messages. Starts with a user message and alternates sources. A message is a dict with attributes: is_user (Bool): Whether the message is from the user. text (String): The message's text
+            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes: msg_id (Integer): The corresponding messages index result: List[NlpSearchPrediction]"""
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results}, server_override=self.default_prediction_url)
+
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """TODO
 

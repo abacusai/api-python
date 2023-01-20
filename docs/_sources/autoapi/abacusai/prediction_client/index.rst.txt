@@ -376,6 +376,20 @@ Classes
       :type query_data: dict
 
 
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None)
+
+      TODO
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param messages: List of chornologically ordered messages. Starts with a user message and alternates sources. A message is a dict with attributes: is_user (Bool): Whether the message is from the user. text (String): The message's text
+      :type messages: list
+      :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes: msg_id (Integer): The corresponding messages index result: List[NlpSearchPrediction]
+      :type search_results: list
+
+
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
 
       TODO

@@ -208,14 +208,15 @@ class FeatureGroupVersion(AbstractApiClass):
         data_df = pd.DataFrame()
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             with tempfile.TemporaryDirectory() as tmp_dir:
+                df_parts = []
                 file_futures = [executor.submit(
                     self._download_avro_file, file_part, tmp_dir) for file_part in file_parts]
                 for future in file_futures:
                     part_path = future.result()
                     with open(part_path, 'rb') as part_data:
                         reader = fastavro.reader(part_data)
-                        data_df = pd.concat([data_df, pd.DataFrame(
-                            [r for r in reader])], ignore_index=True)
+                        df_parts.append(pd.DataFrame([r for r in reader]))
+                data_df = pd.concat(df_parts, ignore_index=True)
             for col in data_df.columns:
                 if pd.core.dtypes.common.is_datetime64_ns_dtype(data_df[col]):
                     data_df[col] = data_df[col].dt.tz_localize(None)

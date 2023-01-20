@@ -96,7 +96,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.45.0
+      :annotation: = 0.46.0
 
       
 
@@ -1419,7 +1419,7 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: list_graph_dashboards(project_id)
+   .. py:method:: list_graph_dashboards(project_id = None)
 
       Lists the graph dashboards for a project
 
@@ -1428,6 +1428,49 @@ Attributes
 
       :returns: An aray of graph dashboards
       :rtype: GraphDashboard
+
+
+   .. py:method:: add_graph_to_dashboard(python_function_id, graph_dashboard_id, function_variable_mappings = None)
+
+      Add a python plot function to a dashboard
+
+      :param python_function_id: The python function id for the graph
+      :type python_function_id: str
+      :param graph_dashboard_id: The graph dashboard id to update
+      :type graph_dashboard_id: str
+      :param function_variable_mappings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type function_variable_mappings: dict
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+   .. py:method:: update_graph_to_dashboard(python_function_id, graph_dashboard_id, function_variable_mappings = None)
+
+      Update a python plot function to a dashboard
+
+      :param python_function_id: The python function id for the graph
+      :type python_function_id: str
+      :param graph_dashboard_id: The graph dashboard id to update
+      :type graph_dashboard_id: str
+      :param function_variable_mappings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type function_variable_mappings: dict
+
+      :returns: An object describing the graph dashboard
+      :rtype: GraphDashboard
+
+
+   .. py:method:: describe_graph_for_dashboard(python_function_id, graph_dashboard_id)
+
+      Describes a python plot to a graph dashboard
+
+      :param python_function_id: The python function id for the graph
+      :type python_function_id: str
+      :param graph_dashboard_id: The graph dashboard id to update
+      :type graph_dashboard_id: str
+
+      :returns: An object describing the graph dashboard
+      :rtype: PythonFunction
 
 
    .. py:method:: describe_algorithm(algorithm)
@@ -1542,7 +1585,7 @@ Attributes
 
 
 
-.. py:function:: get_source_code_info(train_function, predict_function = None, predict_many_function = None, initialize_function = None)
+.. py:function:: get_source_code_info(train_function, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None)
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
@@ -1713,7 +1756,7 @@ Attributes
       :rtype: PythonFunction
 
 
-   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
+   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1729,6 +1772,8 @@ Attributes
       :type predict_many_function: callable
       :param initialize_function: The initialize function callable to serialize and upload
       :type initialize_function: callable
+      :param common_functions: A list of functions that will be used by both train and predict functions, e.g. some data processing utilities
+      :type common_functions: List of callables
       :param training_data_parameter_names_mapping: The mapping from feature group types to training data parameter names in the train function
       :type training_data_parameter_names_mapping: Dict
       :param training_config_parameter_name: The train config parameter name in the train function
@@ -1744,7 +1789,7 @@ Attributes
       :type package_requirements: List
 
 
-   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
+   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1758,6 +1803,8 @@ Attributes
       :type predict_many_function: callable
       :param initialize_function: The initialize function callable to serialize and upload
       :type initialize_function: callable
+      :param common_functions: A list of functions that will be used by both train and predict functions, e.g. some data processing utilities
+      :type common_functions: List of callables
       :param training_data_parameter_names_mapping: The mapping from feature group types to training data parameter names in the train function
       :type training_data_parameter_names_mapping: Dict
       :param training_config_parameter_name: The train config parameter name in the train function
@@ -2000,7 +2047,7 @@ Attributes
 
       :param name: The project's name
       :type name: str
-      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  THEME_ANALYSIS.
+      :param use_case: The use case that the project solves. You can refer to our (guide on use cases)[https://api.abacus.ai/app/help/useCases] for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  THEME_ANALYSIS.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details refer to
@@ -4775,6 +4822,20 @@ Attributes
       :type query_data: dict
 
 
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None)
+
+      TODO
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param messages: List of chornologically ordered messages. Starts with a user message and alternates sources. A message is a dict with attributes: is_user (Bool): Whether the message is from the user. text (String): The message's text
+      :type messages: list
+      :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes: msg_id (Integer): The corresponding messages index result: List[NlpSearchPrediction]
+      :type search_results: list
+
+
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
 
       TODO
@@ -5420,7 +5481,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_graph_dashboard(project_id, name, python_function_ids)
+   .. py:method:: create_graph_dashboard(project_id, name, python_function_ids, variable_mappings = None)
 
       Create a plot dashboard given selected python plots
 
@@ -5430,6 +5491,8 @@ Attributes
       :type name: str
       :param python_function_ids: The list of python function ids to use in the graph dashboard
       :type python_function_ids: list
+      :param variable_mappings:
+      :type variable_mappings: dict
 
       :returns: An object describing the graph dashboard
       :rtype: GraphDashboard
@@ -5443,7 +5506,7 @@ Attributes
       :type graph_dashboard_id: str
 
 
-   .. py:method:: update_graph_dashboard(graph_dashboard_id, name = None, python_function_ids = None)
+   .. py:method:: update_graph_dashboard(graph_dashboard_id, name = None, python_function_ids = None, variable_mappings = None)
 
       Updates a graph dashboard
 
@@ -5453,6 +5516,8 @@ Attributes
       :type name: str
       :param python_function_ids: The list of python function ids to use in the graph dashboard
       :type python_function_ids: list
+      :param variable_mappings:
+      :type variable_mappings: dict
 
       :returns: An object describing the graph dashboard
       :rtype: GraphDashboard
