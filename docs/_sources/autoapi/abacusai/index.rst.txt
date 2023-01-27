@@ -43,9 +43,12 @@ Submodules
    document_store_import/index.rst
    drift_distribution/index.rst
    drift_distributions/index.rst
+   eda/index.rst
    eda_collinearity/index.rst
    eda_data_consistency/index.rst
+   eda_feature_association/index.rst
    eda_feature_collinearity/index.rst
+   eda_version/index.rst
    embedding_feature_drift_distribution/index.rst
    feature/index.rst
    feature_drift_summary/index.rst
@@ -61,6 +64,7 @@ Submodules
    file_connector_instructions/index.rst
    file_connector_verification/index.rst
    function_logs/index.rst
+   generated_pit_feature_config_option/index.rst
    graph_dashboard/index.rst
    indexing_config/index.rst
    model/index.rst
@@ -632,7 +636,7 @@ Attributes
 
    .. py:method:: add_feature_group_to_project(feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE', feature_group_use = None)
 
-      Adds a feature group to a project,
+      Adds a feature group to a project
 
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
@@ -642,6 +646,18 @@ Attributes
       :type feature_group_type: str
       :param feature_group_use: The user assigned feature group use which allows for organizing project feature groups  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT
       :type feature_group_use: str
+
+
+   .. py:method:: set_project_feature_group_config(feature_group_id, project_id, project_config = None)
+
+      Sets a feature group's project config
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param project_config: The feature group's project config.
+      :type project_config: dict
 
 
    .. py:method:: remove_feature_group_from_project(feature_group_id, project_id)
@@ -746,7 +762,7 @@ Attributes
       :rtype: Schema
 
 
-   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui')
+   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None)
 
       Add an annotation entry to the database.
 
@@ -762,6 +778,8 @@ Attributes
       :type feature_group_row_identifier: str
       :param annotation_source: Indicator of whether the annotation came from the UI, bulk upload, etc.
       :type annotation_source: str
+      :param document: The document the annotation is on. This is optional.
+      :type document: str
 
       :returns: The annotation entry that was added
       :rtype: AnnotationEntry
@@ -2011,7 +2029,7 @@ Attributes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
+      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
       :type data_type: str
 
       :returns: The dataset and schema after the data_type has been set
@@ -2558,6 +2576,16 @@ Attributes
       :rtype: CustomTrainFunctionInfo
 
 
+   .. py:method:: ignore_lofo_features(model_version, threshold = None, top_n = 0)
+
+      :param model_version:
+      :type model_version: str
+      :param threshold:
+      :type threshold: float
+      :param top_n:
+      :type top_n: int
+
+
    .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, img_url_prefixes = None)
 
       Runs a model monitor for the specified project.
@@ -2657,7 +2685,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
+   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
 
       Runs an eda (exploratory data analysis) for the specified project.
 
@@ -2673,52 +2701,54 @@ Attributes
       :type include_collinearity: bool
       :param include_data_consistency: Set to True if the eda type is Data consistency
       :type include_data_consistency: bool
+      :param collinearity_keys:
+      :type collinearity_keys: list
       :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
       :type primary_keys: list
       :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
       :type data_consistency_test_config: dict
-      :param data_consistency_reference_config: Reference (Control) feature group version selection strategy for Data Consistency eda type
+      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
       :type data_consistency_reference_config: dict
 
-      :returns: The new model monitor that was created.
-      :rtype: ModelMonitor
+      :returns: The new eda object that was created.
+      :rtype: Eda
 
 
-   .. py:method:: rerun_eda(model_monitor_id)
+   .. py:method:: rerun_eda(eda_id)
 
-      Reruns the specified model monitor.
+      Reruns the specified eda object.
 
-      :param model_monitor_id: The model monitor to rerun.
-      :type model_monitor_id: str
+      :param eda_id: The eda object to rerun.
+      :type eda_id: str
 
-      :returns: The model monitor that is being rerun.
-      :rtype: ModelMonitor
+      :returns: The eda object that is being rerun.
+      :rtype: Eda
 
 
-   .. py:method:: rename_eda(model_monitor_id, name)
+   .. py:method:: rename_eda(eda_id, name)
 
       Renames a model monitor
 
-      :param model_monitor_id: The ID of the model monitor to rename
-      :type model_monitor_id: str
+      :param eda_id: The ID of the eda to rename
+      :type eda_id: str
       :param name: The name to apply to the model monitor
       :type name: str
 
 
-   .. py:method:: delete_eda(model_monitor_id)
+   .. py:method:: delete_eda(eda_id)
 
-      Deletes the specified model monitor and all its versions.
+      Deletes the specified eda and all its versions.
 
-      :param model_monitor_id: The ID of the model monitor to delete.
-      :type model_monitor_id: str
+      :param eda_id: The ID of the eda to delete.
+      :type eda_id: str
 
 
-   .. py:method:: delete_eda_version(model_monitor_version)
+   .. py:method:: delete_eda_version(eda_version)
 
-      Deletes the specified model monitor version.
+      Deletes the specified eda version.
 
-      :param model_monitor_version: The ID of the model monitor version to delete.
-      :type model_monitor_version: str
+      :param eda_version: The ID of the eda version to delete.
+      :type eda_version: str
 
 
    .. py:method:: create_monitor_alert(project_id, model_monitor_id, alert_name, condition_config, action_config)
@@ -4495,7 +4525,7 @@ Attributes
       :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
       :type filter_feature_group_use: str
 
-      :returns: All the Feature Groups in the Organization
+      :returns: All the Feature Groups in a project
       :rtype: FeatureGroup
 
 
@@ -4894,6 +4924,16 @@ Attributes
       :rtype: Model
 
 
+   .. py:method:: set_model_objective(model_version, metric)
+
+      Sets the best model for all model instances of the model based on the specified metric, and updates the training config to use the specified metric for any future model versions.
+
+      :param model_version: The model version to set as the best model
+      :type model_version: str
+      :param metric: The metric to use to determine the best model
+      :type metric: str
+
+
    .. py:method:: get_model_metrics(model_id, model_version = None, baseline_metrics = False)
 
       Retrieves a full list of the metrics for the specified model.
@@ -4992,16 +5032,6 @@ Attributes
 
       :returns: A function logs.
       :rtype: FunctionLogs
-
-
-   .. py:method:: ignore_lofo_features(model_version, threshold = None, top_n = 0)
-
-      :param model_version:
-      :type model_version: str
-      :param threshold:
-      :type threshold: float
-      :param top_n:
-      :type top_n: int
 
 
    .. py:method:: list_model_monitors(project_id)
@@ -5130,64 +5160,64 @@ Attributes
       :param project_id: The unique ID associated with the project.
       :type project_id: str
 
-      :returns: An array of model monitors.
-      :rtype: ModelMonitor
+      :returns: An array of eda objects.
+      :rtype: Eda
 
 
-   .. py:method:: describe_eda(model_monitor_id)
+   .. py:method:: describe_eda(eda_id)
 
-      Retrieves a full description of the specified model monitor.
+      Retrieves a full description of the specified eda object.
 
-      :param model_monitor_id: The unique ID associated with the model monitor.
-      :type model_monitor_id: str
+      :param eda_id: The unique ID associated with the eda object.
+      :type eda_id: str
 
-      :returns: The description of the model monitor.
-      :rtype: ModelMonitor
+      :returns: The description of the eda object.
+      :rtype: Eda
 
 
-   .. py:method:: list_eda_versions(model_monitor_id, limit = 100, start_after_version = None)
+   .. py:method:: list_eda_versions(eda_id, limit = 100, start_after_version = None)
 
-      Retrieves a list of the versions for a given model monitor.
+      Retrieves a list of the versions for a given eda object.
 
-      :param model_monitor_id: The unique ID associated with the model monitor.
-      :type model_monitor_id: str
-      :param limit: The max length of the list of all model monitor versions.
+      :param eda_id: The unique ID associated with the eda object.
+      :type eda_id: str
+      :param limit: The max length of the list of all eda versions.
       :type limit: int
       :param start_after_version: The id of the version after which the list starts.
       :type start_after_version: str
 
-      :returns: An array of model monitor versions.
-      :rtype: ModelMonitorVersion
+      :returns: An array of eda versions.
+      :rtype: EdaVersion
 
 
-   .. py:method:: describe_eda_version(model_monitor_version)
+   .. py:method:: describe_eda_version(eda_version)
 
-      Retrieves a full description of the specified model monitor version
+      Retrieves a full description of the specified eda version
 
-      :param model_monitor_version: The unique version ID of the model monitor version
-      :type model_monitor_version: str
+      :param eda_version: The unique version ID of the eda version
+      :type eda_version: str
 
-      :returns: A model monitor version.
-      :rtype: ModelMonitorVersion
+      :returns: A eda version.
+      :rtype: EdaVersion
 
 
-   .. py:method:: get_eda_collinearity(model_monitor_version)
+   .. py:method:: get_eda_collinearity(eda_version)
 
       Gets the Collinearity between all features for the Exploratory Data Analysis.
 
-      :param model_monitor_version: The unique ID associated with the EDA instance.
-      :type model_monitor_version: str
+      :param eda_version: The unique ID associated with the EDA instance.
+      :type eda_version: str
 
       :returns: An object with a record of correlations between each feature for an eda.
       :rtype: EdaCollinearity
 
 
-   .. py:method:: get_eda_data_consistency(model_monitor_version, transformation_feature = None)
+   .. py:method:: get_eda_data_consistency(eda_version, transformation_feature = None)
 
       Gets the data consistency for the Exploratory Data Analysis.
 
-      :param model_monitor_version: The unique ID associated with the EDA insatnce.
-      :type model_monitor_version: str
+      :param eda_version: The unique ID associated with the EDA insatnce.
+      :type eda_version: str
       :param transformation_feature:
       :type transformation_feature: str
 
@@ -5195,17 +5225,32 @@ Attributes
       :rtype: EdaDataConsistency
 
 
-   .. py:method:: get_collinearity_for_feature(model_monitor_version, feature_name = None)
+   .. py:method:: get_collinearity_for_feature(eda_version, feature_name = None)
 
       Gets the Collinearity for the given feature from the Exploratory Data Analysis.
 
-      :param model_monitor_version: The unique ID associated with the EDA instance.
-      :type model_monitor_version: str
+      :param eda_version: The unique ID associated with the EDA instance.
+      :type eda_version: str
       :param feature_name: The name of the feature for which correlation shown
       :type feature_name: str
 
       :returns: An object with a record of correlations for the provided feature for an eda.
       :rtype: EdaFeatureCollinearity
+
+
+   .. py:method:: get_feature_association(eda_version, reference_feature_name, test_feature_name)
+
+      Gets the Feature Association for the given features from the feature group version within the eda_version.
+
+      :param eda_version: The unique ID associated with the EDA instance.
+      :type eda_version: str
+      :param reference_feature_name: The name of the feature for feature association (in x axis for the plots generated for the Feature association in the product)
+      :type reference_feature_name: str
+      :param test_feature_name: The name of the feature for feature association (in y axis for the plots generated for the Feature association in the product)
+      :type test_feature_name: str
+
+      :returns: An object with a record of data for the feature association between the two given features for an eda version.
+      :rtype: EdaFeatureAssociation
 
 
    .. py:method:: describe_monitor_alert(monitor_alert_id)
@@ -6249,7 +6294,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.46.0
+   :annotation: = 0.47.0
 
    
 

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PointInTimeGroupFeature(client, name=None, expression=None)
+.. py:class:: PointInTimeGroupFeature(client, name=None, expression=None, pitOperationType=None, pitOperationConfig=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,6 +29,10 @@ Classes
    :type name: str
    :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
    :type expression: str
+   :param pitOperationType: The operation used in point in time feature generation
+   :type pitOperationType: str
+   :param pitOperationConfig: The configuration used as input to the operation type
+   :type pitOperationConfig: dict
 
    .. py:method:: __repr__()
 

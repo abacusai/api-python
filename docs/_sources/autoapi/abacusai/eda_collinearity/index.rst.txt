@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: EdaCollinearity(client, columnNames=None, collinearityMatrix={})
+.. py:class:: EdaCollinearity(client, columnNames=None, collinearityMatrix=None, groupFeatureDict=None, collinearityGroups=None, columnNamesX=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25,10 +25,16 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param columnNames: Name of all the features in the data
+   :param columnNames: Name of all the features in the y axis of the collinearity matrix
    :type columnNames: list
-   :param collinearityMatrix: A CollinearityRecord describing the collinearity between all the features
-   :type collinearityMatrix: CollinearityRecord
+   :param collinearityMatrix: A dict describing the collinearity between all the features
+   :type collinearityMatrix: dict
+   :param groupFeatureDict: A dict describing the index of the group from collinearity_groups a feature exists in
+   :type groupFeatureDict: dict
+   :param collinearityGroups: Groups created based on a collinearity threshold of 0.7
+   :type collinearityGroups: list
+   :param columnNamesX: Name of all the features in the x axis of the collinearity matrix
+   :type columnNamesX: list
 
    .. py:method:: __repr__()
 

@@ -1,0 +1,58 @@
+:py:mod:`abacusai.eda_feature_association`
+==========================================
+
+.. py:module:: abacusai.eda_feature_association
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.eda_feature_association.EdaFeatureAssociation
+
+
+
+
+.. py:class:: EdaFeatureAssociation(client, data=None, isScatter=None, isBoxWhisker=None, xAxis=None, yAxis=None, xAxisColumnValues=None, yAxisColumnValues=None, dataColumns=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Eda Feature Association between two features in the data.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param data: the data to display the feature association between two features
+   :type data: dict
+   :param isScatter: A Boolean that represents if the data creates a scatter plot (for cases of numerical data vs numerical data)
+   :type isScatter: bool
+   :param isBoxWhisker: A Boolean that represents if the data creates a box whisker plot (For cases of categorical data vs numerical data and vice versa)
+   :type isBoxWhisker: bool
+   :param xAxis: Name of the feature selected for feature association (reference_feature_name) for x axis on the plot
+   :type xAxis: str
+   :param yAxis: Name of the feature selected for feature association (test_feature_name) for y axis on the plot
+   :type yAxis: str
+   :param xAxisColumnValues: Name of all the categories within the x_axis feature (if it is a categorical data type)
+   :type xAxisColumnValues: list
+   :param yAxisColumnValues: Name of all the categories within the y_axis feature (if it is a categorical data type)
+   :type yAxisColumnValues: list
+   :param dataColumns: A list of columns listed in the data as keys
+   :type dataColumns: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

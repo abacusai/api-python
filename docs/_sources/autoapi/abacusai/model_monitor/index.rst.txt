@@ -155,57 +155,6 @@ Classes
       :type model_monitor_id: str
 
 
-   .. py:method:: rerun_eda()
-
-      Reruns the specified model monitor.
-
-      :param model_monitor_id: The model monitor to rerun.
-      :type model_monitor_id: str
-
-      :returns: The model monitor that is being rerun.
-      :rtype: ModelMonitor
-
-
-   .. py:method:: describe_eda()
-
-      Retrieves a full description of the specified model monitor.
-
-      :param model_monitor_id: The unique ID associated with the model monitor.
-      :type model_monitor_id: str
-
-      :returns: The description of the model monitor.
-      :rtype: ModelMonitor
-
-
-   .. py:method:: list_eda_versions(limit = 100, start_after_version = None)
-
-      Retrieves a list of the versions for a given model monitor.
-
-      :param limit: The max length of the list of all model monitor versions.
-      :type limit: int
-      :param start_after_version: The id of the version after which the list starts.
-      :type start_after_version: str
-
-      :returns: An array of model monitor versions.
-      :rtype: ModelMonitorVersion
-
-
-   .. py:method:: rename_eda(name)
-
-      Renames a model monitor
-
-      :param name: The name to apply to the model monitor
-      :type name: str
-
-
-   .. py:method:: delete_eda()
-
-      Deletes the specified model monitor and all its versions.
-
-      :param model_monitor_id: The ID of the model monitor to delete.
-      :type model_monitor_id: str
-
-
    .. py:method:: list_monitor_alerts_for_monitor()
 
       Retrieves the list of monitor alerts for a specified monitor

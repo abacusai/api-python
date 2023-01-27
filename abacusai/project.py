@@ -183,7 +183,7 @@ class Project(AbstractApiClass):
             filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
 
         Returns:
-            FeatureGroup: All the Feature Groups in the Organization
+            FeatureGroup: All the Feature Groups in a project
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
 
@@ -368,7 +368,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
-    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None):
+    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None):
         """
         Runs an eda (exploratory data analysis) for the specified project.
 
@@ -378,14 +378,15 @@ class Project(AbstractApiClass):
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
             include_collinearity (bool): Set to True if the eda type is collinearity
             include_data_consistency (bool): Set to True if the eda type is Data consistency
+            collinearity_keys (list): 
             primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
             data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency eda type
-            data_consistency_reference_config (dict): Reference (Control) feature group version selection strategy for Data Consistency eda type
+            data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency eda type
 
         Returns:
-            ModelMonitor: The new model monitor that was created.
+            Eda: The new eda object that was created.
         """
-        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_data_consistency, primary_keys, data_consistency_test_config, data_consistency_reference_config)
+        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_data_consistency, collinearity_keys, primary_keys, data_consistency_test_config, data_consistency_reference_config)
 
     def list_eda(self):
         """
@@ -395,7 +396,7 @@ class Project(AbstractApiClass):
             project_id (str): The unique ID associated with the project.
 
         Returns:
-            ModelMonitor: An array of model monitors.
+            Eda: An array of eda objects.
         """
         return self.client.list_eda(self.project_id)
 

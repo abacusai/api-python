@@ -151,61 +151,6 @@ class ModelMonitor(AbstractApiClass):
         """
         return self.client.delete_model_monitor(self.model_monitor_id)
 
-    def rerun_eda(self):
-        """
-        Reruns the specified model monitor.
-
-        Args:
-            model_monitor_id (str): The model monitor to rerun.
-
-        Returns:
-            ModelMonitor: The model monitor that is being rerun.
-        """
-        return self.client.rerun_eda(self.model_monitor_id)
-
-    def describe_eda(self):
-        """
-        Retrieves a full description of the specified model monitor.
-
-        Args:
-            model_monitor_id (str): The unique ID associated with the model monitor.
-
-        Returns:
-            ModelMonitor: The description of the model monitor.
-        """
-        return self.client.describe_eda(self.model_monitor_id)
-
-    def list_eda_versions(self, limit: int = 100, start_after_version: str = None):
-        """
-        Retrieves a list of the versions for a given model monitor.
-
-        Args:
-            limit (int): The max length of the list of all model monitor versions.
-            start_after_version (str): The id of the version after which the list starts.
-
-        Returns:
-            ModelMonitorVersion: An array of model monitor versions.
-        """
-        return self.client.list_eda_versions(self.model_monitor_id, limit, start_after_version)
-
-    def rename_eda(self, name: str):
-        """
-        Renames a model monitor
-
-        Args:
-            name (str): The name to apply to the model monitor
-        """
-        return self.client.rename_eda(self.model_monitor_id, name)
-
-    def delete_eda(self):
-        """
-        Deletes the specified model monitor and all its versions.
-
-        Args:
-            model_monitor_id (str): The ID of the model monitor to delete.
-        """
-        return self.client.delete_eda(self.model_monitor_id)
-
     def list_monitor_alerts_for_monitor(self):
         """
         Retrieves the list of monitor alerts for a specified monitor

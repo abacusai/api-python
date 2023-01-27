@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
     <link rel="next" title="abacusai.eda_data_consistency" href="../eda_data_consistency/index.html" />
-    <link rel="prev" title="abacusai.drift_distributions" href="../drift_distributions/index.html" /> 
+    <link rel="prev" title="abacusai.eda" href="../eda/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -75,12 +75,15 @@
 <li class="toctree-l3"><a class="reference internal" href="../document_store_import/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store_import</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distributions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda</span></code></a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_collinearity</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_data_consistency/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_data_consistency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_association/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_association</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_feature_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_collinearity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
@@ -96,6 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.graph_dashboard</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.indexing_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
@@ -195,15 +199,18 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.eda_collinearity.EdaCollinearity">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.eda_collinearity.</span></span><span class="sig-name descname"><span class="pre">EdaCollinearity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnNames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collinearityMatrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.eda_collinearity.EdaCollinearity" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.eda_collinearity.</span></span><span class="sig-name descname"><span class="pre">EdaCollinearity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnNames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collinearityMatrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groupFeatureDict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collinearityGroups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columnNamesX</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.eda_collinearity.EdaCollinearity" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Eda Collinearity of the latest version of the data between all the features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>columnNames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Name of all the features in the data</p></li>
-<li><p><strong>collinearityMatrix</strong> (<em>CollinearityRecord</em>) – A CollinearityRecord describing the collinearity between all the features</p></li>
+<li><p><strong>columnNames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Name of all the features in the y axis of the collinearity matrix</p></li>
+<li><p><strong>collinearityMatrix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dict describing the collinearity between all the features</p></li>
+<li><p><strong>groupFeatureDict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dict describing the index of the group from collinearity_groups a feature exists in</p></li>
+<li><p><strong>collinearityGroups</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Groups created based on a collinearity threshold of 0.7</p></li>
+<li><p><strong>columnNamesX</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Name of all the features in the x axis of the collinearity matrix</p></li>
 </ul>
 </dd>
 </dl>
@@ -237,7 +244,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../drift_distributions/index.html" class="btn btn-neutral float-left" title="abacusai.drift_distributions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../eda/index.html" class="btn btn-neutral float-left" title="abacusai.eda" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../eda_data_consistency/index.html" class="btn btn-neutral float-right" title="abacusai.eda_data_consistency" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

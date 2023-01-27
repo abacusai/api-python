@@ -112,63 +112,6 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.model_monitor_version_metric_data(self.model_monitor_version, metric_type, actual_values_to_detail)
 
-    def describe_eda_version(self):
-        """
-        Retrieves a full description of the specified model monitor version
-
-        Args:
-            model_monitor_version (str): The unique version ID of the model monitor version
-
-        Returns:
-            ModelMonitorVersion: A model monitor version.
-        """
-        return self.client.describe_eda_version(self.model_monitor_version)
-
-    def delete_eda_version(self):
-        """
-        Deletes the specified model monitor version.
-
-        Args:
-            model_monitor_version (str): The ID of the model monitor version to delete.
-        """
-        return self.client.delete_eda_version(self.model_monitor_version)
-
-    def get_eda_collinearity(self):
-        """
-        Gets the Collinearity between all features for the Exploratory Data Analysis.
-
-        Args:
-            model_monitor_version (str): The unique ID associated with the EDA instance.
-
-        Returns:
-            EdaCollinearity: An object with a record of correlations between each feature for an eda.
-        """
-        return self.client.get_eda_collinearity(self.model_monitor_version)
-
-    def get_eda_data_consistency(self, transformation_feature: str = None):
-        """
-        Gets the data consistency for the Exploratory Data Analysis.
-
-        Args:
-            transformation_feature (str): 
-
-        Returns:
-            EdaDataConsistency: An object with duplication, deletion and transformation data for Data Consistency Analysis for an eda.
-        """
-        return self.client.get_eda_data_consistency(self.model_monitor_version, transformation_feature)
-
-    def get_collinearity_for_feature(self, feature_name: str = None):
-        """
-        Gets the Collinearity for the given feature from the Exploratory Data Analysis.
-
-        Args:
-            feature_name (str): The name of the feature for which correlation shown
-
-        Returns:
-            EdaFeatureCollinearity: An object with a record of correlations for the provided feature for an eda.
-        """
-        return self.client.get_collinearity_for_feature(self.model_monitor_version, feature_name)
-
     def list_monitor_alert_versions_for_monitor_version(self):
         """
         Retrieves the list of monitor alerts version for a specified monitor instance

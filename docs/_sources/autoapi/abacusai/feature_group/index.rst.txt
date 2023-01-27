@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, annotationConfig=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, annotationConfig=None, projectConfig=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,7 +49,7 @@ Classes
    :type createdAt: str
    :param description: Description of the feature group
    :type description: str
-   :param featureGroupType: The Project Dataset Type when the Feature Group is used in the context of a project
+   :param featureGroupType: The Project Type when the Feature Group is used in the context of a project
    :type featureGroupType: str
    :param sqlError: collects the error message with this FeatureGroup
    :type sqlError: str
@@ -99,6 +99,8 @@ Classes
    :type pythonFunctionName: str
    :param annotationConfig: The annotation config for this feature group.
    :type annotationConfig: annotationconfig
+   :param projectConfig: The project-specific config for this feature group
+   :type projectConfig: dict
    :param features: List of resolved features
    :type features: Feature
    :param duplicateFeatures: List of duplicate features
@@ -131,7 +133,7 @@ Classes
 
    .. py:method:: add_to_project(project_id, feature_group_type = 'CUSTOM_TABLE', feature_group_use = None)
 
-      Adds a feature group to a project,
+      Adds a feature group to a project
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
@@ -139,6 +141,16 @@ Classes
       :type feature_group_type: str
       :param feature_group_use: The user assigned feature group use which allows for organizing project feature groups  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT
       :type feature_group_use: str
+
+
+   .. py:method:: set_project_config(project_id, project_config = None)
+
+      Sets a feature group's project config
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param project_config: The feature group's project config.
+      :type project_config: dict
 
 
    .. py:method:: remove_from_project(project_id)

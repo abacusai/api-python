@@ -193,7 +193,7 @@ Classes
       :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
       :type filter_feature_group_use: str
 
-      :returns: All the Feature Groups in the Organization
+      :returns: All the Feature Groups in a project
       :rtype: FeatureGroup
 
 
@@ -414,7 +414,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
+   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
 
       Runs an eda (exploratory data analysis) for the specified project.
 
@@ -428,15 +428,17 @@ Classes
       :type include_collinearity: bool
       :param include_data_consistency: Set to True if the eda type is Data consistency
       :type include_data_consistency: bool
+      :param collinearity_keys:
+      :type collinearity_keys: list
       :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
       :type primary_keys: list
       :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
       :type data_consistency_test_config: dict
-      :param data_consistency_reference_config: Reference (Control) feature group version selection strategy for Data Consistency eda type
+      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
       :type data_consistency_reference_config: dict
 
-      :returns: The new model monitor that was created.
-      :rtype: ModelMonitor
+      :returns: The new eda object that was created.
+      :rtype: Eda
 
 
    .. py:method:: list_eda()
@@ -446,8 +448,8 @@ Classes
       :param project_id: The unique ID associated with the project.
       :type project_id: str
 
-      :returns: An array of model monitors.
-      :rtype: ModelMonitor
+      :returns: An array of eda objects.
+      :rtype: Eda
 
 
    .. py:method:: create_monitor_alert(model_monitor_id, alert_name, condition_config, action_config)

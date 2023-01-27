@@ -37,9 +37,12 @@ from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .drift_distributions import DriftDistributions
+from .eda import Eda
 from .eda_collinearity import EdaCollinearity
 from .eda_data_consistency import EdaDataConsistency
+from .eda_feature_association import EdaFeatureAssociation
 from .eda_feature_collinearity import EdaFeatureCollinearity
+from .eda_version import EdaVersion
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
@@ -176,7 +179,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.46.0'
+    client_version = '0.47.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -552,7 +555,7 @@ class ReadOnlyClient(BaseApiClient):
             filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
 
         Returns:
-            FeatureGroup: All the Feature Groups in the Organization"""
+            FeatureGroup: All the Feature Groups in a project"""
         return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=FeatureGroup)
 
     def list_python_function_feature_groups(self, name: str, limit: int = 100) -> List[FeatureGroup]:
@@ -895,6 +898,14 @@ class ReadOnlyClient(BaseApiClient):
             Model: The description of the model."""
         return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
 
+    def set_model_objective(self, model_version: str, metric: str):
+        """Sets the best model for all model instances of the model based on the specified metric, and updates the training config to use the specified metric for any future model versions.
+
+        Args:
+            model_version (str): The model version to set as the best model
+            metric (str): The metric to use to determine the best model"""
+        return self._call_api('setModelObjective', 'GET', query_params={'modelVersion': model_version, 'metric': metric})
+
     def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False) -> ModelMetrics:
         """Retrieves a full list of the metrics for the specified model.
 
@@ -978,15 +989,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FunctionLogs: A function logs."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
-    def ignore_lofo_features(self, model_version: str, threshold: float = None, top_n: int = 0):
-        """
-
-        Args:
-            model_version (str): 
-            threshold (float): 
-            top_n (int): """
-        return self._call_api('ignoreLofoFeatures', 'GET', query_params={'modelVersion': model_version, 'threshold': threshold, 'topN': top_n})
 
     def list_model_monitors(self, project_id: str) -> List[ModelMonitor]:
         """Retrieves the list of models monitors in the specified project.
@@ -1091,79 +1093,91 @@ class ReadOnlyClient(BaseApiClient):
             ModelMonitorOrgSummary: A list of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, and integrity for all model monitors in an organization."""
         return self._call_api('getModelMonitorSummaryFromOrganization', 'GET', query_params={}, parse_type=ModelMonitorOrgSummary)
 
-    def list_eda(self, project_id: str) -> List[ModelMonitor]:
+    def list_eda(self, project_id: str) -> List[Eda]:
         """Retrieves the list of EDA (exploratory data analysis) in the specified project.
 
         Args:
             project_id (str): The unique ID associated with the project.
 
         Returns:
-            ModelMonitor: An array of model monitors."""
-        return self._call_api('listEda', 'GET', query_params={'projectId': project_id}, parse_type=ModelMonitor)
+            Eda: An array of eda objects."""
+        return self._call_api('listEda', 'GET', query_params={'projectId': project_id}, parse_type=Eda)
 
-    def describe_eda(self, model_monitor_id: str) -> ModelMonitor:
-        """Retrieves a full description of the specified model monitor.
+    def describe_eda(self, eda_id: str) -> Eda:
+        """Retrieves a full description of the specified eda object.
 
         Args:
-            model_monitor_id (str): The unique ID associated with the model monitor.
+            eda_id (str): The unique ID associated with the eda object.
 
         Returns:
-            ModelMonitor: The description of the model monitor."""
-        return self._call_api('describeEda', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+            Eda: The description of the eda object."""
+        return self._call_api('describeEda', 'GET', query_params={'edaId': eda_id}, parse_type=Eda)
 
-    def list_eda_versions(self, model_monitor_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelMonitorVersion]:
-        """Retrieves a list of the versions for a given model monitor.
+    def list_eda_versions(self, eda_id: str, limit: int = 100, start_after_version: str = None) -> List[EdaVersion]:
+        """Retrieves a list of the versions for a given eda object.
 
         Args:
-            model_monitor_id (str): The unique ID associated with the model monitor.
-            limit (int): The max length of the list of all model monitor versions.
+            eda_id (str): The unique ID associated with the eda object.
+            limit (int): The max length of the list of all eda versions.
             start_after_version (str): The id of the version after which the list starts.
 
         Returns:
-            ModelMonitorVersion: An array of model monitor versions."""
-        return self._call_api('listEdaVersions', 'GET', query_params={'modelMonitorId': model_monitor_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=ModelMonitorVersion)
+            EdaVersion: An array of eda versions."""
+        return self._call_api('listEdaVersions', 'GET', query_params={'edaId': eda_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=EdaVersion)
 
-    def describe_eda_version(self, model_monitor_version: str) -> ModelMonitorVersion:
-        """Retrieves a full description of the specified model monitor version
+    def describe_eda_version(self, eda_version: str) -> EdaVersion:
+        """Retrieves a full description of the specified eda version
 
         Args:
-            model_monitor_version (str): The unique version ID of the model monitor version
+            eda_version (str): The unique version ID of the eda version
 
         Returns:
-            ModelMonitorVersion: A model monitor version."""
-        return self._call_api('describeEdaVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=ModelMonitorVersion)
+            EdaVersion: A eda version."""
+        return self._call_api('describeEdaVersion', 'GET', query_params={'edaVersion': eda_version}, parse_type=EdaVersion)
 
-    def get_eda_collinearity(self, model_monitor_version: str) -> EdaCollinearity:
+    def get_eda_collinearity(self, eda_version: str) -> EdaCollinearity:
         """Gets the Collinearity between all features for the Exploratory Data Analysis.
 
         Args:
-            model_monitor_version (str): The unique ID associated with the EDA instance.
+            eda_version (str): The unique ID associated with the EDA instance.
 
         Returns:
             EdaCollinearity: An object with a record of correlations between each feature for an eda."""
-        return self._call_api('getEdaCollinearity', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=EdaCollinearity)
+        return self._call_api('getEdaCollinearity', 'GET', query_params={'edaVersion': eda_version}, parse_type=EdaCollinearity)
 
-    def get_eda_data_consistency(self, model_monitor_version: str, transformation_feature: str = None) -> EdaDataConsistency:
+    def get_eda_data_consistency(self, eda_version: str, transformation_feature: str = None) -> EdaDataConsistency:
         """Gets the data consistency for the Exploratory Data Analysis.
 
         Args:
-            model_monitor_version (str): The unique ID associated with the EDA insatnce.
+            eda_version (str): The unique ID associated with the EDA insatnce.
             transformation_feature (str): 
 
         Returns:
             EdaDataConsistency: An object with duplication, deletion and transformation data for Data Consistency Analysis for an eda."""
-        return self._call_api('getEdaDataConsistency', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'transformationFeature': transformation_feature}, parse_type=EdaDataConsistency)
+        return self._call_api('getEdaDataConsistency', 'GET', query_params={'edaVersion': eda_version, 'transformationFeature': transformation_feature}, parse_type=EdaDataConsistency)
 
-    def get_collinearity_for_feature(self, model_monitor_version: str, feature_name: str = None) -> EdaFeatureCollinearity:
+    def get_collinearity_for_feature(self, eda_version: str, feature_name: str = None) -> EdaFeatureCollinearity:
         """Gets the Collinearity for the given feature from the Exploratory Data Analysis.
 
         Args:
-            model_monitor_version (str): The unique ID associated with the EDA instance.
+            eda_version (str): The unique ID associated with the EDA instance.
             feature_name (str): The name of the feature for which correlation shown
 
         Returns:
             EdaFeatureCollinearity: An object with a record of correlations for the provided feature for an eda."""
-        return self._call_api('getCollinearityForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name}, parse_type=EdaFeatureCollinearity)
+        return self._call_api('getCollinearityForFeature', 'GET', query_params={'edaVersion': eda_version, 'featureName': feature_name}, parse_type=EdaFeatureCollinearity)
+
+    def get_feature_association(self, eda_version: str, reference_feature_name: str, test_feature_name: str) -> EdaFeatureAssociation:
+        """Gets the Feature Association for the given features from the feature group version within the eda_version.
+
+        Args:
+            eda_version (str): The unique ID associated with the EDA instance.
+            reference_feature_name (str): The name of the feature for feature association (in x axis for the plots generated for the Feature association in the product)
+            test_feature_name (str): The name of the feature for feature association (in y axis for the plots generated for the Feature association in the product)
+
+        Returns:
+            EdaFeatureAssociation: An object with a record of data for the feature association between the two given features for an eda version."""
+        return self._call_api('getFeatureAssociation', 'GET', query_params={'edaVersion': eda_version, 'referenceFeatureName': reference_feature_name, 'testFeatureName': test_feature_name}, parse_type=EdaFeatureAssociation)
 
     def describe_monitor_alert(self, monitor_alert_id: str) -> MonitorAlert:
         """Describes a given monitor alert id
@@ -2161,7 +2175,7 @@ class ApiClient(ReadOnlyClient):
         return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
 
     def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
-        """Adds a feature group to a project,
+        """Adds a feature group to a project
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
@@ -2169,6 +2183,15 @@ class ApiClient(ReadOnlyClient):
             feature_group_type (str):  The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
             feature_group_use (str): The user assigned feature group use which allows for organizing project feature groups  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT"""
         return self._call_api('addFeatureGroupToProject', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type, 'featureGroupUse': feature_group_use})
+
+    def set_project_feature_group_config(self, feature_group_id: str, project_id: str, project_config: dict = None):
+        """Sets a feature group's project config
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            project_id (str): The unique ID associated with the project.
+            project_config (dict):  The feature group's project config."""
+        return self._call_api('setProjectFeatureGroupConfig', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'projectConfig': project_config})
 
     def remove_feature_group_from_project(self, feature_group_id: str, project_id: str):
         """Removes a feature group from a project.
@@ -2248,7 +2271,7 @@ class ApiClient(ReadOnlyClient):
             Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set."""
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
-    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui') -> AnnotationEntry:
+    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None) -> AnnotationEntry:
         """Add an annotation entry to the database.
 
         Args:
@@ -2258,10 +2281,11 @@ class ApiClient(ReadOnlyClient):
             doc_id (str): The ID of the primary document the annotation is on.
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group primary key value.
             annotation_source (str): Indicator of whether the annotation came from the UI, bulk upload, etc.
+            document (str): The document the annotation is on. This is optional.
 
         Returns:
             AnnotationEntry: The annotation entry that was added"""
-        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source}, parse_type=AnnotationEntry)
+        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'document': document}, parse_type=AnnotationEntry)
 
     def describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
         """Get the latest annotation entry for a given feature group, feature, and document.
@@ -3216,7 +3240,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
+            data_type (str): The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
 
         Returns:
             Dataset: The dataset and schema after the data_type has been set"""
@@ -3646,6 +3670,15 @@ class ApiClient(ReadOnlyClient):
             CustomTrainFunctionInfo: Information about how to call the customer provided train function."""
         return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override, 'trainingConfig': training_config, 'customAlgorithmConfig': custom_algorithm_config}, parse_type=CustomTrainFunctionInfo)
 
+    def ignore_lofo_features(self, model_version: str, threshold: float = None, top_n: int = 0):
+        """
+
+        Args:
+            model_version (str): 
+            threshold (float): 
+            top_n (int): """
+        return self._call_api('ignoreLofoFeatures', 'POST', query_params={}, body={'modelVersion': model_version, 'threshold': threshold, 'topN': top_n})
+
     def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None, img_url_prefixes: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
@@ -3718,7 +3751,7 @@ class ApiClient(ReadOnlyClient):
             ModelMonitor: The new model monitor that was created."""
         return self._call_api('createVisionDriftMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'featureMappings': feature_mappings, 'trainingFeatureMappings': training_feature_mappings, 'targetValuePerformance': target_value_performance, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
 
-    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None) -> ModelMonitor:
+    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None) -> Eda:
         """Runs an eda (exploratory data analysis) for the specified project.
 
         Args:
@@ -3728,45 +3761,46 @@ class ApiClient(ReadOnlyClient):
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
             include_collinearity (bool): Set to True if the eda type is collinearity
             include_data_consistency (bool): Set to True if the eda type is Data consistency
+            collinearity_keys (list): 
             primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
             data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency eda type
-            data_consistency_reference_config (dict): Reference (Control) feature group version selection strategy for Data Consistency eda type
+            data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency eda type
 
         Returns:
-            ModelMonitor: The new model monitor that was created."""
-        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeDataConsistency': include_data_consistency, 'primaryKeys': primary_keys, 'dataConsistencyTestConfig': data_consistency_test_config, 'dataConsistencyReferenceConfig': data_consistency_reference_config}, parse_type=ModelMonitor)
+            Eda: The new eda object that was created."""
+        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeDataConsistency': include_data_consistency, 'collinearityKeys': collinearity_keys, 'primaryKeys': primary_keys, 'dataConsistencyTestConfig': data_consistency_test_config, 'dataConsistencyReferenceConfig': data_consistency_reference_config}, parse_type=Eda)
 
-    def rerun_eda(self, model_monitor_id: str) -> ModelMonitor:
-        """Reruns the specified model monitor.
+    def rerun_eda(self, eda_id: str) -> Eda:
+        """Reruns the specified eda object.
 
         Args:
-            model_monitor_id (str): The model monitor to rerun.
+            eda_id (str): The eda object to rerun.
 
         Returns:
-            ModelMonitor: The model monitor that is being rerun."""
-        return self._call_api('rerunEda', 'POST', query_params={}, body={'modelMonitorId': model_monitor_id}, parse_type=ModelMonitor)
+            Eda: The eda object that is being rerun."""
+        return self._call_api('rerunEda', 'POST', query_params={}, body={'edaId': eda_id}, parse_type=Eda)
 
-    def rename_eda(self, model_monitor_id: str, name: str):
+    def rename_eda(self, eda_id: str, name: str):
         """Renames a model monitor
 
         Args:
-            model_monitor_id (str): The ID of the model monitor to rename
+            eda_id (str): The ID of the eda to rename
             name (str): The name to apply to the model monitor"""
-        return self._call_api('renameEda', 'PATCH', query_params={}, body={'modelMonitorId': model_monitor_id, 'name': name})
+        return self._call_api('renameEda', 'PATCH', query_params={}, body={'edaId': eda_id, 'name': name})
 
-    def delete_eda(self, model_monitor_id: str):
-        """Deletes the specified model monitor and all its versions.
-
-        Args:
-            model_monitor_id (str): The ID of the model monitor to delete."""
-        return self._call_api('deleteEda', 'DELETE', query_params={'modelMonitorId': model_monitor_id})
-
-    def delete_eda_version(self, model_monitor_version: str):
-        """Deletes the specified model monitor version.
+    def delete_eda(self, eda_id: str):
+        """Deletes the specified eda and all its versions.
 
         Args:
-            model_monitor_version (str): The ID of the model monitor version to delete."""
-        return self._call_api('deleteEdaVersion', 'DELETE', query_params={'modelMonitorVersion': model_monitor_version})
+            eda_id (str): The ID of the eda to delete."""
+        return self._call_api('deleteEda', 'DELETE', query_params={'edaId': eda_id})
+
+    def delete_eda_version(self, eda_version: str):
+        """Deletes the specified eda version.
+
+        Args:
+            eda_version (str): The ID of the eda version to delete."""
+        return self._call_api('deleteEdaVersion', 'DELETE', query_params={'edaVersion': eda_version})
 
     def create_monitor_alert(self, project_id: str, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict) -> MonitorAlert:
         """Create a monitor alert for the given conditions and monitor

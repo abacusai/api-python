@@ -1,0 +1,121 @@
+:py:mod:`abacusai.eda`
+======================
+
+.. py:module:: abacusai.eda
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.eda.Eda
+
+
+
+
+.. py:class:: Eda(client, edaId=None, name=None, createdAt=None, projectId=None, featureGroupId=None, referenceFeatureGroupVersion=None, testFeatureGroupVersion=None, edaConfigs=None, latestEdaVersion={}, refreshSchedules={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A exploratory data analysis object
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param edaId: The unique identifier of the eda object.
+   :type edaId: str
+   :param name: The user-friendly name for the eda object.
+   :type name: str
+   :param createdAt: Date and time at which the eda object was created.
+   :type createdAt: str
+   :param projectId: The project this eda object belongs to.
+   :type projectId: str
+   :param featureGroupId: Feature group ID for which eda analysis is being done.
+   :type featureGroupId: str
+   :param referenceFeatureGroupVersion: Reference Feature group version for data consistency analysis, will be latest feature group version for collinearity analysis.
+   :type referenceFeatureGroupVersion: str
+   :param testFeatureGroupVersion: Test Feature group version for data consistency analysis, will be latest feature group version for collinearity analysis.
+   :type testFeatureGroupVersion: str
+   :param edaConfigs: Configurations for eda object.
+   :type edaConfigs: dict
+   :param latestEdaVersion: The latest eda object version.
+   :type latestEdaVersion: EdaVersion
+   :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
+   :type refreshSchedules: RefreshSchedule
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: rerun()
+
+      Reruns the specified eda object.
+
+      :param eda_id: The eda object to rerun.
+      :type eda_id: str
+
+      :returns: The eda object that is being rerun.
+      :rtype: Eda
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: Eda
+
+
+   .. py:method:: describe()
+
+      Retrieves a full description of the specified eda object.
+
+      :param eda_id: The unique ID associated with the eda object.
+      :type eda_id: str
+
+      :returns: The description of the eda object.
+      :rtype: Eda
+
+
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
+
+      Retrieves a list of the versions for a given eda object.
+
+      :param limit: The max length of the list of all eda versions.
+      :type limit: int
+      :param start_after_version: The id of the version after which the list starts.
+      :type start_after_version: str
+
+      :returns: An array of eda versions.
+      :rtype: EdaVersion
+
+
+   .. py:method:: rename(name)
+
+      Renames a model monitor
+
+      :param name: The name to apply to the model monitor
+      :type name: str
+
+
+   .. py:method:: delete()
+
+      Deletes the specified eda and all its versions.
+
+      :param eda_id: The ID of the eda to delete.
+      :type eda_id: str
+
+
+

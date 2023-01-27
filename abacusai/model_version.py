@@ -83,6 +83,15 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.describe_train_test_data_split_feature_group_version(self.model_version)
 
+    def set_model_objective(self, metric: str):
+        """
+        Sets the best model for all model instances of the model based on the specified metric, and updates the training config to use the specified metric for any future model versions.
+
+        Args:
+            metric (str): The metric to use to determine the best model
+        """
+        return self.client.set_model_objective(self.model_version, metric)
+
     def delete(self):
         """
         Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.

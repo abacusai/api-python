@@ -75,9 +75,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../document_store_import/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store_import</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distributions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_collinearity</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_data_consistency/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_data_consistency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_association/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_association</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_feature_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_collinearity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
@@ -93,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.graph_dashboard</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.indexing_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
@@ -347,82 +351,6 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model_monitor.ModelMonitor.delete">
 <span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor.ModelMonitor.delete" title="Permalink to this definition"></a></dt>
-<dd><p>Deletes the specified model monitor and all its versions.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the model monitor to delete.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.model_monitor.ModelMonitor.rerun_eda">
-<span class="sig-name descname"><span class="pre">rerun_eda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor.ModelMonitor.rerun_eda" title="Permalink to this definition"></a></dt>
-<dd><p>Reruns the specified model monitor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The model monitor to rerun.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The model monitor that is being rerun.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abacusai.model_monitor.ModelMonitor" title="abacusai.model_monitor.ModelMonitor">ModelMonitor</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.model_monitor.ModelMonitor.describe_eda">
-<span class="sig-name descname"><span class="pre">describe_eda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor.ModelMonitor.describe_eda" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves a full description of the specified model monitor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the model monitor.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The description of the model monitor.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abacusai.model_monitor.ModelMonitor" title="abacusai.model_monitor.ModelMonitor">ModelMonitor</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.model_monitor.ModelMonitor.list_eda_versions">
-<span class="sig-name descname"><span class="pre">list_eda_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor.ModelMonitor.list_eda_versions" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves a list of the versions for a given model monitor.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The max length of the list of all model monitor versions.</p></li>
-<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The id of the version after which the list starts.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An array of model monitor versions.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../model_monitor_version/index.html#abacusai.model_monitor_version.ModelMonitorVersion" title="abacusai.model_monitor_version.ModelMonitorVersion">ModelMonitorVersion</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.model_monitor.ModelMonitor.rename_eda">
-<span class="sig-name descname"><span class="pre">rename_eda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor.ModelMonitor.rename_eda" title="Permalink to this definition"></a></dt>
-<dd><p>Renames a model monitor</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name to apply to the model monitor</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.model_monitor.ModelMonitor.delete_eda">
-<span class="sig-name descname"><span class="pre">delete_eda</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor.ModelMonitor.delete_eda" title="Permalink to this definition"></a></dt>
 <dd><p>Deletes the specified model monitor and all its versions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

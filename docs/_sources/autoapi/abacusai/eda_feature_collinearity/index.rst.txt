@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: EdaFeatureCollinearity(client, selectedFeature=None, sortedColumnNames=None, featureCollinearity={})
+.. py:class:: EdaFeatureCollinearity(client, selectedFeature=None, sortedColumnNames=None, featureCollinearity=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,8 +29,8 @@ Classes
    :type selectedFeature: str
    :param sortedColumnNames: Name of all the features in the data sorted in descending order of collinearity value
    :type sortedColumnNames: list
-   :param featureCollinearity: A sorted List describing the collinearity between a given feature and all the features in the data
-   :type featureCollinearity: CollinearityRecord
+   :param featureCollinearity: A dict describing the collinearity between a given feature and all the features in the data
+   :type featureCollinearity: dict
 
    .. py:method:: __repr__()
 

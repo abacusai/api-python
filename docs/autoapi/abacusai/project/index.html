@@ -75,9 +75,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../document_store_import/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store_import</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distributions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_collinearity</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_data_consistency/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_data_consistency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_association/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_association</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_feature_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_collinearity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
@@ -93,6 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.graph_dashboard</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.indexing_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
@@ -431,7 +435,7 @@
 <dd class="field-odd"><p><strong>filter_feature_group_use</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>All the Feature Groups in the Organization</p>
+<dd class="field-even"><p>All the Feature Groups in a project</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
@@ -681,7 +685,7 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.create_eda">
-<span class="sig-name descname"><span class="pre">create_eda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_collinearity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_data_consistency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_consistency_test_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_consistency_reference_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_eda" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_eda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_collinearity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_data_consistency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collinearity_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_consistency_test_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_consistency_reference_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_eda" title="Permalink to this definition"></a></dt>
 <dd><p>Runs an eda (exploratory data analysis) for the specified project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -691,16 +695,17 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron-style string that describes a schedule in UTC to automatically retrain the created EDA</p></li>
 <li><p><strong>include_collinearity</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set to True if the eda type is collinearity</p></li>
 <li><p><strong>include_data_consistency</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Set to True if the eda type is Data consistency</p></li>
+<li><p><strong>collinearity_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – </p></li>
 <li><p><strong>primary_keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis</p></li>
 <li><p><strong>data_consistency_test_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Test feature group version selection strategy for Data Consistency eda type</p></li>
-<li><p><strong>data_consistency_reference_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Reference (Control) feature group version selection strategy for Data Consistency eda type</p></li>
+<li><p><strong>data_consistency_reference_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Reference feature group version selection strategy for Data Consistency eda type</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The new model monitor that was created.</p>
+<dd class="field-even"><p>The new eda object that was created.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../model_monitor/index.html#abacusai.model_monitor.ModelMonitor" title="abacusai.model_monitor.ModelMonitor">ModelMonitor</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../eda/index.html#abacusai.eda.Eda" title="abacusai.eda.Eda">Eda</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -714,10 +719,10 @@ as it returns the prediction made by the <cite>predictFunctionName</cite>, which
 <dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the project.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An array of model monitors.</p>
+<dd class="field-even"><p>An array of eda objects.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../model_monitor/index.html#abacusai.model_monitor.ModelMonitor" title="abacusai.model_monitor.ModelMonitor">ModelMonitor</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../eda/index.html#abacusai.eda.Eda" title="abacusai.eda.Eda">Eda</a></p>
 </dd>
 </dl>
 </dd></dl>

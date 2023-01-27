@@ -12,7 +12,7 @@ class Schema(AbstractApiClass):
             detectedFeatureMapping (str): 
             featureType (str): The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/FeatureType] for more information.
             detectedFeatureType (str): 
-            dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
+            dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
             detectedDataType (str): 
     """
 
