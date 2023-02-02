@@ -81,11 +81,11 @@ Classes
 
       Creates a new version of the specified dataset.
 
-      :param location: A new external URI to import the dataset from. If not specified, the last location will be used.
+      :param location: External URI to import the dataset from. If not specified, the last location will be used.
       :type location: str
-      :param file_format: The fileFormat to be used. If not specified, the service will try to detect the file format.
+      :param file_format: File format to be used. If not specified, the service will try to detect the file format.
       :type file_format: str
-      :param csv_delimiter: If the file format is CSV, use a specific csv delimiter.
+      :param csv_delimiter: If the file format is CSV, use a specific CSV delimiter.
       :type csv_delimiter: str
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
       :type merge_file_schemas: bool
@@ -96,15 +96,15 @@ Classes
 
    .. py:method:: create_version_from_database_connector(object_name = None, columns = None, query_arguments = None, sql_query = None)
 
-      Creates a new version of the specified dataset
+      Creates a new version of the specified dataset.
 
-      :param object_name: If applicable, the name/id of the object in the service to query. If not specified, the last name will be used.
+      :param object_name: The name/ID of the object in the service to query. If not specified, the last name will be used.
       :type object_name: str
       :param columns: The columns to query from the external service object. If not specified, the last columns will be used.
       :type columns: str
       :param query_arguments: Additional query arguments to filter the data. If not specified, the last arguments will be used.
       :type query_arguments: str
-      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override object_name, columns, and query_arguments.
       :type sql_query: str
 
       :returns: The new Dataset Version created.
@@ -113,9 +113,9 @@ Classes
 
    .. py:method:: create_version_from_application_connector(object_id = None, start_timestamp = None, end_timestamp = None)
 
-      Creates a new version of the specified dataset
+      Creates a new version of the specified dataset.
 
-      :param object_id: If applicable, the id of the object in the service to query. If not specified, the last name will be used.
+      :param object_id: The ID of the object in the service to query. If not specified, the last name will be used.
       :type object_id: str
       :param start_timestamp: The Unix timestamp of the start of the period that will be queried.
       :type start_timestamp: int
@@ -130,55 +130,55 @@ Classes
 
       Creates a new version of the specified dataset using a local file upload.
 
-      :param file_format: The file_format to be used. If not specified, the service will try to detect the file format.
+      :param file_format: File format to be used. If not specified, the service will attempt to detect the file format.
       :type file_format: str
 
-      :returns: A token to be used when uploading file parts.
+      :returns: Token to be used when uploading file parts.
       :rtype: Upload
 
 
    .. py:method:: snapshot_streaming_data()
 
-      Snapshots the current data in the streaming dataset for training.
+      Snapshots the current data in the streaming dataset.
 
       :param dataset_id: The unique ID associated with the dataset.
       :type dataset_id: str
 
-      :returns: The new Dataset Version created.
+      :returns: The new Dataset Version created by taking a snapshot of the current data in the streaming dataset.
       :rtype: DatasetVersion
 
 
    .. py:method:: set_column_data_type(column, data_type)
 
-      Set a column's type in a specified dataset.
+      Set a Dataset's column type.
 
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
+      :param data_type: The type of the data in the column. Refer to the [guide on data types](https://api.abacus.ai/app/help/class/DataType) for more information. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
       :type data_type: str
 
-      :returns: The dataset and schema after the data_type has been set
+      :returns: The dataset and schema after the data type has been set.
       :rtype: Dataset
 
 
    .. py:method:: set_streaming_retention_policy(retention_hours = None, retention_row_count = None)
 
-      Sets the streaming retention policy
+      Sets the streaming retention policy.
 
-      :param retention_hours: The number of hours to retain streamed data in memory
+      :param retention_hours: Number of hours to retain streamed data in memory.
       :type retention_hours: int
-      :param retention_row_count: The number of rows to retain streamed data in memory
+      :param retention_row_count: Number of rows to retain streamed data in memory.
       :type retention_row_count: int
 
 
    .. py:method:: get_schema()
 
-      Retrieves the column schema of a dataset
+      Retrieves the column schema of a dataset.
 
-      :param dataset_id: The Dataset schema to lookup.
+      :param dataset_id: Unique string identifier of the dataset schema to look up.
       :type dataset_id: str
 
-      :returns: List of Column schema definitions
+      :returns: List of column schema definitions.
       :rtype: DatasetColumn
 
 
@@ -205,9 +205,9 @@ Classes
 
       Retrieves a list of all dataset versions for the specified dataset.
 
-      :param limit: The max length of the list of all dataset versions.
+      :param limit: The maximum length of the list of all dataset versions.
       :type limit: int
-      :param start_after_version: The id of the version after which the list starts.
+      :param start_after_version: The ID of the version after which the list starts.
       :type start_after_version: str
 
       :returns: A list of dataset versions.
@@ -216,25 +216,25 @@ Classes
 
    .. py:method:: attach_to_project(project_id, dataset_type)
 
-      [DEPRECATED] Attaches the dataset to the project.
+      [DEPRECATED] Attach a dataset to the project.
 
       Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
 
 
-      :param project_id: The project to attach the dataset to.
+      :param project_id: Unique identifier of the project to attach the dataset to.
       :type project_id: str
-      :param dataset_type: The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for the datasetTypes that are supported per use case.
+      :param dataset_type: Enum string representing the dataset type, associated with the use case of the project. Refer to the [Use Case Documentation](https://api.abacus.ai/app/help/useCases) for the supported dataset types per use case.
       :type dataset_type: str
 
-      :returns: An array of columns descriptions.
+      :returns: An array of column descriptions.
       :rtype: Schema
 
 
    .. py:method:: remove_from_project(project_id)
 
-      [DEPRECATED] Removes a dataset from a project.
+      [DEPRECATED] Removes the dataset with the specified dataset from the project.
 
-      :param project_id: The unique ID associated with the project.
+      :param project_id: Unique string identifier of the project.
       :type project_id: str
 
 
@@ -242,10 +242,7 @@ Classes
 
       Deletes the specified dataset from the organization.
 
-      The dataset cannot be deleted if it is currently attached to a project.
-
-
-      :param dataset_id: The dataset to delete.
+      :param dataset_id: Unique string identifier of the dataset to delete.
       :type dataset_id: str
 
 

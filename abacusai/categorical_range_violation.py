@@ -8,7 +8,7 @@ class CategoricalRangeViolation(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             name (str): Name of feature.
-            mostCommonValues (list of string): List of most common feature names in the prediction distribution not present in the training distribution.
+            mostCommonValues (list[str]): List of most common feature names in the prediction distribution not present in the training distribution.
             freqOutsideTrainingRange (float): Frequency of prediction rows outside training distribution for the specified feature.
     """
 

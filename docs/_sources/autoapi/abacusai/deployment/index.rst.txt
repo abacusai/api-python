@@ -25,19 +25,19 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param deploymentId: The unique identifier for the deployment.
+   :param deploymentId: A unique identifier for the deployment.
    :type deploymentId: str
-   :param name: The user-friendly name for the deployment.
+   :param name: A user-friendly name for the deployment.
    :type name: str
    :param status: The status of the deployment.
    :type status: str
-   :param description: A description of this deployment.
+   :param description: A description of the deployment.
    :type description: str
-   :param deployedAt: When the deployment last became active.
+   :param deployedAt: The date and time when the deployment became active, in ISO-8601 format.
    :type deployedAt: str
-   :param createdAt: When the deployment was created.
+   :param createdAt: The date and time when the deployment was created, in ISO-8601 format.
    :type createdAt: str
-   :param projectId: The unique identifier of the project this deployment belongs to.
+   :param projectId: A unique identifier for the project this deployment belongs to.
    :type projectId: str
    :param modelId: The model that is currently deployed.
    :type modelId: str
@@ -47,27 +47,27 @@ Classes
    :type featureGroupId: str
    :param featureGroupVersion: The feature group version ID that is currently deployed.
    :type featureGroupVersion: str
-   :param callsPerSecond: The number of calls per second the deployment could handle.
+   :param callsPerSecond: The number of calls per second the deployment can handle.
    :type callsPerSecond: int
-   :param autoDeploy: Flag marking the deployment eligible for auto deployments whenever any model in the project finishes training.
+   :param autoDeploy: A flag marking the deployment as eligible for auto deployments whenever any model in the project finishes training.
    :type autoDeploy: bool
-   :param algoName: The name of the algorithm that is currently deployed
+   :param algoName: The name of the algorithm that is currently deployed.
    :type algoName: str
-   :param regions: List of regions that a deployment has been deployed to
-   :type regions: list of strings
-   :param error: Relevant error if the status is FAILED
+   :param regions: A list of regions that the deployment has been deployed to.
+   :type regions: list
+   :param error: The relevant error, if the status is FAILED.
    :type error: str
-   :param batchStreamingUpdates: Flag marking the feature group deployment as having enabled a background process which caches streamed in rows for quicker lookup
+   :param batchStreamingUpdates: A flag marking the feature group deployment as having enabled a background process which caches streamed-in rows for quicker lookup.
    :type batchStreamingUpdates: bool
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
    :param pendingModelVersion: The model that the deployment is switching to.
    :type pendingModelVersion: dict
-   :param modelDeploymentConfig: The config for what model to be deployed
+   :param modelDeploymentConfig: The config for which model to be deployed.
    :type modelDeploymentConfig: dict
-   :param refreshSchedules: List of refresh schedules that indicate when the deployment will be updated to the latest model version
+   :param refreshSchedules: A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
    :type refreshSchedules: RefreshSchedule
-   :param featureGroupExportConfig: Export config (file connector or database connector information) for feature group deployment exports
+   :param featureGroupExportConfig: The export config (file connector or database connector information) for feature group deployment exports.
    :type featureGroupExportConfig: FeatureGroupExportConfig
 
    .. py:method:: __repr__()
@@ -85,27 +85,27 @@ Classes
 
    .. py:method:: create_webhook(endpoint, webhook_event_type, payload_template = None)
 
-      Create a webhook attached to a given deployment id.
+      Create a webhook attached to a given deployment ID.
 
       :param endpoint: URI that the webhook will send HTTP POST requests to.
       :type endpoint: str
-      :param webhook_event_type: One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', 'DEPLOYMENT_FAILED'
+      :param webhook_event_type: One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', or 'DEPLOYMENT_FAILED'.
       :type webhook_event_type: str
       :param payload_template: Template for the body of the HTTP POST requests. Defaults to {}.
       :type payload_template: dict
 
-      :returns: The Webhook attached to the deployment
+      :returns: The webhook attached to the deployment.
       :rtype: Webhook
 
 
    .. py:method:: list_webhooks()
 
-      List and describe all the webhooks attached to a given deployment ID.
+      List all the webhooks attached to a given deployment.
 
-      :param deployment_id: ID of target deployment.
+      :param deployment_id: Unique identifier of the target deployment.
       :type deployment_id: str
 
-      :returns: The webhooks attached to the given deployment id.
+      :returns: List of the webhooks attached to the given deployment ID.
       :rtype: Webhook
 
 
@@ -121,10 +121,10 @@ Classes
 
       Retrieves a full description of the specified deployment.
 
-      :param deployment_id: The unique ID associated with the deployment.
+      :param deployment_id: Unique string identifier associated with the deployment.
       :type deployment_id: str
 
-      :returns: The description of the deployment.
+      :returns: Description of the deployment.
       :rtype: Deployment
 
 
@@ -132,13 +132,13 @@ Classes
 
       Updates a deployment's description.
 
-      :param description: The new deployment description.
+      :param description: The new description for the deployment.
       :type description: str
 
 
    .. py:method:: rename(name)
 
-      Updates a deployment's name and/or description.
+      Updates a deployment's name
 
       :param name: The new deployment name.
       :type name: str
@@ -146,35 +146,32 @@ Classes
 
    .. py:method:: set_auto(enable = None)
 
-      Enable/Disable auto deployment for the specified deployment.
+      Enable or disable auto deployment for the specified deployment.
 
-      When a model is scheduled to retrain, deployments with this enabled will be marked to automatically promote the new model
-      version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version
-      will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not,
-      it will be marked as a failed model version promotion with an error indicating poor metrics performance.
+      When a model is scheduled to retrain, deployments with auto deployment enabled will be marked to automatically promote the new model version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not, it will be marked as a failed model version promotion with an error indicating poor metrics performance.
 
 
-      :param enable: Enable/disable the autoDeploy property of the Deployment.
+      :param enable: Enable or disable the autoDeploy property of the deployment.
       :type enable: bool
 
 
    .. py:method:: set_model_version(model_version, algorithm = None, model_deployment_config = None)
 
-      Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.
+      Promotes a model version and/or algorithm to be the active served deployment version
 
-      :param model_version: The unique ID for the model version
+      :param model_version: A unique identifier for the model version.
       :type model_version: str
       :param algorithm: The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.
       :type algorithm: str
-      :param model_deployment_config: The deployment config for model to deploy
+      :param model_deployment_config: The deployment configuration for the model to deploy.
       :type model_deployment_config: dict
 
 
    .. py:method:: set_feature_group_version(feature_group_version)
 
-      Promotes a Feature Group Version to be served in the Deployment
+      Promotes a feature group version to be served in the deployment.
 
-      :param feature_group_version: The unique ID for the Feature Group Version
+      :param feature_group_version: Unique string identifier for the feature group version.
       :type feature_group_version: str
 
 
@@ -182,7 +179,7 @@ Classes
 
       Restarts the specified deployment that was previously suspended.
 
-      :param deployment_id: The unique ID associated with the deployment.
+      :param deployment_id: A unique string identifier associated with the deployment.
       :type deployment_id: str
 
 
@@ -190,7 +187,7 @@ Classes
 
       Stops the specified deployment.
 
-      :param deployment_id: The Deployment ID
+      :param deployment_id: Unique string identifier of the deployment to be stopped.
       :type deployment_id: str
 
 
@@ -198,7 +195,7 @@ Classes
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
-      :param deployment_id: The ID of the deployment to delete.
+      :param deployment_id: Unique string identifier of the deployment to delete.
       :type deployment_id: str
 
 
@@ -206,27 +203,27 @@ Classes
 
       Sets the export output for the Feature Group Deployment to be a file connector.
 
-      :param file_format:
+      :param file_format: The type of export output, either CSV or JSON.
       :type file_format: str
-      :param output_location: the file connector (cloud) location of where to export
+      :param output_location: The file connector (cloud) location where the output should be exported.
       :type output_location: str
 
 
    .. py:method:: set_feature_group_export_database_connector_output(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
-      Sets the export output for the Feature Group Deployment to be a Database connector.
+      Sets the export output for the Feature Group Deployment to a Database connector.
 
-      :param database_connector_id: The database connector ID used
+      :param database_connector_id: The unique string identifier of the database connector used.
       :type database_connector_id: str
-      :param object_name: The database connector's object to write to
+      :param object_name: The object of the database connector to write to.
       :type object_name: str
-      :param write_mode: UPSERT or INSERT for writing to the database connector
+      :param write_mode: The write mode to use when writing to the database connector, either UPSERT or INSERT.
       :type write_mode: str
-      :param database_feature_mapping: The column/feature pairs mapping the features to the database columns
+      :param database_feature_mapping: The column/feature pairs mapping the features to the database columns.
       :type database_feature_mapping: dict
-      :param id_column: The id column to use as the upsert key
+      :param id_column: The id column to use as the upsert key.
       :type id_column: str
-      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+      :param additional_id_columns: For database connectors which support it, a list of additional ID columns to use as a complex key for upserting.
       :type additional_id_columns: list
 
 
@@ -234,7 +231,7 @@ Classes
 
       Removes the export type that is set for the Feature Group Deployment
 
-      :param deployment_id: The deployment for which the export type is set
+      :param deployment_id: The ID of the deployment for which the export type is set.
       :type deployment_id: str
 
 
@@ -242,33 +239,33 @@ Classes
 
       Creates a batch prediction job description for the given deployment.
 
-      :param table_name: If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV
+      :param table_name: Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.
       :type table_name: str
-      :param name: The name of batch prediction job.
+      :param name: Name of the batch prediction job.
       :type name: str
       :param global_prediction_args: Argument(s) to pass on every prediction call.
       :type global_prediction_args: dict
-      :param explanations: If true, will provide SHAP Explanations for each prediction, if supported by the use case.
+      :param explanations: If true, SHAP explanations will be provided for each prediction, if supported by the use case.
       :type explanations: bool
-      :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON)
+      :param output_format: Format of the batch prediction output (CSV or JSON).
       :type output_format: str
-      :param output_location: If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+      :param output_location: Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
       :type output_location: str
-      :param database_connector_id: The unique identifier of an Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
+      :param database_connector_id: Unique identifier of a Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
       :type database_connector_id: str
-      :param database_output_config: A key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.
+      :param database_output_config: Key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.
       :type database_output_config: dict
-      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically run the batch prediction.
+      :param refresh_schedule: Cron-style string that describes a schedule in UTC to automatically run the batch prediction.
       :type refresh_schedule: str
-      :param csv_input_prefix: A prefix to prepend to the input columns, only applies when output format is CSV
+      :param csv_input_prefix: Prefix to prepend to the input columns, only applies when output format is CSV.
       :type csv_input_prefix: str
-      :param csv_prediction_prefix: A prefix to prepend to the prediction columns, only applies when output format is CSV
+      :param csv_prediction_prefix: Prefix to prepend to the prediction columns, only applies when output format is CSV.
       :type csv_prediction_prefix: str
-      :param csv_explanations_prefix: A prefix to prepend to the explanation columns, only applies when output format is CSV
+      :param csv_explanations_prefix: Prefix to prepend to the explanation columns, only applies when output format is CSV.
       :type csv_explanations_prefix: str
-      :param output_includes_metadata: If true, output will contain columns including prediction start time, batch prediction version, and model version
+      :param output_includes_metadata: If true, output will contain columns including prediction start time, batch prediction version, and model version.
       :type output_includes_metadata: bool
-      :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list
+      :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list.
       :type result_input_columns: list
 
       :returns: The batch prediction description.

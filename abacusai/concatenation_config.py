@@ -8,9 +8,9 @@ class ConcatenationConfig(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             concatenatedTable (str): The feature group to concatenate with the destination feature group.
-            mergeType (str): UNION or INTERSECTION
-            replaceUntilTimestamp (int): The unix timestamp to specify the point till which we will replace data from the source feature group.
-            skipMaterialize (bool): If true, will not materialize the concatenated feature group
+            mergeType (str): The type of merge to perform, either `UNION` or `INTERSECTION`.
+            replaceUntilTimestamp (int): The Unix timestamp to specify the point up to which data from the source feature group will be replaced.
+            skipMaterialize (bool): If `True`, the concatenated feature group will not be materialized.
     """
 
     def __init__(self, client, concatenatedTable=None, mergeType=None, replaceUntilTimestamp=None, skipMaterialize=None):

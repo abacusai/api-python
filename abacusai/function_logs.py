@@ -10,12 +10,12 @@ class FunctionLogs(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            function (str): 
-            stats (dict): 
-            stdout (str): 
-            stderr (str): 
-            algorithm (str): 
-            exception (UserException): 
+            function (str): The function this is logging
+            stats (dict): Statistics for the start and end time execution for this function
+            stdout (str): Standard out logs
+            stderr (str): Standard error logs
+            algorithm (str): Algorithm name for this function
+            exception (UserException): The exception stacktrace
     """
 
     def __init__(self, client, function=None, stats=None, stdout=None, stderr=None, algorithm=None, exception={}):

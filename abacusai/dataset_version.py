@@ -14,13 +14,13 @@ class DatasetVersion(AbstractApiClass):
             rowCount (int): Number of rows in the dataset version.
             createdAt (str): The timestamp this dataset version was created.
             error (str): If status is FAILED, this field will be populated with an error.
-            invalidRecords (str): 
             incrementalQueriedAt (str): If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
             uploadId (str): If the dataset version is being uploaded, this the reference to the Upload
             mergeFileSchemas (bool): If the merge file schemas policy is enabled.
+            invalidRecords (str): Invalid records in the dataset version
     """
 
-    def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, invalidRecords=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None):
+    def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, invalidRecords=None):
         super().__init__(client, datasetVersion)
         self.dataset_version = datasetVersion
         self.status = status
@@ -29,13 +29,13 @@ class DatasetVersion(AbstractApiClass):
         self.row_count = rowCount
         self.created_at = createdAt
         self.error = error
-        self.invalid_records = invalidRecords
         self.incremental_queried_at = incrementalQueriedAt
         self.upload_id = uploadId
         self.merge_file_schemas = mergeFileSchemas
+        self.invalid_records = invalidRecords
 
     def __repr__(self):
-        return f"DatasetVersion(dataset_version={repr(self.dataset_version)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  size={repr(self.size)},\n  row_count={repr(self.row_count)},\n  created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  invalid_records={repr(self.invalid_records)},\n  incremental_queried_at={repr(self.incremental_queried_at)},\n  upload_id={repr(self.upload_id)},\n  merge_file_schemas={repr(self.merge_file_schemas)})"
+        return f"DatasetVersion(dataset_version={repr(self.dataset_version)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  size={repr(self.size)},\n  row_count={repr(self.row_count)},\n  created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  incremental_queried_at={repr(self.incremental_queried_at)},\n  upload_id={repr(self.upload_id)},\n  merge_file_schemas={repr(self.merge_file_schemas)},\n  invalid_records={repr(self.invalid_records)})"
 
     def to_dict(self):
         """
@@ -44,7 +44,7 @@ class DatasetVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error, 'invalid_records': self.invalid_records, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas}
+        return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
 
     def refresh(self):
         """
@@ -58,10 +58,10 @@ class DatasetVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Retrieves a full description of the specified dataset version, with attributes such as its ID, name, source type, etc.
+        Retrieves a full description of the specified dataset version, including its ID, name, source type, and other attributes.
 
         Args:
-            dataset_version (str): The unique ID associated with the dataset version.
+            dataset_version (str): Unique string identifier associated with the dataset version.
 
         Returns:
             DatasetVersion: The dataset version.

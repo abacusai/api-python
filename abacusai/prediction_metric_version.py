@@ -7,11 +7,11 @@ class PredictionMetricVersion(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            createdAt (str): Date and time when this preddiction metric version was created.
+            createdAt (str): Date and time when this prediction metric version was created.
             error (str): Relevant error if the status of this job version is FAILED.
             featureGroupVersion (str): The feature group version used as input to this prediction metric.
-            predictionMetricCompletedAt (str): The time and date computatations were completed for this job version.
-            predictionMetricConfig (json): Specification for prediction metric used to run this job.
+            predictionMetricCompletedAt (str): The time and date computations were completed for this job version.
+            predictionMetricConfig (dict): Specification for the prediction metric used to run this job.
             predictionMetricId (str): The unique identifier of the prediction metric this is a version of.
             predictionMetricStartedAt (str): The time and date computations were started for this job version.
             predictionMetricVersion (str): The unique identifier of this prediction metric version.
@@ -54,22 +54,22 @@ class PredictionMetricVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Retrieves a full description of the specified prediction metric version
+        Retrieves a full description of the specified prediction metric version.
 
         Args:
-            prediction_metric_version (str): The unique version ID of the prediction metric version
+            prediction_metric_version (str): The unique version ID of the prediction metric version.
 
         Returns:
-            PredictionMetricVersion: A prediction metric version. For more information, please refer to the details on the object (below).
+            PredictionMetricVersion: A prediction metric version. For more information, please refer to the details on the object.
         """
         return self.client.describe_prediction_metric_version(self.prediction_metric_version)
 
     def delete(self):
         """
-        Removes an existing prediction metric version.
+        Deletes a prediction metric version.
 
         Args:
-            prediction_metric_version (str): 
+            prediction_metric_version (str): Unique string identifier of the prediction metric to remove.
         """
         return self.client.delete_prediction_metric_version(self.prediction_metric_version)
 

@@ -48,32 +48,32 @@ class Webhook(AbstractApiClass):
 
     def describe(self):
         """
-        Describe the webhook with a given id.
+        Describe the webhook with a given ID.
 
         Args:
-            webhook_id (str): ID of target webhook.
+            webhook_id (str): Unique string identifier of the target webhook.
 
         Returns:
-            Webhook: The Webhook with the given id.
+            Webhook: The webhook with the given ID.
         """
         return self.client.describe_webhook(self.webhook_id)
 
     def update(self, endpoint: str = None, webhook_event_type: str = None, payload_template: dict = None):
         """
-        Update the webhook associated with a given webhook id.
+        Update the webhook
 
         Args:
-            endpoint (str): If set, changes the webhook's endpoint.
-            webhook_event_type (str): If set, changes event type.
-            payload_template (dict): If set, changes payload template.
+            endpoint (str): If provided, changes the webhook's endpoint.
+            webhook_event_type (str): If provided, changes the event type.
+            payload_template (dict): If provided, changes the payload template.
         """
         return self.client.update_webhook(self.webhook_id, endpoint, webhook_event_type, payload_template)
 
     def delete(self):
         """
-        Delete the webhook with a given id.
+        Delete the webhook
 
         Args:
-            webhook_id (str): ID of target webhook.
+            webhook_id (str): Unique identifier of the target webhook.
         """
         return self.client.delete_webhook(self.webhook_id)

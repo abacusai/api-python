@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: GraphDashboard(client, name=None, graphDashboardId=None, createdAt=None, projectId=None, pythonFunctionIds=None, pythonFunctionNames=None, projectName=None)
+.. py:class:: GraphDashboard(client, name=None, graphDashboardId=None, createdAt=None, projectId=None, pythonFunctionIds=None, plotReferenceIds=None, pythonFunctionNames=None, projectName=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25,19 +25,21 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param name: The user-friendly name for the plot dashboard
+   :param name: The user-friendly name for the graph dashboard.
    :type name: str
    :param graphDashboardId: The unique identifier of the graph dashboard.
    :type graphDashboardId: str
-   :param createdAt: Date and time at which the graph dashboard was created.
+   :param createdAt: Date and time at which the graph dashboard was created, in ISO-8601 format.
    :type createdAt: str
-   :param projectId: The project this model belongs to.
+   :param projectId: The unique identifier of the project this graph dashboard belongs to.
    :type projectId: str
-   :param pythonFunctionIds: List of python graph ids included in the dashboard
-   :type pythonFunctionIds: list<unique string identifier>)
-   :param pythonFunctionNames: List of names of each of the python functions
-   :type pythonFunctionNames: list<string>
-   :param projectName: The name the plot dashboard belongs to
+   :param pythonFunctionIds: List of Python function IDs included in the dashboard.
+   :type pythonFunctionIds: list[str]
+   :param plotReferenceIds: List of the graph reference IDs for the plots to the dashboard.
+   :type plotReferenceIds: list[str]
+   :param pythonFunctionNames: List of names of each of the plots to the dashboard.
+   :type pythonFunctionNames: list[str]
+   :param projectName: The name the graph dashboard belongs to.
    :type projectName: str
 
    .. py:method:: __repr__()
@@ -65,10 +67,10 @@ Classes
 
       Describes a given graph dashboard.
 
-      :param graph_dashboard_id: The graph dashboard id
+      :param graph_dashboard_id: Unique identifier for the graph dashboard.
       :type graph_dashboard_id: str
 
-      :returns: An object describing the graph dashboard
+      :returns: An object containing information about the graph dashboard.
       :rtype: GraphDashboard
 
 
@@ -76,22 +78,20 @@ Classes
 
       Deletes a graph dashboard
 
-      :param graph_dashboard_id: The graph dashboard id to delete
+      :param graph_dashboard_id: Unique string identifier for the graph dashboard to be deleted.
       :type graph_dashboard_id: str
 
 
-   .. py:method:: update(name = None, python_function_ids = None, variable_mappings = None)
+   .. py:method:: update(name = None, python_function_ids = None)
 
       Updates a graph dashboard
 
-      :param name: The name of the dashboard
+      :param name: Name of the dashboard.
       :type name: str
-      :param python_function_ids: The list of python function ids to use in the graph dashboard
+      :param python_function_ids: List of unique string identifiers for the Python functions to be used in the graph dashboard.
       :type python_function_ids: list
-      :param variable_mappings:
-      :type variable_mappings: dict
 
-      :returns: An object describing the graph dashboard
+      :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
 
 

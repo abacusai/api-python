@@ -25,17 +25,17 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param databaseConnectorId: The unique ID for the connection.
+   :param databaseConnectorId: A unique string identifier for the connection.
    :type databaseConnectorId: str
-   :param service: The service this connection connects to
+   :param service: An enum string indicating the service this connection connects to.
    :type service: str
-   :param name: A user-friendly name for the service
+   :param name: A user-friendly name for the service.
    :type name: str
-   :param status: The status of the Database Connector
+   :param status: The status of the database connector.
    :type status: str
-   :param auth: Non-secret connection information for this connector
+   :param auth: Non-secret connection information for this connector.
    :type auth: dict
-   :param createdAt: When the API key was created
+   :param createdAt: The ISO-8601 string indicating when the API key was created.
    :type createdAt: str
 
    .. py:method:: __repr__()
@@ -55,7 +55,7 @@ Classes
 
       Lists querable objects in the database connector.
 
-      :param database_connector_id: The unique identifier for the database connector.
+      :param database_connector_id: Unique string identifier for the database connector.
       :type database_connector_id: str
 
 
@@ -63,7 +63,7 @@ Classes
 
       Get the schema of an object in an database connector.
 
-      :param object_name: The unique identifier for the object in the external system.
+      :param object_name: Unique identifier for the object in the external system.
       :type object_name: str
 
 
@@ -71,15 +71,15 @@ Classes
 
       Renames a Database Connector
 
-      :param name: The new name for the Database Connector
+      :param name: The new name for the Database Connector.
       :type name: str
 
 
    .. py:method:: verify()
 
-      Checks to see if Abacus.AI can access the database.
+      Checks if Abacus.AI can access the specified database.
 
-      :param database_connector_id: The unique identifier for the database connector.
+      :param database_connector_id: Unique string identifier for the database connector.
       :type database_connector_id: str
 
 

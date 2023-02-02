@@ -18,7 +18,7 @@ class PointInTimeGroup(AbstractApiClass):
             historyTableName (str): The table to use for aggregating, if not provided, the source table will be used
             historyWindowKey (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
             historyAggregationKeys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
-            features (PointInTimeGroupFeature): 
+            features (PointInTimeGroupFeature): List of features in the Point in Time group
     """
 
     def __init__(self, client, groupName=None, windowKey=None, aggregationKeys=None, lookbackWindow=None, lookbackWindowLag=None, lookbackCount=None, lookbackUntilPosition=None, historyTableName=None, historyWindowKey=None, historyAggregationKeys=None, features={}):

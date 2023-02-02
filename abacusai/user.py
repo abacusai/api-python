@@ -4,7 +4,7 @@ from .return_class import AbstractApiClass
 
 class User(AbstractApiClass):
     """
-        A Abacus.AI User
+        An Abacus.AI User
 
         Args:
             client (ApiClient): An authenticated API Client instance

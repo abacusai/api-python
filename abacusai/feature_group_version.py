@@ -17,7 +17,7 @@ class FeatureGroupVersion(AbstractApiClass):
             featureGroupVersion (str): The unique identifier for this materialized version of feature group.
             featureGroupId (str): The unique identifier of the feature group this version belongs to.
             sql (str): The sql definition creating this feature group.
-            sourceTables (list of string): The source tables for this feature group.
+            sourceTables (list[str]): The source tables for this feature group.
             createdAt (str): The timestamp at which the feature group version was created.
             status (str): The current status of the feature group version.
             error (str): Relevant error if the status is FAILED.
@@ -62,10 +62,10 @@ class FeatureGroupVersion(AbstractApiClass):
 
     def create_snapshot_feature_group(self, table_name: str):
         """
-        Creates a Snapshot Feature Group corresponding to a specific feature group version.
+        Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
         Args:
-            table_name (str): The name for the newly created Snapshot Feature Group table.
+            table_name (str): Name for the newly created Snapshot Feature Group table.
 
         Returns:
             FeatureGroup: Feature Group corresponding to the newly created Snapshot.
@@ -78,11 +78,11 @@ class FeatureGroupVersion(AbstractApiClass):
 
         Args:
             location (str): Cloud file location to export to.
-            export_file_format (str): File format to export to.
+            export_file_format (str): Enum string specifying the file format to export to.
             overwrite (bool): If true and a file exists at this location, this process will overwrite the file.
 
         Returns:
-            FeatureGroupExport: The FeatureGroupExport instance
+            FeatureGroupExport: The FeatureGroupExport instance.
         """
         return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format, overwrite)
 
@@ -91,15 +91,15 @@ class FeatureGroupVersion(AbstractApiClass):
         Export Feature group to Database Connector.
 
         Args:
-            database_connector_id (str): Database connector to export to.
-            object_name (str): The database object to write to
-            write_mode (str): Either INSERT or UPSERT
-            database_feature_mapping (dict): A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
-            id_column (str): Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
-            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting
+            database_connector_id (str): Unique string identifier for the Database Connector to export to.
+            object_name (str): Name of the database object to write to.
+            write_mode (str): Enum string indicating whether to use INSERT or UPSERT.
+            database_feature_mapping (dict): Key/value pair JSON object of "database connector column" -> "feature name" pairs.
+            id_column (str): Required if write_mode is UPSERT. Indicates which database column should be used as the lookup key.
+            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting.
 
         Returns:
-            FeatureGroupExport: The FeatureGroupExport instance
+            FeatureGroupExport: The FeatureGroupExport instance.
         """
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column, additional_id_columns)
 
@@ -111,20 +111,20 @@ class FeatureGroupVersion(AbstractApiClass):
             export_file_format (str): File format to export to.
 
         Returns:
-            FeatureGroupExport: The FeatureGroupExport instance
+            FeatureGroupExport: The FeatureGroupExport instance.
         """
         return self.client.export_feature_group_version_to_console(self.feature_group_version, export_file_format)
 
     def get_materialization_logs(self, stdout: bool = False, stderr: bool = False):
         """
-        Returns logs for materialized feature group version.
+        Returns logs for a materialized feature group version.
 
         Args:
-            stdout (bool):  Set True to get info logs
-            stderr (bool):  Set True to get error logs
+            stdout (bool): Set to True to get info logs.
+            stderr (bool): Set to True to get error logs.
 
         Returns:
-            FunctionLogs: A function logs.
+            FunctionLogs: A function logs object.
         """
         return self.client.get_materialization_logs(self.feature_group_version, stdout, stderr)
 
@@ -140,13 +140,13 @@ class FeatureGroupVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Get a specific feature group version.
+        Describe a feature group version.
 
         Args:
-            feature_group_version (str): The unique ID associated with the feature group version.
+            feature_group_version (str): The unique identifier associated with the feature group version.
 
         Returns:
-            FeatureGroupVersion: A feature group version.
+            FeatureGroupVersion: The feature group version.
         """
         return self.client.describe_feature_group_version(self.feature_group_version)
 

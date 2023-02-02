@@ -25,15 +25,15 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param customMetricVersion: The unique identifier of the custom metric version
+   :param customMetricVersion: Unique string identifier for the custom metric version.
    :type customMetricVersion: str
-   :param name: Name assigned to the custom metric
+   :param name: Name assigned to the custom metric.
    :type name: str
-   :param createdAt: When the custom metric was created
+   :param createdAt: ISO-8601 string indicating when the custom metric was created.
    :type createdAt: str
-   :param customMetricFunctionName: The name of the function defined in the source code
+   :param customMetricFunctionName: The name of the function defined in the source code.
    :type customMetricFunctionName: str
-   :param codeSource: Info about the source code of the custom metric
+   :param codeSource: Information about the source code of the custom metric.
    :type codeSource: CodeSource
 
    .. py:method:: __repr__()
@@ -61,7 +61,7 @@ Classes
 
       Describes a given custom metric version
 
-      :param custom_metric_version: The unique identifier to a custom metric version.
+      :param custom_metric_version: A unique string identifier for the custom metric version.
       :type custom_metric_version: str
 
       :returns: An object describing the custom metric version.

@@ -7,8 +7,8 @@ class FeatureGroupExportDownloadUrl(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            downloadUrl (str): The url of the download location
-            expiresAt (str): String representation of datetime when the url expires
+            downloadUrl (str): The URL of the download location.
+            expiresAt (str): String representation of the ISO-8601 datetime when the URL expires.
     """
 
     def __init__(self, client, downloadUrl=None, expiresAt=None):

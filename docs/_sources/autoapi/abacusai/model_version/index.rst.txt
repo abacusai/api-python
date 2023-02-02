@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,39 +35,41 @@ Classes
    :type modelConfig: dict
    :param modelPredictionConfig: The prediction config options for the model.
    :type modelPredictionConfig: dict
-   :param trainingStartedAt: The start time and date of the training process.
+   :param trainingStartedAt: The start time and date of the training process in ISO-8601 format.
    :type trainingStartedAt: str
-   :param trainingCompletedAt: The end time and date of the training process.
+   :param trainingCompletedAt: The end time and date of the training process in ISO-8601 format.
    :type trainingCompletedAt: str
-   :param datasetVersions: Comma separated list of Dataset version IDs used for model training.
-   :type datasetVersions: list of unique string identifiers
-   :param featureGroupVersions: Comma separated list of Feature Group version IDs used for model training.
-   :type featureGroupVersions: list of unique string identifiers
+   :param datasetVersions: A list of Dataset version IDs used for model training.
+   :type datasetVersions: list
+   :param featureGroupVersions: A list of Feature Group version IDs used for model training.
+   :type featureGroupVersions: list
    :param error: Relevant error if the status is FAILED.
    :type error: str
    :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
    :type pendingDeploymentIds: list
    :param failedDeploymentIds: List of failed deployment IDs.
    :type failedDeploymentIds: list
-   :param cpuSize: Cpu size specified for the python model training.
+   :param cpuSize: CPU size specified for the python model training.
    :type cpuSize: str
    :param memory: Memory in GB specified for the python model training.
    :type memory: int
-   :param automlComplete: If true, all algorithms have completed training
+   :param automlComplete: If true, all algorithms have completed training.
    :type automlComplete: bool
-   :param trainingFeatureGroupIds: The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
-   :type trainingFeatureGroupIds: list of unique string identifiers
-   :param deployableAlgorithms: List of deployable algorithms
-   :type deployableAlgorithms: dict
-   :param bestAlgorithm: Best performing algorithm
-   :type bestAlgorithm: dict
-   :param defaultAlgorithm: Default algorithm that the user has selected
-   :type defaultAlgorithm: dict
-   :param featureAnalysisStatus: lifecycle of the feature analysis stage
+   :param trainingFeatureGroupIds: The unique identifiers of the feature groups used as inputs during training to create this ModelVersion.
+   :type trainingFeatureGroupIds: list
+   :param deployableAlgorithms: List of deployable algorithms.
+   :type deployableAlgorithms: list
+   :param bestAlgorithm: Best performing algorithm.
+   :type bestAlgorithm: str
+   :param defaultAlgorithm: Default algorithm that the user has selected.
+   :type defaultAlgorithm: str
+   :param featureAnalysisStatus: Lifecycle of the feature analysis stage.
    :type featureAnalysisStatus: str
-   :param dataClusterInfo: Information about the models for different data clusters
+   :param dataClusterInfo: Information about the models for different data clusters.
    :type dataClusterInfo: dict
-   :param codeSource: If a python model, information on where the source code
+   :param customAlgorithmConfigs: User-defined configs for each of the user-defined custom algorithms.
+   :type customAlgorithmConfigs: dict
+   :param codeSource: If a python model, information on where the source code is located.
    :type codeSource: CodeSource
 
    .. py:method:: __repr__()
@@ -85,9 +87,9 @@ Classes
 
    .. py:method:: describe_train_test_data_split_feature_group_version()
 
-      Get the train and test data split for a trained model by model_version. Only supported for models with custom algorithms.
+      Get the train and test data split for a trained model by model version. This is only supported for models with custom algorithms.
 
-      :param model_version: The unique version ID of the model version
+      :param model_version: The unique version ID of the model version.
       :type model_version: str
 
       :returns: The feature group version containing the training data and folds information.
@@ -96,17 +98,17 @@ Classes
 
    .. py:method:: set_model_objective(metric)
 
-      Sets the best model for all model instances of the model based on the specified metric, and updates the training config to use the specified metric for any future model versions.
+      Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
 
-      :param metric: The metric to use to determine the best model
+      :param metric: The metric to use to determine the best model.
       :type metric: str
 
 
    .. py:method:: delete()
 
-      Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
+      Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.
 
-      :param model_version: The ID of the model version to delete.
+      :param model_version: The unique identifier of the model version to delete.
       :type model_version: str
 
 
@@ -114,9 +116,9 @@ Classes
 
       Exports metric artifact data for a model as a feature group.
 
-      :param table_name: The name of the feature group table to create.
+      :param table_name: Name of the feature group table to create.
       :type table_name: str
-      :param artifact_type: An EvalArtifact enum of which artifact to export.
+      :param artifact_type: EvalArtifact enum specifying which artifact to export.
       :type artifact_type: str
 
       :returns: The created feature group.
@@ -133,9 +135,9 @@ Classes
 
    .. py:method:: describe()
 
-      Retrieves a full description of the specified model version
+      Retrieves a full description of the specified model version.
 
-      :param model_version: The unique version ID of the model version
+      :param model_version: Unique string identifier of the model version.
       :type model_version: str
 
       :returns: A model version.
@@ -144,12 +146,12 @@ Classes
 
    .. py:method:: get_feature_importance_by()
 
-      Gets the feature importance calculated by various methods for the model
+      Gets the feature importance calculated by various methods for the model.
 
-      :param model_version: The version of the model.
+      :param model_version: Unique string identifier for the model version.
       :type model_version: str
 
-      :returns: The feature importances for the model.
+      :returns: Feature importances for the model.
       :rtype: FeatureImportance
 
 
@@ -157,7 +159,7 @@ Classes
 
       Retrieves the data preparation logs during model training.
 
-      :param model_version: The unique version ID of the model version
+      :param model_version: The unique version ID of the model version.
       :type model_version: str
 
       :returns: A list of logs.
@@ -168,21 +170,13 @@ Classes
 
       Returns training logs for the model.
 
-      :param stdout: Set True to get info logs
+      :param stdout: Set True to get info logs.
       :type stdout: bool
-      :param stderr: Set True to get error logs
+      :param stderr: Set True to get error logs.
       :type stderr: bool
 
-      :returns: A function logs.
+      :returns: A function logs object.
       :rtype: FunctionLogs
-
-
-   .. py:method:: ignore_lofo_features(threshold = None, top_n = 0)
-
-      :param threshold:
-      :type threshold: float
-      :param top_n:
-      :type top_n: int
 
 
    .. py:method:: wait_for_training(timeout=None)

@@ -12,7 +12,7 @@ class NestedFeature(AbstractApiClass):
             featureType (str): Feature Type of the Feature
             featureMapping (str): The Feature Mapping of the feature
             dataType (str): Data Type of the Feature
-            dataUse (str): 
+            dataUse (str): The data use of the feature
             sourceTable (str): The source table of the column
             originalName (str): The original name of the column
     """

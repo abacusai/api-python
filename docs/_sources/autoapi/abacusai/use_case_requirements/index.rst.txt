@@ -25,19 +25,19 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param datasetType: The project-specific enum value of the dataset type
+   :param datasetType: The project-specific enum value of the dataset type.
    :type datasetType: str
-   :param name: The user-friendly name of the dataset type
+   :param name: The user-friendly name of the dataset type.
    :type name: str
-   :param description: The description of the dataset type
+   :param description: The description of the dataset type.
    :type description: str
-   :param required: True if the dataset type is required for this project
+   :param required: True if the dataset type is required for this project.
    :type required: bool
-   :param multi:
+   :param multi: If true, multiple versions of the dataset type can be used for training.
    :type multi: bool
-   :param allowedFeatureMappings: A collection of key value pairs with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool}
+   :param allowedFeatureMappings: A collection of key-value pairs, with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool }.
    :type allowedFeatureMappings: dict
-   :param allowedNestedFeatureMappings: A collection of key value pairs with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool}
+   :param allowedNestedFeatureMappings: A collection of key-value pairs, with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool }.
    :type allowedNestedFeatureMappings: dict
 
    .. py:method:: __repr__()

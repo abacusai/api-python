@@ -91,6 +91,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_lineage</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
@@ -115,6 +116,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
@@ -134,6 +136,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a></li>
@@ -193,7 +196,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchPrediction</span></code></a></p></td>
-<td><p>Batch predictions</p></td>
+<td><p>Make batch predictions.</p></td>
 </tr>
 </tbody>
 </table>
@@ -201,36 +204,36 @@
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.batch_prediction.</span></span><span class="sig-name descname"><span class="pre">BatchPrediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batchPredictionId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileConnectorOutputLocation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globalPredictionArgs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseConnectorId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseOutputConfiguration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileOutputFormat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectorType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legacyInputLocation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupTableName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">summaryFeatureGroupTableName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvInputPrefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvPredictionPrefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvExplanationsPrefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputIncludesMetadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resultInputColumns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelMonitorId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelVersion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batchInputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latestBatchPredictionVersion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshSchedules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
-<p>Batch predictions</p>
+<p>Make batch predictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>batchPredictionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction request</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – When the batch prediction was created</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name given to the batch prediction object</p></li>
-<li><p><strong>deploymentId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment used to make the predictions</p></li>
-<li><p><strong>fileConnectorOutputLocation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Contains information about where the batch predictions are written to</p></li>
-<li><p><strong>globalPredictionArgs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Argument(s) passed to every prediction call</p></li>
-<li><p><strong>databaseConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The database connector to write the results to</p></li>
-<li><p><strong>databaseOutputConfiguration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Contains information about where the batch predictions are written to</p></li>
-<li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, explanations for each prediction were created</p></li>
-<li><p><strong>fileOutputFormat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The format of the batch prediction output (CSV or JSON)</p></li>
-<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR</p></li>
-<li><p><strong>legacyInputLocation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The location of the input data</p></li>
-<li><p><strong>featureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The table name of the Batch Prediction feature group</p></li>
-<li><p><strong>summaryFeatureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The table name of the metrics summary feature group output by Batch Prediction</p></li>
-<li><p><strong>csvInputPrefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the input columns, only applies when output format is CSV</p></li>
-<li><p><strong>csvPredictionPrefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the prediction columns, only applies when output format is CSV</p></li>
-<li><p><strong>csvExplanationsPrefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the explanation columns, only applies when output format is CSV</p></li>
-<li><p><strong>outputIncludesMetadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, output will contain columns including prediction start time, batch prediction version, and model version</p></li>
-<li><p><strong>resultInputColumns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>string</em>) – If present, will limit result files or feature groups to only include columns present in this list</p></li>
-<li><p><strong>modelMonitorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The model instance used in the deployement for the batch prediction</p></li>
+<li><p><strong>batchPredictionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction request.</p></li>
+<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – When the batch prediction was created, in ISO-8601 format.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name given to the batch prediction object.</p></li>
+<li><p><strong>deploymentId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment used to make the predictions.</p></li>
+<li><p><strong>fileConnectorOutputLocation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Contains information about where the batch predictions are written to.</p></li>
+<li><p><strong>globalPredictionArgs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Argument(s) passed to every prediction call.</p></li>
+<li><p><strong>databaseConnectorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The database connector to write the results to.</p></li>
+<li><p><strong>databaseOutputConfiguration</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Contains information about where the batch predictions are written to.</p></li>
+<li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, explanations for each prediction will be created.</p></li>
+<li><p><strong>fileOutputFormat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The format of the batch prediction output (CSV or JSON).</p></li>
+<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR.</p></li>
+<li><p><strong>legacyInputLocation</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The location of the input data.</p></li>
+<li><p><strong>featureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The table name of the Batch Prediction feature group.</p></li>
+<li><p><strong>summaryFeatureGroupTableName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The table name of the metrics summary feature group output by Batch Prediction.</p></li>
+<li><p><strong>csvInputPrefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the input columns, only applies when output format is CSV.</p></li>
+<li><p><strong>csvPredictionPrefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the prediction columns, only applies when output format is CSV.</p></li>
+<li><p><strong>csvExplanationsPrefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the explanation columns, only applies when output format is CSV.</p></li>
+<li><p><strong>outputIncludesMetadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, output will contain columns including prediction start time, batch prediction version, and model version.</p></li>
+<li><p><strong>resultInputColumns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – If present, will limit result files or feature groups to only include columns present in this list.</p></li>
+<li><p><strong>modelMonitorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The model monitor for this batch prediction.</p></li>
+<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The model instance used in the deployment for the batch prediction.</p></li>
 <li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The algorithm that is currently deployed.</p></li>
-<li><p><strong>batchInputs</strong> (<a class="reference internal" href="../prediction_input/index.html#abacusai.prediction_input.PredictionInput" title="abacusai.prediction_input.PredictionInput"><em>PredictionInput</em></a>) – Inputs to the batch prediction</p></li>
-<li><p><strong>latestBatchPredictionVersion</strong> (<a class="reference internal" href="../batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion" title="abacusai.batch_prediction_version.BatchPredictionVersion"><em>BatchPredictionVersion</em></a>) – The latest batch prediction version</p></li>
-<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of refresh schedules that dictate the next time the batch prediction will be run</p></li>
+<li><p><strong>batchInputs</strong> (<a class="reference internal" href="../prediction_input/index.html#abacusai.prediction_input.PredictionInput" title="abacusai.prediction_input.PredictionInput"><em>PredictionInput</em></a>) – Inputs to the batch prediction.</p></li>
+<li><p><strong>latestBatchPredictionVersion</strong> (<a class="reference internal" href="../batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion" title="abacusai.batch_prediction_version.BatchPredictionVersion"><em>BatchPredictionVersion</em></a>) – The latest batch prediction version.</p></li>
+<li><p><strong>refreshSchedules</strong> (<a class="reference internal" href="../refresh_schedule/index.html#abacusai.refresh_schedule.RefreshSchedule" title="abacusai.refresh_schedule.RefreshSchedule"><em>RefreshSchedule</em></a>) – List of refresh schedules that dictate the next time the batch prediction will be run.</p></li>
 </ul>
 </dd>
 </dl>
@@ -257,10 +260,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.start">
 <span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.start" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a new batch prediction version job for a given batch prediction job description</p>
+<dd><p>Creates a new batch prediction version job for a given batch prediction job description.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction to create a new version of</p>
+<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction to create a new version of.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The batch prediction version started by this method call.</p>
@@ -288,10 +291,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.describe">
 <span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.describe" title="Permalink to this definition"></a></dt>
-<dd><p>Describes the batch prediction</p>
+<dd><p>Describe the batch prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the batch prediction.</p>
+<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier associated with the batch prediction.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The batch prediction description.</p>
@@ -309,12 +312,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of versions to list</p></li>
-<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The version to start after</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of versions to list.</p></li>
+<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Version to start after.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of batch prediction versions.</p>
+<dd class="field-even"><p>List of batch prediction versions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../batch_prediction_version/index.html#abacusai.batch_prediction_version.BatchPredictionVersion" title="abacusai.batch_prediction_version.BatchPredictionVersion">BatchPredictionVersion</a></p>
@@ -324,24 +327,25 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_prediction_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_input_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_prediction_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_explanations_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_includes_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_input_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.update" title="Permalink to this definition"></a></dt>
-<dd><p>Updates a batch prediction job description</p>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_prediction_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_input_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_prediction_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_explanations_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_includes_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_input_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.update" title="Permalink to this definition"></a></dt>
+<dd><p>Update a batch prediction job description.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the deployment.</p></li>
 <li><p><strong>global_prediction_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Argument(s) to pass on every prediction call.</p></li>
-<li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, will provide SHAP Explanations for each prediction, if supported by the use case.</p></li>
+<li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If True, SHAP explanations for each prediction will be provided, if supported by the use case.</p></li>
 <li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If specified, sets the format of the batch prediction output (CSV or JSON).</p></li>
-<li><p><strong>csv_input_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the input columns, only applies when output format is CSV</p></li>
-<li><p><strong>csv_prediction_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the prediction columns, only applies when output format is CSV</p></li>
-<li><p><strong>csv_explanations_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A prefix to prepend to the explanation columns, only applies when output format is CSV</p></li>
-<li><p><strong>output_includes_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, output will contain columns including prediction start time, batch prediction version, and model version</p></li>
-<li><p><strong>result_input_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – If present, will limit result files or feature groups to only include columns present in this list</p></li>
+<li><p><strong>csv_input_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prefix to prepend to the input columns, only applies when output format is CSV.</p></li>
+<li><p><strong>csv_prediction_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prefix to prepend to the prediction columns, only applies when output format is CSV.</p></li>
+<li><p><strong>csv_explanations_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prefix to prepend to the explanation columns, only applies when output format is CSV.</p></li>
+<li><p><strong>output_includes_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If True, output will contain columns including prediction start time, batch prediction version, and model version.</p></li>
+<li><p><strong>result_input_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – If present, will limit result files or feature groups to only include columns present in this list.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If present, will rename the batch prediction.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The batch prediction description.</p>
+<dd class="field-even"><p>The batch prediction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -356,8 +360,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If specified, sets the format of the batch prediction output (CSV or JSON).</p></li>
-<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.</p></li>
+<li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The format of the batch prediction output (CSV or JSON). If not specified, the default format will be used.</p></li>
+<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The location to write the prediction results. If not specified, results will be stored in Abacus.AI.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -376,12 +380,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of an Database Connection to write predictions to.</p></li>
-<li><p><strong>database_output_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A key-value pair of columns/values to write to the database connector</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier of an Database Connection to write predictions to.</p></li>
+<li><p><strong>database_output_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Key-value pair of columns/values to write to the database connector.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The batch prediction description.</p>
+<dd class="field-even"><p>Description of the batch prediction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -392,13 +396,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.set_feature_group_output">
 <span class="sig-name descname"><span class="pre">set_feature_group_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.set_feature_group_output" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a feature group and sets it to be the batch prediction output</p>
+<dd><p>Creates a feature group and sets it as the batch prediction output.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the feature group table to create</p>
+<dd class="field-odd"><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the feature group table to create.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The batch prediction after the output has been applied</p>
+<dd class="field-even"><p>Batch prediction after the output has been applied.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -409,10 +413,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.set_output_to_console">
 <span class="sig-name descname"><span class="pre">set_output_to_console</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.set_output_to_console" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the batch prediction output to the console, clearing both the file connector and database connector config</p>
+<dd><p>Sets the batch prediction output to the console, clearing both the file connector and database connector configurations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction</p>
+<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The batch prediction description.</p>
@@ -426,16 +430,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.set_dataset">
 <span class="sig-name descname"><span class="pre">set_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.set_dataset" title="Permalink to this definition"></a></dt>
-<dd><p>[Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects</p>
+<dd><p>[Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The dataset type to set</p></li>
-<li><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The dataset to set</p></li>
+<li><p><strong>dataset_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Enum string of the dataset type to set.</p></li>
+<li><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the dataset to set.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The batch prediction description.</p>
+<dd class="field-even"><p>Description of the batch prediction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -450,12 +454,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The feature group type to set. The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.</p></li>
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The feature group to set as input to the batch prediction</p></li>
+<li><p><strong>feature_group_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Enum string representing the feature group type to set. The type is based on the use case under which the feature group is being created (e.g. Catalog Attributes for personalized recommendation use case).</p></li>
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the feature group to set as input to the batch prediction.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The batch prediction description.</p>
+<dd class="field-even"><p>Description of the batch prediction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -466,13 +470,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.set_dataset_remap">
 <span class="sig-name descname"><span class="pre">set_dataset_remap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_id_remap</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.set_dataset_remap" title="Permalink to this definition"></a></dt>
-<dd><p>For the purpose of this batch prediction, will swap out datasets in the input feature groups</p>
+<dd><p>For the purpose of this batch prediction, will swap out datasets in the training feature groups</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset_id_remap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Key/value pairs of dataset_ids to replace during batch predictions</p>
+<dd class="field-odd"><p><strong>dataset_id_remap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Key/value pairs of dataset ids to be replaced during the batch prediction.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Batch Prediction object</p>
+<dd class="field-even"><p>Batch prediction object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -483,10 +487,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.delete">
 <span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.delete" title="Permalink to this definition"></a></dt>
-<dd><p>Deletes a batch prediction and associated data such as associated monitors.</p>
+<dd><p>Deletes a batch prediction and associated data, such as associated monitors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the batch prediction</p>
+<dd class="field-odd"><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier of the batch prediction.</p>
 </dd>
 </dl>
 </dd></dl>

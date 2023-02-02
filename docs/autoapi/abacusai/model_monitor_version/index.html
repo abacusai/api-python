@@ -88,6 +88,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_lineage</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
@@ -115,6 +116,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
@@ -134,6 +136,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a></li>
@@ -211,17 +214,17 @@
 <li><p><strong>modelMonitorId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A reference to the model monitor this version belongs to.</p></li>
 <li><p><strong>monitoringStartedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The start time and date of the monitoring process.</p></li>
 <li><p><strong>monitoringCompletedAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The end time and date of the monitoring process.</p></li>
-<li><p><strong>trainingFeatureGroupVersion</strong> (<em>unique string identifiers</em>) – Feature group version IDs that this refresh pipeline run is monitoring.</p></li>
-<li><p><strong>predictionFeatureGroupVersion</strong> (<em>unique string identifiers</em>) – Feature group version IDs that this refresh pipeline run is monitoring.</p></li>
+<li><p><strong>trainingFeatureGroupVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Feature group version IDs that this refresh pipeline run is monitoring.</p></li>
+<li><p><strong>predictionFeatureGroupVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Feature group version IDs that this refresh pipeline run is monitoring.</p></li>
 <li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Relevant error if the status is FAILED.</p></li>
 <li><p><strong>pendingDeploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of deployment IDs where deployment is pending.</p></li>
 <li><p><strong>failedDeploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of failed deployment IDs.</p></li>
-<li><p><strong>metricConfigs</strong> (<em>json field</em>) – List of metric configs for the model monitor instance.</p></li>
+<li><p><strong>metricConfigs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em>]</em>) – List of metric configs for the model monitor instance.</p></li>
 <li><p><strong>featureGroupMonitorConfigs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Configurations for feature group monitor</p></li>
-<li><p><strong>metricTypes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – List of metric types.</p></li>
-<li><p><strong>modelVersion</strong> (<em>unique string identifiers</em>) – Model version IDs that this refresh pipeline run is monitoring.</p></li>
-<li><p><strong>batchPredictionVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>edaConfigs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – </p></li>
+<li><p><strong>metricTypes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of metric types.</p></li>
+<li><p><strong>modelVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Model version IDs that this refresh pipeline run is monitoring.</p></li>
+<li><p><strong>batchPredictionVersion</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The batch prediction version this model monitor is monitoring</p></li>
+<li><p><strong>edaConfigs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The list of eda configs for the version</p></li>
 </ul>
 </dd>
 </dl>
@@ -251,10 +254,10 @@
 <dd><p>Gets the label and prediction drifts for a model monitor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a model monitor version created under the project.</p>
+<dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for a model monitor version created under the project.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An object describing training and prediction output label and prediction distributions.</p>
+<dd class="field-even"><p>Object describing training and prediction output label and prediction distributions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../drift_distributions/index.html#abacusai.drift_distributions.DriftDistributions" title="abacusai.drift_distributions.DriftDistributions">DriftDistributions</a></p>
@@ -279,10 +282,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model_monitor_version.ModelMonitorVersion.describe">
 <span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor_version.ModelMonitorVersion.describe" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves a full description of the specified model monitor version</p>
+<dd><p>Retrieves a full description of the specified model monitor version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique version ID of the model monitor version</p>
+<dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique version ID of the model monitor version.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A model monitor version.</p>
@@ -299,7 +302,7 @@
 <dd><p>Deletes the specified model monitor version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the model monitor version to delete.</p>
+<dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the model monitor version to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -311,8 +314,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>metric_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The metric type to get data for.</p></li>
-<li><p><strong>actual_values_to_detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – </p></li>
+<li><p><strong>metric_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of metric to get data for.</p></li>
+<li><p><strong>actual_values_to_detail</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – The actual values to detail.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -327,13 +330,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model_monitor_version.ModelMonitorVersion.list_monitor_alert_versions_for_monitor_version">
 <span class="sig-name descname"><span class="pre">list_monitor_alert_versions_for_monitor_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_monitor_version.ModelMonitorVersion.list_monitor_alert_versions_for_monitor_version" title="Permalink to this definition"></a></dt>
-<dd><p>Retrieves the list of monitor alerts version for a specified monitor instance</p>
+<dd><p>Retrieves the list of monitor alert versions for a specified monitor instance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the model monitor.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An array of monitor alerts.</p>
+<dd class="field-even"><p>A list of monitor alert versions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../monitor_alert_version/index.html#abacusai.monitor_alert_version.MonitorAlertVersion" title="abacusai.monitor_alert_version.MonitorAlertVersion">MonitorAlertVersion</a></p>

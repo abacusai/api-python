@@ -3,20 +3,20 @@ from .return_class import AbstractApiClass
 
 class PointInTimeFeature(AbstractApiClass):
     """
-        A point in time feature description
+        A point-in-time feature description
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            historyTableName (str): The table name of the history table. If not specified, we use the current table to do a self join.
-            aggregationKeys (list of string): List of keys to use for join the historical table and performing the window aggregation.
-            timestampKey (str): Name of feature which contains the timestamp value for the point in time feature
+            historyTableName (str): The name of the history table. If not specified, the current table is used for a self-join.
+            aggregationKeys (list[str]): List of keys to use for joining the historical table and performing the window aggregation.
+            timestampKey (str): Name of feature which contains the timestamp value for the point-in-time feature.
             historicalTimestampKey (str): Name of feature which contains the historical timestamp.
-            lookbackWindowSeconds (float): If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
-            lookbackWindowLagSeconds (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-            lookbackCount (int): If window is specified in terms of count, the start position of the window (0 is the current row)
-            lookbackUntilPosition (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
-            expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
-            groupName (str): The group name this point in time feature belongs to
+            lookbackWindowSeconds (float): If window is specified in terms of time, the number of seconds in the past from the current time for the start of the window.
+            lookbackWindowLagSeconds (float): Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed. If it is negative, we are looking at the "future" rows in the history table.
+            lookbackCount (int): If window is specified in terms of count, the start position of the window (0 is the current row).
+            lookbackUntilPosition (int): Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+            expression (str): SQL aggregate expression which can convert a sequence of rows into a scalar value.
+            groupName (str): The group name this point-in-time feature belongs to.
     """
 
     def __init__(self, client, historyTableName=None, aggregationKeys=None, timestampKey=None, historicalTimestampKey=None, lookbackWindowSeconds=None, lookbackWindowLagSeconds=None, lookbackCount=None, lookbackUntilPosition=None, expression=None, groupName=None):

@@ -21,29 +21,29 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   A point in time feature description
+   A point-in-time feature description
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param historyTableName: The table name of the history table. If not specified, we use the current table to do a self join.
+   :param historyTableName: The name of the history table. If not specified, the current table is used for a self-join.
    :type historyTableName: str
-   :param aggregationKeys: List of keys to use for join the historical table and performing the window aggregation.
-   :type aggregationKeys: list of string
-   :param timestampKey: Name of feature which contains the timestamp value for the point in time feature
+   :param aggregationKeys: List of keys to use for joining the historical table and performing the window aggregation.
+   :type aggregationKeys: list[str]
+   :param timestampKey: Name of feature which contains the timestamp value for the point-in-time feature.
    :type timestampKey: str
    :param historicalTimestampKey: Name of feature which contains the historical timestamp.
    :type historicalTimestampKey: str
-   :param lookbackWindowSeconds: If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
+   :param lookbackWindowSeconds: If window is specified in terms of time, the number of seconds in the past from the current time for the start of the window.
    :type lookbackWindowSeconds: float
-   :param lookbackWindowLagSeconds: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
+   :param lookbackWindowLagSeconds: Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed. If it is negative, we are looking at the "future" rows in the history table.
    :type lookbackWindowLagSeconds: float
-   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row)
+   :param lookbackCount: If window is specified in terms of count, the start position of the window (0 is the current row).
    :type lookbackCount: int
-   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+   :param lookbackUntilPosition: Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
    :type lookbackUntilPosition: int
-   :param expression: SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+   :param expression: SQL aggregate expression which can convert a sequence of rows into a scalar value.
    :type expression: str
-   :param groupName: The group name this point in time feature belongs to
+   :param groupName: The group name this point-in-time feature belongs to.
    :type groupName: str
 
    .. py:method:: __repr__()

@@ -3,23 +3,23 @@ from .return_class import AbstractApiClass
 
 class RefreshPolicy(AbstractApiClass):
     """
-        A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.
+        A Refresh Policy describes the frequency at which one or more datasets/models/deployments/batch_predictions can be updated.
 
         Args:
             client (ApiClient): An authenticated API Client instance
             refreshPolicyId (str): The unique identifier for the refresh policy
             name (str): The user-friendly name for the refresh policy
-            cron (str): A cron-style string that describes the when this refresh policy is to be executed in UTC
+            cron (str): A cron-style string that describes when this refresh policy is to be executed in UTC
             nextRunTime (str): The next UTC time that this refresh policy will be executed
             createdAt (str): The time when the refresh policy was created
             refreshType (str): The type of refresh policy to be run
             projectId (str): The unique identifier of a project that this refresh policy applies to
-            datasetIds (list of unique identifiers of type 'string'): Comma separated list of Dataset IDs that this refresh policy applies to
-            modelIds (list of unique identifiers of type 'string'): Comma separated list of Model IDs that this refresh policy applies to
-            deploymentIds (list of unique identifiers of type 'string'): Comma separated list of Deployment IDs that this refresh policy applies to
-            predictionMetricIds (list of unique identifiers of type 'string'): Comma separated list of Prediction Metric IDs that this refresh policy applies to
-            modelMonitorIds (list of unique identifiers of type 'string'): Comma separated list of Model Monitor IDs that this refresh policy applies to
-            paused (bool): (Boolean): True if the refresh policy is paused
+            datasetIds (list[str]): Comma-separated list of Dataset IDs that this refresh policy applies to
+            modelIds (list[str]): Comma-separated list of Model IDs that this refresh policy applies to
+            deploymentIds (list[str]): Comma-separated list of Deployment IDs that this refresh policy applies to
+            predictionMetricIds (list[str]): Comma-separated list of Prediction Metric IDs that this refresh policy applies to
+            modelMonitorIds (list[str]): Comma-separated list of Model Monitor IDs that this refresh policy applies to
+            paused (bool): True if the refresh policy is paused
     """
 
     def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, paused=None):
@@ -52,10 +52,10 @@ class RefreshPolicy(AbstractApiClass):
 
     def delete(self):
         """
-        Delete a refresh policy
+        Delete a refresh policy.
 
         Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
+            refresh_policy_id (str): Unique string identifier associated with the refresh policy to delete.
         """
         return self.client.delete_refresh_policy(self.refresh_policy_id)
 
@@ -74,10 +74,10 @@ class RefreshPolicy(AbstractApiClass):
         Retrieve a single refresh policy
 
         Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
+            refresh_policy_id (str): The unique ID associated with this refresh policy.
 
         Returns:
-            RefreshPolicy: A refresh policy object
+            RefreshPolicy: An object representing the refresh policy.
         """
         return self.client.describe_refresh_policy(self.refresh_policy_id)
 
@@ -86,10 +86,10 @@ class RefreshPolicy(AbstractApiClass):
         List the the times that the refresh policy has been run
 
         Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
+            refresh_policy_id (str): Unique identifier associated with the refresh policy.
 
         Returns:
-            RefreshPipelineRun: A list of refresh pipeline runs for the given refresh policy id
+            RefreshPipelineRun: List of refresh pipeline runs for the given refresh policy ID.
         """
         return self.client.list_refresh_pipeline_runs(self.refresh_policy_id)
 
@@ -98,7 +98,7 @@ class RefreshPolicy(AbstractApiClass):
         Pauses a refresh policy
 
         Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
+            refresh_policy_id (str): Unique identifier associated with the refresh policy to be paused.
         """
         return self.client.pause_refresh_policy(self.refresh_policy_id)
 
@@ -107,7 +107,7 @@ class RefreshPolicy(AbstractApiClass):
         Resumes a refresh policy
 
         Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
+            refresh_policy_id (str): The unique ID associated with this refresh policy.
         """
         return self.client.resume_refresh_policy(self.refresh_policy_id)
 
@@ -116,19 +116,19 @@ class RefreshPolicy(AbstractApiClass):
         Force a run of the refresh policy.
 
         Args:
-            refresh_policy_id (str): The unique ID associated with this refresh policy
+            refresh_policy_id (str): Unique string identifier associated with the refresh policy to be run.
         """
         return self.client.run_refresh_policy(self.refresh_policy_id)
 
     def update(self, name: str = None, cron: str = None):
         """
-        Update the name or cron string of a  refresh policy
+        Update the name or cron string of a refresh policy
 
         Args:
-            name (str): Optional, specify to update the name of the refresh policy
-            cron (str): Optional, specify to update the cron string describing the schedule from the refresh policy
+            name (str): Name of the refresh policy to be updated.
+            cron (str): Cron string describing the schedule from the refresh policy to be updated.
 
         Returns:
-            RefreshPolicy: The updated refresh policy
+            RefreshPolicy: Updated refresh policy.
         """
         return self.client.update_refresh_policy(self.refresh_policy_id, name, cron)

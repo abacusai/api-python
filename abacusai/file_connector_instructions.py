@@ -3,13 +3,13 @@ from .return_class import AbstractApiClass
 
 class FileConnectorInstructions(AbstractApiClass):
     """
-        An object with full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
+        An object with a full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            verified (bool): `true` if the bucket has passed verification
-            writePermission (bool): `true` if Abacus.AI has permission to write to this bucket
-            authOptions (list of json objects): A list of options for giving Abacus.AI access to this bucket
+            verified (bool): `True` if the bucket has passed verification
+            writePermission (bool): `True` if Abacus.AI has permission to write to this bucket
+            authOptions (list[dict]): A list of options for giving Abacus.AI access to this bucket
     """
 
     def __init__(self, client, verified=None, writePermission=None, authOptions=None):

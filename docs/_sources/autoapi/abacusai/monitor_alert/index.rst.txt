@@ -34,7 +34,7 @@ Classes
    :param projectId: The project this alert belongs to.
    :type projectId: str
    :param modelMonitorId: The monitor id that this alert is associated with
-   :type modelMonitorId: unique string identifiers
+   :type modelMonitorId: str
    :param conditionConfig: The condition configuration for this alert.
    :type conditionConfig: dict
    :param actionConfig: The action configuration for this alert.
@@ -61,14 +61,16 @@ Classes
 
    .. py:method:: update(alert_name = None, condition_config = None, action_config = None)
 
-      :param alert_name:
+      Update monitor alert
+
+      :param alert_name: Name of the alert.
       :type alert_name: str
-      :param condition_config:
+      :param condition_config: Condition to run the actions for the alert.
       :type condition_config: dict
-      :param action_config:
+      :param action_config: Configuration for the action of the alert.
       :type action_config: dict
 
-      :returns: None
+      :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
 
 
@@ -84,10 +86,10 @@ Classes
 
       Describes a given monitor alert id
 
-      :param monitor_alert_id: The unique identifier to a monitor alert
+      :param monitor_alert_id: Unique identifier of the monitor alert.
       :type monitor_alert_id: str
 
-      :returns: An object describing the monitor alert
+      :returns: Object containing information about the monitor alert.
       :rtype: MonitorAlert
 
 
@@ -95,16 +97,18 @@ Classes
 
       Reruns a given monitor alert from latest monitor instance
 
-      :param monitor_alert_id: The unique identifier to a monitor alert
+      :param monitor_alert_id: Unique identifier of a monitor alert.
       :type monitor_alert_id: str
 
-      :returns: An object describing the monitor alert
+      :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
 
 
    .. py:method:: delete()
 
-      :param monitor_alert_id:
+      Delets a monitor alert
+
+      :param monitor_alert_id: The unique string identifier of the alert to delete.
       :type monitor_alert_id: str
 
 

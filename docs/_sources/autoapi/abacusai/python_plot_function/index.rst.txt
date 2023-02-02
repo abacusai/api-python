@@ -1,0 +1,60 @@
+:py:mod:`abacusai.python_plot_function`
+=======================================
+
+.. py:module:: abacusai.python_plot_function
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.python_plot_function.PythonPlotFunction
+
+
+
+
+.. py:class:: PythonPlotFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, plotName=None, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Create a Plot for a Dashboard
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param notebookId: Unique string identifier of the notebook used to spin up the notebook upon creation.
+   :type notebookId: str
+   :param name: The name used to identify the algorithm. Only uppercase letters, numbers, and underscores are allowed.
+   :type name: str
+   :param createdAt: Date and time when the Python function was created, in ISO-8601 format.
+   :type createdAt: str
+   :param functionVariableMappings: The mappings for function parameters' names.
+   :type functionVariableMappings: dict
+   :param functionName: The name of the Python function to be used.
+   :type functionName: str
+   :param pythonFunctionId: Unique string identifier of the Python function.
+   :type pythonFunctionId: str
+   :param functionType: The type of the Python function.
+   :type functionType: str
+   :param plotName: Name of the plot.
+   :type plotName: str
+   :param codeSource: Info about the source code of the Python function.
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

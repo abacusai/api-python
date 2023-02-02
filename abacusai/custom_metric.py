@@ -4,16 +4,16 @@ from .return_class import AbstractApiClass
 
 class CustomMetric(AbstractApiClass):
     """
-        Custom metric
+        Custom metric.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            customMetricId (str): The unique identifier of the custom metric
-            name (str): Name assigned to the custom metric
-            createdAt (str): When the custom metric was created
-            problemType (str): The problem type that this custom metric would be applicable to. e.g. - regression.
-            notebookId (str): The unique identifier of the notebook used to create/edit the custom metric
-            latestCustomMetricVersion (CustomMetricVersion): The latest version of the custom metric
+            customMetricId (str): Unique string identifier of the custom metric.
+            name (str): Name assigned to the custom metric.
+            createdAt (str): Date and time when the custom metric was created (ISO 8601 format).
+            problemType (str): Problem type that this custom metric is applicable to (e.g. regression).
+            notebookId (str): Unique string identifier of the notebook used to create/edit the custom metric.
+            latestCustomMetricVersion (CustomMetricVersion): Latest version of the custom metric.
     """
 
     def __init__(self, client, customMetricId=None, name=None, createdAt=None, problemType=None, notebookId=None, latestCustomMetricVersion={}):

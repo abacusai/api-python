@@ -61,7 +61,7 @@ Classes
 
       Delete an existing feature group template.
 
-      :param feature_group_template_id: The unique ID associated with the feature group template.
+      :param feature_group_template_id: Unique string identifier associated with the feature group template.
       :type feature_group_template_id: str
 
 
@@ -77,7 +77,7 @@ Classes
 
       Describe a Feature Group Template.
 
-      :param feature_group_template_id: The unique ID of a feature group template.
+      :param feature_group_template_id: The unique identifier of a feature group template.
       :type feature_group_template_id: str
 
       :returns: The feature group template object.
@@ -88,13 +88,13 @@ Classes
 
       Update a feature group template.
 
-      :param template_sql: If provided, the new value to use for the template sql.
+      :param template_sql: If provided, the new value to use for the template SQL.
       :type template_sql: str
       :param template_variables: If provided, the new value to use for the template variables.
       :type template_variables: list
-      :param description: A description of this feature group template
+      :param description: Description of this feature group template.
       :type description: str
-      :param name: The user-friendly of for this feature group template.
+      :param name: User-friendly name for this feature group template.
       :type name: str
 
       :returns: The updated feature group template.
@@ -105,16 +105,16 @@ Classes
 
       Resolve template sql using template variables and template bindings.
 
-      :param template_bindings: Values that overide the template variable values specified by the template.
+      :param template_bindings: Values to override the template variable values specified by the template.
       :type template_bindings: list
-      :param template_sql: If specified, use this as the template sql instead of the feature group template's sql.
+      :param template_sql: If specified, use this as the template SQL instead of the feature group template's SQL.
       :type template_sql: str
       :param template_variables: Template variables to use. If a template is provided, this overrides the template's template variables.
       :type template_variables: list
-      :param should_validate:
+      :param should_validate: If true, validates the resolved SQL.
       :type should_validate: bool
 
-      :returns: None
+      :returns: The resolved template
       :rtype: ResolvedFeatureGroupTemplate
 
 

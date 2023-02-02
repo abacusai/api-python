@@ -9,28 +9,28 @@ class Deployment(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            deploymentId (str): The unique identifier for the deployment.
-            name (str): The user-friendly name for the deployment.
+            deploymentId (str): A unique identifier for the deployment.
+            name (str): A user-friendly name for the deployment.
             status (str): The status of the deployment.
-            description (str): A description of this deployment.
-            deployedAt (str): When the deployment last became active.
-            createdAt (str): When the deployment was created.
-            projectId (str): The unique identifier of the project this deployment belongs to.
+            description (str): A description of the deployment.
+            deployedAt (str): The date and time when the deployment became active, in ISO-8601 format.
+            createdAt (str): The date and time when the deployment was created, in ISO-8601 format.
+            projectId (str): A unique identifier for the project this deployment belongs to.
             modelId (str): The model that is currently deployed.
             modelVersion (str): The model version ID that is currently deployed.
             featureGroupId (str): The feature group that is currently deployed.
             featureGroupVersion (str): The feature group version ID that is currently deployed.
-            callsPerSecond (int): The number of calls per second the deployment could handle.
-            autoDeploy (bool): Flag marking the deployment eligible for auto deployments whenever any model in the project finishes training.
-            algoName (str): The name of the algorithm that is currently deployed
-            regions (list of strings): List of regions that a deployment has been deployed to
-            error (str): Relevant error if the status is FAILED
-            batchStreamingUpdates (bool): Flag marking the feature group deployment as having enabled a background process which caches streamed in rows for quicker lookup
+            callsPerSecond (int): The number of calls per second the deployment can handle.
+            autoDeploy (bool): A flag marking the deployment as eligible for auto deployments whenever any model in the project finishes training.
+            algoName (str): The name of the algorithm that is currently deployed.
+            regions (list): A list of regions that the deployment has been deployed to.
+            error (str): The relevant error, if the status is FAILED.
+            batchStreamingUpdates (bool): A flag marking the feature group deployment as having enabled a background process which caches streamed-in rows for quicker lookup.
             algorithm (str): The algorithm that is currently deployed.
             pendingModelVersion (dict): The model that the deployment is switching to.
-            modelDeploymentConfig (dict): The config for what model to be deployed
-            refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the deployment will be updated to the latest model version
-            featureGroupExportConfig (FeatureGroupExportConfig): Export config (file connector or database connector information) for feature group deployment exports
+            modelDeploymentConfig (dict): The config for which model to be deployed.
+            refreshSchedules (RefreshSchedule): A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
+            featureGroupExportConfig (FeatureGroupExportConfig): The export config (file connector or database connector information) for feature group deployment exports.
     """
 
     def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, refreshSchedules={}, featureGroupExportConfig={}):
@@ -74,27 +74,27 @@ class Deployment(AbstractApiClass):
 
     def create_webhook(self, endpoint: str, webhook_event_type: str, payload_template: dict = None):
         """
-        Create a webhook attached to a given deployment id.
+        Create a webhook attached to a given deployment ID.
 
         Args:
             endpoint (str): URI that the webhook will send HTTP POST requests to.
-            webhook_event_type (str): One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', 'DEPLOYMENT_FAILED'
+            webhook_event_type (str): One of 'DEPLOYMENT_START', 'DEPLOYMENT_SUCCESS', or 'DEPLOYMENT_FAILED'.
             payload_template (dict): Template for the body of the HTTP POST requests. Defaults to {}.
 
         Returns:
-            Webhook: The Webhook attached to the deployment
+            Webhook: The webhook attached to the deployment.
         """
         return self.client.create_deployment_webhook(self.deployment_id, endpoint, webhook_event_type, payload_template)
 
     def list_webhooks(self):
         """
-        List and describe all the webhooks attached to a given deployment ID.
+        List all the webhooks attached to a given deployment.
 
         Args:
-            deployment_id (str): ID of target deployment.
+            deployment_id (str): Unique identifier of the target deployment.
 
         Returns:
-            Webhook: The webhooks attached to the given deployment id.
+            Webhook: List of the webhooks attached to the given deployment ID.
         """
         return self.client.list_deployment_webhooks(self.deployment_id)
 
@@ -113,10 +113,10 @@ class Deployment(AbstractApiClass):
         Retrieves a full description of the specified deployment.
 
         Args:
-            deployment_id (str): The unique ID associated with the deployment.
+            deployment_id (str): Unique string identifier associated with the deployment.
 
         Returns:
-            Deployment: The description of the deployment.
+            Deployment: Description of the deployment.
         """
         return self.client.describe_deployment(self.deployment_id)
 
@@ -125,13 +125,13 @@ class Deployment(AbstractApiClass):
         Updates a deployment's description.
 
         Args:
-            description (str): The new deployment description.
+            description (str): The new description for the deployment.
         """
         return self.client.update_deployment(self.deployment_id, description)
 
     def rename(self, name: str):
         """
-        Updates a deployment's name and/or description.
+        Updates a deployment's name
 
         Args:
             name (str): The new deployment name.
@@ -140,36 +140,33 @@ class Deployment(AbstractApiClass):
 
     def set_auto(self, enable: bool = None):
         """
-        Enable/Disable auto deployment for the specified deployment.
+        Enable or disable auto deployment for the specified deployment.
 
-        When a model is scheduled to retrain, deployments with this enabled will be marked to automatically promote the new model
-        version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version
-        will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not,
-        it will be marked as a failed model version promotion with an error indicating poor metrics performance.
+        When a model is scheduled to retrain, deployments with auto deployment enabled will be marked to automatically promote the new model version. After the newly trained model completes, a check on its metrics in comparison to the currently deployed model version will be performed. If the metrics are comparable or better, the newly trained model version is automatically promoted. If not, it will be marked as a failed model version promotion with an error indicating poor metrics performance.
 
 
         Args:
-            enable (bool): Enable/disable the autoDeploy property of the Deployment.
+            enable (bool): Enable or disable the autoDeploy property of the deployment.
         """
         return self.client.set_auto_deployment(self.deployment_id, enable)
 
     def set_model_version(self, model_version: str, algorithm: str = None, model_deployment_config: dict = None):
         """
-        Promotes a model version to be served in a deployment by providing the deployment ID, model version ID, algorithm (optional), and model deployment config.
+        Promotes a model version and/or algorithm to be the active served deployment version
 
         Args:
-            model_version (str): The unique ID for the model version
+            model_version (str): A unique identifier for the model version.
             algorithm (str): The algorithm to use for the model version. If not specified, the algorithm will be inferred from the model version.
-            model_deployment_config (dict): The deployment config for model to deploy
+            model_deployment_config (dict): The deployment configuration for the model to deploy.
         """
         return self.client.set_deployment_model_version(self.deployment_id, model_version, algorithm, model_deployment_config)
 
     def set_feature_group_version(self, feature_group_version: str):
         """
-        Promotes a Feature Group Version to be served in the Deployment
+        Promotes a feature group version to be served in the deployment.
 
         Args:
-            feature_group_version (str): The unique ID for the Feature Group Version
+            feature_group_version (str): Unique string identifier for the feature group version.
         """
         return self.client.set_deployment_feature_group_version(self.deployment_id, feature_group_version)
 
@@ -178,7 +175,7 @@ class Deployment(AbstractApiClass):
         Restarts the specified deployment that was previously suspended.
 
         Args:
-            deployment_id (str): The unique ID associated with the deployment.
+            deployment_id (str): A unique string identifier associated with the deployment.
         """
         return self.client.start_deployment(self.deployment_id)
 
@@ -187,7 +184,7 @@ class Deployment(AbstractApiClass):
         Stops the specified deployment.
 
         Args:
-            deployment_id (str): The Deployment ID
+            deployment_id (str): Unique string identifier of the deployment to be stopped.
         """
         return self.client.stop_deployment(self.deployment_id)
 
@@ -196,7 +193,7 @@ class Deployment(AbstractApiClass):
         Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
         Args:
-            deployment_id (str): The ID of the deployment to delete.
+            deployment_id (str): Unique string identifier of the deployment to delete.
         """
         return self.client.delete_deployment(self.deployment_id)
 
@@ -205,22 +202,22 @@ class Deployment(AbstractApiClass):
         Sets the export output for the Feature Group Deployment to be a file connector.
 
         Args:
-            file_format (str): 
-            output_location (str): the file connector (cloud) location of where to export
+            file_format (str): The type of export output, either CSV or JSON.
+            output_location (str): The file connector (cloud) location where the output should be exported.
         """
         return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, file_format, output_location)
 
     def set_feature_group_export_database_connector_output(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None):
         """
-        Sets the export output for the Feature Group Deployment to be a Database connector.
+        Sets the export output for the Feature Group Deployment to a Database connector.
 
         Args:
-            database_connector_id (str): The database connector ID used
-            object_name (str): The database connector's object to write to
-            write_mode (str): UPSERT or INSERT for writing to the database connector
-            database_feature_mapping (dict): The column/feature pairs mapping the features to the database columns
-            id_column (str): The id column to use as the upsert key
-            additional_id_columns (list): For database connectors which support it, additional ID columns to use as a complex key for upserting
+            database_connector_id (str): The unique string identifier of the database connector used.
+            object_name (str): The object of the database connector to write to.
+            write_mode (str): The write mode to use when writing to the database connector, either UPSERT or INSERT.
+            database_feature_mapping (dict): The column/feature pairs mapping the features to the database columns.
+            id_column (str): The id column to use as the upsert key.
+            additional_id_columns (list): For database connectors which support it, a list of additional ID columns to use as a complex key for upserting.
         """
         return self.client.set_deployment_feature_group_export_database_connector_output(self.deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column, additional_id_columns)
 
@@ -229,7 +226,7 @@ class Deployment(AbstractApiClass):
         Removes the export type that is set for the Feature Group Deployment
 
         Args:
-            deployment_id (str): The deployment for which the export type is set
+            deployment_id (str): The ID of the deployment for which the export type is set.
         """
         return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
 
@@ -238,20 +235,20 @@ class Deployment(AbstractApiClass):
         Creates a batch prediction job description for the given deployment.
 
         Args:
-            table_name (str): If specified, the name of the feature group table to write the results of the batch prediction. Can only be specified iff outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV
-            name (str): The name of batch prediction job.
+            table_name (str): Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.
+            name (str): Name of the batch prediction job.
             global_prediction_args (dict): Argument(s) to pass on every prediction call.
-            explanations (bool): If true, will provide SHAP Explanations for each prediction, if supported by the use case.
-            output_format (str): If specified, sets the format of the batch prediction output (CSV or JSON)
-            output_location (str): If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
-            database_connector_id (str): The unique identifier of an Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
-            database_output_config (dict): A key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.
-            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically run the batch prediction.
-            csv_input_prefix (str): A prefix to prepend to the input columns, only applies when output format is CSV
-            csv_prediction_prefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
-            csv_explanations_prefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
-            output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
-            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list
+            explanations (bool): If true, SHAP explanations will be provided for each prediction, if supported by the use case.
+            output_format (str): Format of the batch prediction output (CSV or JSON).
+            output_location (str): Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+            database_connector_id (str): Unique identifier of a Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
+            database_output_config (dict): Key-value pair of columns/values to write to the database connector. Only available if databaseConnectorId is specified.
+            refresh_schedule (str): Cron-style string that describes a schedule in UTC to automatically run the batch prediction.
+            csv_input_prefix (str): Prefix to prepend to the input columns, only applies when output format is CSV.
+            csv_prediction_prefix (str): Prefix to prepend to the prediction columns, only applies when output format is CSV.
+            csv_explanations_prefix (str): Prefix to prepend to the explanation columns, only applies when output format is CSV.
+            output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version.
+            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list.
 
         Returns:
             BatchPrediction: The batch prediction description.

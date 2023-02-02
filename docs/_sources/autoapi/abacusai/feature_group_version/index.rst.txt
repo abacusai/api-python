@@ -32,7 +32,7 @@ Classes
    :param sql: The sql definition creating this feature group.
    :type sql: str
    :param sourceTables: The source tables for this feature group.
-   :type sourceTables: list of string
+   :type sourceTables: list[str]
    :param createdAt: The timestamp at which the feature group version was created.
    :type createdAt: str
    :param status: The current status of the feature group version.
@@ -69,9 +69,9 @@ Classes
 
    .. py:method:: create_snapshot_feature_group(table_name)
 
-      Creates a Snapshot Feature Group corresponding to a specific feature group version.
+      Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
-      :param table_name: The name for the newly created Snapshot Feature Group table.
+      :param table_name: Name for the newly created Snapshot Feature Group table.
       :type table_name: str
 
       :returns: Feature Group corresponding to the newly created Snapshot.
@@ -84,12 +84,12 @@ Classes
 
       :param location: Cloud file location to export to.
       :type location: str
-      :param export_file_format: File format to export to.
+      :param export_file_format: Enum string specifying the file format to export to.
       :type export_file_format: str
       :param overwrite: If true and a file exists at this location, this process will overwrite the file.
       :type overwrite: bool
 
-      :returns: The FeatureGroupExport instance
+      :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
 
 
@@ -97,20 +97,20 @@ Classes
 
       Export Feature group to Database Connector.
 
-      :param database_connector_id: Database connector to export to.
+      :param database_connector_id: Unique string identifier for the Database Connector to export to.
       :type database_connector_id: str
-      :param object_name: The database object to write to
+      :param object_name: Name of the database object to write to.
       :type object_name: str
-      :param write_mode: Either INSERT or UPSERT
+      :param write_mode: Enum string indicating whether to use INSERT or UPSERT.
       :type write_mode: str
-      :param database_feature_mapping: A key/value pair JSON Object of "database connector column" -> "feature name" pairs.
+      :param database_feature_mapping: Key/value pair JSON object of "database connector column" -> "feature name" pairs.
       :type database_feature_mapping: dict
-      :param id_column: Required if mode is UPSERT. Indicates which database column should be used as the lookup key for UPSERT
+      :param id_column: Required if write_mode is UPSERT. Indicates which database column should be used as the lookup key.
       :type id_column: str
-      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting
+      :param additional_id_columns: For database connectors which support it, additional ID columns to use as a complex key for upserting.
       :type additional_id_columns: list
 
-      :returns: The FeatureGroupExport instance
+      :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
 
 
@@ -121,20 +121,20 @@ Classes
       :param export_file_format: File format to export to.
       :type export_file_format: str
 
-      :returns: The FeatureGroupExport instance
+      :returns: The FeatureGroupExport instance.
       :rtype: FeatureGroupExport
 
 
    .. py:method:: get_materialization_logs(stdout = False, stderr = False)
 
-      Returns logs for materialized feature group version.
+      Returns logs for a materialized feature group version.
 
-      :param stdout: Set True to get info logs
+      :param stdout: Set to True to get info logs.
       :type stdout: bool
-      :param stderr: Set True to get error logs
+      :param stderr: Set to True to get error logs.
       :type stderr: bool
 
-      :returns: A function logs.
+      :returns: A function logs object.
       :rtype: FunctionLogs
 
 
@@ -148,12 +148,12 @@ Classes
 
    .. py:method:: describe()
 
-      Get a specific feature group version.
+      Describe a feature group version.
 
-      :param feature_group_version: The unique ID associated with the feature group version.
+      :param feature_group_version: The unique identifier associated with the feature group version.
       :type feature_group_version: str
 
-      :returns: A feature group version.
+      :returns: The feature group version.
       :rtype: FeatureGroupVersion
 
 

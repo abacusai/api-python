@@ -3,13 +3,13 @@ from .return_class import AbstractApiClass
 
 class ResolvedFeatureGroupTemplate(AbstractApiClass):
     """
-        Results from resolving a feature group template.
+        Final SQL from resolving a feature group template.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureGroupTemplateId (str): The unique identifier for this feature group template.
-            resolvedVariables (dict): A map from template variable names to parameters that were available during template resolution.
-            resolvedSql (str): The SQL resulting from resolving the sql template by applying the resolved bindings.
+            featureGroupTemplateId (str): Unique identifier for this feature group template.
+            resolvedVariables (dict): Map from template variable names to parameters available during template resolution.
+            resolvedSql (str): SQL resulting from resolving the SQL template by applying the resolved bindings.
             templateSql (str): SQL that can include variables to be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.
             sqlError (str): if invalid, the sql error message
     """

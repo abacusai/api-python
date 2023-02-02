@@ -6,35 +6,35 @@ from .return_class import AbstractApiClass
 
 class BatchPrediction(AbstractApiClass):
     """
-        Batch predictions
+        Make batch predictions.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            batchPredictionId (str): The unique identifier of the batch prediction request
-            createdAt (str): When the batch prediction was created
-            name (str): Name given to the batch prediction object
-            deploymentId (str): The deployment used to make the predictions
-            fileConnectorOutputLocation (str): Contains information about where the batch predictions are written to
-            globalPredictionArgs (dict): Argument(s) passed to every prediction call
-            databaseConnectorId (str): The database connector to write the results to
-            databaseOutputConfiguration (dict): Contains information about where the batch predictions are written to
-            explanations (bool): If true, explanations for each prediction were created
-            fileOutputFormat (str): The format of the batch prediction output (CSV or JSON)
-            connectorType (str): Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR
-            legacyInputLocation (str): The location of the input data
-            featureGroupTableName (str): The table name of the Batch Prediction feature group
-            summaryFeatureGroupTableName (str): The table name of the metrics summary feature group output by Batch Prediction
-            csvInputPrefix (str): A prefix to prepend to the input columns, only applies when output format is CSV
-            csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
-            csvExplanationsPrefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
-            outputIncludesMetadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
-            resultInputColumns (list of string): If present, will limit result files or feature groups to only include columns present in this list
-            modelMonitorId (str): 
-            modelVersion (str): The model instance used in the deployement for the batch prediction
+            batchPredictionId (str): The unique identifier of the batch prediction request.
+            createdAt (str): When the batch prediction was created, in ISO-8601 format.
+            name (str): Name given to the batch prediction object.
+            deploymentId (str): The deployment used to make the predictions.
+            fileConnectorOutputLocation (str): Contains information about where the batch predictions are written to.
+            globalPredictionArgs (dict): Argument(s) passed to every prediction call.
+            databaseConnectorId (str): The database connector to write the results to.
+            databaseOutputConfiguration (dict): Contains information about where the batch predictions are written to.
+            explanations (bool): If true, explanations for each prediction will be created.
+            fileOutputFormat (str): The format of the batch prediction output (CSV or JSON).
+            connectorType (str): Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR.
+            legacyInputLocation (str): The location of the input data.
+            featureGroupTableName (str): The table name of the Batch Prediction feature group.
+            summaryFeatureGroupTableName (str): The table name of the metrics summary feature group output by Batch Prediction.
+            csvInputPrefix (str): A prefix to prepend to the input columns, only applies when output format is CSV.
+            csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV.
+            csvExplanationsPrefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV.
+            outputIncludesMetadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version.
+            resultInputColumns (list): If present, will limit result files or feature groups to only include columns present in this list.
+            modelMonitorId (str): The model monitor for this batch prediction.
+            modelVersion (str): The model instance used in the deployment for the batch prediction.
             algorithm (str): The algorithm that is currently deployed.
-            batchInputs (PredictionInput): Inputs to the batch prediction
-            latestBatchPredictionVersion (BatchPredictionVersion): The latest batch prediction version
-            refreshSchedules (RefreshSchedule): List of refresh schedules that dictate the next time the batch prediction will be run
+            batchInputs (PredictionInput): Inputs to the batch prediction.
+            latestBatchPredictionVersion (BatchPredictionVersion): The latest batch prediction version.
+            refreshSchedules (RefreshSchedule): List of refresh schedules that dictate the next time the batch prediction will be run.
     """
 
     def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}):
@@ -81,10 +81,10 @@ class BatchPrediction(AbstractApiClass):
 
     def start(self):
         """
-        Creates a new batch prediction version job for a given batch prediction job description
+        Creates a new batch prediction version job for a given batch prediction job description.
 
         Args:
-            batch_prediction_id (str): The unique identifier of the batch prediction to create a new version of
+            batch_prediction_id (str): The unique identifier of the batch prediction to create a new version of.
 
         Returns:
             BatchPredictionVersion: The batch prediction version started by this method call.
@@ -103,10 +103,10 @@ class BatchPrediction(AbstractApiClass):
 
     def describe(self):
         """
-        Describes the batch prediction
+        Describe the batch prediction.
 
         Args:
-            batch_prediction_id (str): The unique ID associated with the batch prediction.
+            batch_prediction_id (str): The unique identifier associated with the batch prediction.
 
         Returns:
             BatchPrediction: The batch prediction description.
@@ -118,41 +118,42 @@ class BatchPrediction(AbstractApiClass):
         Retrieves a list of versions of a given batch prediction
 
         Args:
-            limit (int): The number of versions to list
-            start_after_version (str): The version to start after
+            limit (int): Number of versions to list.
+            start_after_version (str): Version to start after.
 
         Returns:
-            BatchPredictionVersion: A list of batch prediction versions.
+            BatchPredictionVersion: List of batch prediction versions.
         """
         return self.client.list_batch_prediction_versions(self.batch_prediction_id, limit, start_after_version)
 
-    def update(self, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None):
+    def update(self, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None):
         """
-        Updates a batch prediction job description
+        Update a batch prediction job description.
 
         Args:
-            deployment_id (str): The unique identifier to a deployment.
+            deployment_id (str): Unique identifier of the deployment.
             global_prediction_args (dict): Argument(s) to pass on every prediction call.
-            explanations (bool): If true, will provide SHAP Explanations for each prediction, if supported by the use case.
+            explanations (bool): If True, SHAP explanations for each prediction will be provided, if supported by the use case.
             output_format (str): If specified, sets the format of the batch prediction output (CSV or JSON).
-            csv_input_prefix (str): A prefix to prepend to the input columns, only applies when output format is CSV
-            csv_prediction_prefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
-            csv_explanations_prefix (str): A prefix to prepend to the explanation columns, only applies when output format is CSV
-            output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
-            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list
+            csv_input_prefix (str): Prefix to prepend to the input columns, only applies when output format is CSV.
+            csv_prediction_prefix (str): Prefix to prepend to the prediction columns, only applies when output format is CSV.
+            csv_explanations_prefix (str): Prefix to prepend to the explanation columns, only applies when output format is CSV.
+            output_includes_metadata (bool): If True, output will contain columns including prediction start time, batch prediction version, and model version.
+            result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list.
+            name (str): If present, will rename the batch prediction.
 
         Returns:
-            BatchPrediction: The batch prediction description.
+            BatchPrediction: The batch prediction.
         """
-        return self.client.update_batch_prediction(self.batch_prediction_id, deployment_id, global_prediction_args, explanations, output_format, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns)
+        return self.client.update_batch_prediction(self.batch_prediction_id, deployment_id, global_prediction_args, explanations, output_format, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, name)
 
     def set_file_connector_output(self, output_format: str = None, output_location: str = None):
         """
         Updates the file connector output configuration of the batch prediction
 
         Args:
-            output_format (str): If specified, sets the format of the batch prediction output (CSV or JSON).
-            output_location (str): If specified, the location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
+            output_format (str): The format of the batch prediction output (CSV or JSON). If not specified, the default format will be used.
+            output_location (str): The location to write the prediction results. If not specified, results will be stored in Abacus.AI.
 
         Returns:
             BatchPrediction: The batch prediction description.
@@ -164,32 +165,32 @@ class BatchPrediction(AbstractApiClass):
         Updates the database connector output configuration of the batch prediction
 
         Args:
-            database_connector_id (str): The unique identifier of an Database Connection to write predictions to.
-            database_output_config (dict): A key-value pair of columns/values to write to the database connector
+            database_connector_id (str): Unique string identifier of an Database Connection to write predictions to.
+            database_output_config (dict): Key-value pair of columns/values to write to the database connector.
 
         Returns:
-            BatchPrediction: The batch prediction description.
+            BatchPrediction: Description of the batch prediction.
         """
         return self.client.set_batch_prediction_database_connector_output(self.batch_prediction_id, database_connector_id, database_output_config)
 
     def set_feature_group_output(self, table_name: str):
         """
-        Creates a feature group and sets it to be the batch prediction output
+        Creates a feature group and sets it as the batch prediction output.
 
         Args:
-            table_name (str): The name of the feature group table to create
+            table_name (str): Name of the feature group table to create.
 
         Returns:
-            BatchPrediction: The batch prediction after the output has been applied
+            BatchPrediction: Batch prediction after the output has been applied.
         """
         return self.client.set_batch_prediction_feature_group_output(self.batch_prediction_id, table_name)
 
     def set_output_to_console(self):
         """
-        Sets the batch prediction output to the console, clearing both the file connector and database connector config
+        Sets the batch prediction output to the console, clearing both the file connector and database connector configurations.
 
         Args:
-            batch_prediction_id (str): The unique identifier of the batch prediction
+            batch_prediction_id (str): The unique identifier of the batch prediction.
 
         Returns:
             BatchPrediction: The batch prediction description.
@@ -198,14 +199,14 @@ class BatchPrediction(AbstractApiClass):
 
     def set_dataset(self, dataset_type: str, dataset_id: str = None):
         """
-        [Deprecated] Sets the batch prediction input dataset. Only applicable for legacy dataset-based projects
+        [Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.
 
         Args:
-            dataset_type (str): The dataset type to set
-            dataset_id (str): The dataset to set
+            dataset_type (str): Enum string of the dataset type to set.
+            dataset_id (str): Unique identifier of the dataset to set.
 
         Returns:
-            BatchPrediction: The batch prediction description.
+            BatchPrediction: Description of the batch prediction.
         """
         return self.client.set_batch_prediction_dataset(self.batch_prediction_id, dataset_type, dataset_id)
 
@@ -214,32 +215,32 @@ class BatchPrediction(AbstractApiClass):
         Sets the batch prediction input feature group.
 
         Args:
-            feature_group_type (str): The feature group type to set. The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
-            feature_group_id (str): The feature group to set as input to the batch prediction
+            feature_group_type (str): Enum string representing the feature group type to set. The type is based on the use case under which the feature group is being created (e.g. Catalog Attributes for personalized recommendation use case).
+            feature_group_id (str): Unique identifier of the feature group to set as input to the batch prediction.
 
         Returns:
-            BatchPrediction: The batch prediction description.
+            BatchPrediction: Description of the batch prediction.
         """
         return self.client.set_batch_prediction_feature_group(self.batch_prediction_id, feature_group_type, feature_group_id)
 
     def set_dataset_remap(self, dataset_id_remap: dict):
         """
-        For the purpose of this batch prediction, will swap out datasets in the input feature groups
+        For the purpose of this batch prediction, will swap out datasets in the training feature groups
 
         Args:
-            dataset_id_remap (dict): Key/value pairs of dataset_ids to replace during batch predictions
+            dataset_id_remap (dict): Key/value pairs of dataset ids to be replaced during the batch prediction.
 
         Returns:
-            BatchPrediction: Batch Prediction object
+            BatchPrediction: Batch prediction object.
         """
         return self.client.set_batch_prediction_dataset_remap(self.batch_prediction_id, dataset_id_remap)
 
     def delete(self):
         """
-        Deletes a batch prediction and associated data such as associated monitors.
+        Deletes a batch prediction and associated data, such as associated monitors.
 
         Args:
-            batch_prediction_id (str): The unique identifier of the batch prediction
+            batch_prediction_id (str): Unique string identifier of the batch prediction.
         """
         return self.client.delete_batch_prediction(self.batch_prediction_id)
 

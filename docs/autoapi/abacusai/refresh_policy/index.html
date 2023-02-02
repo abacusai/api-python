@@ -88,6 +88,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_lineage</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
@@ -112,6 +113,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.module</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
@@ -131,6 +133,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a><ul>
@@ -193,7 +196,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RefreshPolicy</span></code></a></p></td>
-<td><p>A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.</p></td>
+<td><p>A Refresh Policy describes the frequency at which one or more datasets/models/deployments/batch_predictions can be updated.</p></td>
 </tr>
 </tbody>
 </table>
@@ -201,24 +204,24 @@
 <dt class="sig sig-object py" id="abacusai.refresh_policy.RefreshPolicy">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.refresh_policy.</span></span><span class="sig-name descname"><span class="pre">RefreshPolicy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshPolicyId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cron</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nextRunTime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refreshType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projectId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datasetIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deploymentIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictionMetricIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelMonitorIds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">paused</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.refresh_policy.RefreshPolicy" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
-<p>A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.</p>
+<p>A Refresh Policy describes the frequency at which one or more datasets/models/deployments/batch_predictions can be updated.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>refreshPolicyId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier for the refresh policy</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The user-friendly name for the refresh policy</p></li>
-<li><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron-style string that describes the when this refresh policy is to be executed in UTC</p></li>
+<li><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron-style string that describes when this refresh policy is to be executed in UTC</p></li>
 <li><p><strong>nextRunTime</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The next UTC time that this refresh policy will be executed</p></li>
 <li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The time when the refresh policy was created</p></li>
 <li><p><strong>refreshType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of refresh policy to be run</p></li>
 <li><p><strong>projectId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of a project that this refresh policy applies to</p></li>
-<li><p><strong>datasetIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique identifiers</em><em> of </em><em>type 'string'</em>) – Comma separated list of Dataset IDs that this refresh policy applies to</p></li>
-<li><p><strong>modelIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique identifiers</em><em> of </em><em>type 'string'</em>) – Comma separated list of Model IDs that this refresh policy applies to</p></li>
-<li><p><strong>deploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique identifiers</em><em> of </em><em>type 'string'</em>) – Comma separated list of Deployment IDs that this refresh policy applies to</p></li>
-<li><p><strong>predictionMetricIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique identifiers</em><em> of </em><em>type 'string'</em>) – Comma separated list of Prediction Metric IDs that this refresh policy applies to</p></li>
-<li><p><strong>modelMonitorIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em> of </em><em>unique identifiers</em><em> of </em><em>type 'string'</em>) – Comma separated list of Model Monitor IDs that this refresh policy applies to</p></li>
-<li><p><strong>paused</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – (Boolean): True if the refresh policy is paused</p></li>
+<li><p><strong>datasetIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Comma-separated list of Dataset IDs that this refresh policy applies to</p></li>
+<li><p><strong>modelIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Comma-separated list of Model IDs that this refresh policy applies to</p></li>
+<li><p><strong>deploymentIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Comma-separated list of Deployment IDs that this refresh policy applies to</p></li>
+<li><p><strong>predictionMetricIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Comma-separated list of Prediction Metric IDs that this refresh policy applies to</p></li>
+<li><p><strong>modelMonitorIds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – Comma-separated list of Model Monitor IDs that this refresh policy applies to</p></li>
+<li><p><strong>paused</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – True if the refresh policy is paused</p></li>
 </ul>
 </dd>
 </dl>
@@ -245,10 +248,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.refresh_policy.RefreshPolicy.delete">
 <span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.refresh_policy.RefreshPolicy.delete" title="Permalink to this definition"></a></dt>
-<dd><p>Delete a refresh policy</p>
+<dd><p>Delete a refresh policy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy</p>
+<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier associated with the refresh policy to delete.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -273,10 +276,10 @@
 <dd><p>Retrieve a single refresh policy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy</p>
+<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A refresh policy object</p>
+<dd class="field-even"><p>An object representing the refresh policy.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy">RefreshPolicy</a></p>
@@ -290,10 +293,10 @@
 <dd><p>List the the times that the refresh policy has been run</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy</p>
+<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier associated with the refresh policy.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of refresh pipeline runs for the given refresh policy id</p>
+<dd class="field-even"><p>List of refresh pipeline runs for the given refresh policy ID.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../refresh_pipeline_run/index.html#abacusai.refresh_pipeline_run.RefreshPipelineRun" title="abacusai.refresh_pipeline_run.RefreshPipelineRun">RefreshPipelineRun</a></p>
@@ -307,7 +310,7 @@
 <dd><p>Pauses a refresh policy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy</p>
+<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier associated with the refresh policy to be paused.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -318,7 +321,7 @@
 <dd><p>Resumes a refresh policy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy</p>
+<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -329,7 +332,7 @@
 <dd><p>Force a run of the refresh policy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with this refresh policy</p>
+<dd class="field-odd"><p><strong>refresh_policy_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier associated with the refresh policy to be run.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -337,16 +340,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.refresh_policy.RefreshPolicy.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cron</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.refresh_policy.RefreshPolicy.update" title="Permalink to this definition"></a></dt>
-<dd><p>Update the name or cron string of a  refresh policy</p>
+<dd><p>Update the name or cron string of a refresh policy</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional, specify to update the name of the refresh policy</p></li>
-<li><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional, specify to update the cron string describing the schedule from the refresh policy</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the refresh policy to be updated.</p></li>
+<li><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Cron string describing the schedule from the refresh policy to be updated.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated refresh policy</p>
+<dd class="field-even"><p>Updated refresh policy.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.refresh_policy.RefreshPolicy" title="abacusai.refresh_policy.RefreshPolicy">RefreshPolicy</a></p>

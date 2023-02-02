@@ -21,16 +21,16 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   An object with full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
+   An object with a full description of the cloud storage bucket authentication options and bucket policy. Returns an error message if the parameters are invalid.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param verified: `true` if the bucket has passed verification
+   :param verified: `True` if the bucket has passed verification
    :type verified: bool
-   :param writePermission: `true` if Abacus.AI has permission to write to this bucket
+   :param writePermission: `True` if Abacus.AI has permission to write to this bucket
    :type writePermission: bool
    :param authOptions: A list of options for giving Abacus.AI access to this bucket
-   :type authOptions: list of json objects
+   :type authOptions: list[dict]
 
    .. py:method:: __repr__()
 

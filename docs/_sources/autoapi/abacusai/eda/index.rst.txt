@@ -61,12 +61,12 @@ Classes
 
    .. py:method:: rerun()
 
-      Reruns the specified eda object.
+      Reruns the specified EDA object.
 
-      :param eda_id: The eda object to rerun.
+      :param eda_id: Unique string identifier of the EDA object to rerun.
       :type eda_id: str
 
-      :returns: The eda object that is being rerun.
+      :returns: The EDA object that is being rerun.
       :rtype: Eda
 
 
@@ -80,41 +80,41 @@ Classes
 
    .. py:method:: describe()
 
-      Retrieves a full description of the specified eda object.
+      Retrieves a full description of the specified EDA object.
 
-      :param eda_id: The unique ID associated with the eda object.
+      :param eda_id: Unique string identifier associated with the EDA object.
       :type eda_id: str
 
-      :returns: The description of the eda object.
+      :returns: Description of the EDA object.
       :rtype: Eda
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
-      Retrieves a list of the versions for a given eda object.
+      Retrieves a list of versions for a given EDA object.
 
-      :param limit: The max length of the list of all eda versions.
+      :param limit: The maximum length of the list of all EDA versions.
       :type limit: int
-      :param start_after_version: The id of the version after which the list starts.
+      :param start_after_version: The ID of the version after which the list starts.
       :type start_after_version: str
 
-      :returns: An array of eda versions.
+      :returns: A list of EDA versions.
       :rtype: EdaVersion
 
 
    .. py:method:: rename(name)
 
-      Renames a model monitor
+      Renames an EDA
 
-      :param name: The name to apply to the model monitor
+      :param name: The new name to apply to the model monitor.
       :type name: str
 
 
    .. py:method:: delete()
 
-      Deletes the specified eda and all its versions.
+      Deletes the specified EDA and all its versions.
 
-      :param eda_id: The ID of the eda to delete.
+      :param eda_id: Unique string identifier of the EDA to delete.
       :type eda_id: str
 
 

@@ -8,8 +8,8 @@ class ProjectValidation(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             valid (bool): `true` if the project is valid and ready to be trained, otherwise `false`.
-            datasetErrors (list of json objects): A list of errors keeping the dataset from being valid
-            columnHints (dict): 
+            datasetErrors (list[dict]): A list of errors keeping the dataset from being valid
+            columnHints (dict): Hints for what to set on the columns
     """
 
     def __init__(self, client, valid=None, datasetErrors=None, columnHints=None):

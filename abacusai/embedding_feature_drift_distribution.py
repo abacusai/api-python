@@ -3,14 +3,14 @@ from .return_class import AbstractApiClass
 
 class EmbeddingFeatureDriftDistribution(AbstractApiClass):
     """
-        distance (List): Histogram data of KL divergences between the training distribution and the range of values in the specified window.
+        Feature distribution for embeddings
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            distance (list): 
-            jsDistance (list): 
-            wsDistance (list): 
-            ksStatistic (list): 
+            distance (list): Histogram data of KL divergences between the training distribution and the range of values in the specified window.
+            jsDistance (list): Histogram data of JS divergence between the training distribution and the range of values in the specified window.
+            wsDistance (list): Histogram data of Wasserstein distance between the training distribution and the range of values in the specified window.
+            ksStatistic (list): Histogram data of Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
     """
 
     def __init__(self, client, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None):

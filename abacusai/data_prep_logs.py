@@ -7,7 +7,7 @@ class DataPrepLogs(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            logs (list of strings): List of logs from data preparation during model training.
+            logs (list[str]): List of logs from data preparation during model training.
     """
 
     def __init__(self, client, logs=None):

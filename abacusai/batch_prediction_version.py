@@ -11,7 +11,7 @@ class BatchPredictionVersion(AbstractApiClass):
             batchPredictionVersion (str): The unique identifier of the batch prediction
             batchPredictionId (str): The unique identifier of the batch prediction
             status (str): The current status of the batch prediction
-            driftMonitorStatus (str): 
+            driftMonitorStatus (str): The status of the drift monitor for this batch prediction version
             deploymentId (str): The deployment used to make the predictions
             modelId (str): The model used to make the predictions
             modelVersion (str): The model version used to make the predictions
@@ -29,7 +29,7 @@ class BatchPredictionVersion(AbstractApiClass):
             connectorType (str): Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR
             legacyInputLocation (str): The location of the input data
             error (str): Relevant error if the status is FAILED
-            driftMonitorError (str): 
+            driftMonitorError (str): Error message for the drift monitor of this batch predcition
             monitorWarnings (str): Relevant warning if there are issues found in drift or data integrity
             csvInputPrefix (str): A prefix to prepend to the input columns, only applies when output format is CSV
             csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV
@@ -37,8 +37,8 @@ class BatchPredictionVersion(AbstractApiClass):
             databaseOutputTotalWrites (int): The total number of rows attempted to write (may be less than total_predictions if write mode is UPSERT and multiple rows share the same ID)
             databaseOutputFailedWrites (int): The number of failed writes to the Database Connector
             outputIncludesMetadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version
-            resultInputColumns (list of string): If present, will limit result files or feature groups to only include columns present in this list
-            modelMonitorVersion (str): 
+            resultInputColumns (list[str]): If present, will limit result files or feature groups to only include columns present in this list
+            modelMonitorVersion (str): The version of the model monitor
             algoName (str): The name of the algorithm used to train the model
             algorithm (str): The algorithm that is currently deployed.
             batchInputs (PredictionInput): Inputs to the batch prediction
@@ -104,20 +104,20 @@ class BatchPredictionVersion(AbstractApiClass):
 
     def download_batch_prediction_result_chunk(self, offset: int = 0, chunk_size: int = 10485760):
         """
-        Returns a stream containing the batch prediction results
+        Returns a stream containing the batch prediction results.
 
         Args:
-            offset (int): The offset to read from
-            chunk_size (int): The max amount of data to read
+            offset (int): The offset to read from.
+            chunk_size (int): The maximum amount of data to read.
         """
         return self.client.download_batch_prediction_result_chunk(self.batch_prediction_version, offset, chunk_size)
 
     def get_batch_prediction_connector_errors(self):
         """
-        Returns a stream containing the batch prediction database connection write errors, if any writes failed to the database connector
+        Returns a stream containing the batch prediction database connection write errors, if any writes failed for the specified batch prediction job.
 
         Args:
-            batch_prediction_version (str): The unique identifier of the batch prediction job to get the errors for
+            batch_prediction_version (str): Unique string identifier of the batch prediction job to get the errors for.
         """
         return self.client.get_batch_prediction_connector_errors(self.batch_prediction_version)
 
@@ -133,13 +133,13 @@ class BatchPredictionVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Describes a batch prediction version
+        Describes a Batch Prediction Version.
 
         Args:
-            batch_prediction_version (str): The unique identifier of the batch prediction version
+            batch_prediction_version (str): Unique string identifier of the Batch Prediction Version.
 
         Returns:
-            BatchPredictionVersion: The batch prediction version.
+            BatchPredictionVersion: The Batch Prediction Version.
         """
         return self.client.describe_batch_prediction_version(self.batch_prediction_version)
 

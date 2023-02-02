@@ -82,13 +82,13 @@ class Model(AbstractApiClass):
 
     def describe_train_test_data_split_feature_group(self):
         """
-        Get the train and test data split for a trained model by model id. Only supported for models with custom algorithms.
+        Get the train and test data split for a trained model by its unique identifier. This is only supported for models with custom algorithms.
 
         Args:
-            model_id (str): The unique ID of the model. By default will return for latest model version if version is not specified.
+            model_id (str): The unique ID of the model. By default, the latest model version will be returned if no version is specified.
 
         Returns:
-            FeatureGroup: The feature group containing the training data and folds information.
+            FeatureGroup: The feature group containing the training data and fold information.
         """
         return self.client.describe_train_test_data_split_feature_group(self.model_id)
 
@@ -107,10 +107,10 @@ class Model(AbstractApiClass):
         Retrieves a full description of the specified model.
 
         Args:
-            model_id (str): The unique ID associated with the model.
+            model_id (str): Unique string identifier associated with the model.
 
         Returns:
-            Model: The description of the model.
+            Model: Description of the model.
         """
         return self.client.describe_model(self.model_id)
 
@@ -119,96 +119,78 @@ class Model(AbstractApiClass):
         Renames a model
 
         Args:
-            name (str): The name to apply to the model
+            name (str): The new name to assign to the model.
         """
         return self.client.rename_model(self.model_id, name)
 
     def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
-        Updates an existing python Model using user provided Python code. If a list of input feature groups are supplied,
+        Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `functionSourceCode` to be a valid language source file which contains the functions named
-        `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
+        This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`. `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
 
 
         Args:
-            function_source_code (str): Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            function_source_code (str): Contents of a valid Python source code file. The source code should contain the functions named `trainFunctionName` and `predictFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             train_function_name (str): Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the source code that will be executed to run batch predictions through model. It is not executed when this function is run.
-            initialize_function_name (str): Name of the function found in the source code to initialize the trained model before using it to make predictions using the model
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            predict_function_name (str): Name of the function found in the source code that will be executed to run predictions through the model. It is not executed when this function is run.
+            predict_many_function_name (str): Name of the function found in the source code that will be executed to run batch predictions through the model. It is not executed when this function is run.
+            initialize_function_name (str): Name of the function found in the source code to initialize the trained model before using it to make predictions using the model.
+            training_input_tables (list): List of feature groups that are supplied to the `train` function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).
+            cpu_size (str): Size of the CPU for the model training function.
+            memory (int): Memory (in GB) for the model training function.
+            package_requirements (list): List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
 
         Returns:
-            Model: The updated model
+            Model: The updated model.
         """
         return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements)
 
     def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
-        Updates an existing python Model using a provided zip file. If a list of input feature groups are supplied,
+        Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
 
 
         Args:
-            train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
+            train_function_name (str): Name of the function found in the train module that will be executed to train the model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed to run predictions through the model. It is not executed when this function is run.
+            predict_many_function_name (str): Name of the function found in the predict module that will be executed to run batch predictions through the model. It is not executed when this function is run.
             train_module_name (str): Full path of the module that contains the train function from the root of the zip.
             predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
-            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the function's return value).
+            cpu_size (str): Size of the CPU for the model training function.
+            memory (int): Memory (in GB) for the model training function.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
 
         Returns:
-            Upload: The updated model
+            Upload: The updated model.
         """
         return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, package_requirements)
 
     def update_python_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
         """
-        Updates an existing python Model using an existing git application connector. If a list of input feature groups are supplied,
+        Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
-        we will provide as arguments to the train and predict functions with the materialized feature groups for those
-        input feature groups.
-
-        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contains the functions named
-        `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of
-        training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-        as it returns the prediction made by the `predictFunctionName`, which can be anything
+        This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
 
 
         Args:
-            application_connector_id (str): The unique ID associated with the git application connector.
-            branch_name (str): Name of the branch in the git repository to be used for training.
-            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
+            application_connector_id (str): The unique ID associated with the Git application connector.
+            branch_name (str): Name of the branch in the Git repository to be used for training.
+            python_root (str): Path from the top level of the Git repository to the directory containing the Python source code. If not provided, the default is the root of the Git repository.
             train_function_name (str): Name of the function found in train module that will be executed to train the model. It is not executed when this function is run.
-            predict_function_name (str): Name of the function found in the predict module that will be executed run predictions through model. It is not executed when this function is run.
-            predict_many_function_name (str): Name of the function found in the predict module that will be executed run batch predictions through model. It is not executed when this function is run.
+            predict_function_name (str): Name of the function found in the predict module that will be executed to run predictions through model. It is not executed when this function is run.
+            predict_many_function_name (str): Name of the function found in the predict module that will be executed to run batch predictions through model. It is not executed when this function is run.
             train_module_name (str): Full path of the module that contains the train function from the root of the zip.
             predict_module_name (str): Full path of the module that contains the predict function from the root of the zip.
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the model training function
-            memory (int): Memory (in GB) for the model training function
+            cpu_size (str): Size of the CPU for the model training function.
+            memory (int): Memory (in GB) for the model training function.
 
         Returns:
-            Model: The updated model
+            Model: The updated model.
         """
         return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
 
@@ -217,11 +199,11 @@ class Model(AbstractApiClass):
         Edits the default model training config
 
         Args:
-            training_config (dict): The training config key/value pairs used to train this model.
-            feature_group_ids (list): 
+            training_config (dict): A dictionary of key-value pairs used to train the model.
+            feature_group_ids (list): The list of feature groups used as input to the model.
 
         Returns:
-            Model: The model object correspoding after the training config is applied
+            Model: The model object corresponding to the updated training config.
         """
         return self.client.set_model_training_config(self.model_id, training_config, feature_group_ids)
 
@@ -230,36 +212,36 @@ class Model(AbstractApiClass):
         Sets the model prediction config for the model
 
         Args:
-            prediction_config (dict): The prediction config for the model
+            prediction_config (dict): Prediction configuration for the model.
 
         Returns:
-            Model: The model object correspoding after the prediction config is applied
+            Model: Model object after the prediction configuration is applied.
         """
         return self.client.set_model_prediction_params(self.model_id, prediction_config)
 
     def get_metrics(self, model_version: str = None, baseline_metrics: bool = False):
         """
-        Retrieves a full list of the metrics for the specified model.
+        Retrieves a full list of metrics for the specified model.
 
-        If only the model's unique identifier (modelId) is specified, the latest trained version of model (modelVersion) is used.
+        If only the model's unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.
 
 
         Args:
-            model_version (str): The version of the model.
+            model_version (str): Version of the model.
             baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
 
         Returns:
-            ModelMetrics: An object to show the model metrics and explanations for what each metric means.
+            ModelMetrics: An object containing the model metrics and explanations for what each metric means.
         """
         return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics)
 
     def list_versions(self, limit: int = 100, start_after_version: str = None):
         """
-        Retrieves a list of the version for a given model.
+        Retrieves a list of versions for a given model.
 
         Args:
-            limit (int): The max length of the list of all dataset versions.
-            start_after_version (str): The id of the version after which the list starts.
+            limit (int): Maximum length of the list of all dataset versions.
+            start_after_version (str): Unique string identifier of the version after which the list starts.
 
         Returns:
             ModelVersion: An array of model versions.
@@ -268,17 +250,17 @@ class Model(AbstractApiClass):
 
     def retrain(self, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None):
         """
-        Retrains the specified model. Gives you an option to choose the deployments you want the retraining to be deployed to.
+        Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
         Args:
-            deployment_ids (list): List of deployments to automatically deploy to.
-            feature_group_ids (list): List of feature group ids provided by the user to train the model on.
-            custom_algorithms (list): List of user-defined algorithms to train. If not set, will honor the runs from last time and applicable new custom algorithms.
-            builtin_algorithms (list): List of the builtin algorithms provided by Abacus.AI to train. If not set, honor the runs from last time and applicable new builtin algorithms.
-            custom_algorithm_configs (dict): The user-defined training configs for each custom algorithm.
-            cpu_size (str): Size of the cpu for the user-defined algorithms during train.
-            memory (int): Memory (in GB) for the user-defined algorithms during train.
-            training_config (dict): The training config key/value pairs used to train this model.
+            deployment_ids (list): List of unique string identifiers of deployments to automatically deploy to.
+            feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
+            custom_algorithms (list): List of user-defined algorithms to train. If not set, will honor the runs from the last time and applicable new custom algorithms.
+            builtin_algorithms (list): List of the built-in algorithms provided by Abacus.AI to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
+            custom_algorithm_configs (dict): User-defined training configs for each custom algorithm.
+            cpu_size (str): Size of the CPU for the user-defined algorithms during training.
+            memory (int): Memory (in GB) for the user-defined algorithms during training.
+            training_config (dict): Training config key/value pairs used to train the model.
 
         Returns:
             Model: The model that is being retrained.
@@ -290,7 +272,7 @@ class Model(AbstractApiClass):
         Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
 
         Args:
-            model_id (str): The ID of the model to delete.
+            model_id (str): Unique string identifier of the model to delete.
         """
         return self.client.delete_model(self.model_id)
 
@@ -299,27 +281,21 @@ class Model(AbstractApiClass):
         Sets the model's algorithm to default for all new deployments
 
         Args:
-            model_id (Unique String Identifier): The model to set
-            algorithm (Enum String): the algorithm to pin in the model
-            data_cluster_type (String): the data cluster type to set the lead model for
-
-
-        Args:
-            algorithm (str): 
-            data_cluster_type (str): 
+            algorithm (str): Algorithm to pin in the model.
+            data_cluster_type (str): Data cluster type to set the lead model for.
         """
         return self.client.set_default_model_algorithm(self.model_id, algorithm, data_cluster_type)
 
     def get_training_types_for_deployment(self, model_version: str = None, algorithm: str = None):
         """
-        Returns types of models we can deploy for given model instance id
+        Returns types of models that can be deployed for a given model instance ID.
 
         Args:
             model_version (str): The unique ID associated with the model version to deploy.
             algorithm (str): The unique ID associated with the algorithm to deploy.
 
         Returns:
-            ModelTrainingTypeForDeployment: Model training types for deployment
+            ModelTrainingTypeForDeployment: Model training types for deployment.
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 

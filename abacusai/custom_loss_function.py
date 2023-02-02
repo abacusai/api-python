@@ -4,16 +4,16 @@ from .return_class import AbstractApiClass
 
 class CustomLossFunction(AbstractApiClass):
     """
-        Custom loss function
+        Custom Loss Function
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            notebookId (str): The unique identifier of the notebook used to create/edit the loss function
-            name (str): Name assigned to the custom loss function
-            createdAt (str): When the loss function was created
-            lossFunctionName (str): The name of the function defined in the source code
-            lossFunctionType (str): The category of problems that this loss would be applicable to. Ex - regression, multi-label classification, etc.
-            codeSource (CodeSource): Info about the source code of the loss function
+            notebookId (str): The unique identifier of the notebook used to create/edit the loss function.
+            name (str): Name assigned to the custom loss function.
+            createdAt (str): When the loss function was created.
+            lossFunctionName (str): The name of the function defined in the source code.
+            lossFunctionType (str): The category of problems that this loss would be applicable to, e.g. regression, multi-label classification, etc.
+            codeSource (CodeSource): Information about the source code of the loss function.
     """
 
     def __init__(self, client, notebookId=None, name=None, createdAt=None, lossFunctionName=None, lossFunctionType=None, codeSource={}):

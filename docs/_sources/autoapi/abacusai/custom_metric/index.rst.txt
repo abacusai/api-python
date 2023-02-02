@@ -21,21 +21,21 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   Custom metric
+   Custom metric.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param customMetricId: The unique identifier of the custom metric
+   :param customMetricId: Unique string identifier of the custom metric.
    :type customMetricId: str
-   :param name: Name assigned to the custom metric
+   :param name: Name assigned to the custom metric.
    :type name: str
-   :param createdAt: When the custom metric was created
+   :param createdAt: Date and time when the custom metric was created (ISO 8601 format).
    :type createdAt: str
-   :param problemType: The problem type that this custom metric would be applicable to. e.g. - regression.
+   :param problemType: Problem type that this custom metric is applicable to (e.g. regression).
    :type problemType: str
-   :param notebookId: The unique identifier of the notebook used to create/edit the custom metric
+   :param notebookId: Unique string identifier of the notebook used to create/edit the custom metric.
    :type notebookId: str
-   :param latestCustomMetricVersion: The latest version of the custom metric
+   :param latestCustomMetricVersion: Latest version of the custom metric.
    :type latestCustomMetricVersion: CustomMetricVersion
 
    .. py:method:: __repr__()

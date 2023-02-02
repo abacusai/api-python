@@ -63,21 +63,21 @@ Classes
 
       Returns a description of a project.
 
-      :param project_id: The unique project ID
+      :param project_id: A unique string identifier for the project.
       :type project_id: str
 
-      :returns: The project description is returned.
+      :returns: The description of the project.
       :rtype: Project
 
 
    .. py:method:: list_datasets()
 
-      Retrieves all dataset(s) attached to a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
+      Retrieves all datasets associated with a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
 
-      :param project_id: The unique ID associated with the project.
+      :param project_id: Unique string identifier associated with the project.
       :type project_id: str
 
-      :returns: An array representing all of the datasets attached to the project.
+      :returns: A list representing all of the datasets attached to the project.
       :rtype: ProjectDataset
 
 
@@ -102,11 +102,11 @@ Classes
 
    .. py:method:: delete()
 
-      Deletes a specified project from your organization.
+      Delete a specified project from your organization.
 
-      This method deletes the project, trained models and deployments in the specified project. The datasets attached to the specified project remain available for use with other projects in the organization.
+      This method deletes the project, its associated trained models, and deployments. The datasets attached to the specified project remain available for use with other projects in the organization.
 
-      This method will not delete a project that contains active deployments. Be sure to stop all active deployments before you use the delete option.
+      This method will not delete a project that contains active deployments. Ensure that all active deployments are stopped before using the delete option.
 
       Note: All projects, models, and deployments cannot be recovered once they are deleted.
 
@@ -125,7 +125,7 @@ Classes
       :type feature_name: str
       :param feature_mapping: The mapping of the feature in the feature group.
       :type feature_mapping: str
-      :param nested_column_name: The name of the nested column.
+      :param nested_column_name: The name of the nested column if the input feature is part of a nested feature group for the given feature_group_id.
       :type nested_column_name: str
 
       :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
@@ -136,7 +136,7 @@ Classes
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
-      :param feature_group_ids: The feature group IDS to validate
+      :param feature_group_ids: The list of feature group IDs to validate.
       :type feature_group_ids: list
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
@@ -145,16 +145,16 @@ Classes
 
    .. py:method:: set_column_data_type(dataset_id, column, data_type)
 
-      Set a dataset's column type.
+      Set the data type of a dataset's column.
 
       :param dataset_id: The unique ID associated with the dataset.
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of the data in the column.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
+      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST
       :type data_type: str
 
-      :returns: A list of objects that describes the resulting dataset's schema after the column's dataType is set.
+      :returns: A list of objects that describes the resulting dataset's schema after the column's data type is set.
       :rtype: Schema
 
 
@@ -166,7 +166,7 @@ Classes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param column_mapping: The mapping of the column in the dataset. See a list of columns mapping enums here.
+      :param column_mapping: The mapping of the column in the dataset. See a list of column mapping enums here.
       :type column_mapping: str
 
       :returns: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set.
@@ -190,10 +190,10 @@ Classes
 
       List all the feature groups associated with a project
 
-      :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups in this project to be returned if they are of the given use.  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT
+      :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups present in this project to be returned if they are of the given use. Possible values are:  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT.
       :type filter_feature_group_use: str
 
-      :returns: All the Feature Groups in a project
+      :returns: All the Feature Groups in a project.
       :rtype: FeatureGroup
 
 
@@ -201,11 +201,11 @@ Classes
 
       List feature group templates for feature groups associated with the project.
 
-      :param limit: The maximum number of templates to be retrieved.
+      :param limit: Maximum number of templates to be retrieved.
       :type limit: int
-      :param start_after_id: An offset parameter to exclude all templates till the specified feature group template ID.
+      :param start_after_id: Offset parameter to exclude all templates till the specified feature group template ID.
       :type start_after_id: str
-      :param should_include_all_system_templates:
+      :param should_include_all_system_templates: If True, will include built-in templates.
       :type should_include_all_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
@@ -214,16 +214,13 @@ Classes
 
    .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None)
 
-      Retrieves the full initial description of the model training configuration options available for the specified project.
+      Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
-      The configuration options available are determined by the use case associated with the specified project. Refer to the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more information on use cases and use case specific configuration options.
-
-
-      :param feature_group_ids: The feature group IDs to be used for training
+      :param feature_group_ids: The feature group IDs to be used for training.
       :type feature_group_ids: list
-      :param for_retrain: If training config options are used for retrain
+      :param for_retrain: Whether the training config options are used for retraining.
       :type for_retrain: bool
-      :param current_training_config: This is None by default initially and represents the current state of the training config, with some options set, which shall be used to get new options after refresh.
+      :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
       :type current_training_config: dict
 
       :returns: An array of options that can be specified when training a model in this project.
@@ -234,9 +231,9 @@ Classes
 
       Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
-      :param training_config: The training config key/value pairs used to influence how split is calculated.
+      :param training_config: The training config key/value pairs used to influence how the split is calculated.
       :type training_config: dict
-      :param feature_group_ids: List of feature group ids provided by the user, including the required one for data split and others to influence how to split.
+      :param feature_group_ids: List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
       :type feature_group_ids: list
 
       :returns: The feature group containing the training data and folds information.
@@ -245,30 +242,30 @@ Classes
 
    .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None)
 
-      Trains a model for the specified project.
+      Train a model for the specified project.
 
-      Use this method to train a model in this project. This method supports user-specified training configurations defined in the getTrainingConfigOptions method.
+      This method trains a model in the given project, using user-specified training configurations defined in the `getTrainingConfigOptions` method.
 
 
-      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :param name: The name of the model. Defaults to "<Project Name> Model".
       :type name: str
       :param training_config: The training config key/value pairs used to train this model.
       :type training_config: dict
-      :param feature_group_ids: List of feature group ids provided by the user to train the model on.
+      :param feature_group_ids: List of feature group IDs provided by the user to train the model on.
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
       :type refresh_schedule: str
-      :param custom_algorithms: List of user-defined algorithms to train. If not set, will run default enabled custom algorithms.
+      :param custom_algorithms: List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
       :type custom_algorithms: list
-      :param custom_algorithms_only: Whether only run custom algorithms.
+      :param custom_algorithms_only: Whether to only run custom algorithms.
       :type custom_algorithms_only: bool
-      :param custom_algorithm_configs: Configs for each user-defined algorithm, key is algorithm name, value is the config serialized to json
+      :param custom_algorithm_configs: Configs for each user-defined algorithm; key is the algorithm name, value is the config serialized to JSON.
       :type custom_algorithm_configs: dict
-      :param builtin_algorithms: List of ids of the builtin algorithms provided by Abacus.AI to train. If not set, will try all applicable builtin algorithms.
+      :param builtin_algorithms: List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
       :type builtin_algorithms: list
-      :param cpu_size: Size of the cpu for the user-defined algorithms during train.
+      :param cpu_size: Size of the CPU for the user-defined algorithms during training.
       :type cpu_size: str
-      :param memory: Memory (in GB) for the user-defined algorithms during train.
+      :param memory: Memory (in GB) for the user-defined algorithms during training.
       :type memory: int
 
       :returns: The new model which is being trained.
@@ -277,24 +274,18 @@ Classes
 
    .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None)
 
-      Initializes a new Model from user provided Python code. If a list of input feature groups are supplied,
+      Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
-      we will provide as arguments to the train and predict functions with the materialized feature groups for those
-      input feature groups.
-
-      This method expects `functionSourceCode` to be a valid language source file which contains the functions named
-      `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of
-      training the model using `trainFunctionName` and `predictFunctionName` has no well defined return type,
-      as it returns the prediction made by the `predictFunctionName`, which can be anything
+      This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName` and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
 
 
-      :param function_source_code: Contents of a valid python source code file. The source code should contain the functions named trainFunctionName and predictFunctionName. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :param function_source_code: Contents of a valid Python source code file. The source code should contain the functions named `trainFunctionName` and `predictFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
       :type function_source_code: str
       :param train_function_name: Name of the function found in the source code that will be executed to train the model. It is not executed when this function is run.
       :type train_function_name: str
       :param training_input_tables: List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type training_input_tables: list
-      :param predict_function_name: Name of the function found in the source code that will be executed run predictions through model. It is not executed when this function is run.
+      :param predict_function_name: Name of the function found in the source code that will be executed to run predictions through the model. It is not executed when this function is run.
       :type predict_function_name: str
       :param predict_many_function_name: Name of the function found in the source code that will be executed for batch prediction of the model. It is not executed when this function is run.
       :type predict_many_function_name: str
@@ -302,13 +293,13 @@ Classes
       :type initialize_function_name: str
       :param name: The name you want your model to have. Defaults to "<Project Name> Model"
       :type name: str
-      :param cpu_size: Size of the cpu for the model training function
+      :param cpu_size: Size of the CPU for the model training function
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function
       :type memory: int
       :param training_config: Training configuration
       :type training_config: dict
-      :param exclusive_run: Decides if this model will be run exclusively OR along with other Abacus.ai algorithms
+      :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.ai algorithms
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
@@ -321,60 +312,58 @@ Classes
 
       Retrieves the list of models in the specified project.
 
-      :param project_id: The unique ID associated with the project.
+      :param project_id: Unique string identifier associated with the project.
       :type project_id: str
 
-      :returns: An array of models.
+      :returns: A list of models.
       :rtype: Model
 
 
    .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
 
-      Returns the information about how to call the custom train function.
+      Returns information about how to call the custom train function.
 
-      :param feature_group_names_for_training: A list of feature group table names that will be used for training
+      :param feature_group_names_for_training: A list of feature group table names to be used for training.
       :type feature_group_names_for_training: list
-      :param training_data_parameter_name_override: Override from feature group type to parameter name in train function.
+      :param training_data_parameter_name_override: Override from feature group type to parameter name in the train function.
       :type training_data_parameter_name_override: dict
-      :param training_config: Training config names to values for the options supported by Abacus.ai platform.
+      :param training_config: Training config names and values for the options supported by the Abacus.ai platform.
       :type training_config: dict
       :param custom_algorithm_config: User-defined config that can be serialized by JSON.
       :type custom_algorithm_config: dict
 
-      :returns: Information about how to call the customer provided train function.
+      :returns: Information about how to call the customer-provided train function.
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None, img_url_prefixes = None)
+   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
 
       Runs a model monitor for the specified project.
 
-      :param prediction_feature_group_id: The unique ID of the prediction data feature group
+      :param prediction_feature_group_id: The unique ID of the prediction data feature group.
       :type prediction_feature_group_id: str
-      :param training_feature_group_id: The unique ID of the training data feature group
+      :param training_feature_group_id: The unique ID of the training data feature group.
       :type training_feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
       :type name: str
-      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor.
       :type refresh_schedule: str
-      :param target_value: A target positive value for the label to compute bias and pr/auc for performance page (old style until UI is on prod) (TODO: @sheetal)
+      :param target_value: A target positive value for the label to compute bias and PR/AUC for performance page (old style until UI is on prod).
       :type target_value: str
-      :param target_value_bias: A target positive value for the label to compute bias
+      :param target_value_bias: A target positive value for the label to compute bias.
       :type target_value_bias: str
-      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
+      :param target_value_performance: A target positive value for the label to compute PR curve/AUC for performance page.
       :type target_value_performance: str
-      :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+      :param feature_mappings: A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
-      :param model_id: The Unique ID of the Model
+      :param model_id: The unique ID of the model.
       :type model_id: str
-      :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+      :param training_feature_mappings: A JSON map to override features for training_fature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
-      :param feature_group_base_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
+      :param feature_group_base_monitor_config: Selection strategy for the feature_group 1 with the feature group version if selected.
       :type feature_group_base_monitor_config: dict
-      :param feature_group_comparison_monitor_config: selection startegy for the feature_group 1 with the feature group version if selected
+      :param feature_group_comparison_monitor_config: Selection strategy for the feature_group 1 with the feature group version if selected.
       :type feature_group_comparison_monitor_config: dict
-      :param img_url_prefixes:
-      :type img_url_prefixes: dict
 
       :returns: The new model monitor that was created.
       :rtype: ModelMonitor
@@ -382,12 +371,12 @@ Classes
 
    .. py:method:: list_model_monitors()
 
-      Retrieves the list of models monitors in the specified project.
+      Retrieves the list of model monitors in the specified project.
 
-      :param project_id: The unique ID associated with the project.
+      :param project_id: Unique string identifier associated with the project.
       :type project_id: str
 
-      :returns: An array of model monitors.
+      :returns: A list of model monitors.
       :rtype: ModelMonitor
 
 
@@ -395,19 +384,19 @@ Classes
 
       Runs a vision drift monitor for the specified project.
 
-      :param prediction_feature_group_id: The unique ID of the prediction data feature group
+      :param prediction_feature_group_id: Unique string identifier of the prediction data feature group.
       :type prediction_feature_group_id: str
-      :param training_feature_group_id: The unique ID of the training data feature group
+      :param training_feature_group_id: Unique string identifier of the training data feature group.
       :type training_feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
       :type name: str
-      :param feature_mappings: A json map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+      :param feature_mappings: A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
       :type feature_mappings: dict
-      :param training_feature_mappings: A json map to override features for training_fature_group, where keys are column names and the values are feature data use types.
+      :param training_feature_mappings: A JSON map to override features for training_feature_group, where keys are column names and the values are feature data use types.
       :type training_feature_mappings: dict
-      :param target_value_performance: A target positive value for the label to compute pr curve/ auc for performance page
+      :param target_value_performance: A target positive value for the label to compute precision-recall curve/area under curve for performance page.
       :type target_value_performance: str
-      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor.
       :type refresh_schedule: str
 
       :returns: The new model monitor that was created.
@@ -416,39 +405,39 @@ Classes
 
    .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
 
-      Runs an eda (exploratory data analysis) for the specified project.
+      Run an Exploratory Data Analysis (EDA) for the specified project.
 
-      :param feature_group_id: The unique ID of the prediction data feature group
+      :param feature_group_id: The unique ID of the prediction data feature group.
       :type feature_group_id: str
       :param name: The name you want your model monitor to have. Defaults to "<Project Name> EDA".
       :type name: str
-      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created EDA
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created EDA.
       :type refresh_schedule: str
-      :param include_collinearity: Set to True if the eda type is collinearity
+      :param include_collinearity: Set to True if the EDA type is collinearity.
       :type include_collinearity: bool
-      :param include_data_consistency: Set to True if the eda type is Data consistency
+      :param include_data_consistency: Set to True if the EDA type is data consistency.
       :type include_data_consistency: bool
-      :param collinearity_keys:
+      :param collinearity_keys: List of features to use for collinearity
       :type collinearity_keys: list
-      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis
+      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis.
       :type primary_keys: list
-      :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency eda type
+      :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency EDA type.
       :type data_consistency_test_config: dict
-      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency eda type
+      :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency EDA type.
       :type data_consistency_reference_config: dict
 
-      :returns: The new eda object that was created.
+      :returns: The new EDA object that was created.
       :rtype: Eda
 
 
    .. py:method:: list_eda()
 
-      Retrieves the list of EDA (exploratory data analysis) in the specified project.
+      Retrieves the list of Exploratory Data Analysis (EDA) in the specified project.
 
-      :param project_id: The unique ID associated with the project.
+      :param project_id: Unique string identifier associated with the project.
       :type project_id: str
 
-      :returns: An array of eda objects.
+      :returns: List of EDA objects.
       :rtype: Eda
 
 
@@ -456,16 +445,16 @@ Classes
 
       Create a monitor alert for the given conditions and monitor
 
-      :param model_monitor_id: The unique identifier to a model monitor created under the project.
+      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
       :type model_monitor_id: str
-      :param alert_name: The alert name.
+      :param alert_name: Name of the alert.
       :type alert_name: str
-      :param condition_config: The condition to run the actions for the alert.
+      :param condition_config: Condition to run the actions for the alert.
       :type condition_config: dict
-      :param action_config: The configuration for the action of the alert
+      :param action_config: Configuration for the action of the alert.
       :type action_config: dict
 
-      :returns: An object describing the monitor alert
+      :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
 
 
@@ -473,10 +462,10 @@ Classes
 
       Creates a deployment token for the specified project.
 
-      Deployment tokens are used to authenticate requests to the prediction APIs and are scoped on the project level.
+      Deployment tokens are used to authenticate requests to the prediction APIs and are scoped to the project level.
 
 
-      :param name: The name of the deployement token
+      :param name: The name of the deployment token.
       :type name: str
 
       :returns: The deployment token.
@@ -487,7 +476,7 @@ Classes
 
       Retrieves a list of all deployments in the specified project.
 
-      :param project_id: The unique ID associated with the project.
+      :param project_id: The unique identifier associated with the project.
       :type project_id: str
 
       :returns: An array of deployments.
@@ -496,12 +485,12 @@ Classes
 
    .. py:method:: list_deployment_tokens()
 
-      Retrieves a list of all deployment tokens in the specified project.
+      Retrieves a list of all deployment tokens associated with the specified project.
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
 
-      :returns: An array of deployment tokens.
+      :returns: A list of deployment tokens.
       :rtype: DeploymentAuthToken
 
 
@@ -509,46 +498,44 @@ Classes
 
       List the refresh policies for the organization
 
-      :param dataset_ids: Comma separated list of Dataset IDs
+      :param dataset_ids: Comma-separated list of Dataset IDs.
       :type dataset_ids: list
-      :param model_ids: Comma separated list of Model IDs
+      :param model_ids: Comma-separated list of Model IDs.
       :type model_ids: list
-      :param deployment_ids: Comma separated list of Deployment IDs
+      :param deployment_ids: Comma-separated list of Deployment IDs.
       :type deployment_ids: list
-      :param batch_prediction_ids: Comma separated list of Batch Prediction IDs
+      :param batch_prediction_ids: Comma-separated list of Batch Prediction IDs.
       :type batch_prediction_ids: list
-      :param model_monitor_ids: Comma separated list of Model Monitor IDs.
+      :param model_monitor_ids: Comma-separated list of Model Monitor IDs.
       :type model_monitor_ids: list
-      :param prediction_metric_ids: Comma separated list of Prediction Metric IDs,
+      :param prediction_metric_ids: Comma-separated list of Prediction Metric IDs.
       :type prediction_metric_ids: list
 
-      :returns: List of all refresh policies in the organization
+      :returns: List of all refresh policies in the organization.
       :rtype: RefreshPolicy
 
 
    .. py:method:: list_batch_predictions()
 
-      Retrieves a list for the batch predictions in the project
+      Retrieves a list of batch predictions in the project.
 
-      :param project_id: The unique identifier of the project
+      :param project_id: Unique string identifier of the project.
       :type project_id: str
 
-      :returns: A list of batch prediction jobs.
+      :returns: List of batch prediction jobs.
       :rtype: BatchPrediction
 
 
-   .. py:method:: create_graph_dashboard(name, python_function_ids, variable_mappings = None)
+   .. py:method:: create_graph_dashboard(name, python_function_ids)
 
       Create a plot dashboard given selected python plots
 
-      :param name: The name of the dashboard
+      :param name: The name of the dashboard.
       :type name: str
-      :param python_function_ids: The list of python function ids to use in the graph dashboard
+      :param python_function_ids: A list of unique string identifiers for the python functions to be used in the graph dashboard.
       :type python_function_ids: list
-      :param variable_mappings:
-      :type variable_mappings: dict
 
-      :returns: An object describing the graph dashboard
+      :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
 
 
@@ -556,23 +543,23 @@ Classes
 
       Lists the graph dashboards for a project
 
-      :param project_id: The project id to list graph dashboards
+      :param project_id: Unique string identifier for the project to list graph dashboards from.
       :type project_id: str
 
-      :returns: An aray of graph dashboards
+      :returns: A list of graph dashboards.
       :rtype: GraphDashboard
 
 
    .. py:method:: list_builtin_algorithms(feature_group_ids = None, training_config = None)
 
-      Return list of builtin algorithms based on given input.
+      Return list of built-in algorithms based on given input.
 
-      :param feature_group_ids: List of feature group ids applied to the algorithms.
+      :param feature_group_ids: List of feature group identifiers applied to the algorithms.
       :type feature_group_ids: list
-      :param training_config: The training config key/value pairs used to train with the algorithm.
+      :param training_config: The training configuration key/value pairs used to train with the algorithm.
       :type training_config: dict
 
-      :returns: A list of applicable builtin algorithms.
+      :returns: List of applicable builtin algorithms.
       :rtype: Algorithm
 
 

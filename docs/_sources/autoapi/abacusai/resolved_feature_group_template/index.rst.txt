@@ -21,15 +21,15 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   Results from resolving a feature group template.
+   Final SQL from resolving a feature group template.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param featureGroupTemplateId: The unique identifier for this feature group template.
+   :param featureGroupTemplateId: Unique identifier for this feature group template.
    :type featureGroupTemplateId: str
-   :param resolvedVariables: A map from template variable names to parameters that were available during template resolution.
+   :param resolvedVariables: Map from template variable names to parameters available during template resolution.
    :type resolvedVariables: dict
-   :param resolvedSql: The SQL resulting from resolving the sql template by applying the resolved bindings.
+   :param resolvedSql: SQL resulting from resolving the SQL template by applying the resolved bindings.
    :type resolvedSql: str
    :param templateSql: SQL that can include variables to be replaced by values from the template config to resolve this template SQL into a valid SQL query for a feature group.
    :type templateSql: str

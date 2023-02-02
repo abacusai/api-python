@@ -32,19 +32,19 @@ Classes
    :param valueType: If the data_type is of type DICT_VALUES, this field specifies the expected value type of the values
    :type valueType: str
    :param valueOptions: The list of valid values for DICT_VALUES
-   :type valueOptions: list of string
+   :type valueOptions: list[str]
    :param value: The value of this option
-   :type value: string/number
+   :type value: optional[str, int, float, bool]
    :param default: The default value for this option
-   :type default: boolean/string/number
+   :type default: optional[str, int, float, bool]
    :param options: A list of options for this parameter
-   :type options: list of json objects
+   :type options: list[dict]
    :param description: A description of the parameter
    :type description: str
    :param required: True if the parameter is required for training
    :type required: bool
    :param lastModelValue: The last value used to train a model in this project
-   :type lastModelValue: string/number
+   :type lastModelValue: optional[str, int, float, bool]
    :param needsRefresh: True if training config needs to be fetched again when this config option is changed
    :type needsRefresh: bool
 

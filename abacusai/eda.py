@@ -50,13 +50,13 @@ class Eda(AbstractApiClass):
 
     def rerun(self):
         """
-        Reruns the specified eda object.
+        Reruns the specified EDA object.
 
         Args:
-            eda_id (str): The eda object to rerun.
+            eda_id (str): Unique string identifier of the EDA object to rerun.
 
         Returns:
-            Eda: The eda object that is being rerun.
+            Eda: The EDA object that is being rerun.
         """
         return self.client.rerun_eda(self.eda_id)
 
@@ -72,43 +72,43 @@ class Eda(AbstractApiClass):
 
     def describe(self):
         """
-        Retrieves a full description of the specified eda object.
+        Retrieves a full description of the specified EDA object.
 
         Args:
-            eda_id (str): The unique ID associated with the eda object.
+            eda_id (str): Unique string identifier associated with the EDA object.
 
         Returns:
-            Eda: The description of the eda object.
+            Eda: Description of the EDA object.
         """
         return self.client.describe_eda(self.eda_id)
 
     def list_versions(self, limit: int = 100, start_after_version: str = None):
         """
-        Retrieves a list of the versions for a given eda object.
+        Retrieves a list of versions for a given EDA object.
 
         Args:
-            limit (int): The max length of the list of all eda versions.
-            start_after_version (str): The id of the version after which the list starts.
+            limit (int): The maximum length of the list of all EDA versions.
+            start_after_version (str): The ID of the version after which the list starts.
 
         Returns:
-            EdaVersion: An array of eda versions.
+            EdaVersion: A list of EDA versions.
         """
         return self.client.list_eda_versions(self.eda_id, limit, start_after_version)
 
     def rename(self, name: str):
         """
-        Renames a model monitor
+        Renames an EDA
 
         Args:
-            name (str): The name to apply to the model monitor
+            name (str): The new name to apply to the model monitor.
         """
         return self.client.rename_eda(self.eda_id, name)
 
     def delete(self):
         """
-        Deletes the specified eda and all its versions.
+        Deletes the specified EDA and all its versions.
 
         Args:
-            eda_id (str): The ID of the eda to delete.
+            eda_id (str): Unique string identifier of the EDA to delete.
         """
         return self.client.delete_eda(self.eda_id)

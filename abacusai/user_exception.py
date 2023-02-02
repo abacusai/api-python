@@ -9,9 +9,9 @@ class UserException(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            type (str): 
-            value (str): 
-            traceback (str): 
+            type (str): The type of exception
+            value (str): The value of the exception
+            traceback (str): The traceback of the exception
     """
 
     def __init__(self, client, type=None, value=None, traceback=None):

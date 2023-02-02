@@ -42,15 +42,15 @@ Classes
 
       Returns the feature group deployed in the feature store project.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A deployment token used to authenticate access to created deployments. This token only authorizes predictions on deployments in this project, so it can be safely embedded inside an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :param query_data: A dictionary where the key is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the value is the unique value of the same entity.
       :type query_data: dict
-      :param limit_results: If present, will limit the number of results to the value provided.
+      :param limit_results: If provided, will limit the number of results to the value specified.
       :type limit_results: int
-      :param result_columns: If present, will limit the columns present in each result to the columns specified in this list
+      :param result_columns: If provided, will limit the columns present in each result to the columns specified in this list.
       :type result_columns: list
 
 
@@ -58,49 +58,49 @@ Classes
 
       Returns a prediction for Predictive Modeling
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, and is safe to embed in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :param query_data: A dictionary where the key is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the value is the unique value of the same entity.
       :type query_data: dict
 
 
    .. py:method:: predict_multiple(deployment_token, deployment_id, query_data = {})
 
-      Returns a list of predictions for Predictive Modeling
+      Returns a list of predictions for predictive modeling.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, and is safe to embed in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a list of dictionaries where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :param query_data: A list of dictionaries, where the 'key' is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the 'value' is the unique value of the same entity.
       :type query_data: list
 
 
    .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data = {})
 
-      Returns a list of predictions for Predictive Modeling
+      Returns a list of predictions for Predictive Modeling.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the source dataset name and 'Value' will be a list of records corresponding to the dataset rows
+      :param query_data: A dictionary where the 'key' is the source dataset name, and the 'value' is a list of records corresponding to the dataset rows.
       :type query_data: dict
 
 
    .. py:method:: predict_lead(deployment_token, deployment_id, query_data, explain_predictions = False, explainer_type = None)
 
-      Returns the probability of a user to be a lead on the basis of his/her interaction with the service/product and user's own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
+      Returns the probability of a user being a lead based on their interaction with the service/product and their own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary containing user attributes and/or user's interaction data with the product/service (e.g. number of click, items in cart, etc.).
+      :param query_data: A dictionary containing user attributes and/or user's interaction data with the product/service (e.g. number of clicks, items in cart, etc.).
       :type query_data: dict
-      :param explain_predictions: Will explain predictions for lead
+      :param explain_predictions: Will explain predictions for leads
       :type explain_predictions: bool
       :param explainer_type: Type of explainer to use for explanations
       :type explainer_type: str
@@ -108,37 +108,37 @@ Classes
 
    .. py:method:: predict_churn(deployment_token, deployment_id, query_data)
 
-      Returns a probability of a user to churn out in response to his/her interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
+      Returns the probability of a user to churn out in response to their interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :param query_data: This will be a dictionary where the 'key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' will be the unique value of the same entity.
       :type query_data: dict
 
 
    .. py:method:: predict_takeover(deployment_token, deployment_id, query_data)
 
-      Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+      Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in the dataset mapped to the column mappings in our system (e.g., column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary containing account activity characteristics (e.g. login id, login duration, login type, ip address, etc.).
+      :param query_data: A dictionary containing account activity characteristics (e.g., login id, login duration, login type, IP address, etc.).
       :type query_data: dict
 
 
    .. py:method:: predict_fraud(deployment_token, deployment_id, query_data)
 
-      Returns a probability of a transaction performed under a specific account as being a fraud or not. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
+      Returns the probability of a transaction performed under a specific account being fraudulent or not. Note that the inputs to this method, wherever applicable, should be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.).
+      :param query_data: A dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.).
       :type query_data: dict
 
 
@@ -146,25 +146,25 @@ Classes
 
       Returns a classification prediction
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :param query_data: A dictionary where the 'Key' is the column name (e.g. a column with the name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'Value' is the unique value of the same entity.
       :type query_data: dict
-      :param threshold: float value that is applied on the popular class label.
+      :param threshold: A float value that is applied on the popular class label.
       :type threshold: float
-      :param threshold_class: label upon which the threshold is added (Binary labels only)
+      :param threshold_class: The label upon which the threshold is added (binary labels only).
       :type threshold_class: str
-      :param thresholds: maps labels to thresholds (Multi label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5
+      :param thresholds: Maps labels to thresholds (multi-label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5.
       :type thresholds: list
-      :param explain_predictions: If true, returns the SHAP explanations for all input features.
+      :param explain_predictions: If True, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
-      :param fixed_features: Set of input features to treat as constant for explanations.
+      :param fixed_features: A set of input features to treat as constant for explanations.
       :type fixed_features: list
       :param nested: If specified generates prediction delta for each index of the specified nested feature.
       :type nested: str
-      :param explainer_type:
+      :param explainer_type: The type of explainer to use.
       :type explainer_type: str
 
 
@@ -174,23 +174,23 @@ Classes
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and 'Value' will be the unique value of the same entity.
+      :param query_data: A dictionary where the 'key' is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' is the unique value of the same entity.
       :type query_data: dict
       :param explain_predictions: If true, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
       :param fixed_features: Set of input features to treat as constant for explanations.
       :type fixed_features: list
-      :param nested: If specified generates prediction delta for each index of the specified nested feature.
+      :param nested: If specified, generates prediction delta for each index of the specified nested feature.
       :type nested: str
-      :param explainer_type:
+      :param explainer_type: The type of explainer to use.
       :type explainer_type: str
 
 
    .. py:method:: get_anomalies(deployment_token, deployment_id, threshold = None, histogram = False)
 
-      Returns a list of anomalies from the training dataset
+      Returns a list of anomalies from the training dataset.
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -198,13 +198,13 @@ Classes
       :type deployment_id: str
       :param threshold: The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99.
       :type threshold: float
-      :param histogram: If True, will return a histogram of the distribution of all points
+      :param histogram: If True, will return a histogram of the distribution of all points.
       :type histogram: bool
 
 
    .. py:method:: is_anomaly(deployment_token, deployment_id, query_data = None)
 
-      Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
+      Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -224,7 +224,7 @@ Classes
       :type deployment_id: str
       :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'store_id' in your dataset) mapped to the column mapping ITEM_ID that uniquely identifies the entity against which forecasting is performed and 'Value' will be the unique value of the same entity.
       :type query_data: dict
-      :param future_data: This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'String'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
+      :param future_data: This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'str'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
       :type future_data: dict
       :param num_predictions: The number of timestamps to predict in the future.
       :type num_predictions: int
@@ -246,29 +246,29 @@ Classes
       :type deployment_id: str
       :param vector: Input vector to perform the k nearest neighbors with.
       :type vector: list
-      :param k: Overrideable number of items to return
+      :param k: Overrideable number of items to return.
       :type k: int
-      :param distance: Specify the distance function to use when finding nearest neighbors
+      :param distance: Specify the distance function to use when finding nearest neighbors.
       :type distance: str
-      :param include_score: If True, will return the score alongside the resulting embedding value
+      :param include_score: If True, will return the score alongside the resulting embedding value.
       :type include_score: bool
 
 
    .. py:method:: get_multiple_k_nearest(deployment_token, deployment_id, queries)
 
-      Returns the k nearest neighbors for the queries provided
+      Returns the k nearest neighbors for the queries provided.
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param queries: List of Mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See getKNearest for additional information about the supported parameters
+      :param queries: List of mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See `getKNearest` for additional information about the supported parameters.
       :type queries: list
 
 
    .. py:method:: get_labels(deployment_token, deployment_id, query_data, threshold = None)
 
-      Returns a list of scored labels from
+      Returns a list of scored labels from a deployment.
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -276,8 +276,20 @@ Classes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
-      :param threshold: Deprecated
+      :param threshold: This argument is deprecated and will be ignored.
       :type threshold: None
+
+
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf)
+
+      Extracts text from the provided PDF and returns a list of recognized labels and their scores
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param pdf: The pdf to predict on
+      :type pdf: io.TextIOBase
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
@@ -300,29 +312,29 @@ Classes
       :type score_field: str
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
-      :param restrict_items: It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restrition is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
+      :param restrict_items: It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restriction is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
       :type restrict_items: list
-      :param exclude_items: It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is particularly useful if there's a list of items that you know is of no use in some particular scenario and you don't want to show those items present in that list.
+      :param exclude_items: It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is
       :type exclude_items: list
-      :param explore_fraction: The fraction of recommendations that is to be new items.
+      :param explore_fraction: Explore fraction.
       :type explore_fraction: float
 
 
    .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
-      Returns a list of items with personalized promotions on them for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
+      Returns a list of items with personalized promotions for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
+      :param query_data: This should be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
       :type query_data: dict
       :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
       :type preserve_ranks: list
       :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
       :type preserve_unknown_items: bool
-      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
+      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
 
@@ -338,9 +350,9 @@ Classes
       :type query_data: dict
       :param preserve_ranks: List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
       :type preserve_ranks: list
-      :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
+      :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved
       :type preserve_unknown_items: bool
-      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
+      :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there is a type of item that might be less popular but you want to promote it or there is an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
 
@@ -352,7 +364,7 @@ Classes
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_name' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the user against which related items are determined and 'Value' will be the unique value of the same item. For example, if you have the column name 'user_name' mapped to the column mapping 'USER_ID', then the query must have the exact same column name (user_name) as key and the name of the user (John Doe) as value.
+      :param query_data: This will be a dictionary where the 'key' will be the column name (e.g. a column with name 'user_name' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the user against which related items are determined and the 'value' will be the unique value of the same item. For example, if you have the column name 'user_name' mapped to the column mapping 'USER_ID', then the query must have the exact same column name (user_name) as key and the name of the user (John Doe) as value.
       :type query_data: dict
       :param num_items: The number of items to recommend on one page. By default, it is set to 50 items per page.
       :type num_items: int
@@ -360,105 +372,95 @@ Classes
       :type page: int
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
       :type scaling_factors: list
-      :param restrict_items: It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restrition is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
+      :param restrict_items: It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restriction is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
       :type restrict_items: list
       :param exclude_items: It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is particularly useful if there's a list of items that you know is of no use in some particular scenario and you don't want to show those items present in that list.
       :type exclude_items: list
 
 
-   .. py:method:: get_feature_group_rows(deployment_token, deployment_id, query_data)
-
-      :param deployment_token:
-      :type deployment_token: str
-      :param deployment_id:
-      :type deployment_id: str
-      :param query_data:
-      :type query_data: dict
-
-
    .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None)
 
-      TODO
+      Return a chat response which continues the conversation based on the input messages and search results.
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param messages: List of chornologically ordered messages. Starts with a user message and alternates sources. A message is a dict with attributes: is_user (Bool): Whether the message is from the user. text (String): The message's text
+      :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes: msg_id (Integer): The corresponding messages index result: List[NlpSearchPrediction]
+      :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
       :type search_results: list
 
 
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
 
-      TODO
+      Return the most relevant search results to the search query from the uploaded documents.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be securely embedded in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
+      :param query_data: A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
       :type query_data: dict
 
 
    .. py:method:: get_sentiment(deployment_token, deployment_id, document)
 
-      TODO
+      Predicts sentiment on a document
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique string identifier for a deployment created under this project.
       :type deployment_id: str
-      :param document: # TODO
+      :param document: The document to be analyzed for sentiment.
       :type document: str
 
 
    .. py:method:: get_entailment(deployment_token, deployment_id, document)
 
-      TODO
+      Predicts the classification of the document
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param document: # TODO
+      :param document: The document to be classified.
       :type document: str
 
 
    .. py:method:: get_classification(deployment_token, deployment_id, document)
 
-      TODO
+      Predicts the classification of the document
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param document: # TODO
+      :param document: The document to be classified.
       :type document: str
 
 
    .. py:method:: get_summary(deployment_token, deployment_id, query_data)
 
-      Returns a json of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
+      Returns a JSON of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param query_data: Raw Data dictionary containing the required document data - must have a key document corresponding to a DOCUMENT type text as value.
+      :param query_data: Raw data dictionary containing the required document data - must have a key 'document' corresponding to a DOCUMENT type text as value.
       :type query_data: dict
 
 
    .. py:method:: predict_language(deployment_token, deployment_id, query_data)
 
-      TODO
+      Predicts the language of the text
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments within this project, making it safe to embed this model in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique string identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: # TODO
+      :param query_data: The input string to detect.
       :type query_data: str
 
 
@@ -466,13 +468,13 @@ Classes
 
       Get all positive assignments that match a query.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: specifies the set of assignments being requested.
+      :param query_data: Specifies the set of assignments being requested.
       :type query_data: dict
-      :param forced_assignments: set of assignments to force and resolve before returning query results.
+      :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
 
 
@@ -480,11 +482,11 @@ Classes
 
       Check for any constraints violated by the overrides.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier for a deployment created under the project.
       :type deployment_id: str
-      :param query_data: assignment overrides to the solution.
+      :param query_data: Assignment overrides to the solution.
       :type query_data: dict
 
 
@@ -492,29 +494,29 @@ Classes
 
       Make predictions for a given blob, e.g. image, audio
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param blob: The multipart/form-data of the data
+      :param blob: The multipart/form-data of the data.
       :type blob: io.TextIOBase
-      :param blob_key_name: the key to access this blob data in the model query data
+      :param blob_key_name: The key to access the blob data in the model query data.
       :type blob_key_name: str
 
 
    .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
 
-      Describe the similarity between image and categories.
+      Describe the similarity between an image and a list of categories.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: Unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param image: The image to describe
+      :param image: Image to describe.
       :type image: io.TextIOBase
-      :param categories: A list of candidate categories to compare with the image
+      :param categories: List of candidate categories to compare with the image.
       :type categories: list
-      :param top_n: Return the N most similar categories
+      :param top_n: Return the N most similar categories.
       :type top_n: int
 
 
@@ -522,23 +524,23 @@ Classes
 
       Transcribe the audio
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to make predictions on deployments in this project, so it can be safely embedded in an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param audio: The audio to transcribe
+      :param audio: The audio to transcribe.
       :type audio: io.TextIOBase
 
 
    .. py:method:: classify_image(deployment_token, deployment_id, image)
 
-      Classify the image
+      Classify an image.
 
-      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :param deployment_token: A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
-      :param deployment_id: The unique identifier to a deployment created under the project.
+      :param deployment_id: A unique string identifier to a deployment created under the project.
       :type deployment_id: str
-      :param image: The image to classify
+      :param image: The binary data of the image to classify.
       :type image: io.TextIOBase
 
 

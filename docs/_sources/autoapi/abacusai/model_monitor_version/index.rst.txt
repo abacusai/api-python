@@ -36,9 +36,9 @@ Classes
    :param monitoringCompletedAt: The end time and date of the monitoring process.
    :type monitoringCompletedAt: str
    :param trainingFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is monitoring.
-   :type trainingFeatureGroupVersion: unique string identifiers
+   :type trainingFeatureGroupVersion: list[str]
    :param predictionFeatureGroupVersion: Feature group version IDs that this refresh pipeline run is monitoring.
-   :type predictionFeatureGroupVersion: unique string identifiers
+   :type predictionFeatureGroupVersion: list[str]
    :param error: Relevant error if the status is FAILED.
    :type error: str
    :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
@@ -46,16 +46,16 @@ Classes
    :param failedDeploymentIds: List of failed deployment IDs.
    :type failedDeploymentIds: list
    :param metricConfigs: List of metric configs for the model monitor instance.
-   :type metricConfigs: json field
+   :type metricConfigs: list[dict]
    :param featureGroupMonitorConfigs: Configurations for feature group monitor
    :type featureGroupMonitorConfigs: dict
    :param metricTypes: List of metric types.
-   :type metricTypes: dict
+   :type metricTypes: list
    :param modelVersion: Model version IDs that this refresh pipeline run is monitoring.
-   :type modelVersion: unique string identifiers
-   :param batchPredictionVersion:
+   :type modelVersion: list[str]
+   :param batchPredictionVersion: The batch prediction version this model monitor is monitoring
    :type batchPredictionVersion: str
-   :param edaConfigs:
+   :param edaConfigs: The list of eda configs for the version
    :type edaConfigs: list
 
    .. py:method:: __repr__()
@@ -75,10 +75,10 @@ Classes
 
       Gets the label and prediction drifts for a model monitor.
 
-      :param model_monitor_version: The unique identifier to a model monitor version created under the project.
+      :param model_monitor_version: Unique string identifier for a model monitor version created under the project.
       :type model_monitor_version: str
 
-      :returns: An object describing training and prediction output label and prediction distributions.
+      :returns: Object describing training and prediction output label and prediction distributions.
       :rtype: DriftDistributions
 
 
@@ -92,9 +92,9 @@ Classes
 
    .. py:method:: describe()
 
-      Retrieves a full description of the specified model monitor version
+      Retrieves a full description of the specified model monitor version.
 
-      :param model_monitor_version: The unique version ID of the model monitor version
+      :param model_monitor_version: The unique version ID of the model monitor version.
       :type model_monitor_version: str
 
       :returns: A model monitor version.
@@ -105,7 +105,7 @@ Classes
 
       Deletes the specified model monitor version.
 
-      :param model_monitor_version: The ID of the model monitor version to delete.
+      :param model_monitor_version: Unique identifier of the model monitor version to delete.
       :type model_monitor_version: str
 
 
@@ -113,9 +113,9 @@ Classes
 
       Provides the data needed for decile metrics associated with the model monitor.
 
-      :param metric_type: The metric type to get data for.
+      :param metric_type: The type of metric to get data for.
       :type metric_type: str
-      :param actual_values_to_detail:
+      :param actual_values_to_detail: The actual values to detail.
       :type actual_values_to_detail: list
 
       :returns: Data associated with the metric.
@@ -124,12 +124,12 @@ Classes
 
    .. py:method:: list_monitor_alert_versions_for_monitor_version()
 
-      Retrieves the list of monitor alerts version for a specified monitor instance
+      Retrieves the list of monitor alert versions for a specified monitor instance.
 
       :param model_monitor_version: The unique ID associated with the model monitor.
       :type model_monitor_version: str
 
-      :returns: An array of monitor alerts.
+      :returns: A list of monitor alert versions.
       :rtype: MonitorAlertVersion
 
 

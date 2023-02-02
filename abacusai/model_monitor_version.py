@@ -12,17 +12,17 @@ class ModelMonitorVersion(AbstractApiClass):
             modelMonitorId (str): A reference to the model monitor this version belongs to.
             monitoringStartedAt (str): The start time and date of the monitoring process.
             monitoringCompletedAt (str): The end time and date of the monitoring process.
-            trainingFeatureGroupVersion (unique string identifiers): Feature group version IDs that this refresh pipeline run is monitoring.
-            predictionFeatureGroupVersion (unique string identifiers): Feature group version IDs that this refresh pipeline run is monitoring.
+            trainingFeatureGroupVersion (list[str]): Feature group version IDs that this refresh pipeline run is monitoring.
+            predictionFeatureGroupVersion (list[str]): Feature group version IDs that this refresh pipeline run is monitoring.
             error (str): Relevant error if the status is FAILED.
             pendingDeploymentIds (list): List of deployment IDs where deployment is pending.
             failedDeploymentIds (list): List of failed deployment IDs.
-            metricConfigs (json field): List of metric configs for the model monitor instance.
+            metricConfigs (list[dict]): List of metric configs for the model monitor instance.
             featureGroupMonitorConfigs (dict): Configurations for feature group monitor
-            metricTypes (dict): List of metric types.
-            modelVersion (unique string identifiers): Model version IDs that this refresh pipeline run is monitoring.
-            batchPredictionVersion (str): 
-            edaConfigs (list): 
+            metricTypes (list): List of metric types.
+            modelVersion (list[str]): Model version IDs that this refresh pipeline run is monitoring.
+            batchPredictionVersion (str): The batch prediction version this model monitor is monitoring
+            edaConfigs (list): The list of eda configs for the version
     """
 
     def __init__(self, client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None):
@@ -61,10 +61,10 @@ class ModelMonitorVersion(AbstractApiClass):
         Gets the label and prediction drifts for a model monitor.
 
         Args:
-            model_monitor_version (str): The unique identifier to a model monitor version created under the project.
+            model_monitor_version (str): Unique string identifier for a model monitor version created under the project.
 
         Returns:
-            DriftDistributions: An object describing training and prediction output label and prediction distributions.
+            DriftDistributions: Object describing training and prediction output label and prediction distributions.
         """
         return self.client.get_prediction_drift(self.model_monitor_version)
 
@@ -80,10 +80,10 @@ class ModelMonitorVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Retrieves a full description of the specified model monitor version
+        Retrieves a full description of the specified model monitor version.
 
         Args:
-            model_monitor_version (str): The unique version ID of the model monitor version
+            model_monitor_version (str): The unique version ID of the model monitor version.
 
         Returns:
             ModelMonitorVersion: A model monitor version.
@@ -95,7 +95,7 @@ class ModelMonitorVersion(AbstractApiClass):
         Deletes the specified model monitor version.
 
         Args:
-            model_monitor_version (str): The ID of the model monitor version to delete.
+            model_monitor_version (str): Unique identifier of the model monitor version to delete.
         """
         return self.client.delete_model_monitor_version(self.model_monitor_version)
 
@@ -104,8 +104,8 @@ class ModelMonitorVersion(AbstractApiClass):
         Provides the data needed for decile metrics associated with the model monitor.
 
         Args:
-            metric_type (str): The metric type to get data for.
-            actual_values_to_detail (list): 
+            metric_type (str): The type of metric to get data for.
+            actual_values_to_detail (list): The actual values to detail.
 
         Returns:
             ModelMonitorVersionMetricData: Data associated with the metric.
@@ -114,13 +114,13 @@ class ModelMonitorVersion(AbstractApiClass):
 
     def list_monitor_alert_versions_for_monitor_version(self):
         """
-        Retrieves the list of monitor alerts version for a specified monitor instance
+        Retrieves the list of monitor alert versions for a specified monitor instance.
 
         Args:
             model_monitor_version (str): The unique ID associated with the model monitor.
 
         Returns:
-            MonitorAlertVersion: An array of monitor alerts.
+            MonitorAlertVersion: A list of monitor alert versions.
         """
         return self.client.list_monitor_alert_versions_for_monitor_version(self.model_monitor_version)
 
@@ -129,8 +129,8 @@ class ModelMonitorVersion(AbstractApiClass):
         Returns monitoring logs for the model.
 
         Args:
-            stdout (bool):  Set True to get info logs
-            stderr (bool):  Set True to get error logs
+            stdout (bool): Set True to get info logs
+            stderr (bool): Set True to get error logs
 
         Returns:
             FunctionLogs: A function logs.

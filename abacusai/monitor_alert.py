@@ -12,7 +12,7 @@ class MonitorAlert(AbstractApiClass):
             monitorAlertId (str): The unique identifier of the monitor alert.
             createdAt (str): Date and time at which the monitor alert was created.
             projectId (str): The project this alert belongs to.
-            modelMonitorId (unique string identifiers): The monitor id that this alert is associated with
+            modelMonitorId (str): The monitor id that this alert is associated with
             conditionConfig (dict): The condition configuration for this alert.
             actionConfig (dict): The action configuration for this alert.
             conditionDescription (str): User friendly description of the condition
@@ -48,15 +48,15 @@ class MonitorAlert(AbstractApiClass):
 
     def update(self, alert_name: str = None, condition_config: dict = None, action_config: dict = None):
         """
-
+        Update monitor alert
 
         Args:
-            alert_name (str): 
-            condition_config (dict): 
-            action_config (dict): 
+            alert_name (str): Name of the alert.
+            condition_config (dict): Condition to run the actions for the alert.
+            action_config (dict): Configuration for the action of the alert.
 
         Returns:
-            MonitorAlert: None
+            MonitorAlert: Object describing the monitor alert.
         """
         return self.client.update_monitor_alert(self.monitor_alert_id, alert_name, condition_config, action_config)
 
@@ -75,10 +75,10 @@ class MonitorAlert(AbstractApiClass):
         Describes a given monitor alert id
 
         Args:
-            monitor_alert_id (str): The unique identifier to a monitor alert
+            monitor_alert_id (str): Unique identifier of the monitor alert.
 
         Returns:
-            MonitorAlert: An object describing the monitor alert
+            MonitorAlert: Object containing information about the monitor alert.
         """
         return self.client.describe_monitor_alert(self.monitor_alert_id)
 
@@ -87,18 +87,18 @@ class MonitorAlert(AbstractApiClass):
         Reruns a given monitor alert from latest monitor instance
 
         Args:
-            monitor_alert_id (str): The unique identifier to a monitor alert
+            monitor_alert_id (str): Unique identifier of a monitor alert.
 
         Returns:
-            MonitorAlert: An object describing the monitor alert
+            MonitorAlert: Object describing the monitor alert.
         """
         return self.client.run_monitor_alert(self.monitor_alert_id)
 
     def delete(self):
         """
-
+        Delets a monitor alert
 
         Args:
-            monitor_alert_id (str): 
+            monitor_alert_id (str): The unique string identifier of the alert to delete.
         """
         return self.client.delete_monitor_alert(self.monitor_alert_id)

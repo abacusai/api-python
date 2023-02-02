@@ -72,9 +72,9 @@ class Dataset(AbstractApiClass):
         Creates a new version of the specified dataset.
 
         Args:
-            location (str): A new external URI to import the dataset from. If not specified, the last location will be used.
-            file_format (str): The fileFormat to be used. If not specified, the service will try to detect the file format.
-            csv_delimiter (str): If the file format is CSV, use a specific csv delimiter.
+            location (str): External URI to import the dataset from. If not specified, the last location will be used.
+            file_format (str): File format to be used. If not specified, the service will try to detect the file format.
+            csv_delimiter (str): If the file format is CSV, use a specific CSV delimiter.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
 
         Returns:
@@ -84,13 +84,13 @@ class Dataset(AbstractApiClass):
 
     def create_version_from_database_connector(self, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
         """
-        Creates a new version of the specified dataset
+        Creates a new version of the specified dataset.
 
         Args:
-            object_name (str): If applicable, the name/id of the object in the service to query. If not specified, the last name will be used.
+            object_name (str): The name/ID of the object in the service to query. If not specified, the last name will be used.
             columns (str): The columns to query from the external service object. If not specified, the last columns will be used.
             query_arguments (str): Additional query arguments to filter the data. If not specified, the last arguments will be used.
-            sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override objectName, columns, and queryArguments
+            sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override object_name, columns, and query_arguments.
 
         Returns:
             DatasetVersion: The new Dataset Version created.
@@ -99,10 +99,10 @@ class Dataset(AbstractApiClass):
 
     def create_version_from_application_connector(self, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None):
         """
-        Creates a new version of the specified dataset
+        Creates a new version of the specified dataset.
 
         Args:
-            object_id (str): If applicable, the id of the object in the service to query. If not specified, the last name will be used.
+            object_id (str): The ID of the object in the service to query. If not specified, the last name will be used.
             start_timestamp (int): The Unix timestamp of the start of the period that will be queried.
             end_timestamp (int): The Unix timestamp of the end of the period that will be queried.
 
@@ -116,57 +116,57 @@ class Dataset(AbstractApiClass):
         Creates a new version of the specified dataset using a local file upload.
 
         Args:
-            file_format (str): The file_format to be used. If not specified, the service will try to detect the file format.
+            file_format (str): File format to be used. If not specified, the service will attempt to detect the file format.
 
         Returns:
-            Upload: A token to be used when uploading file parts.
+            Upload: Token to be used when uploading file parts.
         """
         return self.client.create_dataset_version_from_upload(self.dataset_id, file_format)
 
     def snapshot_streaming_data(self):
         """
-        Snapshots the current data in the streaming dataset for training.
+        Snapshots the current data in the streaming dataset.
 
         Args:
             dataset_id (str): The unique ID associated with the dataset.
 
         Returns:
-            DatasetVersion: The new Dataset Version created.
+            DatasetVersion: The new Dataset Version created by taking a snapshot of the current data in the streaming dataset.
         """
         return self.client.snapshot_streaming_data(self.dataset_id)
 
     def set_column_data_type(self, column: str, data_type: str):
         """
-        Set a column's type in a specified dataset.
+        Set a Dataset's column type.
 
         Args:
             column (str): The name of the column.
-            data_type (str): The type of the data in the column.  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType.
+            data_type (str): The type of the data in the column. Refer to the [guide on data types](https://api.abacus.ai/app/help/class/DataType) for more information. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
 
         Returns:
-            Dataset: The dataset and schema after the data_type has been set
+            Dataset: The dataset and schema after the data type has been set.
         """
         return self.client.set_dataset_column_data_type(self.dataset_id, column, data_type)
 
     def set_streaming_retention_policy(self, retention_hours: int = None, retention_row_count: int = None):
         """
-        Sets the streaming retention policy
+        Sets the streaming retention policy.
 
         Args:
-            retention_hours (int): The number of hours to retain streamed data in memory
-            retention_row_count (int): The number of rows to retain streamed data in memory
+            retention_hours (int): Number of hours to retain streamed data in memory.
+            retention_row_count (int): Number of rows to retain streamed data in memory.
         """
         return self.client.set_streaming_retention_policy(self.dataset_id, retention_hours, retention_row_count)
 
     def get_schema(self):
         """
-        Retrieves the column schema of a dataset
+        Retrieves the column schema of a dataset.
 
         Args:
-            dataset_id (str): The Dataset schema to lookup.
+            dataset_id (str): Unique string identifier of the dataset schema to look up.
 
         Returns:
-            DatasetColumn: List of Column schema definitions
+            DatasetColumn: List of column schema definitions.
         """
         return self.client.get_dataset_schema(self.dataset_id)
 
@@ -197,8 +197,8 @@ class Dataset(AbstractApiClass):
         Retrieves a list of all dataset versions for the specified dataset.
 
         Args:
-            limit (int): The max length of the list of all dataset versions.
-            start_after_version (str): The id of the version after which the list starts.
+            limit (int): The maximum length of the list of all dataset versions.
+            start_after_version (str): The ID of the version after which the list starts.
 
         Returns:
             DatasetVersion: A list of dataset versions.
@@ -207,26 +207,26 @@ class Dataset(AbstractApiClass):
 
     def attach_to_project(self, project_id: str, dataset_type: str):
         """
-        [DEPRECATED] Attaches the dataset to the project.
+        [DEPRECATED] Attach a dataset to the project.
 
         Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
 
 
         Args:
-            project_id (str): The project to attach the dataset to.
-            dataset_type (str): The dataset has to be a type that is associated with the use case of your project. Please see (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for the datasetTypes that are supported per use case.
+            project_id (str): Unique identifier of the project to attach the dataset to.
+            dataset_type (str): Enum string representing the dataset type, associated with the use case of the project. Refer to the [Use Case Documentation](https://api.abacus.ai/app/help/useCases) for the supported dataset types per use case.
 
         Returns:
-            Schema: An array of columns descriptions.
+            Schema: An array of column descriptions.
         """
         return self.client.attach_dataset_to_project(self.dataset_id, project_id, dataset_type)
 
     def remove_from_project(self, project_id: str):
         """
-        [DEPRECATED] Removes a dataset from a project.
+        [DEPRECATED] Removes the dataset with the specified dataset from the project.
 
         Args:
-            project_id (str): The unique ID associated with the project.
+            project_id (str): Unique string identifier of the project.
         """
         return self.client.remove_dataset_from_project(self.dataset_id, project_id)
 
@@ -234,11 +234,8 @@ class Dataset(AbstractApiClass):
         """
         Deletes the specified dataset from the organization.
 
-        The dataset cannot be deleted if it is currently attached to a project.
-
-
         Args:
-            dataset_id (str): The dataset to delete.
+            dataset_id (str): Unique string identifier of the dataset to delete.
         """
         return self.client.delete_dataset(self.dataset_id)
 

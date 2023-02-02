@@ -3,11 +3,11 @@ from .return_class import AbstractApiClass
 
 class ModelLocation(AbstractApiClass):
     """
-        Location information for plug and play model.
+        Provide location information for the plug-and-play model.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            location (str): Location of the plug and play model.
+            location (str): Location of the plug-and-play model.
             artifactNames (dict): Representations of the names of the artifacts used to create the model.
     """
 

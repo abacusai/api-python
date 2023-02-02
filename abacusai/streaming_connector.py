@@ -41,7 +41,7 @@ class StreamingConnector(AbstractApiClass):
         Checks to see if Abacus.AI can access the streaming connector.
 
         Args:
-            streaming_connector_id (str): The unique identifier for the streaming connector.
+            streaming_connector_id (str): Unique string identifier for the streaming connector to be checked for Abacus.AI access.
         """
         return self.client.verify_streaming_connector(self.streaming_connector_id)
 
@@ -50,7 +50,7 @@ class StreamingConnector(AbstractApiClass):
         Renames a Streaming Connector
 
         Args:
-            name (str): A new name for the streaming connector
+            name (str): A new name for the streaming connector.
         """
         return self.client.rename_streaming_connector(self.streaming_connector_id, name)
 

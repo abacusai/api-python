@@ -1,0 +1,50 @@
+:py:mod:`abacusai.module`
+=========================
+
+.. py:module:: abacusai.module
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.module.Module
+
+
+
+
+.. py:class:: Module(client, name=None, createdAt=None, notebookId=None, codeSource={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Customer created python module
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name to identify the algorithm. Only uppercase letters, numbers, and underscores are allowed.
+   :type name: str
+   :param createdAt: The date and time when the Python function was created, in ISO-8601 format.
+   :type createdAt: str
+   :param notebookId: The unique string identifier of the notebook used to create or edit the loss function.
+   :type notebookId: str
+   :param codeSource: Information about the source code of the Python function.
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

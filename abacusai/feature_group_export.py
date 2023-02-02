@@ -7,23 +7,23 @@ class FeatureGroupExport(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureGroupExportId (str): The unique identifier for this export
-            featureGroupVersion (str): The version of the feature group being exported
-            connectorType (str): Either DATABASE_CONNECTOR or FILE_CONNECTOR
-            outputLocation (str): The File Connector location the feature group is being written to
-            fileFormat (str): The file format being written to outputLocation
-            databaseConnectorId (str): The database connector ID used
-            objectName (str): The database connector's object to write to
-            writeMode (str): UPSERT or INSERT for writing to the database connector
-            databaseFeatureMapping (dict): The column/feature pairs mapping the features to the database columns
-            idColumn (str): The id column to use as the upsert key
-            status (str): The current status of the export.
-            createdAt (str): The timestamp at which the export was created.
-            exportCompletedAt (str): The timestamp at which the export completed
-            additionalIdColumns (list of string): For database connectors which support it, additional ID columns to use as a complex key for upserting
-            error (str): If status is FAILED, this field will be populated with an error.
-            databaseOutputError (bool): If true, there were errors reported by the database connector while writing
-            projectConfig (dict): The project config for this feature group
+            featureGroupExportId (str): Unique identifier for this export.
+            featureGroupVersion (str): Version of the feature group being exported.
+            connectorType (str): The type of connector
+            outputLocation (str): File Connector location the feature group is being written to.
+            fileFormat (str): File format being written to `output_location`.
+            databaseConnectorId (str): Database connector ID used.
+            objectName (str): Database connector's object to write to.
+            writeMode (str): `UPSERT` or `INSERT` for writing to the database connector.
+            databaseFeatureMapping (dict): Column/feature pairs mapping the features to the database columns.
+            idColumn (str): ID column to use as the upsert key.
+            status (str): Current status of the export.
+            createdAt (str): Timestamp at which the export was created (ISO-8601 format).
+            exportCompletedAt (str): Timestamp at which the export completed (ISO-8601 format).
+            additionalIdColumns (list[str]): For database connectors which support it, additional ID columns to use as a complex key for upserting.
+            error (str): If `status` is `FAILED`, this field will be populated with an error.
+            databaseOutputError (bool): If `True`, there were errors reported by the database connector while writing.
+            projectConfig (dict): Project config for this feature group.
     """
 
     def __init__(self, client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None, projectConfig=None):
@@ -63,10 +63,10 @@ class FeatureGroupExport(AbstractApiClass):
         Get a link to download the feature group version.
 
         Args:
-            feature_group_export_id (str): The Feature Group Export to get signed url for.
+            feature_group_export_id (str): Unique identifier of the Feature Group Export to get a signed URL for.
 
         Returns:
-            FeatureGroupExportDownloadUrl: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time.
+            FeatureGroupExportDownloadUrl: Instance containing the download URL and expiration time for the Feature Group Export.
         """
         return self.client.get_feature_group_version_export_download_url(self.feature_group_export_id)
 
@@ -85,19 +85,19 @@ class FeatureGroupExport(AbstractApiClass):
         A feature group export
 
         Args:
-            feature_group_export_id (str): The ID of the feature group export.
+            feature_group_export_id (str): Unique identifier of the feature group export.
 
         Returns:
-            FeatureGroupExport: The feature group export
+            FeatureGroupExport: The feature group export object.
         """
         return self.client.describe_feature_group_export(self.feature_group_export_id)
 
     def get_connector_errors(self):
         """
-        Returns a stream containing the feature group export database connection write errors, if any writes failed to the database connector
+        Returns a stream containing the write errors of the feature group export database connection, if any writes failed to the database connector.
 
         Args:
-            feature_group_export_id (str): The ID of the feature group export to get the errors for
+            feature_group_export_id (str): Unique identifier of the feature group export to get the errors for.
         """
         return self.client.get_feature_group_export_connector_errors(self.feature_group_export_id)
 

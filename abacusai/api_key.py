@@ -34,7 +34,7 @@ class ApiKey(AbstractApiClass):
 
     def delete(self):
         """
-        Delete a specified API Key. You can use the "listApiKeys" method to find the list of all API Key IDs.
+        Delete a specified API key.
 
         Args:
             api_key_id (str): The ID of the API key to delete.

@@ -10,56 +10,56 @@ from .return_class import AbstractApiClass
 
 class FeatureGroup(AbstractApiClass):
     """
-        A feature group
+        A feature group.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            modificationLock (bool): If feature groups is locked against a change or not
-            featureGroupId (str): The unique identifier for this feature group
-            name (str): [DEPRECATED] A user friendly name for the feature group
-            featureGroupSourceType (str): One of SQL, PYTHON, DATASET, BATCH_PREDICTION
-            tableName (str): The unique table name of this feature group
-            sql (str): The sql definition creating this feature group
-            datasetId (str): The datasetId the feature group is sourced from
-            functionSourceCode (str): The source definition creating this feature group
-            functionName (str): The function name to execute from the source code
-            sourceTables (list of string): The source tables for this feature group
-            createdAt (str): The timestamp at which the feature group was created.
-            description (str): Description of the feature group
-            featureGroupType (str): The Project Type when the Feature Group is used in the context of a project
-            sqlError (str): collects the error message with this FeatureGroup
-            latestVersionOutdated (bool): Is latest materialized feature group version outdated
-            referencedFeatureGroups (list of string): The feature groups this feature group is used in
-            tags (list of string): Tags added to this feature group
-            primaryKey (str): The primary index feature
-            updateTimestampKey (str): The primary timestamp feature
-            lookupKeys (list of string): Additional indexed features for this feature group
-            streamingEnabled (bool): If true, the feature group can have data streamed to it
-            featureGroupUse (str): The user assigned feature group use which allows for organizing feature groups in a project
+            modificationLock (bool): If feature group is locked against a change or not.
+            featureGroupId (str): Unique identifier for this feature group.
+            name (str): [DEPRECATED] User friendly name for the feature group.
+            featureGroupSourceType (str): The source type of the feature group
+            tableName (str): Unique table name of this feature group.
+            sql (str): SQL definition creating this feature group.
+            datasetId (str): Dataset ID the feature group is sourced from.
+            functionSourceCode (str): Source definition creating this feature group.
+            functionName (str): Function name to execute from the source code.
+            sourceTables (list[str]): Source tables for this feature group.
+            createdAt (str): Timestamp at which the feature group was created.
+            description (str): Description of the feature group.
+            featureGroupType (str): Project type when the feature group is used in the context of a project.
+            sqlError (str): Error message with this feature group.
+            latestVersionOutdated (bool): Is latest materialized feature group version outdated.
+            referencedFeatureGroups (list[str]): Feature groups this feature group is used in.
+            tags (list[str]): Tags added to this feature group.
+            primaryKey (str): Primary index feature.
+            updateTimestampKey (str): Primary timestamp feature.
+            lookupKeys (list[str]): Additional indexed features for this feature group.
+            streamingEnabled (bool): If true, the feature group can have data streamed to it.
+            featureGroupUse (str): User assigned feature group use which allows for organizing feature groups in a project.
             incremental (bool): If feature group corresponds to an incremental dataset.
-            mergeConfig (dict): The merge configuration settings for the feature group.
-            transformConfig (dict): The transform configuration settings for the feature group.
-            samplingConfig (dict): The sampling configuration for the feature group
-            cpuSize (str): Cpu size specified for the python feature group.
-            memory (int): Memory in GB specified for the python feature group.
-            streamingReady (bool): If true, the feature group is ready to receive streaming data
-            featureTags (dict): 
-            moduleName (str): The path to the file with the feature group function.
+            mergeConfig (dict): Merge configuration settings for the feature group.
+            transformConfig (dict): Transform configuration settings for the feature group.
+            samplingConfig (dict): Sampling configuration for the feature group.
+            cpuSize (str): CPU size specified for the Python feature group.
+            memory (int): Memory in GB specified for the Python feature group.
+            streamingReady (bool): If true, the feature group is ready to receive streaming data.
+            featureTags (dict): Tags for features in this feature group
+            moduleName (str): Path to the file with the feature group function.
             templateBindings (dict): Config specifying variable names and values to use when resolving a feature group template.
-            featureExpression (str): If the dataset feature group has custom features, the sql select expression creating those features
+            featureExpression (str): If the dataset feature group has custom features, the SQL select expression creating those features.
             useOriginalCsvNames (bool): If true, the feature group will use the original column names in the source dataset.
-            pythonFunctionBindings (dict): Config specifying variable names, types, and values to use when resolving a python feature group.
-            pythonFunctionName (str): The name of the python function the feature group was built from.
-            annotationConfig (annotationconfig): The annotation config for this feature group.
-            projectConfig (dict): The project-specific config for this feature group
-            features (Feature): List of resolved features
-            duplicateFeatures (Feature): List of duplicate features
-            pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups
-            latestFeatureGroupVersion (FeatureGroupVersion): The latest feature group version
-            concatenationConfig (ConcatenationConfig): The Feature Group ID whose data will be concatenated into this feature group
-            indexingConfig (IndexingConfig): 
-            codeSource (CodeSource): If a python feature group, information on the source code
-            featureGroupTemplate (FeatureGroupTemplate): The FeatureGroupTemplate to use when this FeatureGroup is attached to a template.
+            pythonFunctionBindings (dict): Config specifying variable names, types, and values to use when resolving a Python feature group.
+            pythonFunctionName (str): Name of the Python function the feature group was built from.
+            annotationConfig (annotationconfig): Annotation config for this feature
+            projectConfig (dict): Project-specific config for this feature group.
+            features (Feature): List of resolved features.
+            duplicateFeatures (Feature): List of duplicate features.
+            pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups.
+            latestFeatureGroupVersion (FeatureGroupVersion): Latest feature group version.
+            concatenationConfig (ConcatenationConfig): Feature group ID whose data will be concatenated into this feature group.
+            indexingConfig (IndexingConfig): Indexing config for the feature group for feature store
+            codeSource (CodeSource): If a Python feature group, information on the source code.
+            featureGroupTemplate (FeatureGroupTemplate): FeatureGroupTemplate to use when this feature group is attached to a template.
     """
 
     def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, featureGroupUse=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, annotationConfig=None, projectConfig=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, latestFeatureGroupVersion={}):
@@ -129,24 +129,23 @@ class FeatureGroup(AbstractApiClass):
         """
         return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'referenced_feature_groups': self.referenced_feature_groups, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'feature_group_use': self.feature_group_use, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'template_bindings': self.template_bindings, 'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'annotation_config': self.annotation_config, 'project_config': self.project_config, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
-    def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE', feature_group_use: str = None):
+    def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """
-        Adds a feature group to a project
+        Adds a feature group to a project.
 
         Args:
             project_id (str): The unique ID associated with the project.
-            feature_group_type (str):  The feature group type of the feature group. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
-            feature_group_use (str): The user assigned feature group use which allows for organizing project feature groups  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT
+            feature_group_type (str): The feature group type of the feature group, based on the use case under which the feature group is being created.
         """
-        return self.client.add_feature_group_to_project(self.feature_group_id, project_id, feature_group_type, feature_group_use)
+        return self.client.add_feature_group_to_project(self.feature_group_id, project_id, feature_group_type)
 
     def set_project_config(self, project_id: str, project_config: dict = None):
         """
         Sets a feature group's project config
 
         Args:
-            project_id (str): The unique ID associated with the project.
-            project_config (dict):  The feature group's project config.
+            project_id (str): Unique string identifier for the project.
+            project_config (dict): JSON object for the feature group's project configuration.
         """
         return self.client.set_project_feature_group_config(self.feature_group_id, project_id, project_config)
 
@@ -164,8 +163,8 @@ class FeatureGroup(AbstractApiClass):
         Update the feature group type in a project. The feature group must already be added to the project.
 
         Args:
-            project_id (str): The unique ID associated with the project.
-            feature_group_type (str): The feature group type to set the feature group as. The type is based on the use case under which the feature group is being created. For example, Catalog Attributes can be a feature group type under personalized recommendation use case.
+            project_id (str): Unique identifier associated with the project.
+            feature_group_type (str): The feature group type to set the feature group as.
         """
         return self.client.set_feature_group_type(self.feature_group_id, project_id, feature_group_type)
 
@@ -174,8 +173,8 @@ class FeatureGroup(AbstractApiClass):
         Use the feature group for model training input
 
         Args:
-            project_id (str): The unique ID associated with the project.
-            use_for_training (bool): Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training
+            project_id (str): Unique string identifier associated with the project.
+            use_for_training (bool): Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training.
         """
         return self.client.use_feature_group_for_training(self.feature_group_id, project_id, use_for_training)
 
@@ -186,27 +185,27 @@ class FeatureGroup(AbstractApiClass):
         Args:
             feature_name (str): The name of the feature the annotation is on.
             doc_id (str): The ID of the primary document the annotation is on.
-            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
 
         Returns:
-            AnnotationEntry: The latest annotation entry for the given feature group, feature, and document and/or annotation key value
+            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
         """
         return self.client.describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
 
     def create_sampling(self, table_name: str, sampling_config: dict, description: str = None):
         """
-        Creates a new feature group defined as a sample of rows from another feature group.
+        Creates a new Feature Group defined as a sample of rows from another Feature Group.
 
-        For efficiency, sampling is approximate unless otherwise specified. (E.g. the number of rows may vary slightly from what was requested).
+        For efficiency, sampling is approximate unless otherwise specified. (e.g. the number of rows may vary slightly from what was requested).
 
 
         Args:
-            table_name (str): The unique name to be given to this sampling feature group.
-            sampling_config (dict): JSON object (aka map) defining the sampling method and its parameters.
-            description (str): A human-readable description of this feature group.
+            table_name (str): The unique name to be given to this sampling Feature Group.
+            sampling_config (dict): Dictionary defining the sampling method and its parameters.
+            description (str): A human-readable description of this Feature Group.
 
         Returns:
-            FeatureGroup: The created feature group.
+            FeatureGroup: The created Feature Group.
         """
         return self.client.create_sampling_feature_group(self.feature_group_id, table_name, sampling_config, description)
 
@@ -214,14 +213,11 @@ class FeatureGroup(AbstractApiClass):
         """
         Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
-        Currently, sampling is only for Sampling FeatureGroups, so this API only allows calling on that kind of FeatureGroup.
-
-
         Args:
-            sampling_config (dict): A json object string specifying the sampling method and parameters specific to that sampling method. Empty sampling_config means no sampling.
+            sampling_config (dict): A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
 
         Returns:
-            FeatureGroup: The updated feature group.
+            FeatureGroup: The updated FeatureGroup.
         """
         return self.client.set_feature_group_sampling_config(self.feature_group_id, sampling_config)
 
@@ -230,7 +226,7 @@ class FeatureGroup(AbstractApiClass):
         Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
         Args:
-            merge_config (dict): A json object string specifying the merge rule. An empty mergeConfig will default to only including the latest Dataset Version.
+            merge_config (dict): JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.
         """
         return self.client.set_feature_group_merge_config(self.feature_group_id, merge_config)
 
@@ -239,41 +235,41 @@ class FeatureGroup(AbstractApiClass):
         Set a TransformFeatureGroup’s transform config to the values provided.
 
         Args:
-            transform_config (dict): A json object string specifying the pre-defined transformation.
+            transform_config (dict): A dictionary object specifying the pre-defined transformation.
         """
         return self.client.set_feature_group_transform_config(self.feature_group_id, transform_config)
 
     def set_schema(self, schema: list):
         """
-        Creates a new schema and points the feature group to the new feature group schema id.
+        Creates a new schema and points the feature group to the new feature group schema ID.
 
         Args:
-            schema (list): An array of json objects with 'name' and 'dataType' properties.
+            schema (list): JSON string containing an array of objects with 'name' and 'dataType' properties.
         """
         return self.client.set_feature_group_schema(self.feature_group_id, schema)
 
     def get_schema(self, project_id: str = None):
         """
-        Returns a schema given a specific FeatureGroup in a project.
+        Returns a schema for a given FeatureGroup in a project.
 
         Args:
             project_id (str): The unique ID associated with the project.
 
         Returns:
-            Feature: An array of objects for each column in the specified feature group.
+            Feature: A list of objects for each column in the specified feature group.
         """
         return self.client.get_feature_group_schema(self.feature_group_id, project_id)
 
     def create_feature(self, name: str, select_expression: str):
         """
-        Creates a new feature in a Feature Group from a SQL select statement
+        Creates a new feature in a Feature Group from a SQL select statement.
 
         Args:
-            name (str): The name of the feature to add
-            select_expression (str): SQL select expression to create the feature
+            name (str): The name of the feature to add.
+            select_expression (str): SQL SELECT expression to create the feature.
 
         Returns:
-            FeatureGroup: A feature group object with the newly added feature.
+            FeatureGroup: A Feature Group object with the newly added feature.
         """
         return self.client.create_feature(self.feature_group_id, name, select_expression)
 
@@ -282,115 +278,115 @@ class FeatureGroup(AbstractApiClass):
         Adds a tag to the feature group
 
         Args:
-            tag (str): The tag to add to the feature group
+            tag (str): The tag to add to the feature group.
         """
         return self.client.add_feature_group_tag(self.feature_group_id, tag)
 
     def remove_tag(self, tag: str):
         """
-        Removes a tag from the feature group
+        Removes a tag from the specified feature group.
 
         Args:
-            tag (str): The tag to add to the feature group
+            tag (str): The tag to remove from the feature group.
         """
         return self.client.remove_feature_group_tag(self.feature_group_id, tag)
 
     def add_annotatable_feature(self, name: str, annotation_type: str):
         """
-
+        Add an annotatable feature in a Feature Group
 
         Args:
-            name (str): 
-            annotation_type (str): 
+            name (str): The name of the feature to add.
+            annotation_type (str): The type of annotation to set.
 
         Returns:
-            FeatureGroup: None
+            FeatureGroup: The feature group after the feature has been set
         """
         return self.client.add_annotatable_feature(self.feature_group_id, name, annotation_type)
 
     def set_feature_as_annotatable_feature(self, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None):
         """
-
+        Set an existing feature as annotatable
 
         Args:
-            feature_name (str): 
-            annotation_type (str): 
-            feature_group_row_identifier_feature (str): 
-            doc_id_feature (str): 
+            feature_name (str): The name of the feature to set as annotatable.
+            annotation_type (str):  The type of annotation to set.
+            feature_group_row_identifier_feature (str): The identifier of the feature group row.
+            doc_id_feature (str): The document id for the feature.
 
         Returns:
-            FeatureGroup: None
+            FeatureGroup: The feature group after setting the feature as annotatable.
         """
         return self.client.set_feature_as_annotatable_feature(self.feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature, doc_id_feature)
 
     def unset_feature_as_annotatable_feature(self, feature_name: str):
         """
-
+        Unsets a feature as annotatable
 
         Args:
-            feature_name (str): 
+            feature_name (str): The name of the feature to unset.
 
         Returns:
-            FeatureGroup: None
+            FeatureGroup: The feature group after unsetting the feature
         """
         return self.client.unset_feature_as_annotatable_feature(self.feature_group_id, feature_name)
 
     def add_annotation_label(self, label_name: str, annotation_type: str, label_definition: str = None):
         """
-
+        Adds an annotation label
 
         Args:
-            label_name (str): 
-            annotation_type (str): 
-            label_definition (str): 
+            label_name (str): The name of the label.
+            annotation_type (str): The type of the annotation to set.
+            label_definition (str): the definition of the label.
 
         Returns:
-            FeatureGroup: None
+            FeatureGroup: The feature group after adding the annotation label
         """
         return self.client.add_feature_group_annotation_label(self.feature_group_id, label_name, annotation_type, label_definition)
 
     def remove_annotation_label(self, label_name: str):
         """
-
+        Removes an annotation label
 
         Args:
-            label_name (str): 
+            label_name (str): The name of the label to remove.
 
         Returns:
-            FeatureGroup: None
+            FeatureGroup: The feature group after adding the annotation label
         """
         return self.client.remove_feature_group_annotation_label(self.feature_group_id, label_name)
 
     def add_feature_tag(self, feature: str, tag: str):
         """
-
+        Adds a tag on a feature
 
         Args:
-            feature (str): 
-            tag (str): 
+            feature (str): The feature to set the tag on.
+            tag (str): The tag to set on the feature.
         """
         return self.client.add_feature_tag(self.feature_group_id, feature, tag)
 
     def remove_feature_tag(self, feature: str, tag: str):
         """
-
+        Removes a tag from a feature
 
         Args:
-            feature (str): 
-            tag (str): 
+            feature (str): The feature to remove the tag from.
+            tag (str): The tag to remove.
         """
         return self.client.remove_feature_tag(self.feature_group_id, feature, tag)
 
     def create_nested_feature(self, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None):
         """
-        Creates a new nested feature in a feature group from a SQL statements to create a new nested feature.
+        Creates a new nested feature in a feature group from a SQL statement.
 
         Args:
             nested_feature_name (str): The name of the feature.
-            table_name (str): The table name of the feature group to nest
-            using_clause (str): The SQL join column or logic to join the nested table with the parent
-            where_clause (str): A SQL where statement to filter the nested rows
-            order_clause (str): A SQL clause to order the nested rows
+            table_name (str): The table name of the feature group to nest.
+            using_clause (str): The SQL join column or logic to join the nested table with the parent.
+            where_clause (str): A SQL WHERE statement to filter the nested rows.
+            order_clause (str): A SQL clause to order the nested rows.
 
         Returns:
             FeatureGroup: A feature group object with the newly added nested feature.
@@ -404,9 +400,9 @@ class FeatureGroup(AbstractApiClass):
         Args:
             nested_feature_name (str): The name of the feature to be updated.
             table_name (str): The name of the table.
-            using_clause (str): The SQL join column or logic to join the nested table with the parent
-            where_clause (str): A SQL where statement to filter the nested rows
-            order_clause (str): A SQL clause to order the nested rows
+            using_clause (str): The SQL join column or logic to join the nested table with the parent.
+            where_clause (str): An SQL WHERE statement to filter the nested rows.
+            order_clause (str): An SQL clause to order the nested rows.
             new_nested_feature_name (str): New name for the nested feature.
 
         Returns:
@@ -419,35 +415,32 @@ class FeatureGroup(AbstractApiClass):
         Delete a nested feature.
 
         Args:
-            nested_feature_name (str): The name of the feature to be updated.
+            nested_feature_name (str): The name of the feature to be deleted.
 
         Returns:
-            FeatureGroup: A feature group object without the deleted nested feature.
+            FeatureGroup: A feature group object without the specified nested feature.
         """
         return self.client.delete_nested_feature(self.feature_group_id, nested_feature_name)
 
     def create_point_in_time_feature(self, feature_name: str, history_table_name: str, aggregation_keys: list, timestamp_key: str, historical_timestamp_key: str, expression: str, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
         """
-        Creates a new point in time feature in a feature group using another historical feature group, window spec and aggregate expression.
+        Creates a new point in time feature in a feature group using another historical feature group, window spec, and aggregate expression.
 
-        We use the aggregation keys, and either the lookbackWindowSeconds or the lookbackCount values to perform the window aggregation for every row in the current feature group.
-        If the window is specified in seconds, then all rows in the history table which match the aggregation keys and with historicalTimeFeature >= lookbackStartCount and < the value
-        of the current rows timeFeature are considered. An option lookbackWindowLagSeconds (+ve or -ve) can be used to offset the current value of the timeFeature. If this value
-        is negative, we will look at the future rows in the history table, so care must be taken to make sure that these rows are available in the online context when we are performing
-        a lookup on this feature group. If window is specified in counts, then we order the historical table rows aligning by time and consider rows from the window where
-        the rank order is >= lookbackCount and includes the row just prior to the current one. The lag is specified in term of positions using lookbackUntilPosition.
+        We use the aggregation keys and either the lookbackWindowSeconds or the lookbackCount values to perform the window aggregation for every row in the current feature group.
+
+        If the window is specified in seconds, then all rows in the history table which match the aggregation keys and with historicalTimeFeature greater than or equal to lookbackStartCount and less than the value of the current rows timeFeature are considered. An optional lookbackWindowLagSeconds (+ve or -ve) can be used to offset the current value of the timeFeature. If this value is negative, we will look at the future rows in the history table, so care must be taken to ensure that these rows are available in the online context when we are performing a lookup on this feature group. If the window is specified in counts, then we order the historical table rows aligning by time and consider rows from the window where the rank order is greater than or equal to lookbackCount and includes the row just prior to the current one. The lag is specified in terms of positions using lookbackUntilPosition.
 
 
         Args:
-            feature_name (str): The name of the feature to create
+            feature_name (str): The name of the feature to create.
             history_table_name (str): The table name of the history table.
-            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
-            timestamp_key (str): Name of feature which contains the timestamp value for the point in time feature
+            aggregation_keys (list): List of keys to use for joining the historical table and performing the window aggregation.
+            timestamp_key (str): Name of feature which contains the timestamp value for the point in time feature.
             historical_timestamp_key (str): Name of feature which contains the historical timestamp.
-            expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+            expression (str): SQL aggregate expression which can convert a sequence of rows into a scalar value.
             lookback_window_seconds (float): If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
             lookback_window_lag_seconds (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
+            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row).
             lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
 
         Returns:
@@ -457,20 +450,20 @@ class FeatureGroup(AbstractApiClass):
 
     def update_point_in_time_feature(self, feature_name: str, history_table_name: str = None, aggregation_keys: list = None, timestamp_key: str = None, historical_timestamp_key: str = None, expression: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = None, lookback_count: int = None, lookback_until_position: int = None, new_feature_name: str = None):
         """
-        Updates an existing point in time feature in a feature group. See createPointInTimeFeature for detailed semantics.
+        Updates an existing Point-in-Time (PiT) feature in a feature group. See `createPointInTimeFeature` for detailed semantics.
 
         Args:
             feature_name (str): The name of the feature.
             history_table_name (str): The table name of the history table. If not specified, we use the current table to do a self join.
-            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
-            timestamp_key (str): Name of feature which contains the timestamp value for the point in time feature
-            historical_timestamp_key (str): Name of feature which contains the historical timestamp.
+            aggregation_keys (list): List of keys to use for joining the historical table and performing the window aggregation.
+            timestamp_key (str): Name of the feature which contains the timestamp value for the PiT feature.
+            historical_timestamp_key (str): Name of the feature which contains the historical timestamp.
             expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
-            lookback_window_seconds (float): If window is specified in terms of time, number of seconds in the past from the current time for start of the window.
-            lookback_window_lag_seconds (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
-            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
-            new_feature_name (str): New name for the point in time feature.
+            lookback_window_seconds (float): If the window is specified in terms of time, the number of seconds in the past from the current time for the start of the window.
+            lookback_window_lag_seconds (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of the window. If it is negative, we are looking at the "future" rows in the history table.
+            lookback_count (int): If the window is specified in terms of count, the start position of the window (0 is the current row).
+            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of the window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+            new_feature_name (str): New name for the PiT feature.
 
         Returns:
             FeatureGroup: A feature group object with the newly added nested feature.
@@ -479,43 +472,43 @@ class FeatureGroup(AbstractApiClass):
 
     def create_point_in_time_group(self, group_name: str, window_key: str, aggregation_keys: list, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
         """
-        Create point in time group
+        Create a Point-in-Time Group
 
         Args:
-            group_name (str): The name of the point in time group
-            window_key (str): Name of feature to use for ordering the rows on the source table
+            group_name (str): The name of the point in time group.
+            window_key (str): Name of feature to use for ordering the rows on the source table.
             aggregation_keys (list): List of keys to perform on the source table for the window aggregation.
-            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
-            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
-            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
-            lookback_window (float): Number of seconds in the past from the current time for start of the window. If 0, the lookback will include all rows.
-            lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
-            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used.
+            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used.
+            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys.
+            lookback_window (float): Number of seconds in the past from the current time for the start of the window. If 0, the lookback will include all rows.
+            lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed. If it is negative, "future" rows in the history table are used.
+            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row).
+            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed by that many rows. If it is negative, those many "future" rows in the history table are used.
 
         Returns:
-            FeatureGroup: The feature group after the point in time group has been created
+            FeatureGroup: The feature group after the point in time group has been created.
         """
         return self.client.create_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
 
     def update_point_in_time_group(self, group_name: str, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None):
         """
-        Update point in time group
+        Update Point-in-Time Group
 
         Args:
-            group_name (str): The name of the point in time group
-            window_key (str): Name of feature which contains the timestamp value for the point in time feature
-            aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation.
-            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used
-            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used
-            history_aggregation_keys (list): List of keys to use for join the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys
-            lookback_window (float): Number of seconds in the past from the current time for start of the window.
-            lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window. If it is negative, we are looking at the "future" rows in the history table.
-            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row)
-            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, we delay the start of window by that many rows. If it is negative, we are looking at those many "future" rows in the history table.
+            group_name (str): The name of the point-in-time group.
+            window_key (str): Name of feature which contains the timestamp value for the point-in-time feature.
+            aggregation_keys (list): List of keys to use for joining the historical table and performing the window aggregation.
+            history_table_name (str): The table to use for aggregating, if not provided, the source table will be used.
+            history_window_key (str): Name of feature to use for ordering the rows on the history table. If not provided, the windowKey from the source table will be used.
+            history_aggregation_keys (list): List of keys to use for joining the historical table and performing the window aggregation. If not provided, the aggregationKeys from the source table will be used. Must be the same length and order as the source table's aggregationKeys.
+            lookback_window (float): Number of seconds in the past from the current time for the start of the window.
+            lookback_window_lag (float): Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed. If it is negative, future rows in the history table are looked at.
+            lookback_count (int): If window is specified in terms of count, the start position of the window (0 is the current row).
+            lookback_until_position (int): Optional lag to offset the closest point for the window. If it is positive, the start of the window is delayed by that many rows. If it is negative, those many future rows in the history table are looked at.
 
         Returns:
-            FeatureGroup: The feature group after the update has been applied
+            FeatureGroup: The feature group after the update has been applied.
         """
         return self.client.update_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
 
@@ -524,10 +517,10 @@ class FeatureGroup(AbstractApiClass):
         Delete point in time group
 
         Args:
-            group_name (str): The name of the point in time group
+            group_name (str): The name of the point in time group.
 
         Returns:
-            FeatureGroup: The feature group after the point in time group has been deleted
+            FeatureGroup: The feature group after the point in time group has been deleted.
         """
         return self.client.delete_point_in_time_group(self.feature_group_id, group_name)
 
@@ -536,12 +529,12 @@ class FeatureGroup(AbstractApiClass):
         Create point in time group feature
 
         Args:
-            group_name (str): The name of the point in time group
-            name (str): The name of the feature to add to the point in time group
-            expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+            group_name (str): The name of the point-in-time group.
+            name (str): The name of the feature to add to the point-in-time group.
+            expression (str): A SQL aggregate expression which can convert a sequence of rows into a scalar value.
 
         Returns:
-            FeatureGroup: The feature group after the update has been applied
+            FeatureGroup: The feature group after the update has been applied.
         """
         return self.client.create_point_in_time_group_feature(self.feature_group_id, group_name, name, expression)
 
@@ -550,25 +543,25 @@ class FeatureGroup(AbstractApiClass):
         Update a feature's SQL expression in a point in time group
 
         Args:
-            group_name (str): The name of the point in time group
-            name (str): The name of the feature to add to the point in time group
-            expression (str): SQL Aggregate expression which can convert a sequence of rows into a scalar value.
+            group_name (str): The name of the point-in-time group.
+            name (str): The name of the feature to add to the point-in-time group.
+            expression (str): SQL aggregate expression which can convert a sequence of rows into a scalar value.
 
         Returns:
-            FeatureGroup: The feature group after the update has been applied
+            FeatureGroup: The feature group after the update has been applied.
         """
         return self.client.update_point_in_time_group_feature(self.feature_group_id, group_name, name, expression)
 
     def set_feature_type(self, feature: str, feature_type: str):
         """
-        Set a feature's type in a feature group/. Specify the feature group ID, feature name and feature type, and the method will return the new column with the resulting changes reflected.
+        Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
         Args:
             feature (str): The name of the feature.
-            feature_type (str): The machine learning type of the data in the feature.  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST Refer to the (guide on feature types)[https://api.abacus.ai/app/help/class/FeatureType] for more information. Note: Some FeatureMappings will restrict the options or explicitly set the FeatureType.
+            feature_type (str): The machine learning type of the data in the feature. Refer to the [guide on feature types](https://api.abacus.ai/app/help/class/FeatureType) for more information.
 
         Returns:
-            Schema: The feature group after the data_type is applied
+            Schema: The feature group after the data_type is applied.
         """
         return self.client.set_feature_type(self.feature_group_id, feature, feature_type)
 
@@ -577,19 +570,19 @@ class FeatureGroup(AbstractApiClass):
         Invalidates all streaming data with timestamp before invalidBeforeTimestamp
 
         Args:
-            invalid_before_timestamp (int): The unix timestamp, any data which has a timestamp before this time will be deleted
+            invalid_before_timestamp (int): Unix timestamp; any data with a timestamp before this time will be invalidated
         """
         return self.client.invalidate_streaming_feature_group_data(self.feature_group_id, invalid_before_timestamp)
 
     def concatenate_data(self, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None, skip_materialize: bool = False):
         """
-        Concatenates data from one feature group to another. Feature groups can be merged if their schema's are compatible and they have the special updateTimestampKey column and if set, the primaryKey column. The second operand in the concatenate operation will be appended to the first operand (merge target).
+        Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
         Args:
-            source_feature_group_id (str): The feature group to concatenate with the destination feature group.
-            merge_type (str): UNION or INTERSECTION
-            replace_until_timestamp (int): The unix timestamp to specify the point till which we will replace data from the source feature group.
-            skip_materialize (bool): If true, will not materialize the concatenated feature group
+            source_feature_group_id (str): The Feature Group to concatenate with the destination Feature Group.
+            merge_type (str): `UNION` or `INTERSECTION`.
+            replace_until_timestamp (int): The UNIX timestamp to specify the point until which we will replace data from the source Feature Group.
+            skip_materialize (bool): If `True`, will not materialize the concatenated Feature Group.
         """
         return self.client.concatenate_feature_group_data(self.feature_group_id, source_feature_group_id, merge_type, replace_until_timestamp, skip_materialize)
 
@@ -598,7 +591,7 @@ class FeatureGroup(AbstractApiClass):
         Removes the concatenation config on a destination feature group.
 
         Args:
-            feature_group_id (str): Removes the concatenation configuration on a destination feature group
+            feature_group_id (str): Unique identifier of the destination feature group to remove the concatenation configuration from.
         """
         return self.client.remove_concatenation_config(self.feature_group_id)
 
@@ -617,7 +610,7 @@ class FeatureGroup(AbstractApiClass):
         Describe a Feature Group.
 
         Args:
-            feature_group_id (str): The unique ID associated with the feature group.
+            feature_group_id (str): A unique string identifier associated with the feature group.
 
         Returns:
             FeatureGroup: The feature group object.
@@ -629,21 +622,21 @@ class FeatureGroup(AbstractApiClass):
         Sets various attributes of the feature group used for deployment lookups and streaming updates.
 
         Args:
-            primary_key (str): Name of feature which defines the primary key of the feature group.
-            update_timestamp_key (str): Name of feature which defines the update timestamp of the feature group - used in concatenation and primary key deduplication.
-            lookup_keys (list): List of feature names which can be used in the lookup api to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+            primary_key (str): Name of the feature which defines the primary key of the feature group.
+            update_timestamp_key (str): Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication.
+            lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
         """
         return self.client.set_feature_group_indexing_config(self.feature_group_id, primary_key, update_timestamp_key, lookup_keys)
 
     def update(self, description: str = None):
         """
-        Modifies an existing feature group
+        Modify an existing Feature Group.
 
         Args:
-            description (str): The description about the feature group.
+            description (str): Description of the Feature Group.
 
         Returns:
-            FeatureGroup: The updated feature group object.
+            FeatureGroup: Updated Feature Group object.
         """
         return self.client.update_feature_group(self.feature_group_id, description)
 
@@ -651,14 +644,11 @@ class FeatureGroup(AbstractApiClass):
         """
         Update a feature group to detach it from a template.
 
-        Currently, this converts the feature group into a SQL feature group rather than a template feature group.
-
-
         Args:
-            feature_group_id (str): The unique ID associated with the feature group.
+            feature_group_id (str): Unique string identifier associated with the feature group.
 
         Returns:
-            FeatureGroup: The updated feature group
+            FeatureGroup: The updated feature group.
         """
         return self.client.detach_feature_group_from_template(self.feature_group_id)
 
@@ -670,17 +660,13 @@ class FeatureGroup(AbstractApiClass):
             template_bindings (list): Values in these bindings override values set in the template.
 
         Returns:
-            FeatureGroup: The updated feature group
+            FeatureGroup: Updated feature group.
         """
         return self.client.update_feature_group_template_bindings(self.feature_group_id, template_bindings)
 
     def update_python_function_bindings(self, python_function_bindings: list):
         """
-        Updates an existing Feature Group's python function bindings from a user provided Python Function. If a list of feature groups are supplied within the python function
-
-        bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
-        feature groups for those input feature groups.
-
+        Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
         Args:
             python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
@@ -692,149 +678,149 @@ class FeatureGroup(AbstractApiClass):
         Updates the SQL statement for a feature group.
 
         Args:
-            sql (str): Input SQL statement for the feature group.
+            sql (str): The input SQL statement for the feature group.
 
         Returns:
-            FeatureGroup: The updated feature group
+            FeatureGroup: The updated feature group.
         """
         return self.client.update_feature_group_sql_definition(self.feature_group_id, sql)
 
     def update_dataset_feature_expression(self, feature_expression: str):
         """
-        Updates the SQL feature expression for a dataset feature group's custom features
+        Updates the SQL feature expression for a Dataset FeatureGroup's custom features
 
         Args:
-            feature_expression (str): Input SQL statement for the feature group.
+            feature_expression (str): The input SQL statement for the feature group.
 
         Returns:
-            FeatureGroup: The updated feature group
+            FeatureGroup: The updated feature group.
         """
         return self.client.update_dataset_feature_group_feature_expression(self.feature_group_id, feature_expression)
 
     def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None):
         """
-        Updates the function definition for a feature group created using createFeatureGroupFromFunction
+        Updates the function definition for a feature group
 
         Args:
-            function_source_code (str): Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called function_name. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            function_source_code (str): Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called `function_name`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
-            use_original_csv_names (bool): If set to true, feature group uses the original column names for input feature groups from csv datasets.
+            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized DataFrames (same type as the functions return value).
+            cpu_size (str): Size of the CPU for the feature group function.
+            memory (int): Memory (in GB) for the feature group function.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            use_original_csv_names (bool): If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
             python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
 
         Returns:
-            FeatureGroup: The updated feature group
+            FeatureGroup: The updated feature group.
         """
         return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements, use_original_csv_names, python_function_bindings)
 
     def update_zip(self, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
-        Updates the zip for a feature group created using createFeatureGroupFromZip
+        Updates the ZIP file for a feature group created using `createFeatureGroupFromZip`.
 
         Args:
-            function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            module_name (str): Path to the file with the feature group function.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            function_name (str): The name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
+            module_name (str): The path to the file with the feature group function.
+            input_feature_groups (list): A list of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            cpu_size (str): The size of the CPU for the feature group function.
+            memory (int): The memory (in GB) for the feature group function.
+            package_requirements (list): A list of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
 
         Returns:
-            Upload: The Upload to upload the zip file to
+            Upload: The Upload to upload the ZIP file to.
         """
         return self.client.update_feature_group_zip(self.feature_group_id, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
 
     def update_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
         """
-        Updates a feature group created using createFeatureGroupFromGit
+        Updates a feature group created using `createFeatureGroupFromGit`.
 
         Args:
-            application_connector_id (str): The unique ID associated with the git application connector.
+            application_connector_id (str): Unique string identifier associated with the git application connector.
             branch_name (str): Name of the branch in the git repository to be used for training.
             python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
             function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
             module_name (str): Path to the file with the feature group function.
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the feature group function
-            memory (int): Memory (in GB) for the feature group function
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            cpu_size (str): Size of the cpu for the feature group function.
+            memory (int): Memory (in GB) for the feature group function.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
 
         Returns:
-            FeatureGroup: The updated FeatureGroup
+            FeatureGroup: The updated FeatureGroup.
         """
         return self.client.update_feature_group_git(self.feature_group_id, application_connector_id, branch_name, python_root, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
 
     def update_feature(self, name: str, select_expression: str = None, new_name: str = None):
         """
-        Modifies an existing feature in a feature group. A user needs to specify the name and feature group ID and either a SQL statement or new name to update the feature.
+        Modifies an existing feature in a feature group.
 
         Args:
-            name (str): The name of the feature to be updated.
-            select_expression (str): Input SQL statement for modifying the feature.
-            new_name (str):  The new name of the feature.
+            name (str): Name of the feature to be updated.
+            select_expression (str): SQL statement for modifying the feature.
+            new_name (str): New name of the feature.
 
         Returns:
-            FeatureGroup: The updated feature group object.
+            FeatureGroup: Updated feature group object.
         """
         return self.client.update_feature(self.feature_group_id, name, select_expression, new_name)
 
     def list_exports(self):
         """
-        Lists all of the feature group exports for a given feature group
+        Lists all of the feature group exports for the feature group
 
         Args:
-            feature_group_id (str): The ID of the feature group
+            feature_group_id (str): Unique identifier of the feature group
 
         Returns:
-            FeatureGroupExport: The feature group exports
+            FeatureGroupExport: List of feature group exports
         """
         return self.client.list_feature_group_exports(self.feature_group_id)
 
     def set_modifier_lock(self, locked: bool = True):
         """
-        To lock a feature group to prevent it from being modified.
+        Lock a feature group to prevent modification.
 
         Args:
-            locked (bool): True or False to disable or enable feature group modification.
+            locked (bool): Whether to disable or enable feature group modification (True or False).
         """
         return self.client.set_feature_group_modifier_lock(self.feature_group_id, locked)
 
     def list_modifiers(self):
         """
-        To list users who can modify a feature group.
+        List the users who can modify a given feature group.
 
         Args:
-            feature_group_id (str): The unique ID associated with the feature group.
+            feature_group_id (str): Unique string identifier of the feature group.
 
         Returns:
-            ModificationLockInfo: Modification lock status and groups and organizations added to the feature group.
+            ModificationLockInfo: Information about the modification lock status and groups/organizations added to the feature group.
         """
         return self.client.list_feature_group_modifiers(self.feature_group_id)
 
     def add_user_to_modifiers(self, email: str):
         """
-        Adds user to a feature group.
+        Adds a user to a feature group.
 
         Args:
-            email (str): The email address of the user to be removed.
+            email (str): The email address of the user to be added.
         """
         return self.client.add_user_to_feature_group_modifiers(self.feature_group_id, email)
 
     def add_organization_group_to_modifiers(self, organization_group_id: str):
         """
-        Add Organization to a feature group.
+        Add OrganizationGroup to a feature group modifiers list
 
         Args:
-            organization_group_id (str): The unique ID associated with the organization group.
+            organization_group_id (str): Unique string identifier of the organization group.
         """
         return self.client.add_organization_group_to_feature_group_modifiers(self.feature_group_id, organization_group_id)
 
     def remove_user_from_modifiers(self, email: str):
         """
-        Removes user from a feature group.
+        Removes a user from a specified feature group.
 
         Args:
             email (str): The email address of the user to be removed.
@@ -843,7 +829,7 @@ class FeatureGroup(AbstractApiClass):
 
     def remove_organization_group_from_modifiers(self, organization_group_id: str):
         """
-        Removes Organization from a feature group.
+        Removes an OrganizationGroup from a feature group modifiers list
 
         Args:
             organization_group_id (str): The unique ID associated with the organization group.
@@ -852,22 +838,22 @@ class FeatureGroup(AbstractApiClass):
 
     def delete_feature(self, name: str):
         """
-        Removes an existing feature from a feature group. A user needs to specify the name of the feature to be deleted and the feature group ID.
+        Removes a feature from the feature group.
 
         Args:
-            name (str): The name of the feature to be deleted.
+            name (str): Name of the feature to be deleted.
 
         Returns:
-            FeatureGroup: The updated feature group object.
+            FeatureGroup: Updated feature group object.
         """
         return self.client.delete_feature(self.feature_group_id, name)
 
     def delete(self):
         """
-        Removes an existing feature group.
+        Deletes a Feature Group.
 
         Args:
-            feature_group_id (str): The unique ID associated with the feature group.
+            feature_group_id (str): Unique string identifier for the feature group to be removed.
         """
         return self.client.delete_feature_group(self.feature_group_id)
 
@@ -876,7 +862,7 @@ class FeatureGroup(AbstractApiClass):
         Creates a snapshot for a specified feature group.
 
         Args:
-            variable_bindings (dict): (JSON Object): JSON object (aka map) defining variable bindings that override parent feature group values.
+            variable_bindings (dict): Dictionary defining variable bindings that override parent feature group values.
 
         Returns:
             FeatureGroupVersion: A feature group version.
@@ -888,11 +874,11 @@ class FeatureGroup(AbstractApiClass):
         Retrieves a list of all feature group versions for the specified feature group.
 
         Args:
-            limit (int): The max length of the returned versions
-            start_after_version (str): Results will start after this version
+            limit (int): The maximum length of the returned versions.
+            start_after_version (str): Results will start after this version.
 
         Returns:
-            FeatureGroupVersion: An array of feature group version.
+            FeatureGroupVersion: A list of feature group versions.
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
 
@@ -901,15 +887,15 @@ class FeatureGroup(AbstractApiClass):
         Create a feature group template.
 
         Args:
-            name (str): The user-friendly of for this feature group template.
-            template_sql (str): The template sql that will be resolved by applying values from the template variables to generate sql for a feature group.
+            name (str): User-friendly name for this feature group template.
+            template_sql (str): The template SQL that will be resolved by applying values from the template variables to generate SQL for a feature group.
             template_variables (list): The template variables for resolving the template.
-            description (str): A description of this feature group template
+            description (str): Description of this feature group template.
             template_bindings (list): If the feature group will be attached to the newly created template, set these variable bindings on that feature group.
-            should_attach_feature_group_to_template (bool): Set to True to convert the feature group to a template feature group and attach it to the newly created template.
+            should_attach_feature_group_to_template (bool): Set to `True` to convert the feature group to a template feature group and attach it to the newly created template.
 
         Returns:
-            FeatureGroupTemplate: The created feature group template
+            FeatureGroupTemplate: The created feature group template.
         """
         return self.client.create_feature_group_template(self.feature_group_id, name, template_sql, template_variables, description, template_bindings, should_attach_feature_group_to_template)
 
@@ -918,7 +904,7 @@ class FeatureGroup(AbstractApiClass):
         Suggest values for a feature gruop template, based on a feature group.
 
         Args:
-            feature_group_id (str): The unique ID associated with the feature group to use for suggesting values to use for the template.
+            feature_group_id (str): Unique identifier associated with the feature group to use for suggesting values to use in the template.
 
         Returns:
             FeatureGroupTemplate: None
@@ -930,16 +916,16 @@ class FeatureGroup(AbstractApiClass):
         Returns recently streamed data to a streaming feature group.
 
         Args:
-            feature_group_id (str): The unique ID associated with the feature group.
+            feature_group_id (str): Unique string identifier associated with the feature group.
         """
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
 
     def create_prediction_metric(self, prediction_metric_config: dict, project_id: str = None):
         """
-        Create a prediction metric job description for the given prediction and actual-labels data.
+        Create a prediction metric description for the given prediction and actual-labels data.
 
         Args:
-            prediction_metric_config (dict): Specification for prediction metric to run in this job.
+            prediction_metric_config (dict): Specification for the prediction metric to run in this job.
             project_id (str): Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
 
         Returns:
@@ -952,44 +938,37 @@ class FeatureGroup(AbstractApiClass):
         List the prediction metrics for a feature group.
 
         Args:
-            limit (int): The the number of prediction metrics to be retrieved.
-            should_include_latest_version_description (bool): include the description of the latest prediction metric version for each prediction metric
-            start_after_id (str): An offset parameter to exclude all prediction metrics till the specified prediction metric ID.
+            limit (int): Maximum number of prediction metrics to be retrieved.
+            should_include_latest_version_description (bool): Whether to include the description of the latest prediction metric version for each prediction metric.
+            start_after_id (str): Offset parameter to exclude all prediction metrics until the specified prediction metric ID.
 
         Returns:
-            PredictionMetric: The prediction metrics for this feature group.
+            PredictionMetric: List of prediction metrics for the given feature group.
         """
         return self.client.list_prediction_metrics(self.feature_group_id, limit, should_include_latest_version_description, start_after_id)
 
     def query_prediction_metrics(self, project_id: str = None, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None):
         """
-        Query and return prediction metrics and extra data needed by the UI, constrained by the parameters provided.
-
-        feature_group_id (Unique String Identifier): [optional] The feature group used as input to the prediction metrics.
-            project_id (Unique String Identifier): [optional] The project_id of the prediction metrics.
-            limit (Integer): The the number of prediction metrics to be retrieved.
-            should_include_latest_version_description (Boolean): include the description of the latest prediction metric version for each prediction metric
-            start_after_id (Unique String Identifier): An offset parameter to exclude all prediction metrics till the specified prediction metric ID.
-
+        Query and return the prediction metrics and additional data needed by the UI, constrained by the provided parameters.
 
         Args:
-            project_id (str): 
-            limit (int): 
-            should_include_latest_version_description (bool): 
-            start_after_id (str): 
+            project_id (str): The project_id of the prediction metrics.
+            limit (int): The maximum number of prediction metrics to be retrieved.
+            should_include_latest_version_description (bool): Include the description of the latest prediction metric version for each prediction metric.
+            start_after_id (str): An offset parameter to exclude all prediction metrics up to the specified prediction metric ID. Returns:
 
         Returns:
-            PredictionMetric: The prediction metrics for this feature group.
+            PredictionMetric: None
         """
         return self.client.query_prediction_metrics(self.feature_group_id, project_id, limit, should_include_latest_version_description, start_after_id)
 
     def upsert_data(self, streaming_token: str, data: dict):
         """
-        Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+        Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
         Args:
-            streaming_token (str): The streaming token for authenticating requests
-            data (dict): The data to record
+            streaming_token (str): The streaming token for authenticating requests.
+            data (dict): The data to record, in JSON format.
         """
         return self.client.upsert_data(self.feature_group_id, streaming_token, data)
 
@@ -998,18 +977,18 @@ class FeatureGroup(AbstractApiClass):
         Appends new data into the feature group for a given lookup key recordId.
 
         Args:
-            streaming_token (str): The streaming token for authenticating requests
-            data (dict): The data to record
+            streaming_token (str): The streaming token for authenticating requests.
+            data (dict): The data to record as a JSON object.
         """
         return self.client.append_data(self.feature_group_id, streaming_token, data)
 
     def upsert_multiple_data(self, streaming_token: str, data: dict):
         """
-        Updates new data into the feature group for a given lookup key recordId if the recordID is found otherwise inserts new data into the feature group.
+        Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
         Args:
-            streaming_token (str): The streaming token for authenticating requests
-            data (dict): The data to record, as an array of JSON Objects
+            streaming_token (str): The streaming token for authenticating requests.
+            data (dict): The data to record, as a list of JSON objects.
         """
         return self.client.upsert_multiple_data(self.feature_group_id, streaming_token, data)
 
@@ -1018,8 +997,8 @@ class FeatureGroup(AbstractApiClass):
         Appends new data into the feature group for a given lookup key recordId.
 
         Args:
-            streaming_token (str): The streaming token for authenticating requests
-            data (list): The data to record, as an array of JSON objects
+            streaming_token (str): Streaming token for authenticating requests.
+            data (list): Data to record, as a list of JSON objects.
         """
         return self.client.append_multiple_data(self.feature_group_id, streaming_token, data)
 

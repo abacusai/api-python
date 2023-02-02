@@ -7,7 +7,7 @@ class Annotation(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            annotationType (str): A name determinig the type of annotation and how to interpret the annotation value data, e.g. as a label, bounding box, etc.
+            annotationType (str): A name determining the type of annotation and how to interpret the annotation value data, e.g. as a label, bounding box, etc.
             annotationValue (dict): JSON-compatible value of the annotation. The format of the value is determined by the annotation type.
     """
 

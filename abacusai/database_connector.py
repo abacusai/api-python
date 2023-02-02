@@ -7,12 +7,12 @@ class DatabaseConnector(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            databaseConnectorId (str): The unique ID for the connection.
-            service (str): The service this connection connects to
-            name (str): A user-friendly name for the service
-            status (str): The status of the Database Connector
-            auth (dict): Non-secret connection information for this connector
-            createdAt (str): When the API key was created
+            databaseConnectorId (str): A unique string identifier for the connection.
+            service (str): An enum string indicating the service this connection connects to.
+            name (str): A user-friendly name for the service.
+            status (str): The status of the database connector.
+            auth (dict): Non-secret connection information for this connector.
+            createdAt (str): The ISO-8601 string indicating when the API key was created.
     """
 
     def __init__(self, client, databaseConnectorId=None, service=None, name=None, status=None, auth=None, createdAt=None):
@@ -41,7 +41,7 @@ class DatabaseConnector(AbstractApiClass):
         Lists querable objects in the database connector.
 
         Args:
-            database_connector_id (str): The unique identifier for the database connector.
+            database_connector_id (str): Unique string identifier for the database connector.
         """
         return self.client.list_database_connector_objects(self.database_connector_id)
 
@@ -50,7 +50,7 @@ class DatabaseConnector(AbstractApiClass):
         Get the schema of an object in an database connector.
 
         Args:
-            object_name (str): The unique identifier for the object in the external system.
+            object_name (str): Unique identifier for the object in the external system.
         """
         return self.client.get_database_connector_object_schema(self.database_connector_id, object_name)
 
@@ -59,16 +59,16 @@ class DatabaseConnector(AbstractApiClass):
         Renames a Database Connector
 
         Args:
-            name (str): The new name for the Database Connector
+            name (str): The new name for the Database Connector.
         """
         return self.client.rename_database_connector(self.database_connector_id, name)
 
     def verify(self):
         """
-        Checks to see if Abacus.AI can access the database.
+        Checks if Abacus.AI can access the specified database.
 
         Args:
-            database_connector_id (str): The unique identifier for the database connector.
+            database_connector_id (str): Unique string identifier for the database connector.
         """
         return self.client.verify_database_connector(self.database_connector_id)
 

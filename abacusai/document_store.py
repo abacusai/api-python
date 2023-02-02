@@ -7,12 +7,12 @@ class DocumentStore(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            documentStoreId (str): The unique identifier of the document store.
-            createdAt (str): The timestamp at which the document store was created.
-            name (str): The name of the document store
-            documentType (str): The type of documents stored in this document store
-            documentCount (int): The number of documents in the document store
-            approximateSize (int): Approximately the number of bytes of all documents stored in the document store
+            documentStoreId (str): A unique string identifier for the document store.
+            createdAt (str): The timestamp in ISO-8601 format when the document store was created.
+            name (str): The name of the document store.
+            documentType (str): The type of documents stored in the document store, as an enumerated string.
+            documentCount (int): The number of documents in the document store.
+            approximateSize (int): An approximate count of bytes for all documents stored in the document store.
     """
 
     def __init__(self, client, documentStoreId=None, createdAt=None, name=None, documentType=None, documentCount=None, approximateSize=None):

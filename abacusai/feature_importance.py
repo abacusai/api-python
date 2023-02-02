@@ -7,10 +7,10 @@ class FeatureImportance(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            shapFeatureImportance (dict): A feature name, feature importance map for importance determined by shap values on a sample dataset
-            permutationFeatureImportance (dict): A feature name, feature importance map for importance determined by permutation importance
-            nullFeatureImportance (dict): A feature name, feature importance map for importance determined by null feature importance
-            lofoFeatureImportance (dict): A feature name, feature importance map for importance determined by Leave One Feature Out method
+            shapFeatureImportance (dict): A map of feature name to feature importance, determined by Shap values on a sample dataset.
+            permutationFeatureImportance (dict): A map of feature name to feature importance, determined by permutation importance.
+            nullFeatureImportance (dict): A map of feature name to feature importance, determined by null feature importance.
+            lofoFeatureImportance (dict): A map of feature name to feature importance, determined by the Leave One Feature Out method.
     """
 
     def __init__(self, client, shapFeatureImportance=None, permutationFeatureImportance=None, nullFeatureImportance=None, lofoFeatureImportance=None):

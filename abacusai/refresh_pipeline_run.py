@@ -4,23 +4,23 @@ from .return_class import AbstractApiClass
 
 class RefreshPipelineRun(AbstractApiClass):
     """
-        A refresh policy run or a project refresh run.
+        This keeps track of the overall status of a refresh. A refresh can span multiple resources such as the creation of new dataset versions and the training of a new model version based on them.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            refreshPipelineRunId (str): The unique identifier for the refresh pipeline run
-            refreshPolicyId (str): Populated when the run was triggered by a refresh policy
-            createdAt (str): The time when this refresh pipeline run was created
-            startedAt (str): The time when the refresh pipeline run was started
-            completedAt (is-8601 string): The time when the refresh pipeline run was completed
-            status (str): The status of the refresh pipeline run
-            refreshType (str): The type of refresh policy to be run
-            datasetVersions (list of string identifiers): Comma separated list of Dataset version IDs that this refresh pipeline run is monitoring
-            modelVersions (list of string identifiers): Comma separated list of Model version IDs that this refresh pipeline run is monitoring
-            predictionMetricVersions (list): 
-            deploymentVersions (list of string identifiers): Comma separated list of Deployment version IDs that this refresh pipeline run is monitoring
-            batchPredictions (list of string identifiers): Comma separated list of batch predictionn IDs that this refresh pipeline run is monitoring
-            refreshPolicy (RefreshPolicy): 
+            refreshPipelineRunId (str): The unique identifier for the refresh pipeline run.
+            refreshPolicyId (str): Populated when the run was triggered by a refresh policy.
+            createdAt (str): The time when this refresh pipeline run was created, in ISO-8601 format.
+            startedAt (str): The time when the refresh pipeline run was started, in ISO-8601 format.
+            completedAt (str): The time when the refresh pipeline run was completed, in ISO-8601 format.
+            status (str): The status of the refresh pipeline run.
+            refreshType (str): The type of refresh policy to be run.
+            datasetVersions (list[str]): A list of dataset version IDs that this refresh pipeline run is monitoring.
+            modelVersions (list[str]): A list of model version IDs that this refresh pipeline run is monitoring.
+            predictionMetricVersions (list[str]): A list of prediction metric versions that this refresh pipeline run is monitoring.
+            deploymentVersions (list[str]): A list of deployment version IDs that this refresh pipeline run is monitoring.
+            batchPredictions (list[str]): A list of batch prediction IDs that this refresh pipeline run is monitoring.
+            refreshPolicy (RefreshPolicy): The refresh policy for this refresh policy run.
     """
 
     def __init__(self, client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, modelVersions=None, predictionMetricVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={}):
@@ -66,10 +66,10 @@ class RefreshPipelineRun(AbstractApiClass):
         Retrieve a single refresh pipeline run
 
         Args:
-            refresh_pipeline_run_id (str): The unique ID associated with this refresh pipeline_run
+            refresh_pipeline_run_id (str): Unique string identifier associated with the refresh pipeline run.
 
         Returns:
-            RefreshPipelineRun: A refresh pipeline run object
+            RefreshPipelineRun: A refresh pipeline run object.
         """
         return self.client.describe_refresh_pipeline_run(self.refresh_pipeline_run_id)
 

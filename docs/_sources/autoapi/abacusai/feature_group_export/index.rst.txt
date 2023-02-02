@@ -25,39 +25,39 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param featureGroupExportId: The unique identifier for this export
+   :param featureGroupExportId: Unique identifier for this export.
    :type featureGroupExportId: str
-   :param featureGroupVersion: The version of the feature group being exported
+   :param featureGroupVersion: Version of the feature group being exported.
    :type featureGroupVersion: str
-   :param connectorType: Either DATABASE_CONNECTOR or FILE_CONNECTOR
+   :param connectorType: The type of connector
    :type connectorType: str
-   :param outputLocation: The File Connector location the feature group is being written to
+   :param outputLocation: File Connector location the feature group is being written to.
    :type outputLocation: str
-   :param fileFormat: The file format being written to outputLocation
+   :param fileFormat: File format being written to `output_location`.
    :type fileFormat: str
-   :param databaseConnectorId: The database connector ID used
+   :param databaseConnectorId: Database connector ID used.
    :type databaseConnectorId: str
-   :param objectName: The database connector's object to write to
+   :param objectName: Database connector's object to write to.
    :type objectName: str
-   :param writeMode: UPSERT or INSERT for writing to the database connector
+   :param writeMode: `UPSERT` or `INSERT` for writing to the database connector.
    :type writeMode: str
-   :param databaseFeatureMapping: The column/feature pairs mapping the features to the database columns
+   :param databaseFeatureMapping: Column/feature pairs mapping the features to the database columns.
    :type databaseFeatureMapping: dict
-   :param idColumn: The id column to use as the upsert key
+   :param idColumn: ID column to use as the upsert key.
    :type idColumn: str
-   :param status: The current status of the export.
+   :param status: Current status of the export.
    :type status: str
-   :param createdAt: The timestamp at which the export was created.
+   :param createdAt: Timestamp at which the export was created (ISO-8601 format).
    :type createdAt: str
-   :param exportCompletedAt: The timestamp at which the export completed
+   :param exportCompletedAt: Timestamp at which the export completed (ISO-8601 format).
    :type exportCompletedAt: str
-   :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting
-   :type additionalIdColumns: list of string
-   :param error: If status is FAILED, this field will be populated with an error.
+   :param additionalIdColumns: For database connectors which support it, additional ID columns to use as a complex key for upserting.
+   :type additionalIdColumns: list[str]
+   :param error: If `status` is `FAILED`, this field will be populated with an error.
    :type error: str
-   :param databaseOutputError: If true, there were errors reported by the database connector while writing
+   :param databaseOutputError: If `True`, there were errors reported by the database connector while writing.
    :type databaseOutputError: bool
-   :param projectConfig: The project config for this feature group
+   :param projectConfig: Project config for this feature group.
    :type projectConfig: dict
 
    .. py:method:: __repr__()
@@ -77,10 +77,10 @@ Classes
 
       Get a link to download the feature group version.
 
-      :param feature_group_export_id: The Feature Group Export to get signed url for.
+      :param feature_group_export_id: Unique identifier of the Feature Group Export to get a signed URL for.
       :type feature_group_export_id: str
 
-      :returns: The FeatureGroupExportDownloadUrl instance, which contains the download URL and expiration time.
+      :returns: Instance containing the download URL and expiration time for the Feature Group Export.
       :rtype: FeatureGroupExportDownloadUrl
 
 
@@ -96,18 +96,18 @@ Classes
 
       A feature group export
 
-      :param feature_group_export_id: The ID of the feature group export.
+      :param feature_group_export_id: Unique identifier of the feature group export.
       :type feature_group_export_id: str
 
-      :returns: The feature group export
+      :returns: The feature group export object.
       :rtype: FeatureGroupExport
 
 
    .. py:method:: get_connector_errors()
 
-      Returns a stream containing the feature group export database connection write errors, if any writes failed to the database connector
+      Returns a stream containing the write errors of the feature group export database connection, if any writes failed to the database connector.
 
-      :param feature_group_export_id: The ID of the feature group export to get the errors for
+      :param feature_group_export_id: Unique identifier of the feature group export to get the errors for.
       :type feature_group_export_id: str
 
 

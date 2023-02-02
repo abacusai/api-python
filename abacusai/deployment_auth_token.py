@@ -7,9 +7,9 @@ class DeploymentAuthToken(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            deploymentToken (str): The unique token used to authenticate requests
-            createdAt (str): When the token was created
-            name (str): The name associated with the authentication token
+            deploymentToken (str): The unique token used to authenticate requests.
+            createdAt (str): The date and time when the token was created, in ISO-8601 format.
+            name (str): The name associated with the authentication token.
     """
 
     def __init__(self, client, deploymentToken=None, createdAt=None, name=None):

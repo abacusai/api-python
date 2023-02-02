@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupInstanceId=None, trainingFeatureGroupInstanceId=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, refreshSchedules={}, latestMonitorModelVersion={})
+.. py:class:: ModelMonitor(client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, refreshSchedules={}, latestMonitorModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -34,20 +34,20 @@ Classes
    :param projectId: The project this model belongs to.
    :type projectId: str
    :param trainingFeatureGroupId: Feature group IDs that this model monitor is monitoring.
-   :type trainingFeatureGroupId: unique string identifiers
+   :type trainingFeatureGroupId: list[str]
    :param predictionFeatureGroupId: Feature group IDs that this model monitor is monitoring.
-   :type predictionFeatureGroupId: unique string identifiers
-   :param predictionFeatureGroupInstanceId:
-   :type predictionFeatureGroupInstanceId: str
-   :param trainingFeatureGroupInstanceId:
-   :type trainingFeatureGroupInstanceId: str
+   :type predictionFeatureGroupId: list[str]
+   :param predictionFeatureGroupVersion: Feature group version that this model monitor is monitoring.
+   :type predictionFeatureGroupVersion: list[str]
+   :param trainingFeatureGroupVersion: Feature group version that this model monitor is monitoring.
+   :type trainingFeatureGroupVersion: list[str]
    :param alertConfig: Alerting configuration for this model monitor.
    :type alertConfig: dict
-   :param biasMetricId:
+   :param biasMetricId: The bias metric ID
    :type biasMetricId: str
    :param latestBiasMetricVersionId: Lastest prediction metric instance for bias
    :type latestBiasMetricVersionId: str
-   :param predictionMetricId:
+   :param predictionMetricId: The prediction metric ID for the model monitor
    :type predictionMetricId: str
    :param latestPredictionMetricVersionId: Lastest prediction metric instance for decile and other analysis
    :type latestPredictionMetricVersionId: str
@@ -58,15 +58,15 @@ Classes
    :param metricTypes: List of metric types
    :type metricTypes: dict
    :param modelId: Model ID that this model monitor is monitoring.
-   :type modelId: unique string identifiers
+   :type modelId: list[str]
    :param starred: Whether this model monitor is starred.
    :type starred: bool
-   :param batchPredictionId:
+   :param batchPredictionId: The batch prediction ID this model monitor monitors
    :type batchPredictionId: str
    :param monitorType: The type of the monitor, one of MODEL_MONITOR, or FEATURE_GROUP_MONITOR
    :type monitorType: str
-   :param edaConfigs:
-   :type edaConfigs: list
+   :param edaConfigs: The configs for EDA
+   :type edaConfigs: dict
    :param latestMonitorModelVersion: The latest model monitor version.
    :type latestMonitorModelVersion: ModelMonitorVersion
    :param refreshSchedules: List of refresh schedules that indicate when the next model version will be trained.
@@ -87,12 +87,12 @@ Classes
 
    .. py:method:: rerun()
 
-      Reruns the specified model monitor.
+      Re-runs the specified model monitor.
 
-      :param model_monitor_id: The model monitor to rerun.
+      :param model_monitor_id: Unique string identifier of the model monitor to re-run.
       :type model_monitor_id: str
 
-      :returns: The model monitor that is being rerun.
+      :returns: The model monitor that is being re-run.
       :rtype: ModelMonitor
 
 
@@ -108,10 +108,10 @@ Classes
 
       Retrieves a full description of the specified model monitor.
 
-      :param model_monitor_id: The unique ID associated with the model monitor.
+      :param model_monitor_id: Unique string identifier associated with the model monitor.
       :type model_monitor_id: str
 
-      :returns: The description of the model monitor.
+      :returns: Description of the model monitor.
       :rtype: ModelMonitor
 
 
@@ -119,23 +119,23 @@ Classes
 
       Gets the summary of a model monitor across versions.
 
-      :param model_monitor_id: The unique ID associated with the model monitor.
+      :param model_monitor_id: A unique string identifier associated with the model monitor.
       :type model_monitor_id: str
 
-      :returns: An object describing integrity, bias violations, model accuracy, and drift for a model monitor.
+      :returns: An object describing integrity, bias violations, model accuracy and drift for the model monitor.
       :rtype: ModelMonitorSummary
 
 
    .. py:method:: list_versions(limit = 100, start_after_version = None)
 
-      Retrieves a list of the versions for a given model monitor.
+      Retrieves a list of versions for a given model monitor.
 
-      :param limit: The max length of the list of all model monitor versions.
+      :param limit: The maximum length of the list of all model monitor versions.
       :type limit: int
-      :param start_after_version: The id of the version after which the list starts.
+      :param start_after_version: The ID of the version after which the list starts.
       :type start_after_version: str
 
-      :returns: An array of model monitor versions.
+      :returns: A list of model monitor versions.
       :rtype: ModelMonitorVersion
 
 
@@ -143,26 +143,26 @@ Classes
 
       Renames a model monitor
 
-      :param name: The name to apply to the model monitor
+      :param name: The new name to apply to the model monitor.
       :type name: str
 
 
    .. py:method:: delete()
 
-      Deletes the specified model monitor and all its versions.
+      Deletes the specified Model Monitor and all its versions.
 
-      :param model_monitor_id: The ID of the model monitor to delete.
+      :param model_monitor_id: Unique identifier of the Model Monitor to delete.
       :type model_monitor_id: str
 
 
    .. py:method:: list_monitor_alerts_for_monitor()
 
-      Retrieves the list of monitor alerts for a specified monitor
+      Retrieves the list of monitor alerts for a specified monitor.
 
       :param model_monitor_id: The unique ID associated with the model monitor.
       :type model_monitor_id: str
 
-      :returns: An array of monitor alerts.
+      :returns: A list of monitor alerts.
       :rtype: MonitorAlert
 
 

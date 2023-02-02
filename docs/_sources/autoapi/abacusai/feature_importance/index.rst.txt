@@ -25,13 +25,13 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param shapFeatureImportance: A feature name, feature importance map for importance determined by shap values on a sample dataset
+   :param shapFeatureImportance: A map of feature name to feature importance, determined by Shap values on a sample dataset.
    :type shapFeatureImportance: dict
-   :param permutationFeatureImportance: A feature name, feature importance map for importance determined by permutation importance
+   :param permutationFeatureImportance: A map of feature name to feature importance, determined by permutation importance.
    :type permutationFeatureImportance: dict
-   :param nullFeatureImportance: A feature name, feature importance map for importance determined by null feature importance
+   :param nullFeatureImportance: A map of feature name to feature importance, determined by null feature importance.
    :type nullFeatureImportance: dict
-   :param lofoFeatureImportance: A feature name, feature importance map for importance determined by Leave One Feature Out method
+   :param lofoFeatureImportance: A map of feature name to feature importance, determined by the Leave One Feature Out method.
    :type lofoFeatureImportance: dict
 
    .. py:method:: __repr__()

@@ -8,11 +8,11 @@ class CustomMetricVersion(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            customMetricVersion (str): The unique identifier of the custom metric version
-            name (str): Name assigned to the custom metric
-            createdAt (str): When the custom metric was created
-            customMetricFunctionName (str): The name of the function defined in the source code
-            codeSource (CodeSource): Info about the source code of the custom metric
+            customMetricVersion (str): Unique string identifier for the custom metric version.
+            name (str): Name assigned to the custom metric.
+            createdAt (str): ISO-8601 string indicating when the custom metric was created.
+            customMetricFunctionName (str): The name of the function defined in the source code.
+            codeSource (CodeSource): Information about the source code of the custom metric.
     """
 
     def __init__(self, client, customMetricVersion=None, name=None, createdAt=None, customMetricFunctionName=None, codeSource={}):
@@ -50,7 +50,7 @@ class CustomMetricVersion(AbstractApiClass):
         Describes a given custom metric version
 
         Args:
-            custom_metric_version (str): The unique identifier to a custom metric version.
+            custom_metric_version (str): A unique string identifier for the custom metric version.
 
         Returns:
             CustomMetricVersion: An object describing the custom metric version.

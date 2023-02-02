@@ -47,7 +47,7 @@ class FeatureGroupTemplate(AbstractApiClass):
         Delete an existing feature group template.
 
         Args:
-            feature_group_template_id (str): The unique ID associated with the feature group template.
+            feature_group_template_id (str): Unique string identifier associated with the feature group template.
         """
         return self.client.delete_feature_group_template(self.feature_group_template_id)
 
@@ -66,7 +66,7 @@ class FeatureGroupTemplate(AbstractApiClass):
         Describe a Feature Group Template.
 
         Args:
-            feature_group_template_id (str): The unique ID of a feature group template.
+            feature_group_template_id (str): The unique identifier of a feature group template.
 
         Returns:
             FeatureGroupTemplate: The feature group template object.
@@ -78,10 +78,10 @@ class FeatureGroupTemplate(AbstractApiClass):
         Update a feature group template.
 
         Args:
-            template_sql (str): If provided, the new value to use for the template sql.
+            template_sql (str): If provided, the new value to use for the template SQL.
             template_variables (list): If provided, the new value to use for the template variables.
-            description (str): A description of this feature group template
-            name (str): The user-friendly of for this feature group template.
+            description (str): Description of this feature group template.
+            name (str): User-friendly name for this feature group template.
 
         Returns:
             FeatureGroupTemplate: The updated feature group template.
@@ -93,12 +93,12 @@ class FeatureGroupTemplate(AbstractApiClass):
         Resolve template sql using template variables and template bindings.
 
         Args:
-            template_bindings (list): Values that overide the template variable values specified by the template.
-            template_sql (str): If specified, use this as the template sql instead of the feature group template's sql.
+            template_bindings (list): Values to override the template variable values specified by the template.
+            template_sql (str): If specified, use this as the template SQL instead of the feature group template's SQL.
             template_variables (list): Template variables to use. If a template is provided, this overrides the template's template variables.
-            should_validate (bool): 
+            should_validate (bool): If true, validates the resolved SQL.
 
         Returns:
-            ResolvedFeatureGroupTemplate: None
+            ResolvedFeatureGroupTemplate: The resolved template
         """
         return self.client.preview_feature_group_template_resolution(self.feature_group_template_id, template_bindings, template_sql, template_variables, should_validate)

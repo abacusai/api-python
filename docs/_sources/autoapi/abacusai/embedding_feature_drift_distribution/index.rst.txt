@@ -21,17 +21,17 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   distance (List): Histogram data of KL divergences between the training distribution and the range of values in the specified window.
+   Feature distribution for embeddings
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param distance:
+   :param distance: Histogram data of KL divergences between the training distribution and the range of values in the specified window.
    :type distance: list
-   :param jsDistance:
+   :param jsDistance: Histogram data of JS divergence between the training distribution and the range of values in the specified window.
    :type jsDistance: list
-   :param wsDistance:
+   :param wsDistance: Histogram data of Wasserstein distance between the training distribution and the range of values in the specified window.
    :type wsDistance: list
-   :param ksStatistic:
+   :param ksStatistic: Histogram data of Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
    :type ksStatistic: list
 
    .. py:method:: __repr__()

@@ -15,26 +15,27 @@ class ModelVersion(AbstractApiClass):
             modelId (str): A reference to the model this version belongs to.
             modelConfig (dict): The training config options used to train this model.
             modelPredictionConfig (dict): The prediction config options for the model.
-            trainingStartedAt (str): The start time and date of the training process.
-            trainingCompletedAt (str): The end time and date of the training process.
-            datasetVersions (list of unique string identifiers): Comma separated list of Dataset version IDs used for model training.
-            featureGroupVersions (list of unique string identifiers): Comma separated list of Feature Group version IDs used for model training.
+            trainingStartedAt (str): The start time and date of the training process in ISO-8601 format.
+            trainingCompletedAt (str): The end time and date of the training process in ISO-8601 format.
+            datasetVersions (list): A list of Dataset version IDs used for model training.
+            featureGroupVersions (list): A list of Feature Group version IDs used for model training.
             error (str): Relevant error if the status is FAILED.
             pendingDeploymentIds (list): List of deployment IDs where deployment is pending.
             failedDeploymentIds (list): List of failed deployment IDs.
-            cpuSize (str): Cpu size specified for the python model training.
+            cpuSize (str): CPU size specified for the python model training.
             memory (int): Memory in GB specified for the python model training.
-            automlComplete (bool): If true, all algorithms have completed training
-            trainingFeatureGroupIds (list of unique string identifiers): The unique identifiers of the feature group used as the inputs during training to create this ModelVersion.
-            deployableAlgorithms (dict): List of deployable algorithms
-            bestAlgorithm (dict): Best performing algorithm
-            defaultAlgorithm (dict): Default algorithm that the user has selected
-            featureAnalysisStatus (str): lifecycle of the feature analysis stage
-            dataClusterInfo (dict): Information about the models for different data clusters
-            codeSource (CodeSource): If a python model, information on where the source code
+            automlComplete (bool): If true, all algorithms have completed training.
+            trainingFeatureGroupIds (list): The unique identifiers of the feature groups used as inputs during training to create this ModelVersion.
+            deployableAlgorithms (list): List of deployable algorithms.
+            bestAlgorithm (str): Best performing algorithm.
+            defaultAlgorithm (str): Default algorithm that the user has selected.
+            featureAnalysisStatus (str): Lifecycle of the feature analysis stage.
+            dataClusterInfo (dict): Information about the models for different data clusters.
+            customAlgorithmConfigs (dict): User-defined configs for each of the user-defined custom algorithms.
+            codeSource (CodeSource): If a python model, information on where the source code is located.
     """
 
-    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, codeSource={}):
+    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, codeSource={}):
         super().__init__(client, modelVersion)
         self.model_version = modelVersion
         self.status = status
@@ -57,10 +58,11 @@ class ModelVersion(AbstractApiClass):
         self.default_algorithm = defaultAlgorithm
         self.feature_analysis_status = featureAnalysisStatus
         self.data_cluster_info = dataClusterInfo
+        self.custom_algorithm_configs = customAlgorithmConfigs
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  deployable_algorithms={repr(self.deployable_algorithms)},\n  best_algorithm={repr(self.best_algorithm)},\n  default_algorithm={repr(self.default_algorithm)},\n  feature_analysis_status={repr(self.feature_analysis_status)},\n  data_cluster_info={repr(self.data_cluster_info)},\n  code_source={repr(self.code_source)})"
+        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  deployable_algorithms={repr(self.deployable_algorithms)},\n  best_algorithm={repr(self.best_algorithm)},\n  default_algorithm={repr(self.default_algorithm)},\n  feature_analysis_status={repr(self.feature_analysis_status)},\n  data_cluster_info={repr(self.data_cluster_info)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -69,14 +71,14 @@ class ModelVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'deployable_algorithms': self.deployable_algorithms, 'best_algorithm': self.best_algorithm, 'default_algorithm': self.default_algorithm, 'feature_analysis_status': self.feature_analysis_status, 'data_cluster_info': self.data_cluster_info, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'deployable_algorithms': self.deployable_algorithms, 'best_algorithm': self.best_algorithm, 'default_algorithm': self.default_algorithm, 'feature_analysis_status': self.feature_analysis_status, 'data_cluster_info': self.data_cluster_info, 'custom_algorithm_configs': self.custom_algorithm_configs, 'code_source': self._get_attribute_as_dict(self.code_source)}
 
     def describe_train_test_data_split_feature_group_version(self):
         """
-        Get the train and test data split for a trained model by model_version. Only supported for models with custom algorithms.
+        Get the train and test data split for a trained model by model version. This is only supported for models with custom algorithms.
 
         Args:
-            model_version (str): The unique version ID of the model version
+            model_version (str): The unique version ID of the model version.
 
         Returns:
             FeatureGroupVersion: The feature group version containing the training data and folds information.
@@ -85,19 +87,19 @@ class ModelVersion(AbstractApiClass):
 
     def set_model_objective(self, metric: str):
         """
-        Sets the best model for all model instances of the model based on the specified metric, and updates the training config to use the specified metric for any future model versions.
+        Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
 
         Args:
-            metric (str): The metric to use to determine the best model
+            metric (str): The metric to use to determine the best model.
         """
         return self.client.set_model_objective(self.model_version, metric)
 
     def delete(self):
         """
-        Deletes the specified model version. Model Versions which are currently used in deployments cannot be deleted.
+        Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.
 
         Args:
-            model_version (str): The ID of the model version to delete.
+            model_version (str): The unique identifier of the model version to delete.
         """
         return self.client.delete_model_version(self.model_version)
 
@@ -106,8 +108,8 @@ class ModelVersion(AbstractApiClass):
         Exports metric artifact data for a model as a feature group.
 
         Args:
-            table_name (str): The name of the feature group table to create.
-            artifact_type (str): An EvalArtifact enum of which artifact to export.
+            table_name (str): Name of the feature group table to create.
+            artifact_type (str): EvalArtifact enum specifying which artifact to export.
 
         Returns:
             FeatureGroup: The created feature group.
@@ -126,10 +128,10 @@ class ModelVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Retrieves a full description of the specified model version
+        Retrieves a full description of the specified model version.
 
         Args:
-            model_version (str): The unique version ID of the model version
+            model_version (str): Unique string identifier of the model version.
 
         Returns:
             ModelVersion: A model version.
@@ -138,13 +140,13 @@ class ModelVersion(AbstractApiClass):
 
     def get_feature_importance_by(self):
         """
-        Gets the feature importance calculated by various methods for the model
+        Gets the feature importance calculated by various methods for the model.
 
         Args:
-            model_version (str): The version of the model.
+            model_version (str): Unique string identifier for the model version.
 
         Returns:
-            FeatureImportance: The feature importances for the model.
+            FeatureImportance: Feature importances for the model.
         """
         return self.client.get_feature_importance_by_model_version(self.model_version)
 
@@ -153,7 +155,7 @@ class ModelVersion(AbstractApiClass):
         Retrieves the data preparation logs during model training.
 
         Args:
-            model_version (str): The unique version ID of the model version
+            model_version (str): The unique version ID of the model version.
 
         Returns:
             DataPrepLogs: A list of logs.
@@ -165,23 +167,13 @@ class ModelVersion(AbstractApiClass):
         Returns training logs for the model.
 
         Args:
-            stdout (bool):  Set True to get info logs
-            stderr (bool):  Set True to get error logs
+            stdout (bool): Set True to get info logs.
+            stderr (bool): Set True to get error logs.
 
         Returns:
-            FunctionLogs: A function logs.
+            FunctionLogs: A function logs object.
         """
         return self.client.get_training_logs(self.model_version, stdout, stderr)
-
-    def ignore_lofo_features(self, threshold: float = None, top_n: int = 0):
-        """
-
-
-        Args:
-            threshold (float): 
-            top_n (int): 
-        """
-        return self.client.ignore_lofo_features(self.model_version, threshold, top_n)
 
     def wait_for_training(self, timeout=None):
         """

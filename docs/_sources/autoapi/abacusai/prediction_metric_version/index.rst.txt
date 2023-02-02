@@ -25,16 +25,16 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param createdAt: Date and time when this preddiction metric version was created.
+   :param createdAt: Date and time when this prediction metric version was created.
    :type createdAt: str
    :param error: Relevant error if the status of this job version is FAILED.
    :type error: str
    :param featureGroupVersion: The feature group version used as input to this prediction metric.
    :type featureGroupVersion: str
-   :param predictionMetricCompletedAt: The time and date computatations were completed for this job version.
+   :param predictionMetricCompletedAt: The time and date computations were completed for this job version.
    :type predictionMetricCompletedAt: str
-   :param predictionMetricConfig: Specification for prediction metric used to run this job.
-   :type predictionMetricConfig: json
+   :param predictionMetricConfig: Specification for the prediction metric used to run this job.
+   :type predictionMetricConfig: dict
    :param predictionMetricId: The unique identifier of the prediction metric this is a version of.
    :type predictionMetricId: str
    :param predictionMetricStartedAt: The time and date computations were started for this job version.
@@ -67,20 +67,20 @@ Classes
 
    .. py:method:: describe()
 
-      Retrieves a full description of the specified prediction metric version
+      Retrieves a full description of the specified prediction metric version.
 
-      :param prediction_metric_version: The unique version ID of the prediction metric version
+      :param prediction_metric_version: The unique version ID of the prediction metric version.
       :type prediction_metric_version: str
 
-      :returns: A prediction metric version. For more information, please refer to the details on the object (below).
+      :returns: A prediction metric version. For more information, please refer to the details on the object.
       :rtype: PredictionMetricVersion
 
 
    .. py:method:: delete()
 
-      Removes an existing prediction metric version.
+      Deletes a prediction metric version.
 
-      :param prediction_metric_version:
+      :param prediction_metric_version: Unique string identifier of the prediction metric to remove.
       :type prediction_metric_version: str
 
 

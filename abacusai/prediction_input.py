@@ -9,8 +9,8 @@ class PredictionInput(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureGroupDatasetIds (list): 
-            datasetIdRemap (dict): 
+            featureGroupDatasetIds (list): The list of dataset IDs to use as input
+            datasetIdRemap (dict): Replacement datasets to swap as prediction input
             featureGroups (PredictionFeatureGroup): List of prediction feature groups
             datasets (PredictionDataset): List of prediction datasets
     """

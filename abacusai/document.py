@@ -8,8 +8,8 @@ class Document(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            key (str): 
-            fileSize (int): 
+            key (str): The key for the document
+            fileSize (int): file size for the documnet
             createdAt (str): The timestamp at which the document was created.
             annotations (DocumentAnnotation): the annotations for this document
     """

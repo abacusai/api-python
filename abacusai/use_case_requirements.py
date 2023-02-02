@@ -7,13 +7,13 @@ class UseCaseRequirements(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            datasetType (str): The project-specific enum value of the dataset type
-            name (str): The user-friendly name of the dataset type
-            description (str): The description of the dataset type
-            required (bool): True if the dataset type is required for this project
-            multi (bool): 
-            allowedFeatureMappings (dict): A collection of key value pairs with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool}
-            allowedNestedFeatureMappings (dict): A collection of key value pairs with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool}
+            datasetType (str): The project-specific enum value of the dataset type.
+            name (str): The user-friendly name of the dataset type.
+            description (str): The description of the dataset type.
+            required (bool): True if the dataset type is required for this project.
+            multi (bool): If true, multiple versions of the dataset type can be used for training.
+            allowedFeatureMappings (dict): A collection of key-value pairs, with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool }.
+            allowedNestedFeatureMappings (dict): A collection of key-value pairs, with each key being a column mapping enum (see a list of column mapping enums here) and each value being in the following dictionary format: { "description": str, "allowed_feature_types": feature_type_enum, "required": bool }.
     """
 
     def __init__(self, client, datasetType=None, name=None, description=None, required=None, multi=None, allowedFeatureMappings=None, allowedNestedFeatureMappings=None):

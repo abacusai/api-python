@@ -27,11 +27,11 @@ Classes
    :type client: ApiClient
    :param concatenatedTable: The feature group to concatenate with the destination feature group.
    :type concatenatedTable: str
-   :param mergeType: UNION or INTERSECTION
+   :param mergeType: The type of merge to perform, either `UNION` or `INTERSECTION`.
    :type mergeType: str
-   :param replaceUntilTimestamp: The unix timestamp to specify the point till which we will replace data from the source feature group.
+   :param replaceUntilTimestamp: The Unix timestamp to specify the point up to which data from the source feature group will be replaced.
    :type replaceUntilTimestamp: int
-   :param skipMaterialize: If true, will not materialize the concatenated feature group
+   :param skipMaterialize: If `True`, the concatenated feature group will not be materialized.
    :type skipMaterialize: bool
 
    .. py:method:: __repr__()

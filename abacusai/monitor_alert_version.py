@@ -75,10 +75,10 @@ class MonitorAlertVersion(AbstractApiClass):
         Describes a given monitor alert version id
 
         Args:
-            monitor_alert_version (str): The unique identifier to a monitor alert
+            monitor_alert_version (str): Unique string identifier for the monitor alert.
 
         Returns:
-            MonitorAlertVersion: An object describing the monitor alert version
+            MonitorAlertVersion: An object describing the monitor alert version.
         """
         return self.client.describe_monitor_alert_version(self.monitor_alert_version)
 

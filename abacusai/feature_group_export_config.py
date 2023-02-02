@@ -3,18 +3,18 @@ from .return_class import AbstractApiClass
 
 class FeatureGroupExportConfig(AbstractApiClass):
     """
-        Export config (file connector or database connector information) for feature group exports
+        Export configuration (file connector or database connector information) for feature group exports.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            outputLocation (str): The File Connector location the feature group is being written to
-            fileFormat (str): The file format being written to outputLocation
-            databaseConnectorId (str): The database connector ID used
-            objectName (str): The database connector's object to write to
-            writeMode (str): UPSERT or INSERT for writing to the database connector
-            databaseFeatureMapping (dict): The column/feature pairs mapping the features to the database columns
-            idColumn (str): The id column to use as the upsert key
-            additionalIdColumns (str): For database connectors which support it, additional ID columns to use as a complex key for upserting
+            outputLocation (str): The File Connector location to which the feature group is being written.
+            fileFormat (str): The file format being written to output_location.
+            databaseConnectorId (str): The unique string identifier of the database connector used.
+            objectName (str): The object in the database connector to which the feature group is being written.
+            writeMode (str): UPSERT or INSERT for writing to the database connector.
+            databaseFeatureMapping (dict): The column/feature pairs mapping the features to the database columns.
+            idColumn (str): The id column to use as the upsert key.
+            additionalIdColumns (str): For database connectors which support it, additional ID columns to use as a complex key for upserting.
     """
 
     def __init__(self, client, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, additionalIdColumns=None):

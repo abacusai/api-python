@@ -9,7 +9,7 @@ class IndexingConfig(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             primaryKey (str): A single key index
             updateTimestampKey (str): The primary timestamp feature
-            lookupKeys (list of string): A multi-key index. Cannot be used in conjuction with primary key.
+            lookupKeys (list[str]): A multi-key index. Cannot be used in conjuction with primary key.
     """
 
     def __init__(self, client, primaryKey=None, updateTimestampKey=None, lookupKeys=None):

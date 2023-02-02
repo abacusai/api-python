@@ -13,7 +13,7 @@ class AnnotationEntry(AbstractApiClass):
             docId (str): The ID of the primary document the annotation is on.
             featureGroupRowIdentifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value.
             updatedAt (str): Most recent time the annotation entry was modified, e.g. creation or update time.
-            annotationEntryMarker (str): 
+            annotationEntryMarker (str): The entry marker for the annotation
             annotation (Annotation): json-compatible structure holding the type and value of the annotation
     """
 

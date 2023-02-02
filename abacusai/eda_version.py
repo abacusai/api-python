@@ -12,8 +12,8 @@ class EdaVersion(AbstractApiClass):
             edaId (str): A reference to the eda this version belongs to.
             edaStartedAt (str): The start time and date of the eda process.
             edaCompletedAt (str): The end time and date of the eda process.
-            referenceFeatureGroupVersion (unique string identifiers): Feature group version IDs that this refresh pipeline run is analyzing.
-            testFeatureGroupVersion (unique string identifiers): Feature group version IDs that this refresh pipeline run is analyzing.
+            referenceFeatureGroupVersion (list[str]): Feature group version IDs that this refresh pipeline run is analyzing.
+            testFeatureGroupVersion (list[str]): Feature group version IDs that this refresh pipeline run is analyzing.
             error (str): Relevant error if the status is FAILED.
     """
 
@@ -52,22 +52,22 @@ class EdaVersion(AbstractApiClass):
 
     def describe(self):
         """
-        Retrieves a full description of the specified eda version
+        Retrieves a full description of the specified EDA version.
 
         Args:
-            eda_version (str): The unique version ID of the eda version
+            eda_version (str): Unique string identifier of the EDA version.
 
         Returns:
-            EdaVersion: A eda version.
+            EdaVersion: An EDA version.
         """
         return self.client.describe_eda_version(self.eda_version)
 
     def delete(self):
         """
-        Deletes the specified eda version.
+        Deletes the specified EDA version.
 
         Args:
-            eda_version (str): The ID of the eda version to delete.
+            eda_version (str): Unique string identifier of the EDA version to delete.
         """
         return self.client.delete_eda_version(self.eda_version)
 
@@ -76,10 +76,10 @@ class EdaVersion(AbstractApiClass):
         Gets the Collinearity between all features for the Exploratory Data Analysis.
 
         Args:
-            eda_version (str): The unique ID associated with the EDA instance.
+            eda_version (str): Unique string identifier associated with the EDA instance.
 
         Returns:
-            EdaCollinearity: An object with a record of correlations between each feature for an eda.
+            EdaCollinearity: An object with a record of correlations between each feature for the EDA.
         """
         return self.client.get_eda_collinearity(self.eda_version)
 
@@ -88,10 +88,10 @@ class EdaVersion(AbstractApiClass):
         Gets the data consistency for the Exploratory Data Analysis.
 
         Args:
-            transformation_feature (str): 
+            transformation_feature (str): The transformation feature to get consistency for.
 
         Returns:
-            EdaDataConsistency: An object with duplication, deletion and transformation data for Data Consistency Analysis for an eda.
+            EdaDataConsistency: Object with duplication, deletion, and transformation data for data consistency analysis for an EDA.
         """
         return self.client.get_eda_data_consistency(self.eda_version, transformation_feature)
 
@@ -100,10 +100,10 @@ class EdaVersion(AbstractApiClass):
         Gets the Collinearity for the given feature from the Exploratory Data Analysis.
 
         Args:
-            feature_name (str): The name of the feature for which correlation shown
+            feature_name (str): Name of the feature for which correlation is shown.
 
         Returns:
-            EdaFeatureCollinearity: An object with a record of correlations for the provided feature for an eda.
+            EdaFeatureCollinearity: Object with a record of correlations for the provided feature for an EDA.
         """
         return self.client.get_collinearity_for_feature(self.eda_version, feature_name)
 
@@ -112,11 +112,11 @@ class EdaVersion(AbstractApiClass):
         Gets the Feature Association for the given features from the feature group version within the eda_version.
 
         Args:
-            reference_feature_name (str): The name of the feature for feature association (in x axis for the plots generated for the Feature association in the product)
-            test_feature_name (str): The name of the feature for feature association (in y axis for the plots generated for the Feature association in the product)
+            reference_feature_name (str): Name of the feature for feature association (on x-axis for the plots generated for the Feature association in the product).
+            test_feature_name (str): Name of the feature for feature association (on y-axis for the plots generated for the Feature association in the product).
 
         Returns:
-            EdaFeatureAssociation: An object with a record of data for the feature association between the two given features for an eda version.
+            EdaFeatureAssociation: An object with a record of data for the feature association between the two given features for an EDA version.
         """
         return self.client.get_feature_association(self.eda_version, reference_feature_name, test_feature_name)
 

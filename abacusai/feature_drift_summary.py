@@ -11,7 +11,7 @@ class FeatureDriftSummary(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            featureIndex (list of json objects): A list of dicts of eligible feature names and corresponding overall feature drift measures.
+            featureIndex (list[dict]): A list of dicts of eligible feature names and corresponding overall feature drift measures.
             name (str): Name of feature.
             distance (float): Symmetric sum of KL divergences between the training distribution and the range of values in the specified window.
             jsDistance (float): JS divergence between the training distribution and the range of values in the specified window.

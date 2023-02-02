@@ -7,10 +7,10 @@ class GeneratedPitFeatureConfigOption(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            name (str): The short name of the aggrgation type
-            displayName (str): The display name of the aggregation type
-            default (bool): The default value for the option
-            description (str): The description of the aggregation type
+            name (str): The short name of the aggregation type.
+            displayName (str): The display name of the aggregation type.
+            default (bool): The default value for the option.
+            description (str): The description of the aggregation type.
     """
 
     def __init__(self, client, name=None, displayName=None, default=None, description=None):

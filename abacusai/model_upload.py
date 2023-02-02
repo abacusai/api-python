@@ -3,24 +3,24 @@ from .return_class import AbstractApiClass
 
 class ModelUpload(AbstractApiClass):
     """
-        A Model Version that includes the upload ids for the various required files.
+        A model version that includes the upload identifiers for the various required files.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            modelId (str): A reference to the model this version belongs to
-            modelVersion (str): The unique identifier of a model version.
+            modelId (str): A reference to the model this version belongs to.
+            modelVersion (str): A unique identifier for the model version.
             status (str): The current status of the model.
-            createdAt (str): The timestamp at which the model version was created.
-            modelUploadId (str): An Upload Identifier to be used when uploading the Tensorflow Saved Model
-            embeddingsUploadId (str): An Upload Identifier to be used when uploading the embeddings csv
-            artifactsUploadId (str): An Upload Identifier to be used when uploading the artifacts json file
-            verificationsUploadId (str): An Upload Identifier to be used when uploading the verifications json file
-            defaultItemsUploadId (str): An Upload Identifier to be used when uploading the default items json file
-            modelFileUploadId (str): An Upload Identifier to be used when uploading the model json file
-            modelStateUploadId (str): An Upload Identifier to be used when uploading the model state json file
-            inputPreprocessorUploadId (str): An Upload Identifier to be used when uploading the input preprocessor json file
-            requirementsUploadId (str): An Upload Identifier to be used when uploading the requirements json file
-            resourcesUploadId (str): An Upload Identifier to be used when uploading the resources json file
+            createdAt (str): The timestamp at which the model version was created, in ISO-8601 format.
+            modelUploadId (str): An upload identifier to be used when uploading the TensorFlow Saved Model.
+            embeddingsUploadId (str): An upload identifier to be used when uploading the embeddings CSV.
+            artifactsUploadId (str): An upload identifier to be used when uploading the artifacts JSON file.
+            verificationsUploadId (str): An upload identifier to be used when uploading the verifications JSON file.
+            defaultItemsUploadId (str): An upload identifier to be used when uploading the default items JSON file.
+            modelFileUploadId (str): An upload identifier to be used when uploading the model JSON file.
+            modelStateUploadId (str): An upload identifier to be used when uploading the model state JSON file.
+            inputPreprocessorUploadId (str): An upload identifier to be used when uploading the input preprocessor JSON file.
+            requirementsUploadId (str): An upload identifier to be used when uploading the requirements JSON file.
+            resourcesUploadId (str): An upload identifier to be used when uploading the resources JSON file.
     """
 
     def __init__(self, client, modelId=None, modelVersion=None, status=None, createdAt=None, modelUploadId=None, embeddingsUploadId=None, artifactsUploadId=None, verificationsUploadId=None, defaultItemsUploadId=None, modelFileUploadId=None, modelStateUploadId=None, inputPreprocessorUploadId=None, requirementsUploadId=None, resourcesUploadId=None):

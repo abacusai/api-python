@@ -8,14 +8,14 @@ class DatasetColumn(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             name (str): The unique name of the column.
-            dataType (str): The underlying data type of each column:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
-            detectedDataType (str): The detected data type of the column
-            featureType (str): Feature Type of the column
-            detectedFeatureType (str): The detected feature type of the column
-            originalName (str): The original name of the column
-            validDataTypes (list of enum string): The valid data type options for this column
-            timeFormat (str): The detected time format of the column
-            timestampFrequency (str): The detected frequency of the timestamps in the dataset
+            dataType (str): The underlying data type of each column. Refer to the [guide on data types](DATA_TYPES_URL) for more information.
+            detectedDataType (str): The detected data type of the column.
+            featureType (str): Feature type of the column.
+            detectedFeatureType (str): The detected feature type of the column.
+            originalName (str): The original name of the column.
+            validDataTypes (list[str]): The valid data type options for this column.
+            timeFormat (str): The detected time format of the column.
+            timestampFrequency (str): The detected frequency of the timestamps in the dataset.
     """
 
     def __init__(self, client, name=None, dataType=None, detectedDataType=None, featureType=None, detectedFeatureType=None, originalName=None, validDataTypes=None, timeFormat=None, timestampFrequency=None):

@@ -30,7 +30,7 @@ Classes
    :param featureGroupId: The feature group used as input to this prediction metric.
    :type featureGroupId: str
    :param predictionMetricConfig: Specification for the prediction metric to run in this job.
-   :type predictionMetricConfig: json
+   :type predictionMetricConfig: dict
    :param predictionMetricId: The unique identifier of the prediction metric.
    :type predictionMetricId: str
    :param modelMonitorId: The unique string identifier for model monitor that created this prediction metric
@@ -67,7 +67,7 @@ Classes
 
       Describe a Prediction Metric.
 
-      :param should_include_latest_version_description: include the description of the latest prediction metric version
+      :param should_include_latest_version_description: Whether to include the description of the latest prediction metric version.
       :type should_include_latest_version_description: bool
 
       :returns: The prediction metric object.
@@ -78,7 +78,7 @@ Classes
 
       Removes an existing PredictionMetric.
 
-      :param prediction_metric_id: The unique ID associated with the prediction metric.
+      :param prediction_metric_id: The unique ID associated with the PredictionMetric.
       :type prediction_metric_id: str
 
 
@@ -86,10 +86,10 @@ Classes
 
       Creates a new prediction metrics job run for the given prediction metric job description, and starts that job.
 
-      Configures and starts the computations running to compute the prediciton metric.
+      Configures and starts the computations running to compute the prediction metric.
 
 
-      :param prediction_metric_id: The prediction metric job description to apply for configuring a prediction metric job.
+      :param prediction_metric_id: A unique string identifier for the prediction metric job description to apply for configuring a prediction metric job.
       :type prediction_metric_id: str
 
       :returns: A prediction metric version. For more information, please refer to the details on the object (below).
@@ -100,12 +100,12 @@ Classes
 
       List the prediction metric versions for a prediction metric.
 
-      :param limit: The the number of prediction metric instances to be retrieved.
+      :param limit: Maximum number of prediction metric instances to be retrieved.
       :type limit: int
-      :param start_after_id: An offset parameter to exclude all prediction metric versions till the specified prediction metric ID.
+      :param start_after_id: Offset parameter to exclude all prediction metric versions up to the specified prediction metric ID.
       :type start_after_id: str
 
-      :returns: The prediction metric instances for this prediction metric.
+      :returns: List of prediction metric instances for the given prediction metric.
       :rtype: PredictionMetricVersion
 
 

@@ -38,16 +38,16 @@ class ApplicationConnector(AbstractApiClass):
 
     def rename(self, name: str):
         """
-        Renames an Application Connector
+        Renames a Application Connector
 
         Args:
-            name (str): A new name for the application connector
+            name (str): A new name for the application connector.
         """
         return self.client.rename_application_connector(self.application_connector_id, name)
 
     def delete(self):
         """
-        Delete a application connector.
+        Delete an application connector.
 
         Args:
             application_connector_id (str): The unique identifier for the application connector.
@@ -59,15 +59,15 @@ class ApplicationConnector(AbstractApiClass):
         Lists querable objects in the application connector.
 
         Args:
-            application_connector_id (str): The unique identifier for the application connector.
+            application_connector_id (str): Unique string identifier for the application connector.
         """
         return self.client.list_application_connector_objects(self.application_connector_id)
 
     def verify(self):
         """
-        Checks to see if Abacus.AI can access the Application.
+        Checks if Abacus.AI can access the application using the provided application connector ID.
 
         Args:
-            application_connector_id (str): The unique identifier for the application connector.
+            application_connector_id (str): Unique string identifier for the application connector.
         """
         return self.client.verify_application_connector(self.application_connector_id)

@@ -11,7 +11,7 @@ class PredictionMetric(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             createdAt (str): Date and time when this prediction metric was created.
             featureGroupId (str): The feature group used as input to this prediction metric.
-            predictionMetricConfig (json): Specification for the prediction metric to run in this job.
+            predictionMetricConfig (dict): Specification for the prediction metric to run in this job.
             predictionMetricId (str): The unique identifier of the prediction metric.
             modelMonitorId (str): The unique string identifier for model monitor that created this prediction metric
             projectId (str): The project this prediction metric belongs to.
@@ -59,7 +59,7 @@ class PredictionMetric(AbstractApiClass):
         Describe a Prediction Metric.
 
         Args:
-            should_include_latest_version_description (bool): include the description of the latest prediction metric version
+            should_include_latest_version_description (bool): Whether to include the description of the latest prediction metric version.
 
         Returns:
             PredictionMetric: The prediction metric object.
@@ -71,7 +71,7 @@ class PredictionMetric(AbstractApiClass):
         Removes an existing PredictionMetric.
 
         Args:
-            prediction_metric_id (str): The unique ID associated with the prediction metric.
+            prediction_metric_id (str): The unique ID associated with the PredictionMetric.
         """
         return self.client.delete_prediction_metric(self.prediction_metric_id)
 
@@ -79,11 +79,11 @@ class PredictionMetric(AbstractApiClass):
         """
         Creates a new prediction metrics job run for the given prediction metric job description, and starts that job.
 
-        Configures and starts the computations running to compute the prediciton metric.
+        Configures and starts the computations running to compute the prediction metric.
 
 
         Args:
-            prediction_metric_id (str): The prediction metric job description to apply for configuring a prediction metric job.
+            prediction_metric_id (str): A unique string identifier for the prediction metric job description to apply for configuring a prediction metric job.
 
         Returns:
             PredictionMetricVersion: A prediction metric version. For more information, please refer to the details on the object (below).
@@ -95,10 +95,10 @@ class PredictionMetric(AbstractApiClass):
         List the prediction metric versions for a prediction metric.
 
         Args:
-            limit (int): The the number of prediction metric instances to be retrieved.
-            start_after_id (str): An offset parameter to exclude all prediction metric versions till the specified prediction metric ID.
+            limit (int): Maximum number of prediction metric instances to be retrieved.
+            start_after_id (str): Offset parameter to exclude all prediction metric versions up to the specified prediction metric ID.
 
         Returns:
-            PredictionMetricVersion: The prediction metric instances for this prediction metric.
+            PredictionMetricVersion: List of prediction metric instances for the given prediction metric.
         """
         return self.client.list_prediction_metric_versions(self.prediction_metric_id, limit, start_after_id)

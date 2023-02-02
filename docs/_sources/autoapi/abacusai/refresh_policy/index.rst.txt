@@ -21,7 +21,7 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   A Refresh Policy describes the frequency in which one or more datasets/models/deployments/batch_predictions can be updated.
+   A Refresh Policy describes the frequency at which one or more datasets/models/deployments/batch_predictions can be updated.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -29,7 +29,7 @@ Classes
    :type refreshPolicyId: str
    :param name: The user-friendly name for the refresh policy
    :type name: str
-   :param cron: A cron-style string that describes the when this refresh policy is to be executed in UTC
+   :param cron: A cron-style string that describes when this refresh policy is to be executed in UTC
    :type cron: str
    :param nextRunTime: The next UTC time that this refresh policy will be executed
    :type nextRunTime: str
@@ -39,17 +39,17 @@ Classes
    :type refreshType: str
    :param projectId: The unique identifier of a project that this refresh policy applies to
    :type projectId: str
-   :param datasetIds: Comma separated list of Dataset IDs that this refresh policy applies to
-   :type datasetIds: list of unique identifiers of type 'string'
-   :param modelIds: Comma separated list of Model IDs that this refresh policy applies to
-   :type modelIds: list of unique identifiers of type 'string'
-   :param deploymentIds: Comma separated list of Deployment IDs that this refresh policy applies to
-   :type deploymentIds: list of unique identifiers of type 'string'
-   :param predictionMetricIds: Comma separated list of Prediction Metric IDs that this refresh policy applies to
-   :type predictionMetricIds: list of unique identifiers of type 'string'
-   :param modelMonitorIds: Comma separated list of Model Monitor IDs that this refresh policy applies to
-   :type modelMonitorIds: list of unique identifiers of type 'string'
-   :param paused: (Boolean): True if the refresh policy is paused
+   :param datasetIds: Comma-separated list of Dataset IDs that this refresh policy applies to
+   :type datasetIds: list[str]
+   :param modelIds: Comma-separated list of Model IDs that this refresh policy applies to
+   :type modelIds: list[str]
+   :param deploymentIds: Comma-separated list of Deployment IDs that this refresh policy applies to
+   :type deploymentIds: list[str]
+   :param predictionMetricIds: Comma-separated list of Prediction Metric IDs that this refresh policy applies to
+   :type predictionMetricIds: list[str]
+   :param modelMonitorIds: Comma-separated list of Model Monitor IDs that this refresh policy applies to
+   :type modelMonitorIds: list[str]
+   :param paused: True if the refresh policy is paused
    :type paused: bool
 
    .. py:method:: __repr__()
@@ -67,9 +67,9 @@ Classes
 
    .. py:method:: delete()
 
-      Delete a refresh policy
+      Delete a refresh policy.
 
-      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :param refresh_policy_id: Unique string identifier associated with the refresh policy to delete.
       :type refresh_policy_id: str
 
 
@@ -85,10 +85,10 @@ Classes
 
       Retrieve a single refresh policy
 
-      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :param refresh_policy_id: The unique ID associated with this refresh policy.
       :type refresh_policy_id: str
 
-      :returns: A refresh policy object
+      :returns: An object representing the refresh policy.
       :rtype: RefreshPolicy
 
 
@@ -96,10 +96,10 @@ Classes
 
       List the the times that the refresh policy has been run
 
-      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :param refresh_policy_id: Unique identifier associated with the refresh policy.
       :type refresh_policy_id: str
 
-      :returns: A list of refresh pipeline runs for the given refresh policy id
+      :returns: List of refresh pipeline runs for the given refresh policy ID.
       :rtype: RefreshPipelineRun
 
 
@@ -107,7 +107,7 @@ Classes
 
       Pauses a refresh policy
 
-      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :param refresh_policy_id: Unique identifier associated with the refresh policy to be paused.
       :type refresh_policy_id: str
 
 
@@ -115,7 +115,7 @@ Classes
 
       Resumes a refresh policy
 
-      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :param refresh_policy_id: The unique ID associated with this refresh policy.
       :type refresh_policy_id: str
 
 
@@ -123,20 +123,20 @@ Classes
 
       Force a run of the refresh policy.
 
-      :param refresh_policy_id: The unique ID associated with this refresh policy
+      :param refresh_policy_id: Unique string identifier associated with the refresh policy to be run.
       :type refresh_policy_id: str
 
 
    .. py:method:: update(name = None, cron = None)
 
-      Update the name or cron string of a  refresh policy
+      Update the name or cron string of a refresh policy
 
-      :param name: Optional, specify to update the name of the refresh policy
+      :param name: Name of the refresh policy to be updated.
       :type name: str
-      :param cron: Optional, specify to update the cron string describing the schedule from the refresh policy
+      :param cron: Cron string describing the schedule from the refresh policy to be updated.
       :type cron: str
 
-      :returns: The updated refresh policy
+      :returns: Updated refresh policy.
       :rtype: RefreshPolicy
 
 

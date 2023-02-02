@@ -48,66 +48,66 @@ class OrganizationGroup(AbstractApiClass):
 
     def describe(self):
         """
-        Returns the specific organization group passes in by the user.
+        Returns the specific organization group passed in by the user.
 
         Args:
-            organization_group_id (str): The unique ID of the organization group to that needs to be described.
+            organization_group_id (str): The unique identifier of the organization group to be described.
 
         Returns:
-            OrganizationGroup: Information about a specific Organization Group
+            OrganizationGroup: Information about a specific organization group.
         """
         return self.client.describe_organization_group(self.organization_group_id)
 
     def add_permission(self, permission: str):
         """
-        Adds a permission to the specified Organization Group
+        Adds a permission to the specified Organization Group.
 
         Args:
-            permission (str): The permission to add to the Organization Group
+            permission (str): Permission to add to the Organization Group.
         """
         return self.client.add_organization_group_permission(self.organization_group_id, permission)
 
     def remove_permission(self, permission: str):
         """
-        Removes a permission from the specified Organization Group
+        Removes a permission from the specified Organization Group.
 
         Args:
-            permission (str): The permission to remove from the Organization Group
+            permission (str): The permission to remove from the Organization Group.
         """
         return self.client.remove_organization_group_permission(self.organization_group_id, permission)
 
     def delete(self):
         """
-        Deletes the specified Organization Group from the organization.
+        Deletes the specified Organization Group
 
         Args:
-            organization_group_id (str): The ID of the Organization Group
+            organization_group_id (str): Unique string identifier of the organization group.
         """
         return self.client.delete_organization_group(self.organization_group_id)
 
     def add_user_to(self, email: str):
         """
-        Adds a user to the specified Organization Group
+        Adds a user to the specified Organization Group.
 
         Args:
-            email (str): The email of the user that is added to the group
+            email (str): Email of the user to be added to the group.
         """
         return self.client.add_user_to_organization_group(self.organization_group_id, email)
 
     def remove_user_from(self, email: str):
         """
-        Removes a user from an Organization Group
+        Removes a user from an Organization Group.
 
         Args:
-            email (str): The email of the user to remove
+            email (str): Email of the user to remove.
         """
         return self.client.remove_user_from_organization_group(self.organization_group_id, email)
 
     def set_default(self):
         """
-        Sets the default Organization Group that all new users that join an organization are automatically added to
+        Sets the default Organization Group to which all new users joining an organization are automatically added.
 
         Args:
-            organization_group_id (str): The ID of the Organization Group
+            organization_group_id (str): Unique string identifier of the Organization Group.
         """
         return self.client.set_default_organization_group(self.organization_group_id)

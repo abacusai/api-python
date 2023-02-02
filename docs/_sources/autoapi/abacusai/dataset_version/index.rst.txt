@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, invalidRecords=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None)
+.. py:class:: DatasetVersion(client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, invalidRecords=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39,14 +39,14 @@ Classes
    :type createdAt: str
    :param error: If status is FAILED, this field will be populated with an error.
    :type error: str
-   :param invalidRecords:
-   :type invalidRecords: str
    :param incrementalQueriedAt: If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
    :type incrementalQueriedAt: str
    :param uploadId: If the dataset version is being uploaded, this the reference to the Upload
    :type uploadId: str
    :param mergeFileSchemas: If the merge file schemas policy is enabled.
    :type mergeFileSchemas: bool
+   :param invalidRecords: Invalid records in the dataset version
+   :type invalidRecords: str
 
    .. py:method:: __repr__()
 
@@ -71,9 +71,9 @@ Classes
 
    .. py:method:: describe()
 
-      Retrieves a full description of the specified dataset version, with attributes such as its ID, name, source type, etc.
+      Retrieves a full description of the specified dataset version, including its ID, name, source type, and other attributes.
 
-      :param dataset_version: The unique ID associated with the dataset version.
+      :param dataset_version: Unique string identifier associated with the dataset version.
       :type dataset_version: str
 
       :returns: The dataset version.

@@ -19,7 +19,7 @@ class Upload(AbstractApiClass):
             modelId (str): A reference the model the upload is creating a version for
             modelVersion (str): A reference to the model version the upload is creating.
             batchPredictionId (str): A reference to the batch prediction the upload is creating.
-            parts (list of json objects): A list containing the order of the file parts that have been uploaded.
+            parts (list[dict]): A list containing the order of the file parts that have been uploaded.
             createdAt (str): The timestamp at which the upload was created.
     """
 
@@ -50,16 +50,16 @@ class Upload(AbstractApiClass):
 
     def cancel(self):
         """
-        Cancels an upload
+        Cancels an upload.
 
         Args:
-            upload_id (str): The Upload ID
+            upload_id (str): A unique string identifier for the upload.
         """
         return self.client.cancel_upload(self.upload_id)
 
     def part(self, part_number: int, part_data: io.TextIOBase):
         """
-        Uploads a part of a large dataset file from your bucket to our system. Our system currently supports a size of up to 5GB for a part of a full file and a size of up to 5TB for the full file. Note that each part must be >=5MB in size, unless it is the last part in the sequence of parts for the full file.
+        Uploads part of a large dataset file from your bucket to our system. Our system currently supports parts of up to 5GB and full files of up to 5TB. Note that each part must be at least 5MB in size, unless it is the last part in the sequence of parts for the full file.
 
         Args:
             part_number (int): The 1-indexed number denoting the position of the file part in the sequence of parts for the full file.
@@ -75,10 +75,10 @@ class Upload(AbstractApiClass):
         Marks an upload process as complete.
 
         Args:
-            upload_id (str): A unique identifier for this upload
+            upload_id (str): A unique string identifier for the upload process.
 
         Returns:
-            Upload: The upload object associated with the upload process for the full file. The details of the object are described below:
+            Upload: The upload object associated with the process, containing details of the file.
         """
         return self.client.mark_upload_complete(self.upload_id)
 
@@ -100,7 +100,7 @@ class Upload(AbstractApiClass):
             upload_id (str): The unique ID associated with the file uploaded or being uploaded in parts.
 
         Returns:
-            Upload: The details associated with the large dataset file uploaded in parts.
+            Upload: Details associated with the large dataset file uploaded in parts.
         """
         return self.client.describe_upload(self.upload_id)
 
