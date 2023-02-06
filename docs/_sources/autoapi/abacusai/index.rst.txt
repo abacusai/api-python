@@ -321,7 +321,7 @@ Attributes
       :param name: The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
       :type name: String
       :param problem_type: The type of the problem this algorithm will work on
-      :type problem_type: Enum string
+      :type problem_type: str
       :param train_function: The training function callable to serialize and upload
       :type train_function: callable
       :param predict_function: The predict function callable to serialize and upload
@@ -1089,20 +1089,20 @@ Attributes
 
    .. py:method:: set_feature_as_annotatable_feature(feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
 
-      Set an existing feature as annotatable
+      Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
-      :param feature_group_id: The unique string identifier of the feature group.
+      :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
       :param feature_name: The name of the feature to set as annotatable.
       :type feature_name: str
-      :param annotation_type: The type of annotation to set.
+      :param annotation_type: The type of annotation label to add.
       :type annotation_type: str
-      :param feature_group_row_identifier_feature: The identifier of the feature group row.
+      :param feature_group_row_identifier_feature: The key value of the feature group row the annotation is on (cast to string) and uniquely identifies the feature group row. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
       :type feature_group_row_identifier_feature: str
-      :param doc_id_feature: The document id for the feature.
+      :param doc_id_feature: The name of the document ID feature.
       :type doc_id_feature: str
 
-      :returns: The feature group after setting the feature as annotatable.
+      :returns: A feature group object with the newly added annotatable feature.
       :rtype: FeatureGroup
 
 
@@ -3315,7 +3315,7 @@ Attributes
       :type threshold: None
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf, return_extracted_features = False)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores
 
@@ -3323,8 +3323,10 @@ Attributes
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param pdf: The pdf to predict on
+      :param pdf: The pdf to predict on.
       :type pdf: io.TextIOBase
+      :param return_extracted_features: (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
+      :type return_extracted_features: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
@@ -5667,7 +5669,7 @@ Attributes
 
       Deletes a python plot function from a dashboard
 
-      :param graph_reference_id: The graph reference id for the graph
+      :param graph_reference_id: Unique String Identifier for the graph
       :type graph_reference_id: str
 
 
@@ -5675,7 +5677,7 @@ Attributes
 
       Describes a python plot to a graph dashboard
 
-      :param graph_reference_id: Unique string identifie for the python function id for the graph
+      :param graph_reference_id: Unique string identifier for the python function id for the graph
       :type graph_reference_id: str
 
       :returns: An object describing the graph dashboard.
@@ -6076,7 +6078,7 @@ Attributes
       :type threshold: None
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf, return_extracted_features = False)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores
 
@@ -6084,8 +6086,10 @@ Attributes
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param pdf: The pdf to predict on
+      :param pdf: The pdf to predict on.
       :type pdf: io.TextIOBase
+      :param return_extracted_features: (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
+      :type return_extracted_features: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
@@ -6342,7 +6346,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.48.0
+   :annotation: = 0.48.1
 
    
 

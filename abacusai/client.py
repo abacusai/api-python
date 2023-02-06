@@ -182,7 +182,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.48.0'
+    client_version = '0.48.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1500,14 +1500,14 @@ class ReadOnlyClient(BaseApiClient):
         """Deletes a python plot function from a dashboard
 
         Args:
-            graph_reference_id (str): The graph reference id for the graph"""
+            graph_reference_id (str): Unique String Identifier for the graph"""
         return self._call_api('deleteGraphFromDashboard', 'GET', query_params={'graphReferenceId': graph_reference_id})
 
     def describe_graph_for_dashboard(self, graph_reference_id: str) -> PythonPlotFunction:
         """Describes a python plot to a graph dashboard
 
         Args:
-            graph_reference_id (str): Unique string identifie for the python function id for the graph
+            graph_reference_id (str): Unique string identifier for the python function id for the graph
 
         Returns:
             PythonPlotFunction: An object describing the graph dashboard."""
@@ -1608,7 +1608,7 @@ class ReadOnlyClient(BaseApiClient):
             Module: The description of the module."""
         return self._call_api('describeModule', 'GET', query_params={'name': name}, parse_type=Module)
 
-    def list_modules(self) -> List[Module]:
+    def list_modules(self) -> Module:
         """List all the modules
 
         Returns:
@@ -1876,7 +1876,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (String): The name to identify the algorithm, only uppercase letters, numbers and underscore allowed
-            problem_type (Enum string): The type of the problem this algorithm will work on
+            problem_type (str): The type of the problem this algorithm will work on
             train_function (callable): The training function callable to serialize and upload
             predict_function (callable): The predict function callable to serialize and upload
             predict_many_function (callable): The predict many function callable to serialize and upload
@@ -2609,17 +2609,17 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('addAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'name': name, 'annotationType': annotation_type}, parse_type=FeatureGroup)
 
     def set_feature_as_annotatable_feature(self, feature_group_id: str, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None) -> FeatureGroup:
-        """Set an existing feature as annotatable
+        """Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
         Args:
-            feature_group_id (str): The unique string identifier of the feature group.
+            feature_group_id (str): The unique ID associated with the feature group.
             feature_name (str): The name of the feature to set as annotatable.
-            annotation_type (str):  The type of annotation to set.
-            feature_group_row_identifier_feature (str): The identifier of the feature group row.
-            doc_id_feature (str): The document id for the feature.
+            annotation_type (str): The type of annotation label to add.
+            feature_group_row_identifier_feature (str): The key value of the feature group row the annotation is on (cast to string) and uniquely identifies the feature group row. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
+            doc_id_feature (str): The name of the document ID feature.
 
         Returns:
-            FeatureGroup: The feature group after setting the feature as annotatable."""
+            FeatureGroup: A feature group object with the newly added annotatable feature."""
         return self._call_api('setFeatureAsAnnotatableFeature', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'annotationType': annotation_type, 'featureGroupRowIdentifierFeature': feature_group_row_identifier_feature, 'docIdFeature': doc_id_feature}, parse_type=FeatureGroup)
 
     def unset_feature_as_annotatable_feature(self, feature_group_id: str, feature_name: str) -> FeatureGroup:
@@ -4288,14 +4288,15 @@ Creates a new feature group defined as the union of other feature group versions
             threshold (None): This argument is deprecated and will be ignored."""
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=self.default_prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase) -> Dict:
+    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase, return_extracted_features: bool = False) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            pdf (io.TextIOBase): The pdf to predict on"""
-        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'pdf': pdf}, server_override=self.default_prediction_url)
+            pdf (io.TextIOBase): The pdf to predict on.
+            return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
+        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=self.default_prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = None, score_field: str = '', scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = 0.0) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).

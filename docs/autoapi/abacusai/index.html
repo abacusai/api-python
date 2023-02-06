@@ -564,7 +564,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>String</em>) – The name to identify the algorithm, only uppercase letters, numbers and underscore allowed</p></li>
-<li><p><strong>problem_type</strong> (<em>Enum string</em>) – The type of the problem this algorithm will work on</p></li>
+<li><p><strong>problem_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of the problem this algorithm will work on</p></li>
 <li><p><strong>train_function</strong> (<em>callable</em>) – The training function callable to serialize and upload</p></li>
 <li><p><strong>predict_function</strong> (<em>callable</em>) – The predict function callable to serialize and upload</p></li>
 <li><p><strong>predict_many_function</strong> (<em>callable</em>) – The predict many function callable to serialize and upload</p></li>
@@ -1562,19 +1562,19 @@ Creates a new feature group defined as the union of other feature group versions
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.set_feature_as_annotatable_feature">
 <span class="sig-name descname"><span class="pre">set_feature_as_annotatable_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_row_identifier_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_feature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.set_feature_as_annotatable_feature" title="Permalink to this definition"></a></dt>
-<dd><p>Set an existing feature as annotatable</p>
+<dd><p>Sets an existing feature as an annotatable feature (Feature that can be annotated).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique string identifier of the feature group.</p></li>
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
 <li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the feature to set as annotatable.</p></li>
-<li><p><strong>annotation_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of annotation to set.</p></li>
-<li><p><strong>feature_group_row_identifier_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The identifier of the feature group row.</p></li>
-<li><p><strong>doc_id_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The document id for the feature.</p></li>
+<li><p><strong>annotation_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of annotation label to add.</p></li>
+<li><p><strong>feature_group_row_identifier_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The key value of the feature group row the annotation is on (cast to string) and uniquely identifies the feature group row. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.</p></li>
+<li><p><strong>doc_id_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the document ID feature.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The feature group after setting the feature as annotatable.</p>
+<dd class="field-even"><p>A feature group object with the newly added annotatable feature.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
@@ -4275,14 +4275,15 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.get_entities_from_pdf">
-<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
 <dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
-<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on</p></li>
+<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on.</p></li>
+<li><p><strong>return_extracted_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -7554,7 +7555,7 @@ Creates a new feature group defined as the union of other feature group versions
 <dd><p>Deletes a python plot function from a dashboard</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>graph_reference_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The graph reference id for the graph</p>
+<dd class="field-odd"><p><strong>graph_reference_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique String Identifier for the graph</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -7568,7 +7569,7 @@ Creates a new feature group defined as the union of other feature group versions
 <dd><p>Describes a python plot to a graph dashboard</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>graph_reference_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifie for the python function id for the graph</p>
+<dd class="field-odd"><p><strong>graph_reference_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the python function id for the graph</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An object describing the graph dashboard.</p>
@@ -8118,14 +8119,15 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.PredictionClient.get_entities_from_pdf">
-<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
 <dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
-<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on</p></li>
+<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on.</p></li>
+<li><p><strong>return_extracted_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -8468,7 +8470,7 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.48.0</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.48.1</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

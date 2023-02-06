@@ -302,18 +302,18 @@ Classes
 
    .. py:method:: set_feature_as_annotatable_feature(feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
 
-      Set an existing feature as annotatable
+      Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
       :param feature_name: The name of the feature to set as annotatable.
       :type feature_name: str
-      :param annotation_type: The type of annotation to set.
+      :param annotation_type: The type of annotation label to add.
       :type annotation_type: str
-      :param feature_group_row_identifier_feature: The identifier of the feature group row.
+      :param feature_group_row_identifier_feature: The key value of the feature group row the annotation is on (cast to string) and uniquely identifies the feature group row. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
       :type feature_group_row_identifier_feature: str
-      :param doc_id_feature: The document id for the feature.
+      :param doc_id_feature: The name of the document ID feature.
       :type doc_id_feature: str
 
-      :returns: The feature group after setting the feature as annotatable.
+      :returns: A feature group object with the newly added annotatable feature.
       :rtype: FeatureGroup
 
 

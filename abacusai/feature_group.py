@@ -306,16 +306,16 @@ class FeatureGroup(AbstractApiClass):
 
     def set_feature_as_annotatable_feature(self, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None):
         """
-        Set an existing feature as annotatable
+        Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
         Args:
             feature_name (str): The name of the feature to set as annotatable.
-            annotation_type (str):  The type of annotation to set.
-            feature_group_row_identifier_feature (str): The identifier of the feature group row.
-            doc_id_feature (str): The document id for the feature.
+            annotation_type (str): The type of annotation label to add.
+            feature_group_row_identifier_feature (str): The key value of the feature group row the annotation is on (cast to string) and uniquely identifies the feature group row. At least one of the doc_id or key value must be provided so that the correct annotation can be identified.
+            doc_id_feature (str): The name of the document ID feature.
 
         Returns:
-            FeatureGroup: The feature group after setting the feature as annotatable.
+            FeatureGroup: A feature group object with the newly added annotatable feature.
         """
         return self.client.set_feature_as_annotatable_feature(self.feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature, doc_id_feature)
 

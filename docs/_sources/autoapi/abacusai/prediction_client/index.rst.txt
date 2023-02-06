@@ -280,7 +280,7 @@ Classes
       :type threshold: None
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf, return_extracted_features = False)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores
 
@@ -288,8 +288,10 @@ Classes
       :type deployment_token: str
       :param deployment_id: The unique identifier to a deployment created under the project.
       :type deployment_id: str
-      :param pdf: The pdf to predict on
+      :param pdf: The pdf to predict on.
       :type pdf: io.TextIOBase
+      :param return_extracted_features: (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
+      :type return_extracted_features: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
