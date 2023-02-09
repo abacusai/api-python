@@ -140,6 +140,8 @@ Classes
 
 .. autoapisummary::
 
+   abacusai.ApiClass
+   abacusai.ApiClassFactory
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -160,9 +162,56 @@ Attributes
    abacusai.__version__
 
 
+.. py:class:: ApiClass
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: ApiClassFactory
+
+   Bases: :py:obj:`abc.ABC`
+
+   A class to select and return the the correct type of ApiClass based on a serialized instance.
+
+   .. py:attribute:: config_abstract_class
+      
+
+      
+
+   .. py:attribute:: config_class_key
+      
+
+      
+
+   .. py:attribute:: config_class_map
+      
+
+      
+
+   .. py:method:: from_dict(config)
+
+
+
 .. py:class:: SamplingConfig
 
-   Bases: :py:obj:`api_class.abstract.ApiClass`
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the sampling config of a feature group
 
@@ -189,7 +238,7 @@ Attributes
       
 
    .. py:attribute:: sampling_method
-      :annotation: :api_class.enums.SamplingMethodType
+      :annotation: :abacusai.api_class.enums.SamplingMethodType
 
       
 
@@ -221,7 +270,7 @@ Attributes
       
 
    .. py:attribute:: sampling_method
-      :annotation: :api_class.enums.SamplingMethodType
+      :annotation: :abacusai.api_class.enums.SamplingMethodType
 
       
 
@@ -236,7 +285,7 @@ Attributes
 
 .. py:class:: SamplingConfigFactory
 
-   Bases: :py:obj:`api_class.abstract.ApiClassFactory`
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClassFactory`
 
    A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.
 
@@ -6471,7 +6520,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.49.2
+   :annotation: = 0.49.3
 
    
 

@@ -1,8 +1,8 @@
 import dataclasses
 from typing import List
 
-from api_class import enums
-from api_class.abstract import ApiClass, ApiClassFactory
+from . import enums
+from .abstract import ApiClass, ApiClassFactory
 
 
 @dataclasses.dataclass
