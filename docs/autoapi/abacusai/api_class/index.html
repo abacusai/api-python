@@ -44,6 +44,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#package-contents">Package Contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,6 +91,134 @@
 <li class="toctree-l1"><a class="reference internal" href="feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_class.feature_group</span></code></a></li>
 </ul>
 </div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Permalink to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.SamplingConfig" title="abacusai.api_class.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p></td>
+<td><p>An abstract class for the sampling config of a feature group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.NSamplingConfig" title="abacusai.api_class.NSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NSamplingConfig</span></code></a></p></td>
+<td><p>The number of distinct values of the key columns to include in the sample, or number of rows if key columns not specified.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.PercentSamplingConfig" title="abacusai.api_class.PercentSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PercentSamplingConfig</span></code></a></p></td>
+<td><p>The fraction of distinct values of the feature group to include in the sample.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.SamplingConfigFactory" title="abacusai.api_class.SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfigFactory</span></code></a></p></td>
+<td><p>A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.SamplingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">SamplingConfig</span></span><a class="headerlink" href="#abacusai.api_class.SamplingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">api_class.abstract.ApiClass</span></code></p>
+<p>An abstract class for the sampling config of a feature group</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.SamplingConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.SamplingConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.NSamplingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">NSamplingConfig</span></span><a class="headerlink" href="#abacusai.api_class.NSamplingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.SamplingConfig" title="abacusai.api_class.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p>
+<p>The number of distinct values of the key columns to include in the sample, or number of rows if key columns not specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sampling_method</strong> (<a class="reference internal" href="enums/index.html#abacusai.api_class.enums.SamplingMethodType" title="abacusai.api_class.enums.SamplingMethodType"><em>SamplingMethodType</em></a>) – N_SAMPLING</p></li>
+<li><p><strong>sample_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of rows to include in the sample</p></li>
+<li><p><strong>key_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – The feature(s) to use as the key(s) when sampling</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.NSamplingConfig.sample_count">
+<span class="sig-name descname"><span class="pre">sample_count</span></span><em class="property"><span class="w"> </span><span class="pre">:int</span></em><a class="headerlink" href="#abacusai.api_class.NSamplingConfig.sample_count" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.NSamplingConfig.sampling_method">
+<span class="sig-name descname"><span class="pre">sampling_method</span></span><em class="property"><span class="w"> </span><span class="pre">:api_class.enums.SamplingMethodType</span></em><a class="headerlink" href="#abacusai.api_class.NSamplingConfig.sampling_method" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.NSamplingConfig.key_columns">
+<span class="sig-name descname"><span class="pre">key_columns</span></span><em class="property"><span class="w"> </span><span class="pre">:List[str]</span></em><a class="headerlink" href="#abacusai.api_class.NSamplingConfig.key_columns" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.NSamplingConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.NSamplingConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.PercentSamplingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">PercentSamplingConfig</span></span><a class="headerlink" href="#abacusai.api_class.PercentSamplingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.SamplingConfig" title="abacusai.api_class.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p>
+<p>The fraction of distinct values of the feature group to include in the sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sampling_method</strong> (<a class="reference internal" href="enums/index.html#abacusai.api_class.enums.SamplingMethodType" title="abacusai.api_class.enums.SamplingMethodType"><em>SamplingMethodType</em></a>) – PERCENT_SAMPLING</p></li>
+<li><p><strong>sample_percent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The percentage of the rows to sample</p></li>
+<li><p><strong>key_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – The feature(s) to use as the key(s) when sampling</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.PercentSamplingConfig.sample_percent">
+<span class="sig-name descname"><span class="pre">sample_percent</span></span><em class="property"><span class="w"> </span><span class="pre">:float</span></em><a class="headerlink" href="#abacusai.api_class.PercentSamplingConfig.sample_percent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.PercentSamplingConfig.sampling_method">
+<span class="sig-name descname"><span class="pre">sampling_method</span></span><em class="property"><span class="w"> </span><span class="pre">:api_class.enums.SamplingMethodType</span></em><a class="headerlink" href="#abacusai.api_class.PercentSamplingConfig.sampling_method" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.PercentSamplingConfig.key_columns">
+<span class="sig-name descname"><span class="pre">key_columns</span></span><em class="property"><span class="w"> </span><span class="pre">:List[str]</span></em><a class="headerlink" href="#abacusai.api_class.PercentSamplingConfig.key_columns" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.PercentSamplingConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.PercentSamplingConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.SamplingConfigFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">SamplingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.SamplingConfigFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">api_class.abstract.ApiClassFactory</span></code></p>
+<p>A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SamplingConfigFactory.config_abstract_class">
+<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.SamplingConfigFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SamplingConfigFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">sampling_method</span></em><a class="headerlink" href="#abacusai.api_class.SamplingConfigFactory.config_class_key" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.SamplingConfigFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.SamplingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 </section>
 

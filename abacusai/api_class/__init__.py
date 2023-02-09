@@ -1,1 +1,1 @@
-from api_class.feature_group import *
+from .feature_group import *
