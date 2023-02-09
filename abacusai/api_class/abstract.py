@@ -3,7 +3,7 @@ import datetime
 import inspect
 from abc import ABC
 
-from api_class.enums import ApiEnum
+from .enums import ApiEnum
 
 
 def camel_case(value):
