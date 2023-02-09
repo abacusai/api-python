@@ -1,7 +1,6 @@
 from typing import Union
 
-from api_class import SamplingConfig
-
+from .api_class import SamplingConfig
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature

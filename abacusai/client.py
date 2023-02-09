@@ -15,13 +15,13 @@ from typing import Callable, Dict, List, Union
 
 import pandas as pd
 import requests
-from api_class import ApiClass, SamplingConfig
 from packaging import version
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 from .algorithm import Algorithm
 from .annotation_entry import AnnotationEntry
+from .api_class import ApiClass, SamplingConfig
 from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name, get_clean_function_source_code
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
@@ -183,7 +183,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.49.0'
+    client_version = '0.49.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1818,7 +1818,7 @@ class ApiClient(ReadOnlyClient):
         feature_group_version_pandas_df = feature_group_version_object.load_as_pandas()
         return session.createDataFrame(feature_group_version_pandas_df)
 
-    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, name: str = None):
+    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None):
         """
         Creates a model from a python function
 
@@ -1831,6 +1831,7 @@ class ApiClient(ReadOnlyClient):
             training_input_tables (list): The input table names of the feature groups to pass to the train function
             cpu_size (str): Size of the cpu for the training function
             memory (int): Memory (in GB) for the training function
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
             name (str): The name of the model
         """
@@ -1838,7 +1839,7 @@ class ApiClient(ReadOnlyClient):
             train_function, predict_function, predict_many_function, initialize_function)
         function_source_code = include_modules(
             function_source_code, included_modules)
-        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, name=name)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """

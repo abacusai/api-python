@@ -263,7 +263,7 @@ Attributes
       :returns: pyspark.sql.DataFrame
 
 
-   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, name = None)
+   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, package_requirements = None, name = None)
 
       Creates a model from a python function
 
@@ -283,6 +283,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the training function
       :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
       :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
       :param name: The name of the model
@@ -6369,7 +6371,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :annotation: = 0.49.0
+   :annotation: = 0.49.1
 
    
 
