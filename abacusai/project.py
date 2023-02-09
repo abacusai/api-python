@@ -473,7 +473,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_batch_predictions(self.project_id)
 
-    def create_graph_dashboard(self, name: str, python_function_ids: list):
+    def create_graph_dashboard(self, name: str, python_function_ids: list = None):
         """
         Create a plot dashboard given selected python plots
 

@@ -29,6 +29,7 @@ Functions
    abacusai.client._get_service_discovery_url
    abacusai.client.get_source_code_info
    abacusai.client.get_module_code_from_notebook
+   abacusai.client.include_modules
 
 
 
@@ -97,7 +98,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.48.1
+      :annotation: = 0.49.0
 
       
 
@@ -1617,6 +1618,9 @@ Attributes
 .. py:function:: get_module_code_from_notebook(file_path)
 
 
+.. py:function:: include_modules(source_code, included_modules)
+
+
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
    Bases: :py:obj:`ReadOnlyClient`
@@ -1724,7 +1728,7 @@ Attributes
       :returns: pyspark.sql.DataFrame
 
 
-   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)
+   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, name = None)
 
       Creates a model from a python function
 
@@ -1744,9 +1748,13 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the training function
       :type memory: int
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
+      :param name: The name of the model
+      :type name: str
 
 
-   .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None, included_modules = None)
 
       Creates a feature group from a python function
 
@@ -1766,9 +1774,11 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
 
 
-   .. py:method:: update_python_function_code(name, function = None, function_variable_mappings = None, package_requirements = None)
+   .. py:method:: update_python_function_code(name, function = None, function_variable_mappings = None, package_requirements = None, included_modules = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -1780,12 +1790,14 @@ Attributes
       :type function_variable_mappings: List<PythonFunctionArguments>
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
 
       :returns: The python_function object.
       :rtype: PythonFunction
 
 
-   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
+   .. py:method:: create_algorithm_from_function(name, problem_type, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None, included_modules = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1816,9 +1828,11 @@ Attributes
       :type use_gpu: Boolean
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
 
 
-   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
+   .. py:method:: update_algorithm_from_function(algorithm, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function = None, predict_function = None, predict_many_function = None, initialize_function = None, common_functions = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None, included_modules = None)
 
       Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1846,6 +1860,8 @@ Attributes
       :type use_gpu: Boolean
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
 
 
    .. py:method:: get_train_function_input(project_id, training_table_names = None, training_data_parameter_name_override = None, training_config_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -1983,6 +1999,7 @@ Attributes
    .. py:method:: import_module(name)
 
       Import a module created previously. It will reload if has been imported before.
+      This will be equivalent to including from that module file.
 
       :param name: Name of the module to import.
       :type name: String
@@ -2411,7 +2428,7 @@ Attributes
       :param table_name: The unique name to be given to this sampling Feature Group.
       :type table_name: str
       :param sampling_config: Dictionary defining the sampling method and its parameters.
-      :type sampling_config: dict
+      :type sampling_config: SamplingConfig
       :param description: A human-readable description of this Feature Group.
       :type description: str
 
@@ -2472,7 +2489,7 @@ Attributes
       :param feature_group_id: The unique identifier associated with the FeatureGroup.
       :type feature_group_id: str
       :param sampling_config: A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
-      :type sampling_config: dict
+      :type sampling_config: SamplingConfig
 
       :returns: The updated FeatureGroup.
       :rtype: FeatureGroup
@@ -4313,7 +4330,7 @@ Attributes
       :type start: bool
       :param enable_batch_streaming_updates: Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup.
       :type enable_batch_streaming_updates: bool
-      :param model_deployment_config: The deployment config for model to deploy.
+      :param model_deployment_config: The deployment config for model to deploy
       :type model_deployment_config: dict
 
       :returns: The new model or feature group deployment.
@@ -5541,7 +5558,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_graph_dashboard(project_id, name, python_function_ids)
+   .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)
 
       Create a plot dashboard given selected python plots
 

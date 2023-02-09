@@ -41,6 +41,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation</span></code></a></li>
@@ -93,6 +94,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_lineage</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template_variable_options</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_record</span></code></a></li>
@@ -375,7 +377,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique name to be given to this sampling Feature Group.</p></li>
-<li><p><strong>sampling_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Dictionary defining the sampling method and its parameters.</p></li>
+<li><p><strong>sampling_config</strong> (<a class="reference internal" href="../api_class/feature_group/index.html#abacusai.api_class.feature_group.SamplingConfig" title="abacusai.api_class.feature_group.SamplingConfig"><em>SamplingConfig</em></a>) – Dictionary defining the sampling method and its parameters.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A human-readable description of this Feature Group.</p></li>
 </ul>
 </dd>
@@ -394,7 +396,7 @@
 <dd><p>Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>sampling_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.</p>
+<dd class="field-odd"><p><strong>sampling_config</strong> (<a class="reference internal" href="../api_class/feature_group/index.html#abacusai.api_class.feature_group.SamplingConfig" title="abacusai.api_class.feature_group.SamplingConfig"><em>SamplingConfig</em></a>) – A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The updated FeatureGroup.</p>

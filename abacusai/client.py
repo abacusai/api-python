@@ -11,10 +11,11 @@ import tempfile
 import time
 import warnings
 from functools import lru_cache
-from typing import Callable, Dict, List
+from typing import Callable, Dict, List, Union
 
 import pandas as pd
 import requests
+from api_class import ApiClass, SamplingConfig
 from packaging import version
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
@@ -182,7 +183,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.48.1'
+    client_version = '0.49.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -222,6 +223,8 @@ class BaseApiClient:
                 obj[key] = val.deployment_token
             elif isinstance(val, AbstractApiClass):
                 obj[key] = getattr(val, 'id', None)
+            elif isinstance(val, ApiClass):
+                obj[key] = val.to_dict()
             elif callable(val):
                 try:
                     obj[key] = inspect.getsource(val)
@@ -1671,6 +1674,12 @@ def get_module_code_from_notebook(file_path):
     return source_code
 
 
+def include_modules(source_code, included_modules):
+    if not source_code or not included_modules:
+        return source_code
+    return '\n'.join([f'from {m} import *' for m in included_modules]) + '\n\n' + source_code
+
+
 class ApiClient(ReadOnlyClient):
     """
     Abacus.AI API Client
@@ -1809,7 +1818,7 @@ class ApiClient(ReadOnlyClient):
         feature_group_version_pandas_df = feature_group_version_object.load_as_pandas()
         return session.createDataFrame(feature_group_version_pandas_df)
 
-    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False):
+    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, name: str = None):
         """
         Creates a model from a python function
 
@@ -1822,12 +1831,16 @@ class ApiClient(ReadOnlyClient):
             training_input_tables (list): The input table names of the feature groups to pass to the train function
             cpu_size (str): Size of the cpu for the training function
             memory (int): Memory (in GB) for the training function
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
+            name (str): The name of the model
         """
         function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
-        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run)
+        function_source_code = include_modules(
+            function_source_code, included_modules)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, name=name)
 
-    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
+    def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
         Creates a feature group from a python function
 
@@ -1840,9 +1853,12 @@ class ApiClient(ReadOnlyClient):
             cpu_size (str): Size of the cpu for the feature group function
             memory (int): Memory (in GB) for the feature group function
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
         if function:
             function_source = inspect.getsource(function)
+            function_source = include_modules(
+                function_source, included_modules)
             python_function = self.create_python_function(
                 name=table_name, source_code=function_source, function_name=function.__name__, package_requirements=package_requirements)
             python_function_name = python_function_name or python_function.name
@@ -1854,7 +1870,7 @@ class ApiClient(ReadOnlyClient):
                         {'name': variable['name'], 'variable_type': variable['variable_type'], 'value': feature_group_table_name})
         return self.create_feature_group_from_function(table_name=table_name, python_function_name=python_function_name, python_function_bindings=python_function_bindings, cpu_size=cpu_size, memory=memory)
 
-    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None, package_requirements: list = None):
+    def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None, package_requirements: list = None, included_modules: list = None):
         """
         Update custom python function with user inputs for the given python function.
 
@@ -1863,14 +1879,15 @@ class ApiClient(ReadOnlyClient):
             function (callable): The function callable to serialize and upload.
             function_variable_mappings (List<PythonFunctionArguments>): List of python function arguments
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
-
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         Returns:
             PythonFunction: The python_function object.
         """
         source_code = inspect.getsource(function)
+        source_code = include_modules(source_code, included_modules)
         return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings, package_requirements=package_requirements)
 
-    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None):
+    def create_algorithm_from_function(self, name: str, problem_type: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None, included_modules: list = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1889,9 +1906,11 @@ class ApiClient(ReadOnlyClient):
             project_id (Unique String Identifier): The unique version ID of the project
             use_gpu (Boolean): Whether this algorithm needs to run on GPU
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function, common_functions)
+        source_code = include_modules(source_code, included_modules)
         return self.create_algorithm(
             name=name,
             problem_type=problem_type,
@@ -1908,7 +1927,7 @@ class ApiClient(ReadOnlyClient):
             use_gpu=use_gpu,
             package_requirements=package_requirements)
 
-    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None, package_requirements: list = None):
+    def update_algorithm_from_function(self, algorithm: str, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function: callable = None, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None, config_options: dict = None, is_default_enabled: bool = None, use_gpu: bool = None, package_requirements: list = None, included_modules: list = None):
         """
         Create a new algorithm, or update existing algorithm if the name already exists
 
@@ -1925,9 +1944,12 @@ class ApiClient(ReadOnlyClient):
             is_default_enabled (Boolean): Whether train with the algorithm by default
             use_gpu (Boolean): Whether this algorithm needs to run on GPU
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
+
         """
         source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function, common_functions)
+        source_code = include_modules(source_code, included_modules)
         return self.update_algorithm(
             algorithm=algorithm,
             source_code=source_code,
@@ -2141,6 +2163,7 @@ class ApiClient(ReadOnlyClient):
     def import_module(self, name):
         """
         Import a module created previously. It will reload if has been imported before.
+        This will be equivalent to including from that module file.
 
         Args:
             name (String): Name of the module to import.
@@ -2156,9 +2179,20 @@ class ApiClient(ReadOnlyClient):
             sys.path.insert(0, temp_dir)
         import importlib
         if name in sys.modules:
-            return importlib.reload(sys.modules[name])
+            module = importlib.reload(sys.modules[name])
         else:
-            return importlib.import_module(name)
+            module = importlib.import_module(name)
+
+        # respect __all__ if exists
+        if '__all__' in module.__dict__:
+            names = module.__dict__['__all__']
+        else:
+            # otherwise we import all names that don't begin with _
+            names = [x for x in module.__dict__ if not x.startswith('_')]
+        import __main__ as the_main
+        for name in names:
+            setattr(the_main, name, getattr(module, name))
+        return module
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2478,7 +2512,7 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created feature group"""
         return self._call_api('createFeatureGroupFromFunction', 'POST', query_params={}, body={'tableName': table_name, 'functionSourceCode': function_source_code, 'functionName': function_name, 'inputFeatureGroups': input_feature_groups, 'description': description, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useOriginalCsvNames': use_original_csv_names, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings}, parse_type=FeatureGroup)
 
-    def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: dict, description: str = None) -> FeatureGroup:
+    def create_sampling_feature_group(self, feature_group_id: str, table_name: str, sampling_config: Union[dict, SamplingConfig], description: str = None) -> FeatureGroup:
         """Creates a new Feature Group defined as a sample of rows from another Feature Group.
 
         For efficiency, sampling is approximate unless otherwise specified. (e.g. the number of rows may vary slightly from what was requested).
@@ -2487,7 +2521,7 @@ class ApiClient(ReadOnlyClient):
         Args:
             feature_group_id (str): The unique ID associated with the pre-existing Feature Group that will be sampled by this new Feature Group. i.e. the input for sampling.
             table_name (str): The unique name to be given to this sampling Feature Group.
-            sampling_config (dict): Dictionary defining the sampling method and its parameters.
+            sampling_config (SamplingConfig): Dictionary defining the sampling method and its parameters.
             description (str): A human-readable description of this Feature Group.
 
         Returns:
@@ -2533,12 +2567,12 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: Feature Group corresponding to the newly created Snapshot."""
         return self._call_api('createSnapshotFeatureGroup', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'tableName': table_name}, parse_type=FeatureGroup)
 
-    def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: dict) -> FeatureGroup:
+    def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: Union[dict, SamplingConfig]) -> FeatureGroup:
         """Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
         Args:
             feature_group_id (str): The unique identifier associated with the FeatureGroup.
-            sampling_config (dict): A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
+            sampling_config (SamplingConfig): A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
 
         Returns:
             FeatureGroup: The updated FeatureGroup."""
@@ -3935,7 +3969,7 @@ Creates a new feature group defined as the union of other feature group versions
             auto_deploy (bool): Flag to enable the automatic deployment when a new Model Version finishes training.
             start (bool): If true, will start the deployment; otherwise will create offline
             enable_batch_streaming_updates (bool): Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup.
-            model_deployment_config (dict): The deployment config for model to deploy.
+            model_deployment_config (dict): The deployment config for model to deploy
 
         Returns:
             Deployment: The new model or feature group deployment."""
@@ -4847,7 +4881,7 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name to identify the Python function."""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
-    def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list) -> GraphDashboard:
+    def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
 
         Args:

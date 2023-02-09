@@ -1,0 +1,78 @@
+:py:mod:`abacusai.api_class.abstract`
+=====================================
+
+.. py:module:: abacusai.api_class.abstract
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.abstract.ApiClass
+   abacusai.api_class.abstract.ApiClassFactory
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.abstract.camel_case
+
+
+
+.. py:function:: camel_case(value)
+
+
+.. py:class:: ApiClass
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: ApiClassFactory
+
+   Bases: :py:obj:`abc.ABC`
+
+   A class to select and return the the correct type of ApiClass based on a serialized instance.
+
+   .. py:attribute:: config_abstract_class
+      
+
+      
+
+   .. py:attribute:: config_class_key
+      
+
+      
+
+   .. py:attribute:: config_class_map
+      
+
+      
+
+   .. py:method:: from_dict(config)
+
+
+

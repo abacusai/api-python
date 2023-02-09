@@ -204,7 +204,7 @@ Classes
       :param table_name: The unique name to be given to this sampling Feature Group.
       :type table_name: str
       :param sampling_config: Dictionary defining the sampling method and its parameters.
-      :type sampling_config: dict
+      :type sampling_config: SamplingConfig
       :param description: A human-readable description of this Feature Group.
       :type description: str
 
@@ -217,7 +217,7 @@ Classes
       Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
       :param sampling_config: A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
-      :type sampling_config: dict
+      :type sampling_config: SamplingConfig
 
       :returns: The updated FeatureGroup.
       :rtype: FeatureGroup

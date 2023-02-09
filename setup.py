@@ -1,7 +1,7 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
-__version__ = '0.48.1'
+__version__ = '0.49.0'
 
 
 setup(name='abacusai',
@@ -11,7 +11,7 @@ setup(name='abacusai',
       author='Abacus.AI',
       author_email='dev@abacus.ai',
       license='MIT',
-      packages=['abacusai'],
+      packages=find_packages(),
       install_requires=['packaging', 'requests', 'pandas', 'fastavro'],
       zip_safe=True,
       package_data={'': ['public.pem']},

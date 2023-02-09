@@ -1,0 +1,118 @@
+:py:mod:`abacusai.api_class.feature_group`
+==========================================
+
+.. py:module:: abacusai.api_class.feature_group
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.feature_group.SamplingConfig
+   abacusai.api_class.feature_group.NSamplingConfig
+   abacusai.api_class.feature_group.PercentSamplingConfig
+   abacusai.api_class.feature_group.SamplingConfigFactory
+
+
+
+
+.. py:class:: SamplingConfig
+
+   Bases: :py:obj:`api_class.abstract.ApiClass`
+
+   An abstract class for the sampling config of a feature group
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: NSamplingConfig
+
+   Bases: :py:obj:`SamplingConfig`
+
+   The number of distinct values of the key columns to include in the sample, or number of rows if key columns not specified.
+
+   :param sampling_method: N_SAMPLING
+   :type sampling_method: SamplingMethodType
+   :param sample_count: The number of rows to include in the sample
+   :type sample_count: int
+   :param key_columns: The feature(s) to use as the key(s) when sampling
+   :type key_columns: list[str]
+
+   .. py:attribute:: sample_count
+      :annotation: :int
+
+      
+
+   .. py:attribute:: sampling_method
+      :annotation: :api_class.enums.SamplingMethodType
+
+      
+
+   .. py:attribute:: key_columns
+      :annotation: :List[str]
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: PercentSamplingConfig
+
+   Bases: :py:obj:`SamplingConfig`
+
+   The fraction of distinct values of the feature group to include in the sample.
+
+   :param sampling_method: PERCENT_SAMPLING
+   :type sampling_method: SamplingMethodType
+   :param sample_percent: The percentage of the rows to sample
+   :type sample_percent: float
+   :param key_columns: The feature(s) to use as the key(s) when sampling
+   :type key_columns: list[str]
+
+   .. py:attribute:: sample_percent
+      :annotation: :float
+
+      
+
+   .. py:attribute:: sampling_method
+      :annotation: :api_class.enums.SamplingMethodType
+
+      
+
+   .. py:attribute:: key_columns
+      :annotation: :List[str]
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: SamplingConfigFactory
+
+   Bases: :py:obj:`api_class.abstract.ApiClassFactory`
+
+   A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.
+
+   .. py:attribute:: config_abstract_class
+      
+
+      
+
+   .. py:attribute:: config_class_key
+      :annotation: = sampling_method
+
+      
+
+   .. py:attribute:: config_class_map
+      
+
+      
+
+

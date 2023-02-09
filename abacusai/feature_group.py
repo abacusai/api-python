@@ -1,3 +1,7 @@
+from typing import Union
+
+from api_class import SamplingConfig
+
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
@@ -192,7 +196,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
 
-    def create_sampling(self, table_name: str, sampling_config: dict, description: str = None):
+    def create_sampling(self, table_name: str, sampling_config: Union[dict, SamplingConfig], description: str = None):
         """
         Creates a new Feature Group defined as a sample of rows from another Feature Group.
 
@@ -201,7 +205,7 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             table_name (str): The unique name to be given to this sampling Feature Group.
-            sampling_config (dict): Dictionary defining the sampling method and its parameters.
+            sampling_config (SamplingConfig): Dictionary defining the sampling method and its parameters.
             description (str): A human-readable description of this Feature Group.
 
         Returns:
@@ -209,12 +213,12 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_sampling_feature_group(self.feature_group_id, table_name, sampling_config, description)
 
-    def set_sampling_config(self, sampling_config: dict):
+    def set_sampling_config(self, sampling_config: Union[dict, SamplingConfig]):
         """
         Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
         Args:
-            sampling_config (dict): A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
+            sampling_config (SamplingConfig): A JSON string object specifying the sampling method and parameters specific to that sampling method. An empty sampling_config indicates no sampling.
 
         Returns:
             FeatureGroup: The updated FeatureGroup.
