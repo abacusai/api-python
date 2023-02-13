@@ -704,6 +704,20 @@ Classes
       :type python_function_bindings: list
 
 
+   .. py:method:: update_python_function(python_function_name, python_function_bindings = [])
+
+      Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
+
+      bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
+      feature groups for those input feature groups.
+
+
+      :param python_function_name: The name of the python function to be associated with the feature group.
+      :type python_function_name: str
+      :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type python_function_bindings: list
+
+
    .. py:method:: update_sql_definition(sql)
 
       Updates the SQL statement for a feature group.

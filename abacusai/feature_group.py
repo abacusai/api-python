@@ -676,6 +676,20 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_python_function_bindings(self.feature_group_id, python_function_bindings)
 
+    def update_python_function(self, python_function_name: str, python_function_bindings: list = []):
+        """
+        Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
+
+        bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
+        feature groups for those input feature groups.
+
+
+        Args:
+            python_function_name (str): The name of the python function to be associated with the feature group.
+            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+        """
+        return self.client.update_feature_group_python_function(self.feature_group_id, python_function_name, python_function_bindings)
+
     def update_sql_definition(self, sql: str):
         """
         Updates the SQL statement for a feature group.

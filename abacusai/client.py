@@ -183,7 +183,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.49.4'
+    client_version = '0.49.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2962,6 +2962,19 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_id (str): The unique ID associated with the feature group.
             python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}]."""
         return self._call_api('updateFeatureGroupPythonFunctionBindings', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionBindings': python_function_bindings})
+
+    def update_feature_group_python_function(self, feature_group_id: str, python_function_name: str, python_function_bindings: list = []):
+        """Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
+
+        bindings, we will provide as arguments to the function DataFrame's (pandas in the case of Python) with the materialized
+        feature groups for those input feature groups.
+
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+            python_function_name (str): The name of the python function to be associated with the feature group.
+            python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}]."""
+        return self._call_api('updateFeatureGroupPythonFunction', 'PATCH', query_params={}, body={'featureGroupId': feature_group_id, 'pythonFunctionName': python_function_name, 'pythonFunctionBindings': python_function_bindings})
 
     def update_feature_group_sql_definition(self, feature_group_id: str, sql: str) -> FeatureGroup:
         """Updates the SQL statement for a feature group.

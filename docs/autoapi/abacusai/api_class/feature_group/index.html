@@ -98,8 +98,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.PercentSamplingConfig" title="abacusai.api_class.feature_group.PercentSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PercentSamplingConfig</span></code></a></p></td>
 <td><p>The fraction of distinct values of the feature group to include in the sample.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.SamplingConfigFactory" title="abacusai.api_class.feature_group.SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfigFactory</span></code></a></p></td>
-<td><p>A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._SamplingConfigFactory" title="abacusai.api_class.feature_group._SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_SamplingConfigFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
 </table>
@@ -188,23 +188,24 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.feature_group.SamplingConfigFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">SamplingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.SamplingConfigFactory" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClassFactory" title="abacusai.api_class.abstract.ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClassFactory</span></code></a></p>
-<p>A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.</p>
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._SamplingConfigFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">_SamplingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.feature_group._SamplingConfigFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.feature_group.SamplingConfigFactory.config_abstract_class">
-<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.SamplingConfigFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._SamplingConfigFactory.config_abstract_class">
+<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.feature_group._SamplingConfigFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.feature_group.SamplingConfigFactory.config_class_key">
-<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">sampling_method</span></em><a class="headerlink" href="#abacusai.api_class.feature_group.SamplingConfigFactory.config_class_key" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._SamplingConfigFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">sampling_method</span></em><a class="headerlink" href="#abacusai.api_class.feature_group._SamplingConfigFactory.config_class_key" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.feature_group.SamplingConfigFactory.config_class_map">
-<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.SamplingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._SamplingConfigFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.feature_group._SamplingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

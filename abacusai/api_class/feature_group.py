@@ -2,7 +2,7 @@ import dataclasses
 from typing import List
 
 from . import enums
-from .abstract import ApiClass, ApiClassFactory
+from .abstract import ApiClass, _ApiClassFactory
 
 
 @dataclasses.dataclass
@@ -54,8 +54,7 @@ class PercentSamplingConfig(SamplingConfig):
 
 
 @dataclasses.dataclass
-class SamplingConfigFactory(ApiClassFactory):
-    """A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance. """
+class _SamplingConfigFactory(_ApiClassFactory):
     config_abstract_class = SamplingConfig
     config_class_key = 'sampling_method'
     config_class_map = {

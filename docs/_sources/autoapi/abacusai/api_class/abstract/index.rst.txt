@@ -13,7 +13,7 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.abstract.ApiClass
-   abacusai.api_class.abstract.ApiClassFactory
+   abacusai.api_class.abstract._ApiClassFactory
 
 
 
@@ -51,11 +51,12 @@ Functions
 
 
 
-.. py:class:: ApiClassFactory
+.. py:class:: _ApiClassFactory
 
    Bases: :py:obj:`abc.ABC`
 
-   A class to select and return the the correct type of ApiClass based on a serialized instance.
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
    .. py:attribute:: config_abstract_class
       
@@ -73,6 +74,7 @@ Functions
       
 
    .. py:method:: from_dict(config)
+      :classmethod:
 
 
 

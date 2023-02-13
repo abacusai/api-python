@@ -92,8 +92,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.ApiClassFactory" title="abacusai.api_class.abstract.ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClassFactory</span></code></a></p></td>
-<td><p>A class to select and return the the correct type of ApiClass based on a serialized instance.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
 </table>
@@ -144,31 +144,35 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClassFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">ApiClassFactory</span></span><a class="headerlink" href="#abacusai.api_class.abstract.ApiClassFactory" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.abstract._ApiClassFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">_ApiClassFactory</span></span><a class="headerlink" href="#abacusai.api_class.abstract._ApiClassFactory" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
-<p>A class to select and return the the correct type of ApiClass based on a serialized instance.</p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClassFactory.config_abstract_class">
-<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.abstract.ApiClassFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.abstract._ApiClassFactory.config_abstract_class">
+<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.api_class.abstract._ApiClassFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClassFactory.config_class_key">
-<span class="sig-name descname"><span class="pre">config_class_key</span></span><a class="headerlink" href="#abacusai.api_class.abstract.ApiClassFactory.config_class_key" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.abstract._ApiClassFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><a class="headerlink" href="#abacusai.api_class.abstract._ApiClassFactory.config_class_key" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClassFactory.config_class_map">
-<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.abstract.ApiClassFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.abstract._ApiClassFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.abstract._ApiClassFactory.config_class_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClassFactory.from_dict">
-<span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.abstract.ApiClassFactory.from_dict" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.abstract._ApiClassFactory.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.abstract._ApiClassFactory.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass">ApiClass</a></p>
 </dd>
 </dl>
 </dd></dl>

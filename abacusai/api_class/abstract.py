@@ -54,18 +54,18 @@ class ApiClass(ABC):
 
 
 @dataclasses.dataclass
-class ApiClassFactory(ABC):
-    """A class to select and return the the correct type of ApiClass based on a serialized instance. """
+class _ApiClassFactory(ABC):
     config_abstract_class = None
     config_class_key = None
     config_class_map = {}
 
-    def from_dict(self, config: dict):
-        if not config or self.config_class_key not in config:
-            raise KeyError(f'Could not find {camel_case(self.config_class_key)} in {config or ""}')
-        config_class = config.pop(self.config_class_key, None)
+    @classmethod
+    def from_dict(cls, config: dict) -> ApiClass:
+        if not config or cls.config_class_key not in config:
+            raise KeyError(f'Could not find {camel_case(cls.config_class_key)} in {config or ""}')
+        config_class = config.pop(cls.config_class_key, None)
         if isinstance(config_class, str):
             config_class = config_class.upper()
-        if not self.config_class_map.get(config_class):
+        if not cls.config_class_map.get(config_class):
             raise ValueError(f'Invalid type {config_class}')
-        return self.config_class_map[config_class].from_dict(config)
+        return cls.config_class_map[config_class].from_dict(config)

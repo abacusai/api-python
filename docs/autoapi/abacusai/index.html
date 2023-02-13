@@ -163,11 +163,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#classes">Classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#attributes">Attributes</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClass">ApiClass</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClassFactory">ApiClassFactory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai._ApiClassFactory">_ApiClassFactory</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.SamplingConfig">SamplingConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.NSamplingConfig">NSamplingConfig</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.PercentSamplingConfig">PercentSamplingConfig</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.SamplingConfigFactory">SamplingConfigFactory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai._SamplingConfigFactory">_SamplingConfigFactory</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiClient">ApiClient</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiException">ApiException</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ClientOptions">ClientOptions</a></li>
@@ -348,8 +348,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ApiClass" title="abacusai.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClass</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ApiClassFactory" title="abacusai.ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClassFactory</span></code></a></p></td>
-<td><p>A class to select and return the the correct type of ApiClass based on a serialized instance.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._ApiClassFactory" title="abacusai._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.SamplingConfig" title="abacusai.SamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfig</span></code></a></p></td>
 <td><p>An abstract class for the sampling config of a feature group</p></td>
@@ -360,8 +360,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PercentSamplingConfig" title="abacusai.PercentSamplingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PercentSamplingConfig</span></code></a></p></td>
 <td><p>The fraction of distinct values of the feature group to include in the sample.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.SamplingConfigFactory" title="abacusai.SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SamplingConfigFactory</span></code></a></p></td>
-<td><p>A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._SamplingConfigFactory" title="abacusai._SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_SamplingConfigFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ApiClient" title="abacusai.ApiClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClient</span></code></a></p></td>
 <td><p>Abacus.AI API Client</p></td>
@@ -419,31 +419,35 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.ApiClassFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ApiClassFactory</span></span><a class="headerlink" href="#abacusai.ApiClassFactory" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._ApiClassFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">_ApiClassFactory</span></span><a class="headerlink" href="#abacusai._ApiClassFactory" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
-<p>A class to select and return the the correct type of ApiClass based on a serialized instance.</p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.ApiClassFactory.config_abstract_class">
-<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.ApiClassFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._ApiClassFactory.config_abstract_class">
+<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai._ApiClassFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.ApiClassFactory.config_class_key">
-<span class="sig-name descname"><span class="pre">config_class_key</span></span><a class="headerlink" href="#abacusai.ApiClassFactory.config_class_key" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._ApiClassFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><a class="headerlink" href="#abacusai._ApiClassFactory.config_class_key" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.ApiClassFactory.config_class_map">
-<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.ApiClassFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._ApiClassFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai._ApiClassFactory.config_class_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ApiClassFactory.from_dict">
-<span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClassFactory.from_dict" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._ApiClassFactory.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai._ApiClassFactory.from_dict" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#abacusai.ApiClass" title="abacusai.ApiClass">ApiClass</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -535,23 +539,24 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.SamplingConfigFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">SamplingConfigFactory</span></span><a class="headerlink" href="#abacusai.SamplingConfigFactory" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract.ApiClassFactory" title="abacusai.api_class.abstract.ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClassFactory</span></code></a></p>
-<p>A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.</p>
+<dt class="sig sig-object py" id="abacusai._SamplingConfigFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">_SamplingConfigFactory</span></span><a class="headerlink" href="#abacusai._SamplingConfigFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SamplingConfigFactory.config_abstract_class">
-<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai.SamplingConfigFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._SamplingConfigFactory.config_abstract_class">
+<span class="sig-name descname"><span class="pre">config_abstract_class</span></span><a class="headerlink" href="#abacusai._SamplingConfigFactory.config_abstract_class" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SamplingConfigFactory.config_class_key">
-<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">sampling_method</span></em><a class="headerlink" href="#abacusai.SamplingConfigFactory.config_class_key" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._SamplingConfigFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">sampling_method</span></em><a class="headerlink" href="#abacusai._SamplingConfigFactory.config_class_key" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.SamplingConfigFactory.config_class_map">
-<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.SamplingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai._SamplingConfigFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai._SamplingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2290,6 +2295,23 @@ Creates a new feature group defined as the union of other feature group versions
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
+<li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of arguments to be supplied to the function as parameters in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.update_feature_group_python_function">
+<span class="sig-name descname"><span class="pre">update_feature_group_python_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_feature_group_python_function" title="Permalink to this definition"></a></dt>
+<dd><p>Updates an existing Feature Group’s python function from a user provided Python Function. If a list of feature groups are supplied within the python function</p>
+<p>bindings, we will provide as arguments to the function DataFrame’s (pandas in the case of Python) with the materialized
+feature groups for those input feature groups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
+<li><p><strong>python_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the python function to be associated with the feature group.</p></li>
 <li><p><strong>python_function_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of arguments to be supplied to the function as parameters in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
 </ul>
 </dd>
@@ -8690,7 +8712,7 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.49.4</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.49.5</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

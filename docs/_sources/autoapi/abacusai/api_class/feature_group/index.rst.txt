@@ -15,7 +15,7 @@ Classes
    abacusai.api_class.feature_group.SamplingConfig
    abacusai.api_class.feature_group.NSamplingConfig
    abacusai.api_class.feature_group.PercentSamplingConfig
-   abacusai.api_class.feature_group.SamplingConfigFactory
+   abacusai.api_class.feature_group._SamplingConfigFactory
 
 
 
@@ -94,11 +94,12 @@ Classes
 
 
 
-.. py:class:: SamplingConfigFactory
+.. py:class:: _SamplingConfigFactory
 
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClassFactory`
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
-   A class to select and return the the correct type of Sampling Config based on a serialized SamplingConfig instance.
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
 
    .. py:attribute:: config_abstract_class
       
