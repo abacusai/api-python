@@ -1225,7 +1225,7 @@ This will be equivalent to including from that module file.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The project’s name.</p></li>
-<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  THEME_ANALYSIS.</p></li>
+<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  THEME_ANALYSIS.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -4517,14 +4517,15 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.get_entities_from_pdf">
-<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
-<dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores</p>
+<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
-<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on.</p></li>
+<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – (Optional) The pdf to predict on. One of pdf or docId must be specified.</p></li>
+<li><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – (Optional) The pdf to predict on. One of pdf or docId must be specified.</p></li>
 <li><p><strong>return_extracted_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.</p></li>
 </ul>
 </dd>
@@ -4856,6 +4857,25 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier to a deployment created under the project.</p></li>
 <li><p><strong>image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The binary data of the image to classify.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.transfer_style">
+<span class="sig-name descname"><span class="pre">transfer_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style_image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.transfer_style" title="Permalink to this definition"></a></dt>
+<dd><p>Change the source image to adopt the visual style from the style image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique identifier to a deployment created under the project.</p></li>
+<li><p><strong>source_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The source image to apply the makeup.</p></li>
+<li><p><strong>style_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The image that has the style as a reference.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -7317,13 +7337,14 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_drift_for_feature">
-<span class="sig-name descname"><span class="pre">get_drift_for_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_drift_for_feature" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_drift_for_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_drift_for_feature" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the feature drift associated with a single feature in an output feature group from a prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier of a model monitor version created under the project.</p></li>
 <li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the feature to view the distribution of.</p></li>
+<li><p><strong>nested_feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optionally, the name of the nested feature that the feature is in.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -7334,13 +7355,14 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_outliers_for_feature">
-<span class="sig-name descname"><span class="pre">get_outliers_for_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_outliers_for_feature" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_outliers_for_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_outliers_for_feature" title="Permalink to this definition"></a></dt>
 <dd><p>Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for a model monitor version created under the project.</p></li>
 <li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the feature to view the distribution of.</p></li>
+<li><p><strong>nested_feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optionally, the name of the nested feature that the feature is in.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -7351,13 +7373,14 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_outliers_for_batch_prediction_feature">
-<span class="sig-name descname"><span class="pre">get_outliers_for_batch_prediction_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_prediction_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_outliers_for_batch_prediction_feature" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_outliers_for_batch_prediction_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_prediction_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_outliers_for_batch_prediction_feature" title="Permalink to this definition"></a></dt>
 <dd><p>Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch_prediction_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for a batch prediction version created under the project.</p></li>
 <li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the feature to view the distribution of.</p></li>
+<li><p><strong>nested_feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optionally, the name of the nested feature that the feature is in.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -8361,14 +8384,15 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.PredictionClient.get_entities_from_pdf">
-<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
-<dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores</p>
+<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
-<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on.</p></li>
+<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – (Optional) The pdf to predict on. One of pdf or docId must be specified.</p></li>
+<li><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – (Optional) The pdf to predict on. One of pdf or docId must be specified.</p></li>
 <li><p><strong>return_extracted_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.</p></li>
 </ul>
 </dd>
@@ -8708,11 +8732,30 @@ feature groups for those input feature groups.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.PredictionClient.transfer_style">
+<span class="sig-name descname"><span class="pre">transfer_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style_image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.transfer_style" title="Permalink to this definition"></a></dt>
+<dd><p>Change the source image to adopt the visual style from the style image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique identifier to a deployment created under the project.</p></li>
+<li><p><strong>source_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The source image to apply the makeup.</p></li>
+<li><p><strong>style_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The image that has the style as a reference.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.49.5</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="pre">=</span> <span class="pre">0.50.0</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

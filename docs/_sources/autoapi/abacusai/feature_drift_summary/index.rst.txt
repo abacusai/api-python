@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
+.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nestedSummary=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43,6 +43,8 @@ Classes
    :type targetColumn: str
    :param dataIntegrityTimeseries: Frequency vs Data Integrity Violation Charts.
    :type dataIntegrityTimeseries: dict
+   :param nestedSummary: Summary of model monitoring statistics for nested features.
+   :type nestedSummary: list[dict]
    :param nullViolations: A list of dicts of feature names and a description of corresponding null violations.
    :type nullViolations: NullViolation
    :param typeViolations: A list of dicts of feature names and corresponding type mismatches.

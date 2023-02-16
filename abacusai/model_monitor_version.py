@@ -137,23 +137,25 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.get_model_monitoring_logs(self.model_monitor_version, stdout, stderr)
 
-    def get_drift_for_feature(self, feature_name: str):
+    def get_drift_for_feature(self, feature_name: str, nested_feature_name: str = None):
         """
         Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
         Args:
             feature_name (str): Name of the feature to view the distribution of.
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in.
         """
-        return self.client.get_drift_for_feature(self.model_monitor_version, feature_name)
+        return self.client.get_drift_for_feature(self.model_monitor_version, feature_name, nested_feature_name)
 
-    def get_outliers_for_feature(self, feature_name: str = None):
+    def get_outliers_for_feature(self, feature_name: str = None, nested_feature_name: str = None):
         """
         Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
 
         Args:
             feature_name (str): Name of the feature to view the distribution of.
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in.
         """
-        return self.client.get_outliers_for_feature(self.model_monitor_version, feature_name)
+        return self.client.get_outliers_for_feature(self.model_monitor_version, feature_name, nested_feature_name)
 
     def wait_for_monitor(self, timeout=1200):
         """

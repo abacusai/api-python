@@ -93,14 +93,15 @@ class BatchPredictionVersion(AbstractApiClass):
         """
         return {'batch_prediction_version': self.batch_prediction_version, 'batch_prediction_id': self.batch_prediction_id, 'status': self.status, 'drift_monitor_status': self.drift_monitor_status, 'deployment_id': self.deployment_id, 'model_id': self.model_id, 'model_version': self.model_version, 'predictions_started_at': self.predictions_started_at, 'predictions_completed_at': self.predictions_completed_at, 'global_prediction_args': self.global_prediction_args, 'database_output_error': self.database_output_error, 'total_predictions': self.total_predictions, 'failed_predictions': self.failed_predictions, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_connector_output_location': self.file_connector_output_location, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'error': self.error, 'drift_monitor_error': self.drift_monitor_error, 'monitor_warnings': self.monitor_warnings, 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'database_output_total_writes': self.database_output_total_writes, 'database_output_failed_writes': self.database_output_failed_writes, 'output_includes_metadata': self.output_includes_metadata, 'result_input_columns': self.result_input_columns, 'model_monitor_version': self.model_monitor_version, 'algo_name': self.algo_name, 'algorithm': self.algorithm, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs)}
 
-    def get_outliers_for_batch_prediction_feature(self, feature_name: str = None):
+    def get_outliers_for_batch_prediction_feature(self, feature_name: str = None, nested_feature_name: str = None):
         """
         Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
 
         Args:
             feature_name (str): Name of the feature to view the distribution of.
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in.
         """
-        return self.client.get_outliers_for_batch_prediction_feature(self.batch_prediction_version, feature_name)
+        return self.client.get_outliers_for_batch_prediction_feature(self.batch_prediction_version, feature_name, nested_feature_name)
 
     def download_batch_prediction_result_chunk(self, offset: int = 0, chunk_size: int = 10485760):
         """

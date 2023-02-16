@@ -539,14 +539,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.get_entities_from_pdf">
-<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
-<dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores</p>
+<span class="sig-name descname"><span class="pre">get_entities_from_pdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pdf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_extracted_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_entities_from_pdf" title="Permalink to this definition"></a></dt>
+<dd><p>Extracts text from the provided PDF and returns a list of recognized labels and their scores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
-<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The pdf to predict on.</p></li>
+<li><p><strong>pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – (Optional) The pdf to predict on. One of pdf or docId must be specified.</p></li>
+<li><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – (Optional) The pdf to predict on. One of pdf or docId must be specified.</p></li>
 <li><p><strong>return_extracted_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.</p></li>
 </ul>
 </dd>
@@ -878,6 +879,25 @@
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier to a deployment created under the project.</p></li>
 <li><p><strong>image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The binary data of the image to classify.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.transfer_style">
+<span class="sig-name descname"><span class="pre">transfer_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style_image</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.transfer_style" title="Permalink to this definition"></a></dt>
+<dd><p>Change the source image to adopt the visual style from the style image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique identifier to a deployment created under the project.</p></li>
+<li><p><strong>source_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The source image to apply the makeup.</p></li>
+<li><p><strong>style_image</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The image that has the style as a reference.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

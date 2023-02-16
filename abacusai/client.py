@@ -183,7 +183,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.49.5'
+    client_version = '0.50.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1227,29 +1227,32 @@ class ReadOnlyClient(BaseApiClient):
             FunctionLogs: A function logs."""
         return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
-    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str) -> Dict:
+    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str, nested_feature_name: str = None) -> Dict:
         """Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
         Args:
             model_monitor_version (str): Unique string identifier of a model monitor version created under the project.
-            feature_name (str): Name of the feature to view the distribution of."""
-        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
+            feature_name (str): Name of the feature to view the distribution of.
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
+        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
 
-    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str = None) -> Dict:
+    def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str = None, nested_feature_name: str = None) -> Dict:
         """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
 
         Args:
             model_monitor_version (str): Unique string identifier for a model monitor version created under the project.
-            feature_name (str): Name of the feature to view the distribution of."""
-        return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name})
+            feature_name (str): Name of the feature to view the distribution of.
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
+        return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
 
-    def get_outliers_for_batch_prediction_feature(self, batch_prediction_version: str, feature_name: str = None) -> Dict:
+    def get_outliers_for_batch_prediction_feature(self, batch_prediction_version: str, feature_name: str = None, nested_feature_name: str = None) -> Dict:
         """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
 
         Args:
             batch_prediction_version (str): Unique string identifier for a batch prediction version created under the project.
-            feature_name (str): Name of the feature to view the distribution of."""
-        return self._call_api('getOutliersForBatchPredictionFeature', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'featureName': feature_name})
+            feature_name (str): Name of the feature to view the distribution of.
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
+        return self._call_api('getOutliersForBatchPredictionFeature', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
 
     def describe_deployment(self, deployment_id: str) -> Deployment:
         """Retrieves a full description of the specified deployment.
@@ -2309,7 +2312,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  THEME_ANALYSIS.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  THEME_ANALYSIS.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -4336,15 +4339,16 @@ Creates a new feature group defined as the union of other feature group versions
             threshold (None): This argument is deprecated and will be ignored."""
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=self.default_prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase, return_extracted_features: bool = False) -> Dict:
-        """Extracts text from the provided PDF and returns a list of recognized labels and their scores
+    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False) -> Dict:
+        """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            pdf (io.TextIOBase): The pdf to predict on.
+            pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified.
+            doc_id (str): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
-        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=self.default_prediction_url)
+        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=self.default_prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = None, score_field: str = '', scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = 0.0) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
@@ -4522,6 +4526,16 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to classify."""
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
+
+    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
+        """Change the source image to adopt the visual style from the style image.
+
+        Args:
+            deployment_token (str): A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.
+            deployment_id (str): A unique identifier to a deployment created under the project.
+            source_image (io.TextIOBase): The source image to apply the makeup.
+            style_image (io.TextIOBase): The image that has the style as a reference."""
+        return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=self.default_prediction_url)
 
     def create_prediction_metric(self, feature_group_id: str, prediction_metric_config: dict, project_id: str = None) -> PredictionMetric:
         """Create a prediction metric description for the given prediction and actual-labels data.

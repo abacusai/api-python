@@ -194,15 +194,16 @@ class PredictionClient(BaseApiClient):
             threshold (None): This argument is deprecated and will be ignored."""
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=self.default_prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase, return_extracted_features: bool = False) -> Dict:
-        """Extracts text from the provided PDF and returns a list of recognized labels and their scores
+    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False) -> Dict:
+        """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            pdf (io.TextIOBase): The pdf to predict on.
+            pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified.
+            doc_id (str): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
-        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=self.default_prediction_url)
+        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=self.default_prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = 50, page: int = 1, exclude_item_ids: list = None, score_field: str = '', scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = 0.0) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
@@ -380,3 +381,13 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to classify."""
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
+
+    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
+        """Change the source image to adopt the visual style from the style image.
+
+        Args:
+            deployment_token (str): A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.
+            deployment_id (str): A unique identifier to a deployment created under the project.
+            source_image (io.TextIOBase): The source image to apply the makeup.
+            style_image (io.TextIOBase): The image that has the style as a reference."""
+        return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=self.default_prediction_url)
