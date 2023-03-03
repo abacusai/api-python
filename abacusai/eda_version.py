@@ -120,6 +120,18 @@ class EdaVersion(AbstractApiClass):
         """
         return self.client.get_feature_association(self.eda_version, reference_feature_name, test_feature_name)
 
+    def get_eda_forecasting_analysis(self):
+        """
+        Gets the Forecasting analysis for the Exploratory Data Analysis.
+
+        Args:
+            eda_version (str): Unique string identifier associated with the EDA version.
+
+        Returns:
+            EdaForecastingAnalysis: Object with forecasting analysis that includes sales_across_time, cummulative_contribution, missing_value_distribution, history_length, num_rows_histogram, product_maturity data.
+        """
+        return self.client.get_eda_forecasting_analysis(self.eda_version)
+
     def wait_for_eda(self, timeout=1200):
         """
         A waiting call until eda version is ready.

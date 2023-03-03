@@ -149,14 +149,14 @@ class PredictionClient(BaseApiClient):
             query_data (dict): The input data for the prediction."""
         return self._call_api('isAnomaly', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
-    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: dict = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
+    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
         """Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'store_id' in your dataset) mapped to the column mapping ITEM_ID that uniquely identifies the entity against which forecasting is performed and 'Value' will be the unique value of the same entity.
-            future_data (dict): This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'str'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
+            future_data (list): This will be a list of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). Each element is a dictionary, where the key and the value both will be of type 'str'. For example future data entered for a Store may be [{"Holiday":"No", "Promo":"Yes", "Date": "2015-07-31 00:00:00"}].
             num_predictions (int): The number of timestamps to predict in the future.
             prediction_start (str): The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
             explain_predictions (bool): Will explain predictions for forecasting
@@ -382,6 +382,24 @@ class PredictionClient(BaseApiClient):
             image (io.TextIOBase): The binary data of the image to classify."""
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
 
+    def classify_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None) -> Dict:
+        """Returns a classification prediction from a PDF
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+            deployment_id (str): The unique identifier for a deployment created under the project.
+            pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified."""
+        return self._call_api('classifyPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'pdf': pdf}, server_override=self.default_prediction_url)
+
+    def get_objects_from_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
+        """Classify an image.
+
+        Args:
+            deployment_token (str): A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier to a deployment created under the project.
+            image (io.TextIOBase): The binary data of the image to detect objects from."""
+        return self._call_api('getObjectsFromImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
+
     def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
         """Change the source image to adopt the visual style from the style image.
 
@@ -391,3 +409,12 @@ class PredictionClient(BaseApiClient):
             source_image (io.TextIOBase): The source image to apply the makeup.
             style_image (io.TextIOBase): The image that has the style as a reference."""
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=self.default_prediction_url)
+
+    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Generate an image from text prompt.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+            deployment_id (str): A unique identifier to a deployment created under the project.
+            query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
+        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)

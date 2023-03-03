@@ -252,7 +252,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False):
         """
         Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -272,11 +272,12 @@ class Project(AbstractApiClass):
             training_config (dict): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Model: The new model, which has not been trained.
         """
-        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, training_input_tables, predict_function_name, predict_many_function_name, initialize_function_name, name, cpu_size, memory, training_config, exclusive_run, package_requirements)
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, training_input_tables, predict_function_name, predict_many_function_name, initialize_function_name, name, cpu_size, memory, training_config, exclusive_run, package_requirements, use_gpu)
 
     def list_models(self):
         """
@@ -358,7 +359,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
-    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None):
+    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None):
         """
         Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -369,14 +370,16 @@ class Project(AbstractApiClass):
             include_collinearity (bool): Set to True if the EDA type is collinearity.
             include_data_consistency (bool): Set to True if the EDA type is data consistency.
             collinearity_keys (list): List of features to use for collinearity
-            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis.
+            primary_keys (list): List of features that corresponds to the primary keys or item ids for the given feature group for Data Consistency analysis or Forecasting analysis respectively.
             data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency EDA type.
             data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency EDA type.
+            feature_mappings (dict): A JSON map to override features for the given feature_group, where keys are column names and the values are feature data use types. (In forecasting, used to set the timestamp column and target value)
+            forecast_frequency (str): The frequency of the data. It can be either HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY.
 
         Returns:
             Eda: The new EDA object that was created.
         """
-        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_data_consistency, collinearity_keys, primary_keys, data_consistency_test_config, data_consistency_reference_config)
+        return self.client.create_eda(self.project_id, feature_group_id, name, refresh_schedule, include_collinearity, include_data_consistency, collinearity_keys, primary_keys, data_consistency_test_config, data_consistency_reference_config, feature_mappings, forecast_frequency)
 
     def list_eda(self):
         """

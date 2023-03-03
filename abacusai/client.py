@@ -21,6 +21,7 @@ from requests.packages.urllib3.util.retry import Retry
 
 from .algorithm import Algorithm
 from .annotation_entry import AnnotationEntry
+from .annotations_status import AnnotationsStatus
 from .api_class import ApiClass, SamplingConfig
 from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name, get_clean_function_source_code
 from .api_key import ApiKey
@@ -44,6 +45,7 @@ from .eda_collinearity import EdaCollinearity
 from .eda_data_consistency import EdaDataConsistency
 from .eda_feature_association import EdaFeatureAssociation
 from .eda_feature_collinearity import EdaFeatureCollinearity
+from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .feature import Feature
 from .feature_group import FeatureGroup
@@ -58,6 +60,7 @@ from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
 from .graph_dashboard import GraphDashboard
 from .model import Model
+from .model_artifacts_export import ModelArtifactsExport
 from .model_metrics import ModelMetrics
 from .model_monitor import ModelMonitor
 from .model_monitor_org_summary import ModelMonitorOrgSummary
@@ -73,8 +76,6 @@ from .monitor_alert import MonitorAlert
 from .monitor_alert_version import MonitorAlertVersion
 from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
-from .prediction_metric import PredictionMetric
-from .prediction_metric_version import PredictionMetricVersion
 from .problem_type import ProblemType
 from .project import Project
 from .project_dataset import ProjectDataset
@@ -183,7 +184,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.50.0'
+    client_version = '0.51.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -505,6 +506,30 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group."""
         return self._call_api('validateProject', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=ProjectValidation)
+
+    def verify_and_describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
+        """Get the latest annotation entry for a given feature group, feature, and document along with verification information.
+
+        Args:
+            feature_group_id (str): The ID of the feature group the annotation is on.
+            feature_name (str): The name of the feature the annotation is on.
+            doc_id (str): The ID of the primary document the annotation is on.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+
+        Returns:
+            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information."""
+        return self._call_api('verifyAndDescribeAnnotation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
+
+    def get_annotations_status(self, feature_group_id: str, feature_name: str = None) -> AnnotationsStatus:
+        """Get the status of the annotations for a given feature group and feature.
+
+        Args:
+            feature_group_id (str): The ID of the feature group the annotation is on.
+            feature_name (str): The name of the feature the annotation is on.
+
+        Returns:
+            AnnotationsStatus: The status of the annotations for the given feature group and feature."""
+        return self._call_api('getAnnotationsStatus', 'GET', query_params={'featureGroupId': feature_group_id, 'featureName': feature_name}, parse_type=AnnotationsStatus)
 
     def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> Feature:
         """Returns a schema for a given FeatureGroup in a project.
@@ -987,6 +1012,39 @@ class ReadOnlyClient(BaseApiClient):
             FunctionLogs: A function logs object."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
+    def export_custom_model_version(self, model_version: str, output_location: str, algorithm: str = None) -> ModelArtifactsExport:
+        """Bundle custom model artifacts to a zip file, and export to the specified location.
+
+        Args:
+            model_version (str): A unique string identifier for the model version.
+            output_location (str): Location to export the model artifacts results. For example, s3://a-bucket/
+            algorithm (str): The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
+
+        Returns:
+            ModelArtifactsExport: Object describing the export and its status."""
+        return self._call_api('exportCustomModelVersion', 'GET', query_params={'modelVersion': model_version, 'outputLocation': output_location, 'algorithm': algorithm}, parse_type=ModelArtifactsExport)
+
+    def describe_model_artifacts_export(self, model_artifacts_export_id: str) -> ModelArtifactsExport:
+        """Get the description and status of the model artifacts export.
+
+        Args:
+            model_artifacts_export_id (str): A unique string identifier for the export.
+
+        Returns:
+            ModelArtifactsExport: Object describing the export and its status."""
+        return self._call_api('describeModelArtifactsExport', 'GET', query_params={'modelArtifactsExportId': model_artifacts_export_id}, parse_type=ModelArtifactsExport)
+
+    def list_model_artifacts_exports(self, model_id: str, limit: int = 25) -> ModelArtifactsExport:
+        """List all the model artifacts exports.
+
+        Args:
+            model_id (str): A unique string identifier for the model.
+            limit (int): Maximum length of the list of all exports.
+
+        Returns:
+            ModelArtifactsExport: List of model artifacts exports."""
+        return self._call_api('listModelArtifactsExports', 'GET', query_params={'modelId': model_id, 'limit': limit}, parse_type=ModelArtifactsExport)
+
     def list_model_monitors(self, project_id: str) -> ModelMonitor:
         """Retrieves the list of model monitors in the specified project.
 
@@ -1175,6 +1233,16 @@ class ReadOnlyClient(BaseApiClient):
             EdaFeatureAssociation: An object with a record of data for the feature association between the two given features for an EDA version."""
         return self._call_api('getFeatureAssociation', 'GET', query_params={'edaVersion': eda_version, 'referenceFeatureName': reference_feature_name, 'testFeatureName': test_feature_name}, parse_type=EdaFeatureAssociation)
 
+    def get_eda_forecasting_analysis(self, eda_version: str) -> EdaForecastingAnalysis:
+        """Gets the Forecasting analysis for the Exploratory Data Analysis.
+
+        Args:
+            eda_version (str): Unique string identifier associated with the EDA version.
+
+        Returns:
+            EdaForecastingAnalysis: Object with forecasting analysis that includes sales_across_time, cummulative_contribution, missing_value_distribution, history_length, num_rows_histogram, product_maturity data."""
+        return self._call_api('getEdaForecastingAnalysis', 'GET', query_params={'edaVersion': eda_version}, parse_type=EdaForecastingAnalysis)
+
     def describe_monitor_alert(self, monitor_alert_id: str) -> MonitorAlert:
         """Describes a given monitor alert id
 
@@ -1342,43 +1410,6 @@ class ReadOnlyClient(BaseApiClient):
             RefreshPipelineRun: List of refresh pipeline runs for the given refresh policy ID."""
         return self._call_api('listRefreshPipelineRuns', 'GET', query_params={'refreshPolicyId': refresh_policy_id}, parse_type=RefreshPipelineRun)
 
-    def list_prediction_metrics(self, feature_group_id: str, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None) -> PredictionMetric:
-        """List the prediction metrics for a feature group.
-
-        Args:
-            feature_group_id (str): Unique identifier of the feature group used as input for this prediction metric.
-            limit (int): Maximum number of prediction metrics to be retrieved.
-            should_include_latest_version_description (bool): Whether to include the description of the latest prediction metric version for each prediction metric.
-            start_after_id (str): Offset parameter to exclude all prediction metrics until the specified prediction metric ID.
-
-        Returns:
-            PredictionMetric: List of prediction metrics for the given feature group."""
-        return self._call_api('listPredictionMetrics', 'GET', query_params={'featureGroupId': feature_group_id, 'limit': limit, 'shouldIncludeLatestVersionDescription': should_include_latest_version_description, 'startAfterId': start_after_id}, parse_type=PredictionMetric)
-
-    def query_prediction_metrics(self, feature_group_id: str = None, project_id: str = None, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None) -> PredictionMetric:
-        """Query and return the prediction metrics and additional data needed by the UI, constrained by the provided parameters.
-
-        Args:
-            feature_group_id (str): The feature group used as input to the prediction metrics.
-            project_id (str): The project_id of the prediction metrics.
-            limit (int): The maximum number of prediction metrics to be retrieved.
-            should_include_latest_version_description (bool): Include the description of the latest prediction metric version for each prediction metric.
-            start_after_id (str): An offset parameter to exclude all prediction metrics up to the specified prediction metric ID. Returns:
-
-        Returns:
-            PredictionMetric: None"""
-        return self._call_api('queryPredictionMetrics', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id, 'limit': limit, 'shouldIncludeLatestVersionDescription': should_include_latest_version_description, 'startAfterId': start_after_id}, parse_type=PredictionMetric)
-
-    def describe_prediction_metric_version(self, prediction_metric_version: str) -> PredictionMetricVersion:
-        """Retrieves a full description of the specified prediction metric version.
-
-        Args:
-            prediction_metric_version (str): The unique version ID of the prediction metric version.
-
-        Returns:
-            PredictionMetricVersion: A prediction metric version. For more information, please refer to the details on the object."""
-        return self._call_api('describePredictionMetricVersion', 'GET', query_params={'predictionMetricVersion': prediction_metric_version}, parse_type=PredictionMetricVersion)
-
     def download_batch_prediction_result_chunk(self, batch_prediction_version: str, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
         """Returns a stream containing the batch prediction results.
 
@@ -1477,31 +1508,6 @@ class ReadOnlyClient(BaseApiClient):
             GraphDashboard: A list of graph dashboards."""
         return self._call_api('listGraphDashboards', 'GET', query_params={'projectId': project_id}, parse_type=GraphDashboard)
 
-    def add_graph_to_dashboard(self, python_function_id: str, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None) -> GraphDashboard:
-        """Add a python plot function to a dashboard
-
-        Args:
-            python_function_id (str): Unique string identifier for the Python function.
-            graph_dashboard_id (str): Unique string identifier for the graph dashboard to update.
-            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-            name (str): Name of the added python plot
-
-        Returns:
-            GraphDashboard: An object describing the graph dashboard."""
-        return self._call_api('addGraphToDashboard', 'GET', query_params={'pythonFunctionId': python_function_id, 'graphDashboardId': graph_dashboard_id, 'functionVariableMappings': function_variable_mappings, 'name': name}, parse_type=GraphDashboard)
-
-    def update_graph_to_dashboard(self, graph_reference_id: str, function_variable_mappings: list = None, name: str = None) -> GraphDashboard:
-        """Update a python plot function to a dashboard
-
-        Args:
-            graph_reference_id (str): A unique string identifier for the graph reference.
-            function_variable_mappings (list): A list of arguments to be supplied to the Python function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-            name (str): The updated name for the graph
-
-        Returns:
-            GraphDashboard: An object describing the graph dashboard."""
-        return self._call_api('updateGraphToDashboard', 'GET', query_params={'graphReferenceId': graph_reference_id, 'functionVariableMappings': function_variable_mappings, 'name': name}, parse_type=GraphDashboard)
-
     def delete_graph_from_dashboard(self, graph_reference_id: str) -> None:
         """Deletes a python plot function from a dashboard
 
@@ -1539,18 +1545,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             Algorithm: A list of algorithms."""
         return self._call_api('listAlgorithms', 'GET', query_params={'problemType': problem_type, 'projectId': project_id}, parse_type=Algorithm)
-
-    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list = None, training_config: dict = None) -> Algorithm:
-        """Return list of built-in algorithms based on given input.
-
-        Args:
-            project_id (str): Unique string identifier associated with the project.
-            feature_group_ids (list): List of feature group identifiers applied to the algorithms.
-            training_config (dict): The training configuration key/value pairs used to train with the algorithm.
-
-        Returns:
-            Algorithm: List of applicable builtin algorithms."""
-        return self._call_api('listBuiltinAlgorithms', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'trainingConfig': training_config}, parse_type=Algorithm)
 
     def describe_custom_loss_function(self, name: str) -> CustomLossFunction:
         """Retrieve a full description of a previously registered custom loss function.
@@ -1620,17 +1614,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             Module: A list of modules"""
         return self._call_api('listModules', 'GET', query_params={}, parse_type=Module)
-
-    def get_notebook_cell_completion(self, previous_cells: list, completion_type: str = None) -> NotebookCompletion:
-        """Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
-
-        Args:
-            previous_cells (list): A list of cells from Notebook for OpenAI to autocomplete.
-            completion_type (str): Specify the type based on which the completion is done.
-
-        Returns:
-            NotebookCompletion: The text to insert into the notebook cell."""
-        return self._call_api('getNotebookCellCompletion', 'GET', query_params={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
@@ -1821,7 +1804,7 @@ class ApiClient(ReadOnlyClient):
         feature_group_version_pandas_df = feature_group_version_object.load_as_pandas()
         return session.createDataFrame(feature_group_version_pandas_df)
 
-    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None):
+    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None, use_gpu: bool = False):
         """
         Creates a model from a python function
 
@@ -1837,12 +1820,13 @@ class ApiClient(ReadOnlyClient):
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
             name (str): The name of the model
+            use_gpu (bool): Whether this model needs gpu
         """
         function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
         function_source_code = include_modules(
             function_source_code, included_modules)
-        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name, use_gpu=use_gpu)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -2312,7 +2296,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  THEME_ANALYSIS.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -2436,7 +2420,7 @@ class ApiClient(ReadOnlyClient):
             Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set."""
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
-    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None) -> AnnotationEntry:
+    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None) -> AnnotationEntry:
         """Add an annotation entry to the database.
 
         Args:
@@ -2447,10 +2431,11 @@ class ApiClient(ReadOnlyClient):
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group primary key value.
             annotation_source (str): Indicator of whether the annotation came from the UI, bulk upload, etc.
             document (str): The document the annotation is on. This is optional.
+            status (str): The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
 
         Returns:
             AnnotationEntry: The annotation entry that was added."""
-        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'document': document}, parse_type=AnnotationEntry)
+        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'document': document, 'status': status}, parse_type=AnnotationEntry)
 
     def describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
         """Get the latest annotation entry for a given feature group, feature, and document.
@@ -2464,6 +2449,19 @@ class ApiClient(ReadOnlyClient):
         Returns:
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value."""
         return self._call_api('describeAnnotation', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
+
+    def get_document_to_annotate(self, feature_group_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False) -> AnnotationEntry:
+        """Get an available document that needs to be annotated for a given feature group and feature.
+
+        Args:
+            feature_group_id (str): The ID of the feature group the annotation is on.
+            feature_name (str): The name of the feature the annotation is on.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. If provided, fetch the immediate next (or previous) available document.
+            get_previous (bool): If True, get the previous document instead of the next document. Applicable if feature_group_row_identifier is provided.
+
+        Returns:
+            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value."""
+        return self._call_api('getDocumentToAnnotate', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureGroupRowIdentifier': feature_group_row_identifier, 'getPrevious': get_previous}, parse_type=AnnotationEntry)
 
     def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
         """Creates a new FeatureGroup from a SQL statement.
@@ -3421,14 +3419,15 @@ Creates a new feature group defined as the union of other feature group versions
             Dataset: The created dataset."""
         return self._call_api('createDatasetFromStreamingConnector', 'POST', query_params={}, body={'tableName': table_name, 'streamingConnectorId': streaming_connector_id, 'streamingArgs': streaming_args, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
-    def set_streaming_retention_policy(self, dataset_id: str, retention_hours: int = None, retention_row_count: int = None):
+    def set_streaming_retention_policy(self, dataset_id: str, retention_hours: int = None, retention_row_count: int = None, ignore_records_before_timestamp: int = None):
         """Sets the streaming retention policy.
 
         Args:
             dataset_id (str): Unique string identifier for the streaming dataset.
             retention_hours (int): Number of hours to retain streamed data in memory.
-            retention_row_count (int): Number of rows to retain streamed data in memory."""
-        return self._call_api('setStreamingRetentionPolicy', 'POST', query_params={'datasetId': dataset_id}, body={'retentionHours': retention_hours, 'retentionRowCount': retention_row_count})
+            retention_row_count (int): Number of rows to retain streamed data in memory.
+            ignore_records_before_timestamp (int): The Unix timestamp (in seconds) to use as a cutoff to ignore all entries sent before it"""
+        return self._call_api('setStreamingRetentionPolicy', 'POST', query_params={'datasetId': dataset_id}, body={'retentionHours': retention_hours, 'retentionRowCount': retention_row_count, 'ignoreRecordsBeforeTimestamp': ignore_records_before_timestamp})
 
     def rename_database_connector(self, database_connector_id: str, name: str):
         """Renames a Database Connector
@@ -3620,7 +3619,7 @@ Creates a new feature group defined as the union of other feature group versions
             Model: The new model which is being trained."""
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
-    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None) -> Model:
+    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False) -> Model:
         """Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
         This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName` and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -3640,10 +3639,11 @@ Creates a new feature group defined as the union of other feature group versions
             training_config (dict): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Model: The new model, which has not been trained."""
-        return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'exclusiveRun': exclusive_run, 'packageRequirements': package_requirements}, parse_type=Model)
+        return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'exclusiveRun': exclusive_run, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=Model)
 
     def rename_model(self, model_id: str, name: str):
         """Renames a model
@@ -3653,7 +3653,7 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The new name to assign to the model."""
         return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
 
-    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None) -> Model:
+    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> Model:
         """Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
         This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`. `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -3670,12 +3670,13 @@ Creates a new feature group defined as the union of other feature group versions
             cpu_size (str): Size of the CPU for the model training function.
             memory (int): Memory (in GB) for the model training function.
             package_requirements (list): List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Model: The updated model."""
-        return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
+        return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=Model)
 
-    def update_python_model_zip(self, model_id: str, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None) -> Upload:
+    def update_python_model_zip(self, model_id: str, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> Upload:
         """Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
         This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -3692,12 +3693,13 @@ Creates a new feature group defined as the union of other feature group versions
             cpu_size (str): Size of the CPU for the model training function.
             memory (int): Memory (in GB) for the model training function.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Upload: The updated model."""
-        return self._call_api('updatePythonModelZip', 'POST', query_params={}, body={'modelId': model_id, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Upload)
+        return self._call_api('updatePythonModelZip', 'POST', query_params={}, body={'modelId': model_id, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=Upload)
 
-    def update_python_model_git(self, model_id: str, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None) -> Model:
+    def update_python_model_git(self, model_id: str, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None) -> Model:
         """Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
         This method expects `trainModuleName` and `predictModuleName` to be valid language source files which contain the functions named `trainFunctionName` and `predictFunctionName`, respectively. `trainFunctionName` returns the `ModelVersion` that is the result of training the model using `trainFunctionName`, and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -3716,10 +3718,11 @@ Creates a new feature group defined as the union of other feature group versions
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the CPU for the model training function.
             memory (int): Memory (in GB) for the model training function.
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Model: The updated model."""
-        return self._call_api('updatePythonModelGit', 'POST', query_params={}, body={'modelId': model_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'pythonRoot': python_root, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('updatePythonModelGit', 'POST', query_params={}, body={'modelId': model_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'pythonRoot': python_root, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'useGpu': use_gpu}, parse_type=Model)
 
     def set_model_training_config(self, model_id: str, training_config: dict, feature_group_ids: list = None) -> Model:
         """Edits the default model training config
@@ -3744,7 +3747,7 @@ Creates a new feature group defined as the union of other feature group versions
             Model: Model object after the prediction configuration is applied."""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None) -> Model:
         """Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
         Args:
@@ -3873,7 +3876,7 @@ Creates a new feature group defined as the union of other feature group versions
             ModelMonitor: The new model monitor that was created."""
         return self._call_api('createVisionDriftMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'featureMappings': feature_mappings, 'trainingFeatureMappings': training_feature_mappings, 'targetValuePerformance': target_value_performance, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
 
-    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None) -> Eda:
+    def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None) -> Eda:
         """Run an Exploratory Data Analysis (EDA) for the specified project.
 
         Args:
@@ -3884,13 +3887,15 @@ Creates a new feature group defined as the union of other feature group versions
             include_collinearity (bool): Set to True if the EDA type is collinearity.
             include_data_consistency (bool): Set to True if the EDA type is data consistency.
             collinearity_keys (list): List of features to use for collinearity
-            primary_keys (list): List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis.
+            primary_keys (list): List of features that corresponds to the primary keys or item ids for the given feature group for Data Consistency analysis or Forecasting analysis respectively.
             data_consistency_test_config (dict): Test feature group version selection strategy for Data Consistency EDA type.
             data_consistency_reference_config (dict): Reference feature group version selection strategy for Data Consistency EDA type.
+            feature_mappings (dict): A JSON map to override features for the given feature_group, where keys are column names and the values are feature data use types. (In forecasting, used to set the timestamp column and target value)
+            forecast_frequency (str): The frequency of the data. It can be either HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY.
 
         Returns:
             Eda: The new EDA object that was created."""
-        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeDataConsistency': include_data_consistency, 'collinearityKeys': collinearity_keys, 'primaryKeys': primary_keys, 'dataConsistencyTestConfig': data_consistency_test_config, 'dataConsistencyReferenceConfig': data_consistency_reference_config}, parse_type=Eda)
+        return self._call_api('createEda', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'name': name, 'refreshSchedule': refresh_schedule, 'includeCollinearity': include_collinearity, 'includeDataConsistency': include_data_consistency, 'collinearityKeys': collinearity_keys, 'primaryKeys': primary_keys, 'dataConsistencyTestConfig': data_consistency_test_config, 'dataConsistencyReferenceConfig': data_consistency_reference_config, 'featureMappings': feature_mappings, 'forecastFrequency': forecast_frequency}, parse_type=Eda)
 
     def rerun_eda(self, eda_id: str) -> Eda:
         """Reruns the specified EDA object.
@@ -4294,14 +4299,14 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): The input data for the prediction."""
         return self._call_api('isAnomaly', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
-    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: dict = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
+    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
         """Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'store_id' in your dataset) mapped to the column mapping ITEM_ID that uniquely identifies the entity against which forecasting is performed and 'Value' will be the unique value of the same entity.
-            future_data (dict): This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'str'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
+            future_data (list): This will be a list of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). Each element is a dictionary, where the key and the value both will be of type 'str'. For example future data entered for a Store may be [{"Holiday":"No", "Promo":"Yes", "Date": "2015-07-31 00:00:00"}].
             num_predictions (int): The number of timestamps to predict in the future.
             prediction_start (str): The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
             explain_predictions (bool): Will explain predictions for forecasting
@@ -4527,6 +4532,24 @@ Creates a new feature group defined as the union of other feature group versions
             image (io.TextIOBase): The binary data of the image to classify."""
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
 
+    def classify_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None) -> Dict:
+        """Returns a classification prediction from a PDF
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+            deployment_id (str): The unique identifier for a deployment created under the project.
+            pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified."""
+        return self._call_api('classifyPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'pdf': pdf}, server_override=self.default_prediction_url)
+
+    def get_objects_from_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
+        """Classify an image.
+
+        Args:
+            deployment_token (str): A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier to a deployment created under the project.
+            image (io.TextIOBase): The binary data of the image to detect objects from."""
+        return self._call_api('getObjectsFromImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
+
     def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
         """Change the source image to adopt the visual style from the style image.
 
@@ -4537,67 +4560,14 @@ Creates a new feature group defined as the union of other feature group versions
             style_image (io.TextIOBase): The image that has the style as a reference."""
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=self.default_prediction_url)
 
-    def create_prediction_metric(self, feature_group_id: str, prediction_metric_config: dict, project_id: str = None) -> PredictionMetric:
-        """Create a prediction metric description for the given prediction and actual-labels data.
+    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Generate an image from text prompt.
 
         Args:
-            feature_group_id (str): The feature group to use as input for the prediction metrics.
-            prediction_metric_config (dict): Specification for the prediction metric to run in this job.
-            project_id (str): Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
-
-        Returns:
-            PredictionMetric: The Prediction Metric job description."""
-        return self._call_api('createPredictionMetric', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'predictionMetricConfig': prediction_metric_config, 'projectId': project_id}, parse_type=PredictionMetric)
-
-    def describe_prediction_metric(self, prediction_metric_id: str, should_include_latest_version_description: bool = True) -> PredictionMetric:
-        """Describe a Prediction Metric.
-
-        Args:
-            prediction_metric_id (str): The unique string identifier associated with the prediction metric.
-            should_include_latest_version_description (bool): Whether to include the description of the latest prediction metric version.
-
-        Returns:
-            PredictionMetric: The prediction metric object."""
-        return self._call_api('describePredictionMetric', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id, 'shouldIncludeLatestVersionDescription': should_include_latest_version_description}, parse_type=PredictionMetric)
-
-    def delete_prediction_metric(self, prediction_metric_id: str):
-        """Removes an existing PredictionMetric.
-
-        Args:
-            prediction_metric_id (str): The unique ID associated with the PredictionMetric."""
-        return self._call_api('deletePredictionMetric', 'DELETE', query_params={'predictionMetricId': prediction_metric_id})
-
-    def run_prediction_metric(self, prediction_metric_id: str) -> PredictionMetricVersion:
-        """Creates a new prediction metrics job run for the given prediction metric job description, and starts that job.
-
-        Configures and starts the computations running to compute the prediction metric.
-
-
-        Args:
-            prediction_metric_id (str): A unique string identifier for the prediction metric job description to apply for configuring a prediction metric job.
-
-        Returns:
-            PredictionMetricVersion: A prediction metric version. For more information, please refer to the details on the object (below)."""
-        return self._call_api('runPredictionMetric', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id}, parse_type=PredictionMetricVersion)
-
-    def delete_prediction_metric_version(self, prediction_metric_version: str):
-        """Deletes a prediction metric version.
-
-        Args:
-            prediction_metric_version (str): Unique string identifier of the prediction metric to remove."""
-        return self._call_api('deletePredictionMetricVersion', 'DELETE', query_params={'predictionMetricVersion': prediction_metric_version})
-
-    def list_prediction_metric_versions(self, prediction_metric_id: str, limit: int = 100, start_after_id: str = None) -> PredictionMetricVersion:
-        """List the prediction metric versions for a prediction metric.
-
-        Args:
-            prediction_metric_id (str): Unique string identifier for the prediction metric whose instances will be listed.
-            limit (int): Maximum number of prediction metric instances to be retrieved.
-            start_after_id (str): Offset parameter to exclude all prediction metric versions up to the specified prediction metric ID.
-
-        Returns:
-            PredictionMetricVersion: List of prediction metric instances for the given prediction metric."""
-        return self._call_api('listPredictionMetricVersions', 'POST', query_params={}, body={'predictionMetricId': prediction_metric_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=PredictionMetricVersion)
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+            deployment_id (str): A unique identifier to a deployment created under the project.
+            query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
+        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
@@ -4940,6 +4910,31 @@ Creates a new feature group defined as the union of other feature group versions
             GraphDashboard: An object describing the graph dashboard."""
         return self._call_api('updateGraphDashboard', 'POST', query_params={}, body={'graphDashboardId': graph_dashboard_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
 
+    def add_graph_to_dashboard(self, python_function_id: str, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None) -> GraphDashboard:
+        """Add a python plot function to a dashboard
+
+        Args:
+            python_function_id (str): Unique string identifier for the Python function.
+            graph_dashboard_id (str): Unique string identifier for the graph dashboard to update.
+            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            name (str): Name of the added python plot
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard."""
+        return self._call_api('addGraphToDashboard', 'POST', query_params={}, body={'pythonFunctionId': python_function_id, 'graphDashboardId': graph_dashboard_id, 'functionVariableMappings': function_variable_mappings, 'name': name}, parse_type=GraphDashboard)
+
+    def update_graph_to_dashboard(self, graph_reference_id: str, function_variable_mappings: list = None, name: str = None) -> GraphDashboard:
+        """Update a python plot function to a dashboard
+
+        Args:
+            graph_reference_id (str): A unique string identifier for the graph reference.
+            function_variable_mappings (list): A list of arguments to be supplied to the Python function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            name (str): The updated name for the graph
+
+        Returns:
+            GraphDashboard: An object describing the graph dashboard."""
+        return self._call_api('updateGraphToDashboard', 'PATCH', query_params={}, body={'graphReferenceId': graph_reference_id, 'functionVariableMappings': function_variable_mappings, 'name': name}, parse_type=GraphDashboard)
+
     def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None) -> Algorithm:
         """Creates a custom algorithm that is re-usable for model training.
 
@@ -4990,6 +4985,18 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             Algorithm: The new custom model can be used for training."""
         return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'useGpu': use_gpu, 'packageRequirements': package_requirements}, parse_type=Algorithm)
+
+    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list = None, training_config: dict = None) -> Algorithm:
+        """Return list of built-in algorithms based on given input.
+
+        Args:
+            project_id (str): Unique string identifier associated with the project.
+            feature_group_ids (list): List of feature group identifiers applied to the algorithms.
+            training_config (dict): The training configuration key/value pairs used to train with the algorithm.
+
+        Returns:
+            Algorithm: List of applicable builtin algorithms."""
+        return self._call_api('listBuiltinAlgorithms', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'trainingConfig': training_config}, parse_type=Algorithm)
 
     def create_custom_loss_function_with_source_code(self, name: str, loss_function_type: str, loss_function_name: str, loss_function_source_code: str) -> CustomLossFunction:
         """Registers a new custom loss function which can be used as an objective function during model training.
@@ -5083,3 +5090,14 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             Module: The updated module."""
         return self._call_api('updateModule', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code}, parse_type=Module)
+
+    def get_notebook_cell_completion(self, previous_cells: list, completion_type: str = None) -> NotebookCompletion:
+        """Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
+
+        Args:
+            previous_cells (list): A list of cells from Notebook for OpenAI to autocomplete.
+            completion_type (str): Specify the type based on which the completion is done.
+
+        Returns:
+            NotebookCompletion: The text to insert into the notebook cell."""
+        return self._call_api('getNotebookCellCompletion', 'POST', query_params={}, body={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)

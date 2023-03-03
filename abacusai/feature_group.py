@@ -195,6 +195,46 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
 
+    def verify_and_describe_annotation(self, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None):
+        """
+        Get the latest annotation entry for a given feature group, feature, and document along with verification information.
+
+        Args:
+            feature_name (str): The name of the feature the annotation is on.
+            doc_id (str): The ID of the primary document the annotation is on.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+
+        Returns:
+            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
+        """
+        return self.client.verify_and_describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
+
+    def get_document_to_annotate(self, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False):
+        """
+        Get an available document that needs to be annotated for a given feature group and feature.
+
+        Args:
+            feature_name (str): The name of the feature the annotation is on.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. If provided, fetch the immediate next (or previous) available document.
+            get_previous (bool): If True, get the previous document instead of the next document. Applicable if feature_group_row_identifier is provided.
+
+        Returns:
+            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
+        """
+        return self.client.get_document_to_annotate(self.feature_group_id, feature_name, feature_group_row_identifier, get_previous)
+
+    def get_annotations_status(self, feature_name: str = None):
+        """
+        Get the status of the annotations for a given feature group and feature.
+
+        Args:
+            feature_name (str): The name of the feature the annotation is on.
+
+        Returns:
+            AnnotationsStatus: The status of the annotations for the given feature group and feature.
+        """
+        return self.client.get_annotations_status(self.feature_group_id, feature_name)
+
     def create_sampling(self, table_name: str, sampling_config: Union[dict, SamplingConfig], description: str = None):
         """
         Creates a new Feature Group defined as a sample of rows from another Feature Group.
@@ -936,48 +976,6 @@ class FeatureGroup(AbstractApiClass):
             feature_group_id (str): Unique string identifier associated with the feature group.
         """
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
-
-    def create_prediction_metric(self, prediction_metric_config: dict, project_id: str = None):
-        """
-        Create a prediction metric description for the given prediction and actual-labels data.
-
-        Args:
-            prediction_metric_config (dict): Specification for the prediction metric to run in this job.
-            project_id (str): Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
-
-        Returns:
-            PredictionMetric: The Prediction Metric job description.
-        """
-        return self.client.create_prediction_metric(self.feature_group_id, prediction_metric_config, project_id)
-
-    def list_prediction_metrics(self, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None):
-        """
-        List the prediction metrics for a feature group.
-
-        Args:
-            limit (int): Maximum number of prediction metrics to be retrieved.
-            should_include_latest_version_description (bool): Whether to include the description of the latest prediction metric version for each prediction metric.
-            start_after_id (str): Offset parameter to exclude all prediction metrics until the specified prediction metric ID.
-
-        Returns:
-            PredictionMetric: List of prediction metrics for the given feature group.
-        """
-        return self.client.list_prediction_metrics(self.feature_group_id, limit, should_include_latest_version_description, start_after_id)
-
-    def query_prediction_metrics(self, project_id: str = None, limit: int = 100, should_include_latest_version_description: bool = True, start_after_id: str = None):
-        """
-        Query and return the prediction metrics and additional data needed by the UI, constrained by the provided parameters.
-
-        Args:
-            project_id (str): The project_id of the prediction metrics.
-            limit (int): The maximum number of prediction metrics to be retrieved.
-            should_include_latest_version_description (bool): Include the description of the latest prediction metric version for each prediction metric.
-            start_after_id (str): An offset parameter to exclude all prediction metrics up to the specified prediction metric ID. Returns:
-
-        Returns:
-            PredictionMetric: None
-        """
-        return self.client.query_prediction_metrics(self.feature_group_id, project_id, limit, should_include_latest_version_description, start_after_id)
 
     def upsert_data(self, streaming_token: str, data: dict):
         """

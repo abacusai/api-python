@@ -148,15 +148,16 @@ class Dataset(AbstractApiClass):
         """
         return self.client.set_dataset_column_data_type(self.dataset_id, column, data_type)
 
-    def set_streaming_retention_policy(self, retention_hours: int = None, retention_row_count: int = None):
+    def set_streaming_retention_policy(self, retention_hours: int = None, retention_row_count: int = None, ignore_records_before_timestamp: int = None):
         """
         Sets the streaming retention policy.
 
         Args:
             retention_hours (int): Number of hours to retain streamed data in memory.
             retention_row_count (int): Number of rows to retain streamed data in memory.
+            ignore_records_before_timestamp (int): The Unix timestamp (in seconds) to use as a cutoff to ignore all entries sent before it
         """
-        return self.client.set_streaming_retention_policy(self.dataset_id, retention_hours, retention_row_count)
+        return self.client.set_streaming_retention_policy(self.dataset_id, retention_hours, retention_row_count, ignore_records_before_timestamp)
 
     def get_schema(self):
         """

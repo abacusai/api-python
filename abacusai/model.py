@@ -32,13 +32,14 @@ class Model(AbstractApiClass):
             defaultAlgorithm (str): If set, this algorithm will always be used when deploying the model regardless of the model metrics
             customAlgorithmConfigs (dict): User-defined configs for each of the user-defined custom algorithm
             restrictedAlgorithms (dict): User-selected algorithms to train.
+            useGpu (bool): If this model uses gpu.
             latestModelVersion (ModelVersion): The latest model version.
             location (ModelLocation): Location information for models that are imported.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained
             codeSource (CodeSource): If a python model, information on the source code
     """
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
         super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
@@ -61,6 +62,7 @@ class Model(AbstractApiClass):
         self.default_algorithm = defaultAlgorithm
         self.custom_algorithm_configs = customAlgorithmConfigs
         self.restricted_algorithms = restrictedAlgorithms
+        self.use_gpu = useGpu
         self.location = client._build_class(ModelLocation, location)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
@@ -69,7 +71,7 @@ class Model(AbstractApiClass):
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  is_python_model={repr(self.is_python_model)},\n  default_algorithm={repr(self.default_algorithm)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  restricted_algorithms={repr(self.restricted_algorithms)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  is_python_model={repr(self.is_python_model)},\n  default_algorithm={repr(self.default_algorithm)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  restricted_algorithms={repr(self.restricted_algorithms)},\n  use_gpu={repr(self.use_gpu)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
 
     def to_dict(self):
         """
@@ -78,7 +80,7 @@ class Model(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'use_gpu': self.use_gpu, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
     def describe_train_test_data_split_feature_group(self):
         """
@@ -123,7 +125,7 @@ class Model(AbstractApiClass):
         """
         return self.client.rename_model(self.model_id, name)
 
-    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
+    def update_python(self, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
         """
         Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -140,13 +142,14 @@ class Model(AbstractApiClass):
             cpu_size (str): Size of the CPU for the model training function.
             memory (int): Memory (in GB) for the model training function.
             package_requirements (list): List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Model: The updated model.
         """
-        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements)
+        return self.client.update_python_model(self.model_id, function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name, training_input_tables, cpu_size, memory, package_requirements, use_gpu)
 
-    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
+    def update_python_zip(self, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None):
         """
         Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -163,13 +166,14 @@ class Model(AbstractApiClass):
             cpu_size (str): Size of the CPU for the model training function.
             memory (int): Memory (in GB) for the model training function.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Upload: The updated model.
         """
-        return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, package_requirements)
+        return self.client.update_python_model_zip(self.model_id, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, package_requirements, use_gpu)
 
-    def update_python_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None):
+    def update_python_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, use_gpu: bool = None):
         """
         Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -188,11 +192,12 @@ class Model(AbstractApiClass):
             training_input_tables (list): List of feature groups that are supplied to the train function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             cpu_size (str): Size of the CPU for the model training function.
             memory (int): Memory (in GB) for the model training function.
+            use_gpu (bool): Whether this model needs gpu
 
         Returns:
             Model: The updated model.
         """
-        return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory)
+        return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, use_gpu)
 
     def set_training_config(self, training_config: dict, feature_group_ids: list = None):
         """
@@ -248,7 +253,7 @@ class Model(AbstractApiClass):
         """
         return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
-    def retrain(self, deployment_ids: list = [], feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None):
+    def retrain(self, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None):
         """
         Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
@@ -285,6 +290,18 @@ class Model(AbstractApiClass):
             data_cluster_type (str): Data cluster type to set the lead model for.
         """
         return self.client.set_default_model_algorithm(self.model_id, algorithm, data_cluster_type)
+
+    def list_artifacts_exports(self, limit: int = 25):
+        """
+        List all the model artifacts exports.
+
+        Args:
+            limit (int): Maximum length of the list of all exports.
+
+        Returns:
+            ModelArtifactsExport: List of model artifacts exports.
+        """
+        return self.client.list_model_artifacts_exports(self.model_id, limit)
 
     def get_training_types_for_deployment(self, model_version: str = None, algorithm: str = None):
         """
