@@ -194,6 +194,47 @@ Classes
       :rtype: AnnotationEntry
 
 
+   .. py:method:: verify_and_describe_annotation(feature_name = None, doc_id = None, feature_group_row_identifier = None)
+
+      Get the latest annotation entry for a given feature group, feature, and document along with verification information.
+
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param doc_id: The ID of the primary document the annotation is on.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+      :type feature_group_row_identifier: str
+
+      :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: get_document_to_annotate(feature_name, feature_group_row_identifier = None, get_previous = False)
+
+      Get an available document that needs to be annotated for a given feature group and feature.
+
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. If provided, fetch the immediate next (or previous) available document.
+      :type feature_group_row_identifier: str
+      :param get_previous: If True, get the previous document instead of the next document. Applicable if feature_group_row_identifier is provided.
+      :type get_previous: bool
+
+      :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: get_annotations_status(feature_name = None)
+
+      Get the status of the annotations for a given feature group and feature.
+
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+
+      :returns: The status of the annotations for the given feature group and feature.
+      :rtype: AnnotationsStatus
+
+
    .. py:method:: create_sampling(table_name, sampling_config, description = None)
 
       Creates a new Feature Group defined as a sample of rows from another Feature Group.
@@ -971,51 +1012,6 @@ Classes
 
       :param feature_group_id: Unique string identifier associated with the feature group.
       :type feature_group_id: str
-
-
-   .. py:method:: create_prediction_metric(prediction_metric_config, project_id = None)
-
-      Create a prediction metric description for the given prediction and actual-labels data.
-
-      :param prediction_metric_config: Specification for the prediction metric to run in this job.
-      :type prediction_metric_config: dict
-      :param project_id: Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
-      :type project_id: str
-
-      :returns: The Prediction Metric job description.
-      :rtype: PredictionMetric
-
-
-   .. py:method:: list_prediction_metrics(limit = 100, should_include_latest_version_description = True, start_after_id = None)
-
-      List the prediction metrics for a feature group.
-
-      :param limit: Maximum number of prediction metrics to be retrieved.
-      :type limit: int
-      :param should_include_latest_version_description: Whether to include the description of the latest prediction metric version for each prediction metric.
-      :type should_include_latest_version_description: bool
-      :param start_after_id: Offset parameter to exclude all prediction metrics until the specified prediction metric ID.
-      :type start_after_id: str
-
-      :returns: List of prediction metrics for the given feature group.
-      :rtype: PredictionMetric
-
-
-   .. py:method:: query_prediction_metrics(project_id = None, limit = 100, should_include_latest_version_description = True, start_after_id = None)
-
-      Query and return the prediction metrics and additional data needed by the UI, constrained by the provided parameters.
-
-      :param project_id: The project_id of the prediction metrics.
-      :type project_id: str
-      :param limit: The maximum number of prediction metrics to be retrieved.
-      :type limit: int
-      :param should_include_latest_version_description: Include the description of the latest prediction metric version for each prediction metric.
-      :type should_include_latest_version_description: bool
-      :param start_after_id: An offset parameter to exclude all prediction metrics up to the specified prediction metric ID. Returns:
-      :type start_after_id: str
-
-      :returns: None
-      :rtype: PredictionMetric
 
 
    .. py:method:: upsert_data(streaming_token, data)

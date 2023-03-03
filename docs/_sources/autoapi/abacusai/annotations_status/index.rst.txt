@@ -1,0 +1,50 @@
+:py:mod:`abacusai.annotations_status`
+=====================================
+
+.. py:module:: abacusai.annotations_status
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.annotations_status.AnnotationsStatus
+
+
+
+
+.. py:class:: AnnotationsStatus(client, total=None, done=None, inProgress=None, todo=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The status of annotations for a feature group
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param total: The total number of documents annotated
+   :type total: int
+   :param done: The number of documents annotated
+   :type done: int
+   :param inProgress: The number of documents currently being annotated
+   :type inProgress: int
+   :param todo: The number of documents that need to be annotated
+   :type todo: int
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

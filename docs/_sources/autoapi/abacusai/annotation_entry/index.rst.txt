@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AnnotationEntry(client, featureGroupId=None, featureName=None, docId=None, featureGroupRowIdentifier=None, updatedAt=None, annotationEntryMarker=None, annotation={})
+.. py:class:: AnnotationEntry(client, featureGroupId=None, featureName=None, docId=None, featureGroupRowIdentifier=None, updatedAt=None, annotationEntryMarker=None, status=None, lockedUntil=None, verificationInfo=None, annotation={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25,9 +25,9 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param featureGroupId: The ID of the feature group this annotation belongs to
+   :param featureGroupId: The ID of the feature group this annotation belongs to.
    :type featureGroupId: str
-   :param featureName: name of the feature this annotation is on
+   :param featureName: name of the feature this annotation is on.
    :type featureName: str
    :param docId: The ID of the primary document the annotation is on.
    :type docId: str
@@ -35,9 +35,15 @@ Classes
    :type featureGroupRowIdentifier: str
    :param updatedAt: Most recent time the annotation entry was modified, e.g. creation or update time.
    :type updatedAt: str
-   :param annotationEntryMarker: The entry marker for the annotation
+   :param annotationEntryMarker: The entry marker for the annotation.
    :type annotationEntryMarker: str
-   :param annotation: json-compatible structure holding the type and value of the annotation
+   :param status: The status of labeling the document.
+   :type status: str
+   :param lockedUntil: The time until which the document is locked for editing,  in ISO-8601 format.
+   :type lockedUntil: str
+   :param verificationInfo: The verification info for the annotation.
+   :type verificationInfo: dict
+   :param annotation: json-compatible structure holding the type and value of the annotation.
    :type annotation: Annotation
 
    .. py:method:: __repr__()

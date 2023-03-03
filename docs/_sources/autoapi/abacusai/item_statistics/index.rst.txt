@@ -1,0 +1,60 @@
+:py:mod:`abacusai.item_statistics`
+==================================
+
+.. py:module:: abacusai.item_statistics
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.item_statistics.ItemStatistics
+
+
+
+
+.. py:class:: ItemStatistics(client, missingPercent=None, count=None, median=None, mean=None, p10=None, p90=None, stddev=None, min=None, max=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   ItemStatistics representation.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param missingPercent: percentage of missing values in data
+   :type missingPercent: float
+   :param count: count of data
+   :type count: int
+   :param median: median of the data
+   :type median: float
+   :param mean: mean value of the data
+   :type mean: float
+   :param p10: p10 of the data
+   :type p10: float
+   :param p90: p90 of the data
+   :type p90: float
+   :param stddev: standard deviation of the data
+   :type stddev: float
+   :param min: min value in the data
+   :type min: int
+   :param max: max value in the data
+   :type max: int
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

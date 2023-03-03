@@ -224,8 +224,8 @@ Classes
       :type deployment_id: str
       :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'store_id' in your dataset) mapped to the column mapping ITEM_ID that uniquely identifies the entity against which forecasting is performed and 'Value' will be the unique value of the same entity.
       :type query_data: dict
-      :param future_data: This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'str'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
-      :type future_data: dict
+      :param future_data: This will be a list of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). Each element is a dictionary, where the key and the value both will be of type 'str'. For example future data entered for a Store may be [{"Holiday":"No", "Promo":"Yes", "Date": "2015-07-31 00:00:00"}].
+      :type future_data: list
       :param num_predictions: The number of timestamps to predict in the future.
       :type num_predictions: int
       :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
@@ -548,6 +548,30 @@ Classes
       :type image: io.TextIOBase
 
 
+   .. py:method:: classify_pdf(deployment_token, deployment_id, pdf = None)
+
+      Returns a classification prediction from a PDF
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier for a deployment created under the project.
+      :type deployment_id: str
+      :param pdf: (Optional) The pdf to predict on. One of pdf or docId must be specified.
+      :type pdf: io.TextIOBase
+
+
+   .. py:method:: get_objects_from_image(deployment_token, deployment_id, image)
+
+      Classify an image.
+
+      :param deployment_token: A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param image: The binary data of the image to detect objects from.
+      :type image: io.TextIOBase
+
+
    .. py:method:: transfer_style(deployment_token, deployment_id, source_image, style_image)
 
       Change the source image to adopt the visual style from the style image.
@@ -560,6 +584,18 @@ Classes
       :type source_image: io.TextIOBase
       :param style_image: The image that has the style as a reference.
       :type style_image: io.TextIOBase
+
+
+   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
+
+      Generate an image from text prompt.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Specifies the text prompt. For example, {'prompt': 'a cat'}
+      :type query_data: dict
 
 
 

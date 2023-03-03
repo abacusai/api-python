@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, useGpu=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -69,6 +69,8 @@ Classes
    :type dataClusterInfo: dict
    :param customAlgorithmConfigs: User-defined configs for each of the user-defined custom algorithms.
    :type customAlgorithmConfigs: dict
+   :param useGpu: Whether this model version is using gpu
+   :type useGpu: bool
    :param codeSource: If a python model, information on where the source code is located.
    :type codeSource: CodeSource
 
@@ -177,6 +179,19 @@ Classes
 
       :returns: A function logs object.
       :rtype: FunctionLogs
+
+
+   .. py:method:: export_custom(output_location, algorithm = None)
+
+      Bundle custom model artifacts to a zip file, and export to the specified location.
+
+      :param output_location: Location to export the model artifacts results. For example, s3://a-bucket/
+      :type output_location: str
+      :param algorithm: The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
+      :type algorithm: str
+
+      :returns: Object describing the export and its status.
+      :rtype: ModelArtifactsExport
 
 
    .. py:method:: wait_for_training(timeout=None)

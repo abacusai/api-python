@@ -272,7 +272,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None)
+   .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False)
 
       Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -303,6 +303,8 @@ Classes
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -403,7 +405,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
+   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
 
       Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -419,12 +421,16 @@ Classes
       :type include_data_consistency: bool
       :param collinearity_keys: List of features to use for collinearity
       :type collinearity_keys: list
-      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis.
+      :param primary_keys: List of features that corresponds to the primary keys or item ids for the given feature group for Data Consistency analysis or Forecasting analysis respectively.
       :type primary_keys: list
       :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency EDA type.
       :type data_consistency_test_config: dict
       :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency EDA type.
       :type data_consistency_reference_config: dict
+      :param feature_mappings: A JSON map to override features for the given feature_group, where keys are column names and the values are feature data use types. (In forecasting, used to set the timestamp column and target value)
+      :type feature_mappings: dict
+      :param forecast_frequency: The frequency of the data. It can be either HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY.
+      :type forecast_frequency: str
 
       :returns: The new EDA object that was created.
       :rtype: Eda

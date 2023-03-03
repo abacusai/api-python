@@ -128,6 +128,17 @@ Classes
       :rtype: EdaFeatureAssociation
 
 
+   .. py:method:: get_eda_forecasting_analysis()
+
+      Gets the Forecasting analysis for the Exploratory Data Analysis.
+
+      :param eda_version: Unique string identifier associated with the EDA version.
+      :type eda_version: str
+
+      :returns: Object with forecasting analysis that includes sales_across_time, cummulative_contribution, missing_value_distribution, history_length, num_rows_histogram, product_maturity data.
+      :rtype: EdaForecastingAnalysis
+
+
    .. py:method:: wait_for_eda(timeout=1200)
 
       A waiting call until eda version is ready.

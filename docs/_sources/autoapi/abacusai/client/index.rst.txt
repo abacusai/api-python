@@ -42,7 +42,7 @@ Attributes
 
 
 .. py:data:: DEFAULT_SERVER
-   :annotation: = https://api.abacus.ai
+   :value: 'https://api.abacus.ai'
 
    
 
@@ -98,7 +98,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :annotation: = 0.50.0
+      :value: '0.51.0'
 
       
 
@@ -296,6 +296,36 @@ Attributes
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
+
+
+   .. py:method:: verify_and_describe_annotation(feature_group_id, feature_name = None, doc_id = None, feature_group_row_identifier = None)
+
+      Get the latest annotation entry for a given feature group, feature, and document along with verification information.
+
+      :param feature_group_id: The ID of the feature group the annotation is on.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param doc_id: The ID of the primary document the annotation is on.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+      :type feature_group_row_identifier: str
+
+      :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: get_annotations_status(feature_group_id, feature_name = None)
+
+      Get the status of the annotations for a given feature group and feature.
+
+      :param feature_group_id: The ID of the feature group the annotation is on.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+
+      :returns: The status of the annotations for the given feature group and feature.
+      :rtype: AnnotationsStatus
 
 
    .. py:method:: get_feature_group_schema(feature_group_id, project_id = None)
@@ -861,6 +891,45 @@ Attributes
       :rtype: FunctionLogs
 
 
+   .. py:method:: export_custom_model_version(model_version, output_location, algorithm = None)
+
+      Bundle custom model artifacts to a zip file, and export to the specified location.
+
+      :param model_version: A unique string identifier for the model version.
+      :type model_version: str
+      :param output_location: Location to export the model artifacts results. For example, s3://a-bucket/
+      :type output_location: str
+      :param algorithm: The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
+      :type algorithm: str
+
+      :returns: Object describing the export and its status.
+      :rtype: ModelArtifactsExport
+
+
+   .. py:method:: describe_model_artifacts_export(model_artifacts_export_id)
+
+      Get the description and status of the model artifacts export.
+
+      :param model_artifacts_export_id: A unique string identifier for the export.
+      :type model_artifacts_export_id: str
+
+      :returns: Object describing the export and its status.
+      :rtype: ModelArtifactsExport
+
+
+   .. py:method:: list_model_artifacts_exports(model_id, limit = 25)
+
+      List all the model artifacts exports.
+
+      :param model_id: A unique string identifier for the model.
+      :type model_id: str
+      :param limit: Maximum length of the list of all exports.
+      :type limit: int
+
+      :returns: List of model artifacts exports.
+      :rtype: ModelArtifactsExport
+
+
    .. py:method:: list_model_monitors(project_id)
 
       Retrieves the list of model monitors in the specified project.
@@ -1078,6 +1147,17 @@ Attributes
       :rtype: EdaFeatureAssociation
 
 
+   .. py:method:: get_eda_forecasting_analysis(eda_version)
+
+      Gets the Forecasting analysis for the Exploratory Data Analysis.
+
+      :param eda_version: Unique string identifier associated with the EDA version.
+      :type eda_version: str
+
+      :returns: Object with forecasting analysis that includes sales_across_time, cummulative_contribution, missing_value_distribution, history_length, num_rows_histogram, product_maturity data.
+      :rtype: EdaForecastingAnalysis
+
+
    .. py:method:: describe_monitor_alert(monitor_alert_id)
 
       Describes a given monitor alert id
@@ -1277,53 +1357,6 @@ Attributes
       :rtype: RefreshPipelineRun
 
 
-   .. py:method:: list_prediction_metrics(feature_group_id, limit = 100, should_include_latest_version_description = True, start_after_id = None)
-
-      List the prediction metrics for a feature group.
-
-      :param feature_group_id: Unique identifier of the feature group used as input for this prediction metric.
-      :type feature_group_id: str
-      :param limit: Maximum number of prediction metrics to be retrieved.
-      :type limit: int
-      :param should_include_latest_version_description: Whether to include the description of the latest prediction metric version for each prediction metric.
-      :type should_include_latest_version_description: bool
-      :param start_after_id: Offset parameter to exclude all prediction metrics until the specified prediction metric ID.
-      :type start_after_id: str
-
-      :returns: List of prediction metrics for the given feature group.
-      :rtype: PredictionMetric
-
-
-   .. py:method:: query_prediction_metrics(feature_group_id = None, project_id = None, limit = 100, should_include_latest_version_description = True, start_after_id = None)
-
-      Query and return the prediction metrics and additional data needed by the UI, constrained by the provided parameters.
-
-      :param feature_group_id: The feature group used as input to the prediction metrics.
-      :type feature_group_id: str
-      :param project_id: The project_id of the prediction metrics.
-      :type project_id: str
-      :param limit: The maximum number of prediction metrics to be retrieved.
-      :type limit: int
-      :param should_include_latest_version_description: Include the description of the latest prediction metric version for each prediction metric.
-      :type should_include_latest_version_description: bool
-      :param start_after_id: An offset parameter to exclude all prediction metrics up to the specified prediction metric ID. Returns:
-      :type start_after_id: str
-
-      :returns: None
-      :rtype: PredictionMetric
-
-
-   .. py:method:: describe_prediction_metric_version(prediction_metric_version)
-
-      Retrieves a full description of the specified prediction metric version.
-
-      :param prediction_metric_version: The unique version ID of the prediction metric version.
-      :type prediction_metric_version: str
-
-      :returns: A prediction metric version. For more information, please refer to the details on the object.
-      :rtype: PredictionMetricVersion
-
-
    .. py:method:: download_batch_prediction_result_chunk(batch_prediction_version, offset = 0, chunk_size = 10485760)
 
       Returns a stream containing the batch prediction results.
@@ -1436,38 +1469,6 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: add_graph_to_dashboard(python_function_id, graph_dashboard_id, function_variable_mappings = None, name = None)
-
-      Add a python plot function to a dashboard
-
-      :param python_function_id: Unique string identifier for the Python function.
-      :type python_function_id: str
-      :param graph_dashboard_id: Unique string identifier for the graph dashboard to update.
-      :type graph_dashboard_id: str
-      :param function_variable_mappings: List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: dict
-      :param name: Name of the added python plot
-      :type name: str
-
-      :returns: An object describing the graph dashboard.
-      :rtype: GraphDashboard
-
-
-   .. py:method:: update_graph_to_dashboard(graph_reference_id, function_variable_mappings = None, name = None)
-
-      Update a python plot function to a dashboard
-
-      :param graph_reference_id: A unique string identifier for the graph reference.
-      :type graph_reference_id: str
-      :param function_variable_mappings: A list of arguments to be supplied to the Python function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: list
-      :param name: The updated name for the graph
-      :type name: str
-
-      :returns: An object describing the graph dashboard.
-      :rtype: GraphDashboard
-
-
    .. py:method:: delete_graph_from_dashboard(graph_reference_id)
 
       Deletes a python plot function from a dashboard
@@ -1508,21 +1509,6 @@ Attributes
       :type project_id: str
 
       :returns: A list of algorithms.
-      :rtype: Algorithm
-
-
-   .. py:method:: list_builtin_algorithms(project_id, feature_group_ids = None, training_config = None)
-
-      Return list of built-in algorithms based on given input.
-
-      :param project_id: Unique string identifier associated with the project.
-      :type project_id: str
-      :param feature_group_ids: List of feature group identifiers applied to the algorithms.
-      :type feature_group_ids: list
-      :param training_config: The training configuration key/value pairs used to train with the algorithm.
-      :type training_config: dict
-
-      :returns: List of applicable builtin algorithms.
       :rtype: Algorithm
 
 
@@ -1602,19 +1588,6 @@ Attributes
 
       :returns: A list of modules
       :rtype: Module
-
-
-   .. py:method:: get_notebook_cell_completion(previous_cells, completion_type = None)
-
-      Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
-
-      :param previous_cells: A list of cells from Notebook for OpenAI to autocomplete.
-      :type previous_cells: list
-      :param completion_type: Specify the type based on which the completion is done.
-      :type completion_type: str
-
-      :returns: The text to insert into the notebook cell.
-      :rtype: NotebookCompletion
 
 
 
@@ -1734,7 +1707,7 @@ Attributes
       :returns: pyspark.sql.DataFrame
 
 
-   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, package_requirements = None, name = None)
+   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, package_requirements = None, name = None, use_gpu = False)
 
       Creates a model from a python function
 
@@ -1760,6 +1733,8 @@ Attributes
       :type included_modules: list
       :param name: The name of the model
       :type name: str
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
 
    .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None, included_modules = None)
@@ -2156,7 +2131,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  THEME_ANALYSIS.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -2314,7 +2289,7 @@ Attributes
       :rtype: Schema
 
 
-   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None)
+   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None, status = None)
 
       Add an annotation entry to the database.
 
@@ -2332,6 +2307,8 @@ Attributes
       :type annotation_source: str
       :param document: The document the annotation is on. This is optional.
       :type document: str
+      :param status: The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
+      :type status: str
 
       :returns: The annotation entry that was added.
       :rtype: AnnotationEntry
@@ -2349,6 +2326,23 @@ Attributes
       :type doc_id: str
       :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
+
+      :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: get_document_to_annotate(feature_group_id, feature_name, feature_group_row_identifier = None, get_previous = False)
+
+      Get an available document that needs to be annotated for a given feature group and feature.
+
+      :param feature_group_id: The ID of the feature group the annotation is on.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. If provided, fetch the immediate next (or previous) available document.
+      :type feature_group_row_identifier: str
+      :param get_previous: If True, get the previous document instead of the next document. Applicable if feature_group_row_identifier is provided.
+      :type get_previous: bool
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
       :rtype: AnnotationEntry
@@ -3614,7 +3608,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: set_streaming_retention_policy(dataset_id, retention_hours = None, retention_row_count = None)
+   .. py:method:: set_streaming_retention_policy(dataset_id, retention_hours = None, retention_row_count = None, ignore_records_before_timestamp = None)
 
       Sets the streaming retention policy.
 
@@ -3624,6 +3618,8 @@ Attributes
       :type retention_hours: int
       :param retention_row_count: Number of rows to retain streamed data in memory.
       :type retention_row_count: int
+      :param ignore_records_before_timestamp: The Unix timestamp (in seconds) to use as a cutoff to ignore all entries sent before it
+      :type ignore_records_before_timestamp: int
 
 
    .. py:method:: rename_database_connector(database_connector_id, name)
@@ -3854,7 +3850,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(project_id, function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None)
+   .. py:method:: create_model_from_python(project_id, function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False)
 
       Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -3887,6 +3883,8 @@ Attributes
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -3902,7 +3900,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -3929,12 +3927,14 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
       :type package_requirements: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Model
 
 
-   .. py:method:: update_python_model_zip(model_id, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: update_python_model_zip(model_id, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -3961,12 +3961,14 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Upload
 
 
-   .. py:method:: update_python_model_git(model_id, application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None)
+   .. py:method:: update_python_model_git(model_id, application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
 
       Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -3997,6 +3999,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function.
       :type memory: int
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Model
@@ -4030,7 +4034,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(model_id, deployment_ids = [], feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
+   .. py:method:: retrain_model(model_id, deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
 
       Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
@@ -4204,7 +4208,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None)
+   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
 
       Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -4222,12 +4226,16 @@ Attributes
       :type include_data_consistency: bool
       :param collinearity_keys: List of features to use for collinearity
       :type collinearity_keys: list
-      :param primary_keys: List of features that corresponds to the primary keys for the given feature group for Data Consistency analysis.
+      :param primary_keys: List of features that corresponds to the primary keys or item ids for the given feature group for Data Consistency analysis or Forecasting analysis respectively.
       :type primary_keys: list
       :param data_consistency_test_config: Test feature group version selection strategy for Data Consistency EDA type.
       :type data_consistency_test_config: dict
       :param data_consistency_reference_config: Reference feature group version selection strategy for Data Consistency EDA type.
       :type data_consistency_reference_config: dict
+      :param feature_mappings: A JSON map to override features for the given feature_group, where keys are column names and the values are feature data use types. (In forecasting, used to set the timestamp column and target value)
+      :type feature_mappings: dict
+      :param forecast_frequency: The frequency of the data. It can be either HOURLY, DAILY, WEEKLY, MONTHLY, QUARTERLY, YEARLY.
+      :type forecast_frequency: str
 
       :returns: The new EDA object that was created.
       :rtype: Eda
@@ -4771,8 +4779,8 @@ Attributes
       :type deployment_id: str
       :param query_data: This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'store_id' in your dataset) mapped to the column mapping ITEM_ID that uniquely identifies the entity against which forecasting is performed and 'Value' will be the unique value of the same entity.
       :type query_data: dict
-      :param future_data: This will be a dictionary of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). The key and the value both will be of type 'str'. For example future data entered for a Store may be {"Holiday":"No", "Promo":"Yes"}.
-      :type future_data: dict
+      :param future_data: This will be a list of values known ahead of time that are relevant for forecasting (e.g. State Holidays, National Holidays, etc.). Each element is a dictionary, where the key and the value both will be of type 'str'. For example future data entered for a Store may be [{"Holiday":"No", "Promo":"Yes", "Date": "2015-07-31 00:00:00"}].
+      :type future_data: list
       :param num_predictions: The number of timestamps to predict in the future.
       :type num_predictions: int
       :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
@@ -5095,6 +5103,30 @@ Attributes
       :type image: io.TextIOBase
 
 
+   .. py:method:: classify_pdf(deployment_token, deployment_id, pdf = None)
+
+      Returns a classification prediction from a PDF
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier for a deployment created under the project.
+      :type deployment_id: str
+      :param pdf: (Optional) The pdf to predict on. One of pdf or docId must be specified.
+      :type pdf: io.TextIOBase
+
+
+   .. py:method:: get_objects_from_image(deployment_token, deployment_id, image)
+
+      Classify an image.
+
+      :param deployment_token: A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param image: The binary data of the image to detect objects from.
+      :type image: io.TextIOBase
+
+
    .. py:method:: transfer_style(deployment_token, deployment_id, source_image, style_image)
 
       Change the source image to adopt the visual style from the style image.
@@ -5109,77 +5141,16 @@ Attributes
       :type style_image: io.TextIOBase
 
 
-   .. py:method:: create_prediction_metric(feature_group_id, prediction_metric_config, project_id = None)
+   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
 
-      Create a prediction metric description for the given prediction and actual-labels data.
+      Generate an image from text prompt.
 
-      :param feature_group_id: The feature group to use as input for the prediction metrics.
-      :type feature_group_id: str
-      :param prediction_metric_config: Specification for the prediction metric to run in this job.
-      :type prediction_metric_config: dict
-      :param project_id: Project to use for the prediction metrics. Defaults to the project for the input feature_group, if the feature_group has exactly one project.
-      :type project_id: str
-
-      :returns: The Prediction Metric job description.
-      :rtype: PredictionMetric
-
-
-   .. py:method:: describe_prediction_metric(prediction_metric_id, should_include_latest_version_description = True)
-
-      Describe a Prediction Metric.
-
-      :param prediction_metric_id: The unique string identifier associated with the prediction metric.
-      :type prediction_metric_id: str
-      :param should_include_latest_version_description: Whether to include the description of the latest prediction metric version.
-      :type should_include_latest_version_description: bool
-
-      :returns: The prediction metric object.
-      :rtype: PredictionMetric
-
-
-   .. py:method:: delete_prediction_metric(prediction_metric_id)
-
-      Removes an existing PredictionMetric.
-
-      :param prediction_metric_id: The unique ID associated with the PredictionMetric.
-      :type prediction_metric_id: str
-
-
-   .. py:method:: run_prediction_metric(prediction_metric_id)
-
-      Creates a new prediction metrics job run for the given prediction metric job description, and starts that job.
-
-      Configures and starts the computations running to compute the prediction metric.
-
-
-      :param prediction_metric_id: A unique string identifier for the prediction metric job description to apply for configuring a prediction metric job.
-      :type prediction_metric_id: str
-
-      :returns: A prediction metric version. For more information, please refer to the details on the object (below).
-      :rtype: PredictionMetricVersion
-
-
-   .. py:method:: delete_prediction_metric_version(prediction_metric_version)
-
-      Deletes a prediction metric version.
-
-      :param prediction_metric_version: Unique string identifier of the prediction metric to remove.
-      :type prediction_metric_version: str
-
-
-   .. py:method:: list_prediction_metric_versions(prediction_metric_id, limit = 100, start_after_id = None)
-
-      List the prediction metric versions for a prediction metric.
-
-      :param prediction_metric_id: Unique string identifier for the prediction metric whose instances will be listed.
-      :type prediction_metric_id: str
-      :param limit: Maximum number of prediction metric instances to be retrieved.
-      :type limit: int
-      :param start_after_id: Offset parameter to exclude all prediction metric versions up to the specified prediction metric ID.
-      :type start_after_id: str
-
-      :returns: List of prediction metric instances for the given prediction metric.
-      :rtype: PredictionMetricVersion
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model within an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Specifies the text prompt. For example, {'prompt': 'a cat'}
+      :type query_data: dict
 
 
    .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None)
@@ -5636,6 +5607,38 @@ Attributes
       :rtype: GraphDashboard
 
 
+   .. py:method:: add_graph_to_dashboard(python_function_id, graph_dashboard_id, function_variable_mappings = None, name = None)
+
+      Add a python plot function to a dashboard
+
+      :param python_function_id: Unique string identifier for the Python function.
+      :type python_function_id: str
+      :param graph_dashboard_id: Unique string identifier for the graph dashboard to update.
+      :type graph_dashboard_id: str
+      :param function_variable_mappings: List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type function_variable_mappings: dict
+      :param name: Name of the added python plot
+      :type name: str
+
+      :returns: An object describing the graph dashboard.
+      :rtype: GraphDashboard
+
+
+   .. py:method:: update_graph_to_dashboard(graph_reference_id, function_variable_mappings = None, name = None)
+
+      Update a python plot function to a dashboard
+
+      :param graph_reference_id: A unique string identifier for the graph reference.
+      :type graph_reference_id: str
+      :param function_variable_mappings: A list of arguments to be supplied to the Python function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+      :type function_variable_mappings: list
+      :param name: The updated name for the graph
+      :type name: str
+
+      :returns: An object describing the graph dashboard.
+      :rtype: GraphDashboard
+
+
    .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
 
       Creates a custom algorithm that is re-usable for model training.
@@ -5711,6 +5714,21 @@ Attributes
       :type package_requirements: list
 
       :returns: The new custom model can be used for training.
+      :rtype: Algorithm
+
+
+   .. py:method:: list_builtin_algorithms(project_id, feature_group_ids = None, training_config = None)
+
+      Return list of built-in algorithms based on given input.
+
+      :param project_id: Unique string identifier associated with the project.
+      :type project_id: str
+      :param feature_group_ids: List of feature group identifiers applied to the algorithms.
+      :type feature_group_ids: list
+      :param training_config: The training configuration key/value pairs used to train with the algorithm.
+      :type training_config: dict
+
+      :returns: List of applicable builtin algorithms.
       :rtype: Algorithm
 
 
@@ -5826,6 +5844,19 @@ Attributes
 
       :returns: The updated module.
       :rtype: Module
+
+
+   .. py:method:: get_notebook_cell_completion(previous_cells, completion_type = None)
+
+      Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
+
+      :param previous_cells: A list of cells from Notebook for OpenAI to autocomplete.
+      :type previous_cells: list
+      :param completion_type: Specify the type based on which the completion is done.
+      :type completion_type: str
+
+      :returns: The text to insert into the notebook cell.
+      :rtype: NotebookCompletion
 
 
 

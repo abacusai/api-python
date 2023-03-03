@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None)
+.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39,6 +39,8 @@ Classes
    :type status: str
    :param error: If the status is failed, an error message describing what went wrong
    :type error: str
+   :param publishingMsg: Warnings in the source code
+   :type publishingMsg: dict
 
    .. py:method:: __repr__()
 

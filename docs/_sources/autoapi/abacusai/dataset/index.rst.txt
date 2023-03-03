@@ -161,7 +161,7 @@ Classes
       :rtype: Dataset
 
 
-   .. py:method:: set_streaming_retention_policy(retention_hours = None, retention_row_count = None)
+   .. py:method:: set_streaming_retention_policy(retention_hours = None, retention_row_count = None, ignore_records_before_timestamp = None)
 
       Sets the streaming retention policy.
 
@@ -169,6 +169,8 @@ Classes
       :type retention_hours: int
       :param retention_row_count: Number of rows to retain streamed data in memory.
       :type retention_row_count: int
+      :param ignore_records_before_timestamp: The Unix timestamp (in seconds) to use as a cutoff to ignore all entries sent before it
+      :type ignore_records_before_timestamp: int
 
 
    .. py:method:: get_schema()

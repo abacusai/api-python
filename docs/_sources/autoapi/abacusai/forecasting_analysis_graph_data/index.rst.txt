@@ -1,0 +1,52 @@
+:py:mod:`abacusai.forecasting_analysis_graph_data`
+==================================================
+
+.. py:module:: abacusai.forecasting_analysis_graph_data
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.forecasting_analysis_graph_data.ForecastingAnalysisGraphData
+
+
+
+
+.. py:class:: ForecastingAnalysisGraphData(client, data=None, xAxis=None, yAxis=None, dataColumns=None, itemStatistics={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Forecasting Analysis Graph Data representation.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param data: List of graph data
+   :type data: list
+   :param xAxis: Feature that represents the x axis
+   :type xAxis: str
+   :param yAxis: Feature that represents the y axis
+   :type yAxis: str
+   :param dataColumns: Ordered name of the column for each rowwise data
+   :type dataColumns: list
+   :param itemStatistics: In item wise charts, gives the mean, median, count, missing_percent, p10, p90, standard_deviation, min, max
+   :type itemStatistics: ItemStatistics
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

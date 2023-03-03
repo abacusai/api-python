@@ -1,0 +1,89 @@
+:py:mod:`abacusai.model_artifacts_export`
+=========================================
+
+.. py:module:: abacusai.model_artifacts_export
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_artifacts_export.ModelArtifactsExport
+
+
+
+
+.. py:class:: ModelArtifactsExport(client, modelArtifactsExportId=None, modelVersion=None, outputLocation=None, status=None, createdAt=None, exportCompletedAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Model Artifacts Export Job
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelArtifactsExportId: Unique identifier for this export.
+   :type modelArtifactsExportId: str
+   :param modelVersion: Version of the model being exported.
+   :type modelVersion: str
+   :param outputLocation: File Connector location the feature group is being written to.
+   :type outputLocation: str
+   :param status: Current status of the export.
+   :type status: str
+   :param createdAt: Timestamp at which the export was created (ISO-8601 format).
+   :type createdAt: str
+   :param exportCompletedAt: Timestamp at which the export completed (ISO-8601 format).
+   :type exportCompletedAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: ModelArtifactsExport
+
+
+   .. py:method:: describe()
+
+      Get the description and status of the model artifacts export.
+
+      :param model_artifacts_export_id: A unique string identifier for the export.
+      :type model_artifacts_export_id: str
+
+      :returns: Object describing the export and its status.
+      :rtype: ModelArtifactsExport
+
+
+   .. py:method:: wait_for_results(timeout=3600)
+
+      A waiting call until model artifacts export is created.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the model artifacts export.
+
+      :returns: A string describing the status of a model artifacts export (pending, complete, etc.).
+      :rtype: str
+
+
+

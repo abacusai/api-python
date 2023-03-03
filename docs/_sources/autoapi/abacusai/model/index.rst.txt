@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -67,6 +67,8 @@ Classes
    :type customAlgorithmConfigs: dict
    :param restrictedAlgorithms: User-selected algorithms to train.
    :type restrictedAlgorithms: dict
+   :param useGpu: If this model uses gpu.
+   :type useGpu: bool
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -127,7 +129,7 @@ Classes
       :type name: str
 
 
-   .. py:method:: update_python(function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: update_python(function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -152,12 +154,14 @@ Classes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
       :type package_requirements: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Model
 
 
-   .. py:method:: update_python_zip(train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None)
+   .. py:method:: update_python_zip(train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -182,12 +186,14 @@ Classes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Upload
 
 
-   .. py:method:: update_python_git(application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None)
+   .. py:method:: update_python_git(application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
 
       Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -216,6 +222,8 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the model training function.
       :type memory: int
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
 
       :returns: The updated model.
       :rtype: Model
@@ -274,7 +282,7 @@ Classes
       :rtype: ModelVersion
 
 
-   .. py:method:: retrain(deployment_ids = [], feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
+   .. py:method:: retrain(deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
 
       Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
@@ -315,6 +323,17 @@ Classes
       :type algorithm: str
       :param data_cluster_type: Data cluster type to set the lead model for.
       :type data_cluster_type: str
+
+
+   .. py:method:: list_artifacts_exports(limit = 25)
+
+      List all the model artifacts exports.
+
+      :param limit: Maximum length of the list of all exports.
+      :type limit: int
+
+      :returns: List of model artifacts exports.
+      :rtype: ModelArtifactsExport
 
 
    .. py:method:: get_training_types_for_deployment(model_version = None, algorithm = None)
