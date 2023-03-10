@@ -362,6 +362,18 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_as_annotatable_feature(self.feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature, doc_id_feature)
 
+    def set_annotation_status_feature(self, feature_name: str):
+        """
+        Sets a feature as the annotation status feature for a feature group.
+
+        Args:
+            feature_name (str): The name of the feature to set as the annotation status feature.
+
+        Returns:
+            FeatureGroup: The updated feature group.
+        """
+        return self.client.set_annotation_status_feature(self.feature_group_id, feature_name)
+
     def unset_feature_as_annotatable_feature(self, feature_name: str):
         """
         Unsets a feature as annotatable

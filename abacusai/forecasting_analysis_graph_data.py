@@ -12,20 +12,22 @@ class ForecastingAnalysisGraphData(AbstractApiClass):
             xAxis (str): Feature that represents the x axis
             yAxis (str): Feature that represents the y axis
             dataColumns (list): Ordered name of the column for each rowwise data
+            chartName (str): Name of the chart represented by the data
             itemStatistics (ItemStatistics): In item wise charts, gives the mean, median, count, missing_percent, p10, p90, standard_deviation, min, max
     """
 
-    def __init__(self, client, data=None, xAxis=None, yAxis=None, dataColumns=None, itemStatistics={}):
+    def __init__(self, client, data=None, xAxis=None, yAxis=None, dataColumns=None, chartName=None, itemStatistics={}):
         super().__init__(client, None)
         self.data = data
         self.x_axis = xAxis
         self.y_axis = yAxis
         self.data_columns = dataColumns
+        self.chart_name = chartName
         self.item_statistics = client._build_class(
             ItemStatistics, itemStatistics)
 
     def __repr__(self):
-        return f"ForecastingAnalysisGraphData(data={repr(self.data)},\n  x_axis={repr(self.x_axis)},\n  y_axis={repr(self.y_axis)},\n  data_columns={repr(self.data_columns)},\n  item_statistics={repr(self.item_statistics)})"
+        return f"ForecastingAnalysisGraphData(data={repr(self.data)},\n  x_axis={repr(self.x_axis)},\n  y_axis={repr(self.y_axis)},\n  data_columns={repr(self.data_columns)},\n  chart_name={repr(self.chart_name)},\n  item_statistics={repr(self.item_statistics)})"
 
     def to_dict(self):
         """
@@ -34,4 +36,4 @@ class ForecastingAnalysisGraphData(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'data': self.data, 'x_axis': self.x_axis, 'y_axis': self.y_axis, 'data_columns': self.data_columns, 'item_statistics': self._get_attribute_as_dict(self.item_statistics)}
+        return {'data': self.data, 'x_axis': self.x_axis, 'y_axis': self.y_axis, 'data_columns': self.data_columns, 'chart_name': self.chart_name, 'item_statistics': self._get_attribute_as_dict(self.item_statistics)}

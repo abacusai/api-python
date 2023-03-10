@@ -63,7 +63,7 @@ class _ApiClassFactory(ABC):
     def from_dict(cls, config: dict) -> ApiClass:
         if not config or cls.config_class_key not in config:
             raise KeyError(f'Could not find {camel_case(cls.config_class_key)} in {config or ""}')
-        config_class = config.pop(cls.config_class_key, None)
+        config_class = config.get(cls.config_class_key, None)
         if isinstance(config_class, str):
             config_class = config_class.upper()
         if not cls.config_class_map.get(config_class):

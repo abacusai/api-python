@@ -11,8 +11,8 @@ class ItemStatistics(AbstractApiClass):
             count (int): count of data
             median (float): median of the data
             mean (float): mean value of the data
-            p10 (float): p10 of the data
-            p90 (float): p90 of the data
+            p10 (float): 10th percentile of the data
+            p90 (float): 90th_percentile of the data
             stddev (float): standard deviation of the data
             min (int): min value in the data
             max (int): max value in the data
