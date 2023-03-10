@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureImportance(client, shapFeatureImportance=None, permutationFeatureImportance=None, nullFeatureImportance=None, lofoFeatureImportance=None)
+.. py:class:: FeatureImportance(client, shapFeatureImportance=None, limeFeatureImportance=None, permutationFeatureImportance=None, nullFeatureImportance=None, lofoFeatureImportance=None, ebmFeatureImportance=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27,16 +27,18 @@ Classes
    :type client: ApiClient
    :param shapFeatureImportance: A map of feature name to feature importance, determined by Shap values on a sample dataset.
    :type shapFeatureImportance: dict
+   :param limeFeatureImportance: A map of feature name to feature importance, determined by Lime contribution values on a sample dataset.
+   :type limeFeatureImportance: dict
    :param permutationFeatureImportance: A map of feature name to feature importance, determined by permutation importance.
    :type permutationFeatureImportance: dict
    :param nullFeatureImportance: A map of feature name to feature importance, determined by null feature importance.
    :type nullFeatureImportance: dict
    :param lofoFeatureImportance: A map of feature name to feature importance, determined by the Leave One Feature Out method.
    :type lofoFeatureImportance: dict
+   :param ebmFeatureImportance: A map of feature name to feature importance, determined by an Explainable Boosting Machine.
+   :type ebmFeatureImportance: dict
 
    .. py:method:: __repr__()
-
-      Return repr(self).
 
 
    .. py:method:: to_dict()

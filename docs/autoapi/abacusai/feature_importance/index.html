@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.feature_importance &mdash; AbacusAI  documentation</title>
@@ -65,7 +65,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_metric_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_train_function_info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_consistency_duplication</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../data_filter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_filter</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_quality_results/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_quality_results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../database_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector</span></code></a></li>
@@ -141,6 +140,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../prediction_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_input</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_metric/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pretrained_use_case/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pretrained_use_case</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
@@ -212,7 +212,7 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.feature_importance.FeatureImportance">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.feature_importance.</span></span><span class="sig-name descname"><span class="pre">FeatureImportance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shapFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutationFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nullFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lofoFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_importance.FeatureImportance" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.feature_importance.</span></span><span class="sig-name descname"><span class="pre">FeatureImportance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shapFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limeFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permutationFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nullFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lofoFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ebmFeatureImportance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_importance.FeatureImportance" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>Feature importance for a specified model monitor</p>
 <dl class="field-list simple">
@@ -220,17 +220,18 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>shapFeatureImportance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A map of feature name to feature importance, determined by Shap values on a sample dataset.</p></li>
+<li><p><strong>limeFeatureImportance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A map of feature name to feature importance, determined by Lime contribution values on a sample dataset.</p></li>
 <li><p><strong>permutationFeatureImportance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A map of feature name to feature importance, determined by permutation importance.</p></li>
 <li><p><strong>nullFeatureImportance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A map of feature name to feature importance, determined by null feature importance.</p></li>
 <li><p><strong>lofoFeatureImportance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A map of feature name to feature importance, determined by the Leave One Feature Out method.</p></li>
+<li><p><strong>ebmFeatureImportance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A map of feature name to feature importance, determined by an Explainable Boosting Machine.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_importance.FeatureImportance.__repr__">
 <span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_importance.FeatureImportance.__repr__" title="Permalink to this definition"></a></dt>
-<dd><p>Return repr(self).</p>
-</dd></dl>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_importance.FeatureImportance.to_dict">

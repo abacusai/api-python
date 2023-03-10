@@ -1,0 +1,52 @@
+:py:mod:`abacusai.pretrained_use_case`
+======================================
+
+.. py:module:: abacusai.pretrained_use_case
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.pretrained_use_case.PretrainedUseCase
+
+
+
+
+.. py:class:: PretrainedUseCase(client, useCase=None, displayName=None, description=None, predictionApi=None, predictionUiDisplayType=None, imgSrc=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Pretrained use case. Used by Abacus.AI internally.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param useCase: Name of the use case, which is the key for the use case in the system.
+   :type useCase: str
+   :param displayName: The name to show to external users.
+   :type displayName: str
+   :param description: A detailed description of the use case.
+   :type description: str
+   :param predictionApi: Which prediction api should be used for this use case.
+   :type predictionApi: str
+   :param predictionUiDisplayType: The component type to show this use case's prediction dashboard.
+   :type predictionUiDisplayType: str
+   :param imgSrc: The source of the image for this use case.
+   :type imgSrc: str
+
+   .. py:method:: __repr__()
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

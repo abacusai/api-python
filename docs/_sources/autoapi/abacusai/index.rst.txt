@@ -38,7 +38,6 @@ Submodules
    custom_metric_version/index.rst
    custom_train_function_info/index.rst
    data_consistency_duplication/index.rst
-   data_filter/index.rst
    data_prep_logs/index.rst
    data_quality_results/index.rst
    database_connector/index.rst
@@ -111,6 +110,7 @@ Submodules
    prediction_input/index.rst
    prediction_metric/index.rst
    prediction_metric_version/index.rst
+   pretrained_use_case/index.rst
    problem_type/index.rst
    project/index.rst
    project_dataset/index.rst
@@ -839,7 +839,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  PRETRAINED_SEQUENCE_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -1301,6 +1301,19 @@ Attributes
       :type doc_id_feature: str
 
       :returns: A feature group object with the newly added annotatable feature.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: set_annotation_status_feature(feature_group_id, feature_name)
+
+      Sets a feature as the annotation status feature for a feature group.
+
+      :param feature_group_id: The ID of the feature group.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature to set as the annotation status feature.
+      :type feature_name: str
+
+      :returns: The updated feature group.
       :rtype: FeatureGroup
 
 
@@ -3301,7 +3314,7 @@ Attributes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {}, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
@@ -3317,7 +3330,7 @@ Attributes
       :type result_columns: list
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict(deployment_token, deployment_id, query_data)
 
       Returns a prediction for Predictive Modeling
 
@@ -3329,7 +3342,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data)
 
       Returns a list of predictions for predictive modeling.
 
@@ -3341,7 +3354,7 @@ Attributes
       :type query_data: list
 
 
-   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data)
 
       Returns a list of predictions for Predictive Modeling.
 
@@ -3405,7 +3418,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_class(deployment_token, deployment_id, query_data, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a classification prediction
 
@@ -3431,7 +3444,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: predict_target(deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_target(deployment_token, deployment_id, query_data, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
@@ -3531,7 +3544,7 @@ Attributes
 
    .. py:method:: get_labels(deployment_token, deployment_id, query_data, threshold = None)
 
-      Returns a list of scored labels from a deployment.
+      Returns a list of scored labels for a document.
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -3559,7 +3572,7 @@ Attributes
       :type return_extracted_features: bool
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -3623,7 +3636,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = None, restrict_items = None, exclude_items = None)
+   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -3739,7 +3752,7 @@ Attributes
       :type deployment_token: str
       :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: Specifies the set of assignments being requested.
+      :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
@@ -3757,7 +3770,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = 'blob')
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = None)
 
       Make predictions for a given blob, e.g. image, audio
 
@@ -4537,7 +4550,7 @@ Attributes
 
       Deletes the specified customer module.
 
-      :param name: The name of the custom to delete.
+      :param name: The name of the custom module to delete.
       :type name: str
 
 
@@ -6082,7 +6095,7 @@ Attributes
       :type \*\*kwargs: dict
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data = {}, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
@@ -6098,7 +6111,7 @@ Attributes
       :type result_columns: list
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict(deployment_token, deployment_id, query_data)
 
       Returns a prediction for Predictive Modeling
 
@@ -6110,7 +6123,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data)
 
       Returns a list of predictions for predictive modeling.
 
@@ -6122,7 +6135,7 @@ Attributes
       :type query_data: list
 
 
-   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data = {})
+   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data)
 
       Returns a list of predictions for Predictive Modeling.
 
@@ -6186,7 +6199,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(deployment_token, deployment_id, query_data = {}, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_class(deployment_token, deployment_id, query_data, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a classification prediction
 
@@ -6212,7 +6225,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: predict_target(deployment_token, deployment_id, query_data = {}, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_target(deployment_token, deployment_id, query_data, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
@@ -6312,7 +6325,7 @@ Attributes
 
    .. py:method:: get_labels(deployment_token, deployment_id, query_data, threshold = None)
 
-      Returns a list of scored labels from a deployment.
+      Returns a list of scored labels for a document.
 
       :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
       :type deployment_token: str
@@ -6340,7 +6353,7 @@ Attributes
       :type return_extracted_features: bool
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = 50, page = 1, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = 0.0)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -6404,7 +6417,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = 50, page = 1, scaling_factors = None, restrict_items = None, exclude_items = None)
+   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -6520,7 +6533,7 @@ Attributes
       :type deployment_token: str
       :param deployment_id: The unique identifier of a deployment created under the project.
       :type deployment_id: str
-      :param query_data: Specifies the set of assignments being requested.
+      :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
@@ -6538,7 +6551,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = 'blob')
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = None)
 
       Make predictions for a given blob, e.g. image, audio
 
@@ -6644,7 +6657,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.51.0'
+   :value: '0.51.1'
 
    
 
