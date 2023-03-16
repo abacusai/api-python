@@ -494,7 +494,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = None)
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob)
 
       Make predictions for a given blob, e.g. image, audio
 
@@ -504,8 +504,6 @@ Classes
       :type deployment_id: str
       :param blob: The multipart/form-data of the data.
       :type blob: io.TextIOBase
-      :param blob_key_name: The key to access the blob data in the model query data.
-      :type blob_key_name: str
 
 
    .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
@@ -536,7 +534,7 @@ Classes
       :type audio: io.TextIOBase
 
 
-   .. py:method:: classify_image(deployment_token, deployment_id, image)
+   .. py:method:: classify_image(deployment_token, deployment_id, image = None, doc_id = None)
 
       Classify an image.
 
@@ -544,8 +542,10 @@ Classes
       :type deployment_token: str
       :param deployment_id: A unique string identifier to a deployment created under the project.
       :type deployment_id: str
-      :param image: The binary data of the image to classify.
+      :param image: The binary data of the image to classify. One of image or doc_id must be specified.
       :type image: io.TextIOBase
+      :param doc_id: The document ID of the image. One of image or doc_id must be specified.
+      :type doc_id: str
 
 
    .. py:method:: classify_pdf(deployment_token, deployment_id, pdf = None)
@@ -560,6 +560,18 @@ Classes
       :type pdf: io.TextIOBase
 
 
+   .. py:method:: get_cluster(deployment_token, deployment_id, query_data)
+
+      Predicts the cluster for given data.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param query_data: A dictionary where the 'key' is the column name and the 'value' is the value of that column.
+      :type query_data: dict
+
+
    .. py:method:: get_objects_from_image(deployment_token, deployment_id, image)
 
       Classify an image.
@@ -569,6 +581,18 @@ Classes
       :param deployment_id: A unique string identifier to a deployment created under the project.
       :type deployment_id: str
       :param image: The binary data of the image to detect objects from.
+      :type image: io.TextIOBase
+
+
+   .. py:method:: score_image(deployment_token, deployment_id, image)
+
+      Score on image.
+
+      :param deployment_token: A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param image: The binary data of the image to get the score.
       :type image: io.TextIOBase
 
 

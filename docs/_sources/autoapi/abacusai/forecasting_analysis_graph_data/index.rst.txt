@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ForecastingAnalysisGraphData(client, data=None, xAxis=None, yAxis=None, dataColumns=None, chartName=None, itemStatistics={})
+.. py:class:: ForecastingAnalysisGraphData(client, data=None, xAxis=None, yAxis=None, dataColumns=None, chartName=None, chartTypes=None, itemStatistics={}, chartDescriptions={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,8 +35,12 @@ Classes
    :type dataColumns: list
    :param chartName: Name of the chart represented by the data
    :type chartName: str
+   :param chartTypes: Type of charts in that can exist in the current data.
+   :type chartTypes: list
    :param itemStatistics: In item wise charts, gives the mean, median, count, missing_percent, p10, p90, standard_deviation, min, max
    :type itemStatistics: ItemStatistics
+   :param chartDescriptions: List of descriptions of what the chart contains
+   :type chartDescriptions: EdaChartDescription
 
    .. py:method:: __repr__()
 

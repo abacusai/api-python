@@ -98,7 +98,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.51.1'
+      :value: '0.52.0'
 
       
 
@@ -2131,7 +2131,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  PRETRAINED_SEQUENCE_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -2221,7 +2221,7 @@ Attributes
       :type use_for_training: bool
 
 
-   .. py:method:: set_feature_mapping(project_id, feature_group_id, feature_name, feature_mapping, nested_column_name = None)
+   .. py:method:: set_feature_mapping(project_id, feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 
@@ -3399,7 +3399,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, merge_file_schemas = False)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, merge_file_schemas = False, parsing_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -3429,12 +3429,14 @@ Attributes
       :type is_documentset: bool
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
       :type merge_file_schemas: bool
+      :param parsing_config: Custom config for dataset parsing.
+      :type parsing_config: ParsingConfig
 
       :returns: The dataset created.
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_version_from_file_connector(dataset_id, location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None)
+   .. py:method:: create_dataset_version_from_file_connector(dataset_id, location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None)
 
       Creates a new version of the specified dataset.
 
@@ -3448,6 +3450,8 @@ Attributes
       :type csv_delimiter: str
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
       :type merge_file_schemas: bool
+      :param parsing_config: Custom config for dataset parsing.
+      :type parsing_config: ParsingConfig
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion
@@ -3537,7 +3541,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, parsing_config = None)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -3549,6 +3553,8 @@ Attributes
       :type csv_delimiter: str
       :param is_documentset: Signifies if the dataset is a docstore dataset.
       :type is_documentset: bool
+      :param parsing_config: Custom config for dataset parsing.
+      :type parsing_config: ParsingConfig
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -5062,7 +5068,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob, blob_key_name = None)
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob)
 
       Make predictions for a given blob, e.g. image, audio
 
@@ -5072,8 +5078,6 @@ Attributes
       :type deployment_id: str
       :param blob: The multipart/form-data of the data.
       :type blob: io.TextIOBase
-      :param blob_key_name: The key to access the blob data in the model query data.
-      :type blob_key_name: str
 
 
    .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
@@ -5104,7 +5108,7 @@ Attributes
       :type audio: io.TextIOBase
 
 
-   .. py:method:: classify_image(deployment_token, deployment_id, image)
+   .. py:method:: classify_image(deployment_token, deployment_id, image = None, doc_id = None)
 
       Classify an image.
 
@@ -5112,8 +5116,10 @@ Attributes
       :type deployment_token: str
       :param deployment_id: A unique string identifier to a deployment created under the project.
       :type deployment_id: str
-      :param image: The binary data of the image to classify.
+      :param image: The binary data of the image to classify. One of image or doc_id must be specified.
       :type image: io.TextIOBase
+      :param doc_id: The document ID of the image. One of image or doc_id must be specified.
+      :type doc_id: str
 
 
    .. py:method:: classify_pdf(deployment_token, deployment_id, pdf = None)
@@ -5128,6 +5134,18 @@ Attributes
       :type pdf: io.TextIOBase
 
 
+   .. py:method:: get_cluster(deployment_token, deployment_id, query_data)
+
+      Predicts the cluster for given data.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param query_data: A dictionary where the 'key' is the column name and the 'value' is the value of that column.
+      :type query_data: dict
+
+
    .. py:method:: get_objects_from_image(deployment_token, deployment_id, image)
 
       Classify an image.
@@ -5137,6 +5155,18 @@ Attributes
       :param deployment_id: A unique string identifier to a deployment created under the project.
       :type deployment_id: str
       :param image: The binary data of the image to detect objects from.
+      :type image: io.TextIOBase
+
+
+   .. py:method:: score_image(deployment_token, deployment_id, image)
+
+      Score on image.
+
+      :param deployment_token: A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param image: The binary data of the image to get the score.
       :type image: io.TextIOBase
 
 

@@ -77,7 +77,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None)
+   .. py:method:: create_version_from_file_connector(location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None)
 
       Creates a new version of the specified dataset.
 
@@ -89,6 +89,8 @@ Classes
       :type csv_delimiter: str
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
       :type merge_file_schemas: bool
+      :param parsing_config: Custom config for dataset parsing.
+      :type parsing_config: ParsingConfig
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion

@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    abstract/index.rst
+   dataset/index.rst
    enums/index.rst
    feature_group/index.rst
 
@@ -23,6 +24,7 @@ Classes
 
 .. autoapisummary::
 
+   abacusai.api_class.ParsingConfig
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.SamplingConfig
@@ -31,6 +33,19 @@ Classes
    abacusai.api_class._SamplingConfigFactory
 
 
+
+
+.. py:class:: ParsingConfig
+
+   Bases: :py:obj:`api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: escape
+      :type: str
+
+      
 
 
 .. py:class:: ApiClass
@@ -117,9 +132,6 @@ Classes
 
       
 
-   .. py:method:: __post_init__()
-
-
 
 .. py:class:: PercentSamplingConfig
 
@@ -149,9 +161,6 @@ Classes
 
       
 
-   .. py:method:: __post_init__()
-
-
 
 .. py:class:: _SamplingConfigFactory
 
@@ -159,10 +168,6 @@ Classes
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
-
-   .. py:attribute:: config_abstract_class
-
-      
 
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
