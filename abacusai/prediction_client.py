@@ -343,15 +343,14 @@ class PredictionClient(BaseApiClient):
             query_data (dict): Assignment overrides to the solution."""
         return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
 
-    def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, blob_key_name: str = None) -> Dict:
+    def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase) -> Dict:
         """Make predictions for a given blob, e.g. image, audio
 
         Args:
             deployment_token (str): A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model in an application or website.
             deployment_id (str): A unique identifier to a deployment created under the project.
-            blob (io.TextIOBase): The multipart/form-data of the data.
-            blob_key_name (str): The key to access the blob data in the model query data."""
-        return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'blobKeyName': blob_key_name}, files={'blob': blob}, server_override=self.default_prediction_url)
+            blob (io.TextIOBase): The multipart/form-data of the data."""
+        return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'blob': blob}, server_override=self.default_prediction_url)
 
     def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list, top_n: int = None) -> Dict:
         """Describe the similarity between an image and a list of categories.
@@ -373,14 +372,15 @@ class PredictionClient(BaseApiClient):
             audio (io.TextIOBase): The audio to transcribe."""
         return self._call_api('transcribeAudio', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'audio': audio}, server_override=self.default_prediction_url)
 
-    def classify_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
+    def classify_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase = None, doc_id: str = None) -> Dict:
         """Classify an image.
 
         Args:
             deployment_token (str): A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): A unique string identifier to a deployment created under the project.
-            image (io.TextIOBase): The binary data of the image to classify."""
-        return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
+            image (io.TextIOBase): The binary data of the image to classify. One of image or doc_id must be specified.
+            doc_id (str): The document ID of the image. One of image or doc_id must be specified."""
+        return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id}, files={'image': image}, server_override=self.default_prediction_url)
 
     def classify_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None) -> Dict:
         """Returns a classification prediction from a PDF
@@ -391,6 +391,15 @@ class PredictionClient(BaseApiClient):
             pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified."""
         return self._call_api('classifyPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'pdf': pdf}, server_override=self.default_prediction_url)
 
+    def get_cluster(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Predicts the cluster for given data.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            query_data (dict): A dictionary where the 'key' is the column name and the 'value' is the value of that column."""
+        return self._call_api('getCluster', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=self.default_prediction_url)
+
     def get_objects_from_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
         """Classify an image.
 
@@ -399,6 +408,15 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to detect objects from."""
         return self._call_api('getObjectsFromImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
+
+    def score_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
+        """Score on image.
+
+        Args:
+            deployment_token (str): A deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier to a deployment created under the project.
+            image (io.TextIOBase): The binary data of the image to get the score."""
+        return self._call_api('scoreImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=self.default_prediction_url)
 
     def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
         """Change the source image to adopt the visual style from the style image.

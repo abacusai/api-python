@@ -1,3 +1,6 @@
+from typing import Union
+
+from .api_class import ParsingConfig
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
@@ -67,7 +70,7 @@ class Dataset(AbstractApiClass):
         """
         return {'dataset_id': self.dataset_id, 'source_type': self.source_type, 'data_source': self.data_source, 'created_at': self.created_at, 'ignore_before': self.ignore_before, 'ephemeral': self.ephemeral, 'lookback_days': self.lookback_days, 'database_connector_id': self.database_connector_id, 'database_connector_config': self.database_connector_config, 'connector_type': self.connector_type, 'feature_group_table_name': self.feature_group_table_name, 'application_connector_id': self.application_connector_id, 'application_connector_config': self.application_connector_config, 'incremental': self.incremental, 'is_documentset': self.is_documentset, 'merge_file_schemas': self.merge_file_schemas, 'schema': self._get_attribute_as_dict(self.schema), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_dataset_version': self._get_attribute_as_dict(self.latest_dataset_version)}
 
-    def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None):
+    def create_version_from_file_connector(self, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None):
         """
         Creates a new version of the specified dataset.
 
@@ -76,11 +79,12 @@ class Dataset(AbstractApiClass):
             file_format (str): File format to be used. If not specified, the service will try to detect the file format.
             csv_delimiter (str): If the file format is CSV, use a specific CSV delimiter.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
+            parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             DatasetVersion: The new Dataset Version created.
         """
-        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter, merge_file_schemas)
+        return self.client.create_dataset_version_from_file_connector(self.dataset_id, location, file_format, csv_delimiter, merge_file_schemas, parsing_config)
 
     def create_version_from_database_connector(self, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
         """

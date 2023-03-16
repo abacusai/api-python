@@ -107,7 +107,7 @@ class Project(AbstractApiClass):
         """
         return self.client.delete_project(self.project_id)
 
-    def set_feature_mapping(self, feature_group_id: str, feature_name: str, feature_mapping: str, nested_column_name: str = None):
+    def set_feature_mapping(self, feature_group_id: str, feature_name: str, feature_mapping: str = None, nested_column_name: str = None):
         """
         Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 

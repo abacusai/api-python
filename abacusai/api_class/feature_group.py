@@ -29,10 +29,6 @@ class NSamplingConfig(SamplingConfig):
     sampling_method: enums.SamplingMethodType = dataclasses.field(default=enums.SamplingMethodType.N_SAMPLING)
     key_columns: List[str] = dataclasses.field(default_factory=list)
 
-    def __post_init__(self):
-        if self.sample_count <= 0:
-            raise ValueError('Sample count must be greater than 0')
-
 
 @dataclasses.dataclass
 class PercentSamplingConfig(SamplingConfig):
@@ -48,14 +44,9 @@ class PercentSamplingConfig(SamplingConfig):
     sampling_method: enums.SamplingMethodType = dataclasses.field(default=enums.SamplingMethodType.PERCENT_SAMPLING)
     key_columns: List[str] = dataclasses.field(default_factory=list)
 
-    def __post_init__(self):
-        if self.sample_percent <= 0.0 or self.sample_percent >= 1.0:
-            raise ValueError('Sample percent must be between 0.0 and 1.0')
-
 
 @dataclasses.dataclass
 class _SamplingConfigFactory(_ApiClassFactory):
-    config_abstract_class = SamplingConfig
     config_class_key = 'sampling_method'
     config_class_map = {
         enums.SamplingMethodType.N_SAMPLING: NSamplingConfig,
