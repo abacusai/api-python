@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from api_class.abstract import ApiClass
+from .abstract import ApiClass
 
 
 @dataclass

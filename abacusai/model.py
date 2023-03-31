@@ -1,3 +1,6 @@
+from typing import Union
+
+from .api_class import TrainingConfig
 from .code_source import CodeSource
 from .model_location import ModelLocation
 from .model_version import ModelVersion
@@ -199,12 +202,12 @@ class Model(AbstractApiClass):
         """
         return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, use_gpu)
 
-    def set_training_config(self, training_config: dict, feature_group_ids: list = None):
+    def set_training_config(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list = None):
         """
         Edits the default model training config
 
         Args:
-            training_config (dict): A dictionary of key-value pairs used to train the model.
+            training_config (TrainingConfig): The training config used to train this model.
             feature_group_ids (list): The list of feature groups used as input to the model.
 
         Returns:
@@ -253,7 +256,7 @@ class Model(AbstractApiClass):
         """
         return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
-    def retrain(self, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None):
+    def retrain(self, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None):
         """
         Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
@@ -265,7 +268,7 @@ class Model(AbstractApiClass):
             custom_algorithm_configs (dict): User-defined training configs for each custom algorithm.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
-            training_config (dict): Training config key/value pairs used to train the model.
+            training_config (TrainingConfig): The training config used to train this model.
 
         Returns:
             Model: The model that is being retrained.

@@ -22,7 +22,7 @@ from requests.packages.urllib3.util.retry import Retry
 from .algorithm import Algorithm
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
-from .api_class import ApiClass, ParsingConfig, SamplingConfig
+from .api_class import ApiClass, ParsingConfig, SamplingConfig, TrainingConfig
 from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name, get_clean_function_source_code
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
@@ -74,6 +74,7 @@ from .modification_lock_info import ModificationLockInfo
 from .module import Module
 from .monitor_alert import MonitorAlert
 from .monitor_alert_version import MonitorAlertVersion
+from .natural_language_explanation import NaturalLanguageExplanation
 from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
 from .problem_type import ProblemType
@@ -184,7 +185,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.52.0'
+    client_version = '0.60.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1615,6 +1616,28 @@ class ReadOnlyClient(BaseApiClient):
             Module: A list of modules"""
         return self._call_api('listModules', 'GET', query_params={}, parse_type=Module)
 
+    def get_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None) -> NaturalLanguageExplanation:
+        """Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+
+        Args:
+            feature_group_id (str): A unique string identifier associated with the Feature Group.
+            feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+
+        Returns:
+            NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s)."""
+        return self._call_api('getNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, parse_type=NaturalLanguageExplanation)
+
+    def generate_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None) -> NaturalLanguageExplanation:
+        """Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+
+        Args:
+            feature_group_id (str): A unique string identifier associated with the Feature Group.
+            feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+
+        Returns:
+            NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s)."""
+        return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, parse_type=NaturalLanguageExplanation)
+
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
     if not train_function:
@@ -2296,7 +2319,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -3265,7 +3288,7 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: The upload object associated with the process, containing details of the file."""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, merge_file_schemas: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, merge_file_schemas: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -3281,12 +3304,13 @@ Creates a new feature group defined as the union of other feature group versions
             date_format_lookback_days (int): The number of days to look back from the current day for import locations that are date partitioned. For example, import date 2021-06-04 with `date_format_lookback_days` = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
             incremental (bool): Signifies if the dataset is an incremental dataset.
             is_documentset (bool): Signifies if the dataset is docstore dataset.
+            extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -3363,7 +3387,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Upload:
+    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Upload:
         """Creates a dataset and returns an upload ID that can be used to upload a file.
 
         Args:
@@ -3371,11 +3395,12 @@ Creates a new feature group defined as the union of other feature group versions
             file_format (str): The file format of the dataset.
             csv_delimiter (str): If the file format is CSV, use a specific CSV delimiter.
             is_documentset (bool): Signifies if the dataset is a docstore dataset.
+            extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'parsingConfig': parsing_config}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         """Creates a new version of the specified dataset using a local file upload.
@@ -3585,32 +3610,32 @@ Creates a new feature group defined as the union of other feature group versions
             dataset_id (str): Unique string identifier of the dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: dict = None) -> TrainingConfigOptions:
+    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None) -> TrainingConfigOptions:
         """Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
         Args:
             project_id (str): The unique ID associated with the project.
             feature_group_ids (list): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
-            current_training_config (dict): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
+            current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
         return self._call_api('getTrainingConfigOptions', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain, 'currentTrainingConfig': current_training_config}, parse_type=TrainingConfigOptions)
 
-    def create_train_test_data_split_feature_group(self, project_id: str, training_config: dict, feature_group_ids: list) -> FeatureGroup:
+    def create_train_test_data_split_feature_group(self, project_id: str, training_config: Union[dict, TrainingConfig], feature_group_ids: list) -> FeatureGroup:
         """Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
         Args:
             project_id (str): The unique ID associated with the project.
-            training_config (dict): The training config key/value pairs used to influence how the split is calculated.
+            training_config (TrainingConfig): The training config used to influence how the split is calculated.
             feature_group_ids (list): List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
 
         Returns:
             FeatureGroup: The feature group containing the training data and folds information."""
         return self._call_api('createTrainTestDataSplitFeatureGroup', 'POST', query_params={}, body={'projectId': project_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=FeatureGroup)
 
-    def train_model(self, project_id: str, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None) -> Model:
+    def train_model(self, project_id: str, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None) -> Model:
         """Train a model for the specified project.
 
         This method trains a model in the given project, using user-specified training configurations defined in the `getTrainingConfigOptions` method.
@@ -3619,7 +3644,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             project_id (str): The unique ID associated with the project.
             name (str): The name of the model. Defaults to "<Project Name> Model".
-            training_config (dict): The training config key/value pairs used to train this model.
+            training_config (TrainingConfig): The training config used to train this model.
             feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
             custom_algorithms (list): List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
@@ -3633,7 +3658,7 @@ Creates a new feature group defined as the union of other feature group versions
             Model: The new model which is being trained."""
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
 
-    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False) -> Model:
+    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False) -> Model:
         """Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
         This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName` and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -3650,7 +3675,7 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name you want your model to have. Defaults to "<Project Name> Model"
             cpu_size (str): Size of the CPU for the model training function
             memory (int): Memory (in GB) for the model training function
-            training_config (dict): Training configuration
+            training_config (TrainingConfig): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_gpu (bool): Whether this model needs gpu
@@ -3738,12 +3763,12 @@ Creates a new feature group defined as the union of other feature group versions
             Model: The updated model."""
         return self._call_api('updatePythonModelGit', 'POST', query_params={}, body={'modelId': model_id, 'applicationConnectorId': application_connector_id, 'branchName': branch_name, 'pythonRoot': python_root, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'trainModuleName': train_module_name, 'predictModuleName': predict_module_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'useGpu': use_gpu}, parse_type=Model)
 
-    def set_model_training_config(self, model_id: str, training_config: dict, feature_group_ids: list = None) -> Model:
+    def set_model_training_config(self, model_id: str, training_config: Union[dict, TrainingConfig], feature_group_ids: list = None) -> Model:
         """Edits the default model training config
 
         Args:
             model_id (str): A unique string identifier of the model to update.
-            training_config (dict): A dictionary of key-value pairs used to train the model.
+            training_config (TrainingConfig): The training config used to train this model.
             feature_group_ids (list): The list of feature groups used as input to the model.
 
         Returns:
@@ -3761,7 +3786,7 @@ Creates a new feature group defined as the union of other feature group versions
             Model: Model object after the prediction configuration is applied."""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: dict = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None) -> Model:
         """Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
         Args:
@@ -3773,7 +3798,7 @@ Creates a new feature group defined as the union of other feature group versions
             custom_algorithm_configs (dict): User-defined training configs for each custom algorithm.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
-            training_config (dict): Training config key/value pairs used to train the model.
+            training_config (TrainingConfig): The training config used to train this model.
 
         Returns:
             Model: The model that is being retrained."""
@@ -3805,14 +3830,14 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The created feature group."""
         return self._call_api('exportModelArtifactAsFeatureGroup', 'POST', query_params={}, body={'modelVersion': model_version, 'tableName': table_name, 'artifactType': artifact_type}, parse_type=FeatureGroup)
 
-    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: dict = None, custom_algorithm_config: dict = None) -> CustomTrainFunctionInfo:
+    def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: Union[dict, TrainingConfig] = None, custom_algorithm_config: dict = None) -> CustomTrainFunctionInfo:
         """Returns information about how to call the custom train function.
 
         Args:
             project_id (str): The unique version ID of the project.
             feature_group_names_for_training (list): A list of feature group table names to be used for training.
             training_data_parameter_name_override (dict): Override from feature group type to parameter name in the train function.
-            training_config (dict): Training config names and values for the options supported by the Abacus.ai platform.
+            training_config (TrainingConfig): Training config for the options supported by the Abacus.ai platform.
             custom_algorithm_config (dict): User-defined config that can be serialized by JSON.
 
         Returns:
@@ -4369,7 +4394,7 @@ Creates a new feature group defined as the union of other feature group versions
             return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
         return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=self.default_prediction_url)
 
-    def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = '', scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None) -> Dict:
+    def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
         Args:
@@ -4398,7 +4423,7 @@ Creates a new feature group defined as the union of other feature group versions
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
         return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=self.default_prediction_url)
 
-    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
+    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, score_field: str = None, scaling_factors: list = None) -> Dict:
         """Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -4407,8 +4432,9 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): This will be a dictionary with two key-value pairs. The first pair represents a 'Key' where the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID uniquely identifies the user against whom a prediction is made and a 'Value' which is the identifier value for that user. The second pair will have a 'Key' which will be the name of the column name (e.g. movie_name) mapped to ITEM_ID (unique item identifier) and a 'Value' which will be a list of identifiers that uniquely identifies those items.
             preserve_ranks (list): List of dictionaries of format {"column": "col0", "values": ["value0, value1"]}, where the ranks of items in query_data is preserved for all the items in "col0" with values, "value0" and "value1". This option is useful when the desired items are being recommended in the desired order and the ranks for those items need to be kept unchanged during recommendation generation.
             preserve_unknown_items (bool): If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved
+            score_field (str): The relative item scores are returned in a separate field named with the same name as the key (score_field) for this argument.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there is a type of item that might be less popular but you want to promote it or there is an item that always comes up and you want to demote it."""
-        return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=self.default_prediction_url)
+        return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scoreField': score_field, 'scalingFactors': scaling_factors}, server_override=self.default_prediction_url)
 
     def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None) -> Dict:
         """Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
@@ -5133,3 +5159,13 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             NotebookCompletion: The text to insert into the notebook cell."""
         return self._call_api('getNotebookCellCompletion', 'POST', query_params={}, body={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
+
+    def set_natural_language_explanation(self, short_explanation: str, long_explanation: str, feature_group_id: str = None, feature_group_version: str = None):
+        """Saves the natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+
+        Args:
+            short_explanation (str): succinct explanation of the artifact with given ID
+            long_explanation (str): verbose explanation of the artifact with given ID
+            feature_group_id (str): A unique string identifier associated with the Feature Group.
+            feature_group_version (str): A unique string identifier associated with the Feature Group Version."""
+        return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version})

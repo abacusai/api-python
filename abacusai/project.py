@@ -1,3 +1,6 @@
+from typing import Union
+
+from .api_class import TrainingConfig
 from .return_class import AbstractApiClass
 
 
@@ -201,26 +204,26 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
-    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: dict = None):
+    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None):
         """
         Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
         Args:
             feature_group_ids (list): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
-            current_training_config (dict): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
+            current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project.
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config)
 
-    def create_train_test_data_split_feature_group(self, training_config: dict, feature_group_ids: list):
+    def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list):
         """
         Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
         Args:
-            training_config (dict): The training config key/value pairs used to influence how the split is calculated.
+            training_config (TrainingConfig): The training config used to influence how the split is calculated.
             feature_group_ids (list): List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
 
         Returns:
@@ -228,7 +231,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_train_test_data_split_feature_group(self.project_id, training_config, feature_group_ids)
 
-    def train_model(self, name: str = None, training_config: dict = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None):
+    def train_model(self, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None):
         """
         Train a model for the specified project.
 
@@ -237,7 +240,7 @@ class Project(AbstractApiClass):
 
         Args:
             name (str): The name of the model. Defaults to "<Project Name> Model".
-            training_config (dict): The training config key/value pairs used to train this model.
+            training_config (TrainingConfig): The training config used to train this model.
             feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model.
             custom_algorithms (list): List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
@@ -252,7 +255,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False):
         """
         Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -269,7 +272,7 @@ class Project(AbstractApiClass):
             name (str): The name you want your model to have. Defaults to "<Project Name> Model"
             cpu_size (str): Size of the CPU for the model training function
             memory (int): Memory (in GB) for the model training function
-            training_config (dict): Training configuration
+            training_config (TrainingConfig): Training configuration
             exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_gpu (bool): Whether this model needs gpu
@@ -291,14 +294,14 @@ class Project(AbstractApiClass):
         """
         return self.client.list_models(self.project_id)
 
-    def get_custom_train_function_info(self, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: dict = None, custom_algorithm_config: dict = None):
+    def get_custom_train_function_info(self, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: Union[dict, TrainingConfig] = None, custom_algorithm_config: dict = None):
         """
         Returns information about how to call the custom train function.
 
         Args:
             feature_group_names_for_training (list): A list of feature group table names to be used for training.
             training_data_parameter_name_override (dict): Override from feature group type to parameter name in the train function.
-            training_config (dict): Training config names and values for the options supported by the Abacus.ai platform.
+            training_config (TrainingConfig): Training config for the options supported by the Abacus.ai platform.
             custom_algorithm_config (dict): User-defined config that can be serialized by JSON.
 
         Returns:

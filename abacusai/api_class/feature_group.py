@@ -26,8 +26,8 @@ class NSamplingConfig(SamplingConfig):
         key_columns (list[str]): The feature(s) to use as the key(s) when sampling
     """
     sample_count: int
-    sampling_method: enums.SamplingMethodType = dataclasses.field(default=enums.SamplingMethodType.N_SAMPLING)
     key_columns: List[str] = dataclasses.field(default_factory=list)
+    sampling_method: enums.SamplingMethodType = enums.SamplingMethodType.N_SAMPLING
 
 
 @dataclasses.dataclass
@@ -41,8 +41,8 @@ class PercentSamplingConfig(SamplingConfig):
         key_columns (list[str]): The feature(s) to use as the key(s) when sampling
     """
     sample_percent: float
-    sampling_method: enums.SamplingMethodType = dataclasses.field(default=enums.SamplingMethodType.PERCENT_SAMPLING)
     key_columns: List[str] = dataclasses.field(default_factory=list)
+    sampling_method: enums.SamplingMethodType = enums.SamplingMethodType.PERCENT_SAMPLING
 
 
 @dataclasses.dataclass
