@@ -1,6 +1,7 @@
 from .api_class import *
 from .client import ApiClient, ApiException, ClientOptions, ReadOnlyClient
 from .prediction_client import PredictionClient
+from .streaming_client import StreamingClient
 
 
-__version__ = "0.60.0"
+__version__ = "0.61.0"

@@ -26,7 +26,6 @@ Functions
 
    abacusai.client._requests_retry_session
    abacusai.client._discover_service_url
-   abacusai.client._get_service_discovery_url
    abacusai.client.get_source_code_info
    abacusai.client.get_module_code_from_notebook
    abacusai.client.include_modules
@@ -39,6 +38,7 @@ Attributes
 .. autoapisummary::
 
    abacusai.client.DEFAULT_SERVER
+   abacusai.client._cached_endpoints
 
 
 .. py:data:: DEFAULT_SERVER
@@ -52,8 +52,9 @@ Attributes
 .. py:function:: _discover_service_url(service_discovery_url, client_version, deployment_id, deployment_token)
 
 
-.. py:function:: _get_service_discovery_url()
+.. py:data:: _cached_endpoints
 
+   
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
@@ -98,9 +99,15 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.52.0'
+      :value: '0.61.0'
 
       
+
+   .. py:method:: _get_prediction_endpoint(deployment_id, deployment_token)
+
+
+   .. py:method:: _get_streaming_endpoint(streaming_token, model_id = None, feature_group_id = None)
+
 
    .. py:method:: _clean_api_objects(obj)
 
@@ -1286,6 +1293,25 @@ Attributes
       :rtype: DeploymentAuthToken
 
 
+   .. py:method:: get_api_endpoint(deployment_token = None, deployment_id = None, streaming_token = None, feature_group_id = None, model_id = None)
+
+      Returns the API endpoint specific to an organization. This function can be utilized using either an API Key or a deployment ID and token for authentication.
+
+      :param deployment_token: Token used for authenticating access to deployed models.
+      :type deployment_token: str
+      :param deployment_id: Unique identifier assigned to a deployment created under the specified project.
+      :type deployment_id: str
+      :param streaming_token: Token used for authenticating access to streaming data.
+      :type streaming_token: str
+      :param feature_group_id: Unique identifier assigned to a feature group.
+      :type feature_group_id: str
+      :param model_id: Unique identifier assigned to a model.
+      :type model_id: str
+
+      :returns: The API endpoint specific to the organization.
+      :rtype: ApiEndpoint
+
+
    .. py:method:: get_model_training_types_for_deployment(model_id, model_version = None, algorithm = None)
 
       Returns types of models that can be deployed for a given model instance ID.
@@ -1588,6 +1614,32 @@ Attributes
 
       :returns: A list of modules
       :rtype: Module
+
+
+   .. py:method:: get_natural_language_explanation(feature_group_id = None, feature_group_version = None)
+
+      Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+
+      :param feature_group_id: A unique string identifier associated with the Feature Group.
+      :type feature_group_id: str
+      :param feature_group_version: A unique string identifier associated with the Feature Group Version.
+      :type feature_group_version: str
+
+      :returns: The object containing natural language explanation(s) as field(s).
+      :rtype: NaturalLanguageExplanation
+
+
+   .. py:method:: generate_natural_language_explanation(feature_group_id = None, feature_group_version = None)
+
+      Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+
+      :param feature_group_id: A unique string identifier associated with the Feature Group.
+      :type feature_group_id: str
+      :param feature_group_version: A unique string identifier associated with the Feature Group Version.
+      :type feature_group_version: str
+
+      :returns: The object containing natural language explanation(s) as field(s).
+      :rtype: NaturalLanguageExplanation
 
 
 
@@ -2131,7 +2183,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_SEQUENCE_CLASSIFICATION_2,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -3399,7 +3451,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, merge_file_schemas = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, merge_file_schemas = False, parsing_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -3427,6 +3479,8 @@ Attributes
       :type incremental: bool
       :param is_documentset: Signifies if the dataset is docstore dataset.
       :type is_documentset: bool
+      :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
+      :type extract_bounding_boxes: bool
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
       :type merge_file_schemas: bool
       :param parsing_config: Custom config for dataset parsing.
@@ -3541,7 +3595,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, parsing_config = None)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -3553,6 +3607,8 @@ Attributes
       :type csv_delimiter: str
       :param is_documentset: Signifies if the dataset is a docstore dataset.
       :type is_documentset: bool
+      :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
+      :type extract_bounding_boxes: bool
       :param parsing_config: Custom config for dataset parsing.
       :type parsing_config: ParsingConfig
 
@@ -3814,7 +3870,7 @@ Attributes
       :param for_retrain: Whether the training config options are used for retraining.
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
-      :type current_training_config: dict
+      :type current_training_config: TrainingConfig
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
@@ -3826,8 +3882,8 @@ Attributes
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
-      :param training_config: The training config key/value pairs used to influence how the split is calculated.
-      :type training_config: dict
+      :param training_config: The training config used to influence how the split is calculated.
+      :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
       :type feature_group_ids: list
 
@@ -3846,8 +3902,8 @@ Attributes
       :type project_id: str
       :param name: The name of the model. Defaults to "<Project Name> Model".
       :type name: str
-      :param training_config: The training config key/value pairs used to train this model.
-      :type training_config: dict
+      :param training_config: The training config used to train this model.
+      :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user to train the model on.
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
@@ -3897,7 +3953,7 @@ Attributes
       :param memory: Memory (in GB) for the model training function
       :type memory: int
       :param training_config: Training configuration
-      :type training_config: dict
+      :type training_config: TrainingConfig
       :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.ai algorithms
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
@@ -4031,8 +4087,8 @@ Attributes
 
       :param model_id: A unique string identifier of the model to update.
       :type model_id: str
-      :param training_config: A dictionary of key-value pairs used to train the model.
-      :type training_config: dict
+      :param training_config: The training config used to train this model.
+      :type training_config: TrainingConfig
       :param feature_group_ids: The list of feature groups used as input to the model.
       :type feature_group_ids: list
 
@@ -4073,8 +4129,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the user-defined algorithms during training.
       :type memory: int
-      :param training_config: Training config key/value pairs used to train the model.
-      :type training_config: dict
+      :param training_config: The training config used to train this model.
+      :type training_config: TrainingConfig
 
       :returns: The model that is being retrained.
       :rtype: Model
@@ -4121,8 +4177,8 @@ Attributes
       :type feature_group_names_for_training: list
       :param training_data_parameter_name_override: Override from feature group type to parameter name in the train function.
       :type training_data_parameter_name_override: dict
-      :param training_config: Training config names and values for the options supported by the Abacus.ai platform.
-      :type training_config: dict
+      :param training_config: Training config for the options supported by the Abacus.ai platform.
+      :type training_config: TrainingConfig
       :param custom_algorithm_config: User-defined config that can be serialized by JSON.
       :type custom_algorithm_config: dict
 
@@ -4220,7 +4276,32 @@ Attributes
       :type training_feature_mappings: dict
       :param target_value_performance: A target positive value for the label to compute precision-recall curve/area under curve for performance page.
       :type target_value_performance: str
-      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor.
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created vision drift monitor.
+      :type refresh_schedule: str
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: create_nlp_drift_monitor(project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
+
+      Runs an NLP drift monitor for the specified project.
+
+      :param project_id: Unique string identifier of the project.
+      :type project_id: str
+      :param prediction_feature_group_id: Unique string identifier of the prediction data feature group.
+      :type prediction_feature_group_id: str
+      :param training_feature_group_id: Unique string identifier of the training data feature group.
+      :type training_feature_group_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+      :type name: str
+      :param feature_mappings: A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+      :type feature_mappings: dict
+      :param training_feature_mappings: A JSON map to override features for training_feature_group, where keys are column names and the values are feature data use types.
+      :type training_feature_mappings: dict
+      :param target_value_performance: A target positive value for the label to compute precision-recall curve/area under curve for performance page.
+      :type target_value_performance: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created nlp drift monitor.
       :type refresh_schedule: str
 
       :returns: The new model monitor that was created.
@@ -4870,7 +4951,7 @@ Attributes
       :type return_extracted_features: bool
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = '', scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -4916,7 +4997,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -4930,6 +5011,8 @@ Attributes
       :type preserve_ranks: list
       :param preserve_unknown_items: If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved
       :type preserve_unknown_items: bool
+      :param score_field: The relative item scores are returned in a separate field named with the same name as the key (score_field) for this argument.
+      :type score_field: str
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there is a type of item that might be less popular but you want to promote it or there is an item that always comes up and you want to demote it.
       :type scaling_factors: list
 
@@ -5142,7 +5225,7 @@ Attributes
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param query_data: A dictionary where the 'key' is the column name and the 'value' is the value of that column.
+      :param query_data: A dictionary where each 'key' represents a column name and its corresponding 'value' represents the value of that column. For Timeseries Clustering, the 'key' should be ITEM_ID, and its value should represent a unique item ID that needs clustering.
       :type query_data: dict
 
 
@@ -5593,9 +5676,9 @@ Attributes
       :type name: str
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
-      :param function_name: The name of the Python function.
+      :param function_name: The name of the Python function within `source_code`.
       :type function_name: str
-      :param function_variable_mappings: List of Python function arguments.
+      :param function_variable_mappings: List of arguments required by `function_name`.
       :type function_variable_mappings: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
@@ -5900,6 +5983,35 @@ Attributes
 
       :returns: The text to insert into the notebook cell.
       :rtype: NotebookCompletion
+
+
+   .. py:method:: set_natural_language_explanation(short_explanation, long_explanation, feature_group_id = None, feature_group_version = None)
+
+      Saves the natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+
+      :param short_explanation: succinct explanation of the artifact with given ID
+      :type short_explanation: str
+      :param long_explanation: verbose explanation of the artifact with given ID
+      :type long_explanation: str
+      :param feature_group_id: A unique string identifier associated with the Feature Group.
+      :type feature_group_id: str
+      :param feature_group_version: A unique string identifier associated with the Feature Group Version.
+      :type feature_group_version: str
+
+
+   .. py:method:: query_feature_group_explorer(feature_group_version, message, chat_history = None)
+
+      Send a message to Abacus Chat for the specified feature group version and receive a response.
+
+      :param feature_group_version: A unique string identifier for the feature group version.
+      :type feature_group_version: str
+      :param message: The message that you want to send to Abacus Chat.
+      :type message: str
+      :param chat_history: A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
+      :type chat_history: list
+
+      :returns: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
+      :rtype: ChatBotResponse
 
 
 

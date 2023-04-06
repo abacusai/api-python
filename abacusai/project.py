@@ -355,12 +355,30 @@ class Project(AbstractApiClass):
             feature_mappings (dict): A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
             training_feature_mappings (dict): A JSON map to override features for training_feature_group, where keys are column names and the values are feature data use types.
             target_value_performance (str): A target positive value for the label to compute precision-recall curve/area under curve for performance page.
-            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor.
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically rerun the created vision drift monitor.
 
         Returns:
             ModelMonitor: The new model monitor that was created.
         """
         return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
+
+    def create_nlp_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, feature_mappings: dict, training_feature_mappings: dict, target_value_performance: str = None, refresh_schedule: str = None):
+        """
+        Runs an NLP drift monitor for the specified project.
+
+        Args:
+            prediction_feature_group_id (str): Unique string identifier of the prediction data feature group.
+            training_feature_group_id (str): Unique string identifier of the training data feature group.
+            name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+            feature_mappings (dict): A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+            training_feature_mappings (dict): A JSON map to override features for training_feature_group, where keys are column names and the values are feature data use types.
+            target_value_performance (str): A target positive value for the label to compute precision-recall curve/area under curve for performance page.
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically rerun the created nlp drift monitor.
+
+        Returns:
+            ModelMonitor: The new model monitor that was created.
+        """
+        return self.client.create_nlp_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
     def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None):
         """

@@ -1,0 +1,121 @@
+:py:mod:`abacusai.streaming_client`
+===================================
+
+.. py:module:: abacusai.streaming_client
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.streaming_client.StreamingClient
+
+
+
+
+.. py:class:: StreamingClient(client_options = None)
+
+   Bases: :py:obj:`abacusai.client.BaseApiClient`
+
+   Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
+
+   :param client_options: Optional API client configurations
+   :type client_options: ClientOptions
+
+   .. py:method:: upsert_item_embeddings(streaming_token, model_id, item_id, vector, catalog_id = None)
+
+      Upserts an embedding vector for an item id for a model_id.
+
+      :param streaming_token: The streaming token for authenticating requests to the model.
+      :type streaming_token: str
+      :param model_id: A unique string identifier for the model to upsert item embeddings to.
+      :type model_id: str
+      :param item_id: The item id for which its embeddings will be upserted.
+      :type item_id: str
+      :param vector: The embedding vector.
+      :type vector: list
+      :param catalog_id: The name of the catalog in the model to update.
+      :type catalog_id: str
+
+
+   .. py:method:: delete_item_embeddings(streaming_token, model_id, item_ids, catalog_id = None)
+
+      Deletes KNN embeddings for a list of item IDs for a given model ID.
+
+      :param streaming_token: The streaming token for authenticating requests to the model.
+      :type streaming_token: str
+      :param model_id: A unique string identifier for the model from which to delete item embeddings.
+      :type model_id: str
+      :param item_ids: A list of item IDs whose embeddings will be deleted.
+      :type item_ids: list
+      :param catalog_id: An optional name to specify which catalog in a model to update.
+      :type catalog_id: str
+
+
+   .. py:method:: upsert_multiple_item_embeddings(streaming_token, model_id, upserts, catalog_id = None)
+
+      Upserts a knn embedding for multiple item ids for a model_id.
+
+      :param streaming_token: The streaming token for authenticating requests to the model.
+      :type streaming_token: str
+      :param model_id: The unique string identifier of the model to upsert item embeddings to.
+      :type model_id: str
+      :param upserts: A list of dictionaries of the form {'itemId': ..., 'vector': [...]} for each upsert.
+      :type upserts: list
+      :param catalog_id: Name of the catalog in the model to update.
+      :type catalog_id: str
+
+
+   .. py:method:: upsert_data(feature_group_id, streaming_token, data)
+
+      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
+
+      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
+      :type feature_group_id: str
+      :param streaming_token: The streaming token for authenticating requests.
+      :type streaming_token: str
+      :param data: The data to record, in JSON format.
+      :type data: dict
+
+
+   .. py:method:: append_data(feature_group_id, streaming_token, data)
+
+      Appends new data into the feature group for a given lookup key recordId.
+
+      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
+      :type feature_group_id: str
+      :param streaming_token: The streaming token for authenticating requests.
+      :type streaming_token: str
+      :param data: The data to record as a JSON object.
+      :type data: dict
+
+
+   .. py:method:: upsert_multiple_data(feature_group_id, streaming_token, data)
+
+      Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
+
+      :param feature_group_id: Unique string identifier for the streaming feature group to record data to.
+      :type feature_group_id: str
+      :param streaming_token: The streaming token for authenticating requests.
+      :type streaming_token: str
+      :param data: The data to record, as a list of JSON objects.
+      :type data: dict
+
+
+   .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
+
+      Appends new data into the feature group for a given lookup key recordId.
+
+      :param feature_group_id: Unique string identifier of the streaming feature group to record data to.
+      :type feature_group_id: str
+      :param streaming_token: Streaming token for authenticating requests.
+      :type streaming_token: str
+      :param data: Data to record, as a list of JSON objects.
+      :type data: list
+
+
+

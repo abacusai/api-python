@@ -1,0 +1,46 @@
+:py:mod:`abacusai.chat_bot_response`
+====================================
+
+.. py:module:: abacusai.chat_bot_response
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.chat_bot_response.ChatBotResponse
+
+
+
+
+.. py:class:: ChatBotResponse(client, answer=None, chatHistory=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A response from the chat bot
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param answer: The response from the chat bot
+   :type answer: str
+   :param chatHistory: The chat history as a list of dicts with is_user and text entries
+   :type chatHistory: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

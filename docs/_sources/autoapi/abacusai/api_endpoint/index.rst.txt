@@ -1,0 +1,46 @@
+:py:mod:`abacusai.api_endpoint`
+===============================
+
+.. py:module:: abacusai.api_endpoint
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_endpoint.ApiEndpoint
+
+
+
+
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An collection of endpoints which can be used to make requests to, such as api calls or predict calls
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param apiEndpoint: The URI that can be used to make API calls
+   :type apiEndpoint: str
+   :param predictEndpoint: The URI that can be used to make predict calls against Deployments
+   :type predictEndpoint: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

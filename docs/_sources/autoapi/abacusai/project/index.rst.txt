@@ -221,7 +221,7 @@ Classes
       :param for_retrain: Whether the training config options are used for retraining.
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
-      :type current_training_config: dict
+      :type current_training_config: TrainingConfig
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
@@ -231,8 +231,8 @@ Classes
 
       Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
-      :param training_config: The training config key/value pairs used to influence how the split is calculated.
-      :type training_config: dict
+      :param training_config: The training config used to influence how the split is calculated.
+      :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user, including the required one for data split and others to influence how to split.
       :type feature_group_ids: list
 
@@ -249,8 +249,8 @@ Classes
 
       :param name: The name of the model. Defaults to "<Project Name> Model".
       :type name: str
-      :param training_config: The training config key/value pairs used to train this model.
-      :type training_config: dict
+      :param training_config: The training config used to train this model.
+      :type training_config: TrainingConfig
       :param feature_group_ids: List of feature group IDs provided by the user to train the model on.
       :type feature_group_ids: list
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model.
@@ -298,7 +298,7 @@ Classes
       :param memory: Memory (in GB) for the model training function
       :type memory: int
       :param training_config: Training configuration
-      :type training_config: dict
+      :type training_config: TrainingConfig
       :param exclusive_run: Decides if this model will be run exclusively or along with other Abacus.ai algorithms
       :type exclusive_run: bool
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
@@ -329,8 +329,8 @@ Classes
       :type feature_group_names_for_training: list
       :param training_data_parameter_name_override: Override from feature group type to parameter name in the train function.
       :type training_data_parameter_name_override: dict
-      :param training_config: Training config names and values for the options supported by the Abacus.ai platform.
-      :type training_config: dict
+      :param training_config: Training config for the options supported by the Abacus.ai platform.
+      :type training_config: TrainingConfig
       :param custom_algorithm_config: User-defined config that can be serialized by JSON.
       :type custom_algorithm_config: dict
 
@@ -398,7 +398,30 @@ Classes
       :type training_feature_mappings: dict
       :param target_value_performance: A target positive value for the label to compute precision-recall curve/area under curve for performance page.
       :type target_value_performance: str
-      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created vision drift monitor.
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created vision drift monitor.
+      :type refresh_schedule: str
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: create_nlp_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
+
+      Runs an NLP drift monitor for the specified project.
+
+      :param prediction_feature_group_id: Unique string identifier of the prediction data feature group.
+      :type prediction_feature_group_id: str
+      :param training_feature_group_id: Unique string identifier of the training data feature group.
+      :type training_feature_group_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+      :type name: str
+      :param feature_mappings: A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
+      :type feature_mappings: dict
+      :param training_feature_mappings: A JSON map to override features for training_feature_group, where keys are column names and the values are feature data use types.
+      :type training_feature_mappings: dict
+      :param target_value_performance: A target positive value for the label to compute precision-recall curve/area under curve for performance page.
+      :type target_value_performance: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created nlp drift monitor.
       :type refresh_schedule: str
 
       :returns: The new model monitor that was created.

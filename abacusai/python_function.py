@@ -55,12 +55,11 @@ class PythonFunction(AbstractApiClass):
         """
         return self.client.add_graph_to_dashboard(self.python_function_id, graph_dashboard_id, function_variable_mappings, name)
 
-    def validate_locally(self, function_name: str = None, kwargs: dict = None) -> any:
+    def validate_locally(self, kwargs: dict = None) -> any:
         """
         Validates a Python function by running it with the given input values in an local environment. Taking Input Feature Group as either name(string) or Pandas DataFrame in kwargs.
 
         Args:
-            function_name (str): The name of the function to execute. If not provided, the function name will be inferred from the python_function_name.
             kwargs (dict): A dictionary mapping function arguments to values to pass to the function. Feature group names will automatically be converted into pandas dataframes.
 
         Returns:
@@ -71,4 +70,4 @@ class PythonFunction(AbstractApiClass):
             Exception: If an error occurs while validating the Python function.
         """
         from .python_function_validator import validate_function_locally
-        return validate_function_locally(self.client, self.name, function_name or self.function_name or self.name, kwargs)
+        return validate_function_locally(self.client, self.name, kwargs)

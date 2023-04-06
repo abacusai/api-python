@@ -1,0 +1,490 @@
+:py:mod:`abacusai.api_class.model`
+==================================
+
+.. py:module:: abacusai.api_class.model
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.model.TrainingConfig
+   abacusai.api_class.model.ForecastingTrainingConfig
+   abacusai.api_class.model._TrainingConfigFactory
+
+
+
+
+.. py:class:: TrainingConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:attribute:: kwargs
+      :type: dict
+
+      
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+
+.. py:class:: ForecastingTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the FORECASTING problem type
+   :param problem_type: FORECASTING
+   :type problem_type: ProblemType
+   :param prediction_length: How many timesteps in the future to predict.
+   :type prediction_length: int
+   :param objective: Ranking scheme used to select final best model.
+   :type objective: ForecastingObjective
+   :param sort_objective: Ranking scheme used to sort models on the metrics page.
+   :type sort_objective: ForecastingObjective
+   :param forecast_frequency: Forecast frequency.
+   :type forecast_frequency: ForecastingFrequency
+   :param probability_quantiles: Prediction quantiles.
+   :type probability_quantiles: list[float]
+   :param no_validation_set: Do not generate validation set, test set will be used instead.
+   :type no_validation_set: bool
+   :param force_prediction_length: Force length of test window to be the same as prediction length.
+   :type force_prediction_length: int
+   :param filter_items: Filter items with small history and volume.
+   :type filter_items: bool
+   :param enable_cold_start: Enable cold start forecasting by training/predicting for zero history items.
+   :type enable_cold_start: bool
+   :param enable_multiple_backtests: Whether to enable multiple backtesting or not.
+   :type enable_multiple_backtests: bool
+   :param total_backtesting_windows: Total backtesting windows to use for the training.
+   :type total_backtesting_windows: int
+   :param backtest_window_step_size: Use this step size to shift backtesting windows for model training.
+   :type backtest_window_step_size: int
+   :param full_data_retraining: Train models separately with all the data.
+   :type full_data_retraining: bool
+   :param type_of_split: Type of data splitting into train/test.
+   :type type_of_split: ForecastingDataSplitType
+   :param test_by_item: Partition train/test data by item rather than time if true.
+   :type test_by_item: bool
+   :param test_start: Limit training data to dates before the given test start.
+   :type test_start: datetime
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
+   :type test_split: int
+   :param loss_function: Loss function for training neural network.
+   :type loss_function: ForecastingLossFunction
+   :param underprediction_weight: Weight for underpredictions
+   :type underprediction_weight: float
+   :param disable_networks_without_analytic_quantiles: Disable neural networks, which quantile functions do not have analytic expressions (e.g, mixture models)
+   :type disable_networks_without_analytic_quantiles: bool
+   :param initial_learning_rate: Initial learning rate.
+   :type initial_learning_rate: float
+   :param l2_regularization_factor: L2 regularization factor.
+   :type l2_regularization_factor: float
+   :param dropout_rate: Dropout percentage rate.
+   :type dropout_rate: int
+   :param recurrent_layers: Number of recurrent layers to stack in network.
+   :type recurrent_layers: int
+   :param recurrent_units: Number of units in each recurrent layer.
+   :type recurrent_units: int
+   :param convolutional_layers: Number of convolutional layers to stack on top of recurrent layers in network.
+   :type convolutional_layers: int
+   :param convolution_filters: Number of filters in each convolution.
+   :type convolution_filters: int
+   :param local_scaling_mode: Options to make NN inputs stationary in high dynamic range datasets.
+   :type local_scaling_mode: ForecastingLocalScaling
+   :param zero_predictor: Include subnetwork to classify points where target equals zero.
+   :type zero_predictor: bool
+   :param skip_missing: Make the RNN ignore missing entries rather instead of processing them.
+   :type skip_missing: bool
+   :param batch_size: Batch size.
+   :type batch_size: ForecastingBatchSize
+   :param batch_renormalization: Enable batch renormalization between layers.
+   :type batch_renormalization: bool
+   :param history_length: While training, how much history to consider.
+   :type history_length: int
+   :param prediction_step_size: Number of future periods to include in objective for each training sample.
+   :type prediction_step_size: int
+   :param training_point_overlap: Amount of overlap to allow between training samples.
+   :type training_point_overlap: float
+   :param max_scale_context: Maximum context to use for local scaling.
+   :type max_scale_context: int
+   :param quantiles_extension_method: Quantile extension method
+   :type quantiles_extension_method: ForecastingQuanitlesExtensionMethod
+   :param number_of_samples: Number of samples for ancestral simulation
+   :type number_of_samples: int
+   :param symmetrize_quantiles: Force symmetric quantiles (like in Gaussian distribution)
+   :type symmetrize_quantiles: bool
+   :param use_log_transforms: Apply logarithmic transformations to input data.
+   :type use_log_transforms: bool
+   :param smooth_history: Smooth (low pass filter) the timeseries.
+   :type smooth_history: float
+   :param prediction_offset: Offset for prediction.
+   :type prediction_offset: int
+   :param skip_local_scale_target: Skip using per training/prediction window target scaling.
+   :type skip_local_scale_target: bool
+   :param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
+   :type timeseries_weight_column: str
+   :param item_attributes_weight_column: If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
+   :type item_attributes_weight_column: str
+   :param use_timeseries_weights_in_objective: If True, we include weights from column set as "TIMESERIES WEIGHT COLUMN" in objective functions.
+   :type use_timeseries_weights_in_objective: bool
+   :param use_item_weights_in_objective: If True, we include weights from column set as "ITEM ATTRIBUTES WEIGHT COLUMN" in objective functions.
+   :type use_item_weights_in_objective: bool
+   :param skip_timeseries_weight_scaling: If True, we will avoid normalizing the weights.
+   :type skip_timeseries_weight_scaling: bool
+   :param timeseries_loss_weight_column: Use value in this column to weight the loss while training.
+   :type timeseries_loss_weight_column: str
+   :param use_item_id: Include a feature to indicate the item being forecast.
+   :type use_item_id: bool
+   :param use_all_item_totals: Include as input total target across items.
+   :type use_all_item_totals: bool
+   :param handle_zeros_as_missing: If True, handle zero values in demand as missing data.
+   :type handle_zeros_as_missing: bool
+   :param datetime_holiday_calendars: Holiday calendars to augment training with.
+   :type datetime_holiday_calendars: list[HolidayCalendars]
+   :param fill_missing_values: Strategy for filling in missing values.
+   :type fill_missing_values: list[dict]
+   :param enable_clustering: Enable clustering in forecasting.
+   :type enable_clustering: bool
+   :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
+   :type data_split_feature_group_table_name: str
+   :param custom_loss_functions: Registered custom losses available for selection.
+   :type custom_loss_functions: list[str]
+   :param custom_metrics: Registered custom metrics available for selection.
+   :type custom_metrics: list[str]
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: prediction_length
+      :type: int
+
+      
+
+   .. py:attribute:: objective
+      :type: abacusai.api_class.enums.ForecastingObjective
+
+      
+
+   .. py:attribute:: sort_objective
+      :type: abacusai.api_class.enums.ForecastingObjective
+
+      
+
+   .. py:attribute:: forecast_frequency
+      :type: abacusai.api_class.enums.ForecastingFrequency
+
+      
+
+   .. py:attribute:: probability_quantiles
+      :type: List[float]
+
+      
+
+   .. py:attribute:: no_validation_set
+      :type: bool
+
+      
+
+   .. py:attribute:: force_prediction_length
+      :type: bool
+
+      
+
+   .. py:attribute:: filter_items
+      :type: bool
+
+      
+
+   .. py:attribute:: enable_cold_start
+      :type: bool
+
+      
+
+   .. py:attribute:: enable_multiple_backtests
+      :type: bool
+
+      
+
+   .. py:attribute:: total_backtesting_windows
+      :type: int
+
+      
+
+   .. py:attribute:: backtest_window_step_size
+      :type: int
+
+      
+
+   .. py:attribute:: full_data_retraining
+      :type: bool
+
+      
+
+   .. py:attribute:: type_of_split
+      :type: abacusai.api_class.enums.ForecastingDataSplitType
+
+      
+
+   .. py:attribute:: test_by_item
+      :type: bool
+
+      
+
+   .. py:attribute:: test_start
+      :type: datetime.datetime
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: loss_function
+      :type: abacusai.api_class.enums.ForecastingLossFunction
+
+      
+
+   .. py:attribute:: underprediction_weight
+      :type: float
+
+      
+
+   .. py:attribute:: disable_networks_without_analytic_quantiles
+      :type: bool
+
+      
+
+   .. py:attribute:: initial_learning_rate
+      :type: float
+
+      
+
+   .. py:attribute:: l2_regularization_factor
+      :type: float
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: int
+
+      
+
+   .. py:attribute:: recurrent_layers
+      :type: int
+
+      
+
+   .. py:attribute:: recurrent_units
+      :type: int
+
+      
+
+   .. py:attribute:: convolutional_layers
+      :type: int
+
+      
+
+   .. py:attribute:: convolution_filters
+      :type: int
+
+      
+
+   .. py:attribute:: local_scaling_mode
+      :type: abacusai.api_class.enums.ForecastingLocalScaling
+
+      
+
+   .. py:attribute:: zero_predictor
+      :type: bool
+
+      
+
+   .. py:attribute:: skip_missing
+      :type: bool
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+   .. py:attribute:: batch_renormalization
+      :type: bool
+
+      
+
+   .. py:attribute:: history_length
+      :type: int
+
+      
+
+   .. py:attribute:: prediction_step_size
+      :type: int
+
+      
+
+   .. py:attribute:: training_point_overlap
+      :type: float
+
+      
+
+   .. py:attribute:: max_scale_context
+      :type: int
+
+      
+
+   .. py:attribute:: quantiles_extension_method
+      :type: abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
+
+      
+
+   .. py:attribute:: number_of_samples
+      :type: int
+
+      
+
+   .. py:attribute:: symmetrize_quantiles
+      :type: bool
+
+      
+
+   .. py:attribute:: use_log_transforms
+      :type: bool
+
+      
+
+   .. py:attribute:: smooth_history
+      :type: float
+
+      
+
+   .. py:attribute:: prediction_offset
+      :type: int
+
+      
+
+   .. py:attribute:: skip_local_scale_target
+      :type: bool
+
+      
+
+   .. py:attribute:: timeseries_weight_column
+      :type: str
+
+      
+
+   .. py:attribute:: item_attributes_weight_column
+      :type: str
+
+      
+
+   .. py:attribute:: use_timeseries_weights_in_objective
+      :type: bool
+
+      
+
+   .. py:attribute:: use_item_weights_in_objective
+      :type: bool
+
+      
+
+   .. py:attribute:: skip_timeseries_weight_scaling
+      :type: bool
+
+      
+
+   .. py:attribute:: timeseries_loss_weight_column
+      :type: str
+
+      
+
+   .. py:attribute:: use_item_id
+      :type: bool
+
+      
+
+   .. py:attribute:: use_all_item_totals
+      :type: bool
+
+      
+
+   .. py:attribute:: handle_zeros_as_missing
+      :type: bool
+
+      
+
+   .. py:attribute:: datetime_holiday_calendars
+      :type: List[abacusai.api_class.enums.HolidayCalendars]
+
+      
+
+   .. py:attribute:: fill_missing_values
+      :type: List[dict]
+
+      
+
+   .. py:attribute:: enable_clustering
+      :type: bool
+
+      
+
+   .. py:attribute:: data_split_feature_group_table_name
+      :type: str
+
+      
+
+   .. py:attribute:: custom_loss_functions
+      :type: List[str]
+
+      
+
+   .. py:attribute:: custom_metrics
+      :type: List[str]
+
+      
+
+
+.. py:class:: _TrainingConfigFactory
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'problem_type'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+

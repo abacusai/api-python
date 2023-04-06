@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, features={}, pointInTimeGroups={}, codeSource={})
+.. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, annotationConfig=None, features={}, pointInTimeGroups={}, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,6 +49,8 @@ Classes
    :type useOriginalCsvNames: bool
    :param pythonFunctionBindings: Config specifying variable names, types, and values to use when resolving a Python feature group.
    :type pythonFunctionBindings: list
+   :param annotationConfig: The annotations config for the feature group.
+   :type annotationConfig: dict
    :param features: List of features.
    :type features: Feature
    :param pointInTimeGroups: List of Point In Time Groups
@@ -157,6 +159,19 @@ Classes
 
       :returns: The feature group version.
       :rtype: FeatureGroupVersion
+
+
+   .. py:method:: query_feature_group_explorer(message, chat_history = None)
+
+      Send a message to Abacus Chat for the specified feature group version and receive a response.
+
+      :param message: The message that you want to send to Abacus Chat.
+      :type message: str
+      :param chat_history: A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
+      :type chat_history: list
+
+      :returns: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
+      :rtype: ChatBotResponse
 
 
    .. py:method:: wait_for_results(timeout=3600)

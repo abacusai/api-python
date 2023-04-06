@@ -70,4 +70,18 @@ Classes
       :rtype: GraphDashboard
 
 
+   .. py:method:: validate_locally(kwargs = None)
+
+      Validates a Python function by running it with the given input values in an local environment. Taking Input Feature Group as either name(string) or Pandas DataFrame in kwargs.
+
+      :param kwargs: A dictionary mapping function arguments to values to pass to the function. Feature group names will automatically be converted into pandas dataframes.
+      :type kwargs: dict
+
+      :returns: The result of executing the python function
+      :rtype: any
+
+      :raises TypeError: If an Input Feature Group argument has an invalid type or argument is missing.
+      :raises Exception: If an error occurs while validating the Python function.
+
+
 

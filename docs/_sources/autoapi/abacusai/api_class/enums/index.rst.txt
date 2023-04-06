@@ -13,7 +13,18 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.enums.ApiEnum
+   abacusai.api_class.enums.ProblemType
    abacusai.api_class.enums.SamplingMethodType
+   abacusai.api_class.enums.FillLogic
+   abacusai.api_class.enums.BatchSize
+   abacusai.api_class.enums.HolidayCalendars
+   abacusai.api_class.enums.ForecastingObjective
+   abacusai.api_class.enums.ForecastingFrequency
+   abacusai.api_class.enums.ForecastingDataSplitType
+   abacusai.api_class.enums.ForecastingLossFunction
+   abacusai.api_class.enums.ForecastingLocalScaling
+   abacusai.api_class.enums.ForecastingFillMethod
+   abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
 
 
 
@@ -37,6 +48,145 @@ Classes
 
 
 
+.. py:class:: ProblemType
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: USER_ITEM_SCORING
+      :value: 'affinity'
+
+      
+
+   .. py:attribute:: ANOMALY_DETECTION
+      :value: 'anomaly_new'
+
+      
+
+   .. py:attribute:: ANOMALY_OUTLIERS
+      :value: 'anomaly'
+
+      
+
+   .. py:attribute:: CLUSTERING
+      :value: 'clustering'
+
+      
+
+   .. py:attribute:: CLUSTERING_TIMESERIES
+      :value: 'clustering_timeseries'
+
+      
+
+   .. py:attribute:: CUMULATIVE_FORECASTING
+      :value: 'cumulative_forecasting'
+
+      
+
+   .. py:attribute:: NAMED_ENTITY_EXTRACTION
+      :value: 'nlp_ner'
+
+      
+
+   .. py:attribute:: NATURAL_LANGUAGE_SEARCH
+      :value: 'nlp_search'
+
+      
+
+   .. py:attribute:: SENTENCE_BOUNDARY_DETECTION
+      :value: 'nlp_sentence_boundary_detection'
+
+      
+
+   .. py:attribute:: SENTIMENT_DETECTION
+      :value: 'nlp_sentiment'
+
+      
+
+   .. py:attribute:: DOCUMENT_CLASSIFICATION
+      :value: 'nlp_classification'
+
+      
+
+   .. py:attribute:: DOCUMENT_SUMMARIZATION
+      :value: 'nlp_summarization'
+
+      
+
+   .. py:attribute:: DOCUMENT_VISUALIZATION
+      :value: 'nlp_document_visualization'
+
+      
+
+   .. py:attribute:: PERSONALIZATION
+      :value: 'personalization'
+
+      
+
+   .. py:attribute:: PREDICTIVE_MODELING
+      :value: 'regression'
+
+      
+
+   .. py:attribute:: FORECASTING
+      :value: 'forecasting'
+
+      
+
+   .. py:attribute:: CUSTOM_TRAINED_MODEL
+      :value: 'plug_and_play'
+
+      
+
+   .. py:attribute:: FEATURE_STORE
+      :value: 'feature_store'
+
+      
+
+   .. py:attribute:: IMAGE_CLASSIFICATION
+      :value: 'vision_classification'
+
+      
+
+   .. py:attribute:: OBJECT_DETECTION
+      :value: 'vision_object_detection'
+
+      
+
+   .. py:attribute:: IMAGE_VALUE_PREDICTION
+      :value: 'vision_regression'
+
+      
+
+   .. py:attribute:: MODEL_MONITORING
+      :value: 'model_monitoring'
+
+      
+
+   .. py:attribute:: LANGUAGE_DETECTION
+      :value: 'language_detection'
+
+      
+
+   .. py:attribute:: OPTIMIZATION
+      :value: 'optimization'
+
+      
+
+   .. py:attribute:: PRETRAINED_MODELS
+      :value: 'pretrained'
+
+      
+
+   .. py:attribute:: THEME_ANALYSIS
+      :value: 'theme_analysis'
+
+      
+
+
 .. py:class:: SamplingMethodType
 
    Bases: :py:obj:`ApiEnum`
@@ -52,6 +202,466 @@ Classes
 
    .. py:attribute:: PERCENT_SAMPLING
       :value: 'PERCENT_SAMPLING'
+
+      
+
+
+.. py:class:: FillLogic
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AVERAGE
+      :value: 'average'
+
+      
+
+   .. py:attribute:: MAX
+      :value: 'max'
+
+      
+
+   .. py:attribute:: MEDIAN
+      :value: 'median'
+
+      
+
+   .. py:attribute:: MIN
+      :value: 'min'
+
+      
+
+   .. py:attribute:: CUSTOM
+      :value: 'custom'
+
+      
+
+   .. py:attribute:: BACKFILL
+      :value: 'bfill'
+
+      
+
+   .. py:attribute:: FORWARDFILL
+      :value: 'ffill'
+
+      
+
+   .. py:attribute:: LINEAR
+      :value: 'linear'
+
+      
+
+   .. py:attribute:: NEAREST
+      :value: 'nearest'
+
+      
+
+
+.. py:class:: BatchSize
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: BATCH_8
+      :value: 8
+
+      
+
+   .. py:attribute:: BATCH_16
+      :value: 16
+
+      
+
+   .. py:attribute:: BATCH_32
+      :value: 32
+
+      
+
+   .. py:attribute:: BATCH_64
+      :value: 64
+
+      
+
+   .. py:attribute:: BATCH_128
+      :value: 128
+
+      
+
+   .. py:attribute:: BATCH_256
+      :value: 256
+
+      
+
+   .. py:attribute:: BATCH_384
+      :value: 384
+
+      
+
+   .. py:attribute:: BATCH_512
+      :value: 512
+
+      
+
+   .. py:attribute:: BATCH_740
+      :value: 740
+
+      
+
+   .. py:attribute:: BATCH_1024
+      :value: 1024
+
+      
+
+
+.. py:class:: HolidayCalendars
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AU
+      :value: 'AU'
+
+      
+
+   .. py:attribute:: UK
+      :value: 'UK'
+
+      
+
+   .. py:attribute:: US
+      :value: 'US'
+
+      
+
+
+.. py:class:: ForecastingObjective
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: ACCURACY
+      :value: 'w_c_accuracy'
+
+      
+
+   .. py:attribute:: WAPE
+      :value: 'wape'
+
+      
+
+   .. py:attribute:: MAPE
+      :value: 'mape'
+
+      
+
+   .. py:attribute:: CMAPE
+      :value: 'cmape'
+
+      
+
+   .. py:attribute:: RMSE
+      :value: 'rmse'
+
+      
+
+   .. py:attribute:: CV
+      :value: 'coefficient_of_variation'
+
+      
+
+   .. py:attribute:: BIAS
+      :value: 'bias'
+
+      
+
+   .. py:attribute:: SRMSE
+      :value: 'srmse'
+
+      
+
+
+.. py:class:: ForecastingFrequency
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: HOURLY
+      :value: '1H'
+
+      
+
+   .. py:attribute:: DAILY
+      :value: '1D'
+
+      
+
+   .. py:attribute:: WEEKLY_SUNDAY_START
+      :value: '1W'
+
+      
+
+   .. py:attribute:: WEEKLY_MONDAY_START
+      :value: 'W-MON'
+
+      
+
+   .. py:attribute:: WEEKLY_SATURDAY_START
+      :value: 'W-SAT'
+
+      
+
+   .. py:attribute:: MONTH_START
+      :value: 'MS'
+
+      
+
+   .. py:attribute:: MONTH_END
+      :value: '1M'
+
+      
+
+   .. py:attribute:: QUARTER_START
+      :value: 'QS'
+
+      
+
+   .. py:attribute:: QUARTER_END
+      :value: '1Q'
+
+      
+
+   .. py:attribute:: YEARLY
+      :value: '1Y'
+
+      
+
+
+.. py:class:: ForecastingDataSplitType
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AUTO
+      :value: 'Automatic Time Based'
+
+      
+
+   .. py:attribute:: TIMESTAMP
+      :value: 'Timestamp Based'
+
+      
+
+   .. py:attribute:: ITEM
+      :value: 'Item Based'
+
+      
+
+   .. py:attribute:: PREDICTION_LENGTH
+      :value: 'Force Prediction Length'
+
+      
+
+
+.. py:class:: ForecastingLossFunction
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: CUSTOM
+      :value: 'Custom'
+
+      
+
+   .. py:attribute:: MEAN_ABSOLUTE_ERROR
+      :value: 'mae'
+
+      
+
+   .. py:attribute:: NORMALIZED_MEAN_ABSOLUTE_ERROR
+      :value: 'nmae'
+
+      
+
+   .. py:attribute:: PEAKS_MEAN_ABSOLUTE_ERROR
+      :value: 'peaks_mae'
+
+      
+
+   .. py:attribute:: MEAN_ABSOLUTE_PERCENTAGE_ERROR
+      :value: 'stable_mape'
+
+      
+
+   .. py:attribute:: POINTWISE_ACCURACY
+      :value: 'accuracy'
+
+      
+
+   .. py:attribute:: ROOT_MEAN_SQUARE_ERROR
+      :value: 'rmse'
+
+      
+
+   .. py:attribute:: NORMALIZED_ROOT_MEAN_SQUARE_ERROR
+      :value: 'nrmse'
+
+      
+
+   .. py:attribute:: ASYMMETRIC_MEAN_ABSOLUTE_PERCENTAGE_ERROR
+      :value: 'asymmetric_mape'
+
+      
+
+   .. py:attribute:: STABLE_STANDARDIZED_MEAN_ABSOLUTE_PERCENTAGE_ERROR
+      :value: 'stable_standardized_mape_with_cmape'
+
+      
+
+   .. py:attribute:: GAUSSIAN
+      :value: 'mle_gaussian_local'
+
+      
+
+   .. py:attribute:: GAUSSIAN_FULL_COVARIANCE
+      :value: 'mle_gaussfullcov'
+
+      
+
+   .. py:attribute:: GUASSIAN_EXPONENTIAL
+      :value: 'mle_gaussexp'
+
+      
+
+   .. py:attribute:: MIX_GAUSSIANS
+      :value: 'mle_gaussmix'
+
+      
+
+   .. py:attribute:: WEIBULL
+      :value: 'mle_weibull'
+
+      
+
+   .. py:attribute:: NEGATIVE_BINOMIAL
+      :value: 'mle_negbinom'
+
+      
+
+   .. py:attribute:: LOG_ROOT_MEAN_SQUARE_ERROR
+      :value: 'log_rmse'
+
+      
+
+
+.. py:class:: ForecastingLocalScaling
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: ZSCORE
+      :value: 'zscore'
+
+      
+
+   .. py:attribute:: SLIDING_ZSCORE
+      :value: 'sliding_zscore'
+
+      
+
+   .. py:attribute:: LAST_POINT
+      :value: 'lastpoint'
+
+      
+
+   .. py:attribute:: MIN_MAX
+      :value: 'minmax'
+
+      
+
+   .. py:attribute:: MIN_STD
+      :value: 'minstd'
+
+      
+
+   .. py:attribute:: ROBUST
+      :value: 'robust'
+
+      
+
+   .. py:attribute:: ITEM
+      :value: 'item'
+
+      
+
+
+.. py:class:: ForecastingFillMethod
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: BACK
+      :value: 'BACK'
+
+      
+
+   .. py:attribute:: MIDDLE
+      :value: 'MIDDLE'
+
+      
+
+   .. py:attribute:: FUTURE
+      :value: 'FUTURE'
+
+      
+
+
+.. py:class:: ForecastingQuanitlesExtensionMethod
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: DIRECT
+      :value: 'direct'
+
+      
+
+   .. py:attribute:: QUADRATIC
+      :value: 'quadratic'
+
+      
+
+   .. py:attribute:: ANCESTRAL_SIMULATION
+      :value: 'simulation'
 
       
 

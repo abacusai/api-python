@@ -22,6 +22,7 @@ class ProblemType(ApiEnum):
     ANOMALY_DETECTION = 'anomaly_new'
     ANOMALY_OUTLIERS = 'anomaly'
     CLUSTERING = 'clustering'
+    CLUSTERING_TIMESERIES = 'clustering_timeseries'
     CUMULATIVE_FORECASTING = 'cumulative_forecasting'
     NAMED_ENTITY_EXTRACTION = 'nlp_ner'
     NATURAL_LANGUAGE_SEARCH = 'nlp_search'

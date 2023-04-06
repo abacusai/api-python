@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: EdaForecastingAnalysis(client, primaryKeys=None, forecastingTargetFeature=None, timestampFeature=None, forecastFrequency=None, salesAcrossTime={}, cummulativeContribution={}, missingValueDistribution={}, historyLength={}, numRowsHistogram={}, productMaturity={})
+.. py:class:: EdaForecastingAnalysis(client, primaryKeys=None, forecastingTargetFeature=None, timestampFeature=None, forecastFrequency=None, salesAcrossTime={}, cummulativeContribution={}, missingValueDistribution={}, historyLength={}, numRowsHistogram={}, productMaturity={}, seasonalityYear={}, seasonalityMonth={}, seasonalityWeekOfYear={}, seasonalityDayOfYear={}, seasonalityDayOfMonth={}, seasonalityDayOfWeek={}, seasonalityQuarter={}, seasonalityHour={}, seasonalityMinute={}, seasonalitySecond={}, autocorrelation={}, partialAutocorrelation={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,6 +45,30 @@ Classes
    :type numRowsHistogram: ForecastingAnalysisGraphData
    :param productMaturity: Data showing length of how long a product has been alive with average, p10, p90 and median
    :type productMaturity: ForecastingAnalysisGraphData
+   :param seasonalityYear: Data showing average, p10, p90, median sales across grouped years
+   :type seasonalityYear: ForecastingAnalysisGraphData
+   :param seasonalityMonth: Data showing average, p10, p90, median sales across grouped months
+   :type seasonalityMonth: ForecastingAnalysisGraphData
+   :param seasonalityWeekOfYear: Data showing average, p10, p90, median sales across week of year seasonality
+   :type seasonalityWeekOfYear: ForecastingAnalysisGraphData
+   :param seasonalityDayOfYear: Data showing average, p10, p90, median sales across day of year seasonality
+   :type seasonalityDayOfYear: ForecastingAnalysisGraphData
+   :param seasonalityDayOfMonth: Data showing average, p10, p90, median sales across day of month seasonality
+   :type seasonalityDayOfMonth: ForecastingAnalysisGraphData
+   :param seasonalityDayOfWeek: Data showing average, p10, p90, median sales across day of week seasonality
+   :type seasonalityDayOfWeek: ForecastingAnalysisGraphData
+   :param seasonalityQuarter: Data showing average, p10, p90, median sales across grouped quarters
+   :type seasonalityQuarter: ForecastingAnalysisGraphData
+   :param seasonalityHour: Data showing average, p10, p90, median sales across grouped hours
+   :type seasonalityHour: ForecastingAnalysisGraphData
+   :param seasonalityMinute: Data showing average, p10, p90, median sales across grouped minutes
+   :type seasonalityMinute: ForecastingAnalysisGraphData
+   :param seasonalitySecond: Data showing average, p10, p90, median sales across grouped seconds
+   :type seasonalitySecond: ForecastingAnalysisGraphData
+   :param autocorrelation: Data showing the correlation of the forecasting target and its lagged values at different time lags.
+   :type autocorrelation: ForecastingAnalysisGraphData
+   :param partialAutocorrelation: Data showing the correlation of the forecasting target and its lagged values, controlling for the effects of intervening lags.
+   :type partialAutocorrelation: ForecastingAnalysisGraphData
 
    .. py:method:: __repr__()
 

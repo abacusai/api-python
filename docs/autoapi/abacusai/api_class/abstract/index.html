@@ -108,11 +108,50 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.camel_case" title="abacusai.api_class.abstract.camel_case"><code class="xref py py-obj docutils literal notranslate"><span class="pre">camel_case</span></code></a>(value)</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.upper_snake_case" title="abacusai.api_class.abstract.upper_snake_case"><code class="xref py py-obj docutils literal notranslate"><span class="pre">upper_snake_case</span></code></a>(value)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.snake_case" title="abacusai.api_class.abstract.snake_case"><code class="xref py py-obj docutils literal notranslate"><span class="pre">snake_case</span></code></a>(value)</p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.FIRST_CAP_RE" title="abacusai.api_class.abstract.FIRST_CAP_RE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FIRST_CAP_RE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.abstract.ALL_CAP_RE" title="abacusai.api_class.abstract.ALL_CAP_RE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ALL_CAP_RE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="abacusai.api_class.abstract.FIRST_CAP_RE">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">FIRST_CAP_RE</span></span><a class="headerlink" href="#abacusai.api_class.abstract.FIRST_CAP_RE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="abacusai.api_class.abstract.ALL_CAP_RE">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">ALL_CAP_RE</span></span><a class="headerlink" href="#abacusai.api_class.abstract.ALL_CAP_RE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="abacusai.api_class.abstract.camel_case">
 <span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">camel_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.abstract.camel_case" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_class.abstract.upper_snake_case">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">upper_snake_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.abstract.upper_snake_case" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_class.abstract.snake_case">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_class.abstract.</span></span><span class="sig-name descname"><span class="pre">snake_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.abstract.snake_case" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -121,6 +160,16 @@
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Helper class that provides a standard way to create an ABC using
 inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClass._upper_snake_case_keys">
+<span class="sig-name descname"><span class="pre">_upper_snake_case_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.abstract.ApiClass._upper_snake_case_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClass._support_kwargs">
+<span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.abstract.ApiClass._support_kwargs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.abstract.ApiClass.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.abstract.ApiClass.__post_init__" title="Permalink to this definition"></a></dt>

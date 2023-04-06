@@ -154,6 +154,19 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.describe_feature_group_version(self.feature_group_version)
 
+    def query_feature_group_explorer(self, message: str, chat_history: list = None):
+        """
+        Send a message to Abacus Chat for the specified feature group version and receive a response.
+
+        Args:
+            message (str): The message that you want to send to Abacus Chat.
+            chat_history (list): A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
+
+        Returns:
+            ChatBotResponse: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
+        """
+        return self.client.query_feature_group_explorer(self.feature_group_version, message, chat_history)
+
     def wait_for_results(self, timeout=3600):
         """
         A waiting call until feature group version is materialized

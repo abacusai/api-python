@@ -23,10 +23,35 @@ Functions
 .. autoapisummary::
 
    abacusai.api_class.abstract.camel_case
+   abacusai.api_class.abstract.upper_snake_case
+   abacusai.api_class.abstract.snake_case
 
 
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.abstract.FIRST_CAP_RE
+   abacusai.api_class.abstract.ALL_CAP_RE
+
+
+.. py:data:: FIRST_CAP_RE
+
+   
+
+.. py:data:: ALL_CAP_RE
+
+   
 
 .. py:function:: camel_case(value)
+
+
+.. py:function:: upper_snake_case(value)
+
+
+.. py:function:: snake_case(value)
 
 
 .. py:class:: ApiClass
@@ -35,6 +60,16 @@ Functions
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
 
    .. py:method:: __post_init__()
 
