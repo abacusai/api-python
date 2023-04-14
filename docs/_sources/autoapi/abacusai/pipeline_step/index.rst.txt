@@ -1,0 +1,60 @@
+:py:mod:`abacusai.pipeline_step`
+================================
+
+.. py:module:: abacusai.pipeline_step
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.pipeline_step.PipelineStep
+
+
+
+
+.. py:class:: PipelineStep(client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, pythonFunction={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A step in a pipeline.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param pipelineStepId: The reference to this step.
+   :type pipelineStepId: str
+   :param pipelineId: The reference to the pipeline this step belongs to.
+   :type pipelineId: str
+   :param stepName: The name of the step.
+   :type stepName: str
+   :param pipelineName: The name of the pipeline this step is a part of.
+   :type pipelineName: str
+   :param createdAt: The date and time which this step was created.
+   :type createdAt: str
+   :param updatedAt: The date and time when this step was last updated.
+   :type updatedAt: str
+   :param pythonFunctionId: The python function_id.
+   :type pythonFunctionId: str
+   :param stepDependencies: List of steps this step depends on.
+   :type stepDependencies: list[str]
+   :param pythonFunction: Information about the python function for the step.
+   :type pythonFunction: PythonFunction
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

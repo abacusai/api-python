@@ -79,6 +79,9 @@ from .monitor_alert_version import MonitorAlertVersion
 from .natural_language_explanation import NaturalLanguageExplanation
 from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
+from .pipeline import Pipeline
+from .pipeline_step import PipelineStep
+from .pipeline_version import PipelineVersion
 from .problem_type import ProblemType
 from .project import Project
 from .project_dataset import ProjectDataset
@@ -1535,6 +1538,37 @@ class ReadOnlyClient(BaseApiClient):
             PythonFunction: A list of PythonFunction objects."""
         return self._call_api('listPythonFunctions', 'GET', query_params={'functionType': function_type}, parse_type=PythonFunction)
 
+    def list_pipelines(self, project_id: str = None) -> Pipeline:
+        """Lists the pipelines for an organization or a project
+
+        Args:
+            project_id (str): Unique string identifier for the project to list graph dashboards from.
+
+        Returns:
+            Pipeline: A list of pipelines."""
+        return self._call_api('listPipelines', 'GET', query_params={'projectId': project_id}, parse_type=Pipeline)
+
+    def describe_pipeline_version(self, pipeline_version: str) -> PipelineVersion:
+        """Describes a specified pipeline version
+
+        Args:
+            pipeline_version (str): Unique string identifier for the pipeline version
+
+        Returns:
+            PipelineVersion: Object describing the pipeline version"""
+        return self._call_api('describePipelineVersion', 'GET', query_params={'pipelineVersion': pipeline_version}, parse_type=PipelineVersion)
+
+    def describe_pipeline_step(self, pipeline_name: str, step_name: str) -> PipelineStep:
+        """Deletes a step from a pipeline.
+
+        Args:
+            pipeline_name (str): The name of the pipeline.
+            step_name (str): The name of the step.
+
+        Returns:
+            PipelineStep: An object describing the pipeline step."""
+        return self._call_api('describePipelineStep', 'GET', query_params={'pipelineName': pipeline_name, 'stepName': step_name}, parse_type=PipelineStep)
+
     def describe_graph_dashboard(self, graph_dashboard_id: str) -> GraphDashboard:
         """Describes a given graph dashboard.
 
@@ -2365,7 +2399,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_SEQUENCE_CLASSIFICATION_2,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -3349,7 +3383,7 @@ Creates a new feature group defined as the union of other feature group versions
             location_date_format (str): The date format in which the data is partitioned in the cloud storage location. For example, if the data is partitioned as s3://bucket1/dir1/dir2/event_date=YYYY-MM-DD/dir4/filename.parquet, then the `location_date_format` is YYYY-MM-DD. This format needs to be consistent across all files within the specified location.
             date_format_lookback_days (int): The number of days to look back from the current day for import locations that are date partitioned. For example, import date 2021-06-04 with `date_format_lookback_days` = 3 will retrieve data for all the dates in the range [2021-06-02, 2021-06-04].
             incremental (bool): Signifies if the dataset is an incremental dataset.
-            is_documentset (bool): Signifies if the dataset is docstore dataset.
+            is_documentset (bool): Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
@@ -3440,7 +3474,7 @@ Creates a new feature group defined as the union of other feature group versions
             table_name (str): Organization-unique table name for this dataset.
             file_format (str): The file format of the dataset.
             csv_delimiter (str): If the file format is CSV, use a specific CSV delimiter.
-            is_documentset (bool): Signifies if the dataset is a docstore dataset.
+            is_documentset (bool): Signifies if the dataset is a docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
 
@@ -4441,7 +4475,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token,)
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
-    def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False) -> Dict:
+    def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
         """Returns the k nearest neighbors for the provided embedding vector.
 
         Args:
@@ -4450,10 +4484,11 @@ Creates a new feature group defined as the union of other feature group versions
             vector (list): Input vector to perform the k nearest neighbors with.
             k (int): Overrideable number of items to return.
             distance (str): Specify the distance function to use when finding nearest neighbors.
-            include_score (bool): If True, will return the score alongside the resulting embedding value."""
+            include_score (bool): If True, will return the score alongside the resulting embedding value.
+            catalog_id (str): An optional parameter honored only for embeddings that provide a catalog id"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token,)
-        return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score}, server_override=prediction_url)
+        return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score, 'catalogId': catalog_id}, server_override=prediction_url)
 
     def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):
         """Returns the k nearest neighbors for the queries provided.
@@ -5093,6 +5128,97 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             name (str): The name to identify the Python function."""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
+
+    def create_pipeline(self, pipeline_name: str, project_id: str = None) -> Pipeline:
+        """Creates a pipeline for executing multiple steps.
+
+        Args:
+            pipeline_name (str): The name of the pipeline, which should be unique to the organization.
+            project_id (str): A unique string identifier for the plot dashboard.
+
+        Returns:
+            Pipeline: An object that describes a Pipeline."""
+        return self._call_api('createPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id}, parse_type=Pipeline)
+
+    def describe_pipeline(self, pipeline_name: str) -> Pipeline:
+        """Describes a given pipeline.
+
+        Args:
+            pipeline_name (str): The name of the pipeline to describe.
+
+        Returns:
+            Pipeline: An object describing a Pipeline"""
+        return self._call_api('describePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=Pipeline)
+
+    def delete_pipeline(self, pipeline_name: None):
+        """Deletes a pipeline.
+
+        Args:
+            pipeline_name (None): The name of the pipeline to describe."""
+        return self._call_api('deletePipeline', 'DELETE', query_params={'pipelineName': pipeline_name})
+
+    def list_pipeline_versions(self, pipeline_name: str) -> List[PipelineVersion]:
+        """Lists the pipeline versions for a specified pipeline
+
+        Args:
+            pipeline_name (str): The name of the pipeline to describe.
+
+        Returns:
+            PipelineVersion: A list of pipeline versions."""
+        return self._call_api('listPipelineVersions', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=PipelineVersion)
+
+    def run_pipeline(self, pipeline_name: str, pipeline_variable_mappings: list = None) -> PipelineVersion:
+        """Runs a specified pipeline with the arguments provided.
+
+        Args:
+            pipeline_name (str): The name of the pipeline to run.
+            pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+
+        Returns:
+            PipelineVersion: The object describing the pipeline"""
+        return self._call_api('runPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'pipelineVariableMappings': pipeline_variable_mappings}, parse_type=PipelineVersion)
+
+    def create_pipeline_step(self, pipeline_name: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> Pipeline:
+        """Creates a step in a given pipeline.
+
+        Args:
+            pipeline_name (str): The name of the pipeline to run.
+            step_name (str): The name of the step.
+            function_name (str): The name of the Python function.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+            step_input_mappings (list): List of Python function arguments.
+            output_variable_mappings (list): List of Python function ouputs.
+            step_dependencies (list): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('createPipelineStep', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=Pipeline)
+
+    def delete_pipeline_step(self, pipeline_name: str, step_name: str):
+        """Deletes a step from a pipeline.
+
+        Args:
+            pipeline_name (str): The name of the pipeline.
+            step_name (str): The name of the step."""
+        return self._call_api('deletePipelineStep', 'DELETE', query_params={'pipelineName': pipeline_name, 'stepName': step_name})
+
+    def update_pipeline_step(self, pipeline_name: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> Pipeline:
+        """Creates a step in a given pipeline.
+
+        Args:
+            pipeline_name (str): The name of the pipeline to run.
+            step_name (str): The name of the step.
+            function_name (str): The name of the Python function.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+            step_input_mappings (list): List of Python function arguments.
+            output_variable_mappings (list): List of Python function ouputs.
+            step_dependencies (list): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=Pipeline)
 
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots

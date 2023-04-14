@@ -1,0 +1,66 @@
+:py:mod:`abacusai.pipeline_step_version`
+========================================
+
+.. py:module:: abacusai.pipeline_step_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.pipeline_step_version.PipelineStepVersion
+
+
+
+
+.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A version of a pipeline step.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param stepName: The name of the step.
+   :type stepName: str
+   :param pipelineStepVersion: The reference to the pipeline step version.
+   :type pipelineStepVersion: str
+   :param pipelineStepId: The reference to this step.
+   :type pipelineStepId: str
+   :param pipelineId: The reference to the pipeline this step belongs to.
+   :type pipelineId: str
+   :param pipelineVersion: The reference to the pipeline version.
+   :type pipelineVersion: str
+   :param createdAt: The date and time which this step was created.
+   :type createdAt: str
+   :param updatedAt: The date and time when this step was last updated.
+   :type updatedAt: str
+   :param status: The status of the pipeline version.
+   :type status: str
+   :param pythonFunctionId: The reference to the python function
+   :type pythonFunctionId: str
+   :param functionVariableMappings: The mappings for function parameters' names.
+   :type functionVariableMappings: dict
+   :param stepDependencies: List of steps this step depends on.
+   :type stepDependencies: list[str]
+   :param outputVariableMappings: The mappings for the output variables to the step.
+   :type outputVariableMappings: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

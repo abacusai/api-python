@@ -1473,6 +1473,41 @@ Attributes
       :rtype: PythonFunction
 
 
+   .. py:method:: list_pipelines(project_id = None)
+
+      Lists the pipelines for an organization or a project
+
+      :param project_id: Unique string identifier for the project to list graph dashboards from.
+      :type project_id: str
+
+      :returns: A list of pipelines.
+      :rtype: Pipeline
+
+
+   .. py:method:: describe_pipeline_version(pipeline_version)
+
+      Describes a specified pipeline version
+
+      :param pipeline_version: Unique string identifier for the pipeline version
+      :type pipeline_version: str
+
+      :returns: Object describing the pipeline version
+      :rtype: PipelineVersion
+
+
+   .. py:method:: describe_pipeline_step(pipeline_name, step_name)
+
+      Deletes a step from a pipeline.
+
+      :param pipeline_name: The name of the pipeline.
+      :type pipeline_name: str
+      :param step_name: The name of the step.
+      :type step_name: str
+
+      :returns: An object describing the pipeline step.
+      :rtype: PipelineStep
+
+
    .. py:method:: describe_graph_dashboard(graph_dashboard_id)
 
       Describes a given graph dashboard.
@@ -2183,7 +2218,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_SEQUENCE_CLASSIFICATION_2,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -3477,7 +3512,7 @@ Attributes
       :type date_format_lookback_days: int
       :param incremental: Signifies if the dataset is an incremental dataset.
       :type incremental: bool
-      :param is_documentset: Signifies if the dataset is docstore dataset.
+      :param is_documentset: Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
       :type is_documentset: bool
       :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
       :type extract_bounding_boxes: bool
@@ -3605,7 +3640,7 @@ Attributes
       :type file_format: str
       :param csv_delimiter: If the file format is CSV, use a specific CSV delimiter.
       :type csv_delimiter: str
-      :param is_documentset: Signifies if the dataset is a docstore dataset.
+      :param is_documentset: Signifies if the dataset is a docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
       :type is_documentset: bool
       :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
       :type extract_bounding_boxes: bool
@@ -4891,7 +4926,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
+   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False, catalog_id = None)
 
       Returns the k nearest neighbors for the provided embedding vector.
 
@@ -4907,6 +4942,8 @@ Attributes
       :type distance: str
       :param include_score: If True, will return the score alongside the resulting embedding value.
       :type include_score: bool
+      :param catalog_id: An optional parameter honored only for embeddings that provide a catalog id
+      :type catalog_id: str
 
 
    .. py:method:: get_multiple_k_nearest(deployment_token, deployment_id, queries)
@@ -5693,6 +5730,122 @@ Attributes
 
       :param name: The name to identify the Python function.
       :type name: str
+
+
+   .. py:method:: create_pipeline(pipeline_name, project_id = None)
+
+      Creates a pipeline for executing multiple steps.
+
+      :param pipeline_name: The name of the pipeline, which should be unique to the organization.
+      :type pipeline_name: str
+      :param project_id: A unique string identifier for the plot dashboard.
+      :type project_id: str
+
+      :returns: An object that describes a Pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: describe_pipeline(pipeline_name)
+
+      Describes a given pipeline.
+
+      :param pipeline_name: The name of the pipeline to describe.
+      :type pipeline_name: str
+
+      :returns: An object describing a Pipeline
+      :rtype: Pipeline
+
+
+   .. py:method:: delete_pipeline(pipeline_name)
+
+      Deletes a pipeline.
+
+      :param pipeline_name: The name of the pipeline to describe.
+      :type pipeline_name: None
+
+
+   .. py:method:: list_pipeline_versions(pipeline_name)
+
+      Lists the pipeline versions for a specified pipeline
+
+      :param pipeline_name: The name of the pipeline to describe.
+      :type pipeline_name: str
+
+      :returns: A list of pipeline versions.
+      :rtype: PipelineVersion
+
+
+   .. py:method:: run_pipeline(pipeline_name, pipeline_variable_mappings = None)
+
+      Runs a specified pipeline with the arguments provided.
+
+      :param pipeline_name: The name of the pipeline to run.
+      :type pipeline_name: str
+      :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
+      :type pipeline_variable_mappings: list
+
+      :returns: The object describing the pipeline
+      :rtype: PipelineVersion
+
+
+   .. py:method:: create_pipeline_step(pipeline_name, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+
+      Creates a step in a given pipeline.
+
+      :param pipeline_name: The name of the pipeline to run.
+      :type pipeline_name: str
+      :param step_name: The name of the step.
+      :type step_name: str
+      :param function_name: The name of the Python function.
+      :type function_name: str
+      :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+      :type source_code: str
+      :param step_input_mappings: List of Python function arguments.
+      :type step_input_mappings: list
+      :param output_variable_mappings: List of Python function ouputs.
+      :type output_variable_mappings: list
+      :param step_dependencies: List of step names this step depends on.
+      :type step_dependencies: list
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: delete_pipeline_step(pipeline_name, step_name)
+
+      Deletes a step from a pipeline.
+
+      :param pipeline_name: The name of the pipeline.
+      :type pipeline_name: str
+      :param step_name: The name of the step.
+      :type step_name: str
+
+
+   .. py:method:: update_pipeline_step(pipeline_name, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+
+      Creates a step in a given pipeline.
+
+      :param pipeline_name: The name of the pipeline to run.
+      :type pipeline_name: str
+      :param step_name: The name of the step.
+      :type step_name: str
+      :param function_name: The name of the Python function.
+      :type function_name: str
+      :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+      :type source_code: str
+      :param step_input_mappings: List of Python function arguments.
+      :type step_input_mappings: list
+      :param output_variable_mappings: List of Python function ouputs.
+      :type output_variable_mappings: list
+      :param step_dependencies: List of step names this step depends on.
+      :type step_dependencies: list
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
 
 
    .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)

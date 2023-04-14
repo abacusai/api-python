@@ -1,0 +1,52 @@
+:py:mod:`abacusai.pipeline`
+===========================
+
+.. py:module:: abacusai.pipeline
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.pipeline.Pipeline
+
+
+
+
+.. py:class:: Pipeline(client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, steps={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A Pipeline For Steps.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param pipelineName: The name of the pipeline this step is a part of.
+   :type pipelineName: str
+   :param pipelineId: The reference to the pipeline this step belongs to.
+   :type pipelineId: str
+   :param createdAt: The date and time which the pipeline was created.
+   :type createdAt: str
+   :param pipelineVariableMappings: A description of the function variables into the pipeline.
+   :type pipelineVariableMappings: dict
+   :param steps: A list of the pipeline steps attached to the pipeline.
+   :type steps: PipelineStep
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

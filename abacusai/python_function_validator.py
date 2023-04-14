@@ -1,9 +1,12 @@
 import importlib.util
+import logging
 import os
+import sys
 import tempfile
-from typing import Any, Dict
+from contextlib import contextmanager
+from typing import Any, Dict, Generator, List, Optional
 
-import pandas as pd
+from pandas import DataFrame
 
 
 def validate_function_locally(client, python_function_name: str, kwargs: Dict = None) -> Any:
@@ -25,7 +28,6 @@ def validate_function_locally(client, python_function_name: str, kwargs: Dict = 
     kwargs = kwargs or {}
     # Get the function metadata from the AbacusAI client.
     function_metadata = client.describe_python_function(python_function_name)
-
     for argument in function_metadata.function_variable_mappings:
         # Check that all required arguments are present.
         if argument['name'] not in kwargs and argument['is_required']:
@@ -39,33 +41,98 @@ def validate_function_locally(client, python_function_name: str, kwargs: Dict = 
                     feature_group = client.describe_feature_group_by_table_name(
                         value)
                     kwargs[argument['name']] = feature_group.load_as_pandas()
-                elif not isinstance(value, pd.DataFrame):
+                elif not isinstance(value, DataFrame):
                     raise TypeError(f'Invalid type for feature group argument {argument["name"]}. '
                                     f'It should be either a string or a Pandas DataFrame, '
                                     f'but got {type(value).__name__}')
 
     # Create a temporary directory to store input values and Python code.
     with tempfile.TemporaryDirectory() as temp_dir:
+        py_fun_source_code = function_metadata.code_source.source_code
+
+        # Retrieving Dependent Modules
+        dependent_modules = function_metadata.module_dependencies
+        modules_and_source_code = []
+        if dependent_modules:
+            for module in dependent_modules:
+                try:
+                    modules_and_source_code.append(
+                        client.describe_module(module))
+                except Exception as e:
+                    logging.exception(
+                        f'Error while retrieving dependent module "{module}"')
+                    raise e
+
+        for dependent_module in modules_and_source_code:
+            dependent_module_path = os.path.join(
+                temp_dir, f'{dependent_module.name}.py')
+            with open(dependent_module_path, 'w') as f:
+                f.write(dependent_module.code_source.source_code)
+
         # Write the Python function code to a file and import the function.
         module_name = 'validation_module'
         module_path = os.path.join(temp_dir, f'{module_name}.py')
 
         with open(module_path, 'w') as f:
-            f.write(function_metadata.code_source.source_code)
+            f.write(py_fun_source_code)
 
         spec = importlib.util.spec_from_file_location(module_name, module_path)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-
         function = getattr(
             module, function_metadata.function_name or python_function_name)
 
-        # Run the function with the provided arguments.
-        try:
-            result = function(**kwargs)
-        except Exception as e:
-            raise Exception(
-                f"Error while validating Python function '{python_function_name}': {e}")
+        with _MonkeyPatch().context() as m:
+            m.syspath_prepend(temp_dir)
+            try:
+                result = function(**kwargs)
+                return result
+            except Exception as e:
+                logging.exception(
+                    f'Error while validating Python function "{python_function_name}"')
+                raise e
 
-        # Return the result and status of the validation.
-        return result
+
+class _MonkeyPatch:
+    """
+    Helper class to prepend to ``sys.path`` and undo monkeypatching of attributes
+        :syspath_prepend: prepend to ``sys.path`` list of import locations
+        :undo: undo all changes made
+    """
+
+    def __init__(self) -> None:
+        self._savesyspath: Optional[List[str]] = None
+
+    @classmethod
+    @contextmanager
+    def context(cls) -> Generator['_MonkeyPatch', None, None]:
+        m = cls()
+        try:
+            yield m
+        finally:
+            m.undo()
+
+    def syspath_prepend(self, path) -> None:
+        """
+        Prepend ``path`` to ``sys.path`` list of import locations.
+        """
+
+        if self._savesyspath is None:
+            self._savesyspath = sys.path[:]
+        sys.path.insert(0, str(path))
+
+        # this is only needed when pkg_resources was already loaded by the namespace package
+        if 'pkg_resources' in sys.modules:
+            from pkg_resources import fixup_namespace_packages
+            fixup_namespace_packages(str(path))
+        from importlib import invalidate_caches
+
+        invalidate_caches()
+
+    def undo(self) -> None:
+        """
+        Undo all monkeypatching done by this object.
+        """
+        if self._savesyspath is not None:
+            sys.path[:] = self._savesyspath
+            self._savesyspath = None

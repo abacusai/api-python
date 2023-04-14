@@ -1,0 +1,48 @@
+:py:mod:`abacusai.annotation_config`
+====================================
+
+.. py:module:: abacusai.annotation_config
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.annotation_config.AnnotationConfig
+
+
+
+
+.. py:class:: AnnotationConfig(client, featureAnnotationConfigs=None, labels=None, statusFeature=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Annotation config for a feature group
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureAnnotationConfigs: List of feature annotation configs
+   :type featureAnnotationConfigs: list
+   :param labels: List of labels
+   :type labels: list
+   :param statusFeature: Name of the feature that contains the status of the annotation (Optional)
+   :type statusFeature: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

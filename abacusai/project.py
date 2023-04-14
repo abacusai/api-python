@@ -497,6 +497,18 @@ class Project(AbstractApiClass):
         """
         return self.client.list_batch_predictions(self.project_id)
 
+    def list_pipelines(self):
+        """
+        Lists the pipelines for an organization or a project
+
+        Args:
+            project_id (str): Unique string identifier for the project to list graph dashboards from.
+
+        Returns:
+            Pipeline: A list of pipelines.
+        """
+        return self.client.list_pipelines(self.project_id)
+
     def create_graph_dashboard(self, name: str, python_function_ids: list = None):
         """
         Create a plot dashboard given selected python plots

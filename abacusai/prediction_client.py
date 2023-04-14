@@ -191,7 +191,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token,)
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
-    def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False) -> Dict:
+    def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
         """Returns the k nearest neighbors for the provided embedding vector.
 
         Args:
@@ -200,10 +200,11 @@ class PredictionClient(BaseApiClient):
             vector (list): Input vector to perform the k nearest neighbors with.
             k (int): Overrideable number of items to return.
             distance (str): Specify the distance function to use when finding nearest neighbors.
-            include_score (bool): If True, will return the score alongside the resulting embedding value."""
+            include_score (bool): If True, will return the score alongside the resulting embedding value.
+            catalog_id (str): An optional parameter honored only for embeddings that provide a catalog id"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token,)
-        return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score}, server_override=prediction_url)
+        return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score, 'catalogId': catalog_id}, server_override=prediction_url)
 
     def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):
         """Returns the k nearest neighbors for the queries provided.

@@ -236,7 +236,7 @@ Classes
       :type explainer_type: str
 
 
-   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False)
+   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False, catalog_id = None)
 
       Returns the k nearest neighbors for the provided embedding vector.
 
@@ -252,6 +252,8 @@ Classes
       :type distance: str
       :param include_score: If True, will return the score alongside the resulting embedding value.
       :type include_score: bool
+      :param catalog_id: An optional parameter honored only for embeddings that provide a catalog id
+      :type catalog_id: str
 
 
    .. py:method:: get_multiple_k_nearest(deployment_token, deployment_id, queries)
