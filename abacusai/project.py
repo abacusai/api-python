@@ -144,7 +144,7 @@ class Project(AbstractApiClass):
         Args:
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST
+            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE
 
         Returns:
             Schema: A list of objects that describes the resulting dataset's schema after the column's data type is set.
@@ -468,7 +468,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_deployment_tokens(self.project_id)
 
-    def list_refresh_policies(self, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = []):
+    def list_refresh_policies(self, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []):
         """
         List the refresh policies for the organization
 
@@ -479,11 +479,12 @@ class Project(AbstractApiClass):
             batch_prediction_ids (list): Comma-separated list of Batch Prediction IDs.
             model_monitor_ids (list): Comma-separated list of Model Monitor IDs.
             prediction_metric_ids (list): Comma-separated list of Prediction Metric IDs.
+            notebook_ids (list): Comma-separated list of Notebook IDs.
 
         Returns:
             RefreshPolicy: List of all refresh policies in the organization.
         """
-        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, prediction_metric_ids)
+        return self.client.list_refresh_policies(self.project_id, dataset_ids, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, prediction_metric_ids, notebook_ids)
 
     def list_batch_predictions(self):
         """
@@ -546,6 +547,34 @@ class Project(AbstractApiClass):
             Algorithm: List of applicable builtin algorithms.
         """
         return self.client.list_builtin_algorithms(self.project_id, feature_group_ids, training_config)
+
+    def create_chat_session(self):
+        """
+        Creates a chat session with Abacus Chat.
+
+        Args:
+            project_id (str): The project this chat session belongs to
+
+        Returns:
+            ChatSession: The chat session with Abacus Chat
+        """
+        return self.client.create_chat_session(self.project_id)
+
+    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None):
+        """
+        Creates a new AI agent.
+
+        Args:
+            function_source_code (str): The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            agent_function_name (str): The name of the function found in the source code that will be executed when the agent is deployed.
+            name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
+            memory (int): The memory allocation (in GB) for the agent.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+
+        Returns:
+            Model: None
+        """
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

@@ -29,7 +29,7 @@ from .api_key import ApiKey
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
-from .chat_bot_response import ChatBotResponse
+from .chat_session import ChatSession
 from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
@@ -49,6 +49,7 @@ from .eda_feature_association import EdaFeatureAssociation
 from .eda_feature_collinearity import EdaFeatureCollinearity
 from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
+from .execute_fg_operation import ExecuteFgOperation
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
@@ -61,6 +62,9 @@ from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
 from .graph_dashboard import GraphDashboard
+from .llm_input import LlmInput
+from .llm_response import LlmResponse
+from .llm_search_result import LlmSearchResult
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
 from .model_metrics import ModelMetrics
@@ -188,7 +192,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.61.0'
+    client_version = '0.63.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -549,8 +553,8 @@ class ReadOnlyClient(BaseApiClient):
         Args:
             feature_group_id (str): The ID of the feature group the annotation is on.
             feature_name (str): The name of the feature the annotation is on.
-            doc_id (str): The ID of the primary document the annotation is on.
-            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
 
         Returns:
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information."""
@@ -632,6 +636,26 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FeatureGroup: All the feature groups associated with the specified Python function ID."""
         return self._call_api('listPythonFunctionFeatureGroups', 'GET', query_params={'name': name, 'limit': limit}, parse_type=FeatureGroup)
+
+    def execute_async_feature_group_operation(self, query: str = None) -> ExecuteFgOperation:
+        """Starts the execution of fg operation
+
+        Args:
+            query (str): The SQL to be executed.
+
+        Returns:
+            ExecuteFgOperation: A dict that contains the execution status"""
+        return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query}, parse_type=ExecuteFgOperation)
+
+    def download_execute_feature_group_operation_result_part_chunk(self, execute_fg_operation_run_id: str, part: int, offset: int = 0, chunk_size: int = 10485760) -> Dict:
+        """Downloads a chunk of the result of the execution of fg operation
+
+        Args:
+            execute_fg_operation_run_id (str): The unique ID associated with the execution.
+            part (int): The part number of the result
+            offset (int): The offset in the part
+            chunk_size (int): The size of the chunk"""
+        return self._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'executeFgOperationRunId': execute_fg_operation_run_id, 'part': part, 'offset': offset, 'chunkSize': chunk_size})
 
     def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
         """Get a link to download the feature group version.
@@ -1434,21 +1458,22 @@ class ReadOnlyClient(BaseApiClient):
             RefreshPipelineRun: A refresh pipeline run object."""
         return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
 
-    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = []) -> RefreshPolicy:
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []) -> RefreshPolicy:
         """List the refresh policies for the organization
 
         Args:
-            project_id (str): Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, and model monitors are captured at the instant this policy was created.
+            project_id (str): Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitors, and notebooks are captured at the instant this policy was created.
             dataset_ids (list): Comma-separated list of Dataset IDs.
             model_ids (list): Comma-separated list of Model IDs.
             deployment_ids (list): Comma-separated list of Deployment IDs.
             batch_prediction_ids (list): Comma-separated list of Batch Prediction IDs.
             model_monitor_ids (list): Comma-separated list of Model Monitor IDs.
             prediction_metric_ids (list): Comma-separated list of Prediction Metric IDs.
+            notebook_ids (list): Comma-separated list of Notebook IDs.
 
         Returns:
             RefreshPolicy: List of all refresh policies in the organization."""
-        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'predictionMetricIds': prediction_metric_ids}, parse_type=RefreshPolicy)
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'predictionMetricIds': prediction_metric_ids, 'notebookIds': notebook_ids}, parse_type=RefreshPolicy)
 
     def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
         """List the the times that the refresh policy has been run
@@ -1718,6 +1743,61 @@ class ReadOnlyClient(BaseApiClient):
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s)."""
         return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, parse_type=NaturalLanguageExplanation)
 
+    def get_chat_session(self, chat_session_id: str) -> ChatSession:
+        """Gets a chat session from Abacus Chat.
+
+        Args:
+            chat_session_id (str): The chat session id
+
+        Returns:
+            ChatSession: The chat session with Abacus Chat"""
+        return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
+
+    def evaluate_prompt(self, prompt: str, system_message: str = None, num_output_tokens: int = None) -> LlmResponse:
+        """Generate response to the prompt using the specified model.
+
+        Args:
+            prompt (str): Prompt to use for generation.
+            system_message (str): System message for models that support it.
+            num_output_tokens (int): Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be <= model token limit
+
+        Returns:
+            LlmResponse: The response from the mode, raw text and parsed components."""
+        return self._call_api('evaluatePrompt', 'GET', query_params={'prompt': prompt, 'systemMessage': system_message, 'numOutputTokens': num_output_tokens}, parse_type=LlmResponse)
+
+    def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> LlmSearchResult:
+        """Search feature groups based on text and filters.
+
+        Args:
+            text (str): Text to use for approximately matching feature groups.
+            num_results (int): The maximum number of search results to retrieve. The length of the returned list is less than or equal to num_results.
+            project_id (str): The ID of the project in which to restrict the search, if specified.
+            feature_group_ids (list): A list of feagure group IDs to restrict the search to.
+
+        Returns:
+            LlmSearchResult: A list of search results, each containing the retrieved object and its relevance score"""
+        return self._call_api('searchFeatureGroups', 'GET', query_params={'text': text, 'numResults': num_results, 'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=LlmSearchResult)
+
+    def render_feature_group_data_for_llm(self, feature_group_id: str, token_budget: int = None, render_format: str = 'markdown') -> LlmInput:
+        """Encode feature groups as language model inputs.
+
+        Args:
+            feature_group_id (str): The ID of the feature groups to be encoded.
+            token_budget (int): Enforce a given budget for each encoded feature group.
+            render_format (str): One of `['markdown', 'json']`
+
+        Returns:
+            LlmInput: LLM input object comprising of information about the feature group with given ID."""
+        return self._call_api('renderFeatureGroupDataForLLM', 'GET', query_params={'featureGroupId': feature_group_id, 'tokenBudget': token_budget, 'renderFormat': render_format}, parse_type=LlmInput)
+
+    def query_feature_group_code_generator(self, query: str, project_id: str = None):
+        """Send a query to the feature group code generator tool to generate code for the query.
+
+        Args:
+            query (str): A natural language query which specifies what the user wants out of the feature group or its code.
+            project_id (str): A unique string identifier of the project in context of which the query is."""
+        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'projectId': project_id})
+
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
     if not train_function:
@@ -1930,6 +2010,64 @@ class ApiClient(ReadOnlyClient):
         function_source_code = include_modules(
             function_source_code, included_modules)
         return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name, use_gpu=use_gpu)
+
+    def create_pipeline_step_from_function(self,
+                                           pipeline_name: str,
+                                           step_name: str,
+                                           function: callable,
+                                           step_input_mappings: list,
+                                           output_variable_mappings: list = None,
+                                           step_dependencies: list = None,
+                                           package_requirements: list = None):
+        """
+        Creates a step in a given pipeline from a python function.
+
+        Args:
+            pipeline_name (str): The name of the pipeline to add the step to.
+            step_name (str): The name of the step.
+            function (callable): The python function.
+            step_input_mappings (list[PythonFunctionArguments]): List of Python function arguments.
+            output_variable_mappings (list[PythonFunctionArguments]): List of Python function ouputs.
+            step_dependencies (List[str]): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+        """
+        source_code = inspect.getsource(function)
+        return self.create_pipeline_step(pipeline_name=pipeline_name,
+                                         step_name=step_name,
+                                         function_name=function.__name__,
+                                         source_code=source_code,
+                                         step_input_mappings=step_input_mappings,
+                                         output_variable_mappings=output_variable_mappings,
+                                         step_dependencies=step_dependencies)
+
+    def update_pipeline_step_from_function(self,
+                                           pipeline_name: str,
+                                           step_name: str,
+                                           function: callable,
+                                           step_input_mappings: list,
+                                           output_variable_mappings: list = None,
+                                           step_dependencies: list = None,
+                                           package_requirements: list = None):
+        """
+        Updates a step in a given pipeline from a python function.
+
+        Args:
+            pipeline_name (str): The name of the pipeline the step belongs to.
+            step_name (str): The name of the step.
+            function (callable): The python function.
+            step_input_mappings (list[PythonFunctionArguments]): List of Python function arguments.
+            output_variable_mappings (list[PythonFunctionArguments]): List of Python function ouputs.
+            step_dependencies (List[str]): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+        """
+        source_code = inspect.getsource(function)
+        return self.update_pipeline_step(pipeline_name=pipeline_name,
+                                         step_name=step_name,
+                                         function_name=function.__name__,
+                                         source_code=source_code,
+                                         step_input_mappings=step_input_mappings,
+                                         output_variable_mappings=output_variable_mappings,
+                                         step_dependencies=step_dependencies)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -2285,6 +2423,49 @@ class ApiClient(ReadOnlyClient):
             setattr(the_main, name, getattr(module, name))
         return module
 
+    def create_agent_from_function(self, project_id: str, agent_function: callable, name: str = None, memory: int = None, package_requirements: list = None):
+        """
+        Creates the agent from a python function
+
+        Args:
+            project_id (str): The project to create the model in
+            agent_function (callable): The agent function callable to serialize and upload
+            name (str): The name of the agent
+            memory (int): Memory (in GB) for hosting the agent
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+        """
+        function_source_code = inspect.getsource(agent_function)
+        agent_function_name = agent_function.__name__
+        return self.create_agent(project_id=project_id, function_source_code=function_source_code, agent_function_name=agent_function_name, name=name, memory=memory, package_requirements=package_requirements)
+
+    def update_agent_with_function(self, model_id: str, agent_function: callable, memory: int = None, package_requirements: list = None):
+        """
+        Updates the agent with a new agent function.
+
+        Args:
+            model_id (str): The unique ID associated with the AI Agent to be changed.
+            agent_function (callable): The new agent function callable to serialize and upload
+            memory (int): Memory (in GB) for hosting the agent
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+        """
+        function_source_code = inspect.getsource(agent_function)
+        agent_function_name = agent_function.__name__
+        return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements)
+
+    def execute_feature_group_sql(self, sql):
+        """
+        Execute a SQL query on the feature groups
+
+        Args:
+            sql (str): The SQL query to execute.
+
+        Returns:
+            pandas.DataFrame: The result of the query.
+        """
+        execute_query = self.execute_async_feature_group_operation(sql)
+        execute_query.wait_for_execution()
+        return execute_query.load_as_pandas()
+
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
 
@@ -2399,7 +2580,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -2492,7 +2673,7 @@ class ApiClient(ReadOnlyClient):
             project_id (str): The unique ID associated with the project.
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST
+            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE
 
         Returns:
             Schema: A list of objects that describes the resulting dataset's schema after the column's data type is set."""
@@ -2523,22 +2704,25 @@ class ApiClient(ReadOnlyClient):
             Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set."""
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
-    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None) -> AnnotationEntry:
+    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None, comments: str = None, project_id: str = None, save_metadata: bool = False) -> AnnotationEntry:
         """Add an annotation entry to the database.
 
         Args:
             annotation (dict): The annotation to add. Format of the annotation is determined by its annotation type.
             feature_group_id (str): The ID of the feature group the annotation is on.
             feature_name (str): The name of the feature the annotation is on.
-            doc_id (str): The ID of the primary document the annotation is on.
-            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group primary key value.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
             annotation_source (str): Indicator of whether the annotation came from the UI, bulk upload, etc.
             document (str): The document the annotation is on. This is optional.
             status (str): The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
+            comments (str): Comments for the annotation. This is optional.
+            project_id (str): The ID of the project that the annotation is associated with. This is optional.
+            save_metadata (bool): Whether to save the metadata for the annotation. This is optional.
 
         Returns:
             AnnotationEntry: The annotation entry that was added."""
-        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'document': document, 'status': status}, parse_type=AnnotationEntry)
+        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'document': document, 'status': status, 'comments': comments, 'projectId': project_id, 'saveMetadata': save_metadata}, parse_type=AnnotationEntry)
 
     def describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
         """Get the latest annotation entry for a given feature group, feature, and document.
@@ -2546,12 +2730,26 @@ class ApiClient(ReadOnlyClient):
         Args:
             feature_group_id (str): The ID of the feature group the annotation is on.
             feature_name (str): The name of the feature the annotation is on.
-            doc_id (str): The ID of the primary document the annotation is on.
-            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
 
         Returns:
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value."""
         return self._call_api('describeAnnotation', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
+
+    def update_annotation_status(self, feature_group_id: str, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
+        """Update the status of an annotation entry.
+
+        Args:
+            feature_group_id (str): The ID of the feature group the annotation is on.
+            feature_name (str): The name of the feature the annotation is on.
+            status (str): The new status of the annotation. Must be one of the following: 'TODO', 'IN_PROGRESS', 'DONE'.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+
+        Returns:
+            AnnotationEntry: None"""
+        return self._call_api('updateAnnotationStatus', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'status': status, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
 
     def get_document_to_annotate(self, feature_group_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False) -> AnnotationEntry:
         """Get an available document that needs to be annotated for a given feature group and feature.
@@ -3038,6 +3236,23 @@ Creates a new feature group defined as the union of other feature group versions
             lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns."""
         return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
 
+    def describe_async_feature_group_operation(self, execute_fg_operation_run_id: str) -> ExecuteFgOperation:
+        """Gets the status of the execution of fg operation
+
+        Args:
+            execute_fg_operation_run_id (str): The unique ID associated with the execution.
+
+        Returns:
+            ExecuteFgOperation: A dict that contains the execution status"""
+        return self._call_api('describeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'executeFgOperationRunId': execute_fg_operation_run_id}, parse_type=ExecuteFgOperation)
+
+    def get_execute_feature_group_operation_result_part_count(self, execute_fg_operation_run_id: str) -> None:
+        """Gets the number of parts in the result of the execution of fg operation
+
+        Args:
+            execute_fg_operation_run_id (str): The unique ID associated with the execution."""
+        return self._call_api('getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={}, body={'executeFgOperationRunId': execute_fg_operation_run_id})
+
     def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
         """Modify an existing Feature Group.
 
@@ -3467,7 +3682,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Upload:
+    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False) -> Upload:
         """Creates a dataset and returns an upload ID that can be used to upload a file.
 
         Args:
@@ -3477,10 +3692,11 @@ Creates a new feature group defined as the union of other feature group versions
             is_documentset (bool): Signifies if the dataset is a docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
+            merge_file_schemas (bool): Signifies whether to merge the schemas of all files in the dataset.
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config, 'mergeFileSchemas': merge_file_schemas}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         """Creates a new version of the specified dataset using a local file upload.
@@ -4249,7 +4465,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The ID of the deployment for which the export type is set."""
         return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
-    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = []) -> RefreshPolicy:
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type.
 
         A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.
@@ -4259,17 +4475,18 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name of the refresh policy.
             cron (str): A cron-like string specifying the frequency of the refresh policy.
             refresh_type (str): The refresh type used to determine what is being refreshed, such as a single dataset, dataset and model, or more.
-            project_id (str): Optionally, a project ID can be specified so that all datasets, models, and deployments are captured at the instant the policy was created.
+            project_id (str): Optionally, a project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitrs, and notebooks are captured at the instant the policy was created.
             dataset_ids (list): Comma-separated list of dataset IDs.
             model_ids (list): Comma-separated list of model IDs.
             deployment_ids (list): Comma-separated list of deployment IDs.
             batch_prediction_ids (list): Comma-separated list of batch prediction IDs.
             prediction_metric_ids (list): Comma-separated list of prediction metric IDs.
             model_monitor_ids (list): Comma-separated list of model monitor IDs.
+            notebook_id (str): Notebook ID associated with refresh policy.
 
         Returns:
             RefreshPolicy: The created refresh policy."""
-        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids}, parse_type=RefreshPolicy)
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id}, parse_type=RefreshPolicy)
 
     def delete_refresh_policy(self, refresh_policy_id: str):
         """Delete a refresh policy.
@@ -4321,7 +4538,7 @@ Creates a new feature group defined as the union of other feature group versions
             limit_results (int): If provided, will limit the number of results to the value specified.
             result_columns (list): If provided, will limit the columns present in each result to the columns specified in this list."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4332,7 +4549,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique identifier for a deployment created under the project.
             query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the value is the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list) -> Dict:
@@ -4343,7 +4560,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier for a deployment created under the project.
             query_data (list): A list of dictionaries, where the 'key' is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the 'value' is the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictMultiple', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_from_datasets(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4354,7 +4571,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier for a deployment created under the project.
             query_data (dict): A dictionary where the 'key' is the source dataset name, and the 'value' is a list of records corresponding to the dataset rows."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictFromDatasets', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_lead(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
@@ -4367,7 +4584,7 @@ Creates a new feature group defined as the union of other feature group versions
             explain_predictions (bool): Will explain predictions for leads
             explainer_type (str): Type of explainer to use for explanations"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictLead', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def predict_churn(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4378,7 +4595,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): This will be a dictionary where the 'key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' will be the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictChurn', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_takeover(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4389,7 +4606,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): A dictionary containing account activity characteristics (e.g., login id, login duration, login type, IP address, etc.)."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictTakeover', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_fraud(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4400,7 +4617,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique identifier to a deployment created under the project.
             query_data (dict): A dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.)."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
@@ -4418,7 +4635,7 @@ Creates a new feature group defined as the union of other feature group versions
             nested (str): If specified generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'thresholds': thresholds, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
@@ -4433,7 +4650,7 @@ Creates a new feature group defined as the union of other feature group versions
             nested (str): If specified, generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False) -> io.BytesIO:
@@ -4445,7 +4662,7 @@ Creates a new feature group defined as the union of other feature group versions
             threshold (float): The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99.
             histogram (bool): If True, will return a histogram of the distribution of all points."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
 
     def is_anomaly(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
@@ -4456,7 +4673,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): The input data for the prediction."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('isAnomaly', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
@@ -4472,7 +4689,7 @@ Creates a new feature group defined as the union of other feature group versions
             explain_predictions (bool): Will explain predictions for forecasting
             explainer_type (str): Type of explainer to use for explanations"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
@@ -4487,7 +4704,7 @@ Creates a new feature group defined as the union of other feature group versions
             include_score (bool): If True, will return the score alongside the resulting embedding value.
             catalog_id (str): An optional parameter honored only for embeddings that provide a catalog id"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score, 'catalogId': catalog_id}, server_override=prediction_url)
 
     def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):
@@ -4498,7 +4715,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             queries (list): List of mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See `getKNearest` for additional information about the supported parameters."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries}, server_override=prediction_url)
 
     def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: None = None) -> Dict:
@@ -4510,7 +4727,7 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted.
             threshold (None): This argument is deprecated and will be ignored."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=prediction_url)
 
     def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False) -> Dict:
@@ -4523,7 +4740,7 @@ Creates a new feature group defined as the union of other feature group versions
             doc_id (str): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None) -> Dict:
@@ -4542,7 +4759,7 @@ Creates a new feature group defined as the union of other feature group versions
             exclude_items (list): It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is
             explore_fraction (float): Explore fraction."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getRecommendations', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'excludeItemIds': exclude_item_ids, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items, 'exploreFraction': explore_fraction}, server_override=prediction_url)
 
     def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
@@ -4556,7 +4773,7 @@ Creates a new feature group defined as the union of other feature group versions
             preserve_unknown_items (bool): If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=prediction_url)
 
     def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, score_field: str = None, scaling_factors: list = None) -> Dict:
@@ -4571,7 +4788,7 @@ Creates a new feature group defined as the union of other feature group versions
             score_field (str): The relative item scores are returned in a separate field named with the same name as the key (score_field) for this argument.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there is a type of item that might be less popular but you want to promote it or there is an item that always comes up and you want to demote it."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scoreField': score_field, 'scalingFactors': scaling_factors}, server_override=prediction_url)
 
     def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None) -> Dict:
@@ -4587,7 +4804,7 @@ Creates a new feature group defined as the union of other feature group versions
             restrict_items (list): It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restriction is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
             exclude_items (list): It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is particularly useful if there's a list of items that you know is of no use in some particular scenario and you don't want to show those items present in that list."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
     def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None) -> Dict:
@@ -4599,7 +4816,7 @@ Creates a new feature group defined as the union of other feature group versions
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
             search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results}, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4610,7 +4827,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique identifier of a deployment created under the project.
             query_data (dict): A dictionary where the key is "Content" and the value is the text from which entities are to be extracted."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
@@ -4621,7 +4838,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for a deployment created under this project.
             document (str): The document to be analyzed for sentiment."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
     def get_entailment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
@@ -4632,7 +4849,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for the deployment created under the project.
             document (str): The document to be classified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
     def get_classification(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
@@ -4643,7 +4860,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for the deployment created under the project.
             document (str): The document to be classified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getClassification', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
     def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4654,7 +4871,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): Raw data dictionary containing the required document data - must have a key 'document' corresponding to a DOCUMENT type text as value."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getSummary', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
@@ -4665,7 +4882,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for a deployment created under the project.
             query_data (str): The input string to detect."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None) -> Dict:
@@ -4677,7 +4894,7 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
             forced_assignments (dict): Set of assignments to force and resolve before returning query results."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4688,7 +4905,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier for a deployment created under the project.
             query_data (dict): Assignment overrides to the solution."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase) -> Dict:
@@ -4699,7 +4916,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique identifier to a deployment created under the project.
             blob (io.TextIOBase): The multipart/form-data of the data."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'blob': blob}, server_override=prediction_url)
 
     def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list, top_n: int = None) -> Dict:
@@ -4712,7 +4929,7 @@ Creates a new feature group defined as the union of other feature group versions
             categories (list): List of candidate categories to compare with the image.
             top_n (int): Return the N most similar categories."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=prediction_url)
 
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
@@ -4723,7 +4940,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier of a deployment created under the project.
             audio (io.TextIOBase): The audio to transcribe."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('transcribeAudio', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'audio': audio}, server_override=prediction_url)
 
     def classify_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase = None, doc_id: str = None) -> Dict:
@@ -4735,7 +4952,7 @@ Creates a new feature group defined as the union of other feature group versions
             image (io.TextIOBase): The binary data of the image to classify. One of image or doc_id must be specified.
             doc_id (str): The document ID of the image. One of image or doc_id must be specified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id}, files={'image': image}, server_override=prediction_url)
 
     def classify_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None) -> Dict:
@@ -4746,7 +4963,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier for a deployment created under the project.
             pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('classifyPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_cluster(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4757,7 +4974,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for the deployment created under the project.
             query_data (dict): A dictionary where each 'key' represents a column name and its corresponding 'value' represents the value of that column. For Timeseries Clustering, the 'key' should be ITEM_ID, and its value should represent a unique item ID that needs clustering."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getCluster', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_objects_from_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
@@ -4768,7 +4985,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to detect objects from."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('getObjectsFromImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=prediction_url)
 
     def score_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
@@ -4779,7 +4996,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to get the score."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('scoreImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=prediction_url)
 
     def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
@@ -4791,7 +5008,7 @@ Creates a new feature group defined as the union of other feature group versions
             source_image (io.TextIOBase): The source image to apply the makeup.
             style_image (io.TextIOBase): The image that has the style as a reference."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=prediction_url)
 
     def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -4802,7 +5019,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique identifier to a deployment created under the project.
             query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token,)
+            deployment_id, deployment_token)
         return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
@@ -5071,13 +5288,13 @@ Creates a new feature group defined as the union of other feature group versions
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
-    def upsert_multiple_data(self, feature_group_id: str, streaming_token: str, data: dict):
+    def upsert_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
         """Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
         Args:
             feature_group_id (str): Unique string identifier for the streaming feature group to record data to.
             streaming_token (str): The streaming token for authenticating requests.
-            data (dict): The data to record, as a list of JSON objects."""
+            data (list): The data to record, as a list of JSON objects."""
         prediction_url = self._get_streaming_endpoint(
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('upsertMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
@@ -5134,7 +5351,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             pipeline_name (str): The name of the pipeline, which should be unique to the organization.
-            project_id (str): A unique string identifier for the plot dashboard.
+            project_id (str): A unique string identifier for the pipeline.
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
@@ -5150,11 +5367,23 @@ Creates a new feature group defined as the union of other feature group versions
             Pipeline: An object describing a Pipeline"""
         return self._call_api('describePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=Pipeline)
 
-    def delete_pipeline(self, pipeline_name: None):
+    def update_pipeline(self, pipeline_name: str, project_id: str = None, pipeline_variable_mappings: list = None) -> Pipeline:
+        """Updates a pipeline for executing multiple steps.
+
+        Args:
+            pipeline_name (str): The name of the pipeline, which should be unique to the organization.
+            project_id (str): A unique string identifier for the pipeline.
+            pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+
+        Returns:
+            Pipeline: An object that describes a Pipeline."""
+        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings}, parse_type=Pipeline)
+
+    def delete_pipeline(self, pipeline_name: str):
         """Deletes a pipeline.
 
         Args:
-            pipeline_name (None): The name of the pipeline to describe."""
+            pipeline_name (str): The name of the pipeline to describe."""
         return self._call_api('deletePipeline', 'DELETE', query_params={'pipelineName': pipeline_name})
 
     def list_pipeline_versions(self, pipeline_name: str) -> List[PipelineVersion]:
@@ -5453,7 +5682,7 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_version (str): A unique string identifier associated with the Feature Group Version."""
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version})
 
-    def query_feature_group_explorer(self, feature_group_version: str, message: str, chat_history: list = None) -> ChatBotResponse:
+    def query_feature_group_explorer(self, feature_group_version: str, message: str, chat_history: list = None) -> ChatSession:
         """Send a message to Abacus Chat for the specified feature group version and receive a response.
 
         Args:
@@ -5462,5 +5691,67 @@ Creates a new feature group defined as the union of other feature group versions
             chat_history (list): A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
 
         Returns:
-            ChatBotResponse: An object representing the response from Abacus Chat, which includes an answer and updated chat history."""
-        return self._call_api('queryFeatureGroupExplorer', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'message': message, 'chatHistory': chat_history}, parse_type=ChatBotResponse)
+            ChatSession: An object representing the response from Abacus Chat, which includes an answer and updated chat history."""
+        return self._call_api('queryFeatureGroupExplorer', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'message': message, 'chatHistory': chat_history}, parse_type=ChatSession)
+
+    def create_chat_session(self, project_id: str = None) -> ChatSession:
+        """Creates a chat session with Abacus Chat.
+
+        Args:
+            project_id (str): The project this chat session belongs to
+
+        Returns:
+            ChatSession: The chat session with Abacus Chat"""
+        return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id}, parse_type=ChatSession)
+
+    def send_chat_message(self, chat_session_id: str, message: str) -> ChatSession:
+        """Updates chat history with the response from a user message
+
+        Args:
+            chat_session_id (str): Unique ID of the chat session.
+            message (str): Message you want to send to Abacus Chat
+
+        Returns:
+            ChatSession: The chat session with Abacus Chat"""
+        return self._call_api('sendChatMessage', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'message': message}, parse_type=ChatSession)
+
+    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None) -> Model:
+        """Creates a new AI agent.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            function_source_code (str): The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            agent_function_name (str): The name of the function found in the source code that will be executed when the agent is deployed.
+            name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
+            memory (int): The memory allocation (in GB) for the agent.
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+
+        Returns:
+            Model: None"""
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
+
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None) -> Model:
+        """Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+        Args:
+            model_id (str): The unique ID associated with the AI Agent to be changed.
+            function_source_code (str): Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            agent_function_name (str): Name of the function found in the source code that will be executed to the agent when it is deployed.
+            memory (int): Memory (in GB) for the agent.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+
+        Returns:
+            Model: None"""
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
+
+    def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
+        """Encode feature groups as language model inputs.
+
+        Args:
+            feature_group_ids (list): List of feature groups to be encoded.
+            token_budget (int): Enforce a given budget for each encoded feature group.
+            include_definition (bool): Include the definition of the feature group in the encoding.
+
+        Returns:
+            LlmInput: LLM input object comprising of information about the feature groups with given IDs."""
+        return self._call_api('renderFeatureGroupsForLLM', 'POST', query_params={}, body={'featureGroupIds': feature_group_ids, 'tokenBudget': token_budget, 'includeDefinition': include_definition}, parse_type=LlmInput)

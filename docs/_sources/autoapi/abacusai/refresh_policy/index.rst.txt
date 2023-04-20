@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, paused=None)
+.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,6 +49,8 @@ Classes
    :type predictionMetricIds: list[str]
    :param modelMonitorIds: Comma-separated list of Model Monitor IDs that this refresh policy applies to
    :type modelMonitorIds: list[str]
+   :param notebookId: Notebook ID that this refresh policy applies to
+   :type notebookId: str
    :param paused: True if the refresh policy is paused
    :type paused: bool
 

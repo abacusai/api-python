@@ -151,7 +151,7 @@ Classes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST
+      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE
       :type data_type: str
 
       :returns: A list of objects that describes the resulting dataset's schema after the column's data type is set.
@@ -523,7 +523,7 @@ Classes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: list_refresh_policies(dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [])
+   .. py:method:: list_refresh_policies(dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization
 
@@ -539,6 +539,8 @@ Classes
       :type model_monitor_ids: list
       :param prediction_metric_ids: Comma-separated list of Prediction Metric IDs.
       :type prediction_metric_ids: list
+      :param notebook_ids: Comma-separated list of Notebook IDs.
+      :type notebook_ids: list
 
       :returns: List of all refresh policies in the organization.
       :rtype: RefreshPolicy
@@ -601,6 +603,36 @@ Classes
 
       :returns: List of applicable builtin algorithms.
       :rtype: Algorithm
+
+
+   .. py:method:: create_chat_session()
+
+      Creates a chat session with Abacus Chat.
+
+      :param project_id: The project this chat session belongs to
+      :type project_id: str
+
+      :returns: The chat session with Abacus Chat
+      :rtype: ChatSession
+
+
+   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None)
+
+      Creates a new AI agent.
+
+      :param function_source_code: The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param agent_function_name: The name of the function found in the source code that will be executed when the agent is deployed.
+      :type agent_function_name: str
+      :param name: The name you want your agent to have, defaults to "<Project Name> Agent".
+      :type name: str
+      :param memory: The memory allocation (in GB) for the agent.
+      :type memory: int
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+      :type package_requirements: list
+
+      :returns: None
+      :rtype: Model
 
 
    .. py:method:: attach_dataset(dataset_id, project_dataset_type)

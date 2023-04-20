@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AnnotationConfig(client, featureAnnotationConfigs=None, labels=None, statusFeature=None)
+.. py:class:: AnnotationConfig(client, featureAnnotationConfigs=None, labels=None, statusFeature=None, commentsFeature=None, metadataFeature=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +31,10 @@ Classes
    :type labels: list
    :param statusFeature: Name of the feature that contains the status of the annotation (Optional)
    :type statusFeature: str
+   :param commentsFeature: Name of the feature that contains the comments for the annotation (Optional)
+   :type commentsFeature: str
+   :param metadataFeature: Name of the feature that contains the metadata for the annotation (Optional)
+   :type metadataFeature: str
 
    .. py:method:: __repr__()
 

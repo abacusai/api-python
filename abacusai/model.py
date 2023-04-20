@@ -319,6 +319,21 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None):
+        """
+        Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+        Args:
+            function_source_code (str): Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+            agent_function_name (str): Name of the function found in the source code that will be executed to the agent when it is deployed.
+            memory (int): Memory (in GB) for the agent.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+
+        Returns:
+            Model: None
+        """
+        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements)
+
     def wait_for_training(self, timeout=None):
         """
         A waiting call until model is trained.

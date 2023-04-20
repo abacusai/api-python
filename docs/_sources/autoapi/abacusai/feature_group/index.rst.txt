@@ -187,9 +187,9 @@ Classes
 
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
-      :param doc_id: The ID of the primary document the annotation is on.
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type doc_id: str
-      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
@@ -202,12 +202,29 @@ Classes
 
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
-      :param doc_id: The ID of the primary document the annotation is on.
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type doc_id: str
-      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: update_annotation_status(feature_name, status, doc_id = None, feature_group_row_identifier = None)
+
+      Update the status of an annotation entry.
+
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param status: The new status of the annotation. Must be one of the following: 'TODO', 'IN_PROGRESS', 'DONE'.
+      :type status: str
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+      :type feature_group_row_identifier: str
+
+      :returns: None
       :rtype: AnnotationEntry
 
 
@@ -1054,7 +1071,7 @@ Classes
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
       :param data: The data to record, as a list of JSON objects.
-      :type data: dict
+      :type data: list
 
 
    .. py:method:: append_multiple_data(streaming_token, data)
@@ -1087,6 +1104,19 @@ Classes
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
+
+
+   .. py:method:: render_data_for_llm(token_budget = None, render_format = 'markdown')
+
+      Encode feature groups as language model inputs.
+
+      :param token_budget: Enforce a given budget for each encoded feature group.
+      :type token_budget: int
+      :param render_format: One of `['markdown', 'json']`
+      :type render_format: str
+
+      :returns: LLM input object comprising of information about the feature group with given ID.
+      :rtype: LlmInput
 
 
    .. py:method:: wait_for_dataset(timeout = 7200)

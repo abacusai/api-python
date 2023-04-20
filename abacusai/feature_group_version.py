@@ -165,7 +165,7 @@ class FeatureGroupVersion(AbstractApiClass):
             chat_history (list): A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
 
         Returns:
-            ChatBotResponse: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
+            ChatSession: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
         """
         return self.client.query_feature_group_explorer(self.feature_group_version, message, chat_history)
 
@@ -222,6 +222,8 @@ class FeatureGroupVersion(AbstractApiClass):
         import fastavro
         import pandas as pd
 
+        from .api_client_utils import avro_to_pandas_dtype, get_non_nullable_type
+
         file_parts = range(self.client._call_api(
             '_getFeatureGroupVersionPartCount', 'GET', query_params={'featureGroupVersion': self.id}))
         data_df = pd.DataFrame()
@@ -234,9 +236,26 @@ class FeatureGroupVersion(AbstractApiClass):
                     part_path = future.result()
                     with open(part_path, 'rb') as part_data:
                         reader = fastavro.reader(part_data)
-                        df_parts.append(pd.DataFrame([r for r in reader]))
-                data_df = pd.concat(df_parts, ignore_index=True)
-            for col in data_df.columns:
-                if pd.core.dtypes.common.is_datetime64_ns_dtype(data_df[col]):
-                    data_df[col] = data_df[col].dt.tz_localize(None)
+                        schema = reader.writer_schema
+                        col_dtypes = {}
+                        for field in schema['fields']:
+                            field_name = field['name']
+                            field_type = field['type']
+                            if isinstance(field_type, list):
+                                field_type = get_non_nullable_type(field_type)
+                            pandas_dtype = avro_to_pandas_dtype(field_type)
+                            col_dtypes[field_name] = pandas_dtype
+                        df_part = pd.DataFrame.from_records(
+                            [r for r in reader], columns=col_dtypes.keys())
+
+                        for col in df_part.columns:
+                            if pd.core.dtypes.common.is_datetime64_ns_dtype(df_part[col]):
+                                df_part[col] = df_part[col].dt.tz_localize(
+                                    None)
+                            else:
+                                df_part[col] = df_part[col].astype(
+                                    col_dtypes[col])
+                        df_parts.append(df_part)
+            data_df = pd.concat(df_parts, ignore_index=True)
+
         return data_df

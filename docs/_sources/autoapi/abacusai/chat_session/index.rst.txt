@@ -1,0 +1,74 @@
+:py:mod:`abacusai.chat_session`
+===============================
+
+.. py:module:: abacusai.chat_session
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.chat_session.ChatSession
+
+
+
+
+.. py:class:: ChatSession(client, answer=None, availableIndices=None, chatSessionId=None, projectId=None, chatHistory={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A chat session with Abacus Chat.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param answer: The response from the chatbot
+   :type answer: str
+   :param availableIndices: A list of indices that the chatbot has access to
+   :type availableIndices: list[dict]
+   :param chatSessionId: The chat session id
+   :type chatSessionId: str
+   :param projectId: The project id associated with the chat session
+   :type projectId: str
+   :param chatHistory: The chat history for the conversation
+   :type chatHistory: ChatMessage
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: get()
+
+      Gets a chat session from Abacus Chat.
+
+      :param chat_session_id: The chat session id
+      :type chat_session_id: str
+
+      :returns: The chat session with Abacus Chat
+      :rtype: ChatSession
+
+
+   .. py:method:: send_chat_message(message)
+
+      Updates chat history with the response from a user message
+
+      :param message: Message you want to send to Abacus Chat
+      :type message: str
+
+      :returns: The chat session with Abacus Chat
+      :rtype: ChatSession
+
+
+

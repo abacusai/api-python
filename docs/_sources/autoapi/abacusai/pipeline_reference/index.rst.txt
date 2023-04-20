@@ -1,0 +1,62 @@
+:py:mod:`abacusai.pipeline_reference`
+=====================================
+
+.. py:module:: abacusai.pipeline_reference
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.pipeline_reference.PipelineReference
+
+
+
+
+.. py:class:: PipelineReference(client, pipelineReferenceId=None, pipelineId=None, objectType=None, datasetId=None, modelId=None, deploymentId=None, batchPredictionDescriptionId=None, modelMonitorId=None, notebookId=None, featureGroupId=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A reference to a pipeline to the objects it is run on.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param pipelineReferenceId: The id of the reference.
+   :type pipelineReferenceId: str
+   :param pipelineId: The id of the pipeline for the reference.
+   :type pipelineId: str
+   :param objectType: The object type of the reference.
+   :type objectType: str
+   :param datasetId: The dataset id of the reference.
+   :type datasetId: str
+   :param modelId: The model id of the reference.
+   :type modelId: str
+   :param deploymentId: The deployment id of the reference.
+   :type deploymentId: str
+   :param batchPredictionDescriptionId: The batch prediction description id of the reference.
+   :type batchPredictionDescriptionId: str
+   :param modelMonitorId: The model monitor id of the reference.
+   :type modelMonitorId: str
+   :param notebookId: The notebook id of the reference.
+   :type notebookId: str
+   :param featureGroupId: The feature group id of the reference.
+   :type featureGroupId: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

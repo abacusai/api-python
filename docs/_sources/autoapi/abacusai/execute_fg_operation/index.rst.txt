@@ -1,0 +1,97 @@
+:py:mod:`abacusai.execute_fg_operation`
+=======================================
+
+.. py:module:: abacusai.execute_fg_operation
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.execute_fg_operation.ExecuteFgOperation
+
+
+
+
+.. py:class:: ExecuteFgOperation(client, executeFgOperationRunId=None, status=None, error=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The result of executing a SQL query
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param executeFgOperationRunId: The run id of the operation
+   :type executeFgOperationRunId: str
+   :param status: The status of the operation
+   :type status: str
+   :param error: The error message if the operation failed
+   :type error: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: wait_for_results(timeout=3600)
+
+      A waiting call until query is executed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: wait_for_execution(timeout=3600)
+
+      A waiting call until query is executed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the query execution
+
+      :returns: A string describing the status of a query execution (pending, complete, etc.).
+      :rtype: str
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: DatasetVersion
+
+
+   .. py:method:: describe()
+
+
+   .. py:method:: _download_avro_file(file_part, tmp_dir)
+
+
+   .. py:method:: load_as_pandas(max_workers=10)
+
+      Loads the result data into a pandas dataframe
+
+      :param max_workers: The number of threads.
+      :type max_workers: int, optional
+
+      :returns: A pandas dataframe displaying the data from execution.
+      :rtype: DataFrame
+
+
+

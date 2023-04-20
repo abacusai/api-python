@@ -349,6 +349,23 @@ Classes
       :rtype: ModelTrainingTypeForDeployment
 
 
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None)
+
+      Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+      :param function_source_code: Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param agent_function_name: Name of the function found in the source code that will be executed to the agent when it is deployed.
+      :type agent_function_name: str
+      :param memory: Memory (in GB) for the agent.
+      :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
+
+      :returns: None
+      :rtype: Model
+
+
    .. py:method:: wait_for_training(timeout=None)
 
       A waiting call until model is trained.

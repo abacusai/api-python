@@ -1,0 +1,50 @@
+:py:mod:`abacusai.llm_response`
+===============================
+
+.. py:module:: abacusai.llm_response
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.llm_response.LlmResponse
+
+
+
+
+.. py:class:: LlmResponse(client, content=None, tokens=None, stopReason=None, llmCodeBlock={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The response returned by LLM
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param content: Content of the response.
+   :type content: str
+   :param tokens: The number of tokens in the response.
+   :type tokens: int
+   :param stopReason: The reason due to which the response generation stopped.
+   :type stopReason: str
+   :param llmCodeBlock: Parsed code block from raw LLM Response
+   :type llmCodeBlock: LlmCodeBlock
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

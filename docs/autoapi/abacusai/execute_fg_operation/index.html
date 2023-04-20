@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>abacusai.execute_fg_operation &mdash; AbacusAI  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="abacusai.feature" href="../feature/index.html" />
+    <link rel="prev" title="abacusai.embedding_feature_drift_distribution" href="../embedding_feature_drift_distribution/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            AbacusAI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotation_entry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation_entry</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../annotations_status/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotations_status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_client_utils/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_client_utils</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_endpoint/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_endpoint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api_key/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.api_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../application_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.application_connector</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_prediction/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.batch_prediction</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../batch_prediction_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.batch_prediction_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../categorical_range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.categorical_range_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chat_message/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.chat_message</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chat_session/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.chat_session</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.client</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../code_source/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.code_source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../concatenation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.concatenation_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../cryptography/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.cryptography</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_loss_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_loss_function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_metric/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_metric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_metric_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../custom_train_function_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.custom_train_function_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_consistency_duplication/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_consistency_duplication</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data_quality_results/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_quality_results</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_column/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_column</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../deployment_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_auth_token</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_annotation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_store_import/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store_import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distribution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../drift_distributions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distributions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_chart_description/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_chart_description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_collinearity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_data_consistency/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_data_consistency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_association/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_association</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_feature_collinearity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_feature_collinearity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_forecasting_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_forecasting_analysis</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_fg_operation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_export_download_url/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export_download_url</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_lineage/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_lineage</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_metrics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_template_variable_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_template_variable_options</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_group_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_importance/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_importance</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_record</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../file_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../forecasting_analysis_graph_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_analysis_graph_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graph_dashboard/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.graph_dashboard</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.indexing_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.item_statistics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_input</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_response</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_search_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_artifacts_export</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_location/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_location</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_metrics</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_org_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_org_summary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_summary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_summary_from_org/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_summary_from_org</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_monitor_version_metric_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor_version_metric_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_training_type_for_deployment/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_training_type_for_deployment</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_upload</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modification_lock_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.modification_lock_info</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.module</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../monitor_alert_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.monitor_alert_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../natural_language_explanation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.natural_language_explanation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_reference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_reference</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_step</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_step_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_step_version_reference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_step_version_reference</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../point_in_time_group_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.point_in_time_group_feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_client</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_dataset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_feature_group</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_input</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_metric/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../prediction_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function_validator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_schedule</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../resolved_feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.resolved_feature_group_template</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../return_class/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.return_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../schema/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.schema</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_auth_token</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_client</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_connector</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.training_config_options</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../type_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.type_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../upload_part/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload_part</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../use_case/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case_requirements</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user_exception</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../webhook/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.webhook</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">AbacusAI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_fg_operation</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/abacusai/execute_fg_operation/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-abacusai.execute_fg_operation">
+<span id="abacusai-execute-fg-operation"></span><h1><a class="reference internal" href="#module-abacusai.execute_fg_operation" title="abacusai.execute_fg_operation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_fg_operation</span></code></a><a class="headerlink" href="#module-abacusai.execute_fg_operation" title="Permalink to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.execute_fg_operation.ExecuteFgOperation" title="abacusai.execute_fg_operation.ExecuteFgOperation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExecuteFgOperation</span></code></a></p></td>
+<td><p>The result of executing a SQL query</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.execute_fg_operation.</span></span><span class="sig-name descname"><span class="pre">ExecuteFgOperation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executeFgOperationRunId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
+<p>The result of executing a SQL query</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
+<li><p><strong>executeFgOperationRunId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The run id of the operation</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The status of the operation</p></li>
+<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The error message if the operation failed</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.__repr__" title="Permalink to this definition"></a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Get a dict representation of the parameters in this class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The dict value representation of the class parameters</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.wait_for_results">
+<span class="sig-name descname"><span class="pre">wait_for_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.wait_for_results" title="Permalink to this definition"></a></dt>
+<dd><p>A waiting call until query is executed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.wait_for_execution">
+<span class="sig-name descname"><span class="pre">wait_for_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.wait_for_execution" title="Permalink to this definition"></a></dt>
+<dd><p>A waiting call until query is executed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the status of the query execution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string describing the status of a query execution (pending, complete, etc.).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Calls describe and refreshes the current object’s fields</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../dataset_version/index.html#abacusai.dataset_version.DatasetVersion" title="abacusai.dataset_version.DatasetVersion">DatasetVersion</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.describe" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation._download_avro_file">
+<span class="sig-name descname"><span class="pre">_download_avro_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmp_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation._download_avro_file" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_fg_operation.ExecuteFgOperation.load_as_pandas">
+<span class="sig-name descname"><span class="pre">load_as_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_fg_operation.ExecuteFgOperation.load_as_pandas" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the result data into a pandas dataframe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The number of threads.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas dataframe displaying the data from execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../embedding_feature_drift_distribution/index.html" class="btn btn-neutral float-left" title="abacusai.embedding_feature_drift_distribution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../feature/index.html" class="btn btn-neutral float-right" title="abacusai.feature" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Abacus.ai.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

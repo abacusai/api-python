@@ -31,7 +31,8 @@ Submodules
    batch_prediction/index.rst
    batch_prediction_version/index.rst
    categorical_range_violation/index.rst
-   chat_bot_response/index.rst
+   chat_message/index.rst
+   chat_session/index.rst
    client/index.rst
    code_source/index.rst
    concatenation_config/index.rst
@@ -64,6 +65,7 @@ Submodules
    eda_forecasting_analysis/index.rst
    eda_version/index.rst
    embedding_feature_drift_distribution/index.rst
+   execute_fg_operation/index.rst
    feature/index.rst
    feature_drift_summary/index.rst
    feature_group/index.rst
@@ -86,6 +88,10 @@ Submodules
    graph_dashboard/index.rst
    indexing_config/index.rst
    item_statistics/index.rst
+   llm_code_block/index.rst
+   llm_input/index.rst
+   llm_response/index.rst
+   llm_search_result/index.rst
    model/index.rst
    model_artifacts_export/index.rst
    model_location/index.rst
@@ -108,8 +114,10 @@ Submodules
    null_violation/index.rst
    organization_group/index.rst
    pipeline/index.rst
+   pipeline_reference/index.rst
    pipeline_step/index.rst
    pipeline_step_version/index.rst
+   pipeline_step_version_reference/index.rst
    pipeline_version/index.rst
    point_in_time_feature/index.rst
    point_in_time_group/index.rst
@@ -953,6 +961,46 @@ Attributes
       :type use_gpu: bool
 
 
+   .. py:method:: create_pipeline_step_from_function(pipeline_name, step_name, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+
+      Creates a step in a given pipeline from a python function.
+
+      :param pipeline_name: The name of the pipeline to add the step to.
+      :type pipeline_name: str
+      :param step_name: The name of the step.
+      :type step_name: str
+      :param function: The python function.
+      :type function: callable
+      :param step_input_mappings: List of Python function arguments.
+      :type step_input_mappings: list[PythonFunctionArguments]
+      :param output_variable_mappings: List of Python function ouputs.
+      :type output_variable_mappings: list[PythonFunctionArguments]
+      :param step_dependencies: List of step names this step depends on.
+      :type step_dependencies: List[str]
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+
+   .. py:method:: update_pipeline_step_from_function(pipeline_name, step_name, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+
+      Updates a step in a given pipeline from a python function.
+
+      :param pipeline_name: The name of the pipeline the step belongs to.
+      :type pipeline_name: str
+      :param step_name: The name of the step.
+      :type step_name: str
+      :param function: The python function.
+      :type function: callable
+      :param step_input_mappings: List of Python function arguments.
+      :type step_input_mappings: list[PythonFunctionArguments]
+      :param output_variable_mappings: List of Python function ouputs.
+      :type output_variable_mappings: list[PythonFunctionArguments]
+      :param step_dependencies: List of step names this step depends on.
+      :type step_dependencies: List[str]
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+
    .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None, included_modules = None)
 
       Creates a feature group from a python function
@@ -1207,6 +1255,47 @@ Attributes
       :rtype: module
 
 
+   .. py:method:: create_agent_from_function(project_id, agent_function, name = None, memory = None, package_requirements = None)
+
+      Creates the agent from a python function
+
+      :param project_id: The project to create the model in
+      :type project_id: str
+      :param agent_function: The agent function callable to serialize and upload
+      :type agent_function: callable
+      :param name: The name of the agent
+      :type name: str
+      :param memory: Memory (in GB) for hosting the agent
+      :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
+
+
+   .. py:method:: update_agent_with_function(model_id, agent_function, memory = None, package_requirements = None)
+
+      Updates the agent with a new agent function.
+
+      :param model_id: The unique ID associated with the AI Agent to be changed.
+      :type model_id: str
+      :param agent_function: The new agent function callable to serialize and upload
+      :type agent_function: callable
+      :param memory: Memory (in GB) for hosting the agent
+      :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
+
+
+   .. py:method:: execute_feature_group_sql(sql)
+
+      Execute a SQL query on the feature groups
+
+      :param sql: The SQL query to execute.
+      :type sql: str
+
+      :returns: The result of the query.
+      :rtype: pandas.DataFrame
+
+
    .. py:method:: add_user_to_organization(email)
 
       Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -1347,7 +1436,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -1466,7 +1555,7 @@ Attributes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST
+      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE
       :type data_type: str
 
       :returns: A list of objects that describes the resulting dataset's schema after the column's data type is set.
@@ -1505,7 +1594,7 @@ Attributes
       :rtype: Schema
 
 
-   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None, status = None)
+   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None, status = None, comments = None, project_id = None, save_metadata = False)
 
       Add an annotation entry to the database.
 
@@ -1515,9 +1604,9 @@ Attributes
       :type feature_group_id: str
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
-      :param doc_id: The ID of the primary document the annotation is on.
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type doc_id: str
-      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group primary key value.
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
       :param annotation_source: Indicator of whether the annotation came from the UI, bulk upload, etc.
       :type annotation_source: str
@@ -1525,6 +1614,12 @@ Attributes
       :type document: str
       :param status: The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
       :type status: str
+      :param comments: Comments for the annotation. This is optional.
+      :type comments: str
+      :param project_id: The ID of the project that the annotation is associated with. This is optional.
+      :type project_id: str
+      :param save_metadata: Whether to save the metadata for the annotation. This is optional.
+      :type save_metadata: bool
 
       :returns: The annotation entry that was added.
       :rtype: AnnotationEntry
@@ -1538,12 +1633,31 @@ Attributes
       :type feature_group_id: str
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
-      :param doc_id: The ID of the primary document the annotation is on.
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type doc_id: str
-      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
+      :rtype: AnnotationEntry
+
+
+   .. py:method:: update_annotation_status(feature_group_id, feature_name, status, doc_id = None, feature_group_row_identifier = None)
+
+      Update the status of an annotation entry.
+
+      :param feature_group_id: The ID of the feature group the annotation is on.
+      :type feature_group_id: str
+      :param feature_name: The name of the feature the annotation is on.
+      :type feature_name: str
+      :param status: The new status of the annotation. Must be one of the following: 'TODO', 'IN_PROGRESS', 'DONE'.
+      :type status: str
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+      :type doc_id: str
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+      :type feature_group_row_identifier: str
+
+      :returns: None
       :rtype: AnnotationEntry
 
 
@@ -2190,6 +2304,25 @@ Attributes
       :type lookup_keys: list
 
 
+   .. py:method:: describe_async_feature_group_operation(execute_fg_operation_run_id)
+
+      Gets the status of the execution of fg operation
+
+      :param execute_fg_operation_run_id: The unique ID associated with the execution.
+      :type execute_fg_operation_run_id: str
+
+      :returns: A dict that contains the execution status
+      :rtype: ExecuteFgOperation
+
+
+   .. py:method:: get_execute_feature_group_operation_result_part_count(execute_fg_operation_run_id)
+
+      Gets the number of parts in the result of the execution of fg operation
+
+      :param execute_fg_operation_run_id: The unique ID associated with the execution.
+      :type execute_fg_operation_run_id: str
+
+
    .. py:method:: update_feature_group(feature_group_id, description = None)
 
       Modify an existing Feature Group.
@@ -2759,7 +2892,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -2775,6 +2908,8 @@ Attributes
       :type extract_bounding_boxes: bool
       :param parsing_config: Custom config for dataset parsing.
       :type parsing_config: ParsingConfig
+      :param merge_file_schemas: Signifies whether to merge the schemas of all files in the dataset.
+      :type merge_file_schemas: bool
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -3778,7 +3913,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [])
+   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None)
 
       Creates a refresh policy with a particular cron pattern and refresh type.
 
@@ -3791,7 +3926,7 @@ Attributes
       :type cron: str
       :param refresh_type: The refresh type used to determine what is being refreshed, such as a single dataset, dataset and model, or more.
       :type refresh_type: str
-      :param project_id: Optionally, a project ID can be specified so that all datasets, models, and deployments are captured at the instant the policy was created.
+      :param project_id: Optionally, a project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitrs, and notebooks are captured at the instant the policy was created.
       :type project_id: str
       :param dataset_ids: Comma-separated list of dataset IDs.
       :type dataset_ids: list
@@ -3805,6 +3940,8 @@ Attributes
       :type prediction_metric_ids: list
       :param model_monitor_ids: Comma-separated list of model monitor IDs.
       :type model_monitor_ids: list
+      :param notebook_id: Notebook ID associated with refresh policy.
+      :type notebook_id: str
 
       :returns: The created refresh policy.
       :rtype: RefreshPolicy
@@ -4798,7 +4935,7 @@ Attributes
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
       :param data: The data to record, as a list of JSON objects.
-      :type data: dict
+      :type data: list
 
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
@@ -4867,7 +5004,7 @@ Attributes
 
       :param pipeline_name: The name of the pipeline, which should be unique to the organization.
       :type pipeline_name: str
-      :param project_id: A unique string identifier for the plot dashboard.
+      :param project_id: A unique string identifier for the pipeline.
       :type project_id: str
 
       :returns: An object that describes a Pipeline.
@@ -4885,12 +5022,27 @@ Attributes
       :rtype: Pipeline
 
 
+   .. py:method:: update_pipeline(pipeline_name, project_id = None, pipeline_variable_mappings = None)
+
+      Updates a pipeline for executing multiple steps.
+
+      :param pipeline_name: The name of the pipeline, which should be unique to the organization.
+      :type pipeline_name: str
+      :param project_id: A unique string identifier for the pipeline.
+      :type project_id: str
+      :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
+      :type pipeline_variable_mappings: list
+
+      :returns: An object that describes a Pipeline.
+      :rtype: Pipeline
+
+
    .. py:method:: delete_pipeline(pipeline_name)
 
       Deletes a pipeline.
 
       :param pipeline_name: The name of the pipeline to describe.
-      :type pipeline_name: None
+      :type pipeline_name: str
 
 
    .. py:method:: list_pipeline_versions(pipeline_name)
@@ -5293,7 +5445,86 @@ Attributes
       :type chat_history: list
 
       :returns: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
-      :rtype: ChatBotResponse
+      :rtype: ChatSession
+
+
+   .. py:method:: create_chat_session(project_id = None)
+
+      Creates a chat session with Abacus Chat.
+
+      :param project_id: The project this chat session belongs to
+      :type project_id: str
+
+      :returns: The chat session with Abacus Chat
+      :rtype: ChatSession
+
+
+   .. py:method:: send_chat_message(chat_session_id, message)
+
+      Updates chat history with the response from a user message
+
+      :param chat_session_id: Unique ID of the chat session.
+      :type chat_session_id: str
+      :param message: Message you want to send to Abacus Chat
+      :type message: str
+
+      :returns: The chat session with Abacus Chat
+      :rtype: ChatSession
+
+
+   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None)
+
+      Creates a new AI agent.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param function_source_code: The contents of a valid Python source code file. The source code should contain a function named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param agent_function_name: The name of the function found in the source code that will be executed when the agent is deployed.
+      :type agent_function_name: str
+      :param name: The name you want your agent to have, defaults to "<Project Name> Agent".
+      :type name: str
+      :param memory: The memory allocation (in GB) for the agent.
+      :type memory: int
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+      :type package_requirements: list
+
+      :returns: None
+      :rtype: Model
+
+
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None)
+
+      Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
+
+      :param model_id: The unique ID associated with the AI Agent to be changed.
+      :type model_id: str
+      :param function_source_code: Contents of a valid Python source code file. The source code should contain the functions named `agentFunctionName`. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
+      :type function_source_code: str
+      :param agent_function_name: Name of the function found in the source code that will be executed to the agent when it is deployed.
+      :type agent_function_name: str
+      :param memory: Memory (in GB) for the agent.
+      :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
+
+      :returns: None
+      :rtype: Model
+
+
+   .. py:method:: render_feature_groups_for_llm(feature_group_ids, token_budget = None, include_definition = True)
+
+      Encode feature groups as language model inputs.
+
+      :param feature_group_ids: List of feature groups to be encoded.
+      :type feature_group_ids: list
+      :param token_budget: Enforce a given budget for each encoded feature group.
+      :type token_budget: int
+      :param include_definition: Include the definition of the feature group in the encoding.
+      :type include_definition: bool
+
+      :returns: LLM input object comprising of information about the feature groups with given IDs.
+      :rtype: LlmInput
 
 
 
@@ -5505,9 +5736,9 @@ Attributes
       :type feature_group_id: str
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
-      :param doc_id: The ID of the primary document the annotation is on.
+      :param doc_id: The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type doc_id: str
-      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+      :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
@@ -5603,6 +5834,31 @@ Attributes
 
       :returns: All the feature groups associated with the specified Python function ID.
       :rtype: FeatureGroup
+
+
+   .. py:method:: execute_async_feature_group_operation(query = None)
+
+      Starts the execution of fg operation
+
+      :param query: The SQL to be executed.
+      :type query: str
+
+      :returns: A dict that contains the execution status
+      :rtype: ExecuteFgOperation
+
+
+   .. py:method:: download_execute_feature_group_operation_result_part_chunk(execute_fg_operation_run_id, part, offset = 0, chunk_size = 10485760)
+
+      Downloads a chunk of the result of the execution of fg operation
+
+      :param execute_fg_operation_run_id: The unique ID associated with the execution.
+      :type execute_fg_operation_run_id: str
+      :param part: The part number of the result
+      :type part: int
+      :param offset: The offset in the part
+      :type offset: int
+      :param chunk_size: The size of the chunk
+      :type chunk_size: int
 
 
    .. py:method:: get_feature_group_version_export_download_url(feature_group_export_id)
@@ -6541,11 +6797,11 @@ Attributes
       :rtype: RefreshPipelineRun
 
 
-   .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [])
+   .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization
 
-      :param project_id: Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, and model monitors are captured at the instant this policy was created.
+      :param project_id: Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitors, and notebooks are captured at the instant this policy was created.
       :type project_id: str
       :param dataset_ids: Comma-separated list of Dataset IDs.
       :type dataset_ids: list
@@ -6559,6 +6815,8 @@ Attributes
       :type model_monitor_ids: list
       :param prediction_metric_ids: Comma-separated list of Prediction Metric IDs.
       :type prediction_metric_ids: list
+      :param notebook_ids: Comma-separated list of Notebook IDs.
+      :type notebook_ids: list
 
       :returns: List of all refresh policies in the organization.
       :rtype: RefreshPolicy
@@ -6867,6 +7125,74 @@ Attributes
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
+
+
+   .. py:method:: get_chat_session(chat_session_id)
+
+      Gets a chat session from Abacus Chat.
+
+      :param chat_session_id: The chat session id
+      :type chat_session_id: str
+
+      :returns: The chat session with Abacus Chat
+      :rtype: ChatSession
+
+
+   .. py:method:: evaluate_prompt(prompt, system_message = None, num_output_tokens = None)
+
+      Generate response to the prompt using the specified model.
+
+      :param prompt: Prompt to use for generation.
+      :type prompt: str
+      :param system_message: System message for models that support it.
+      :type system_message: str
+      :param num_output_tokens: Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be <= model token limit
+      :type num_output_tokens: int
+
+      :returns: The response from the mode, raw text and parsed components.
+      :rtype: LlmResponse
+
+
+   .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
+
+      Search feature groups based on text and filters.
+
+      :param text: Text to use for approximately matching feature groups.
+      :type text: str
+      :param num_results: The maximum number of search results to retrieve. The length of the returned list is less than or equal to num_results.
+      :type num_results: int
+      :param project_id: The ID of the project in which to restrict the search, if specified.
+      :type project_id: str
+      :param feature_group_ids: A list of feagure group IDs to restrict the search to.
+      :type feature_group_ids: list
+
+      :returns: A list of search results, each containing the retrieved object and its relevance score
+      :rtype: LlmSearchResult
+
+
+   .. py:method:: render_feature_group_data_for_llm(feature_group_id, token_budget = None, render_format = 'markdown')
+
+      Encode feature groups as language model inputs.
+
+      :param feature_group_id: The ID of the feature groups to be encoded.
+      :type feature_group_id: str
+      :param token_budget: Enforce a given budget for each encoded feature group.
+      :type token_budget: int
+      :param render_format: One of `['markdown', 'json']`
+      :type render_format: str
+
+      :returns: LLM input object comprising of information about the feature group with given ID.
+      :rtype: LlmInput
+
+
+   .. py:method:: query_feature_group_code_generator(query, project_id = None)
+
+      Send a query to the feature group code generator tool to generate code for the query.
+
+      :param query: A natural language query which specifies what the user wants out of the feature group or its code.
+      :type query: str
+      :param project_id: A unique string identifier of the project in context of which the query is.
+      :type project_id: str
 
 
 
@@ -7566,7 +7892,7 @@ Attributes
       :param streaming_token: The streaming token for authenticating requests.
       :type streaming_token: str
       :param data: The data to record, as a list of JSON objects.
-      :type data: dict
+      :type data: list
 
 
    .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
@@ -7583,7 +7909,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.61.0'
+   :value: '0.63.0'
 
    
 

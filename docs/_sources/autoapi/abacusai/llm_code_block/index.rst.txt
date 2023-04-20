@@ -1,0 +1,52 @@
+:py:mod:`abacusai.llm_code_block`
+=================================
+
+.. py:module:: abacusai.llm_code_block
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.llm_code_block.LlmCodeBlock
+
+
+
+
+.. py:class:: LlmCodeBlock(client, language=None, code=None, start=None, end=None, valid=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Parsed code block from an LLM response
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param language: The language of the code block. Eg - python/SQL/etc.
+   :type language: str
+   :param code: source code string
+   :type code: str
+   :param start: index of the starting character of the code block in the original response
+   :type start: number(integer)
+   :param end: index of the last character of the code block in the original response
+   :type end: number(integer)
+   :param valid: flag denoting whether the soruce code string is syntactically valid
+   :type valid: bool
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

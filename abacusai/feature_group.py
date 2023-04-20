@@ -193,8 +193,8 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             feature_name (str): The name of the feature the annotation is on.
-            doc_id (str): The ID of the primary document the annotation is on.
-            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
 
         Returns:
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
@@ -207,13 +207,28 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             feature_name (str): The name of the feature the annotation is on.
-            doc_id (str): The ID of the primary document the annotation is on.
-            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. At least one of the doc_id or key value must be provided in order to identify the correct annotation.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
 
         Returns:
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information.
         """
         return self.client.verify_and_describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
+
+    def update_annotation_status(self, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None):
+        """
+        Update the status of an annotation entry.
+
+        Args:
+            feature_name (str): The name of the feature the annotation is on.
+            status (str): The new status of the annotation. Must be one of the following: 'TODO', 'IN_PROGRESS', 'DONE'.
+            doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+
+        Returns:
+            AnnotationEntry: None
+        """
+        return self.client.update_annotation_status(self.feature_group_id, feature_name, status, doc_id, feature_group_row_identifier)
 
     def get_document_to_annotate(self, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False):
         """
@@ -1015,13 +1030,13 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.append_data(self.feature_group_id, streaming_token, data)
 
-    def upsert_multiple_data(self, streaming_token: str, data: dict):
+    def upsert_multiple_data(self, streaming_token: str, data: list):
         """
         Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
         Args:
             streaming_token (str): The streaming token for authenticating requests.
-            data (dict): The data to record, as a list of JSON objects.
+            data (list): The data to record, as a list of JSON objects.
         """
         return self.client.upsert_multiple_data(self.feature_group_id, streaming_token, data)
 
@@ -1058,6 +1073,19 @@ class FeatureGroup(AbstractApiClass):
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s).
         """
         return self.client.generate_natural_language_explanation(self.feature_group_id, feature_group_version)
+
+    def render_data_for_llm(self, token_budget: int = None, render_format: str = 'markdown'):
+        """
+        Encode feature groups as language model inputs.
+
+        Args:
+            token_budget (int): Enforce a given budget for each encoded feature group.
+            render_format (str): One of `['markdown', 'json']`
+
+        Returns:
+            LlmInput: LLM input object comprising of information about the feature group with given ID.
+        """
+        return self.client.render_feature_group_data_for_llm(self.feature_group_id, token_budget, render_format)
 
     def wait_for_dataset(self, timeout: int = 7200):
         """

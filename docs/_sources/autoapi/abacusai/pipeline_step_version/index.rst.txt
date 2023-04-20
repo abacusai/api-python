@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None)
+.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, pipelineStepVersionReferences={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -49,6 +49,8 @@ Classes
    :type stepDependencies: list[str]
    :param outputVariableMappings: The mappings for the output variables to the step.
    :type outputVariableMappings: dict
+   :param pipelineStepVersionReferences: A list to the output instances of the pipeline step version.
+   :type pipelineStepVersionReferences: PipelineStepVersionReference
 
    .. py:method:: __repr__()
 

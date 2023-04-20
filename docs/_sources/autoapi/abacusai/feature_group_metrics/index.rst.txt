@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupMetrics(client, metrics=None, schema=None)
+.. py:class:: FeatureGroupMetrics(client, metrics=None, schema=None, numRows=None, numCols=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,6 +29,10 @@ Classes
    :type metrics: list[dict]
    :param schema: A list of dicts with the schema for each metric
    :type schema: list[dict]
+   :param numRows: The number of rows in the feature group
+   :type numRows: int
+   :param numCols: The number of columns in the feature group
+   :type numCols: int
 
    .. py:method:: __repr__()
 
