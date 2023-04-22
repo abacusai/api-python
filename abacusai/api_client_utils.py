@@ -33,10 +33,12 @@ def avro_to_pandas_dtype(avro_type):
         'boolean': 'bool',
         'bytes': 'object',
         'null': 'object',
+        'date': 'datetime',
     }
 
     if isinstance(avro_type, dict):
-        avro_type = avro_type['type']
+        avro_type = 'date' if avro_type.get(
+            'logicalType') == 'date' else avro_type['type']
 
     return avro_pandas_dtypes.get(avro_type, 'object')
 

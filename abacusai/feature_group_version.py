@@ -249,6 +249,9 @@ class FeatureGroupVersion(AbstractApiClass):
                             [r for r in reader], columns=col_dtypes.keys())
 
                         for col in df_part.columns:
+                            if col_dtypes[col] == 'datetime':
+                                df_part[col] = pd.to_datetime(df_part[col])
+
                             if pd.core.dtypes.common.is_datetime64_ns_dtype(df_part[col]):
                                 df_part[col] = df_part[col].dt.tz_localize(
                                     None)
