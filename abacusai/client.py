@@ -49,7 +49,7 @@ from .eda_feature_association import EdaFeatureAssociation
 from .eda_feature_collinearity import EdaFeatureCollinearity
 from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
-from .execute_fg_operation import ExecuteFgOperation
+from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
@@ -637,25 +637,25 @@ class ReadOnlyClient(BaseApiClient):
             FeatureGroup: All the feature groups associated with the specified Python function ID."""
         return self._call_api('listPythonFunctionFeatureGroups', 'GET', query_params={'name': name, 'limit': limit}, parse_type=FeatureGroup)
 
-    def execute_async_feature_group_operation(self, query: str = None) -> ExecuteFgOperation:
+    def execute_async_feature_group_operation(self, query: str = None) -> ExecuteFeatureGroupOperation:
         """Starts the execution of fg operation
 
         Args:
             query (str): The SQL to be executed.
 
         Returns:
-            ExecuteFgOperation: A dict that contains the execution status"""
-        return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query}, parse_type=ExecuteFgOperation)
+            ExecuteFeatureGroupOperation: A dict that contains the execution status"""
+        return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query}, parse_type=ExecuteFeatureGroupOperation)
 
-    def download_execute_feature_group_operation_result_part_chunk(self, execute_fg_operation_run_id: str, part: int, offset: int = 0, chunk_size: int = 10485760) -> Dict:
+    def download_execute_feature_group_operation_result_part_chunk(self, feature_group_operation_run_id: str, part: int, offset: int = 0, chunk_size: int = 10485760) -> Dict:
         """Downloads a chunk of the result of the execution of fg operation
 
         Args:
-            execute_fg_operation_run_id (str): The unique ID associated with the execution.
+            feature_group_operation_run_id (str): The unique ID associated with the execution.
             part (int): The part number of the result
             offset (int): The offset in the part
             chunk_size (int): The size of the chunk"""
-        return self._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'executeFgOperationRunId': execute_fg_operation_run_id, 'part': part, 'offset': offset, 'chunkSize': chunk_size})
+        return self._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': feature_group_operation_run_id, 'part': part, 'offset': offset, 'chunkSize': chunk_size})
 
     def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
         """Get a link to download the feature group version.
@@ -3236,22 +3236,22 @@ Creates a new feature group defined as the union of other feature group versions
             lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns."""
         return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
 
-    def describe_async_feature_group_operation(self, execute_fg_operation_run_id: str) -> ExecuteFgOperation:
+    def describe_async_feature_group_operation(self, feature_group_operation_run_id: str) -> ExecuteFeatureGroupOperation:
         """Gets the status of the execution of fg operation
 
         Args:
-            execute_fg_operation_run_id (str): The unique ID associated with the execution.
+            feature_group_operation_run_id (str): The unique ID associated with the execution.
 
         Returns:
-            ExecuteFgOperation: A dict that contains the execution status"""
-        return self._call_api('describeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'executeFgOperationRunId': execute_fg_operation_run_id}, parse_type=ExecuteFgOperation)
+            ExecuteFeatureGroupOperation: A dict that contains the execution status"""
+        return self._call_api('describeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'featureGroupOperationRunId': feature_group_operation_run_id}, parse_type=ExecuteFeatureGroupOperation)
 
-    def get_execute_feature_group_operation_result_part_count(self, execute_fg_operation_run_id: str) -> None:
+    def get_execute_feature_group_operation_result_part_count(self, feature_group_operation_run_id: str) -> None:
         """Gets the number of parts in the result of the execution of fg operation
 
         Args:
-            execute_fg_operation_run_id (str): The unique ID associated with the execution."""
-        return self._call_api('getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={}, body={'executeFgOperationRunId': execute_fg_operation_run_id})
+            feature_group_operation_run_id (str): The unique ID associated with the execution."""
+        return self._call_api('getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={}, body={'featureGroupOperationRunId': feature_group_operation_run_id})
 
     def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
         """Modify an existing Feature Group.
@@ -5022,16 +5022,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def execute_agent(self, deployment_token: str, deployment_id: str, arguments: dict) -> Dict:
+    def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): A unique string identifier for the deployment created under the project.
-            arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments}, server_override=prediction_url)
+        return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.

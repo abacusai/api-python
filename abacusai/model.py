@@ -358,6 +358,15 @@ class Model(AbstractApiClass):
         """
         return self.wait_for_training()
 
+    def wait_for_publish(self, timeout=None):
+        """
+        A waiting call until agent is published.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.wait_for_training()
+
     def wait_for_full_automl(self, timeout=None):
         """
         A waiting call until full AutoML cycle is completed.

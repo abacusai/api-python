@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abacusai.python_function &mdash; AbacusAI  documentation</title>
+  <title>abacusai.execute_feature_group_operation &mdash; AbacusAI  documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
@@ -20,8 +20,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="abacusai.python_function_validator" href="../python_function_validator/index.html" />
-    <link rel="prev" title="abacusai.project_validation" href="../project_validation/index.html" /> 
+    <link rel="next" title="abacusai.feature" href="../feature/index.html" />
+    <link rel="prev" title="abacusai.embedding_feature_drift_distribution" href="../embedding_feature_drift_distribution/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -93,7 +93,10 @@
 <li class="toctree-l3"><a class="reference internal" href="../eda_forecasting_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_forecasting_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
@@ -160,10 +163,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function_validator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
@@ -207,9 +207,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a></li>
-      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/autoapi/abacusai/python_function/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/autoapi/abacusai/execute_feature_group_operation/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -217,49 +217,43 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-abacusai.python_function">
-<span id="abacusai-python-function"></span><h1><a class="reference internal" href="#module-abacusai.python_function" title="abacusai.python_function"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a><a class="headerlink" href="#module-abacusai.python_function" title="Permalink to this heading"></a></h1>
+  <section id="module-abacusai.execute_feature_group_operation">
+<span id="abacusai-execute-feature-group-operation"></span><h1><a class="reference internal" href="#module-abacusai.execute_feature_group_operation" title="abacusai.execute_feature_group_operation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a><a class="headerlink" href="#module-abacusai.execute_feature_group_operation" title="Permalink to this heading"></a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
 <section id="classes">
 <h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.python_function.PythonFunction" title="abacusai.python_function.PythonFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunction</span></code></a></p></td>
-<td><p>Customer created python function</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExecuteFeatureGroupOperation</span></code></a></p></td>
+<td><p>The result of executing a SQL query</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.python_function.PythonFunction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.python_function.</span></span><span class="sig-name descname"><span class="pre">PythonFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notebookId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">createdAt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">functionVariableMappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputVariableMappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">functionName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pythonFunctionId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">functionType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codeSource</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.python_function.PythonFunction" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.execute_feature_group_operation.</span></span><span class="sig-name descname"><span class="pre">ExecuteFeatureGroupOperation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupOperationRunId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
-<p>Customer created python function</p>
+<p>The result of executing a SQL query</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>notebookId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the notebook used to spin up the notebook upon creation.</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name to identify the algorithm, only uppercase letters, numbers, and underscores allowed.</p></li>
-<li><p><strong>createdAt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ISO-8601 string representing when the Python function was created.</p></li>
-<li><p><strong>functionVariableMappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A description of the function variables.</p></li>
-<li><p><strong>outputVariableMappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A description of the variables returned by the function</p></li>
-<li><p><strong>functionName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the Python function to be used.</p></li>
-<li><p><strong>pythonFunctionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the Python function.</p></li>
-<li><p><strong>functionType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of the Python function.</p></li>
-<li><p><strong>codeSource</strong> (<a class="reference internal" href="../code_source/index.html#abacusai.code_source.CodeSource" title="abacusai.code_source.CodeSource"><em>CodeSource</em></a>) – Information about the source code of the Python function.</p></li>
+<li><p><strong>featureGroupOperationRunId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The run id of the operation</p></li>
+<li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The status of the operation</p></li>
+<li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The error message if the operation failed</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.python_function.PythonFunction.__repr__">
-<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.python_function.PythonFunction.__repr__" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.__repr__">
+<span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.__repr__" title="Permalink to this definition"></a></dt>
 <dd><p>Return repr(self).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.python_function.PythonFunction.to_dict">
-<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.python_function.PythonFunction.to_dict" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.to_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Get a dict representation of the parameters in this class</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -272,45 +266,78 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.python_function.PythonFunction.add_graph_to_dashboard">
-<span class="sig-name descname"><span class="pre">add_graph_to_dashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_dashboard_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.python_function.PythonFunction.add_graph_to_dashboard" title="Permalink to this definition"></a></dt>
-<dd><p>Add a python plot function to a dashboard</p>
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.wait_for_results">
+<span class="sig-name descname"><span class="pre">wait_for_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.wait_for_results" title="Permalink to this definition"></a></dt>
+<dd><p>A waiting call until query is executed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>graph_dashboard_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the graph dashboard to update.</p></li>
-<li><p><strong>function_variable_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – List of arguments to be supplied to the function as parameters, in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the added python plot</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An object describing the graph dashboard.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../graph_dashboard/index.html#abacusai.graph_dashboard.GraphDashboard" title="abacusai.graph_dashboard.GraphDashboard">GraphDashboard</a></p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.python_function.PythonFunction.validate_locally">
-<span class="sig-name descname"><span class="pre">validate_locally</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.python_function.PythonFunction.validate_locally" title="Permalink to this definition"></a></dt>
-<dd><p>Validates a Python function by running it with the given input values in an local environment. Taking Input Feature Group as either name(string) or Pandas DataFrame in kwargs.</p>
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.wait_for_execution">
+<span class="sig-name descname"><span class="pre">wait_for_execution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.wait_for_execution" title="Permalink to this definition"></a></dt>
+<dd><p>A waiting call until query is executed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary mapping function arguments to values to pass to the function. Feature group names will automatically be converted into pandas dataframes.</p>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.get_status">
+<span class="sig-name descname"><span class="pre">get_status</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.get_status" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the status of the query execution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string describing the status of a query execution (pending, complete, etc.).</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Calls describe and refreshes the current object’s fields</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../dataset_version/index.html#abacusai.dataset_version.DatasetVersion" title="abacusai.dataset_version.DatasetVersion">DatasetVersion</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.describe" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation._download_avro_file">
+<span class="sig-name descname"><span class="pre">_download_avro_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmp_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation._download_avro_file" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.load_as_pandas">
+<span class="sig-name descname"><span class="pre">load_as_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation.load_as_pandas" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the result data into a pandas dataframe</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The number of threads.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The result of executing the python function</p>
+<dd class="field-even"><p>A pandas dataframe displaying the data from execution.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>any</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.11)"><strong>TypeError</strong></a> – If an Input Feature Group argument has an invalid type or argument is missing.</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.11)"><strong>Exception</strong></a> – If an error occurs while validating the Python function.</p></li>
-</ul>
+<dd class="field-odd"><p>DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,8 +352,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../project_validation/index.html" class="btn btn-neutral float-left" title="abacusai.project_validation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../python_function_validator/index.html" class="btn btn-neutral float-right" title="abacusai.python_function_validator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../embedding_feature_drift_distribution/index.html" class="btn btn-neutral float-left" title="abacusai.embedding_feature_drift_distribution" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../feature/index.html" class="btn btn-neutral float-right" title="abacusai.feature" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

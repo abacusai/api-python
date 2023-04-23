@@ -5,25 +5,25 @@ from concurrent.futures import ThreadPoolExecutor
 from .return_class import AbstractApiClass
 
 
-class ExecuteFgOperation(AbstractApiClass):
+class ExecuteFeatureGroupOperation(AbstractApiClass):
     """
         The result of executing a SQL query
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            executeFgOperationRunId (str): The run id of the operation
+            featureGroupOperationRunId (str): The run id of the operation
             status (str): The status of the operation
             error (str): The error message if the operation failed
     """
 
-    def __init__(self, client, executeFgOperationRunId=None, status=None, error=None):
+    def __init__(self, client, featureGroupOperationRunId=None, status=None, error=None):
         super().__init__(client, None)
-        self.execute_fg_operation_run_id = executeFgOperationRunId
+        self.feature_group_operation_run_id = featureGroupOperationRunId
         self.status = status
         self.error = error
 
     def __repr__(self):
-        return f"ExecuteFgOperation(execute_fg_operation_run_id={repr(self.execute_fg_operation_run_id)},\n  status={repr(self.status)},\n  error={repr(self.error)})"
+        return f"ExecuteFeatureGroupOperation(feature_group_operation_run_id={repr(self.feature_group_operation_run_id)},\n  status={repr(self.status)},\n  error={repr(self.error)})"
 
     def to_dict(self):
         """
@@ -32,7 +32,7 @@ class ExecuteFgOperation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'execute_fg_operation_run_id': self.execute_fg_operation_run_id, 'status': self.status, 'error': self.error}
+        return {'feature_group_operation_run_id': self.feature_group_operation_run_id, 'status': self.status, 'error': self.error}
 
     def wait_for_results(self, timeout=3600):
         """
@@ -72,7 +72,7 @@ class ExecuteFgOperation(AbstractApiClass):
         return self
 
     def describe(self):
-        return self.client.describe_async_feature_group_operation(self.execute_fg_operation_run_id)
+        return self.client.describe_async_feature_group_operation(self.feature_group_operation_run_id)
 
     # internal call
     def _download_avro_file(self, file_part, tmp_dir):
@@ -80,7 +80,7 @@ class ExecuteFgOperation(AbstractApiClass):
         part_path = os.path.join(tmp_dir, f'{file_part}.avro')
         with open(part_path, 'wb') as file:
             while True:
-                with self.client._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'executeFgOperationRunId': self.execute_fg_operation_run_id, 'part': file_part, 'offset': offset}, streamable_response=True) as chunk:
+                with self.client._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': self.feature_group_operation_run_id, 'part': file_part, 'offset': offset}, streamable_response=True) as chunk:
                     bytes_written = file.write(chunk.read())
                 if not bytes_written:
                     break
@@ -100,8 +100,8 @@ class ExecuteFgOperation(AbstractApiClass):
         import fastavro
         import pandas as pd
 
-        file_parts = range(self.client._call_api('getExecuteFeatureGroupOperationResultPartCount',
-                           'POST', query_params={'executeFgOperationRunId': self.execute_fg_operation_run_id}))
+        file_parts = range(self.client._call_api('getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={
+                           'featureGroupOperationRunId': self.feature_group_operation_run_id}))
         data_df = pd.DataFrame()
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             with tempfile.TemporaryDirectory() as tmp_dir:

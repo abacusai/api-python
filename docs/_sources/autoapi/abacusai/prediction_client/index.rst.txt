@@ -626,7 +626,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: execute_agent(deployment_token, deployment_id, arguments)
+   .. py:method:: execute_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -634,8 +634,10 @@ Classes
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type arguments: dict
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
 
 
 

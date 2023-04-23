@@ -65,7 +65,7 @@ Submodules
    eda_forecasting_analysis/index.rst
    eda_version/index.rst
    embedding_feature_drift_distribution/index.rst
-   execute_fg_operation/index.rst
+   execute_feature_group_operation/index.rst
    feature/index.rst
    feature_drift_summary/index.rst
    feature_group/index.rst
@@ -2304,23 +2304,23 @@ Attributes
       :type lookup_keys: list
 
 
-   .. py:method:: describe_async_feature_group_operation(execute_fg_operation_run_id)
+   .. py:method:: describe_async_feature_group_operation(feature_group_operation_run_id)
 
       Gets the status of the execution of fg operation
 
-      :param execute_fg_operation_run_id: The unique ID associated with the execution.
-      :type execute_fg_operation_run_id: str
+      :param feature_group_operation_run_id: The unique ID associated with the execution.
+      :type feature_group_operation_run_id: str
 
       :returns: A dict that contains the execution status
-      :rtype: ExecuteFgOperation
+      :rtype: ExecuteFeatureGroupOperation
 
 
-   .. py:method:: get_execute_feature_group_operation_result_part_count(execute_fg_operation_run_id)
+   .. py:method:: get_execute_feature_group_operation_result_part_count(feature_group_operation_run_id)
 
       Gets the number of parts in the result of the execution of fg operation
 
-      :param execute_fg_operation_run_id: The unique ID associated with the execution.
-      :type execute_fg_operation_run_id: str
+      :param feature_group_operation_run_id: The unique ID associated with the execution.
+      :type feature_group_operation_run_id: str
 
 
    .. py:method:: update_feature_group(feature_group_id, description = None)
@@ -4582,7 +4582,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: execute_agent(deployment_token, deployment_id, arguments)
+   .. py:method:: execute_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -4590,8 +4590,10 @@ Attributes
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type arguments: dict
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
 
 
    .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None)
@@ -5856,15 +5858,15 @@ Attributes
       :type query: str
 
       :returns: A dict that contains the execution status
-      :rtype: ExecuteFgOperation
+      :rtype: ExecuteFeatureGroupOperation
 
 
-   .. py:method:: download_execute_feature_group_operation_result_part_chunk(execute_fg_operation_run_id, part, offset = 0, chunk_size = 10485760)
+   .. py:method:: download_execute_feature_group_operation_result_part_chunk(feature_group_operation_run_id, part, offset = 0, chunk_size = 10485760)
 
       Downloads a chunk of the result of the execution of fg operation
 
-      :param execute_fg_operation_run_id: The unique ID associated with the execution.
-      :type execute_fg_operation_run_id: str
+      :param feature_group_operation_run_id: The unique ID associated with the execution.
+      :type feature_group_operation_run_id: str
       :param part: The part number of the result
       :type part: int
       :param offset: The offset in the part
@@ -7817,7 +7819,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: execute_agent(deployment_token, deployment_id, arguments)
+   .. py:method:: execute_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -7825,8 +7827,10 @@ Attributes
       :type deployment_token: str
       :param deployment_id: A unique string identifier for the deployment created under the project.
       :type deployment_id: str
-      :param arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type arguments: dict
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
 
 
 

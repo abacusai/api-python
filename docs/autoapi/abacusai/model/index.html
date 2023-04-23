@@ -93,7 +93,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../eda_forecasting_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_forecasting_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../execute_fg_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_fg_operation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
@@ -639,6 +639,17 @@
 <dt class="sig sig-object py" id="abacusai.model.Model.wait_for_evaluation">
 <span class="sig-name descname"><span class="pre">wait_for_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.wait_for_evaluation" title="Permalink to this definition"></a></dt>
 <dd><p>A waiting call until model is evaluated completely.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.model.Model.wait_for_publish">
+<span class="sig-name descname"><span class="pre">wait_for_publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.wait_for_publish" title="Permalink to this definition"></a></dt>
+<dd><p>A waiting call until agent is published.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>, </em><em>optional</em>) – The waiting time given to the call to finish, if it doesn’t finish by the allocated time, the call is said to be timed out.</p>

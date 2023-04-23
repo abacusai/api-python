@@ -96,7 +96,7 @@
 <li class="toctree-l3"><a class="reference internal" href="eda_forecasting_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_forecasting_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="execute_fg_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_fg_operation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
@@ -306,7 +306,7 @@
 <li class="toctree-l1"><a class="reference internal" href="eda_forecasting_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_forecasting_analysis</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="eda_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.eda_version</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="execute_fg_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_fg_operation</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
@@ -2953,28 +2953,28 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.describe_async_feature_group_operation">
-<span class="sig-name descname"><span class="pre">describe_async_feature_group_operation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">execute_fg_operation_run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.describe_async_feature_group_operation" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">describe_async_feature_group_operation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_operation_run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.describe_async_feature_group_operation" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the status of the execution of fg operation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>execute_fg_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p>
+<dd class="field-odd"><p><strong>feature_group_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A dict that contains the execution status</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="execute_fg_operation/index.html#abacusai.execute_fg_operation.ExecuteFgOperation" title="abacusai.execute_fg_operation.ExecuteFgOperation">ExecuteFgOperation</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="execute_feature_group_operation/index.html#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation">ExecuteFeatureGroupOperation</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.get_execute_feature_group_operation_result_part_count">
-<span class="sig-name descname"><span class="pre">get_execute_feature_group_operation_result_part_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">execute_fg_operation_run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_execute_feature_group_operation_result_part_count" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_execute_feature_group_operation_result_part_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_operation_run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_execute_feature_group_operation_result_part_count" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the number of parts in the result of the execution of fg operation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>execute_fg_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p>
+<dd class="field-odd"><p><strong>feature_group_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -5770,14 +5770,15 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.execute_agent">
-<span class="sig-name descname"><span class="pre">execute_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.execute_agent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">execute_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.execute_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
-<li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the paramter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
+<li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
+<li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the paramter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -7437,19 +7438,19 @@ feature groups for those input feature groups.</p>
 <dd class="field-even"><p>A dict that contains the execution status</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="execute_fg_operation/index.html#abacusai.execute_fg_operation.ExecuteFgOperation" title="abacusai.execute_fg_operation.ExecuteFgOperation">ExecuteFgOperation</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="execute_feature_group_operation/index.html#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation">ExecuteFeatureGroupOperation</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.download_execute_feature_group_operation_result_part_chunk">
-<span class="sig-name descname"><span class="pre">download_execute_feature_group_operation_result_part_chunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">execute_fg_operation_run_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10485760</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.download_execute_feature_group_operation_result_part_chunk" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">download_execute_feature_group_operation_result_part_chunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_operation_run_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10485760</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.download_execute_feature_group_operation_result_part_chunk" title="Permalink to this definition"></a></dt>
 <dd><p>Downloads a chunk of the result of the execution of fg operation</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>execute_fg_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p></li>
+<li><p><strong>feature_group_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p></li>
 <li><p><strong>part</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The part number of the result</p></li>
 <li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The offset in the part</p></li>
 <li><p><strong>chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The size of the chunk</p></li>
@@ -10263,14 +10264,15 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.PredictionClient.execute_agent">
-<span class="sig-name descname"><span class="pre">execute_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.execute_agent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">execute_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.execute_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
-<li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the paramter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
+<li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
+<li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the paramter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
