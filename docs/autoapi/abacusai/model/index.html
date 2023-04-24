@@ -475,7 +475,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model.Model.get_metrics">
-<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.get_metrics" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_graphs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model.Model.get_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves a full list of metrics for the specified model.</p>
 <p>If only the model’s unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.</p>
 <dl class="field-list simple">
@@ -483,6 +483,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Version of the model.</p></li>
 <li><p><strong>baseline_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, will also return the baseline model metrics for comparison.</p></li>
+<li><p><strong>return_graphs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, will return the information used for the graphs on the model metrics page.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

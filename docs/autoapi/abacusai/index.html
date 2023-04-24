@@ -2024,7 +2024,7 @@ This will be equivalent to including from that module file.</p>
 <li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the project.</p></li>
 <li><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the dataset.</p></li>
 <li><p><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the column.</p></li>
-<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE</p></li>
+<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -6946,6 +6946,27 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.evaluate_prompt">
+<span class="sig-name descname"><span class="pre">evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_output_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.evaluate_prompt" title="Permalink to this definition"></a></dt>
+<dd><p>Generate response to the prompt using the specified model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prompt to use for generation.</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – System message for models that support it.</p></li>
+<li><p><strong>num_output_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be &lt;= model token limit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the mode, raw text and parsed components.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="llm_response/index.html#abacusai.llm_response.LlmResponse" title="abacusai.llm_response.LlmResponse">LlmResponse</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.render_feature_groups_for_llm">
 <span class="sig-name descname"><span class="pre">render_feature_groups_for_llm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_budget</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.render_feature_groups_for_llm" title="Permalink to this definition"></a></dt>
 <dd><p>Encode feature groups as language model inputs.</p>
@@ -8067,7 +8088,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_model_metrics">
-<span class="sig-name descname"><span class="pre">get_model_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_model_metrics" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_model_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_graphs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_model_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves a full list of metrics for the specified model.</p>
 <p>If only the model’s unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.</p>
 <dl class="field-list simple">
@@ -8076,6 +8097,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the model.</p></li>
 <li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Version of the model.</p></li>
 <li><p><strong>baseline_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, will also return the baseline model metrics for comparison.</p></li>
+<li><p><strong>return_graphs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, will return the information used for the graphs on the model metrics page.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -9382,27 +9404,6 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="chat_session/index.html#abacusai.chat_session.ChatSession" title="abacusai.chat_session.ChatSession">ChatSession</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.evaluate_prompt">
-<span class="sig-name descname"><span class="pre">evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_output_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.evaluate_prompt" title="Permalink to this definition"></a></dt>
-<dd><p>Generate response to the prompt using the specified model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prompt to use for generation.</p></li>
-<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – System message for models that support it.</p></li>
-<li><p><strong>num_output_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be &lt;= model token limit</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The response from the mode, raw text and parsed components.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="llm_response/index.html#abacusai.llm_response.LlmResponse" title="abacusai.llm_response.LlmResponse">LlmResponse</a></p>
 </dd>
 </dl>
 </dd></dl>

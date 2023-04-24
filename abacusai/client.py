@@ -994,7 +994,7 @@ class ReadOnlyClient(BaseApiClient):
             metric (str): The metric to use to determine the best model."""
         return self._call_api('setModelObjective', 'GET', query_params={'modelVersion': model_version, 'metric': metric})
 
-    def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False) -> ModelMetrics:
+    def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False) -> ModelMetrics:
         """Retrieves a full list of metrics for the specified model.
 
         If only the model's unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.
@@ -1004,10 +1004,11 @@ class ReadOnlyClient(BaseApiClient):
             model_id (str): Unique string identifier for the model.
             model_version (str): Version of the model.
             baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
+            return_graphs (bool): If true, will return the information used for the graphs on the model metrics page.
 
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means."""
-        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics}, parse_type=ModelMetrics)
+        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics, 'returnGraphs': return_graphs}, parse_type=ModelMetrics)
 
     def list_model_versions(self, model_id: str, limit: int = 100, start_after_version: str = None) -> ModelVersion:
         """Retrieves a list of versions for a given model.
@@ -1752,18 +1753,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ChatSession: The chat session with Abacus Chat"""
         return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
-
-    def evaluate_prompt(self, prompt: str, system_message: str = None, num_output_tokens: int = None) -> LlmResponse:
-        """Generate response to the prompt using the specified model.
-
-        Args:
-            prompt (str): Prompt to use for generation.
-            system_message (str): System message for models that support it.
-            num_output_tokens (int): Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be <= model token limit
-
-        Returns:
-            LlmResponse: The response from the mode, raw text and parsed components."""
-        return self._call_api('evaluatePrompt', 'GET', query_params={'prompt': prompt, 'systemMessage': system_message, 'numOutputTokens': num_output_tokens}, parse_type=LlmResponse)
 
     def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> LlmSearchResult:
         """Search feature groups based on text and filters.
@@ -2673,7 +2662,7 @@ class ApiClient(ReadOnlyClient):
             project_id (str): The unique ID associated with the project.
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE
+            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL
 
         Returns:
             Schema: A list of objects that describes the resulting dataset's schema after the column's data type is set."""
@@ -5755,6 +5744,18 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             Model: None"""
         return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
+
+    def evaluate_prompt(self, prompt: str, system_message: str = None, num_output_tokens: int = None) -> LlmResponse:
+        """Generate response to the prompt using the specified model.
+
+        Args:
+            prompt (str): Prompt to use for generation.
+            system_message (str): System message for models that support it.
+            num_output_tokens (int): Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be <= model token limit
+
+        Returns:
+            LlmResponse: The response from the mode, raw text and parsed components."""
+        return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'numOutputTokens': num_output_tokens}, parse_type=LlmResponse)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.

@@ -253,7 +253,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: get_metrics(model_version = None, baseline_metrics = False)
+   .. py:method:: get_metrics(model_version = None, baseline_metrics = False, return_graphs = False)
 
       Retrieves a full list of metrics for the specified model.
 
@@ -264,6 +264,8 @@ Classes
       :type model_version: str
       :param baseline_metrics: If true, will also return the baseline model metrics for comparison.
       :type baseline_metrics: bool
+      :param return_graphs: If true, will return the information used for the graphs on the model metrics page.
+      :type return_graphs: bool
 
       :returns: An object containing the model metrics and explanations for what each metric means.
       :rtype: ModelMetrics

@@ -227,7 +227,7 @@ class Model(AbstractApiClass):
         """
         return self.client.set_model_prediction_params(self.model_id, prediction_config)
 
-    def get_metrics(self, model_version: str = None, baseline_metrics: bool = False):
+    def get_metrics(self, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False):
         """
         Retrieves a full list of metrics for the specified model.
 
@@ -237,11 +237,12 @@ class Model(AbstractApiClass):
         Args:
             model_version (str): Version of the model.
             baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
+            return_graphs (bool): If true, will return the information used for the graphs on the model metrics page.
 
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means.
         """
-        return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics)
+        return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics, return_graphs)
 
     def list_versions(self, limit: int = 100, start_after_version: str = None):
         """
