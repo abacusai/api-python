@@ -560,7 +560,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id)
 
-    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None):
+    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None):
         """
         Creates a new AI agent.
 
@@ -569,12 +569,13 @@ class Project(AbstractApiClass):
             agent_function_name (str): The name of the function found in the source code that will be executed when the agent is deployed.
             name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
             memory (int): The memory allocation (in GB) for the agent.
-            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            description (str): A description of the agent, including its purpose and instructions. Returns:
 
         Returns:
             Model: None
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

@@ -188,6 +188,22 @@ Classes
       :rtype: DatasetColumn
 
 
+   .. py:method:: set_database_connector_config(database_connector_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
+
+      Sets database connector config for a dataset. This method is currently only supported for streaming datasets.
+
+      :param database_connector_id: Unique String Identifier of the Database Connector to import the dataset from.
+      :type database_connector_id: str
+      :param object_name: If applicable, the name/ID of the object in the service to query.
+      :type object_name: str
+      :param columns: The columns to query from the external service object.
+      :type columns: str
+      :param query_arguments: Additional query arguments to filter the data.
+      :type query_arguments: str
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`.
+      :type sql_query: str
+
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields

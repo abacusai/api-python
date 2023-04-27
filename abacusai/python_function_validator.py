@@ -51,7 +51,7 @@ def validate_function_locally(client, python_function_name: str, kwargs: Dict = 
         py_fun_source_code = function_metadata.code_source.source_code
 
         # Retrieving Dependent Modules
-        dependent_modules = function_metadata.module_dependencies
+        dependent_modules = function_metadata.code_source.module_dependencies
         modules_and_source_code = []
         if dependent_modules:
             for module in dependent_modules:

@@ -125,6 +125,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../llm_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_search_result</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_artifacts_export</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_blueprint_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_blueprint_export</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../model_blueprint_stage/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_blueprint_stage</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_location/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_location</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_metrics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_monitor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_monitor</span></code></a></li>
@@ -430,6 +432,23 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../dataset_column/index.html#abacusai.dataset_column.DatasetColumn" title="abacusai.dataset_column.DatasetColumn">DatasetColumn</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.dataset.Dataset.set_database_connector_config">
+<span class="sig-name descname"><span class="pre">set_database_connector_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sql_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.dataset.Dataset.set_database_connector_config" title="Permalink to this definition"></a></dt>
+<dd><p>Sets database connector config for a dataset. This method is currently only supported for streaming datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique String Identifier of the Database Connector to import the dataset from.</p></li>
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If applicable, the name/ID of the object in the service to query.</p></li>
+<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The columns to query from the external service object.</p></li>
+<li><p><strong>query_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Additional query arguments to filter the data.</p></li>
+<li><p><strong>sql_query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The full SQL query to use when fetching data. If present, this parameter will override <cite>object_name</cite>, <cite>columns</cite> and <cite>query_arguments</cite>.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

@@ -616,7 +616,7 @@ Classes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None)
+   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
 
       Creates a new AI agent.
 
@@ -628,8 +628,10 @@ Classes
       :type name: str
       :param memory: The memory allocation (in GB) for the agent.
       :type memory: int
-      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param description: A description of the agent, including its purpose and instructions. Returns:
+      :type description: str
 
       :returns: None
       :rtype: Model

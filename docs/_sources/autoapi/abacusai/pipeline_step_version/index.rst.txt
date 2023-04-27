@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, pipelineStepVersionReferences={})
+.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, pipelineStepVersionReferences={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41,6 +41,10 @@ Classes
    :type updatedAt: str
    :param status: The status of the pipeline version.
    :type status: str
+   :param error: The error message if the pipeline step failed.
+   :type error: str
+   :param outputErrors: The error message of a pipeline step's output.
+   :type outputErrors: str
    :param pythonFunctionId: The reference to the python function
    :type pythonFunctionId: str
    :param functionVariableMappings: The mappings for function parameters' names.

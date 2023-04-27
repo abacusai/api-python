@@ -351,7 +351,7 @@ Classes
       :rtype: ModelTrainingTypeForDeployment
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -363,6 +363,8 @@ Classes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
+      :param description: A description of the agent, including its purpose and instructions.
+      :type description: str
 
       :returns: None
       :rtype: Model

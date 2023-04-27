@@ -177,6 +177,19 @@ class Dataset(AbstractApiClass):
         """
         return self.client.get_dataset_schema(self.dataset_id)
 
+    def set_database_connector_config(self, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
+        """
+        Sets database connector config for a dataset. This method is currently only supported for streaming datasets.
+
+        Args:
+            database_connector_id (str): Unique String Identifier of the Database Connector to import the dataset from.
+            object_name (str): If applicable, the name/ID of the object in the service to query.
+            columns (str): The columns to query from the external service object.
+            query_arguments (str): Additional query arguments to filter the data.
+            sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`.
+        """
+        return self.client.set_dataset_database_connector_config(self.dataset_id, database_connector_id, object_name, columns, query_arguments, sql_query)
+
     def refresh(self):
         """
         Calls describe and refreshes the current object's fields

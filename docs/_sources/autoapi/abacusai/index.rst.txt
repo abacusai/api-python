@@ -94,6 +94,8 @@ Submodules
    llm_search_result/index.rst
    model/index.rst
    model_artifacts_export/index.rst
+   model_blueprint_export/index.rst
+   model_blueprint_stage/index.rst
    model_location/index.rst
    model_metrics/index.rst
    model_monitor/index.rst
@@ -1285,7 +1287,7 @@ Attributes
       :type package_requirements: List
 
 
-   .. py:method:: execute_feature_group_sql(sql)
+   .. py:method:: execute_feature_group_sql(sql, timeout=3600, delay=2)
 
       Execute a SQL query on the feature groups
 
@@ -5486,7 +5488,7 @@ Attributes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None)
+   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
 
       Creates a new AI agent.
 
@@ -5500,14 +5502,16 @@ Attributes
       :type name: str
       :param memory: The memory allocation (in GB) for the agent.
       :type memory: int
-      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+      :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param description: A description of the agent, including its purpose and instructions. Returns:
+      :type description: str
 
       :returns: None
       :rtype: Model
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -5521,12 +5525,14 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
+      :param description: A description of the agent, including its purpose and instructions.
+      :type description: str
 
       :returns: None
       :rtype: Model
 
 
-   .. py:method:: evaluate_prompt(prompt, system_message = None, num_output_tokens = None)
+   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None)
 
       Generate response to the prompt using the specified model.
 
@@ -5534,10 +5540,12 @@ Attributes
       :type prompt: str
       :param system_message: System message for models that support it.
       :type system_message: str
-      :param num_output_tokens: Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be <= model token limit
-      :type num_output_tokens: int
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+      :type llm_name: str
+      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+      :type max_tokens: int
 
-      :returns: The response from the mode, raw text and parsed components.
+      :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse
 
 
@@ -6048,6 +6056,24 @@ Attributes
 
       :returns: List of column schema definitions.
       :rtype: DatasetColumn
+
+
+   .. py:method:: set_dataset_database_connector_config(dataset_id, database_connector_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
+
+      Sets database connector config for a dataset. This method is currently only supported for streaming datasets.
+
+      :param dataset_id: Unique String Identifier of the dataset_id.
+      :type dataset_id: str
+      :param database_connector_id: Unique String Identifier of the Database Connector to import the dataset from.
+      :type database_connector_id: str
+      :param object_name: If applicable, the name/ID of the object in the service to query.
+      :type object_name: str
+      :param columns: The columns to query from the external service object.
+      :type columns: str
+      :param query_arguments: Additional query arguments to filter the data.
+      :type query_arguments: str
+      :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`.
+      :type sql_query: str
 
 
    .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
@@ -7201,14 +7227,23 @@ Attributes
       :rtype: LlmInput
 
 
-   .. py:method:: query_feature_group_code_generator(query, project_id = None)
+   .. py:method:: query_feature_group_code_generator(query, language, project_id = None, llm_name = None, max_tokens = None)
 
       Send a query to the feature group code generator tool to generate code for the query.
 
       :param query: A natural language query which specifies what the user wants out of the feature group or its code.
       :type query: str
+      :param language: The language in which code is to be generated. One of 'sql' or 'python'.
+      :type language: str
       :param project_id: A unique string identifier of the project in context of which the query is.
       :type project_id: str
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+      :type llm_name: str
+      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+      :type max_tokens: int
+
+      :returns: The response from the model, raw text and parsed components.
+      :rtype: LlmResponse
 
 
 
@@ -7939,7 +7974,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.63.0'
+   :value: '0.63.5'
 
    
 

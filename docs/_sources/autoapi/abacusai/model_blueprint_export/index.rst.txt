@@ -1,0 +1,48 @@
+:py:mod:`abacusai.model_blueprint_export`
+=========================================
+
+.. py:module:: abacusai.model_blueprint_export
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.model_blueprint_export.ModelBlueprintExport
+
+
+
+
+.. py:class:: ModelBlueprintExport(client, modelVersion=None, currentTrainingConfig=None, modelBlueprintStages={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Model Blueprint
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param modelVersion: Version of the model that the blueprint is for.
+   :type modelVersion: str
+   :param currentTrainingConfig: The current training configuration for the model. It can be used to get training configs and train a new model
+   :type currentTrainingConfig: dict
+   :param modelBlueprintStages: The stages of the model blueprint. Each one includes the stage name, display name, description, parameters, and predecessors.
+   :type modelBlueprintStages: ModelBlueprintStage
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

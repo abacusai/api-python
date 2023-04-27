@@ -192,7 +192,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.63.0'
+    client_version = '0.63.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -793,6 +793,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DatasetColumn: List of column schema definitions."""
         return self._call_api('getDatasetSchema', 'GET', query_params={'datasetId': dataset_id}, parse_type=DatasetColumn)
+
+    def set_dataset_database_connector_config(self, dataset_id: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
+        """Sets database connector config for a dataset. This method is currently only supported for streaming datasets.
+
+        Args:
+            dataset_id (str): Unique String Identifier of the dataset_id.
+            database_connector_id (str): Unique String Identifier of the Database Connector to import the dataset from.
+            object_name (str): If applicable, the name/ID of the object in the service to query.
+            columns (str): The columns to query from the external service object.
+            query_arguments (str): Additional query arguments to filter the data.
+            sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`."""
+        return self._call_api('setDatasetDatabaseConnectorConfig', 'GET', query_params={'datasetId': dataset_id, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query})
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         """Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -1779,13 +1791,19 @@ class ReadOnlyClient(BaseApiClient):
             LlmInput: LLM input object comprising of information about the feature group with given ID."""
         return self._call_api('renderFeatureGroupDataForLLM', 'GET', query_params={'featureGroupId': feature_group_id, 'tokenBudget': token_budget, 'renderFormat': render_format}, parse_type=LlmInput)
 
-    def query_feature_group_code_generator(self, query: str, project_id: str = None):
+    def query_feature_group_code_generator(self, query: str, language: str, project_id: str = None, llm_name: str = None, max_tokens: int = None) -> LlmResponse:
         """Send a query to the feature group code generator tool to generate code for the query.
 
         Args:
             query (str): A natural language query which specifies what the user wants out of the feature group or its code.
-            project_id (str): A unique string identifier of the project in context of which the query is."""
-        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'projectId': project_id})
+            language (str): The language in which code is to be generated. One of 'sql' or 'python'.
+            project_id (str): A unique string identifier of the project in context of which the query is.
+            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+
+        Returns:
+            LlmResponse: The response from the model, raw text and parsed components."""
+        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
@@ -2441,7 +2459,7 @@ class ApiClient(ReadOnlyClient):
         agent_function_name = agent_function.__name__
         return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements)
 
-    def execute_feature_group_sql(self, sql):
+    def execute_feature_group_sql(self, sql, timeout=3600, delay=2):
         """
         Execute a SQL query on the feature groups
 
@@ -2452,7 +2470,7 @@ class ApiClient(ReadOnlyClient):
             pandas.DataFrame: The result of the query.
         """
         execute_query = self.execute_async_feature_group_operation(sql)
-        execute_query.wait_for_execution()
+        execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return execute_query.load_as_pandas()
 
     def add_user_to_organization(self, email: str):
@@ -5716,7 +5734,7 @@ Creates a new feature group defined as the union of other feature group versions
             ChatSession: The chat session with Abacus Chat"""
         return self._call_api('sendChatMessage', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'message': message}, parse_type=ChatSession)
 
-    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None) -> Model:
+    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
         """Creates a new AI agent.
 
         Args:
@@ -5725,13 +5743,14 @@ Creates a new feature group defined as the union of other feature group versions
             agent_function_name (str): The name of the function found in the source code that will be executed when the agent is deployed.
             name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
             memory (int): The memory allocation (in GB) for the agent.
-            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']. Returns:
+            package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            description (str): A description of the agent, including its purpose and instructions. Returns:
 
         Returns:
             Model: None"""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Model)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None) -> Model:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
         """Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
         Args:
@@ -5740,22 +5759,24 @@ Creates a new feature group defined as the union of other feature group versions
             agent_function_name (str): Name of the function found in the source code that will be executed to the agent when it is deployed.
             memory (int): Memory (in GB) for the agent.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
             Model: None"""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements}, parse_type=Model)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Model)
 
-    def evaluate_prompt(self, prompt: str, system_message: str = None, num_output_tokens: int = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
             prompt (str): Prompt to use for generation.
             system_message (str): System message for models that support it.
-            num_output_tokens (int): Number of tokens to be reserved for output. If not specified, the model generates output of length as deemed fit. input tokens + num_output_tokens should be <= model token limit
+            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
 
         Returns:
-            LlmResponse: The response from the mode, raw text and parsed components."""
-        return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'numOutputTokens': num_output_tokens}, parse_type=LlmResponse)
+            LlmResponse: The response from the model, raw text and parsed components."""
+        return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.

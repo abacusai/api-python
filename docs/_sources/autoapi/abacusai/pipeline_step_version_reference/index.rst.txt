@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineStepVersionReference(client, pipelineStepVersionReferenceId=None, pipelineStepVersion=None, objectType=None, datasetVersion=None, modelVersion=None, deploymentVersion=None, batchPredictionId=None, modelMonitorVersion=None, notebookVersion=None, featureGroupVersion=None)
+.. py:class:: PipelineStepVersionReference(client, pipelineStepVersionReferenceId=None, pipelineStepVersion=None, objectType=None, datasetVersion=None, modelVersion=None, deploymentVersion=None, batchPredictionId=None, modelMonitorVersion=None, notebookVersion=None, featureGroupVersion=None, status=None, error=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -45,6 +45,10 @@ Classes
    :type notebookVersion: str
    :param featureGroupVersion: The feature group version the reference is connected to.
    :type featureGroupVersion: str
+   :param status: The status of the reference
+   :type status: str
+   :param error: The error message if the reference is in an error state.
+   :type error: str
 
    .. py:method:: __repr__()
 

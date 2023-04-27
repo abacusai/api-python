@@ -34,23 +34,23 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         """
         return {'feature_group_operation_run_id': self.feature_group_operation_run_id, 'status': self.status, 'error': self.error}
 
-    def wait_for_results(self, timeout=3600):
+    def wait_for_results(self, timeout=3600, delay=2):
         """
         A waiting call until query is executed.
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
-        return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout)
+        return self.client._poll(self, {'PENDING', 'GENERATING'}, timeout=timeout, delay=delay)
 
-    def wait_for_execution(self, timeout=3600):
+    def wait_for_execution(self, timeout=3600, delay=2):
         """
         A waiting call until query is executed.
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
-        return self.wait_for_results(timeout)
+        return self.wait_for_results(timeout, delay=delay)
 
     def get_status(self):
         """

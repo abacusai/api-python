@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None)
+.. py:class:: CodeSource(client, sourceType=None, sourceCode=None, applicationConnectorId=None, applicationConnectorInfo=None, packageRequirements=None, status=None, error=None, publishingMsg=None, moduleDependencies=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41,6 +41,8 @@ Classes
    :type error: str
    :param publishingMsg: Warnings in the source code
    :type publishingMsg: dict
+   :param moduleDependencies: The list of internal modules dependencies required to run the code
+   :type moduleDependencies: list
 
    .. py:method:: __repr__()
 

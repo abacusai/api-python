@@ -1,5 +1,6 @@
 from .pipeline_reference import PipelineReference
 from .pipeline_step import PipelineStep
+from .pipeline_version import PipelineVersion
 from .return_class import AbstractApiClass
 
 
@@ -16,9 +17,10 @@ class Pipeline(AbstractApiClass):
             notebookId (str): The reference to the notebook this pipeline belongs to.
             steps (PipelineStep): A list of the pipeline steps attached to the pipeline.
             pipelineReferences (PipelineReference): A list of references from the pipeline to other objects
+            latestPipelineVersion (PipelineVersion): The latest version of the pipeline.
     """
 
-    def __init__(self, client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, notebookId=None, steps={}, pipelineReferences={}):
+    def __init__(self, client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, notebookId=None, steps={}, pipelineReferences={}, latestPipelineVersion={}):
         super().__init__(client, pipelineId)
         self.pipeline_name = pipelineName
         self.pipeline_id = pipelineId
@@ -28,9 +30,11 @@ class Pipeline(AbstractApiClass):
         self.steps = client._build_class(PipelineStep, steps)
         self.pipeline_references = client._build_class(
             PipelineReference, pipelineReferences)
+        self.latest_pipeline_version = client._build_class(
+            PipelineVersion, latestPipelineVersion)
 
     def __repr__(self):
-        return f"Pipeline(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  created_at={repr(self.created_at)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  notebook_id={repr(self.notebook_id)},\n  steps={repr(self.steps)},\n  pipeline_references={repr(self.pipeline_references)})"
+        return f"Pipeline(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  created_at={repr(self.created_at)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  notebook_id={repr(self.notebook_id)},\n  steps={repr(self.steps)},\n  pipeline_references={repr(self.pipeline_references)},\n  latest_pipeline_version={repr(self.latest_pipeline_version)})"
 
     def to_dict(self):
         """
@@ -39,4 +43,4 @@ class Pipeline(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'created_at': self.created_at, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'notebook_id': self.notebook_id, 'steps': self._get_attribute_as_dict(self.steps), 'pipeline_references': self._get_attribute_as_dict(self.pipeline_references)}
+        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'created_at': self.created_at, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'notebook_id': self.notebook_id, 'steps': self._get_attribute_as_dict(self.steps), 'pipeline_references': self._get_attribute_as_dict(self.pipeline_references), 'latest_pipeline_version': self._get_attribute_as_dict(self.latest_pipeline_version)}

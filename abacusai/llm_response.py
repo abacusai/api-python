@@ -11,18 +11,18 @@ class LlmResponse(AbstractApiClass):
             content (str): Content of the response.
             tokens (int): The number of tokens in the response.
             stopReason (str): The reason due to which the response generation stopped.
-            llmCodeBlock (LlmCodeBlock): Parsed code block from raw LLM Response
+            codeBlocks (LlmCodeBlock): A list of parsed code blocks from raw LLM Response
     """
 
-    def __init__(self, client, content=None, tokens=None, stopReason=None, llmCodeBlock={}):
+    def __init__(self, client, content=None, tokens=None, stopReason=None, codeBlocks={}):
         super().__init__(client, None)
         self.content = content
         self.tokens = tokens
         self.stop_reason = stopReason
-        self.llm_code_block = client._build_class(LlmCodeBlock, llmCodeBlock)
+        self.code_blocks = client._build_class(LlmCodeBlock, codeBlocks)
 
     def __repr__(self):
-        return f"LlmResponse(content={repr(self.content)},\n  tokens={repr(self.tokens)},\n  stop_reason={repr(self.stop_reason)},\n  llm_code_block={repr(self.llm_code_block)})"
+        return f"LlmResponse(content={repr(self.content)},\n  tokens={repr(self.tokens)},\n  stop_reason={repr(self.stop_reason)},\n  code_blocks={repr(self.code_blocks)})"
 
     def to_dict(self):
         """
@@ -31,4 +31,4 @@ class LlmResponse(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'content': self.content, 'tokens': self.tokens, 'stop_reason': self.stop_reason, 'llm_code_block': self._get_attribute_as_dict(self.llm_code_block)}
+        return {'content': self.content, 'tokens': self.tokens, 'stop_reason': self.stop_reason, 'code_blocks': self._get_attribute_as_dict(self.code_blocks)}
