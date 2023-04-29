@@ -206,6 +206,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ApiException"><code class="docutils literal notranslate"><span class="pre">ApiException</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ClientOptions"><code class="docutils literal notranslate"><span class="pre">ClientOptions</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ReadOnlyClient"><code class="docutils literal notranslate"><span class="pre">ReadOnlyClient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai._request_context"><code class="docutils literal notranslate"><span class="pre">_request_context</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.PredictionClient"><code class="docutils literal notranslate"><span class="pre">PredictionClient</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.StreamingClient"><code class="docutils literal notranslate"><span class="pre">StreamingClient</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.__version__"><code class="docutils literal notranslate"><span class="pre">__version__</span></code></a></li>
@@ -460,7 +461,10 @@
 <h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.__version__" title="abacusai.__version__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version__</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai._request_context" title="abacusai._request_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_request_context</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.__version__" title="abacusai.__version__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version__</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -1690,6 +1694,35 @@ This will be equivalent to including from that module file.</p>
 <dd class="field-odd"><p>pandas.DataFrame</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.get_agent_context_chat_history">
+<span class="sig-name descname"><span class="pre">get_agent_context_chat_history</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_agent_context_chat_history" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a history of chat messages from the current request context. Applicable within a AIAgent
+execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[ChatMessage]:: The chat history for the current request being processed by the Agent.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.set_agent_context_chat_history">
+<span class="sig-name descname"><span class="pre">set_agent_context_chat_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_history</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.set_agent_context_chat_history" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the history of chat messages from the current request context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>chat_history</strong> (<em>List</em><em>[</em><a class="reference internal" href="chat_message/index.html#abacusai.chat_message.ChatMessage" title="abacusai.chat_message.ChatMessage"><em>ChatMessage</em></a><em>]</em>) – The chat history associated with the current request context.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.clear_agent_context_chat_history">
+<span class="sig-name descname"><span class="pre">clear_agent_context_chat_history</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.clear_agent_context_chat_history" title="Permalink to this definition"></a></dt>
+<dd><p>Clears the history of chat messages from the current request context.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -9500,6 +9533,11 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 </dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="abacusai._request_context">
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">_request_context</span></span><a class="headerlink" href="#abacusai._request_context" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.PredictionClient">

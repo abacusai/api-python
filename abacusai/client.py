@@ -8,6 +8,7 @@ import string
 import sys
 import tarfile
 import tempfile
+import threading
 import time
 import warnings
 from functools import lru_cache
@@ -23,7 +24,10 @@ from .algorithm import Algorithm
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import ApiClass, ParsingConfig, SamplingConfig, TrainingConfig
-from .api_client_utils import INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name, get_clean_function_source_code
+from .api_client_utils import (
+    INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
+    get_clean_function_source_code, get_object_from_context
+)
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
 from .application_connector import ApplicationConnector
@@ -109,6 +113,9 @@ from .webhook import Webhook
 
 
 DEFAULT_SERVER = 'https://api.abacus.ai'
+
+
+_request_context = threading.local()
 
 
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
@@ -2472,6 +2479,33 @@ class ApiClient(ReadOnlyClient):
         execute_query = self.execute_async_feature_group_operation(sql)
         execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return execute_query.load_as_pandas()
+
+    def get_agent_context_chat_history(self):
+        """
+        Gets a history of chat messages from the current request context. Applicable within a AIAgent
+        execute function.
+
+        Returns:
+            List[ChatMessage]:: The chat history for the current request being processed by the Agent.
+        """
+        from .return_class import ChatMessage
+        return get_object_from_context(_request_context, 'chat_history', List[ChatMessage])
+
+    def set_agent_context_chat_history(self, chat_history):
+        """
+        Sets the history of chat messages from the current request context.
+
+        Args:
+            chat_history (List[ChatMessage]): The chat history associated with the current request context.
+        """
+        _request_context.chat_history = chat_history
+
+    def clear_agent_context_chat_history(self):
+        """
+        Clears the history of chat messages from the current request context.
+        """
+        if hasattr(_request_context, 'chat_history'):
+            delattr(_request_context, 'chat_history')
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.

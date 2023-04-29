@@ -190,6 +190,7 @@ Attributes
 
 .. autoapisummary::
 
+   abacusai._request_context
    abacusai.__version__
 
 
@@ -1296,6 +1297,27 @@ Attributes
 
       :returns: The result of the query.
       :rtype: pandas.DataFrame
+
+
+   .. py:method:: get_agent_context_chat_history()
+
+      Gets a history of chat messages from the current request context. Applicable within a AIAgent
+      execute function.
+
+      :returns: List[ChatMessage]:: The chat history for the current request being processed by the Agent.
+
+
+   .. py:method:: set_agent_context_chat_history(chat_history)
+
+      Sets the history of chat messages from the current request context.
+
+      :param chat_history: The chat history associated with the current request context.
+      :type chat_history: List[ChatMessage]
+
+
+   .. py:method:: clear_agent_context_chat_history()
+
+      Clears the history of chat messages from the current request context.
 
 
    .. py:method:: add_user_to_organization(email)
@@ -7246,6 +7268,10 @@ Attributes
       :rtype: LlmResponse
 
 
+
+.. py:data:: _request_context
+
+   
 
 .. py:class:: PredictionClient(client_options = None)
 
