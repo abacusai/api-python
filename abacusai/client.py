@@ -2488,8 +2488,8 @@ class ApiClient(ReadOnlyClient):
         Returns:
             List[ChatMessage]:: The chat history for the current request being processed by the Agent.
         """
-        from .return_class import ChatMessage
-        return get_object_from_context(_request_context, 'chat_history', List[ChatMessage])
+        from .chat_message import ChatMessage
+        return get_object_from_context(self, _request_context, 'chat_history', List[ChatMessage])
 
     def set_agent_context_chat_history(self, chat_history):
         """

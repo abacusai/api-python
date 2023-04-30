@@ -50,12 +50,15 @@ def get_non_nullable_type(types):
     return non_nullable_types[0] if non_nullable_types else None
 
 
-def get_object_from_context(context, variable_name, return_type):
-    if not hasattr(context, variable_name):
+def get_object_from_context(client, context, variable_name, return_type):
+    raw_value = getattr(context, variable_name, None)
+    if raw_value is None:
         return None
 
-    raw_value = getattr(context, variable_name)
-    if raw_value is None or isinstance(raw_value, return_type):
+    from typing import _GenericAlias
+
+    is_container_type = isinstance(return_type, _GenericAlias)
+    if not is_container_type and isinstance(raw_value, return_type):
         return raw_value
 
     typed_value = raw_value
@@ -64,14 +67,12 @@ def get_object_from_context(context, variable_name, return_type):
     # Attempt to cast json strings and dicts into api class objects
     #
     try:
-        from typing import _GenericAlias
-
         from .return_class import AbstractApiClass
 
         list_container = return_type is list
         dict_container = return_type is dict
         base_type = return_type
-        if isinstance(return_type, _GenericAlias):
+        if is_container_type:
             dict_container = return_type.__origin__ is dict
             list_container = return_type.__origin__ is list
             if hasattr(return_type.__args__[-1], '__bases__'):
@@ -83,12 +84,12 @@ def get_object_from_context(context, variable_name, return_type):
 
         if is_api_class:
             if list_container and hasattr(typed_value, '__iter__') and isinstance(next(iter(typed_value)), dict):
-                typed_value = [base_type(**o) for o in typed_value]
+                typed_value = [base_type(client, **o) for o in typed_value]
             elif dict_container and isinstance(typed_value, dict) and isinstance(next(iter(typed_value.values())), dict):
-                typed_value = {k: base_type(**v)
+                typed_value = {k: base_type(client, **v)
                                for k, v in typed_value.items()}
             elif not list_container and not dict_container and isinstance(typed_value, dict):
-                typed_value = base_type(**typed_value)
+                typed_value = base_type(client, **typed_value)
 
     except Exception:
         pass
