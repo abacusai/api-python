@@ -199,7 +199,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.63.5'
+    client_version = '0.64.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2500,12 +2500,12 @@ class ApiClient(ReadOnlyClient):
         """
         _request_context.chat_history = chat_history
 
-    def clear_agent_context_chat_history(self):
+    def clear_agent_context(self):
         """
-        Clears the history of chat messages from the current request context.
+        Clears the current request context.
         """
-        if hasattr(_request_context, 'chat_history'):
-            delattr(_request_context, 'chat_history')
+        if hasattr(_request_context):
+            _request_context.clear()
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2649,6 +2649,22 @@ class ApiClient(ReadOnlyClient):
             project_id (str): The unique ID of the project to delete."""
         return self._call_api('deleteProject', 'DELETE', query_params={'projectId': project_id})
 
+    def add_project_tags(self, project_id: str, tags: list):
+        """This method adds a tag to a project.
+
+        Args:
+            project_id (str): The unique identifier for the project.
+            tags (list): The tags to add to the project."""
+        return self._call_api('addProjectTags', 'POST', query_params={}, body={'projectId': project_id, 'tags': tags})
+
+    def remove_project_tags(self, project_id: str, tags: list):
+        """This method removes a tag from a project.
+
+        Args:
+            project_id (str): The unique identifier for the project.
+            tags (list): The tags to remove from the project."""
+        return self._call_api('removeProjectTags', 'DELETE', query_params={'projectId': project_id, 'tags': tags})
+
     def add_feature_group_to_project(self, feature_group_id: str, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """Adds a feature group to a project.
 
@@ -2745,7 +2761,7 @@ class ApiClient(ReadOnlyClient):
             Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set."""
         return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
-    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None, comments: str = None, project_id: str = None, save_metadata: bool = False) -> AnnotationEntry:
+    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None, comments: dict = None, project_id: str = None, save_metadata: bool = False) -> AnnotationEntry:
         """Add an annotation entry to the database.
 
         Args:
@@ -2757,7 +2773,7 @@ class ApiClient(ReadOnlyClient):
             annotation_source (str): Indicator of whether the annotation came from the UI, bulk upload, etc.
             document (str): The document the annotation is on. This is optional.
             status (str): The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
-            comments (str): Comments for the annotation. This is optional.
+            comments (dict): Comments for the annotation. This is a dictionary of feature name to the corresponding comment. This is optional.
             project_id (str): The ID of the project that the annotation is associated with. This is optional.
             save_metadata (bool): Whether to save the metadata for the annotation. This is optional.
 
@@ -3624,7 +3640,7 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: The upload object associated with the process, containing details of the file."""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, merge_file_schemas: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -3642,11 +3658,12 @@ Creates a new feature group defined as the union of other feature group versions
             is_documentset (bool): Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
+            reference_only_documentset (bool): Signifies if the data reference only policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -4771,7 +4788,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False) -> Dict:
+    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
         Args:
@@ -4779,10 +4796,11 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier to a deployment created under the project.
             pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             doc_id (str): (Optional) The pdf to predict on. One of pdf or docId must be specified.
-            return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
+            return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
+            verbose (bool): (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=prediction_url)
+        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features, 'verbose': verbose}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
@@ -4937,6 +4955,17 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments}, server_override=prediction_url)
+
+    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+            deployment_id (str): The unique identifier of a deployment created under the project.
+            query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Check for any constraints violated by the overrides.
@@ -5734,18 +5763,6 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_id (str): A unique string identifier associated with the Feature Group.
             feature_group_version (str): A unique string identifier associated with the Feature Group Version."""
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version})
-
-    def query_feature_group_explorer(self, feature_group_version: str, message: str, chat_history: list = None) -> ChatSession:
-        """Send a message to Abacus Chat for the specified feature group version and receive a response.
-
-        Args:
-            feature_group_version (str): A unique string identifier for the feature group version.
-            message (str): The message that you want to send to Abacus Chat.
-            chat_history (list): A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
-
-        Returns:
-            ChatSession: An object representing the response from Abacus Chat, which includes an answer and updated chat history."""
-        return self._call_api('queryFeatureGroupExplorer', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'message': message, 'chatHistory': chat_history}, parse_type=ChatSession)
 
     def create_chat_session(self, project_id: str = None) -> ChatSession:
         """Creates a chat session with Abacus Chat.

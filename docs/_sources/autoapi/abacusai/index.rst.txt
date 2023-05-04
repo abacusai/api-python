@@ -1315,9 +1315,9 @@ Attributes
       :type chat_history: List[ChatMessage]
 
 
-   .. py:method:: clear_agent_context_chat_history()
+   .. py:method:: clear_agent_context()
 
-      Clears the history of chat messages from the current request context.
+      Clears the current request context.
 
 
    .. py:method:: add_user_to_organization(email)
@@ -1492,6 +1492,26 @@ Attributes
       :type project_id: str
 
 
+   .. py:method:: add_project_tags(project_id, tags)
+
+      This method adds a tag to a project.
+
+      :param project_id: The unique identifier for the project.
+      :type project_id: str
+      :param tags: The tags to add to the project.
+      :type tags: list
+
+
+   .. py:method:: remove_project_tags(project_id, tags)
+
+      This method removes a tag from a project.
+
+      :param project_id: The unique identifier for the project.
+      :type project_id: str
+      :param tags: The tags to remove from the project.
+      :type tags: list
+
+
    .. py:method:: add_feature_group_to_project(feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE')
 
       Adds a feature group to a project.
@@ -1638,8 +1658,8 @@ Attributes
       :type document: str
       :param status: The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
       :type status: str
-      :param comments: Comments for the annotation. This is optional.
-      :type comments: str
+      :param comments: Comments for the annotation. This is a dictionary of feature name to the corresponding comment. This is optional.
+      :type comments: dict
       :param project_id: The ID of the project that the annotation is associated with. This is optional.
       :type project_id: str
       :param save_metadata: Whether to save the metadata for the annotation. This is optional.
@@ -2772,7 +2792,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, merge_file_schemas = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -2804,6 +2824,8 @@ Attributes
       :type extract_bounding_boxes: bool
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled.
       :type merge_file_schemas: bool
+      :param reference_only_documentset: Signifies if the data reference only policy is enabled.
+      :type reference_only_documentset: bool
       :param parsing_config: Custom config for dataset parsing.
       :type parsing_config: ParsingConfig
 
@@ -4262,7 +4284,7 @@ Attributes
       :type threshold: None
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -4276,6 +4298,8 @@ Attributes
       :type doc_id: str
       :param return_extracted_features: (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
       :type return_extracted_features: bool
+      :param verbose: (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
+      :type verbose: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
@@ -4464,6 +4488,18 @@ Attributes
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
+
+
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data)
+
+      Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
+      :type query_data: dict
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -5469,21 +5505,6 @@ Attributes
       :type feature_group_id: str
       :param feature_group_version: A unique string identifier associated with the Feature Group Version.
       :type feature_group_version: str
-
-
-   .. py:method:: query_feature_group_explorer(feature_group_version, message, chat_history = None)
-
-      Send a message to Abacus Chat for the specified feature group version and receive a response.
-
-      :param feature_group_version: A unique string identifier for the feature group version.
-      :type feature_group_version: str
-      :param message: The message that you want to send to Abacus Chat.
-      :type message: str
-      :param chat_history: A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
-      :type chat_history: list
-
-      :returns: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
-      :rtype: ChatSession
 
 
    .. py:method:: create_chat_session(project_id = None)
@@ -7538,7 +7559,7 @@ Attributes
       :type threshold: None
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -7552,6 +7573,8 @@ Attributes
       :type doc_id: str
       :param return_extracted_features: (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
       :type return_extracted_features: bool
+      :param verbose: (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
+      :type verbose: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
@@ -7740,6 +7763,18 @@ Attributes
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
+
+
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data)
+
+      Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
+      :type query_data: dict
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -8000,7 +8035,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.63.5'
+   :value: '0.64.0'
 
    
 

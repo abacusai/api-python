@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None)
+.. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None, tags=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -37,6 +37,8 @@ Classes
    :type createdAt: str
    :param featureGroupsEnabled: Project uses feature groups instead of datasets.
    :type featureGroupsEnabled: bool
+   :param tags: List of tags associated with the project.
+   :type tags: list[str]
 
    .. py:method:: __repr__()
 
@@ -113,6 +115,22 @@ Classes
 
       :param project_id: The unique ID of the project to delete.
       :type project_id: str
+
+
+   .. py:method:: add_tags(tags)
+
+      This method adds a tag to a project.
+
+      :param tags: The tags to add to the project.
+      :type tags: list
+
+
+   .. py:method:: remove_tags(tags)
+
+      This method removes a tag from a project.
+
+      :param tags: The tags to remove from the project.
+      :type tags: list
 
 
    .. py:method:: set_feature_mapping(feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)

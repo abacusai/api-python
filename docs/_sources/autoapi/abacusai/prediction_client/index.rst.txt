@@ -282,7 +282,7 @@ Classes
       :type threshold: None
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -296,6 +296,8 @@ Classes
       :type doc_id: str
       :param return_extracted_features: (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
       :type return_extracted_features: bool
+      :param verbose: (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
+      :type verbose: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
@@ -484,6 +486,18 @@ Classes
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
+
+
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data)
+
+      Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
+      :type query_data: dict
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)

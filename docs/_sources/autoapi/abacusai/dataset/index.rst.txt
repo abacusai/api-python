@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -59,6 +59,8 @@ Classes
    :type extractBoundingBoxes: bool
    :param mergeFileSchemas: If the merge file schemas policy is enabled.
    :type mergeFileSchemas: bool
+   :param referenceOnlyDocumentset: Signifies whether to save the data reference only. Only valid if is_documentset if True.
+   :type referenceOnlyDocumentset: bool
    :param latestDatasetVersion: The latest version of this dataset.
    :type latestDatasetVersion: DatasetVersion
    :param schema: List of resolved columns.

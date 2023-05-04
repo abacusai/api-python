@@ -16,9 +16,10 @@ class Project(AbstractApiClass):
             problemType (str): The problem type associated with the project.
             createdAt (str): The date and time when the project was created.
             featureGroupsEnabled (bool): Project uses feature groups instead of datasets.
+            tags (list[str]): List of tags associated with the project.
     """
 
-    def __init__(self, client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None):
+    def __init__(self, client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None, tags=None):
         super().__init__(client, projectId)
         self.project_id = projectId
         self.name = name
@@ -26,9 +27,10 @@ class Project(AbstractApiClass):
         self.problem_type = problemType
         self.created_at = createdAt
         self.feature_groups_enabled = featureGroupsEnabled
+        self.tags = tags
 
     def __repr__(self):
-        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  feature_groups_enabled={repr(self.feature_groups_enabled)})"
+        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  feature_groups_enabled={repr(self.feature_groups_enabled)},\n  tags={repr(self.tags)})"
 
     def to_dict(self):
         """
@@ -37,7 +39,7 @@ class Project(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'problem_type': self.problem_type, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled}
+        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'problem_type': self.problem_type, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled, 'tags': self.tags}
 
     def refresh(self):
         """
@@ -109,6 +111,24 @@ class Project(AbstractApiClass):
             project_id (str): The unique ID of the project to delete.
         """
         return self.client.delete_project(self.project_id)
+
+    def add_tags(self, tags: list):
+        """
+        This method adds a tag to a project.
+
+        Args:
+            tags (list): The tags to add to the project.
+        """
+        return self.client.add_project_tags(self.project_id, tags)
+
+    def remove_tags(self, tags: list):
+        """
+        This method removes a tag from a project.
+
+        Args:
+            tags (list): The tags to remove from the project.
+        """
+        return self.client.remove_project_tags(self.project_id, tags)
 
     def set_feature_mapping(self, feature_group_id: str, feature_name: str, feature_mapping: str = None, nested_column_name: str = None):
         """

@@ -231,7 +231,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold}, server_override=prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False) -> Dict:
+    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
         Args:
@@ -239,10 +239,11 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             doc_id (str): (Optional) The pdf to predict on. One of pdf or docId must be specified.
-            return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False."""
+            return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
+            verbose (bool): (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features}, files={'pdf': pdf}, server_override=prediction_url)
+        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features, 'verbose': verbose}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
@@ -397,6 +398,17 @@ class PredictionClient(BaseApiClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments}, server_override=prediction_url)
+
+    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+        """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
+            deployment_id (str): The unique identifier of a deployment created under the project.
+            query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Check for any constraints violated by the overrides.

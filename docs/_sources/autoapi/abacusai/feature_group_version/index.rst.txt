@@ -161,19 +161,6 @@ Classes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: query_feature_group_explorer(message, chat_history = None)
-
-      Send a message to Abacus Chat for the specified feature group version and receive a response.
-
-      :param message: The message that you want to send to Abacus Chat.
-      :type message: str
-      :param chat_history: A list of chronologically ordered messages. Starts with a user message and alternates sources. Each message is represented as a dict with attributes: is_user (bool): Whether the message is from the user. timestamp (str): The timestamp of the message. text (list): Segmented parts of the message into text and code blocks.
-      :type chat_history: list
-
-      :returns: An object representing the response from Abacus Chat, which includes an answer and updated chat history.
-      :rtype: ChatSession
-
-
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until feature group version is materialized
