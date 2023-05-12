@@ -16,6 +16,7 @@ class RefreshPipelineRun(AbstractApiClass):
             status (str): The status of the refresh pipeline run.
             refreshType (str): The type of refresh policy to be run.
             datasetVersions (list[str]): A list of dataset version IDs that this refresh pipeline run is monitoring.
+            featureGroupVersion (str): The feature group version ID that this refresh pipeline run is monitoring.
             modelVersions (list[str]): A list of model version IDs that this refresh pipeline run is monitoring.
             predictionMetricVersions (list[str]): A list of prediction metric versions that this refresh pipeline run is monitoring.
             deploymentVersions (list[str]): A list of deployment version IDs that this refresh pipeline run is monitoring.
@@ -23,7 +24,7 @@ class RefreshPipelineRun(AbstractApiClass):
             refreshPolicy (RefreshPolicy): The refresh policy for this refresh policy run.
     """
 
-    def __init__(self, client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, modelVersions=None, predictionMetricVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={}):
+    def __init__(self, client, refreshPipelineRunId=None, refreshPolicyId=None, createdAt=None, startedAt=None, completedAt=None, status=None, refreshType=None, datasetVersions=None, featureGroupVersion=None, modelVersions=None, predictionMetricVersions=None, deploymentVersions=None, batchPredictions=None, refreshPolicy={}):
         super().__init__(client, refreshPipelineRunId)
         self.refresh_pipeline_run_id = refreshPipelineRunId
         self.refresh_policy_id = refreshPolicyId
@@ -33,6 +34,7 @@ class RefreshPipelineRun(AbstractApiClass):
         self.status = status
         self.refresh_type = refreshType
         self.dataset_versions = datasetVersions
+        self.feature_group_version = featureGroupVersion
         self.model_versions = modelVersions
         self.prediction_metric_versions = predictionMetricVersions
         self.deployment_versions = deploymentVersions
@@ -40,7 +42,7 @@ class RefreshPipelineRun(AbstractApiClass):
         self.refresh_policy = client._build_class(RefreshPolicy, refreshPolicy)
 
     def __repr__(self):
-        return f"RefreshPipelineRun(refresh_pipeline_run_id={repr(self.refresh_pipeline_run_id)},\n  refresh_policy_id={repr(self.refresh_policy_id)},\n  created_at={repr(self.created_at)},\n  started_at={repr(self.started_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  refresh_type={repr(self.refresh_type)},\n  dataset_versions={repr(self.dataset_versions)},\n  model_versions={repr(self.model_versions)},\n  prediction_metric_versions={repr(self.prediction_metric_versions)},\n  deployment_versions={repr(self.deployment_versions)},\n  batch_predictions={repr(self.batch_predictions)},\n  refresh_policy={repr(self.refresh_policy)})"
+        return f"RefreshPipelineRun(refresh_pipeline_run_id={repr(self.refresh_pipeline_run_id)},\n  refresh_policy_id={repr(self.refresh_policy_id)},\n  created_at={repr(self.created_at)},\n  started_at={repr(self.started_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  refresh_type={repr(self.refresh_type)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_version={repr(self.feature_group_version)},\n  model_versions={repr(self.model_versions)},\n  prediction_metric_versions={repr(self.prediction_metric_versions)},\n  deployment_versions={repr(self.deployment_versions)},\n  batch_predictions={repr(self.batch_predictions)},\n  refresh_policy={repr(self.refresh_policy)})"
 
     def to_dict(self):
         """
@@ -49,7 +51,7 @@ class RefreshPipelineRun(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_pipeline_run_id': self.refresh_pipeline_run_id, 'refresh_policy_id': self.refresh_policy_id, 'created_at': self.created_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'refresh_type': self.refresh_type, 'dataset_versions': self.dataset_versions, 'model_versions': self.model_versions, 'prediction_metric_versions': self.prediction_metric_versions, 'deployment_versions': self.deployment_versions, 'batch_predictions': self.batch_predictions, 'refresh_policy': self._get_attribute_as_dict(self.refresh_policy)}
+        return {'refresh_pipeline_run_id': self.refresh_pipeline_run_id, 'refresh_policy_id': self.refresh_policy_id, 'created_at': self.created_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'refresh_type': self.refresh_type, 'dataset_versions': self.dataset_versions, 'feature_group_version': self.feature_group_version, 'model_versions': self.model_versions, 'prediction_metric_versions': self.prediction_metric_versions, 'deployment_versions': self.deployment_versions, 'batch_predictions': self.batch_predictions, 'refresh_policy': self._get_attribute_as_dict(self.refresh_policy)}
 
     def refresh(self):
         """

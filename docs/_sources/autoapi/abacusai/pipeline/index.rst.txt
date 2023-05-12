@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Pipeline(client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, notebookId=None, steps={}, pipelineReferences={}, latestPipelineVersion={})
+.. py:class:: Pipeline(client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, notebookId=None, cron=None, nextRunTime=None, steps={}, pipelineReferences={}, latestPipelineVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,6 +35,10 @@ Classes
    :type pipelineVariableMappings: dict
    :param notebookId: The reference to the notebook this pipeline belongs to.
    :type notebookId: str
+   :param cron: A cron-style string that describes when this refresh policy is to be executed in UTC
+   :type cron: str
+   :param nextRunTime: The next time this pipeline will be run.
+   :type nextRunTime: str
    :param steps: A list of the pipeline steps attached to the pipeline.
    :type steps: PipelineStep
    :param pipelineReferences: A list of references from the pipeline to other objects
@@ -53,6 +57,39 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+   .. py:method:: unset_refresh_schedule()
+
+      Deletes the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: pause_refresh_schedule()
+
+      Pauses the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: resume_refresh_schedule()
+
+      Resumes the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
 
 
 

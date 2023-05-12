@@ -1,3 +1,7 @@
+from typing import Union
+
+from .api_class import FeatureGroupExportConfig
+from .feature_group_refresh_export_config import FeatureGroupRefreshExportConfig
 from .return_class import AbstractApiClass
 
 
@@ -15,15 +19,17 @@ class RefreshPolicy(AbstractApiClass):
             refreshType (str): The type of refresh policy to be run
             projectId (str): The unique identifier of a project that this refresh policy applies to
             datasetIds (list[str]): Comma-separated list of Dataset IDs that this refresh policy applies to
+            featureGroupId (str): Feature Group ID that this refresh policy applies to
             modelIds (list[str]): Comma-separated list of Model IDs that this refresh policy applies to
             deploymentIds (list[str]): Comma-separated list of Deployment IDs that this refresh policy applies to
             predictionMetricIds (list[str]): Comma-separated list of Prediction Metric IDs that this refresh policy applies to
             modelMonitorIds (list[str]): Comma-separated list of Model Monitor IDs that this refresh policy applies to
             notebookId (str): Notebook ID that this refresh policy applies to
             paused (bool): True if the refresh policy is paused
+            featureGroupExportConfig (FeatureGroupRefreshExportConfig): The export configuration for the feature group. Only applicable if refresh_type is FEATUREGROUP.
     """
 
-    def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None):
+    def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, featureGroupId=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None, featureGroupExportConfig={}):
         super().__init__(client, refreshPolicyId)
         self.refresh_policy_id = refreshPolicyId
         self.name = name
@@ -33,15 +39,18 @@ class RefreshPolicy(AbstractApiClass):
         self.refresh_type = refreshType
         self.project_id = projectId
         self.dataset_ids = datasetIds
+        self.feature_group_id = featureGroupId
         self.model_ids = modelIds
         self.deployment_ids = deploymentIds
         self.prediction_metric_ids = predictionMetricIds
         self.model_monitor_ids = modelMonitorIds
         self.notebook_id = notebookId
         self.paused = paused
+        self.feature_group_export_config = client._build_class(
+            FeatureGroupRefreshExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  model_monitor_ids={repr(self.model_monitor_ids)},\n  notebook_id={repr(self.notebook_id)},\n  paused={repr(self.paused)})"
+        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  feature_group_id={repr(self.feature_group_id)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  model_monitor_ids={repr(self.model_monitor_ids)},\n  notebook_id={repr(self.notebook_id)},\n  paused={repr(self.paused)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
 
     def to_dict(self):
         """
@@ -50,7 +59,7 @@ class RefreshPolicy(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused}
+        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'feature_group_id': self.feature_group_id, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused, 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
 
     def delete(self):
         """
@@ -122,15 +131,16 @@ class RefreshPolicy(AbstractApiClass):
         """
         return self.client.run_refresh_policy(self.refresh_policy_id)
 
-    def update(self, name: str = None, cron: str = None):
+    def update(self, name: str = None, cron: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None):
         """
         Update the name or cron string of a refresh policy
 
         Args:
             name (str): Name of the refresh policy to be updated.
             cron (str): Cron string describing the schedule from the refresh policy to be updated.
+            feature_group_export_config (FeatureGroupExportConfig): Feature group export configuration to update a feature group refresh policy.
 
         Returns:
             RefreshPolicy: Updated refresh policy.
         """
-        return self.client.update_refresh_policy(self.refresh_policy_id, name, cron)
+        return self.client.update_refresh_policy(self.refresh_policy_id, name, cron, feature_group_export_config)

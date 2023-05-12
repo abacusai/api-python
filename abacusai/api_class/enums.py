@@ -156,3 +156,10 @@ class ForecastingQuanitlesExtensionMethod(ApiEnum):
     DIRECT = 'direct'
     QUADRATIC = 'quadratic'
     ANCESTRAL_SIMULATION = 'simulation'
+
+
+class ConnectorType(ApiEnum):
+    FILE = 'FILE'
+    DATABASE = 'DATABASE'
+    STREAMING = 'STREAMING'
+    APPLICATION = 'APPLICATION'

@@ -541,12 +541,14 @@ Classes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: list_refresh_policies(dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
+   .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization
 
       :param dataset_ids: Comma-separated list of Dataset IDs.
       :type dataset_ids: list
+      :param feature_group_id: Feature Group ID for which we wish to see the refresh policies attached.
+      :type feature_group_id: str
       :param model_ids: Comma-separated list of Model IDs.
       :type model_ids: list
       :param deployment_ids: Comma-separated list of Deployment IDs.

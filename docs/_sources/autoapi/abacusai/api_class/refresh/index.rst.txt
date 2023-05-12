@@ -1,0 +1,136 @@
+:py:mod:`abacusai.api_class.refresh`
+====================================
+
+.. py:module:: abacusai.api_class.refresh
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.refresh.FeatureGroupExportConfig
+   abacusai.api_class.refresh.FileConnectorExportConfig
+   abacusai.api_class.refresh.DatabaseConnectorExportConfig
+   abacusai.api_class.refresh._FeatureGroupExportConfigFactory
+
+
+
+
+.. py:class:: FeatureGroupExportConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: connector_type
+      :type: abacusai.api_class.enums.ConnectorType
+
+      
+
+
+.. py:class:: FileConnectorExportConfig
+
+   Bases: :py:obj:`FeatureGroupExportConfig`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: connector_type
+      :type: abacusai.api_class.enums.ConnectorType
+
+      
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: export_file_format
+      :type: str
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: DatabaseConnectorExportConfig
+
+   Bases: :py:obj:`FeatureGroupExportConfig`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: connector_type
+      :type: abacusai.api_class.enums.ConnectorType
+
+      
+
+   .. py:attribute:: database_connector_id
+      :type: str
+
+      
+
+   .. py:attribute:: mode
+      :type: str
+
+      
+
+   .. py:attribute:: object_name
+      :type: str
+
+      
+
+   .. py:attribute:: id_column
+      :type: str
+
+      
+
+   .. py:attribute:: additional_id_columns
+      :type: List[str]
+
+      
+
+   .. py:attribute:: data_columns
+      :type: Dict[str, str]
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: _FeatureGroupExportConfigFactory
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'connectorType'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+

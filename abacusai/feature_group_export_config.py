@@ -1,3 +1,4 @@
+from .api_class import FeatureGroupExportConfig
 from .return_class import AbstractApiClass
 
 

@@ -104,7 +104,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.64.0'
+      :value: '0.64.1'
 
       
 
@@ -1399,7 +1399,7 @@ Attributes
       :rtype: RefreshPipelineRun
 
 
-   .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
+   .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization
 
@@ -1407,6 +1407,8 @@ Attributes
       :type project_id: str
       :param dataset_ids: Comma-separated list of Dataset IDs.
       :type dataset_ids: list
+      :param feature_group_id: Feature Group ID for which we wish to see the refresh policies attached.
+      :type feature_group_id: str
       :param model_ids: Comma-separated list of Model IDs.
       :type model_ids: list
       :param deployment_ids: Comma-separated list of Deployment IDs.
@@ -1558,6 +1560,39 @@ Attributes
 
       :returns: An object describing the pipeline step.
       :rtype: PipelineStep
+
+
+   .. py:method:: unset_pipeline_refresh_schedule(pipeline_id)
+
+      Deletes the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: pause_pipeline_refresh_schedule(pipeline_id)
+
+      Pauses the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: resume_pipeline_refresh_schedule(pipeline_id)
+
+      Resumes the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
 
 
    .. py:method:: describe_graph_dashboard(graph_dashboard_id)
@@ -4933,7 +4968,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None)
+   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, feature_group_export_config = None)
 
       Creates a refresh policy with a particular cron pattern and refresh type.
 
@@ -4950,6 +4985,8 @@ Attributes
       :type project_id: str
       :param dataset_ids: Comma-separated list of dataset IDs.
       :type dataset_ids: list
+      :param feature_group_id: Feature Group ID associated with refresh policy.
+      :type feature_group_id: str
       :param model_ids: Comma-separated list of model IDs.
       :type model_ids: list
       :param deployment_ids: Comma-separated list of deployment IDs.
@@ -4962,6 +4999,8 @@ Attributes
       :type model_monitor_ids: list
       :param notebook_id: Notebook ID associated with refresh policy.
       :type notebook_id: str
+      :param feature_group_export_config: Feature group export configuration.
+      :type feature_group_export_config: FeatureGroupExportConfig
 
       :returns: The created refresh policy.
       :rtype: RefreshPolicy
@@ -4999,7 +5038,7 @@ Attributes
       :type refresh_policy_id: str
 
 
-   .. py:method:: update_refresh_policy(refresh_policy_id, name = None, cron = None)
+   .. py:method:: update_refresh_policy(refresh_policy_id, name = None, cron = None, feature_group_export_config = None)
 
       Update the name or cron string of a refresh policy
 
@@ -5009,6 +5048,8 @@ Attributes
       :type name: str
       :param cron: Cron string describing the schedule from the refresh policy to be updated.
       :type cron: str
+      :param feature_group_export_config: Feature group export configuration to update a feature group refresh policy.
+      :type feature_group_export_config: FeatureGroupExportConfig
 
       :returns: Updated refresh policy.
       :rtype: RefreshPolicy
@@ -6046,7 +6087,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_pipeline(pipeline_name, project_id = None)
+   .. py:method:: create_pipeline(pipeline_name, project_id = None, cron = None)
 
       Creates a pipeline for executing multiple steps.
 
@@ -6054,6 +6095,8 @@ Attributes
       :type pipeline_name: str
       :param project_id: A unique string identifier for the pipeline.
       :type project_id: str
+      :param cron: A cron-like string specifying the frequency of pipeline reruns.
+      :type cron: str
 
       :returns: An object that describes a Pipeline.
       :rtype: Pipeline
@@ -6070,7 +6113,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: update_pipeline(pipeline_name, project_id = None, pipeline_variable_mappings = None)
+   .. py:method:: update_pipeline(pipeline_name, project_id = None, pipeline_variable_mappings = None, cron = None)
 
       Updates a pipeline for executing multiple steps.
 
@@ -6080,6 +6123,8 @@ Attributes
       :type project_id: str
       :param pipeline_variable_mappings: List of Python function arguments for the pipeline.
       :type pipeline_variable_mappings: list
+      :param cron: A cron-like string specifying the frequency of the scheduled pipeline runs.
+      :type cron: str
 
       :returns: An object that describes a Pipeline.
       :rtype: Pipeline
@@ -6174,7 +6219,7 @@ Attributes
       :type package_requirements: list
 
       :returns: Object describing the pipeline.
-      :rtype: Pipeline
+      :rtype: PipelineStep
 
 
    .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)
@@ -6463,7 +6508,7 @@ Attributes
       :param completion_type: Specify the type based on which the completion is done.
       :type completion_type: str
 
-      :returns: The text to insert into the notebook cell.
+      :returns: A list of objects, each containing the type and contents of the new cell to be inserted.
       :rtype: NotebookCompletion
 
 

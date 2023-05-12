@@ -1,3 +1,4 @@
+from .api_class import FeatureGroupExportConfig
 from .feature_group_export_config import FeatureGroupExportConfig
 from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass

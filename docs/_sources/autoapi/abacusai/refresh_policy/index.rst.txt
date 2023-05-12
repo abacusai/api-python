@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None)
+.. py:class:: RefreshPolicy(client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, featureGroupId=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None, featureGroupExportConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -41,6 +41,8 @@ Classes
    :type projectId: str
    :param datasetIds: Comma-separated list of Dataset IDs that this refresh policy applies to
    :type datasetIds: list[str]
+   :param featureGroupId: Feature Group ID that this refresh policy applies to
+   :type featureGroupId: str
    :param modelIds: Comma-separated list of Model IDs that this refresh policy applies to
    :type modelIds: list[str]
    :param deploymentIds: Comma-separated list of Deployment IDs that this refresh policy applies to
@@ -53,6 +55,8 @@ Classes
    :type notebookId: str
    :param paused: True if the refresh policy is paused
    :type paused: bool
+   :param featureGroupExportConfig: The export configuration for the feature group. Only applicable if refresh_type is FEATUREGROUP.
+   :type featureGroupExportConfig: FeatureGroupRefreshExportConfig
 
    .. py:method:: __repr__()
 
@@ -129,7 +133,7 @@ Classes
       :type refresh_policy_id: str
 
 
-   .. py:method:: update(name = None, cron = None)
+   .. py:method:: update(name = None, cron = None, feature_group_export_config = None)
 
       Update the name or cron string of a refresh policy
 
@@ -137,6 +141,8 @@ Classes
       :type name: str
       :param cron: Cron string describing the schedule from the refresh policy to be updated.
       :type cron: str
+      :param feature_group_export_config: Feature group export configuration to update a feature group refresh policy.
+      :type feature_group_export_config: FeatureGroupExportConfig
 
       :returns: Updated refresh policy.
       :rtype: RefreshPolicy

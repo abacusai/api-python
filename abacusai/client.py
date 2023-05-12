@@ -23,7 +23,7 @@ from requests.packages.urllib3.util.retry import Retry
 from .algorithm import Algorithm
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
-from .api_class import ApiClass, ParsingConfig, SamplingConfig, TrainingConfig
+from .api_class import ApiClass, FeatureGroupExportConfig, ParsingConfig, SamplingConfig, TrainingConfig
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
     get_clean_function_source_code, get_object_from_context
@@ -57,6 +57,7 @@ from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .feature import Feature
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
+from .feature_group_export_config import FeatureGroupExportConfig
 from .feature_group_export_download_url import FeatureGroupExportDownloadUrl
 from .feature_group_template import FeatureGroupTemplate
 from .feature_group_version import FeatureGroupVersion
@@ -199,7 +200,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.64.0'
+    client_version = '0.64.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1478,12 +1479,13 @@ class ReadOnlyClient(BaseApiClient):
             RefreshPipelineRun: A refresh pipeline run object."""
         return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
 
-    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []) -> RefreshPolicy:
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []) -> RefreshPolicy:
         """List the refresh policies for the organization
 
         Args:
             project_id (str): Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitors, and notebooks are captured at the instant this policy was created.
             dataset_ids (list): Comma-separated list of Dataset IDs.
+            feature_group_id (str): Feature Group ID for which we wish to see the refresh policies attached.
             model_ids (list): Comma-separated list of Model IDs.
             deployment_ids (list): Comma-separated list of Deployment IDs.
             batch_prediction_ids (list): Comma-separated list of Batch Prediction IDs.
@@ -1493,7 +1495,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Returns:
             RefreshPolicy: List of all refresh policies in the organization."""
-        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'predictionMetricIds': prediction_metric_ids, 'notebookIds': notebook_ids}, parse_type=RefreshPolicy)
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'predictionMetricIds': prediction_metric_ids, 'notebookIds': notebook_ids}, parse_type=RefreshPolicy)
 
     def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> RefreshPipelineRun:
         """List the the times that the refresh policy has been run
@@ -1613,6 +1615,36 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             PipelineStep: An object describing the pipeline step."""
         return self._call_api('describePipelineStep', 'GET', query_params={'pipelineName': pipeline_name, 'stepName': step_name}, parse_type=PipelineStep)
+
+    def unset_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
+        """Deletes the refresh schedule for a given pipeline.
+
+        Args:
+            pipeline_id (str): The id of the pipeline.
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('unsetPipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
+
+    def pause_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
+        """Pauses the refresh schedule for a given pipeline.
+
+        Args:
+            pipeline_id (str): The id of the pipeline.
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('pausePipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
+
+    def resume_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
+        """Resumes the refresh schedule for a given pipeline.
+
+        Args:
+            pipeline_id (str): The id of the pipeline.
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('resumePipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
 
     def describe_graph_dashboard(self, graph_dashboard_id: str) -> GraphDashboard:
         """Describes a given graph dashboard.
@@ -2102,9 +2134,9 @@ class ApiClient(ReadOnlyClient):
             function_source = inspect.getsource(function)
             function_source = include_modules(
                 function_source, included_modules)
-            python_function = self.create_python_function(
-                name=table_name, source_code=function_source, function_name=function.__name__, package_requirements=package_requirements)
-            python_function_name = python_function_name or python_function.name
+            python_function_name = python_function_name or function.__name__
+            python_function = self.create_python_function(name=python_function_name, source_code=function_source, function_name=function.__name__,
+                                                          package_requirements=package_requirements, function_variable_mappings=python_function_bindings)
             if not python_function_bindings and input_tables:
                 python_function_bindings = []
                 for index, feature_group_table_name in enumerate(input_tables):
@@ -4523,7 +4555,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The ID of the deployment for which the export type is set."""
         return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
-    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None) -> RefreshPolicy:
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type.
 
         A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.
@@ -4535,16 +4567,18 @@ Creates a new feature group defined as the union of other feature group versions
             refresh_type (str): The refresh type used to determine what is being refreshed, such as a single dataset, dataset and model, or more.
             project_id (str): Optionally, a project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitrs, and notebooks are captured at the instant the policy was created.
             dataset_ids (list): Comma-separated list of dataset IDs.
+            feature_group_id (str): Feature Group ID associated with refresh policy.
             model_ids (list): Comma-separated list of model IDs.
             deployment_ids (list): Comma-separated list of deployment IDs.
             batch_prediction_ids (list): Comma-separated list of batch prediction IDs.
             prediction_metric_ids (list): Comma-separated list of prediction metric IDs.
             model_monitor_ids (list): Comma-separated list of model monitor IDs.
             notebook_id (str): Notebook ID associated with refresh policy.
+            feature_group_export_config (FeatureGroupExportConfig): Feature group export configuration.
 
         Returns:
             RefreshPolicy: The created refresh policy."""
-        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id}, parse_type=RefreshPolicy)
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
 
     def delete_refresh_policy(self, refresh_policy_id: str):
         """Delete a refresh policy.
@@ -4574,17 +4608,18 @@ Creates a new feature group defined as the union of other feature group versions
             refresh_policy_id (str): Unique string identifier associated with the refresh policy to be run."""
         return self._call_api('runRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id})
 
-    def update_refresh_policy(self, refresh_policy_id: str, name: str = None, cron: str = None) -> RefreshPolicy:
+    def update_refresh_policy(self, refresh_policy_id: str, name: str = None, cron: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
         """Update the name or cron string of a refresh policy
 
         Args:
             refresh_policy_id (str): Unique string identifier associated with the refresh policy.
             name (str): Name of the refresh policy to be updated.
             cron (str): Cron string describing the schedule from the refresh policy to be updated.
+            feature_group_export_config (FeatureGroupExportConfig): Feature group export configuration to update a feature group refresh policy.
 
         Returns:
             RefreshPolicy: Updated refresh policy."""
-        return self._call_api('updateRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id, 'name': name, 'cron': cron}, parse_type=RefreshPolicy)
+        return self._call_api('updateRefreshPolicy', 'POST', query_params={}, body={'refreshPolicyId': refresh_policy_id, 'name': name, 'cron': cron, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
 
     def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict, limit_results: int = None, result_columns: list = None) -> Dict:
         """Returns the feature group deployed in the feature store project.
@@ -5428,16 +5463,17 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name to identify the Python function."""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
-    def create_pipeline(self, pipeline_name: str, project_id: str = None) -> Pipeline:
+    def create_pipeline(self, pipeline_name: str, project_id: str = None, cron: str = None) -> Pipeline:
         """Creates a pipeline for executing multiple steps.
 
         Args:
             pipeline_name (str): The name of the pipeline, which should be unique to the organization.
             project_id (str): A unique string identifier for the pipeline.
+            cron (str): A cron-like string specifying the frequency of pipeline reruns.
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
-        return self._call_api('createPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id}, parse_type=Pipeline)
+        return self._call_api('createPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'cron': cron}, parse_type=Pipeline)
 
     def describe_pipeline(self, pipeline_name: str) -> Pipeline:
         """Describes a given pipeline.
@@ -5449,17 +5485,18 @@ Creates a new feature group defined as the union of other feature group versions
             Pipeline: An object describing a Pipeline"""
         return self._call_api('describePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=Pipeline)
 
-    def update_pipeline(self, pipeline_name: str, project_id: str = None, pipeline_variable_mappings: list = None) -> Pipeline:
+    def update_pipeline(self, pipeline_name: str, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None) -> Pipeline:
         """Updates a pipeline for executing multiple steps.
 
         Args:
             pipeline_name (str): The name of the pipeline, which should be unique to the organization.
             project_id (str): A unique string identifier for the pipeline.
             pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+            cron (str): A cron-like string specifying the frequency of the scheduled pipeline runs.
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
-        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings}, parse_type=Pipeline)
+        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron}, parse_type=Pipeline)
 
     def delete_pipeline(self, pipeline_name: str):
         """Deletes a pipeline.
@@ -5514,7 +5551,7 @@ Creates a new feature group defined as the union of other feature group versions
             step_name (str): The name of the step."""
         return self._call_api('deletePipelineStep', 'DELETE', query_params={'pipelineName': pipeline_name, 'stepName': step_name})
 
-    def update_pipeline_step(self, pipeline_name: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> Pipeline:
+    def update_pipeline_step(self, pipeline_name: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> PipelineStep:
         """Creates a step in a given pipeline.
 
         Args:
@@ -5528,8 +5565,8 @@ Creates a new feature group defined as the union of other feature group versions
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
 
         Returns:
-            Pipeline: Object describing the pipeline."""
-        return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=Pipeline)
+            PipelineStep: Object describing the pipeline."""
+        return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=PipelineStep)
 
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
@@ -5751,7 +5788,7 @@ Creates a new feature group defined as the union of other feature group versions
             completion_type (str): Specify the type based on which the completion is done.
 
         Returns:
-            NotebookCompletion: The text to insert into the notebook cell."""
+            NotebookCompletion: A list of objects, each containing the type and contents of the new cell to be inserted."""
         return self._call_api('getNotebookCellCompletion', 'POST', query_params={}, body={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
 
     def set_natural_language_explanation(self, short_explanation: str, long_explanation: str, feature_group_id: str = None, feature_group_version: str = None):
