@@ -11,21 +11,23 @@ class PipelineVersion(AbstractApiClass):
             pipelineName (str): The name of the pipeline this step is a part of.
             pipelineId (str): The reference to the pipeline this step belongs to.
             pipelineVersion (str): The reference to this pipeline version.
-            createdAt (str): The date and time which this step was created.
-            updatedAt (str): The date and time which this step was updated.
+            createdAt (str): The date and time which this pipeline version was created.
+            updatedAt (str): The date and time which this pipeline version was updated.
+            completedAt (str): The date and time which this pipeline version was updated.
             status (str): The status of the pipeline version.
             error (str): The relevant error, if the status is FAILED.
             pipelineVariableMappings (dict): A description of the function variables into the pipeline.
             stepVersions (PipelineStepVersion): A list of the pipeline step versions.
     """
 
-    def __init__(self, client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={}):
+    def __init__(self, client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={}):
         super().__init__(client, pipelineVersion)
         self.pipeline_name = pipelineName
         self.pipeline_id = pipelineId
         self.pipeline_version = pipelineVersion
         self.created_at = createdAt
         self.updated_at = updatedAt
+        self.completed_at = completedAt
         self.status = status
         self.error = error
         self.pipeline_variable_mappings = pipelineVariableMappings
@@ -33,7 +35,7 @@ class PipelineVersion(AbstractApiClass):
             PipelineStepVersion, stepVersions)
 
     def __repr__(self):
-        return f"PipelineVersion(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  step_versions={repr(self.step_versions)})"
+        return f"PipelineVersion(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  step_versions={repr(self.step_versions)})"
 
     def to_dict(self):
         """
@@ -42,7 +44,7 @@ class PipelineVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions)}
+        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions)}
 
     def refresh(self):
         """

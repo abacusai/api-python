@@ -43,3 +43,51 @@ class PipelineStep(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         return {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id, 'step_dependencies': self.step_dependencies, 'python_function': self._get_attribute_as_dict(self.python_function)}
+
+    def delete(self):
+        """
+        Deletes a step from a pipeline.
+
+        Args:
+            pipeline_step_id (str): The ID of the pipeline step.
+        """
+        return self.client.delete_pipeline_step(self.pipeline_step_id)
+
+    def update(self, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None):
+        """
+        Creates a step in a given pipeline.
+
+        Args:
+            function_name (str): The name of the Python function.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+            step_input_mappings (list): List of Python function arguments.
+            output_variable_mappings (list): List of Python function ouputs.
+            step_dependencies (list): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            PipelineStep: Object describing the pipeline.
+        """
+        return self.client.update_pipeline_step(self.pipeline_step_id, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements)
+
+    def refresh(self):
+        """
+        Calls describe and refreshes the current object's fields
+
+        Returns:
+            PipelineStep: The current object
+        """
+        self.__dict__.update(self.describe().__dict__)
+        return self
+
+    def describe(self):
+        """
+        Deletes a step from a pipeline.
+
+        Args:
+            pipeline_step_id (str): The ID of the pipeline step.
+
+        Returns:
+            PipelineStep: An object describing the pipeline step.
+        """
+        return self.client.describe_pipeline_step(self.pipeline_step_id)

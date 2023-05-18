@@ -1,0 +1,48 @@
+:py:mod:`abacusai.vector_store_version`
+=======================================
+
+.. py:module:: abacusai.vector_store_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.vector_store_version.VectorStoreVersion
+
+
+
+
+.. py:class:: VectorStoreVersion(client, vectorStoreId=None, vectorStoreVersion=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A version of vector store.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param vectorStoreId: The unique identifier of the vector store.
+   :type vectorStoreId: str
+   :param vectorStoreVersion: The unique identifier of the vector store version.
+   :type vectorStoreVersion: str
+   :param createdAt: When the vector store was created.
+   :type createdAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

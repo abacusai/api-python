@@ -46,15 +46,3 @@ class ChatSession(AbstractApiClass):
             ChatSession: The chat session with Abacus Chat
         """
         return self.client.get_chat_session(self.chat_session_id)
-
-    def send_chat_message(self, message: str):
-        """
-        Updates chat history with the response from a user message
-
-        Args:
-            message (str): Message you want to send to Abacus Chat
-
-        Returns:
-            ChatSession: The chat session with Abacus Chat
-        """
-        return self.client.send_chat_message(self.chat_session_id, message)

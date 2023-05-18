@@ -55,6 +55,7 @@ from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .feature import Feature
+from .feature_distribution import FeatureDistribution
 from .feature_group import FeatureGroup
 from .feature_group_export import FeatureGroupExport
 from .feature_group_export_config import FeatureGroupExportConfig
@@ -200,7 +201,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.64.1'
+    client_version = '0.65.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -655,7 +656,14 @@ class ReadOnlyClient(BaseApiClient):
             ExecuteFeatureGroupOperation: A dict that contains the execution status"""
         return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query}, parse_type=ExecuteFeatureGroupOperation)
 
-    def download_execute_feature_group_operation_result_part_chunk(self, feature_group_operation_run_id: str, part: int, offset: int = 0, chunk_size: int = 10485760) -> Dict:
+    def get_execute_feature_group_operation_result_part_count(self, feature_group_operation_run_id: str) -> int:
+        """Gets the number of parts in the result of the execution of fg operation
+
+        Args:
+            feature_group_operation_run_id (str): The unique ID associated with the execution."""
+        return self._call_api('getExecuteFeatureGroupOperationResultPartCount', 'GET', query_params={'featureGroupOperationRunId': feature_group_operation_run_id})
+
+    def download_execute_feature_group_operation_result_part_chunk(self, feature_group_operation_run_id: str, part: int, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
         """Downloads a chunk of the result of the execution of fg operation
 
         Args:
@@ -663,7 +671,7 @@ class ReadOnlyClient(BaseApiClient):
             part (int): The part number of the result
             offset (int): The offset in the part
             chunk_size (int): The size of the chunk"""
-        return self._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': feature_group_operation_run_id, 'part': part, 'offset': offset, 'chunkSize': chunk_size})
+        return self._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': feature_group_operation_run_id, 'part': part, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
 
     def get_feature_group_version_export_download_url(self, feature_group_export_id: str) -> FeatureGroupExportDownloadUrl:
         """Get a link to download the feature group version.
@@ -839,14 +847,14 @@ class ReadOnlyClient(BaseApiClient):
             FileConnector: A list of cloud storage buckets connected to the organization."""
         return self._call_api('listFileConnectors', 'GET', query_params={}, parse_type=FileConnector)
 
-    def list_database_connector_objects(self, database_connector_id: str) -> None:
+    def list_database_connector_objects(self, database_connector_id: str) -> list:
         """Lists querable objects in the database connector.
 
         Args:
             database_connector_id (str): Unique string identifier for the database connector."""
         return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id})
 
-    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None) -> None:
+    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None) -> list:
         """Get the schema of an object in an database connector.
 
         Args:
@@ -861,7 +869,7 @@ class ReadOnlyClient(BaseApiClient):
             ApplicationConnector: A list of application connectors."""
         return self._call_api('listApplicationConnectors', 'GET', query_params={}, parse_type=ApplicationConnector)
 
-    def list_application_connector_objects(self, application_connector_id: str) -> None:
+    def list_application_connector_objects(self, application_connector_id: str) -> list:
         """Lists querable objects in the application connector.
 
         Args:
@@ -1376,14 +1384,17 @@ class ReadOnlyClient(BaseApiClient):
             FunctionLogs: A function logs."""
         return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
 
-    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str, nested_feature_name: str = None) -> Dict:
+    def get_drift_for_feature(self, model_monitor_version: str, feature_name: str, nested_feature_name: str = None) -> FeatureDistribution:
         """Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
         Args:
             model_monitor_version (str): Unique string identifier of a model monitor version created under the project.
             feature_name (str): Name of the feature to view the distribution of.
-            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
-        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
+            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in.
+
+        Returns:
+            FeatureDistribution: An object describing the training and prediction output feature distributions."""
+        return self._call_api('getDriftForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name}, parse_type=FeatureDistribution)
 
     def get_outliers_for_feature(self, model_monitor_version: str, feature_name: str = None, nested_feature_name: str = None) -> Dict:
         """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
@@ -1605,16 +1616,26 @@ class ReadOnlyClient(BaseApiClient):
             PipelineVersion: Object describing the pipeline version"""
         return self._call_api('describePipelineVersion', 'GET', query_params={'pipelineVersion': pipeline_version}, parse_type=PipelineVersion)
 
-    def describe_pipeline_step(self, pipeline_name: str, step_name: str) -> PipelineStep:
+    def describe_pipeline_step(self, pipeline_step_id: str) -> PipelineStep:
         """Deletes a step from a pipeline.
 
         Args:
-            pipeline_name (str): The name of the pipeline.
+            pipeline_step_id (str): The ID of the pipeline step.
+
+        Returns:
+            PipelineStep: An object describing the pipeline step."""
+        return self._call_api('describePipelineStep', 'GET', query_params={'pipelineStepId': pipeline_step_id}, parse_type=PipelineStep)
+
+    def describe_pipeline_step_by_name(self, pipeline_id: str, step_name: str) -> PipelineStep:
+        """Describes a pipeline step by the step name.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline.
             step_name (str): The name of the step.
 
         Returns:
             PipelineStep: An object describing the pipeline step."""
-        return self._call_api('describePipelineStep', 'GET', query_params={'pipelineName': pipeline_name, 'stepName': step_name}, parse_type=PipelineStep)
+        return self._call_api('describePipelineStepByName', 'GET', query_params={'pipelineId': pipeline_id, 'stepName': step_name}, parse_type=PipelineStep)
 
     def unset_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
         """Deletes the refresh schedule for a given pipeline.
@@ -1666,7 +1687,7 @@ class ReadOnlyClient(BaseApiClient):
             GraphDashboard: A list of graph dashboards."""
         return self._call_api('listGraphDashboards', 'GET', query_params={'projectId': project_id}, parse_type=GraphDashboard)
 
-    def delete_graph_from_dashboard(self, graph_reference_id: str) -> None:
+    def delete_graph_from_dashboard(self, graph_reference_id: str):
         """Deletes a python plot function from a dashboard
 
         Args:
@@ -2058,7 +2079,7 @@ class ApiClient(ReadOnlyClient):
         return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name, use_gpu=use_gpu)
 
     def create_pipeline_step_from_function(self,
-                                           pipeline_name: str,
+                                           pipeline_id: str,
                                            step_name: str,
                                            function: callable,
                                            step_input_mappings: list,
@@ -2069,7 +2090,7 @@ class ApiClient(ReadOnlyClient):
         Creates a step in a given pipeline from a python function.
 
         Args:
-            pipeline_name (str): The name of the pipeline to add the step to.
+            pipeline_id (str): The ID of the pipeline to add the step to.
             step_name (str): The name of the step.
             function (callable): The python function.
             step_input_mappings (list[PythonFunctionArguments]): List of Python function arguments.
@@ -2078,7 +2099,7 @@ class ApiClient(ReadOnlyClient):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
         """
         source_code = inspect.getsource(function)
-        return self.create_pipeline_step(pipeline_name=pipeline_name,
+        return self.create_pipeline_step(pipeline_id=pipeline_id,
                                          step_name=step_name,
                                          function_name=function.__name__,
                                          source_code=source_code,
@@ -2086,19 +2107,19 @@ class ApiClient(ReadOnlyClient):
                                          output_variable_mappings=output_variable_mappings,
                                          step_dependencies=step_dependencies)
 
-    def update_pipeline_step_from_function(self,
-                                           pipeline_name: str,
-                                           step_name: str,
-                                           function: callable,
-                                           step_input_mappings: list,
-                                           output_variable_mappings: list = None,
-                                           step_dependencies: list = None,
-                                           package_requirements: list = None):
+    def update_pipeline_step_by_name_from_function(self,
+                                                   pipeline_id: str,
+                                                   step_name: str,
+                                                   function: callable,
+                                                   step_input_mappings: list,
+                                                   output_variable_mappings: list = None,
+                                                   step_dependencies: list = None,
+                                                   package_requirements: list = None):
         """
         Updates a step in a given pipeline from a python function.
 
         Args:
-            pipeline_name (str): The name of the pipeline the step belongs to.
+            pipeline_id (str): The ID of the pipeline the step belongs to.
             step_name (str): The name of the step.
             function (callable): The python function.
             step_input_mappings (list[PythonFunctionArguments]): List of Python function arguments.
@@ -2107,13 +2128,13 @@ class ApiClient(ReadOnlyClient):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
         """
         source_code = inspect.getsource(function)
-        return self.update_pipeline_step(pipeline_name=pipeline_name,
-                                         step_name=step_name,
-                                         function_name=function.__name__,
-                                         source_code=source_code,
-                                         step_input_mappings=step_input_mappings,
-                                         output_variable_mappings=output_variable_mappings,
-                                         step_dependencies=step_dependencies)
+        return self.update_pipeline_step_by_name(pipeline_id=pipeline_name,
+                                                 step_name=step_name,
+                                                 function_name=function.__name__,
+                                                 source_code=source_code,
+                                                 step_input_mappings=step_input_mappings,
+                                                 output_variable_mappings=output_variable_mappings,
+                                                 step_dependencies=step_dependencies)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -2653,7 +2674,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -2826,7 +2847,7 @@ class ApiClient(ReadOnlyClient):
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value."""
         return self._call_api('describeAnnotation', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
 
-    def update_annotation_status(self, feature_group_id: str, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
+    def update_annotation_status(self, feature_group_id: str, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None, save_metadata: bool = False) -> AnnotationEntry:
         """Update the status of an annotation entry.
 
         Args:
@@ -2835,10 +2856,11 @@ class ApiClient(ReadOnlyClient):
             status (str): The new status of the annotation. Must be one of the following: 'TODO', 'IN_PROGRESS', 'DONE'.
             doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            save_metadata (bool): If True, save the metadata for the annotation entry.
 
         Returns:
             AnnotationEntry: None"""
-        return self._call_api('updateAnnotationStatus', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'status': status, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
+        return self._call_api('updateAnnotationStatus', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'status': status, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'saveMetadata': save_metadata}, parse_type=AnnotationEntry)
 
     def get_document_to_annotate(self, feature_group_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False) -> AnnotationEntry:
         """Get an available document that needs to be annotated for a given feature group and feature.
@@ -2970,7 +2992,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The updated FeatureGroup."""
         return self._call_api('setFeatureGroupSamplingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'samplingConfig': sampling_config}, parse_type=FeatureGroup)
 
-    def set_feature_group_merge_config(self, feature_group_id: str, merge_config: dict) -> None:
+    def set_feature_group_merge_config(self, feature_group_id: str, merge_config: dict):
         """Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
         Args:
@@ -2978,7 +3000,7 @@ Creates a new feature group defined as the union of other feature group versions
             merge_config (dict): JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version."""
         return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config})
 
-    def set_feature_group_transform_config(self, feature_group_id: str, transform_config: dict) -> None:
+    def set_feature_group_transform_config(self, feature_group_id: str, transform_config: dict):
         """Set a TransformFeatureGroup’s transform config to the values provided.
 
         Args:
@@ -3334,13 +3356,6 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             ExecuteFeatureGroupOperation: A dict that contains the execution status"""
         return self._call_api('describeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'featureGroupOperationRunId': feature_group_operation_run_id}, parse_type=ExecuteFeatureGroupOperation)
-
-    def get_execute_feature_group_operation_result_part_count(self, feature_group_operation_run_id: str) -> None:
-        """Gets the number of parts in the result of the execution of fg operation
-
-        Args:
-            feature_group_operation_run_id (str): The unique ID associated with the execution."""
-        return self._call_api('getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={}, body={'featureGroupOperationRunId': feature_group_operation_run_id})
 
     def update_feature_group(self, feature_group_id: str, description: str = None) -> FeatureGroup:
         """Modify an existing Feature Group.
@@ -4901,17 +4916,18 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None, chat_config: dict = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
-            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects."""
+            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
+            chat_config (dict): A dictionary specifiying the query chat config override"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results, 'chatConfig': chat_config}, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -5104,7 +5120,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('scoreImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=prediction_url)
 
-    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
+    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> io.BytesIO:
         """Change the source image to adopt the visual style from the style image.
 
         Args:
@@ -5114,9 +5130,9 @@ Creates a new feature group defined as the union of other feature group versions
             style_image (io.TextIOBase): The image that has the style as a reference."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=prediction_url)
+        return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, streamable_response=True, server_override=prediction_url)
 
-    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> io.BytesIO:
         """Generate an image from text prompt.
 
         Args:
@@ -5125,7 +5141,7 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
 
     def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
@@ -5475,7 +5491,17 @@ Creates a new feature group defined as the union of other feature group versions
             Pipeline: An object that describes a Pipeline."""
         return self._call_api('createPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'cron': cron}, parse_type=Pipeline)
 
-    def describe_pipeline(self, pipeline_name: str) -> Pipeline:
+    def describe_pipeline(self, pipeline_id: str) -> Pipeline:
+        """Describes a given pipeline.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline to describe.
+
+        Returns:
+            Pipeline: An object describing a Pipeline"""
+        return self._call_api('describePipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id}, parse_type=Pipeline)
+
+    def describe_pipeline_by_name(self, pipeline_name: str) -> Pipeline:
         """Describes a given pipeline.
 
         Args:
@@ -5483,54 +5509,54 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             Pipeline: An object describing a Pipeline"""
-        return self._call_api('describePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=Pipeline)
+        return self._call_api('describePipelineByName', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=Pipeline)
 
-    def update_pipeline(self, pipeline_name: str, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None) -> Pipeline:
+    def update_pipeline(self, pipeline_id: str, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None) -> Pipeline:
         """Updates a pipeline for executing multiple steps.
 
         Args:
-            pipeline_name (str): The name of the pipeline, which should be unique to the organization.
+            pipeline_id (str): The ID of the pipeline to update.
             project_id (str): A unique string identifier for the pipeline.
             pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
             cron (str): A cron-like string specifying the frequency of the scheduled pipeline runs.
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
-        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron}, parse_type=Pipeline)
+        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron}, parse_type=Pipeline)
 
-    def delete_pipeline(self, pipeline_name: str):
+    def delete_pipeline(self, pipeline_id: str):
         """Deletes a pipeline.
 
         Args:
-            pipeline_name (str): The name of the pipeline to describe."""
-        return self._call_api('deletePipeline', 'DELETE', query_params={'pipelineName': pipeline_name})
+            pipeline_id (str): The ID of the pipeline to delete."""
+        return self._call_api('deletePipeline', 'DELETE', query_params={'pipelineId': pipeline_id})
 
-    def list_pipeline_versions(self, pipeline_name: str) -> List[PipelineVersion]:
+    def list_pipeline_versions(self, pipeline_id: str) -> List[PipelineVersion]:
         """Lists the pipeline versions for a specified pipeline
 
         Args:
-            pipeline_name (str): The name of the pipeline to describe.
+            pipeline_id (str): The ID of the pipeline to list versions for.
 
         Returns:
             PipelineVersion: A list of pipeline versions."""
-        return self._call_api('listPipelineVersions', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=PipelineVersion)
+        return self._call_api('listPipelineVersions', 'POST', query_params={}, body={'pipelineId': pipeline_id}, parse_type=PipelineVersion)
 
-    def run_pipeline(self, pipeline_name: str, pipeline_variable_mappings: list = None) -> PipelineVersion:
+    def run_pipeline(self, pipeline_id: str, pipeline_variable_mappings: list = None) -> PipelineVersion:
         """Runs a specified pipeline with the arguments provided.
 
         Args:
-            pipeline_name (str): The name of the pipeline to run.
+            pipeline_id (str): The ID of the pipeline to run.
             pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
 
         Returns:
             PipelineVersion: The object describing the pipeline"""
-        return self._call_api('runPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'pipelineVariableMappings': pipeline_variable_mappings}, parse_type=PipelineVersion)
+        return self._call_api('runPipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'pipelineVariableMappings': pipeline_variable_mappings}, parse_type=PipelineVersion)
 
-    def create_pipeline_step(self, pipeline_name: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> Pipeline:
+    def create_pipeline_step(self, pipeline_id: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> Pipeline:
         """Creates a step in a given pipeline.
 
         Args:
-            pipeline_name (str): The name of the pipeline to run.
+            pipeline_id (str): The ID of the pipeline to run.
             step_name (str): The name of the step.
             function_name (str): The name of the Python function.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
@@ -5541,21 +5567,44 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             Pipeline: Object describing the pipeline."""
-        return self._call_api('createPipelineStep', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=Pipeline)
+        return self._call_api('createPipelineStep', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=Pipeline)
 
-    def delete_pipeline_step(self, pipeline_name: str, step_name: str):
+    def delete_pipeline_step(self, pipeline_step_id: str):
         """Deletes a step from a pipeline.
 
         Args:
-            pipeline_name (str): The name of the pipeline.
-            step_name (str): The name of the step."""
-        return self._call_api('deletePipelineStep', 'DELETE', query_params={'pipelineName': pipeline_name, 'stepName': step_name})
+            pipeline_step_id (str): The ID of the pipeline step."""
+        return self._call_api('deletePipelineStep', 'DELETE', query_params={'pipelineStepId': pipeline_step_id})
 
-    def update_pipeline_step(self, pipeline_name: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> PipelineStep:
+    def delete_pipeline_step_by_name(self, pipeline_id: str, step_name: str):
+        """Deletes a step from a pipeline.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline.
+            step_name (str): The name of the step."""
+        return self._call_api('deletePipelineStepByName', 'DELETE', query_params={'pipelineId': pipeline_id, 'stepName': step_name})
+
+    def update_pipeline_step(self, pipeline_step_id: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> PipelineStep:
         """Creates a step in a given pipeline.
 
         Args:
-            pipeline_name (str): The name of the pipeline to run.
+            pipeline_step_id (str): The ID of the pipeline_step to update.
+            function_name (str): The name of the Python function.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+            step_input_mappings (list): List of Python function arguments.
+            output_variable_mappings (list): List of Python function ouputs.
+            step_dependencies (list): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            PipelineStep: Object describing the pipeline."""
+        return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineStepId': pipeline_step_id, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=PipelineStep)
+
+    def update_pipeline_step_by_name(self, pipeline_id: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> PipelineStep:
+        """Creates a step in a given pipeline.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline to update the step for.
             step_name (str): The name of the step.
             function_name (str): The name of the Python function.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
@@ -5566,7 +5615,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             PipelineStep: Object describing the pipeline."""
-        return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=PipelineStep)
+        return self._call_api('updatePipelineStepByName', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=PipelineStep)
 
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
@@ -5810,17 +5859,6 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             ChatSession: The chat session with Abacus Chat"""
         return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id}, parse_type=ChatSession)
-
-    def send_chat_message(self, chat_session_id: str, message: str) -> ChatSession:
-        """Updates chat history with the response from a user message
-
-        Args:
-            chat_session_id (str): Unique ID of the chat session.
-            message (str): Message you want to send to Abacus Chat
-
-        Returns:
-            ChatSession: The chat session with Abacus Chat"""
-        return self._call_api('sendChatMessage', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'message': message}, parse_type=ChatSession)
 
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
         """Creates a new AI agent.

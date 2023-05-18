@@ -388,7 +388,7 @@ Classes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None, chat_config = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -400,6 +400,8 @@ Classes
       :type messages: list
       :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
       :type search_results: list
+      :param chat_config: A dictionary specifiying the query chat config override
+      :type chat_config: dict
 
 
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data)

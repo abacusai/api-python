@@ -95,6 +95,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
@@ -187,6 +188,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case_requirements</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user_exception</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vector_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vector_store_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.webhook</span></code></a></li>
 </ul>
 </li>
@@ -684,7 +687,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.get_chat_response">
-<span class="sig-name descname"><span class="pre">get_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_chat_response" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_chat_response" title="Permalink to this definition"></a></dt>
 <dd><p>Return a chat response which continues the conversation based on the input messages and search results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -693,6 +696,7 @@
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
 <li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message’s text.</p></li>
 <li><p><strong>search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message’s index.      result (list): List of NlpSearchPrediction objects.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary specifiying the query chat config override</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1025,7 +1029,7 @@
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1043,7 +1047,7 @@
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -242,7 +242,7 @@ class FeatureGroupVersion(AbstractApiClass):
                             if pd.core.dtypes.common.is_datetime64_ns_dtype(df_part[col]):
                                 df_part[col] = df_part[col].dt.tz_localize(
                                     None)
-                            else:
+                            elif str(df_part[col].dtype).lower() != str(col_dtypes[col]).lower():
                                 df_part[col] = df_part[col].astype(
                                     col_dtypes[col])
                         df_parts.append(df_part)

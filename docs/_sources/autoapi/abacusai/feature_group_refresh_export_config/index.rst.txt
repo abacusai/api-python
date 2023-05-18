@@ -21,25 +21,27 @@ Classes
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
+   A Feature Group Refresh Export Config outlines the export configuration for a feature group.
+
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param connectorType:
+   :param connectorType: The type of connector the feature group is
    :type connectorType: str
-   :param location:
+   :param location: The file connector location of the feature group export
    :type location: str
-   :param exportFileFormat:
+   :param exportFileFormat: The file format of the feature group export
    :type exportFileFormat: str
-   :param additionalIdColumns:
+   :param additionalIdColumns: Additional id columns to use for upsert operations
    :type additionalIdColumns: list
-   :param databaseFeatureMapping:
+   :param databaseFeatureMapping: The mapping of feature names to database columns
    :type databaseFeatureMapping: dict
-   :param externalConnectionId:
+   :param externalConnectionId: The unique identifier of the external connection to write to
    :type externalConnectionId: str
-   :param idColumn:
+   :param idColumn: The column to use as the id column for upsert operations
    :type idColumn: str
-   :param objectName:
+   :param objectName: The name of the object to write to
    :type objectName: str
-   :param writeMode:
+   :param writeMode: The write mode to use for the export
    :type writeMode: str
 
    .. py:method:: __repr__()

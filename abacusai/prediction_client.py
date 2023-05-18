@@ -309,17 +309,18 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None, chat_config: dict = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
-            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects."""
+            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
+            chat_config (dict): A dictionary specifiying the query chat config override"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results, 'chatConfig': chat_config}, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -512,7 +513,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('scoreImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=prediction_url)
 
-    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> Dict:
+    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> io.BytesIO:
         """Change the source image to adopt the visual style from the style image.
 
         Args:
@@ -522,9 +523,9 @@ class PredictionClient(BaseApiClient):
             style_image (io.TextIOBase): The image that has the style as a reference."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, server_override=prediction_url)
+        return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, streamable_response=True, server_override=prediction_url)
 
-    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> io.BytesIO:
         """Generate an image from text prompt.
 
         Args:
@@ -533,7 +534,7 @@ class PredictionClient(BaseApiClient):
             query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
 
     def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.

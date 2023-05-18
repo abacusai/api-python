@@ -213,7 +213,7 @@ Classes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: update_annotation_status(feature_name, status, doc_id = None, feature_group_row_identifier = None)
+   .. py:method:: update_annotation_status(feature_name, status, doc_id = None, feature_group_row_identifier = None, save_metadata = False)
 
       Update the status of an annotation entry.
 
@@ -225,6 +225,8 @@ Classes
       :type doc_id: str
       :param feature_group_row_identifier: The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
       :type feature_group_row_identifier: str
+      :param save_metadata: If True, save the metadata for the annotation entry.
+      :type save_metadata: bool
 
       :returns: None
       :rtype: AnnotationEntry

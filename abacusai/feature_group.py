@@ -219,7 +219,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.verify_and_describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
 
-    def update_annotation_status(self, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None):
+    def update_annotation_status(self, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None, save_metadata: bool = False):
         """
         Update the status of an annotation entry.
 
@@ -228,11 +228,12 @@ class FeatureGroup(AbstractApiClass):
             status (str): The new status of the annotation. Must be one of the following: 'TODO', 'IN_PROGRESS', 'DONE'.
             doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
+            save_metadata (bool): If True, save the metadata for the annotation entry.
 
         Returns:
             AnnotationEntry: None
         """
-        return self.client.update_annotation_status(self.feature_group_id, feature_name, status, doc_id, feature_group_row_identifier)
+        return self.client.update_annotation_status(self.feature_group_id, feature_name, status, doc_id, feature_group_row_identifier, save_metadata)
 
     def get_document_to_annotate(self, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False):
         """

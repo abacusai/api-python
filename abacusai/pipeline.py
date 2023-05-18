@@ -49,6 +49,132 @@ class Pipeline(AbstractApiClass):
         """
         return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'created_at': self.created_at, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'notebook_id': self.notebook_id, 'cron': self.cron, 'next_run_time': self.next_run_time, 'steps': self._get_attribute_as_dict(self.steps), 'pipeline_references': self._get_attribute_as_dict(self.pipeline_references), 'latest_pipeline_version': self._get_attribute_as_dict(self.latest_pipeline_version)}
 
+    def refresh(self):
+        """
+        Calls describe and refreshes the current object's fields
+
+        Returns:
+            Pipeline: The current object
+        """
+        self.__dict__.update(self.describe().__dict__)
+        return self
+
+    def describe(self):
+        """
+        Describes a given pipeline.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline to describe.
+
+        Returns:
+            Pipeline: An object describing a Pipeline
+        """
+        return self.client.describe_pipeline(self.pipeline_id)
+
+    def update(self, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None):
+        """
+        Updates a pipeline for executing multiple steps.
+
+        Args:
+            project_id (str): A unique string identifier for the pipeline.
+            pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+            cron (str): A cron-like string specifying the frequency of the scheduled pipeline runs.
+
+        Returns:
+            Pipeline: An object that describes a Pipeline.
+        """
+        return self.client.update_pipeline(self.pipeline_id, project_id, pipeline_variable_mappings, cron)
+
+    def delete(self):
+        """
+        Deletes a pipeline.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline to delete.
+        """
+        return self.client.delete_pipeline(self.pipeline_id)
+
+    def list_versions(self):
+        """
+        Lists the pipeline versions for a specified pipeline
+
+        Args:
+            pipeline_id (str): The ID of the pipeline to list versions for.
+
+        Returns:
+            PipelineVersion: A list of pipeline versions.
+        """
+        return self.client.list_pipeline_versions(self.pipeline_id)
+
+    def run(self, pipeline_variable_mappings: list = None):
+        """
+        Runs a specified pipeline with the arguments provided.
+
+        Args:
+            pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
+
+        Returns:
+            PipelineVersion: The object describing the pipeline
+        """
+        return self.client.run_pipeline(self.pipeline_id, pipeline_variable_mappings)
+
+    def create_step(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None):
+        """
+        Creates a step in a given pipeline.
+
+        Args:
+            step_name (str): The name of the step.
+            function_name (str): The name of the Python function.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+            step_input_mappings (list): List of Python function arguments.
+            output_variable_mappings (list): List of Python function ouputs.
+            step_dependencies (list): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            Pipeline: Object describing the pipeline.
+        """
+        return self.client.create_pipeline_step(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements)
+
+    def delete_step_by_name(self, step_name: str):
+        """
+        Deletes a step from a pipeline.
+
+        Args:
+            step_name (str): The name of the step.
+        """
+        return self.client.delete_pipeline_step_by_name(self.pipeline_id, step_name)
+
+    def update_step_by_name(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None):
+        """
+        Creates a step in a given pipeline.
+
+        Args:
+            step_name (str): The name of the step.
+            function_name (str): The name of the Python function.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+            step_input_mappings (list): List of Python function arguments.
+            output_variable_mappings (list): List of Python function ouputs.
+            step_dependencies (list): List of step names this step depends on.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+
+        Returns:
+            PipelineStep: Object describing the pipeline.
+        """
+        return self.client.update_pipeline_step_by_name(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements)
+
+    def describe_step_by_name(self, step_name: str):
+        """
+        Describes a pipeline step by the step name.
+
+        Args:
+            step_name (str): The name of the step.
+
+        Returns:
+            PipelineStep: An object describing the pipeline step.
+        """
+        return self.client.describe_pipeline_step_by_name(self.pipeline_id, step_name)
+
     def unset_refresh_schedule(self):
         """
         Deletes the refresh schedule for a given pipeline.

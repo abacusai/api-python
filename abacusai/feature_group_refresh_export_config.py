@@ -3,19 +3,19 @@ from .return_class import AbstractApiClass
 
 class FeatureGroupRefreshExportConfig(AbstractApiClass):
     """
-
+        A Feature Group Refresh Export Config outlines the export configuration for a feature group.
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            connectorType (str): 
-            location (str): 
-            exportFileFormat (str): 
-            additionalIdColumns (list): 
-            databaseFeatureMapping (dict): 
-            externalConnectionId (str): 
-            idColumn (str): 
-            objectName (str): 
-            writeMode (str): 
+            connectorType (str): The type of connector the feature group is
+            location (str): The file connector location of the feature group export
+            exportFileFormat (str): The file format of the feature group export
+            additionalIdColumns (list): Additional id columns to use for upsert operations
+            databaseFeatureMapping (dict): The mapping of feature names to database columns
+            externalConnectionId (str): The unique identifier of the external connection to write to
+            idColumn (str): The column to use as the id column for upsert operations
+            objectName (str): The name of the object to write to
+            writeMode (str): The write mode to use for the export
     """
 
     def __init__(self, client, connectorType=None, location=None, exportFileFormat=None, additionalIdColumns=None, databaseFeatureMapping=None, externalConnectionId=None, idColumn=None, objectName=None, writeMode=None):

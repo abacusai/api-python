@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineVersion(client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={})
+.. py:class:: PipelineVersion(client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,10 +31,12 @@ Classes
    :type pipelineId: str
    :param pipelineVersion: The reference to this pipeline version.
    :type pipelineVersion: str
-   :param createdAt: The date and time which this step was created.
+   :param createdAt: The date and time which this pipeline version was created.
    :type createdAt: str
-   :param updatedAt: The date and time which this step was updated.
+   :param updatedAt: The date and time which this pipeline version was updated.
    :type updatedAt: str
+   :param completedAt: The date and time which this pipeline version was updated.
+   :type completedAt: str
    :param status: The status of the pipeline version.
    :type status: str
    :param error: The relevant error, if the status is FAILED.

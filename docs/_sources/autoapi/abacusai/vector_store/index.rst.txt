@@ -1,0 +1,46 @@
+:py:mod:`abacusai.vector_store`
+===============================
+
+.. py:module:: abacusai.vector_store
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.vector_store.VectorStore
+
+
+
+
+.. py:class:: VectorStore(client, vectorStoreId=None, createdAt=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A vector store that stores embeddings for a list of document trunks.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param vectorStoreId: The unique identifier of the vector store.
+   :type vectorStoreId: str
+   :param createdAt: When the vector store was created.
+   :type createdAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

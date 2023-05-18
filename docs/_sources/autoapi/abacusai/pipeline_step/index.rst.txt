@@ -57,4 +57,52 @@ Classes
       :rtype: dict
 
 
+   .. py:method:: delete()
+
+      Deletes a step from a pipeline.
+
+      :param pipeline_step_id: The ID of the pipeline step.
+      :type pipeline_step_id: str
+
+
+   .. py:method:: update(function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+
+      Creates a step in a given pipeline.
+
+      :param function_name: The name of the Python function.
+      :type function_name: str
+      :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
+      :type source_code: str
+      :param step_input_mappings: List of Python function arguments.
+      :type step_input_mappings: list
+      :param output_variable_mappings: List of Python function ouputs.
+      :type output_variable_mappings: list
+      :param step_dependencies: List of step names this step depends on.
+      :type step_dependencies: list
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+
+      :returns: Object describing the pipeline.
+      :rtype: PipelineStep
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: PipelineStep
+
+
+   .. py:method:: describe()
+
+      Deletes a step from a pipeline.
+
+      :param pipeline_step_id: The ID of the pipeline step.
+      :type pipeline_step_id: str
+
+      :returns: An object describing the pipeline step.
+      :rtype: PipelineStep
+
+
 

@@ -1,0 +1,56 @@
+:py:mod:`abacusai.feature_distribution`
+=======================================
+
+.. py:module:: abacusai.feature_distribution
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_distribution.FeatureDistribution
+
+
+
+
+.. py:class:: FeatureDistribution(client, type=None, trainingDistribution=None, predictionDistribution=None, numericalTrainingDistribution=None, numericalPredictionDistribution=None, trainingStatistics=None, predictionStatistics=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   For a single feature, how it has changed in the training data versus some specified window
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param type: Data type of values in each distribution, typically 'categorical' or 'numerical'.
+   :type type: str
+   :param trainingDistribution: A dict describing the range of values in the training distribution.
+   :type trainingDistribution: dict
+   :param predictionDistribution: A dict describing the range of values in the specified window.
+   :type predictionDistribution: dict
+   :param numericalTrainingDistribution: A dict describing the summary statistics of the numerical training distribution.
+   :type numericalTrainingDistribution: dict
+   :param numericalPredictionDistribution: A dict describing the summary statistics of the numerical prediction distribution.
+   :type numericalPredictionDistribution: dict
+   :param trainingStatistics: A dict describing summary statistics of values in the training distribution.
+   :type trainingStatistics: dict
+   :param predictionStatistics: A dict describing summary statistics of values in the specified window.
+   :type predictionStatistics: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -144,6 +144,9 @@ class ModelMonitorVersion(AbstractApiClass):
         Args:
             feature_name (str): Name of the feature to view the distribution of.
             nested_feature_name (str): Optionally, the name of the nested feature that the feature is in.
+
+        Returns:
+            FeatureDistribution: An object describing the training and prediction output feature distributions.
         """
         return self.client.get_drift_for_feature(self.model_monitor_version, feature_name, nested_feature_name)
 

@@ -95,6 +95,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
@@ -187,6 +188,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../use_case_requirements/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case_requirements</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../user_exception/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user_exception</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vector_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../vector_store_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../webhook/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.webhook</span></code></a></li>
 </ul>
 </li>
@@ -229,12 +232,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.feature_group_refresh_export_config.FeatureGroupRefreshExportConfig" title="abacusai.feature_group_refresh_export_config.FeatureGroupRefreshExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureGroupRefreshExportConfig</span></code></a></p></td>
-<td><p><dl class="field-list simple">
-<dt class="field-odd">param client<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An authenticated API Client instance</p>
-</dd>
-</dl>
-</p></td>
+<td><p>A Feature Group Refresh Export Config outlines the export configuration for a feature group.</p></td>
 </tr>
 </tbody>
 </table>
@@ -242,19 +240,20 @@
 <dt class="sig sig-object py" id="abacusai.feature_group_refresh_export_config.FeatureGroupRefreshExportConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.feature_group_refresh_export_config.</span></span><span class="sig-name descname"><span class="pre">FeatureGroupRefreshExportConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connectorType</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exportFileFormat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additionalIdColumns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databaseFeatureMapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">externalConnectionId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idColumn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">objectName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">writeMode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group_refresh_export_config.FeatureGroupRefreshExportConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
+<p>A Feature Group Refresh Export Config outlines the export configuration for a feature group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
-<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>exportFileFormat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>additionalIdColumns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – </p></li>
-<li><p><strong>databaseFeatureMapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – </p></li>
-<li><p><strong>externalConnectionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>idColumn</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>objectName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
-<li><p><strong>writeMode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – </p></li>
+<li><p><strong>connectorType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of connector the feature group is</p></li>
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The file connector location of the feature group export</p></li>
+<li><p><strong>exportFileFormat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The file format of the feature group export</p></li>
+<li><p><strong>additionalIdColumns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Additional id columns to use for upsert operations</p></li>
+<li><p><strong>databaseFeatureMapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The mapping of feature names to database columns</p></li>
+<li><p><strong>externalConnectionId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier of the external connection to write to</p></li>
+<li><p><strong>idColumn</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The column to use as the id column for upsert operations</p></li>
+<li><p><strong>objectName</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the object to write to</p></li>
+<li><p><strong>writeMode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The write mode to use for the export</p></li>
 </ul>
 </dd>
 </dl>

@@ -98,6 +98,7 @@
 <li class="toctree-l3"><a class="reference internal" href="embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
@@ -187,6 +188,8 @@
 <li class="toctree-l3"><a class="reference internal" href="use_case_requirements/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case_requirements</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="user/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_exception/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user_exception</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="vector_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="vector_store_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="webhook/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.webhook</span></code></a></li>
 </ul>
 </li>
@@ -317,6 +320,7 @@
 <li class="toctree-l1"><a class="reference internal" href="embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="feature_group_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_export</span></code></a></li>
@@ -406,6 +410,8 @@
 <li class="toctree-l1"><a class="reference internal" href="use_case_requirements/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.use_case_requirements</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_exception/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.user_exception</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="vector_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="vector_store_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.vector_store_version</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="webhook/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.webhook</span></code></a></li>
 </ul>
 </div>
@@ -1445,12 +1451,12 @@ Updates an existing dataset from a pandas dataframe</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_pipeline_step_from_function">
-<span class="sig-name descname"><span class="pre">create_pipeline_step_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_pipeline_step_from_function" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_pipeline_step_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_pipeline_step_from_function" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a step in a given pipeline from a python function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline to add the step to.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to add the step to.</p></li>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 <li><p><strong>function</strong> (<em>callable</em>) – The python function.</p></li>
 <li><p><strong>step_input_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><em>PythonFunctionArguments</em><em>]</em>) – List of Python function arguments.</p></li>
@@ -1463,13 +1469,13 @@ Updates an existing dataset from a pandas dataframe</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ApiClient.update_pipeline_step_from_function">
-<span class="sig-name descname"><span class="pre">update_pipeline_step_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline_step_from_function" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.ApiClient.update_pipeline_step_by_name_from_function">
+<span class="sig-name descname"><span class="pre">update_pipeline_step_by_name_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline_step_by_name_from_function" title="Permalink to this definition"></a></dt>
 <dd><p>Updates a step in a given pipeline from a python function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline the step belongs to.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline the step belongs to.</p></li>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 <li><p><strong>function</strong> (<em>callable</em>) – The python function.</p></li>
 <li><p><strong>step_input_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a><em>[</em><em>PythonFunctionArguments</em><em>]</em>) – List of Python function arguments.</p></li>
@@ -2051,7 +2057,7 @@ execute function.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The project’s name.</p></li>
-<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_ITEM_AFFINITY,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
+<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2334,7 +2340,7 @@ execute function.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.update_annotation_status">
-<span class="sig-name descname"><span class="pre">update_annotation_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_row_identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_annotation_status" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_annotation_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_row_identifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_annotation_status" title="Permalink to this definition"></a></dt>
 <dd><p>Update the status of an annotation entry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -2344,6 +2350,7 @@ execute function.</p>
 <li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The new status of the annotation. Must be one of the following: ‘TODO’, ‘IN_PROGRESS’, ‘DONE’.</p></li>
 <li><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.</p></li>
 <li><p><strong>feature_group_row_identifier</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The key value of the feature group row the annotation is on (cast to string). Usually the feature group’s primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.</p></li>
+<li><p><strong>save_metadata</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If True, save the metadata for the annotation entry.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -2580,9 +2587,6 @@ Creates a new feature group defined as the union of other feature group versions
 <li><p><strong>merge_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
 </dl>
 </dd></dl>
 
@@ -2596,9 +2600,6 @@ Creates a new feature group defined as the union of other feature group versions
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the feature group.</p></li>
 <li><p><strong>transform_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary object specifying the pre-defined transformation.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3166,20 +3167,6 @@ Creates a new feature group defined as the union of other feature group versions
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="execute_feature_group_operation/index.html#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation">ExecuteFeatureGroupOperation</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ApiClient.get_execute_feature_group_operation_result_part_count">
-<span class="sig-name descname"><span class="pre">get_execute_feature_group_operation_result_part_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_operation_run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_execute_feature_group_operation_result_part_count" title="Permalink to this definition"></a></dt>
-<dd><p>Gets the number of parts in the result of the execution of fg operation</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>feature_group_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -5629,7 +5616,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.get_chat_response">
-<span class="sig-name descname"><span class="pre">get_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_chat_response" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.get_chat_response" title="Permalink to this definition"></a></dt>
 <dd><p>Return a chat response which continues the conversation based on the input messages and search results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -5638,6 +5625,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
 <li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message’s text.</p></li>
 <li><p><strong>search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message’s index.      result (list): List of NlpSearchPrediction objects.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary specifiying the query chat config override</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -5970,7 +5958,7 @@ feature groups for those input feature groups.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -5988,7 +5976,7 @@ feature groups for those input feature groups.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -6531,7 +6519,24 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.describe_pipeline">
-<span class="sig-name descname"><span class="pre">describe_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.describe_pipeline" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">describe_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.describe_pipeline" title="Permalink to this definition"></a></dt>
+<dd><p>Describes a given pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to describe.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An object describing a Pipeline</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pipeline/index.html#abacusai.pipeline.Pipeline" title="abacusai.pipeline.Pipeline">Pipeline</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.describe_pipeline_by_name">
+<span class="sig-name descname"><span class="pre">describe_pipeline_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.describe_pipeline_by_name" title="Permalink to this definition"></a></dt>
 <dd><p>Describes a given pipeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -6548,12 +6553,12 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.update_pipeline">
-<span class="sig-name descname"><span class="pre">update_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cron</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cron</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline" title="Permalink to this definition"></a></dt>
 <dd><p>Updates a pipeline for executing multiple steps.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline, which should be unique to the organization.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to update.</p></li>
 <li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the pipeline.</p></li>
 <li><p><strong>pipeline_variable_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of Python function arguments for the pipeline.</p></li>
 <li><p><strong>cron</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron-like string specifying the frequency of the scheduled pipeline runs.</p></li>
@@ -6570,22 +6575,22 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.delete_pipeline">
-<span class="sig-name descname"><span class="pre">delete_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.delete_pipeline" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">delete_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.delete_pipeline" title="Permalink to this definition"></a></dt>
 <dd><p>Deletes a pipeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline to describe.</p>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to delete.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.list_pipeline_versions">
-<span class="sig-name descname"><span class="pre">list_pipeline_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.list_pipeline_versions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_pipeline_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.list_pipeline_versions" title="Permalink to this definition"></a></dt>
 <dd><p>Lists the pipeline versions for a specified pipeline</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline to describe.</p>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to list versions for.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of pipeline versions.</p>
@@ -6598,12 +6603,12 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.run_pipeline">
-<span class="sig-name descname"><span class="pre">run_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.run_pipeline" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">run_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipeline_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.run_pipeline" title="Permalink to this definition"></a></dt>
 <dd><p>Runs a specified pipeline with the arguments provided.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline to run.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to run.</p></li>
 <li><p><strong>pipeline_variable_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of Python function arguments for the pipeline.</p></li>
 </ul>
 </dd>
@@ -6618,12 +6623,12 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_pipeline_step">
-<span class="sig-name descname"><span class="pre">create_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_pipeline_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_pipeline_step" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a step in a given pipeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline to run.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to run.</p></li>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the Python function.</p></li>
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.</p></li>
@@ -6644,12 +6649,23 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.delete_pipeline_step">
-<span class="sig-name descname"><span class="pre">delete_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.delete_pipeline_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">delete_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_step_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.delete_pipeline_step" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes a step from a pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pipeline_step_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline step.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.delete_pipeline_step_by_name">
+<span class="sig-name descname"><span class="pre">delete_pipeline_step_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.delete_pipeline_step_by_name" title="Permalink to this definition"></a></dt>
 <dd><p>Deletes a step from a pipeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline.</p></li>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 </ul>
 </dd>
@@ -6658,12 +6674,37 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.update_pipeline_step">
-<span class="sig-name descname"><span class="pre">update_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_step_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline_step" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a step in a given pipeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline to run.</p></li>
+<li><p><strong>pipeline_step_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline_step to update.</p></li>
+<li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the Python function.</p></li>
+<li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.</p></li>
+<li><p><strong>step_input_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of Python function arguments.</p></li>
+<li><p><strong>output_variable_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of Python function ouputs.</p></li>
+<li><p><strong>step_dependencies</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of step names this step depends on.</p></li>
+<li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pipeline_step/index.html#abacusai.pipeline_step.PipelineStep" title="abacusai.pipeline_step.PipelineStep">PipelineStep</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ApiClient.update_pipeline_step_by_name">
+<span class="sig-name descname"><span class="pre">update_pipeline_step_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_input_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_variable_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_dependencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.update_pipeline_step_by_name" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a step in a given pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to update the step for.</p></li>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 <li><p><strong>function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the Python function.</p></li>
 <li><p><strong>source_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.</p></li>
@@ -7074,26 +7115,6 @@ feature groups for those input feature groups.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The project this chat session belongs to</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The chat session with Abacus Chat</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="chat_session/index.html#abacusai.chat_session.ChatSession" title="abacusai.chat_session.ChatSession">ChatSession</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ApiClient.send_chat_message">
-<span class="sig-name descname"><span class="pre">send_chat_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_session_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.send_chat_message" title="Permalink to this definition"></a></dt>
-<dd><p>Updates chat history with the response from a user message</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>chat_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique ID of the chat session.</p></li>
-<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Message you want to send to Abacus Chat</p></li>
-</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The chat session with Abacus Chat</p>
@@ -7674,6 +7695,20 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_execute_feature_group_operation_result_part_count">
+<span class="sig-name descname"><span class="pre">get_execute_feature_group_operation_result_part_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_operation_run_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_execute_feature_group_operation_result_part_count" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the number of parts in the result of the execution of fg operation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature_group_operation_run_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the execution.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.download_execute_feature_group_operation_result_part_chunk">
 <span class="sig-name descname"><span class="pre">download_execute_feature_group_operation_result_part_chunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_operation_run_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">part</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10485760</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.download_execute_feature_group_operation_result_part_chunk" title="Permalink to this definition"></a></dt>
 <dd><p>Downloads a chunk of the result of the execution of fg operation</p>
@@ -7687,7 +7722,7 @@ feature groups for those input feature groups.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -8003,7 +8038,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-odd"><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the database connector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -8020,7 +8055,7 @@ feature groups for those input feature groups.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -8048,7 +8083,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-odd"><p><strong>application_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the application connector.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -8948,8 +8983,11 @@ feature groups for those input feature groups.</p>
 <li><p><strong>nested_feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optionally, the name of the nested feature that the feature is in.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An object describing the training and prediction output feature distributions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="feature_distribution/index.html#abacusai.feature_distribution.FeatureDistribution" title="abacusai.feature_distribution.FeatureDistribution">FeatureDistribution</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -9337,12 +9375,29 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.describe_pipeline_step">
-<span class="sig-name descname"><span class="pre">describe_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.describe_pipeline_step" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">describe_pipeline_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_step_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.describe_pipeline_step" title="Permalink to this definition"></a></dt>
 <dd><p>Deletes a step from a pipeline.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pipeline_step_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline step.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An object describing the pipeline step.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pipeline_step/index.html#abacusai.pipeline_step.PipelineStep" title="abacusai.pipeline_step.PipelineStep">PipelineStep</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.describe_pipeline_step_by_name">
+<span class="sig-name descname"><span class="pre">describe_pipeline_step_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.describe_pipeline_step_by_name" title="Permalink to this definition"></a></dt>
+<dd><p>Describes a pipeline step by the step name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the pipeline.</p></li>
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline.</p></li>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 </ul>
 </dd>
@@ -9447,9 +9502,6 @@ feature groups for those input feature groups.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>graph_reference_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique String Identifier for the graph</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -10211,7 +10263,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.PredictionClient.get_chat_response">
-<span class="sig-name descname"><span class="pre">get_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.get_chat_response" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_chat_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messages</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.PredictionClient.get_chat_response" title="Permalink to this definition"></a></dt>
 <dd><p>Return a chat response which continues the conversation based on the input messages and search results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -10220,6 +10272,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
 <li><p><strong>messages</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message’s text.</p></li>
 <li><p><strong>search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message’s index.      result (list): List of NlpSearchPrediction objects.</p></li>
+<li><p><strong>chat_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary specifiying the query chat config override</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -10552,7 +10605,7 @@ feature groups for those input feature groups.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -10570,7 +10623,7 @@ feature groups for those input feature groups.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Dict</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.11)">io.BytesIO</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -10719,7 +10772,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.64.1'</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.65.0'</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
