@@ -201,7 +201,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.65.0'
+    client_version = '0.65.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -284,7 +284,7 @@ class BaseApiClient:
 
     def _call_api(
             self, action, method, query_params=None,
-            body=None, files=None, parse_type=None, streamable_response=False, server_override=None):
+            body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None):
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
                    'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id}
         url = (server_override or self.server) + '/api/v0/' + action
@@ -295,8 +295,8 @@ class BaseApiClient:
                 'deploymentId') if query_params else None, query_params.get('deploymentToken') if query_params else None)
             if discovered_url:
                 url = discovered_url + '/api/' + action
-        response = self._request(url, method, query_params=query_params,
-                                 headers=headers, body=body, files=files, stream=streamable_response)
+        response = self._request(url, method, query_params=query_params, headers=headers,
+                                 body=body, files=files, stream=streamable_response, timeout=timeout)
 
         result = None
         success = False
@@ -340,17 +340,17 @@ class BaseApiClient:
         return return_class(self, **{key: val for key, val in values.items() if key in type_inputs})
 
     def _request(self, url, method, query_params=None, headers=None,
-                 body=None, files=None, stream=False):
+                 body=None, files=None, stream=False, timeout=None):
         if method == 'GET':
             cleaned_params = {key: ','.join([str(item) for item in val]) if isinstance(
                 val, list) else val for key, val in query_params.items()} if query_params else query_params
             return _requests_retry_session().get(url, params=cleaned_params, headers=headers, stream=stream)
         elif method == 'POST':
-            return _requests_retry_session().post(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
+            return _requests_retry_session().post(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
         elif method == 'PUT':
-            return _requests_retry_session().put(url, params=query_params, data=body, headers=headers, files=files, timeout=90)
+            return _requests_retry_session().put(url, params=query_params, data=body, headers=headers, files=files, timeout=timeout or 200)
         elif method == 'PATCH':
-            return _requests_retry_session().patch(url, params=query_params, json=body, headers=headers, files=files, timeout=90)
+            return _requests_retry_session().patch(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
         elif method == 'DELETE':
             return _requests_retry_session().delete(url, params=query_params, data=body, headers=headers)
         else:
@@ -1863,7 +1863,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse)
+        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
@@ -2152,7 +2152,7 @@ class ApiClient(ReadOnlyClient):
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
         if function:
-            function_source = inspect.getsource(function)
+            function_source = get_clean_function_source_code(function)
             function_source = include_modules(
                 function_source, included_modules)
             python_function_name = python_function_name or function.__name__
@@ -4929,16 +4929,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results, 'chatConfig': chat_config}, server_override=prediction_url)
 
-    def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
 
         Args:
             deployment_token (str): A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be securely embedded in an application or website.
             deployment_id (str): A unique identifier of a deployment created under the project.
-            query_data (dict): A dictionary where the key is "Content" and the value is the text from which entities are to be extracted."""
+            query_data (dict): A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
+            num (int): Number of search results to return."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'num': num}, server_override=prediction_url)
 
     def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
         """Predicts sentiment on a document
@@ -5848,7 +5849,7 @@ Creates a new feature group defined as the union of other feature group versions
             long_explanation (str): verbose explanation of the artifact with given ID
             feature_group_id (str): A unique string identifier associated with the Feature Group.
             feature_group_version (str): A unique string identifier associated with the Feature Group Version."""
-        return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version})
+        return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, timeout=300)
 
     def create_chat_session(self, project_id: str = None) -> ChatSession:
         """Creates a chat session with Abacus Chat.
@@ -5902,7 +5903,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse)
+        return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.

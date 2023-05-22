@@ -322,16 +322,17 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results, 'chatConfig': chat_config}, server_override=prediction_url)
 
-    def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
 
         Args:
             deployment_token (str): A token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be securely embedded in an application or website.
             deployment_id (str): A unique identifier of a deployment created under the project.
-            query_data (dict): A dictionary where the key is "Content" and the value is the text from which entities are to be extracted."""
+            query_data (dict): A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
+            num (int): Number of search results to return."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'num': num}, server_override=prediction_url)
 
     def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
         """Predicts sentiment on a document

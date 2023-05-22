@@ -110,6 +110,15 @@ class FeatureGroupExport(AbstractApiClass):
         """
         return self.client._poll(self, {'PENDING', 'EXPORTING'}, timeout=timeout)
 
+    def wait_for_export(self, timeout=3600):
+        """
+        A waiting call until feature group export is created.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.wait_for_results(timeout=timeout)
+
     def get_status(self):
         """
         Gets the status of the feature group export.

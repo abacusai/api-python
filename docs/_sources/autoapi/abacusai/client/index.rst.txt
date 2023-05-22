@@ -104,7 +104,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.65.0'
+      :value: '0.65.1'
 
       
 
@@ -117,13 +117,13 @@ Attributes
    .. py:method:: _clean_api_objects(obj)
 
 
-   .. py:method:: _call_api(action, method, query_params=None, body=None, files=None, parse_type=None, streamable_response=False, server_override=None)
+   .. py:method:: _call_api(action, method, query_params=None, body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None)
 
 
    .. py:method:: _build_class(return_class, values)
 
 
-   .. py:method:: _request(url, method, query_params=None, headers=None, body=None, files=None, stream=False)
+   .. py:method:: _request(url, method, query_params=None, headers=None, body=None, files=None, stream=False, timeout=None)
 
 
    .. py:method:: _poll(obj, wait_states, delay = 15, timeout = 300, poll_args = {}, status_field=None)
@@ -5437,7 +5437,7 @@ Attributes
       :type chat_config: dict
 
 
-   .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
+   .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
 
       Return the most relevant search results to the search query from the uploaded documents.
 
@@ -5447,6 +5447,8 @@ Attributes
       :type deployment_id: str
       :param query_data: A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
       :type query_data: dict
+      :param num: Number of search results to return.
+      :type num: int
 
 
    .. py:method:: get_sentiment(deployment_token, deployment_id, document)

@@ -4528,7 +4528,7 @@ Attributes
       :type chat_config: dict
 
 
-   .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
+   .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
 
       Return the most relevant search results to the search query from the uploaded documents.
 
@@ -4538,6 +4538,8 @@ Attributes
       :type deployment_id: str
       :param query_data: A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
       :type query_data: dict
+      :param num: Number of search results to return.
+      :type num: int
 
 
    .. py:method:: get_sentiment(deployment_token, deployment_id, document)
@@ -7895,7 +7897,7 @@ Attributes
       :type chat_config: dict
 
 
-   .. py:method:: get_search_results(deployment_token, deployment_id, query_data)
+   .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
 
       Return the most relevant search results to the search query from the uploaded documents.
 
@@ -7905,6 +7907,8 @@ Attributes
       :type deployment_id: str
       :param query_data: A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
       :type query_data: dict
+      :param num: Number of search results to return.
+      :type num: int
 
 
    .. py:method:: get_sentiment(deployment_token, deployment_id, document)
@@ -8251,7 +8255,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.65.0'
+   :value: '0.65.1'
 
    
 
