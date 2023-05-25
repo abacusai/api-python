@@ -3,7 +3,7 @@ from .feature_group_version import FeatureGroupVersion
 from .return_class import AbstractApiClass
 
 
-class LlmSearchResult(AbstractApiClass):
+class OrganizationSearchResult(AbstractApiClass):
     """
         A search result object which contains the retrieved artifact and its relevance score
 
@@ -22,7 +22,7 @@ class LlmSearchResult(AbstractApiClass):
             FeatureGroupVersion, featureGroupVersion)
 
     def __repr__(self):
-        return f"LlmSearchResult(score={repr(self.score)},\n  feature_group={repr(self.feature_group)},\n  feature_group_version={repr(self.feature_group_version)})"
+        return f"OrganizationSearchResult(score={repr(self.score)},\n  feature_group={repr(self.feature_group)},\n  feature_group_version={repr(self.feature_group_version)})"
 
     def to_dict(self):
         """

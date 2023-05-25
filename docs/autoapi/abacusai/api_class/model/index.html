@@ -20,7 +20,7 @@
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="abacusai.api_class.refresh" href="../refresh/index.html" />
+    <link rel="next" title="abacusai.api_class.python_function_argument" href="../python_function_argument/index.html" />
     <link rel="prev" title="abacusai.api_class.feature_group" href="../feature_group/index.html" /> 
 </head>
 
@@ -99,7 +99,34 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.ForecastingTrainingConfig" title="abacusai.api_class.model.ForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the FORECASTING problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig" title="abacusai.api_class.model.NamedEntityExtractionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the NAMED_ENTITY_EXTRACTION problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig" title="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the NATURAL_LANGUAGE_SEARCH problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig" title="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the SENTENCE_BOUNDARY_DETECTION problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig" title="abacusai.api_class.model.SentimentDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentDetectionTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the SENTIMENT_DETECTION problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig" title="abacusai.api_class.model.DocumentClassificationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentClassificationTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the DOCUMENT_CLASSIFICATION problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig" title="abacusai.api_class.model.DocumentSummarizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentSummarizationTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the DOCUMENT_SUMMARIZATION problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig" title="abacusai.api_class.model.DocumentVisualizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentVisualizationTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the DOCUMENT_VISUALIZATION problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.ClusteringTrainingConfig" title="abacusai.api_class.model.ClusteringTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the CLUSTERING problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig" title="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTimeseriesTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the CLUSTERING_TIMESERIES problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
@@ -553,6 +580,398 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">NamedEntityExtractionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the NAMED_ENTITY_EXTRACTION problem type
+:param problem_type: NAMED_ENTITY_EXTRACTION
+:type problem_type: ProblemType
+:param objective: Ranking scheme used to select final best model.
+:type objective: NERObjective
+:param sort_objective: Ranking scheme used to sort models on the metrics page.
+:type sort_objective: NERObjective
+:param ner_model_type: Type of NER model to use.
+:type ner_model_type: NERModelType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param test_indicator_column: Column indicating which rows to use for training (TRAIN) and testing (TEST).
+:type test_indicator_column: str
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: float
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize
+:param active_labels_column: Entities that have been marked in a particular text
+:type active_labels_column: str
+:param document_format: Format of the input documents.
+:type document_format: NLPDocumentFormat
+:param include_longformer: Whether to include the longformer model.
+:type include_longformer: bool</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.objective">
+<span class="sig-name descname"><span class="pre">objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><span class="pre">abacusai.api_class.enums.NERObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.objective" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.sort_objective">
+<span class="sig-name descname"><span class="pre">sort_objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><span class="pre">abacusai.api_class.enums.NERObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.sort_objective" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.ner_model_type">
+<span class="sig-name descname"><span class="pre">ner_model_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERModelType" title="abacusai.api_class.enums.NERModelType"><span class="pre">abacusai.api_class.enums.NERModelType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.ner_model_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_indicator_column">
+<span class="sig-name descname"><span class="pre">test_indicator_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_indicator_column" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.active_labels_column">
+<span class="sig-name descname"><span class="pre">active_labels_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.active_labels_column" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format">
+<span class="sig-name descname"><span class="pre">document_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NLPDocumentFormat" title="abacusai.api_class.enums.NLPDocumentFormat"><span class="pre">abacusai.api_class.enums.NLPDocumentFormat</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.include_longformer">
+<span class="sig-name descname"><span class="pre">include_longformer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.include_longformer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">NaturalLanguageSearchTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the NATURAL_LANGUAGE_SEARCH problem type
+:param problem_type: NATURAL_LANGUAGE_SEARCH
+:type problem_type: ProblemType
+:param custom_finetuned_model: Use custom fine tuned model.
+:type custom_finetuned_model: bool
+:param faster_chat: Use a faster model to search for relevant documents.
+:type faster_chat: bool
+:param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
+:type num_completion_tokens: int
+:param larger_embeddings: Use a higher dimension embedding model.
+:type larger_embeddings: bool
+:param search_chunk_size: Chunk size for indexing the documents.
+:type search_chunk_size: int
+:param chunk_overlap_fraction: Overlap in chunks while indexing the documents.
+:type chunk_overlap_fraction: float
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.custom_finetuned_model">
+<span class="sig-name descname"><span class="pre">custom_finetuned_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.custom_finetuned_model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.faster_chat">
+<span class="sig-name descname"><span class="pre">faster_chat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.faster_chat" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.num_completion_tokens">
+<span class="sig-name descname"><span class="pre">num_completion_tokens</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.num_completion_tokens" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.larger_embeddings">
+<span class="sig-name descname"><span class="pre">larger_embeddings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.larger_embeddings" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.search_chunk_size">
+<span class="sig-name descname"><span class="pre">search_chunk_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.search_chunk_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.chunk_overlap_fraction">
+<span class="sig-name descname"><span class="pre">chunk_overlap_fraction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.chunk_overlap_fraction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+:param problem_type: SENTENCE_BOUNDARY_DETECTION
+:type problem_type: ProblemType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: float
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">SentimentDetectionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the SENTIMENT_DETECTION problem type
+:param problem_type: SENTIMENT_DETECTION
+:type problem_type: ProblemType
+:param sentiment_type: Type of sentiment to detect.
+:type sentiment_type: SentimentType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: float
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize
+:param compute_metrics: Whether to compute metrics.
+:type compute_metrics: bool</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.sentiment_type">
+<span class="sig-name descname"><span class="pre">sentiment_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.SentimentType" title="abacusai.api_class.enums.SentimentType"><span class="pre">abacusai.api_class.enums.SentimentType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.sentiment_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.compute_metrics">
+<span class="sig-name descname"><span class="pre">compute_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.compute_metrics" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DocumentClassificationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the DOCUMENT_CLASSIFICATION problem type
+:param problem_type: DOCUMENT_CLASSIFICATION
+:type problem_type: ProblemType
+:param zero_shot_hypotheses: Zero shot hypotheses. Example text: ‘This text is about pricing’.
+:type zero_shot_hypotheses: List[str]
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: float
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig.zero_shot_hypotheses">
+<span class="sig-name descname"><span class="pre">zero_shot_hypotheses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig.zero_shot_hypotheses" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DocumentSummarizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the DOCUMENT_SUMMARIZATION problem type
+:param problem_type: DOCUMENT_SUMMARIZATION
+:type problem_type: ProblemType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: float
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DocumentVisualizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the DOCUMENT_VISUALIZATION problem type
+:param problem_type: DOCUMENT_VISUALIZATION
+:type problem_type: ProblemType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: float
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ClusteringTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ClusteringTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the CLUSTERING problem type
+:param problem_type: CLUSTERING
+:type problem_type: ProblemType
+:param num_clusters_selection: Number of clusters. If None, will be selected automatically.
+:type num_clusters_selection: int</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTrainingConfig.num_clusters_selection">
+<span class="sig-name descname"><span class="pre">num_clusters_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTrainingConfig.num_clusters_selection" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ClusteringTimeseriesTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the CLUSTERING_TIMESERIES problem type
+:param problem_type: CLUSTERING_TIMESERIES
+:type problem_type: ProblemType
+:param num_clusters_selection: Number of clusters. If None, will be selected automatically.
+:type num_clusters_selection: int
+:param imputation: Imputation method for missing values.
+:type imputation: ClusteringImputationMethod</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.num_clusters_selection">
+<span class="sig-name descname"><span class="pre">num_clusters_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.num_clusters_selection" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.imputation">
+<span class="sig-name descname"><span class="pre">imputation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ClusteringImputationMethod" title="abacusai.api_class.enums.ClusteringImputationMethod"><span class="pre">abacusai.api_class.enums.ClusteringImputationMethod</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.imputation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.model._TrainingConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">_TrainingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.model._TrainingConfigFactory" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
@@ -584,7 +1003,7 @@ inheritance.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../feature_group/index.html" class="btn btn-neutral float-left" title="abacusai.api_class.feature_group" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../refresh/index.html" class="btn btn-neutral float-right" title="abacusai.api_class.refresh" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../python_function_argument/index.html" class="btn btn-neutral float-right" title="abacusai.api_class.python_function_argument" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

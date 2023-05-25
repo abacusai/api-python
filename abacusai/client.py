@@ -70,7 +70,6 @@ from .function_logs import FunctionLogs
 from .graph_dashboard import GraphDashboard
 from .llm_input import LlmInput
 from .llm_response import LlmResponse
-from .llm_search_result import LlmSearchResult
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
 from .model_metrics import ModelMetrics
@@ -89,6 +88,7 @@ from .monitor_alert_version import MonitorAlertVersion
 from .natural_language_explanation import NaturalLanguageExplanation
 from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
+from .organization_search_result import OrganizationSearchResult
 from .pipeline import Pipeline
 from .pipeline_step import PipelineStep
 from .pipeline_version import PipelineVersion
@@ -201,7 +201,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.65.1'
+    client_version = '0.66.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1826,7 +1826,7 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat session with Abacus Chat"""
         return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
 
-    def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> LlmSearchResult:
+    def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> OrganizationSearchResult:
         """Search feature groups based on text and filters.
 
         Args:
@@ -1836,8 +1836,8 @@ class ReadOnlyClient(BaseApiClient):
             feature_group_ids (list): A list of feagure group IDs to restrict the search to.
 
         Returns:
-            LlmSearchResult: A list of search results, each containing the retrieved object and its relevance score"""
-        return self._call_api('searchFeatureGroups', 'GET', query_params={'text': text, 'numResults': num_results, 'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=LlmSearchResult)
+            OrganizationSearchResult: A list of search results, each containing the retrieved object and its relevance score"""
+        return self._call_api('searchFeatureGroups', 'GET', query_params={'text': text, 'numResults': num_results, 'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=OrganizationSearchResult)
 
     def render_feature_group_data_for_llm(self, feature_group_id: str, token_budget: int = None, render_format: str = 'markdown') -> LlmInput:
         """Encode feature groups as language model inputs.
@@ -5577,14 +5577,6 @@ Creates a new feature group defined as the union of other feature group versions
             pipeline_step_id (str): The ID of the pipeline step."""
         return self._call_api('deletePipelineStep', 'DELETE', query_params={'pipelineStepId': pipeline_step_id})
 
-    def delete_pipeline_step_by_name(self, pipeline_id: str, step_name: str):
-        """Deletes a step from a pipeline.
-
-        Args:
-            pipeline_id (str): The ID of the pipeline.
-            step_name (str): The name of the step."""
-        return self._call_api('deletePipelineStepByName', 'DELETE', query_params={'pipelineId': pipeline_id, 'stepName': step_name})
-
     def update_pipeline_step(self, pipeline_step_id: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> PipelineStep:
         """Creates a step in a given pipeline.
 
@@ -5600,23 +5592,6 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             PipelineStep: Object describing the pipeline."""
         return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineStepId': pipeline_step_id, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=PipelineStep)
-
-    def update_pipeline_step_by_name(self, pipeline_id: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None) -> PipelineStep:
-        """Creates a step in a given pipeline.
-
-        Args:
-            pipeline_id (str): The ID of the pipeline to update the step for.
-            step_name (str): The name of the step.
-            function_name (str): The name of the Python function.
-            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
-            step_input_mappings (list): List of Python function arguments.
-            output_variable_mappings (list): List of Python function ouputs.
-            step_dependencies (list): List of step names this step depends on.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-
-        Returns:
-            PipelineStep: Object describing the pipeline."""
-        return self._call_api('updatePipelineStepByName', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'stepName': step_name, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements}, parse_type=PipelineStep)
 
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots

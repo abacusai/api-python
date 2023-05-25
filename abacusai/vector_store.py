@@ -1,4 +1,5 @@
 from .return_class import AbstractApiClass
+from .vector_store_version import VectorStoreVersion
 
 
 class VectorStore(AbstractApiClass):
@@ -7,17 +8,22 @@ class VectorStore(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
+            name (str): The name of the vector store.
             vectorStoreId (str): The unique identifier of the vector store.
             createdAt (str): When the vector store was created.
+            latestVectorStoreVersion (VectorStoreVersion): The latest version of vector store.
     """
 
-    def __init__(self, client, vectorStoreId=None, createdAt=None):
+    def __init__(self, client, name=None, vectorStoreId=None, createdAt=None, latestVectorStoreVersion={}):
         super().__init__(client, vectorStoreId)
+        self.name = name
         self.vector_store_id = vectorStoreId
         self.created_at = createdAt
+        self.latest_vector_store_version = client._build_class(
+            VectorStoreVersion, latestVectorStoreVersion)
 
     def __repr__(self):
-        return f"VectorStore(vector_store_id={repr(self.vector_store_id)},\n  created_at={repr(self.created_at)})"
+        return f"VectorStore(name={repr(self.name)},\n  vector_store_id={repr(self.vector_store_id)},\n  created_at={repr(self.created_at)},\n  latest_vector_store_version={repr(self.latest_vector_store_version)})"
 
     def to_dict(self):
         """
@@ -26,4 +32,28 @@ class VectorStore(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'vector_store_id': self.vector_store_id, 'created_at': self.created_at}
+        return {'name': self.name, 'vector_store_id': self.vector_store_id, 'created_at': self.created_at, 'latest_vector_store_version': self._get_attribute_as_dict(self.latest_vector_store_version)}
+
+    def wait_until_ready(self, timeout: int = 3600):
+        """
+        A waiting call until vector store is ready.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+        """
+        version = self.describe().latest_vector_store_version
+        if not version:
+            from .client import ApiException
+            raise ApiException(
+                409, 'This vector store does not have any versions')
+        version.wait_until_ready(timeout=timeout)
+        return self
+
+    def get_status(self):
+        """
+        Gets the status of the vector store.
+
+        Returns:
+            str: A string describing the status of a vector store (pending, complete, etc.).
+        """
+        return self.describe().latest_vector_store_version.status

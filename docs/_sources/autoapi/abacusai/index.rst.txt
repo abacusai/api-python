@@ -93,7 +93,6 @@ Submodules
    llm_code_block/index.rst
    llm_input/index.rst
    llm_response/index.rst
-   llm_search_result/index.rst
    model/index.rst
    model_artifacts_export/index.rst
    model_blueprint_export/index.rst
@@ -117,6 +116,7 @@ Submodules
    nested_feature/index.rst
    null_violation/index.rst
    organization_group/index.rst
+   organization_search_result/index.rst
    pipeline/index.rst
    pipeline_reference/index.rst
    pipeline_step/index.rst
@@ -179,6 +179,15 @@ Classes
    abacusai._SamplingConfigFactory
    abacusai.TrainingConfig
    abacusai.ForecastingTrainingConfig
+   abacusai.NamedEntityExtractionTrainingConfig
+   abacusai.NaturalLanguageSearchTrainingConfig
+   abacusai.SentenceBoundaryDetectionTrainingConfig
+   abacusai.SentimentDetectionTrainingConfig
+   abacusai.DocumentClassificationTrainingConfig
+   abacusai.DocumentSummarizationTrainingConfig
+   abacusai.DocumentVisualizationTrainingConfig
+   abacusai.ClusteringTrainingConfig
+   abacusai.ClusteringTimeseriesTrainingConfig
    abacusai._TrainingConfigFactory
    abacusai.FeatureGroupExportConfig
    abacusai.FileConnectorExportConfig
@@ -810,6 +819,398 @@ Attributes
 
    .. py:attribute:: custom_metrics
       :type: List[str]
+
+      
+
+
+.. py:class:: NamedEntityExtractionTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the NAMED_ENTITY_EXTRACTION problem type
+   :param problem_type: NAMED_ENTITY_EXTRACTION
+   :type problem_type: ProblemType
+   :param objective: Ranking scheme used to select final best model.
+   :type objective: NERObjective
+   :param sort_objective: Ranking scheme used to sort models on the metrics page.
+   :type sort_objective: NERObjective
+   :param ner_model_type: Type of NER model to use.
+   :type ner_model_type: NERModelType
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param test_indicator_column: Column indicating which rows to use for training (TRAIN) and testing (TEST).
+   :type test_indicator_column: str
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: float
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+   :param active_labels_column: Entities that have been marked in a particular text
+   :type active_labels_column: str
+   :param document_format: Format of the input documents.
+   :type document_format: NLPDocumentFormat
+   :param include_longformer: Whether to include the longformer model.
+   :type include_longformer: bool
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: objective
+      :type: abacusai.api_class.enums.NERObjective
+
+      
+
+   .. py:attribute:: sort_objective
+      :type: abacusai.api_class.enums.NERObjective
+
+      
+
+   .. py:attribute:: ner_model_type
+      :type: abacusai.api_class.enums.NERModelType
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: test_indicator_column
+      :type: str
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: float
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+   .. py:attribute:: active_labels_column
+      :type: str
+
+      
+
+   .. py:attribute:: document_format
+      :type: abacusai.api_class.enums.NLPDocumentFormat
+
+      
+
+   .. py:attribute:: include_longformer
+      :type: bool
+
+      
+
+
+.. py:class:: NaturalLanguageSearchTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the NATURAL_LANGUAGE_SEARCH problem type
+   :param problem_type: NATURAL_LANGUAGE_SEARCH
+   :type problem_type: ProblemType
+   :param custom_finetuned_model: Use custom fine tuned model.
+   :type custom_finetuned_model: bool
+   :param faster_chat: Use a faster model to search for relevant documents.
+   :type faster_chat: bool
+   :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
+   :type num_completion_tokens: int
+   :param larger_embeddings: Use a higher dimension embedding model.
+   :type larger_embeddings: bool
+   :param search_chunk_size: Chunk size for indexing the documents.
+   :type search_chunk_size: int
+   :param chunk_overlap_fraction: Overlap in chunks while indexing the documents.
+   :type chunk_overlap_fraction: float
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: custom_finetuned_model
+      :type: bool
+
+      
+
+   .. py:attribute:: faster_chat
+      :type: bool
+
+      
+
+   .. py:attribute:: num_completion_tokens
+      :type: int
+
+      
+
+   .. py:attribute:: larger_embeddings
+      :type: bool
+
+      
+
+   .. py:attribute:: search_chunk_size
+      :type: int
+
+      
+
+   .. py:attribute:: chunk_overlap_fraction
+      :type: float
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+
+.. py:class:: SentenceBoundaryDetectionTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+   :param problem_type: SENTENCE_BOUNDARY_DETECTION
+   :type problem_type: ProblemType
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: float
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: float
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+
+.. py:class:: SentimentDetectionTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the SENTIMENT_DETECTION problem type
+   :param problem_type: SENTIMENT_DETECTION
+   :type problem_type: ProblemType
+   :param sentiment_type: Type of sentiment to detect.
+   :type sentiment_type: SentimentType
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: float
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+   :param compute_metrics: Whether to compute metrics.
+   :type compute_metrics: bool
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: sentiment_type
+      :type: abacusai.api_class.enums.SentimentType
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: float
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+   .. py:attribute:: compute_metrics
+      :type: bool
+
+      
+
+
+.. py:class:: DocumentClassificationTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the DOCUMENT_CLASSIFICATION problem type
+   :param problem_type: DOCUMENT_CLASSIFICATION
+   :type problem_type: ProblemType
+   :param zero_shot_hypotheses: Zero shot hypotheses. Example text: 'This text is about pricing'.
+   :type zero_shot_hypotheses: List[str]
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: float
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: zero_shot_hypotheses
+      :type: List[str]
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: float
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+
+.. py:class:: DocumentSummarizationTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the DOCUMENT_SUMMARIZATION problem type
+   :param problem_type: DOCUMENT_SUMMARIZATION
+   :type problem_type: ProblemType
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: float
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: float
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+
+.. py:class:: DocumentVisualizationTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the DOCUMENT_VISUALIZATION problem type
+   :param problem_type: DOCUMENT_VISUALIZATION
+   :type problem_type: ProblemType
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: float
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: float
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+
+.. py:class:: ClusteringTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the CLUSTERING problem type
+   :param problem_type: CLUSTERING
+   :type problem_type: ProblemType
+   :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
+   :type num_clusters_selection: int
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: num_clusters_selection
+      :type: int
+
+      
+
+
+.. py:class:: ClusteringTimeseriesTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the CLUSTERING_TIMESERIES problem type
+   :param problem_type: CLUSTERING_TIMESERIES
+   :type problem_type: ProblemType
+   :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
+   :type num_clusters_selection: int
+   :param imputation: Imputation method for missing values.
+   :type imputation: ClusteringImputationMethod
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: num_clusters_selection
+      :type: int
+
+      
+
+   .. py:attribute:: imputation
+      :type: abacusai.api_class.enums.ClusteringImputationMethod
 
       
 
@@ -5317,47 +5718,12 @@ Attributes
       :type pipeline_step_id: str
 
 
-   .. py:method:: delete_pipeline_step_by_name(pipeline_id, step_name)
-
-      Deletes a step from a pipeline.
-
-      :param pipeline_id: The ID of the pipeline.
-      :type pipeline_id: str
-      :param step_name: The name of the step.
-      :type step_name: str
-
-
    .. py:method:: update_pipeline_step(pipeline_step_id, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
 
       Creates a step in a given pipeline.
 
       :param pipeline_step_id: The ID of the pipeline_step to update.
       :type pipeline_step_id: str
-      :param function_name: The name of the Python function.
-      :type function_name: str
-      :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
-      :type source_code: str
-      :param step_input_mappings: List of Python function arguments.
-      :type step_input_mappings: list
-      :param output_variable_mappings: List of Python function ouputs.
-      :type output_variable_mappings: list
-      :param step_dependencies: List of step names this step depends on.
-      :type step_dependencies: list
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-
-      :returns: Object describing the pipeline.
-      :rtype: PipelineStep
-
-
-   .. py:method:: update_pipeline_step_by_name(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
-
-      Creates a step in a given pipeline.
-
-      :param pipeline_id: The ID of the pipeline to update the step for.
-      :type pipeline_id: str
-      :param step_name: The name of the step.
-      :type step_name: str
       :param function_name: The name of the Python function.
       :type function_name: str
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
@@ -7468,7 +7834,7 @@ Attributes
       :type feature_group_ids: list
 
       :returns: A list of search results, each containing the retrieved object and its relevance score
-      :rtype: LlmSearchResult
+      :rtype: OrganizationSearchResult
 
 
    .. py:method:: render_feature_group_data_for_llm(feature_group_id, token_budget = None, render_format = 'markdown')
@@ -8255,7 +8621,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.65.1'
+   :value: '0.66.0'
 
    
 

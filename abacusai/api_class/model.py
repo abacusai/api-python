@@ -148,6 +148,187 @@ class ForecastingTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
+class NamedEntityExtractionTrainingConfig(TrainingConfig):
+    """
+    Training config for the NAMED_ENTITY_EXTRACTION problem type
+    Args:
+        problem_type (ProblemType): NAMED_ENTITY_EXTRACTION
+        objective (NERObjective): Ranking scheme used to select final best model.
+        sort_objective (NERObjective): Ranking scheme used to sort models on the metrics page.
+        ner_model_type (NERModelType): Type of NER model to use.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        test_indicator_column (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
+        dropout_rate (float): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+        active_labels_column (str): Entities that have been marked in a particular text
+        document_format (NLPDocumentFormat): Format of the input documents.
+        include_longformer (bool): Whether to include the longformer model.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.NAMED_ENTITY_EXTRACTION, repr=False, init=False)
+    objective: enums.NERObjective = dataclasses.field(default=None)
+    sort_objective: enums.NERObjective = dataclasses.field(default=None)
+    ner_model_type: enums.NERModelType = dataclasses.field(default=None)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+    test_indicator_column: str = dataclasses.field(default=None)
+    # Neural Network
+    dropout_rate: float = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+    # Named Entity Recognition
+    active_labels_column: str = dataclasses.field(default=None)
+    document_format: enums.NLPDocumentFormat = dataclasses.field(default=None)
+    include_longformer: bool = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class NaturalLanguageSearchTrainingConfig(TrainingConfig):
+    """
+    Training config for the NATURAL_LANGUAGE_SEARCH problem type
+    Args:
+        problem_type (ProblemType): NATURAL_LANGUAGE_SEARCH
+        custom_finetuned_model (bool): Use custom fine tuned model.
+        faster_chat (bool): Use a faster model to search for relevant documents.
+        num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
+        larger_embeddings (bool): Use a higher dimension embedding model.
+        search_chunk_size (int): Chunk size for indexing the documents.
+        chunk_overlap_fraction (float): Overlap in chunks while indexing the documents.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.NATURAL_LANGUAGE_SEARCH, repr=False, init=False)
+    custom_finetuned_model: bool = dataclasses.field(default=None)
+    faster_chat: bool = dataclasses.field(default=None)
+    num_completion_tokens: int = dataclasses.field(default=None)
+    larger_embeddings: bool = dataclasses.field(default=None)
+    search_chunk_size: int = dataclasses.field(default=None)
+    chunk_overlap_fraction: float = dataclasses.field(default=None)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class SentenceBoundaryDetectionTrainingConfig(TrainingConfig):
+    """
+    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+    Args:
+        problem_type (ProblemType): SENTENCE_BOUNDARY_DETECTION
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        dropout_rate (float): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.SENTENCE_BOUNDARY_DETECTION, repr=False, init=False)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+    # Neural Network
+    dropout_rate: float = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class SentimentDetectionTrainingConfig(TrainingConfig):
+    """
+    Training config for the SENTIMENT_DETECTION problem type
+    Args:
+        problem_type (ProblemType): SENTIMENT_DETECTION
+        sentiment_type (SentimentType): Type of sentiment to detect.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        dropout_rate (float): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+        compute_metrics (bool): Whether to compute metrics.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.SENTIMENT_DETECTION, repr=False, init=False)
+    sentiment_type: enums.SentimentType = dataclasses.field(default=None)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+    # Neural Network
+    dropout_rate: float = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+    # Metrics
+    compute_metrics: bool = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class DocumentClassificationTrainingConfig(TrainingConfig):
+    """
+    Training config for the DOCUMENT_CLASSIFICATION problem type
+    Args:
+        problem_type (ProblemType): DOCUMENT_CLASSIFICATION
+        zero_shot_hypotheses (List[str]): Zero shot hypotheses. Example text: 'This text is about pricing'.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        dropout_rate (float): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.DOCUMENT_CLASSIFICATION, repr=False, init=False)
+    zero_shot_hypotheses: List[str] = dataclasses.field(default=None)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+    # Neural Network
+    dropout_rate: float = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class DocumentSummarizationTrainingConfig(TrainingConfig):
+    """
+    Training config for the DOCUMENT_SUMMARIZATION problem type
+    Args:
+        problem_type (ProblemType): DOCUMENT_SUMMARIZATION
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        dropout_rate (float): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.DOCUMENT_SUMMARIZATION, repr=False, init=False)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+    # Neural Network
+    dropout_rate: float = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class DocumentVisualizationTrainingConfig(TrainingConfig):
+    """
+    Training config for the DOCUMENT_VISUALIZATION problem type
+    Args:
+        problem_type (ProblemType): DOCUMENT_VISUALIZATION
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        dropout_rate (float): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.DOCUMENT_VISUALIZATION, repr=False, init=False)
+    # Data Split Params
+    test_split: int = dataclasses.field(default=None)
+    # Neural Network
+    dropout_rate: float = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class ClusteringTrainingConfig(TrainingConfig):
+    """
+    Training config for the CLUSTERING problem type
+    Args:
+        problem_type (ProblemType): CLUSTERING
+        num_clusters_selection (int): Number of clusters. If None, will be selected automatically.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.CLUSTERING, repr=False, init=False)
+    num_clusters_selection: int = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class ClusteringTimeseriesTrainingConfig(TrainingConfig):
+    """
+    Training config for the CLUSTERING_TIMESERIES problem type
+    Args:
+        problem_type (ProblemType): CLUSTERING_TIMESERIES
+        num_clusters_selection (int): Number of clusters. If None, will be selected automatically.
+        imputation (ClusteringImputationMethod): Imputation method for missing values.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.CLUSTERING_TIMESERIES, repr=False, init=False)
+    num_clusters_selection: int = dataclasses.field(default=None)
+    imputation: enums.ClusteringImputationMethod = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
 class _TrainingConfigFactory(_ApiClassFactory):
     config_abstract_class = TrainingConfig
     config_class_key = 'problem_type'

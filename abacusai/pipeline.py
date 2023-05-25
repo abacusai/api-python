@@ -136,33 +136,6 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.create_pipeline_step(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements)
 
-    def delete_step_by_name(self, step_name: str):
-        """
-        Deletes a step from a pipeline.
-
-        Args:
-            step_name (str): The name of the step.
-        """
-        return self.client.delete_pipeline_step_by_name(self.pipeline_id, step_name)
-
-    def update_step_by_name(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None):
-        """
-        Creates a step in a given pipeline.
-
-        Args:
-            step_name (str): The name of the step.
-            function_name (str): The name of the Python function.
-            source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
-            step_input_mappings (list): List of Python function arguments.
-            output_variable_mappings (list): List of Python function ouputs.
-            step_dependencies (list): List of step names this step depends on.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-
-        Returns:
-            PipelineStep: Object describing the pipeline.
-        """
-        return self.client.update_pipeline_step_by_name(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements)
-
     def describe_step_by_name(self, step_name: str):
         """
         Describes a pipeline step by the step name.

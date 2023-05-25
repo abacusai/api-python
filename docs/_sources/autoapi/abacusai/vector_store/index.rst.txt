@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: VectorStore(client, vectorStoreId=None, createdAt=None)
+.. py:class:: VectorStore(client, name=None, vectorStoreId=None, createdAt=None, latestVectorStoreVersion={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -25,10 +25,14 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
+   :param name: The name of the vector store.
+   :type name: str
    :param vectorStoreId: The unique identifier of the vector store.
    :type vectorStoreId: str
    :param createdAt: When the vector store was created.
    :type createdAt: str
+   :param latestVectorStoreVersion: The latest version of vector store.
+   :type latestVectorStoreVersion: VectorStoreVersion
 
    .. py:method:: __repr__()
 
@@ -41,6 +45,22 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+   .. py:method:: wait_until_ready(timeout = 3600)
+
+      A waiting call until vector store is ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the vector store.
+
+      :returns: A string describing the status of a vector store (pending, complete, etc.).
+      :rtype: str
 
 
 

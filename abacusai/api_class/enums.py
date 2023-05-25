@@ -158,6 +158,44 @@ class ForecastingQuanitlesExtensionMethod(ApiEnum):
     ANCESTRAL_SIMULATION = 'simulation'
 
 
+# Named Entity Recognition
+class NERObjective(ApiEnum):
+    LOG_LOSS = 'log_loss'
+    AUC = 'auc'
+    PRECISION = 'precision'
+    RECALL = 'recall'
+    ANNOTATIONS_PRECISION = 'annotations_precision'
+    ANNOTATIONS_RECALL = 'annotations_recall'
+
+
+class NERModelType(ApiEnum):
+    PRETRAINED_BERT = 'pretrained_bert'
+    PRETRAINED_ROBERTA_27 = 'pretrained_roberta_27'
+    PRETRAINED_ROBERTA_43 = 'pretrained_roberta_43'
+    PRETRAINED_MULTILINGUAL = 'pretrained_multilingual'
+    LEARNED = 'learned'
+
+
+class NLPDocumentFormat(ApiEnum):
+    AUTO = 'auto'
+    TEXT = 'text'
+    DOC = 'doc'
+    TOKENS = 'tokens'
+
+
+# Sentiment Analysis
+class SentimentType(ApiEnum):
+    VALENCE = 'valence'
+    EMOTION = 'emotion'
+
+
+# Timeseries Clustering
+class ClusteringImputationMethod(ApiEnum):
+    AUTOMATIC = 'Automatic'
+    ZEROS = 'Zeros'
+    INTERPOLATE = 'Interpolate'
+
+
 class ConnectorType(ApiEnum):
     FILE = 'FILE'
     DATABASE = 'DATABASE'

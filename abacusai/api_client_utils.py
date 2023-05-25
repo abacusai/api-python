@@ -38,8 +38,8 @@ def avro_to_pandas_dtype(avro_type):
     }
 
     if isinstance(avro_type, dict):
-        avro_type = 'date' if avro_type.get(
-            'logicalType') == 'date' else avro_type['type']
+        avro_type = 'date' if avro_type.get('logicalType') in [
+            'date', 'timestamp-micros'] else avro_type['type']
 
     return avro_pandas_dtypes.get(avro_type, 'object')
 

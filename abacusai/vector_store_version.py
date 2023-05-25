@@ -10,16 +10,18 @@ class VectorStoreVersion(AbstractApiClass):
             vectorStoreId (str): The unique identifier of the vector store.
             vectorStoreVersion (str): The unique identifier of the vector store version.
             createdAt (str): When the vector store was created.
+            status (str): The status of creating vector store version.
     """
 
-    def __init__(self, client, vectorStoreId=None, vectorStoreVersion=None, createdAt=None):
+    def __init__(self, client, vectorStoreId=None, vectorStoreVersion=None, createdAt=None, status=None):
         super().__init__(client, vectorStoreVersion)
         self.vector_store_id = vectorStoreId
         self.vector_store_version = vectorStoreVersion
         self.created_at = createdAt
+        self.status = status
 
     def __repr__(self):
-        return f"VectorStoreVersion(vector_store_id={repr(self.vector_store_id)},\n  vector_store_version={repr(self.vector_store_version)},\n  created_at={repr(self.created_at)})"
+        return f"VectorStoreVersion(vector_store_id={repr(self.vector_store_id)},\n  vector_store_version={repr(self.vector_store_version)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)})"
 
     def to_dict(self):
         """
@@ -28,4 +30,31 @@ class VectorStoreVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'vector_store_id': self.vector_store_id, 'vector_store_version': self.vector_store_version, 'created_at': self.created_at}
+        return {'vector_store_id': self.vector_store_id, 'vector_store_version': self.vector_store_version, 'created_at': self.created_at, 'status': self.status}
+
+    def wait_for_results(self, timeout=3600):
+        """
+        A waiting call until vector store version indexing and deployment is complete.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.client._poll(self, {'PENDING', 'INDEXING'}, timeout=timeout)
+
+    def wait_until_ready(self, timeout=3600):
+        """
+        A waiting call until the vector store version is ready.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.wait_for_results(timeout)
+
+    def get_status(self):
+        """
+        Gets the status of the vector store version.
+
+        Returns:
+            str: A string describing the status of a vector store version (pending, complete, etc.).
+        """
+        return self.describe().status

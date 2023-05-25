@@ -25,6 +25,11 @@ Classes
    abacusai.api_class.enums.ForecastingLocalScaling
    abacusai.api_class.enums.ForecastingFillMethod
    abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
+   abacusai.api_class.enums.NERObjective
+   abacusai.api_class.enums.NERModelType
+   abacusai.api_class.enums.NLPDocumentFormat
+   abacusai.api_class.enums.SentimentType
+   abacusai.api_class.enums.ClusteringImputationMethod
    abacusai.api_class.enums.ConnectorType
    abacusai.api_class.enums.PythonFunctionArgumentType
 
@@ -664,6 +669,151 @@ Classes
 
    .. py:attribute:: ANCESTRAL_SIMULATION
       :value: 'simulation'
+
+      
+
+
+.. py:class:: NERObjective
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: LOG_LOSS
+      :value: 'log_loss'
+
+      
+
+   .. py:attribute:: AUC
+      :value: 'auc'
+
+      
+
+   .. py:attribute:: PRECISION
+      :value: 'precision'
+
+      
+
+   .. py:attribute:: RECALL
+      :value: 'recall'
+
+      
+
+   .. py:attribute:: ANNOTATIONS_PRECISION
+      :value: 'annotations_precision'
+
+      
+
+   .. py:attribute:: ANNOTATIONS_RECALL
+      :value: 'annotations_recall'
+
+      
+
+
+.. py:class:: NERModelType
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: PRETRAINED_BERT
+      :value: 'pretrained_bert'
+
+      
+
+   .. py:attribute:: PRETRAINED_ROBERTA_27
+      :value: 'pretrained_roberta_27'
+
+      
+
+   .. py:attribute:: PRETRAINED_ROBERTA_43
+      :value: 'pretrained_roberta_43'
+
+      
+
+   .. py:attribute:: PRETRAINED_MULTILINGUAL
+      :value: 'pretrained_multilingual'
+
+      
+
+   .. py:attribute:: LEARNED
+      :value: 'learned'
+
+      
+
+
+.. py:class:: NLPDocumentFormat
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AUTO
+      :value: 'auto'
+
+      
+
+   .. py:attribute:: TEXT
+      :value: 'text'
+
+      
+
+   .. py:attribute:: DOC
+      :value: 'doc'
+
+      
+
+   .. py:attribute:: TOKENS
+      :value: 'tokens'
+
+      
+
+
+.. py:class:: SentimentType
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: VALENCE
+      :value: 'valence'
+
+      
+
+   .. py:attribute:: EMOTION
+      :value: 'emotion'
+
+      
+
+
+.. py:class:: ClusteringImputationMethod
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AUTOMATIC
+      :value: 'Automatic'
+
+      
+
+   .. py:attribute:: ZEROS
+      :value: 'Zeros'
+
+      
+
+   .. py:attribute:: INTERPOLATE
+      :value: 'Interpolate'
 
       
 
