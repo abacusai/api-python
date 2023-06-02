@@ -18,6 +18,9 @@ Classes
    abacusai.api_class.enums.FillLogic
    abacusai.api_class.enums.BatchSize
    abacusai.api_class.enums.HolidayCalendars
+   abacusai.api_class.enums.ExperimentationMode
+   abacusai.api_class.enums.PersonalizationTrainingMode
+   abacusai.api_class.enums.PersonalizationObjective
    abacusai.api_class.enums.ForecastingObjective
    abacusai.api_class.enums.ForecastingFrequency
    abacusai.api_class.enums.ForecastingDataSplitType
@@ -63,8 +66,8 @@ Classes
 
    Derive from this class to define new enumerations.
 
-   .. py:attribute:: USER_ITEM_SCORING
-      :value: 'affinity'
+   .. py:attribute:: AI_AGENT
+      :value: 'ai_agent'
 
       
 
@@ -145,6 +148,11 @@ Classes
 
    .. py:attribute:: CUSTOM_TRAINED_MODEL
       :value: 'plug_and_play'
+
+      
+
+   .. py:attribute:: CUSTOM_ALGORITHM
+      :value: 'trainable_plug_and_play'
 
       
 
@@ -346,6 +354,98 @@ Classes
 
    .. py:attribute:: US
       :value: 'US'
+
+      
+
+
+.. py:class:: ExperimentationMode
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: RAPID
+      :value: 'rapid'
+
+      
+
+   .. py:attribute:: THOROUGH
+      :value: 'thorough'
+
+      
+
+
+.. py:class:: PersonalizationTrainingMode
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: EXPERIMENTAL
+      :value: 'EXP'
+
+      
+
+   .. py:attribute:: PRODUCTION
+      :value: 'PROD'
+
+      
+
+
+.. py:class:: PersonalizationObjective
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: NDCG
+      :value: 'ndcg'
+
+      
+
+   .. py:attribute:: NDCG_5
+      :value: 'ndcg@5'
+
+      
+
+   .. py:attribute:: NDCG_10
+      :value: 'ndcg@10'
+
+      
+
+   .. py:attribute:: MAP
+      :value: 'map'
+
+      
+
+   .. py:attribute:: MAP_5
+      :value: 'map@5'
+
+      
+
+   .. py:attribute:: MAP_10
+      :value: 'map@10'
+
+      
+
+   .. py:attribute:: MRR
+      :value: 'mrr'
+
+      
+
+   .. py:attribute:: PERSONALIZATION
+      :value: 'personalization@10'
+
+      
+
+   .. py:attribute:: COVERAGE
+      :value: 'coverage'
 
       
 

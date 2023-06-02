@@ -1,6 +1,6 @@
 import dataclasses
 from datetime import datetime
-from typing import List
+from typing import Dict, List
 
 from . import enums
 from .abstract import ApiClass, _ApiClassFactory
@@ -16,6 +16,95 @@ class TrainingConfig(ApiClass):
 
 
 @dataclasses.dataclass
+class PersonalizationTrainingConfig(TrainingConfig):
+    """
+    Training config for the PERSONALIZATION problem type
+    Args:
+        problem_type (ProblemType): PERSONALIZATION
+        objective (PersonalizationObjective): Ranking scheme used to select final best model.
+        sort_objective (PersonalizationObjective): Ranking scheme used to sort models on the metrics page.
+        training_mode (PersonalizationTrainingMode): whether to train in production or experimental mode.
+        target_action_types (List[str]): List of action types to use as targets for training.
+        target_action_weights (Dict[str, float]): Dictionary of action types to weights for training.
+        session_event_types (List[str]): List of event types to treat as occurrences of sessions.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+        recent_days_for_training (int): Limit training data to a certain latest number of days.
+        training_start_date (datetime): Only consider training interaction data after this date. Specified in the timezone of the dataset.
+        test_on_user_split (bool): Use user splits instead of using time splits, when validating and testing the model.
+        test_split_on_last_k_items (bool): Use last k items instead of global timestamp splits, when validating and testing the model.
+        test_last_items_length (int): Number of items to leave out for each user when using leave k out folds.
+        test_window_length_hours (int): Duration (in hours) of most recent time window to use when validating and testing the model.
+        explicit_time_split (bool): Sets an explicit time-based test boundary.
+        test_row_indicator (str): Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
+        full_data_retraining (bool): Train models separately with all the data.
+        sequential_training (bool): Train a mode sequentially through time.
+        data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
+        dropout_rate (int): Dropout rate for neural network.
+        batch_size (BatchSize): Batch size for neural network.
+        disable_transformer (bool): Disable training the transformer algorithm.
+        disable_gpu (boo): Disable training on GPU.
+        filter_history (bool): Do not recommend items the user has already interacted with.
+        explore_lookback_hours (int): Number of hours since creation time that an item is eligible for explore fraction.
+        max_history_length (int): Maximum length of user-item history to include user in training examples.
+        compute_rerank_metrics (bool): Compute metrics based on rerank results.
+        item_id_dropout (float): Fraction of item_id values to randomly dropout during training.
+        add_time_features (bool): Include interaction time as a feature.
+        disable_timestamp_scalar_features (bool): Exclude timestamp scalar features.
+        compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
+        max_user_history_len_percentile (int): Filter out users with history length above this percentile.
+        downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
+
+    """
+    # top-level params
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.PERSONALIZATION, repr=False, init=False)
+    objective: enums.PersonalizationObjective = dataclasses.field(default=None)
+    sort_objective: enums.PersonalizationObjective = dataclasses.field(default=None)
+    training_mode: enums.PersonalizationTrainingMode = dataclasses.field(default=None)
+
+    # advanced options
+    # interactions
+    target_action_types: List[str] = dataclasses.field(default=None)
+    target_action_weights: Dict[str, float] = dataclasses.field(default=None)
+    session_event_types: List[str] = dataclasses.field(default=None)
+
+    # data split
+    test_split: int = dataclasses.field(default=None)
+    recent_days_for_training: int = dataclasses.field(default=None)
+    training_start_date: datetime = dataclasses.field(default=None)
+    test_on_user_split: bool = dataclasses.field(default=None)
+    test_split_on_last_k_items: bool = dataclasses.field(default=None)
+    test_last_items_length: int = dataclasses.field(default=None)
+    test_window_length_hours: int = dataclasses.field(default=None)
+    explicit_time_split: bool = dataclasses.field(default=None)
+    test_row_indicator: str = dataclasses.field(default=None)
+    full_data_retraining: bool = dataclasses.field(default=None)
+    sequential_training: bool = dataclasses.field(default=None)
+    data_split_feature_group_table_name: str = dataclasses.field(default=None)
+
+    # neural network
+    dropout_rate: int = dataclasses.field(default=None)
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+    disable_transformer: bool = dataclasses.field(default=None)
+    disable_gpu: bool = dataclasses.field(default=None)
+
+    # prediction
+    filter_history: bool = dataclasses.field(default=None)
+    explore_lookback_hours: int = dataclasses.field(default=None)
+
+    # data distribution
+    max_history_length: int = dataclasses.field(default=None)
+    compute_rerank_metrics: bool = dataclasses.field(default=None)
+    item_id_dropout: float = dataclasses.field(default=None)
+    add_time_features: bool = dataclasses.field(default=None)
+    disable_timestamp_scalar_features: bool = dataclasses.field(default=None)
+    compute_session_metrics: bool = dataclasses.field(default=None)
+
+    # outliers
+    max_user_history_len_percentile: int = dataclasses.field(default=None)
+    downsample_item_popularity_percentile: float = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
 class ForecastingTrainingConfig(TrainingConfig):
     """
     Training config for the FORECASTING problem type
@@ -26,14 +115,16 @@ class ForecastingTrainingConfig(TrainingConfig):
         sort_objective (ForecastingObjective): Ranking scheme used to sort models on the metrics page.
         forecast_frequency (ForecastingFrequency): Forecast frequency.
         probability_quantiles (list[float]): Prediction quantiles.
-        no_validation_set (bool): Do not generate validation set, test set will be used instead.
         force_prediction_length (int): Force length of test window to be the same as prediction length.
         filter_items (bool): Filter items with small history and volume.
+        enable_feature_selection (bool): Enable feature selection.
         enable_cold_start (bool): Enable cold start forecasting by training/predicting for zero history items.
         enable_multiple_backtests (bool): Whether to enable multiple backtesting or not.
-        total_backtesting_windows (int): Total backtesting windows to use for the training.
-        backtest_window_step_size (int): Use this step size to shift backtesting windows for model training.
+        num_backtesting_windows (int): Total backtesting windows to use for the training.
+        backtesting_window_step_size (int): Use this step size to shift backtesting windows for model training.
         full_data_retraining (bool): Train models separately with all the data.
+        additional_forecast_keys: List[str]: List of categoricals in timeseries that can act as multi-identifier.
+        experimentation_mode (ExperimentationMode): Selecting Thorough Experimentation will take longer to train.
         type_of_split (ForecastingDataSplitType): Type of data splitting into train/test.
         test_by_item (bool): Partition train/test data by item rather than time if true.
         test_start (datetime): Limit training data to dates before the given test start.
@@ -62,7 +153,6 @@ class ForecastingTrainingConfig(TrainingConfig):
         symmetrize_quantiles (bool): Force symmetric quantiles (like in Gaussian distribution)
         use_log_transforms (bool): Apply logarithmic transformations to input data.
         smooth_history (float): Smooth (low pass filter) the timeseries.
-        prediction_offset (int): Offset for prediction.
         skip_local_scale_target (bool): Skip using per training/prediction window target scaling.
         timeseries_weight_column (str): If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
         item_attributes_weight_column (str): If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
@@ -72,7 +162,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         timeseries_loss_weight_column (str): Use value in this column to weight the loss while training.
         use_item_id (bool): Include a feature to indicate the item being forecast.
         use_all_item_totals (bool): Include as input total target across items.
-        handle_zeros_as_missing (bool): If True, handle zero values in demand as missing data.
+        handle_zeros_as_missing_values (bool): If True, handle zero values in demand as missing data.
         datetime_holiday_calendars (list[HolidayCalendars]): Holiday calendars to augment training with.
         fill_missing_values (list[dict]): Strategy for filling in missing values.
         enable_clustering (bool): Enable clustering in forecasting.
@@ -86,16 +176,18 @@ class ForecastingTrainingConfig(TrainingConfig):
     sort_objective: enums.ForecastingObjective = dataclasses.field(default=None)
     forecast_frequency: enums.ForecastingFrequency = dataclasses.field(default=None)
     probability_quantiles: List[float] = dataclasses.field(default=None)
-    no_validation_set: bool = dataclasses.field(default=None)
     force_prediction_length: bool = dataclasses.field(default=None)
     filter_items: bool = dataclasses.field(default=None)
+    enable_feature_selection: bool = dataclasses.field(default=None)
     enable_cold_start: bool = dataclasses.field(default=None)
     enable_multiple_backtests: bool = dataclasses.field(default=None)
-    total_backtesting_windows: int = dataclasses.field(default=None)
-    backtest_window_step_size: int = dataclasses.field(default=None)
+    num_backtesting_windows: int = dataclasses.field(default=None)
+    backtesting_window_step_size: int = dataclasses.field(default=None)
     full_data_retraining: bool = dataclasses.field(default=None)
+    additional_forecast_keys: List[str] = dataclasses.field(default=None)
+    experimentation_mode: enums.ExperimentationMode = dataclasses.field(default=None)
     # Data split params
-    type_of_split: enums.ForecastingDataSplitType = dataclasses.field(default=enums.ForecastingDataSplitType.AUTO)
+    type_of_split: enums.ForecastingDataSplitType = dataclasses.field(default=None)
     test_by_item: bool = dataclasses.field(default=None)
     test_start: datetime = dataclasses.field(default=None)
     test_split: int = dataclasses.field(default=None)
@@ -125,7 +217,6 @@ class ForecastingTrainingConfig(TrainingConfig):
     symmetrize_quantiles: bool = dataclasses.field(default=None)
     use_log_transforms: bool = dataclasses.field(default=None)
     smooth_history: float = dataclasses.field(default=None)
-    prediction_offset: int = dataclasses.field(default=None)
     skip_local_scale_target: bool = dataclasses.field(default=None)
     # Item weights
     timeseries_weight_column: str = dataclasses.field(default=None)
@@ -137,7 +228,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     # Data Augmentation
     use_item_id: bool = dataclasses.field(default=None)
     use_all_item_totals: bool = dataclasses.field(default=None)
-    handle_zeros_as_missing: bool = dataclasses.field(default=None)
+    handle_zeros_as_missing_values: bool = dataclasses.field(default=None)
     datetime_holiday_calendars: List[enums.HolidayCalendars] = dataclasses.field(default=None)
     fill_missing_values: List[dict] = dataclasses.field(default=None)
     enable_clustering: bool = dataclasses.field(default=None)
@@ -157,7 +248,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         sort_objective (NERObjective): Ranking scheme used to sort models on the metrics page.
         ner_model_type (NERModelType): Type of NER model to use.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-        test_indicator_column (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
+        test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
         dropout_rate (float): Dropout rate for neural network.
         batch_size (BatchSize): Batch size for neural network.
         active_labels_column (str): Entities that have been marked in a particular text
@@ -170,7 +261,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     ner_model_type: enums.NERModelType = dataclasses.field(default=None)
     # Data Split Params
     test_split: int = dataclasses.field(default=None)
-    test_indicator_column: str = dataclasses.field(default=None)
+    test_row_indicator: str = dataclasses.field(default=None)
     # Neural Network
     dropout_rate: float = dataclasses.field(default=None)
     batch_size: enums.BatchSize = dataclasses.field(default=None)
@@ -186,23 +277,20 @@ class NaturalLanguageSearchTrainingConfig(TrainingConfig):
     Training config for the NATURAL_LANGUAGE_SEARCH problem type
     Args:
         problem_type (ProblemType): NATURAL_LANGUAGE_SEARCH
-        custom_finetuned_model (bool): Use custom fine tuned model.
-        faster_chat (bool): Use a faster model to search for relevant documents.
-        num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
+        abacus_internal_model (bool): Use a Abacus.AI LLM to answer questions about your data without using any external APIs
+        num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
         larger_embeddings (bool): Use a higher dimension embedding model.
         search_chunk_size (int): Chunk size for indexing the documents.
         chunk_overlap_fraction (float): Overlap in chunks while indexing the documents.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
     """
     problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.NATURAL_LANGUAGE_SEARCH, repr=False, init=False)
-    custom_finetuned_model: bool = dataclasses.field(default=None)
-    faster_chat: bool = dataclasses.field(default=None)
+    abacus_internal_model: bool = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
     larger_embeddings: bool = dataclasses.field(default=None)
     search_chunk_size: int = dataclasses.field(default=None)
+    index_fraction: float = dataclasses.field(default=None)
     chunk_overlap_fraction: float = dataclasses.field(default=None)
-    # Data Split Params
-    test_split: int = dataclasses.field(default=None)
 
 
 @dataclasses.dataclass
@@ -329,9 +417,109 @@ class ClusteringTimeseriesTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
+class CumulativeForecastingTrainingConfig(TrainingConfig):
+    """
+    Training config for the CUMULATIVE_FORECASTING problem type
+    Args:
+        problem_type (ProblemType): CUMULATIVE_FORECASTING
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        historical_frequency (str): Forecast frequency
+        cumulative_prediction_lengths (List[int]): List of Cumulative Prediction Frequencies. Each prediction length must be between 1 and 365.
+        skip_input_transform (bool): Avoid doing numeric scaling transformations on the input.
+        skip_target_transform (bool): Avoid doing numeric scaling transformations on the target.
+        predict_residuals (bool): Predict residuals instead of totals at each prediction step.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.CUMULATIVE_FORECASTING, repr=False, init=False)
+    test_split: int = dataclasses.field(default=None)
+    historical_frequency: str = dataclasses.field(default=None)
+    cumulative_prediction_lengths: List[int] = dataclasses.field(default=None)
+    skip_input_transform: bool = dataclasses.field(default=None)
+    skip_target_transform: bool = dataclasses.field(default=None)
+    predict_residuals: bool = dataclasses.field(default=None)
+
+
+class AnomalyDetectionTrainingConfig(TrainingConfig):
+    """
+    Training config for the ANOMALY_DETECTION problem type
+    Args:
+        problem_type (ProblemType): ANOMALY_DETECTION
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
+        value_high (bool): Detect unusually high values.
+        mixture_of_gaussians (bool): Detect unusual combinations of values using mixture of Gaussians.
+        variational_autoencoder (bool): Use variational autoencoder for anomaly detection.
+        spike_up (bool): Detect outliers with a high value.
+        spike_down (bool): Detect outliers with a low value.
+        trend_change (bool): Detect changes to the trend.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.ANOMALY_DETECTION, repr=False, init=False)
+    test_split: int = dataclasses.field(default=None)
+    value_high: bool = dataclasses.field(default=None)
+    mixture_of_gaussians: bool = dataclasses.field(default=None)
+    variational_autoencoder: bool = dataclasses.field(default=None)
+    spike_up: bool = dataclasses.field(default=None)
+    spike_down: bool = dataclasses.field(default=None)
+    trend_change: bool = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class ThemeAnalysisTrainingConfig(TrainingConfig):
+    """
+    Training config for the THEME ANALYSIS problem type
+    Args:
+        problem_type (ProblemType): THEME_ANALYSIS
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.THEME_ANALYSIS, repr=False, init=False)
+
+
+class AIAgentTrainingConfig(TrainingConfig):
+    """
+    Training config for the AI_AGENT problem type
+    Args:
+        problem_type (ProblemType): AI_AGENT
+        description (str): Description of the agent function.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.AI_AGENT, repr=False, init=False)
+    description: str = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class CustomTrainedModelTrainingConfig(TrainingConfig):
+    """
+    Training config for the CUSTOM_TRAINED_MODEL problem type
+    Args:
+        problem_type (ProblemType): CUSTOM_TRAINED_MODEL
+        max_catalog_size (int): Maximum expected catalog size.
+        max_dimension (int): Maximum expected dimension of the catalog.
+        index_output_path (str): Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
+        docker_image_uri (str): Docker image URI.
+        service_port (int): Service port.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.CUSTOM_TRAINED_MODEL, repr=False, init=False)
+    max_catalog_size: int = dataclasses.field(default=None)
+    max_dimension: int = dataclasses.field(default=None)
+    index_output_path: str = dataclasses.field(default=None)
+    docker_image_uri: str = dataclasses.field(default=None)
+    service_port: int = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
 class _TrainingConfigFactory(_ApiClassFactory):
     config_abstract_class = TrainingConfig
     config_class_key = 'problem_type'
     config_class_map = {
-        enums.ProblemType.FORECASTING: ForecastingTrainingConfig
+        enums.ProblemType.AI_AGENT: AIAgentTrainingConfig,
+        enums.ProblemType.ANOMALY_DETECTION: AnomalyDetectionTrainingConfig,
+        enums.ProblemType.CLUSTERING: ClusteringTrainingConfig,
+        enums.ProblemType.CLUSTERING_TIMESERIES: ClusteringTimeseriesTrainingConfig,
+        enums.ProblemType.CUMULATIVE_FORECASTING: CumulativeForecastingTrainingConfig,
+        enums.ProblemType.CUSTOM_TRAINED_MODEL: CustomTrainedModelTrainingConfig,
+        enums.ProblemType.DOCUMENT_CLASSIFICATION: DocumentClassificationTrainingConfig,
+        enums.ProblemType.DOCUMENT_SUMMARIZATION: DocumentSummarizationTrainingConfig,
+        enums.ProblemType.DOCUMENT_VISUALIZATION: DocumentVisualizationTrainingConfig,
+        enums.ProblemType.FORECASTING: ForecastingTrainingConfig,
+        enums.ProblemType.NAMED_ENTITY_EXTRACTION: NamedEntityExtractionTrainingConfig,
+        enums.ProblemType.NATURAL_LANGUAGE_SEARCH: NaturalLanguageSearchTrainingConfig,
+        enums.ProblemType.SENTENCE_BOUNDARY_DETECTION: SentenceBoundaryDetectionTrainingConfig,
+        enums.ProblemType.SENTIMENT_DETECTION: SentimentDetectionTrainingConfig,
+        enums.ProblemType.THEME_ANALYSIS: ThemeAnalysisTrainingConfig,
     }

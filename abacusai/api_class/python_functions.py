@@ -22,3 +22,16 @@ class PythonFunctionArgument(ApiClass):
     is_required: bool = dataclasses.field(default=True)
     value: Any = dataclasses.field(default=None)
     pipeline_variable: str = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class OutputVariableMapping(ApiClass):
+    """
+    A config class for python function arguments
+
+    Args:
+        variable_type (PythonFunctionArgumentType): The type of the python function argument
+        name (str): The name of the python function variable
+    """
+    variable_type: enums.PythonFunctionArgumentType = dataclasses.field(default=None)
+    name: str = dataclasses.field(default=None)

@@ -1,0 +1,46 @@
+:py:mod:`abacusai.vector_store_lookup_result`
+=============================================
+
+.. py:module:: abacusai.vector_store_lookup_result
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.vector_store_lookup_result.VectorStoreLookupResult
+
+
+
+
+.. py:class:: VectorStoreLookupResult(client, document=None, score=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Result of a vector store lookup.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param document: The document that was looked up.
+   :type document: str
+   :param score: Score of the document with respect to the query.
+   :type score: float
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

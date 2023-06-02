@@ -612,7 +612,7 @@ Classes
       :rtype: GraphDashboard
 
 
-   .. py:method:: list_builtin_algorithms(feature_group_ids = None, training_config = None)
+   .. py:method:: list_builtin_algorithms(feature_group_ids, training_config = None)
 
       Return list of built-in algorithms based on given input.
 
@@ -655,6 +655,35 @@ Classes
 
       :returns: None
       :rtype: Model
+
+
+   .. py:method:: create_vector_store(name, feature_group_id, cluster_name = None)
+
+      Returns a vector store that stores embeddings for document chunks in a feature group.
+
+      Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
+
+
+      :param name: The name of the vector store.
+      :type name: str
+      :param feature_group_id: The ID of the feature group that the vector store is associated with.
+      :type feature_group_id: str
+      :param cluster_name: The name of the cluster that the vector store is created in.
+      :type cluster_name: str
+
+      :returns: The newly created vector store.
+      :rtype: VectorStore
+
+
+   .. py:method:: list_vector_stores()
+
+      List all the vector stores.
+
+      :param project_id: The ID of project that the vector store is created in.
+      :type project_id: str
+
+      :returns: All the vector stores in the organization associated with the specified project.
+      :rtype: VectorStore
 
 
    .. py:method:: attach_dataset(dataset_id, project_dataset_type)

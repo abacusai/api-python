@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, useGpu=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, codeSource={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -69,6 +69,8 @@ Classes
    :type dataClusterInfo: dict
    :param customAlgorithmConfigs: User-defined configs for each of the user-defined custom algorithms.
    :type customAlgorithmConfigs: dict
+   :param trainedModelTypes: List of trained model types.
+   :type trainedModelTypes: list
    :param useGpu: Whether this model version is using gpu
    :type useGpu: bool
    :param codeSource: If a python model, information on where the source code is located.

@@ -111,6 +111,9 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
+from .vector_store import VectorStore
+from .vector_store_lookup_result import VectorStoreLookupResult
+from .vector_store_version import VectorStoreVersion
 from .webhook import Webhook
 
 
@@ -182,10 +185,11 @@ class ApiException(Exception):
         exception (str): The exception class raised by the server
     """
 
-    def __init__(self, message: str, http_status: int, exception: str = None):
+    def __init__(self, message: str, http_status: int, exception: str = None, request_id: str = None):
         self.message = message
         self.http_status = http_status
         self.exception = exception or 'ApiException'
+        self.request_id = request_id
 
     def __str__(self):
         return f'{self.exception}({self.http_status}): {self.message}'
@@ -201,7 +205,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.66.0'
+    client_version = '0.67.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -303,6 +307,7 @@ class BaseApiClient:
         error_message = None
         error_type = None
         json_data = None
+        request_id = None
         if streamable_response and response.status_code == 200:
             return response.raw
         try:
@@ -310,6 +315,7 @@ class BaseApiClient:
             success = json_data['success']
             error_message = json_data.get('error')
             error_type = json_data.get('errorType')
+            request_id = json_data.get('requestId')
             result = json_data.get('result')
             if success and parse_type:
                 result = self._build_class(parse_type, result)
@@ -326,9 +332,12 @@ class BaseApiClient:
                 error_message = 'Internal Server Error, please contact dev@abacus.ai for support'
             elif response.status_code == 404 and not self.client_options.exception_on_404:
                 return None
-            if response.headers and response.headers.get('x-request-id'):
-                error_message += f". Request ID: {response.headers.get('x-request-id')}"
-            raise ApiException(error_message, response.status_code, error_type)
+            if request_id is None and response.headers:
+                request_id = response.headers.get('x-request-id')
+            if request_id:
+                error_message += f". Request ID: {request_id}"
+            raise ApiException(
+                error_message, response.status_code, error_type, request_id)
         return result
 
     def _build_class(self, return_class, values):
@@ -1826,6 +1835,16 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat session with Abacus Chat"""
         return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
 
+    def list_chat_sessions(self, most_recent_per_project: bool = False) -> ChatSession:
+        """Lists all chat sessions for the current user
+
+        Args:
+            most_recent_per_project (bool): An optional parameter whether to only return the most recent chat session per project. Default False.
+
+        Returns:
+            ChatSession: The chat sessions with Abacus Chat"""
+        return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
+
     def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> OrganizationSearchResult:
         """Search feature groups based on text and filters.
 
@@ -1864,6 +1883,56 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
         return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
+
+    def list_vector_stores(self, project_id: str) -> VectorStore:
+        """List all the vector stores.
+
+        Args:
+            project_id (str): The ID of project that the vector store is created in.
+
+        Returns:
+            VectorStore: All the vector stores in the organization associated with the specified project."""
+        return self._call_api('listVectorStores', 'GET', query_params={'projectId': project_id}, parse_type=VectorStore)
+
+    def describe_vector_store(self, vector_store_id: str) -> VectorStore:
+        """Describe a Vector Store.
+
+        Args:
+            vector_store_id (str): A unique string identifier associated with the vector store.
+
+        Returns:
+            VectorStore: The vector store object."""
+        return self._call_api('describeVectorStore', 'GET', query_params={'vectorStoreId': vector_store_id}, parse_type=VectorStore)
+
+    def describe_vector_store_by_name(self, name: str) -> VectorStore:
+        """Describe a vector store by its name.
+
+        Args:
+            name (str): The unique name of the vector store to look up.
+
+        Returns:
+            VectorStore: The Vector Store."""
+        return self._call_api('describeVectorStoreByName', 'GET', query_params={'name': name}, parse_type=VectorStore)
+
+    def list_vector_store_versions(self, vector_store_id: str) -> VectorStoreVersion:
+        """List all the vector store versions with a given vector store ID.
+
+        Args:
+            vector_store_id (str): A unique string identifier associated with the vector store.
+
+        Returns:
+            VectorStoreVersion: All the vector store versions associated with the vector store."""
+        return self._call_api('listVectorStoreVersions', 'GET', query_params={'vectorStoreId': vector_store_id}, parse_type=VectorStoreVersion)
+
+    def describe_vector_store_version(self, vector_store_version: str) -> VectorStoreVersion:
+        """Describe a vector store version.
+
+        Args:
+            vector_store_version (str): A unique string identifier associated with the vector store version.
+
+        Returns:
+            VectorStoreVersion: The vector store version object."""
+        return self._call_api('describeVectorStoreVersion', 'GET', query_params={'vectorStoreVersion': vector_store_version}, parse_type=VectorStoreVersion)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
@@ -2107,20 +2176,18 @@ class ApiClient(ReadOnlyClient):
                                          output_variable_mappings=output_variable_mappings,
                                          step_dependencies=step_dependencies)
 
-    def update_pipeline_step_by_name_from_function(self,
-                                                   pipeline_id: str,
-                                                   step_name: str,
-                                                   function: callable,
-                                                   step_input_mappings: list,
-                                                   output_variable_mappings: list = None,
-                                                   step_dependencies: list = None,
-                                                   package_requirements: list = None):
+    def update_pipeline_step_from_function(self,
+                                           pipeline_step_id: str,
+                                           function: callable,
+                                           step_input_mappings: list,
+                                           output_variable_mappings: list = None,
+                                           step_dependencies: list = None,
+                                           package_requirements: list = None):
         """
-        Updates a step in a given pipeline from a python function.
+        Updates a pipeline step from a python function.
 
         Args:
-            pipeline_id (str): The ID of the pipeline the step belongs to.
-            step_name (str): The name of the step.
+            pipeline_step_id (str): The ID of the pipeline_step to update.
             function (callable): The python function.
             step_input_mappings (list[PythonFunctionArguments]): List of Python function arguments.
             output_variable_mappings (list[PythonFunctionArguments]): List of Python function ouputs.
@@ -2128,13 +2195,13 @@ class ApiClient(ReadOnlyClient):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
         """
         source_code = inspect.getsource(function)
-        return self.update_pipeline_step_by_name(pipeline_id=pipeline_name,
-                                                 step_name=step_name,
-                                                 function_name=function.__name__,
-                                                 source_code=source_code,
-                                                 step_input_mappings=step_input_mappings,
-                                                 output_variable_mappings=output_variable_mappings,
-                                                 step_dependencies=step_dependencies)
+
+        return self.update_pipeline_step(pipeline_step_id=pipeline_step_id,
+                                         function_name=function.__name__,
+                                         source_code=source_code,
+                                         step_input_mappings=step_input_mappings,
+                                         output_variable_mappings=output_variable_mappings,
+                                         step_dependencies=step_dependencies)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -5700,7 +5767,7 @@ Creates a new feature group defined as the union of other feature group versions
             Algorithm: The new custom model can be used for training."""
         return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'useGpu': use_gpu, 'packageRequirements': package_requirements}, parse_type=Algorithm)
 
-    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list = None, training_config: dict = None) -> Algorithm:
+    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list, training_config: dict = None) -> Algorithm:
         """Return list of built-in algorithms based on given input.
 
         Args:
@@ -5891,3 +5958,61 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             LlmInput: LLM input object comprising of information about the feature groups with given IDs."""
         return self._call_api('renderFeatureGroupsForLLM', 'POST', query_params={}, body={'featureGroupIds': feature_group_ids, 'tokenBudget': token_budget, 'includeDefinition': include_definition}, parse_type=LlmInput)
+
+    def create_vector_store(self, project_id: str, name: str, feature_group_id: str, cluster_name: str = None) -> VectorStore:
+        """Returns a vector store that stores embeddings for document chunks in a feature group.
+
+        Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
+
+
+        Args:
+            project_id (str): The ID of project that the vector store is created in.
+            name (str): The name of the vector store.
+            feature_group_id (str): The ID of the feature group that the vector store is associated with.
+            cluster_name (str): The name of the cluster that the vector store is created in.
+
+        Returns:
+            VectorStore: The newly created vector store."""
+        return self._call_api('createVectorStore', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'clusterName': cluster_name}, parse_type=VectorStore)
+
+    def update_vector_store(self, vector_store_id: str, feature_group_id: str = None, name: str = None) -> VectorStore:
+        """Updates an existing vector store.
+
+        Args:
+            vector_store_id (str): The unique ID associated with the vector store.
+            feature_group_id (str): The ID of the feature group to update the vector store with.
+            name (str): The name group to update the vector store with.
+
+        Returns:
+            VectorStore: The updated vector store."""
+        return self._call_api('updateVectorStore', 'POST', query_params={}, body={'vectorStoreId': vector_store_id, 'featureGroupId': feature_group_id, 'name': name}, parse_type=VectorStore)
+
+    def create_vector_store_version(self, vector_store_id: str) -> VectorStoreVersion:
+        """Creates a vector store version from the latest version of the feature group that the vector store associated with.
+
+        Args:
+            vector_store_id (str): The unique ID associated with the vector store to create version with.
+
+        Returns:
+            VectorStoreVersion: The newly created vector store version."""
+        return self._call_api('createVectorStoreVersion', 'POST', query_params={}, body={'vectorStoreId': vector_store_id}, parse_type=VectorStoreVersion)
+
+    def delete_vector_store(self, vector_store_id: str):
+        """Delete a Vector Store.
+
+        Args:
+            vector_store_id (str): A unique string identifier associated with the vector store."""
+        return self._call_api('deleteVectorStore', 'DELETE', query_params={'vectorStoreId': vector_store_id})
+
+    def lookup_vector_store(self, vector_store_id: str, query: str, deployment_token: str, limit_results: int = None) -> VectorStoreLookupResult:
+        """Lookup relevant documents from the vector store deployed with given query.
+
+        Args:
+            vector_store_id (str): A unique string identifier associated with the vector store.
+            query (str): The query to search for.
+            deployment_token (str): A deployment token used to authenticate access to created vector store.
+            limit_results (int): If provided, will limit the number of results to the value specified.
+
+        Returns:
+            VectorStoreLookupResult: The relevant documentation results found from the vector store."""
+        return self._call_api('lookupVectorStore', 'POST', query_params={'deploymentToken': deployment_token}, body={'vectorStoreId': vector_store_id, 'query': query, 'limitResults': limit_results}, parse_type=VectorStoreLookupResult)

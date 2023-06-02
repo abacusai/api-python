@@ -1,0 +1,85 @@
+:py:mod:`abacusai.api_class.python_functions`
+=============================================
+
+.. py:module:: abacusai.api_class.python_functions
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.python_functions.PythonFunctionArgument
+   abacusai.api_class.python_functions.OutputVariableMapping
+
+
+
+
+.. py:class:: PythonFunctionArgument
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A config class for python function arguments
+
+   :param variable_type: The type of the python function argument
+   :type variable_type: PythonFunctionArgumentType
+   :param name: The name of the python function variable
+   :type name: str
+   :param is_required: Whether the argument is required
+   :type is_required: bool
+   :param value: The value of the argument
+   :type value: Any
+   :param pipeline_variable: The name of the pipeline variable to use as the value
+   :type pipeline_variable: str
+
+   .. py:attribute:: variable_type
+      :type: abacusai.api_class.enums.PythonFunctionArgumentType
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: is_required
+      :type: bool
+
+      
+
+   .. py:attribute:: value
+      :type: Any
+
+      
+
+   .. py:attribute:: pipeline_variable
+      :type: str
+
+      
+
+
+.. py:class:: OutputVariableMapping
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A config class for python function arguments
+
+   :param variable_type: The type of the python function argument
+   :type variable_type: PythonFunctionArgumentType
+   :param name: The name of the python function variable
+   :type name: str
+
+   .. py:attribute:: variable_type
+      :type: abacusai.api_class.enums.PythonFunctionArgumentType
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+

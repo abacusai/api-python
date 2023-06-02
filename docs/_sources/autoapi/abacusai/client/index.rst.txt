@@ -71,7 +71,7 @@ Attributes
    :type server: str
 
 
-.. py:exception:: ApiException(message, http_status, exception = None)
+.. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
 
    Bases: :py:obj:`Exception`
 
@@ -104,7 +104,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.66.0'
+      :value: '0.67.0'
 
       
 
@@ -1797,6 +1797,17 @@ Attributes
       :rtype: ChatSession
 
 
+   .. py:method:: list_chat_sessions(most_recent_per_project = False)
+
+      Lists all chat sessions for the current user
+
+      :param most_recent_per_project: An optional parameter whether to only return the most recent chat session per project. Default False.
+      :type most_recent_per_project: bool
+
+      :returns: The chat sessions with Abacus Chat
+      :rtype: ChatSession
+
+
    .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
 
       Search feature groups based on text and filters.
@@ -1846,6 +1857,61 @@ Attributes
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse
+
+
+   .. py:method:: list_vector_stores(project_id)
+
+      List all the vector stores.
+
+      :param project_id: The ID of project that the vector store is created in.
+      :type project_id: str
+
+      :returns: All the vector stores in the organization associated with the specified project.
+      :rtype: VectorStore
+
+
+   .. py:method:: describe_vector_store(vector_store_id)
+
+      Describe a Vector Store.
+
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
+
+      :returns: The vector store object.
+      :rtype: VectorStore
+
+
+   .. py:method:: describe_vector_store_by_name(name)
+
+      Describe a vector store by its name.
+
+      :param name: The unique name of the vector store to look up.
+      :type name: str
+
+      :returns: The Vector Store.
+      :rtype: VectorStore
+
+
+   .. py:method:: list_vector_store_versions(vector_store_id)
+
+      List all the vector store versions with a given vector store ID.
+
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
+
+      :returns: All the vector store versions associated with the vector store.
+      :rtype: VectorStoreVersion
+
+
+   .. py:method:: describe_vector_store_version(vector_store_version)
+
+      Describe a vector store version.
+
+      :param vector_store_version: A unique string identifier associated with the vector store version.
+      :type vector_store_version: str
+
+      :returns: The vector store version object.
+      :rtype: VectorStoreVersion
 
 
 
@@ -2015,14 +2081,12 @@ Attributes
       :type package_requirements: list
 
 
-   .. py:method:: update_pipeline_step_by_name_from_function(pipeline_id, step_name, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
 
-      Updates a step in a given pipeline from a python function.
+      Updates a pipeline step from a python function.
 
-      :param pipeline_id: The ID of the pipeline the step belongs to.
-      :type pipeline_id: str
-      :param step_name: The name of the step.
-      :type step_name: str
+      :param pipeline_step_id: The ID of the pipeline_step to update.
+      :type pipeline_step_id: str
       :param function: The python function.
       :type function: callable
       :param step_input_mappings: List of Python function arguments.
@@ -6397,7 +6461,7 @@ Attributes
       :rtype: Algorithm
 
 
-   .. py:method:: list_builtin_algorithms(project_id, feature_group_ids = None, training_config = None)
+   .. py:method:: list_builtin_algorithms(project_id, feature_group_ids, training_config = None)
 
       Return list of built-in algorithms based on given input.
 
@@ -6638,6 +6702,77 @@ Attributes
 
       :returns: LLM input object comprising of information about the feature groups with given IDs.
       :rtype: LlmInput
+
+
+   .. py:method:: create_vector_store(project_id, name, feature_group_id, cluster_name = None)
+
+      Returns a vector store that stores embeddings for document chunks in a feature group.
+
+      Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
+
+
+      :param project_id: The ID of project that the vector store is created in.
+      :type project_id: str
+      :param name: The name of the vector store.
+      :type name: str
+      :param feature_group_id: The ID of the feature group that the vector store is associated with.
+      :type feature_group_id: str
+      :param cluster_name: The name of the cluster that the vector store is created in.
+      :type cluster_name: str
+
+      :returns: The newly created vector store.
+      :rtype: VectorStore
+
+
+   .. py:method:: update_vector_store(vector_store_id, feature_group_id = None, name = None)
+
+      Updates an existing vector store.
+
+      :param vector_store_id: The unique ID associated with the vector store.
+      :type vector_store_id: str
+      :param feature_group_id: The ID of the feature group to update the vector store with.
+      :type feature_group_id: str
+      :param name: The name group to update the vector store with.
+      :type name: str
+
+      :returns: The updated vector store.
+      :rtype: VectorStore
+
+
+   .. py:method:: create_vector_store_version(vector_store_id)
+
+      Creates a vector store version from the latest version of the feature group that the vector store associated with.
+
+      :param vector_store_id: The unique ID associated with the vector store to create version with.
+      :type vector_store_id: str
+
+      :returns: The newly created vector store version.
+      :rtype: VectorStoreVersion
+
+
+   .. py:method:: delete_vector_store(vector_store_id)
+
+      Delete a Vector Store.
+
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
+
+
+   .. py:method:: lookup_vector_store(vector_store_id, query, deployment_token, limit_results = None)
+
+      Lookup relevant documents from the vector store deployed with given query.
+
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
+      :param query: The query to search for.
+      :type query: str
+      :param deployment_token: A deployment token used to authenticate access to created vector store.
+      :type deployment_token: str
+      :param limit_results: If provided, will limit the number of results to the value specified.
+      :type limit_results: int
+
+      :returns: The relevant documentation results found from the vector store.
+      :rtype: VectorStoreLookupResult
 
 
 

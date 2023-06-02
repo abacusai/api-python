@@ -47,6 +47,25 @@ Classes
       :rtype: dict
 
 
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: VectorStoreVersion
+
+
+   .. py:method:: describe()
+
+      Describe a vector store version.
+
+      :param vector_store_version: A unique string identifier associated with the vector store version.
+      :type vector_store_version: str
+
+      :returns: The vector store version object.
+      :rtype: VectorStoreVersion
+
+
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until vector store version indexing and deployment is complete.

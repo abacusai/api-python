@@ -18,7 +18,7 @@ class ApiEnum(Enum):
 
 
 class ProblemType(ApiEnum):
-    USER_ITEM_SCORING = 'affinity'
+    AI_AGENT = 'ai_agent'
     ANOMALY_DETECTION = 'anomaly_new'
     ANOMALY_OUTLIERS = 'anomaly'
     CLUSTERING = 'clustering'
@@ -35,6 +35,7 @@ class ProblemType(ApiEnum):
     PREDICTIVE_MODELING = 'regression'
     FORECASTING = 'forecasting'
     CUSTOM_TRAINED_MODEL = 'plug_and_play'
+    CUSTOM_ALGORITHM = 'trainable_plug_and_play'
     FEATURE_STORE = 'feature_store'
     IMAGE_CLASSIFICATION = 'vision_classification'
     OBJECT_DETECTION = 'vision_object_detection'
@@ -82,6 +83,28 @@ class HolidayCalendars(ApiEnum):
     AU = 'AU'
     UK = 'UK'
     US = 'US'
+
+
+class ExperimentationMode(ApiEnum):
+    RAPID = 'rapid'
+    THOROUGH = 'thorough'
+
+
+class PersonalizationTrainingMode(ApiEnum):
+    EXPERIMENTAL = 'EXP'
+    PRODUCTION = 'PROD'
+
+
+class PersonalizationObjective(ApiEnum):
+    NDCG = 'ndcg'
+    NDCG_5 = 'ndcg@5'
+    NDCG_10 = 'ndcg@10'
+    MAP = 'map'
+    MAP_5 = 'map@5'
+    MAP_10 = 'map@10'
+    MRR = 'mrr'
+    PERSONALIZATION = 'personalization@10'
+    COVERAGE = 'coverage'
 
 
 # Forecasting

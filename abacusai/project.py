@@ -556,7 +556,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_graph_dashboards(self.project_id)
 
-    def list_builtin_algorithms(self, feature_group_ids: list = None, training_config: dict = None):
+    def list_builtin_algorithms(self, feature_group_ids: list, training_config: dict = None):
         """
         Return list of built-in algorithms based on given input.
 
@@ -597,6 +597,35 @@ class Project(AbstractApiClass):
             Model: None
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
+
+    def create_vector_store(self, name: str, feature_group_id: str, cluster_name: str = None):
+        """
+        Returns a vector store that stores embeddings for document chunks in a feature group.
+
+        Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
+
+
+        Args:
+            name (str): The name of the vector store.
+            feature_group_id (str): The ID of the feature group that the vector store is associated with.
+            cluster_name (str): The name of the cluster that the vector store is created in.
+
+        Returns:
+            VectorStore: The newly created vector store.
+        """
+        return self.client.create_vector_store(self.project_id, name, feature_group_id, cluster_name)
+
+    def list_vector_stores(self):
+        """
+        List all the vector stores.
+
+        Args:
+            project_id (str): The ID of project that the vector store is created in.
+
+        Returns:
+            VectorStore: All the vector stores in the organization associated with the specified project.
+        """
+        return self.client.list_vector_stores(self.project_id)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

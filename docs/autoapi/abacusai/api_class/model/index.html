@@ -20,7 +20,7 @@
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="next" title="abacusai.api_class.python_function_argument" href="../python_function_argument/index.html" />
+    <link rel="next" title="abacusai.api_class.python_functions" href="../python_functions/index.html" />
     <link rel="prev" title="abacusai.api_class.feature_group" href="../feature_group/index.html" /> 
 </head>
 
@@ -96,35 +96,53 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.ForecastingTrainingConfig" title="abacusai.api_class.model.ForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.PersonalizationTrainingConfig" title="abacusai.api_class.model.PersonalizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the PERSONALIZATION problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.ForecastingTrainingConfig" title="abacusai.api_class.model.ForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the FORECASTING problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig" title="abacusai.api_class.model.NamedEntityExtractionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig" title="abacusai.api_class.model.NamedEntityExtractionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the NAMED_ENTITY_EXTRACTION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig" title="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig" title="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NaturalLanguageSearchTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the NATURAL_LANGUAGE_SEARCH problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig" title="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig" title="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the SENTENCE_BOUNDARY_DETECTION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig" title="abacusai.api_class.model.SentimentDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentDetectionTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig" title="abacusai.api_class.model.SentimentDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentimentDetectionTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the SENTIMENT_DETECTION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig" title="abacusai.api_class.model.DocumentClassificationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentClassificationTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig" title="abacusai.api_class.model.DocumentClassificationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentClassificationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the DOCUMENT_CLASSIFICATION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig" title="abacusai.api_class.model.DocumentSummarizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentSummarizationTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig" title="abacusai.api_class.model.DocumentSummarizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentSummarizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the DOCUMENT_SUMMARIZATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig" title="abacusai.api_class.model.DocumentVisualizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentVisualizationTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig" title="abacusai.api_class.model.DocumentVisualizationTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentVisualizationTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the DOCUMENT_VISUALIZATION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.ClusteringTrainingConfig" title="abacusai.api_class.model.ClusteringTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTrainingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.ClusteringTrainingConfig" title="abacusai.api_class.model.ClusteringTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CLUSTERING problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig" title="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTimeseriesTrainingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig" title="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClusteringTimeseriesTrainingConfig</span></code></a></p></td>
 <td><p>Training config for the CLUSTERING_TIMESERIES problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig" title="abacusai.api_class.model.CumulativeForecastingTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CumulativeForecastingTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the CUMULATIVE_FORECASTING problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig" title="abacusai.api_class.model.AnomalyDetectionTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyDetectionTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the ANOMALY_DETECTION problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.ThemeAnalysisTrainingConfig" title="abacusai.api_class.model.ThemeAnalysisTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemeAnalysisTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the THEME ANALYSIS problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.AIAgentTrainingConfig" title="abacusai.api_class.model.AIAgentTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AIAgentTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the AI_AGENT problem type</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig" title="abacusai.api_class.model.CustomTrainedModelTrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CustomTrainedModelTrainingConfig</span></code></a></p></td>
+<td><p>Training config for the CUSTOM_TRAINED_MODEL problem type</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
@@ -160,6 +178,244 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">PersonalizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the PERSONALIZATION problem type
+:param problem_type: PERSONALIZATION
+:type problem_type: ProblemType
+:param objective: Ranking scheme used to select final best model.
+:type objective: PersonalizationObjective
+:param sort_objective: Ranking scheme used to sort models on the metrics page.
+:type sort_objective: PersonalizationObjective
+:param training_mode: whether to train in production or experimental mode.
+:type training_mode: PersonalizationTrainingMode
+:param target_action_types: List of action types to use as targets for training.
+:type target_action_types: List[str]
+:param target_action_weights: Dictionary of action types to weights for training.
+:type target_action_weights: Dict[str, float]
+:param session_event_types: List of event types to treat as occurrences of sessions.
+:type session_event_types: List[str]
+:param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+:type test_split: int
+:param recent_days_for_training: Limit training data to a certain latest number of days.
+:type recent_days_for_training: int
+:param training_start_date: Only consider training interaction data after this date. Specified in the timezone of the dataset.
+:type training_start_date: datetime
+:param test_on_user_split: Use user splits instead of using time splits, when validating and testing the model.
+:type test_on_user_split: bool
+:param test_split_on_last_k_items: Use last k items instead of global timestamp splits, when validating and testing the model.
+:type test_split_on_last_k_items: bool
+:param test_last_items_length: Number of items to leave out for each user when using leave k out folds.
+:type test_last_items_length: int
+:param test_window_length_hours: Duration (in hours) of most recent time window to use when validating and testing the model.
+:type test_window_length_hours: int
+:param explicit_time_split: Sets an explicit time-based test boundary.
+:type explicit_time_split: bool
+:param test_row_indicator: Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
+:type test_row_indicator: str
+:param full_data_retraining: Train models separately with all the data.
+:type full_data_retraining: bool
+:param sequential_training: Train a mode sequentially through time.
+:type sequential_training: bool
+:param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
+:type data_split_feature_group_table_name: str
+:param dropout_rate: Dropout rate for neural network.
+:type dropout_rate: int
+:param batch_size: Batch size for neural network.
+:type batch_size: BatchSize
+:param disable_transformer: Disable training the transformer algorithm.
+:type disable_transformer: bool
+:param disable_gpu: Disable training on GPU.
+:type disable_gpu: boo
+:param filter_history: Do not recommend items the user has already interacted with.
+:type filter_history: bool
+:param explore_lookback_hours: Number of hours since creation time that an item is eligible for explore fraction.
+:type explore_lookback_hours: int
+:param max_history_length: Maximum length of user-item history to include user in training examples.
+:type max_history_length: int
+:param compute_rerank_metrics: Compute metrics based on rerank results.
+:type compute_rerank_metrics: bool
+:param item_id_dropout: Fraction of item_id values to randomly dropout during training.
+:type item_id_dropout: float
+:param add_time_features: Include interaction time as a feature.
+:type add_time_features: bool
+:param disable_timestamp_scalar_features: Exclude timestamp scalar features.
+:type disable_timestamp_scalar_features: bool
+:param compute_session_metrics: Evaluate models based on how well they are able to predict the next session of interactions.
+:type compute_session_metrics: bool
+:param max_user_history_len_percentile: Filter out users with history length above this percentile.
+:type max_user_history_len_percentile: int
+:param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
+:type downsample_item_popularity_percentile: float</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.objective">
+<span class="sig-name descname"><span class="pre">objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationObjective" title="abacusai.api_class.enums.PersonalizationObjective"><span class="pre">abacusai.api_class.enums.PersonalizationObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.objective" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.sort_objective">
+<span class="sig-name descname"><span class="pre">sort_objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationObjective" title="abacusai.api_class.enums.PersonalizationObjective"><span class="pre">abacusai.api_class.enums.PersonalizationObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.sort_objective" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.training_mode">
+<span class="sig-name descname"><span class="pre">training_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationTrainingMode" title="abacusai.api_class.enums.PersonalizationTrainingMode"><span class="pre">abacusai.api_class.enums.PersonalizationTrainingMode</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.training_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.target_action_types">
+<span class="sig-name descname"><span class="pre">target_action_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.target_action_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.target_action_weights">
+<span class="sig-name descname"><span class="pre">target_action_weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.target_action_weights" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.session_event_types">
+<span class="sig-name descname"><span class="pre">session_event_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.session_event_types" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.recent_days_for_training">
+<span class="sig-name descname"><span class="pre">recent_days_for_training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.recent_days_for_training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.training_start_date">
+<span class="sig-name descname"><span class="pre">training_start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.11)"><span class="pre">datetime.datetime</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.training_start_date" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.test_on_user_split">
+<span class="sig-name descname"><span class="pre">test_on_user_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.test_on_user_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.test_split_on_last_k_items">
+<span class="sig-name descname"><span class="pre">test_split_on_last_k_items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.test_split_on_last_k_items" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.test_last_items_length">
+<span class="sig-name descname"><span class="pre">test_last_items_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.test_last_items_length" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.test_window_length_hours">
+<span class="sig-name descname"><span class="pre">test_window_length_hours</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.test_window_length_hours" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.explicit_time_split">
+<span class="sig-name descname"><span class="pre">explicit_time_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.explicit_time_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.test_row_indicator">
+<span class="sig-name descname"><span class="pre">test_row_indicator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.test_row_indicator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.full_data_retraining">
+<span class="sig-name descname"><span class="pre">full_data_retraining</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.full_data_retraining" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.sequential_training">
+<span class="sig-name descname"><span class="pre">sequential_training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.sequential_training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.data_split_feature_group_table_name">
+<span class="sig-name descname"><span class="pre">data_split_feature_group_table_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.data_split_feature_group_table_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.dropout_rate">
+<span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><span class="pre">abacusai.api_class.enums.BatchSize</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.batch_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.disable_transformer">
+<span class="sig-name descname"><span class="pre">disable_transformer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.disable_transformer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.disable_gpu">
+<span class="sig-name descname"><span class="pre">disable_gpu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.disable_gpu" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.filter_history">
+<span class="sig-name descname"><span class="pre">filter_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.filter_history" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.explore_lookback_hours">
+<span class="sig-name descname"><span class="pre">explore_lookback_hours</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.explore_lookback_hours" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.max_history_length">
+<span class="sig-name descname"><span class="pre">max_history_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.max_history_length" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.compute_rerank_metrics">
+<span class="sig-name descname"><span class="pre">compute_rerank_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.compute_rerank_metrics" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.item_id_dropout">
+<span class="sig-name descname"><span class="pre">item_id_dropout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.item_id_dropout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.add_time_features">
+<span class="sig-name descname"><span class="pre">add_time_features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.add_time_features" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.disable_timestamp_scalar_features">
+<span class="sig-name descname"><span class="pre">disable_timestamp_scalar_features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.disable_timestamp_scalar_features" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.compute_session_metrics">
+<span class="sig-name descname"><span class="pre">compute_session_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.compute_session_metrics" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.max_user_history_len_percentile">
+<span class="sig-name descname"><span class="pre">max_user_history_len_percentile</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.max_user_history_len_percentile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.downsample_item_popularity_percentile">
+<span class="sig-name descname"><span class="pre">downsample_item_popularity_percentile</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.downsample_item_popularity_percentile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ForecastingTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
@@ -176,22 +432,25 @@ inheritance.</p>
 :type forecast_frequency: ForecastingFrequency
 :param probability_quantiles: Prediction quantiles.
 :type probability_quantiles: list[float]
-:param no_validation_set: Do not generate validation set, test set will be used instead.
-:type no_validation_set: bool
 :param force_prediction_length: Force length of test window to be the same as prediction length.
 :type force_prediction_length: int
 :param filter_items: Filter items with small history and volume.
 :type filter_items: bool
+:param enable_feature_selection: Enable feature selection.
+:type enable_feature_selection: bool
 :param enable_cold_start: Enable cold start forecasting by training/predicting for zero history items.
 :type enable_cold_start: bool
 :param enable_multiple_backtests: Whether to enable multiple backtesting or not.
 :type enable_multiple_backtests: bool
-:param total_backtesting_windows: Total backtesting windows to use for the training.
-:type total_backtesting_windows: int
-:param backtest_window_step_size: Use this step size to shift backtesting windows for model training.
-:type backtest_window_step_size: int
+:param num_backtesting_windows: Total backtesting windows to use for the training.
+:type num_backtesting_windows: int
+:param backtesting_window_step_size: Use this step size to shift backtesting windows for model training.
+:type backtesting_window_step_size: int
 :param full_data_retraining: Train models separately with all the data.
 :type full_data_retraining: bool
+:param additional_forecast_keys: List[str]: List of categoricals in timeseries that can act as multi-identifier.
+:param experimentation_mode: Selecting Thorough Experimentation will take longer to train.
+:type experimentation_mode: ExperimentationMode
 :param type_of_split: Type of data splitting into train/test.
 :type type_of_split: ForecastingDataSplitType
 :param test_by_item: Partition train/test data by item rather than time if true.
@@ -248,8 +507,6 @@ inheritance.</p>
 :type use_log_transforms: bool
 :param smooth_history: Smooth (low pass filter) the timeseries.
 :type smooth_history: float
-:param prediction_offset: Offset for prediction.
-:type prediction_offset: int
 :param skip_local_scale_target: Skip using per training/prediction window target scaling.
 :type skip_local_scale_target: bool
 :param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
@@ -268,8 +525,8 @@ inheritance.</p>
 :type use_item_id: bool
 :param use_all_item_totals: Include as input total target across items.
 :type use_all_item_totals: bool
-:param handle_zeros_as_missing: If True, handle zero values in demand as missing data.
-:type handle_zeros_as_missing: bool
+:param handle_zeros_as_missing_values: If True, handle zero values in demand as missing data.
+:type handle_zeros_as_missing_values: bool
 :param datetime_holiday_calendars: Holiday calendars to augment training with.
 :type datetime_holiday_calendars: list[HolidayCalendars]
 :param fill_missing_values: Strategy for filling in missing values.
@@ -313,11 +570,6 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.no_validation_set">
-<span class="sig-name descname"><span class="pre">no_validation_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.no_validation_set" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.force_prediction_length">
 <span class="sig-name descname"><span class="pre">force_prediction_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.force_prediction_length" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -325,6 +577,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.filter_items">
 <span class="sig-name descname"><span class="pre">filter_items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.filter_items" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.enable_feature_selection">
+<span class="sig-name descname"><span class="pre">enable_feature_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.enable_feature_selection" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -338,18 +595,28 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.total_backtesting_windows">
-<span class="sig-name descname"><span class="pre">total_backtesting_windows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.total_backtesting_windows" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.num_backtesting_windows">
+<span class="sig-name descname"><span class="pre">num_backtesting_windows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.num_backtesting_windows" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.backtest_window_step_size">
-<span class="sig-name descname"><span class="pre">backtest_window_step_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.backtest_window_step_size" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.backtesting_window_step_size">
+<span class="sig-name descname"><span class="pre">backtesting_window_step_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.backtesting_window_step_size" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.full_data_retraining">
 <span class="sig-name descname"><span class="pre">full_data_retraining</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.full_data_retraining" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.additional_forecast_keys">
+<span class="sig-name descname"><span class="pre">additional_forecast_keys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.additional_forecast_keys" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.experimentation_mode">
+<span class="sig-name descname"><span class="pre">experimentation_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ExperimentationMode" title="abacusai.api_class.enums.ExperimentationMode"><span class="pre">abacusai.api_class.enums.ExperimentationMode</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.experimentation_mode" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -493,11 +760,6 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.prediction_offset">
-<span class="sig-name descname"><span class="pre">prediction_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.prediction_offset" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.skip_local_scale_target">
 <span class="sig-name descname"><span class="pre">skip_local_scale_target</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.skip_local_scale_target" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -543,8 +805,8 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.handle_zeros_as_missing">
-<span class="sig-name descname"><span class="pre">handle_zeros_as_missing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.handle_zeros_as_missing" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.handle_zeros_as_missing_values">
+<span class="sig-name descname"><span class="pre">handle_zeros_as_missing_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.handle_zeros_as_missing_values" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -594,8 +856,8 @@ inheritance.</p>
 :type ner_model_type: NERModelType
 :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
 :type test_split: int
-:param test_indicator_column: Column indicating which rows to use for training (TRAIN) and testing (TEST).
-:type test_indicator_column: str
+:param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
+:type test_row_indicator: str
 :param dropout_rate: Dropout rate for neural network.
 :type dropout_rate: float
 :param batch_size: Batch size for neural network.
@@ -632,8 +894,8 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_indicator_column">
-<span class="sig-name descname"><span class="pre">test_indicator_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_indicator_column" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_row_indicator">
+<span class="sig-name descname"><span class="pre">test_row_indicator</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_row_indicator" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -670,11 +932,9 @@ inheritance.</p>
 <p>Training config for the NATURAL_LANGUAGE_SEARCH problem type
 :param problem_type: NATURAL_LANGUAGE_SEARCH
 :type problem_type: ProblemType
-:param custom_finetuned_model: Use custom fine tuned model.
-:type custom_finetuned_model: bool
-:param faster_chat: Use a faster model to search for relevant documents.
-:type faster_chat: bool
-:param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct.
+:param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
+:type abacus_internal_model: bool
+:param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
 :type num_completion_tokens: int
 :param larger_embeddings: Use a higher dimension embedding model.
 :type larger_embeddings: bool
@@ -690,13 +950,8 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.custom_finetuned_model">
-<span class="sig-name descname"><span class="pre">custom_finetuned_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.custom_finetuned_model" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.faster_chat">
-<span class="sig-name descname"><span class="pre">faster_chat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.faster_chat" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.abacus_internal_model">
+<span class="sig-name descname"><span class="pre">abacus_internal_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.abacus_internal_model" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -715,13 +970,13 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.chunk_overlap_fraction">
-<span class="sig-name descname"><span class="pre">chunk_overlap_fraction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.chunk_overlap_fraction" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.index_fraction">
+<span class="sig-name descname"><span class="pre">index_fraction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.index_fraction" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.test_split">
-<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.chunk_overlap_fraction">
+<span class="sig-name descname"><span class="pre">chunk_overlap_fraction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.chunk_overlap_fraction" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -972,6 +1227,209 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">CumulativeForecastingTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the CUMULATIVE_FORECASTING problem type
+:param problem_type: CUMULATIVE_FORECASTING
+:type problem_type: ProblemType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+:type test_split: int
+:param historical_frequency: Forecast frequency
+:type historical_frequency: str
+:param cumulative_prediction_lengths: List of Cumulative Prediction Frequencies. Each prediction length must be between 1 and 365.
+:type cumulative_prediction_lengths: List[int]
+:param skip_input_transform: Avoid doing numeric scaling transformations on the input.
+:type skip_input_transform: bool
+:param skip_target_transform: Avoid doing numeric scaling transformations on the target.
+:type skip_target_transform: bool
+:param predict_residuals: Predict residuals instead of totals at each prediction step.
+:type predict_residuals: bool</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.historical_frequency">
+<span class="sig-name descname"><span class="pre">historical_frequency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.historical_frequency" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.cumulative_prediction_lengths">
+<span class="sig-name descname"><span class="pre">cumulative_prediction_lengths</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.cumulative_prediction_lengths" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.skip_input_transform">
+<span class="sig-name descname"><span class="pre">skip_input_transform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.skip_input_transform" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.skip_target_transform">
+<span class="sig-name descname"><span class="pre">skip_target_transform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.skip_target_transform" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.predict_residuals">
+<span class="sig-name descname"><span class="pre">predict_residuals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.predict_residuals" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">AnomalyDetectionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the ANOMALY_DETECTION problem type
+:param problem_type: ANOMALY_DETECTION
+:type problem_type: ProblemType
+:param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
+:type test_split: int
+:param value_high: Detect unusually high values.
+:type value_high: bool
+:param mixture_of_gaussians: Detect unusual combinations of values using mixture of Gaussians.
+:type mixture_of_gaussians: bool
+:param variational_autoencoder: Use variational autoencoder for anomaly detection.
+:type variational_autoencoder: bool
+:param spike_up: Detect outliers with a high value.
+:type spike_up: bool
+:param spike_down: Detect outliers with a low value.
+:type spike_down: bool
+:param trend_change: Detect changes to the trend.
+:type trend_change: bool</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.test_split">
+<span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.value_high">
+<span class="sig-name descname"><span class="pre">value_high</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.value_high" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.mixture_of_gaussians">
+<span class="sig-name descname"><span class="pre">mixture_of_gaussians</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.mixture_of_gaussians" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.variational_autoencoder">
+<span class="sig-name descname"><span class="pre">variational_autoencoder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.variational_autoencoder" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.spike_up">
+<span class="sig-name descname"><span class="pre">spike_up</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.spike_up" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.spike_down">
+<span class="sig-name descname"><span class="pre">spike_down</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.spike_down" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.trend_change">
+<span class="sig-name descname"><span class="pre">trend_change</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.trend_change" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ThemeAnalysisTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ThemeAnalysisTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ThemeAnalysisTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the THEME ANALYSIS problem type
+:param problem_type: THEME_ANALYSIS
+:type problem_type: ProblemType</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ThemeAnalysisTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ThemeAnalysisTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">AIAgentTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the AI_AGENT problem type
+:param problem_type: AI_AGENT
+:type problem_type: ProblemType
+:param description: Description of the agent function.
+:type description: str</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.description" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">CustomTrainedModelTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
+<p>Training config for the CUSTOM_TRAINED_MODEL problem type
+:param problem_type: CUSTOM_TRAINED_MODEL
+:type problem_type: ProblemType
+:param max_catalog_size: Maximum expected catalog size.
+:type max_catalog_size: int
+:param max_dimension: Maximum expected dimension of the catalog.
+:type max_dimension: int
+:param index_output_path: Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
+:type index_output_path: str
+:param docker_image_uri: Docker image URI.
+:type docker_image_uri: str
+:param service_port: Service port.
+:type service_port: int</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.problem_type">
+<span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_catalog_size">
+<span class="sig-name descname"><span class="pre">max_catalog_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_catalog_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_dimension">
+<span class="sig-name descname"><span class="pre">max_dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_dimension" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.index_output_path">
+<span class="sig-name descname"><span class="pre">index_output_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.index_output_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.docker_image_uri">
+<span class="sig-name descname"><span class="pre">docker_image_uri</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.docker_image_uri" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.service_port">
+<span class="sig-name descname"><span class="pre">service_port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.service_port" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.model._TrainingConfigFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">_TrainingConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.model._TrainingConfigFactory" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
@@ -1003,7 +1461,7 @@ inheritance.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../feature_group/index.html" class="btn btn-neutral float-left" title="abacusai.api_class.feature_group" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../python_function_argument/index.html" class="btn btn-neutral float-right" title="abacusai.api_class.python_function_argument" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../python_functions/index.html" class="btn btn-neutral float-right" title="abacusai.api_class.python_functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
