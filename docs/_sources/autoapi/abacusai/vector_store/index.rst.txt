@@ -98,12 +98,14 @@ Classes
       :type vector_store_id: str
 
 
-   .. py:method:: list_versions()
+   .. py:method:: list_versions(limit = 100, start_after_version = None)
 
       List all the vector store versions with a given vector store ID.
 
-      :param vector_store_id: A unique string identifier associated with the vector store.
-      :type vector_store_id: str
+      :param limit: The number of vector store versions to retrieve.
+      :type limit: int
+      :param start_after_version: An offset parameter to exclude all vector store versions up to this specified one.
+      :type start_after_version: str
 
       :returns: All the vector store versions associated with the vector store.
       :rtype: VectorStoreVersion

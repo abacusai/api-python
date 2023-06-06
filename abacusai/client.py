@@ -21,6 +21,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
 from .algorithm import Algorithm
+from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import ApiClass, FeatureGroupExportConfig, ParsingConfig, SamplingConfig, TrainingConfig
@@ -69,6 +70,7 @@ from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
 from .graph_dashboard import GraphDashboard
 from .llm_input import LlmInput
+from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
@@ -94,6 +96,7 @@ from .pipeline_step import PipelineStep
 from .pipeline_version import PipelineVersion
 from .problem_type import ProblemType
 from .project import Project
+from .project_config import ProjectConfig
 from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
 from .python_function import PythonFunction
@@ -205,7 +208,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.67.0'
+    client_version = '0.68.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -554,6 +557,17 @@ class ReadOnlyClient(BaseApiClient):
             'This function (getSchema) is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
         return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
 
+    def get_project_feature_group_config(self, feature_group_id: str, project_id: str) -> ProjectConfig:
+        """Gets a feature group's project config
+
+        Args:
+            feature_group_id (str): Unique string identifier for the feature group.
+            project_id (str): Unique string identifier for the project.
+
+        Returns:
+            ProjectConfig: None"""
+        return self._call_api('getProjectFeatureGroupConfig', 'GET', query_params={'featureGroupId': feature_group_id, 'projectId': project_id}, parse_type=ProjectConfig)
+
     def validate_project(self, project_id: str, feature_group_ids: list = None) -> ProjectValidation:
         """Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
@@ -632,6 +646,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FeatureGroup: All the feature groups in the organization associated with the specified project."""
         return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupTemplateId': feature_group_template_id, 'isIncludingDetachedFromTemplate': is_including_detached_from_template}, parse_type=FeatureGroup)
+
+    def describe_project_feature_group(self, project_id: str, feature_group_id: str) -> FeatureGroup:
+        """Describe a feature group associated with a project
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            FeatureGroup: The feature group object."""
+        return self._call_api('describeProjectFeatureGroup', 'GET', query_params={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
 
     def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> FeatureGroup:
         """List all the feature groups associated with a project
@@ -1884,15 +1909,17 @@ class ReadOnlyClient(BaseApiClient):
             LlmResponse: The response from the model, raw text and parsed components."""
         return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
 
-    def list_vector_stores(self, project_id: str) -> VectorStore:
+    def list_vector_stores(self, project_id: str, limit: int = 100, start_after_id: str = None) -> VectorStore:
         """List all the vector stores.
 
         Args:
             project_id (str): The ID of project that the vector store is created in.
+            limit (int): The number of vector stores to retrieve.
+            start_after_id (str): An offset parameter to exclude all vector stores up to this specified ID.
 
         Returns:
             VectorStore: All the vector stores in the organization associated with the specified project."""
-        return self._call_api('listVectorStores', 'GET', query_params={'projectId': project_id}, parse_type=VectorStore)
+        return self._call_api('listVectorStores', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=VectorStore)
 
     def describe_vector_store(self, vector_store_id: str) -> VectorStore:
         """Describe a Vector Store.
@@ -1914,15 +1941,17 @@ class ReadOnlyClient(BaseApiClient):
             VectorStore: The Vector Store."""
         return self._call_api('describeVectorStoreByName', 'GET', query_params={'name': name}, parse_type=VectorStore)
 
-    def list_vector_store_versions(self, vector_store_id: str) -> VectorStoreVersion:
+    def list_vector_store_versions(self, vector_store_id: str, limit: int = 100, start_after_version: str = None) -> VectorStoreVersion:
         """List all the vector store versions with a given vector store ID.
 
         Args:
             vector_store_id (str): A unique string identifier associated with the vector store.
+            limit (int): The number of vector store versions to retrieve.
+            start_after_version (str): An offset parameter to exclude all vector store versions up to this specified one.
 
         Returns:
             VectorStoreVersion: All the vector store versions associated with the vector store."""
-        return self._call_api('listVectorStoreVersions', 'GET', query_params={'vectorStoreId': vector_store_id}, parse_type=VectorStoreVersion)
+        return self._call_api('listVectorStoreVersions', 'GET', query_params={'vectorStoreId': vector_store_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=VectorStoreVersion)
 
     def describe_vector_store_version(self, vector_store_version: str) -> VectorStoreVersion:
         """Describe a vector store version.
@@ -2174,7 +2203,8 @@ class ApiClient(ReadOnlyClient):
                                          source_code=source_code,
                                          step_input_mappings=step_input_mappings,
                                          output_variable_mappings=output_variable_mappings,
-                                         step_dependencies=step_dependencies)
+                                         step_dependencies=step_dependencies,
+                                         package_requirements=package_requirements)
 
     def update_pipeline_step_from_function(self,
                                            pipeline_step_id: str,
@@ -2627,6 +2657,102 @@ class ApiClient(ReadOnlyClient):
         if hasattr(_request_context):
             _request_context.clear()
 
+    def streaming_evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None):
+        """
+        Generate response to the prompt using the specified model.
+        This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
+
+        Args:
+            prompt (str): Prompt to use for generation.
+            system_message (str): System message for models that support it.
+            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+
+        Returns:
+            LLMResponse: The response from the model, raw text and parsed components.
+        """
+        from .llm_response import LlmResponse
+
+        llm_parameters = self.get_llm_parameters(
+            prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
+        result = self._stream_llm_call_ui(llm_parameters.parameters)
+        result = self._build_class(LlmResponse, result)
+        return result
+
+    def _get_agent_async_app_request_id(self):
+        """
+        Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
+
+        Returns:
+            str: The request ID for the current request being processed by the Agent.
+        """
+        return get_object_from_context(self, _request_context, 'request_id', str)
+
+    def _get_agent_async_app_caller(self):
+        """
+        Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+
+        Returns:
+            str: The caller for the current request being processed by the Agent.
+        """
+        return get_object_from_context(self, _request_context, 'async_app_caller', str)
+
+    def stream_message(self, message: str) -> None:
+        """
+        Streams a message to the current request context. Applicable within a AIAgent execute function.
+        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be printed on the console if used from notebook or python script.
+
+        Args:
+            message (str): The message to be streamed.
+        """
+        request_id = self._get_agent_async_app_request_id()
+        caller = self._get_agent_async_app_caller()
+        if not request_id or not caller:
+            logging.info(message)
+            return
+        self._call_aiagent_asyncapp_sync_message(
+            request_id, caller, message=message)
+
+    def _stream_llm_call_ui(self, llm_args: dict):
+        request_id = self._get_agent_async_app_request_id()
+        caller = self._get_agent_async_app_caller()
+        if not request_id or not caller:
+            raise Exception(
+                'Unable to stream LLM call to UI. No request ID or caller found.')
+        return self._call_aiagent_asyncapp_sync_message(request_id, caller, llm_args=llm_args)
+
+    def _call_aiagent_asyncapp_sync_message(self, request_id, caller, message=None, llm_args=None):
+        """
+        Calls the AI Agent AsyncApp sync message endpoint.
+
+        Args:
+            request_id (str): The request ID for the current request being processed by the Agent.
+            caller (str): The caller for the current request being processed by the Agent.
+            message (str): The message to send to the AsyncApp.
+            llm_args (dict): The LLM arguments to send to the AsyncApp.
+
+        Returns:
+            str: The response from the AsyncApp.
+        """
+        if not caller.endswith('/'):
+            caller = caller + '/'
+        api_endpont = f'{caller}sendSyncMessageExecuteAgentRequest'
+        body = {'requestId': request_id}
+        if message:
+            body['message'] = message
+        elif llm_args:
+            body['llmArgs'] = llm_args
+        else:
+            raise Exception('Either message or llm_args must be provided.')
+        headers = {'APIKEY': self.api_key}
+        response = self._request(
+            api_endpont, method='POST', body=body, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(
+                f'Error calling AI Agent AsyncApp sync message endpoint. Status code: {response.status_code}. Response: {response.text}')
+
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
 
@@ -2941,6 +3067,18 @@ class ApiClient(ReadOnlyClient):
         Returns:
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value."""
         return self._call_api('getDocumentToAnnotate', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureGroupRowIdentifier': feature_group_row_identifier, 'getPrevious': get_previous}, parse_type=AnnotationEntry)
+
+    def import_annotation_labels(self, feature_group_id: str, file: io.TextIOBase, annotation_type: str) -> AnnotationConfig:
+        """Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
+
+        Args:
+            feature_group_id (str): The unique string identifier of the feature group.
+            file (io.TextIOBase): The file to import. Must be a csv file.
+            annotation_type (str): The type of the annotation.
+
+        Returns:
+            AnnotationConfig: The annotation config for the feature group."""
+        return self._call_api('importAnnotationLabels', 'POST', query_params={'featureGroupId': feature_group_id, 'annotationType': annotation_type}, parse_type=AnnotationConfig, files={'file': file})
 
     def create_feature_group(self, table_name: str, sql: str, description: str = None) -> FeatureGroup:
         """Creates a new FeatureGroup from a SQL statement.
@@ -5599,15 +5737,16 @@ Creates a new feature group defined as the union of other feature group versions
             pipeline_id (str): The ID of the pipeline to delete."""
         return self._call_api('deletePipeline', 'DELETE', query_params={'pipelineId': pipeline_id})
 
-    def list_pipeline_versions(self, pipeline_id: str) -> List[PipelineVersion]:
+    def list_pipeline_versions(self, pipeline_id: str, limit: int = 200) -> List[PipelineVersion]:
         """Lists the pipeline versions for a specified pipeline
 
         Args:
             pipeline_id (str): The ID of the pipeline to list versions for.
+            limit (int): The maximum number of pipeline versions to return.
 
         Returns:
             PipelineVersion: A list of pipeline versions."""
-        return self._call_api('listPipelineVersions', 'POST', query_params={}, body={'pipelineId': pipeline_id}, parse_type=PipelineVersion)
+        return self._call_api('listPipelineVersions', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'limit': limit}, parse_type=PipelineVersion)
 
     def run_pipeline(self, pipeline_id: str, pipeline_variable_mappings: list = None) -> PipelineVersion:
         """Runs a specified pipeline with the arguments provided.
@@ -5958,6 +6097,19 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             LlmInput: LLM input object comprising of information about the feature groups with given IDs."""
         return self._call_api('renderFeatureGroupsForLLM', 'POST', query_params={}, body={'featureGroupIds': feature_group_ids, 'tokenBudget': token_budget, 'includeDefinition': include_definition}, parse_type=LlmInput)
+
+    def get_llm_parameters(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None) -> LlmParameters:
+        """Generate parameteres to the prompt using the given inputs
+
+        Args:
+            prompt (str): Prompt to use for generation.
+            system_message (str): System message for models that support it.
+            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+
+        Returns:
+            LlmParameters: The parameters for LLM using the given inputs."""
+        return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
 
     def create_vector_store(self, project_id: str, name: str, feature_group_id: str, cluster_name: str = None) -> VectorStore:
         """Returns a vector store that stores embeddings for document chunks in a feature group.

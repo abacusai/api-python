@@ -101,12 +101,12 @@ Classes
       :type pipeline_id: str
 
 
-   .. py:method:: list_versions()
+   .. py:method:: list_versions(limit = 200)
 
       Lists the pipeline versions for a specified pipeline
 
-      :param pipeline_id: The ID of the pipeline to list versions for.
-      :type pipeline_id: str
+      :param limit: The maximum number of pipeline versions to return.
+      :type limit: int
 
       :returns: A list of pipeline versions.
       :rtype: PipelineVersion

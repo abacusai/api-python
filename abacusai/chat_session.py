@@ -9,24 +9,22 @@ class ChatSession(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             answer (str): The response from the chatbot
-            availableIndices (list[dict]): A list of indices that the chatbot has access to
             chatSessionId (str): The chat session id
             projectId (str): The project id associated with the chat session
             createdAt (str): The timestamp at which the chat session was created
             chatHistory (ChatMessage): The chat history for the conversation
     """
 
-    def __init__(self, client, answer=None, availableIndices=None, chatSessionId=None, projectId=None, createdAt=None, chatHistory={}):
+    def __init__(self, client, answer=None, chatSessionId=None, projectId=None, createdAt=None, chatHistory={}):
         super().__init__(client, chatSessionId)
         self.answer = answer
-        self.available_indices = availableIndices
         self.chat_session_id = chatSessionId
         self.project_id = projectId
         self.created_at = createdAt
         self.chat_history = client._build_class(ChatMessage, chatHistory)
 
     def __repr__(self):
-        return f"ChatSession(answer={repr(self.answer)},\n  available_indices={repr(self.available_indices)},\n  chat_session_id={repr(self.chat_session_id)},\n  project_id={repr(self.project_id)},\n  created_at={repr(self.created_at)},\n  chat_history={repr(self.chat_history)})"
+        return f"ChatSession(answer={repr(self.answer)},\n  chat_session_id={repr(self.chat_session_id)},\n  project_id={repr(self.project_id)},\n  created_at={repr(self.created_at)},\n  chat_history={repr(self.chat_history)})"
 
     def to_dict(self):
         """
@@ -35,7 +33,7 @@ class ChatSession(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'answer': self.answer, 'available_indices': self.available_indices, 'chat_session_id': self.chat_session_id, 'project_id': self.project_id, 'created_at': self.created_at, 'chat_history': self._get_attribute_as_dict(self.chat_history)}
+        return {'answer': self.answer, 'chat_session_id': self.chat_session_id, 'project_id': self.project_id, 'created_at': self.created_at, 'chat_history': self._get_attribute_as_dict(self.chat_history)}
 
     def get(self):
         """

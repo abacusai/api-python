@@ -123,6 +123,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.item_statistics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_input</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_parameters</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_response</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_artifacts_export</span></code></a></li>
@@ -165,6 +166,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../prediction_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
@@ -362,7 +364,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.67.0'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.68.0'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -704,6 +706,26 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_project_feature_group_config">
+<span class="sig-name descname"><span class="pre">get_project_feature_group_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_project_feature_group_config" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a feature group’s project config</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the feature group.</p></li>
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the project.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../project_config/index.html#abacusai.project_config.ProjectConfig" title="abacusai.project_config.ProjectConfig">ProjectConfig</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.validate_project">
 <span class="sig-name descname"><span class="pre">validate_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.validate_project" title="Permalink to this definition"></a></dt>
 <dd><p>Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.</p>
@@ -834,6 +856,26 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All the feature groups in the organization associated with the specified project.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_project_feature_group">
+<span class="sig-name descname"><span class="pre">describe_project_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_project_feature_group" title="Permalink to this definition"></a></dt>
+<dd><p>Describe a feature group associated with a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the project.</p></li>
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the feature group.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The feature group object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
@@ -3028,11 +3070,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_vector_stores">
-<span class="sig-name descname"><span class="pre">list_vector_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_vector_stores" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_vector_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_vector_stores" title="Permalink to this definition"></a></dt>
 <dd><p>List all the vector stores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of project that the vector store is created in.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of project that the vector store is created in.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of vector stores to retrieve.</p></li>
+<li><p><strong>start_after_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An offset parameter to exclude all vector stores up to this specified ID.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All the vector stores in the organization associated with the specified project.</p>
@@ -3079,11 +3125,15 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_vector_store_versions">
-<span class="sig-name descname"><span class="pre">list_vector_store_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_vector_store_versions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_vector_store_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_vector_store_versions" title="Permalink to this definition"></a></dt>
 <dd><p>List all the vector store versions with a given vector store ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of vector store versions to retrieve.</p></li>
+<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An offset parameter to exclude all vector store versions up to this specified one.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All the vector store versions associated with the vector store.</p>
@@ -3732,6 +3782,104 @@ execute function.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.streaming_evaluate_prompt">
+<span class="sig-name descname"><span class="pre">streaming_evaluate_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.streaming_evaluate_prompt" title="Permalink to this definition"></a></dt>
+<dd><p>Generate response to the prompt using the specified model.
+This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prompt to use for generation.</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – System message for models that support it.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the underlying LLM to be used for generation. Should be one of ‘gpt-4’ or ‘gpt-3.5-turbo’. Default is auto selection.</p></li>
+<li><p><strong>max_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the model, raw text and parsed components.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>LLMResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient._get_agent_async_app_request_id">
+<span class="sig-name descname"><span class="pre">_get_agent_async_app_request_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._get_agent_async_app_request_id" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The request ID for the current request being processed by the Agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient._get_agent_async_app_caller">
+<span class="sig-name descname"><span class="pre">_get_agent_async_app_caller</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._get_agent_async_app_caller" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The caller for the current request being processed by the Agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.stream_message">
+<span class="sig-name descname"><span class="pre">stream_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.stream_message" title="Permalink to this definition"></a></dt>
+<dd><p>Streams a message to the current request context. Applicable within a AIAgent execute function.
+If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be printed on the console if used from notebook or python script.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The message to be streamed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient._stream_llm_call_ui">
+<span class="sig-name descname"><span class="pre">_stream_llm_call_ui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._stream_llm_call_ui" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>llm_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient._call_aiagent_asyncapp_sync_message">
+<span class="sig-name descname"><span class="pre">_call_aiagent_asyncapp_sync_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._call_aiagent_asyncapp_sync_message" title="Permalink to this definition"></a></dt>
+<dd><p>Calls the AI Agent AsyncApp sync message endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The request ID for the current request being processed by the Agent.</p></li>
+<li><p><strong>caller</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The caller for the current request being processed by the Agent.</p></li>
+<li><p><strong>message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The message to send to the AsyncApp.</p></li>
+<li><p><strong>llm_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The LLM arguments to send to the AsyncApp.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the AsyncApp.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.add_user_to_organization">
 <span class="sig-name descname"><span class="pre">add_user_to_organization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.add_user_to_organization" title="Permalink to this definition"></a></dt>
 <dd><p>Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.</p>
@@ -4243,6 +4391,27 @@ execute function.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../annotation_entry/index.html#abacusai.annotation_entry.AnnotationEntry" title="abacusai.annotation_entry.AnnotationEntry">AnnotationEntry</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.import_annotation_labels">
+<span class="sig-name descname"><span class="pre">import_annotation_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotation_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.import_annotation_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique string identifier of the feature group.</p></li>
+<li><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – The file to import. Must be a csv file.</p></li>
+<li><p><strong>annotation_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The type of the annotation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The annotation config for the feature group.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../annotation_config/index.html#abacusai.annotation_config.AnnotationConfig" title="abacusai.annotation_config.AnnotationConfig">AnnotationConfig</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -8450,11 +8619,14 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.list_pipeline_versions">
-<span class="sig-name descname"><span class="pre">list_pipeline_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.list_pipeline_versions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_pipeline_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.list_pipeline_versions" title="Permalink to this definition"></a></dt>
 <dd><p>Lists the pipeline versions for a specified pipeline</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to list versions for.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to list versions for.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The maximum number of pipeline versions to return.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of pipeline versions.</p>
@@ -9037,6 +9209,28 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../llm_input/index.html#abacusai.llm_input.LlmInput" title="abacusai.llm_input.LlmInput">LlmInput</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_llm_parameters">
+<span class="sig-name descname"><span class="pre">get_llm_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_llm_parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Generate parameteres to the prompt using the given inputs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prompt</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prompt to use for generation.</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – System message for models that support it.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the underlying LLM to be used for generation. Should be one of ‘gpt-4’ or ‘gpt-3.5-turbo’. Default is auto selection.</p></li>
+<li><p><strong>max_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parameters for LLM using the given inputs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../llm_parameters/index.html#abacusai.llm_parameters.LlmParameters" title="abacusai.llm_parameters.LlmParameters">LlmParameters</a></p>
 </dd>
 </dl>
 </dd></dl>

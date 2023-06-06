@@ -14,6 +14,7 @@ Classes
 
    abacusai.api_class.model.TrainingConfig
    abacusai.api_class.model.PersonalizationTrainingConfig
+   abacusai.api_class.model.RegressionTrainingConfig
    abacusai.api_class.model.ForecastingTrainingConfig
    abacusai.api_class.model.NamedEntityExtractionTrainingConfig
    abacusai.api_class.model.NaturalLanguageSearchTrainingConfig
@@ -29,6 +30,8 @@ Classes
    abacusai.api_class.model.ThemeAnalysisTrainingConfig
    abacusai.api_class.model.AIAgentTrainingConfig
    abacusai.api_class.model.CustomTrainedModelTrainingConfig
+   abacusai.api_class.model.CustomAlgorithmTrainingConfig
+   abacusai.api_class.model.OptimizationTrainingConfig
    abacusai.api_class.model._TrainingConfigFactory
 
 
@@ -296,6 +299,279 @@ Classes
 
    .. py:attribute:: downsample_item_popularity_percentile
       :type: float
+
+      
+
+
+.. py:class:: RegressionTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the PREDICTIVE_MODELING problem type
+   :param problem_type: PREDICTIVE_MODELING
+   :type problem_type: ProblemType
+   :param objective: Ranking scheme used to select final best model.
+   :type objective: RegressionObjective
+   :param sort_objective: Ranking scheme used to sort models on the metrics page.
+   :type sort_objective: RegressionObjective
+   :param tree_hpo_mode: (RegressionTreeHPOMode): Turning off Rapid Experimentation will take longer to train.
+   :param type_of_split: Type of data splitting into train/test (validation also).
+   :type type_of_split: RegressionTypeOfSplit
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
+   :type test_split: int
+   :param disable_test_val_fold: Do not create a TEST_VAL set. All records which would be part of the TEST_VAL fold otherwise, remain in the TEST fold.
+   :type disable_test_val_fold: bool
+   :param k_fold_cross_validation: Use this to force k-fold cross validation bagging on or off.
+   :type k_fold_cross_validation: bool
+   :param num_cv_folds: Specify the value of k in k-fold cross validation.
+   :type num_cv_folds: int
+   :param timestamp_based_splitting_column: Timestamp column selected for splitting into test and train.
+   :type timestamp_based_splitting_column: str
+   :param timestamp_based_splitting_method: Method of selecting TEST set, top percentile wise or after a given timestamp.
+   :type timestamp_based_splitting_method: RegressionTimeSplitMethod
+   :param test_splitting_timestamp: Rows with timestamp greater than this will be considered to be in the test set.
+   :type test_splitting_timestamp: str
+   :param sampling_unit_keys: Constrain train/test separation to partition a column.
+   :type sampling_unit_keys: List[str]
+   :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
+   :type test_row_indicator: str
+   :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
+                             Re-balancing classes generally boosts recall at the cost of precision on rare classes.
+   :type rebalance_classes: bool
+   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold.
+   :type rare_class_augmentation_threshold: float
+   :param augmentation_strategy: Strategy to deal with class imbalance and data augmentation.
+   :type augmentation_strategy: RegressionAugmentationStrategy
+   :param training_rows_downsample_ratio: Uses this ratio to train on a sample of the dataset provided.
+   :type training_rows_downsample_ratio: float
+   :param active_labels_column: Specify a column to use as the active columns in a multi label setting.
+   :type active_labels_column: str
+   :param min_categorical_count: Minimum threshold to consider a value different from the unknown placeholder.
+   :type min_categorical_count: int
+   :param sample_weight: Specify a column to use as the weight of a sample for training and eval.
+   :type sample_weight: str
+   :param numeric_clipping_percentile: Uses this option to clip the top and bottom x percentile of numeric feature columns where x is the value of this option.
+   :type numeric_clipping_percentile: float
+   :param target_transform: Specify a transform (e.g. log, quantile) to apply to the target variable.
+   :type target_transform: RegressionTargetTransform
+   :param ignore_datetime_features: Remove all datetime features from the model. Useful while generalizing to different time periods.
+   :type ignore_datetime_features: bool
+   :param max_text_words: Maximum number of words to use from text fields.
+   :type max_text_words: int
+   :param perform_feature_selection: If enabled, additional algorithms which support feature selection as a pretraining step will be trained separately with the selected subset of features. The details about their selected features can be found in their respective logs.
+   :type perform_feature_selection: bool
+   :param feature_selection_intensity: This determines the strictness with which features will be filtered out. 1 being very lenient (more features kept), 100 being very strict.
+   :type feature_selection_intensity: int
+   :param batch_size: Batch size.
+   :type batch_size: BatchSize
+   :param dropout_rate: Dropout percentage rate.
+   :type dropout_rate: int
+   :param pretrained_model_name: Enable algorithms which process text using pretrained multilingual NLP models.
+   :type pretrained_model_name: str
+   :param is_multilingual: Enable algorithms which process text using pretrained multilingual NLP models.
+   :type is_multilingual: bool
+   :param loss_function: Loss function to be used as objective for model training.
+   :type loss_function: RegressionLossFunction
+   :param loss_parameters: Loss function params in format <key>=<value>;<key>=<value>;.....
+   :type loss_parameters: str
+   :param target_encode_categoricals: Use this to turn target encoding on categorical features on or off.
+   :type target_encode_categoricals: bool
+   :param drop_original_categoricals: This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
+   :type drop_original_categoricals: bool
+   :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
+   :type data_split_feature_group_table_name: str
+   :param custom_loss_functions: Registered custom losses available for selection.
+   :type custom_loss_functions: list[str]
+   :param custom_metrics: Registered custom metrics available for selection.
+   :type custom_metrics: list[str]
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: objective
+      :type: abacusai.api_class.enums.RegressionObjective
+
+      
+
+   .. py:attribute:: sort_objective
+      :type: abacusai.api_class.enums.RegressionObjective
+
+      
+
+   .. py:attribute:: tree_hpo_mode
+      :type: abacusai.api_class.enums.RegressionTreeHPOMode
+
+      
+
+   .. py:attribute:: type_of_split
+      :type: abacusai.api_class.enums.RegressionTypeOfSplit
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: disable_test_val_fold
+      :type: bool
+
+      
+
+   .. py:attribute:: k_fold_cross_validation
+      :type: bool
+
+      
+
+   .. py:attribute:: num_cv_folds
+      :type: int
+
+      
+
+   .. py:attribute:: timestamp_based_splitting_column
+      :type: str
+
+      
+
+   .. py:attribute:: timestamp_based_splitting_method
+      :type: abacusai.api_class.enums.RegressionTimeSplitMethod
+
+      
+
+   .. py:attribute:: test_splitting_timestamp
+      :type: str
+
+      
+
+   .. py:attribute:: sampling_unit_keys
+      :type: List[str]
+
+      
+
+   .. py:attribute:: test_row_indicator
+      :type: str
+
+      
+
+   .. py:attribute:: rebalance_classes
+      :type: bool
+
+      
+
+   .. py:attribute:: rare_class_augmentation_threshold
+      :type: float
+
+      
+
+   .. py:attribute:: augmentation_strategy
+      :type: abacusai.api_class.enums.RegressionAugmentationStrategy
+
+      
+
+   .. py:attribute:: training_rows_downsample_ratio
+      :type: float
+
+      
+
+   .. py:attribute:: active_labels_column
+      :type: str
+
+      
+
+   .. py:attribute:: min_categorical_count
+      :type: int
+
+      
+
+   .. py:attribute:: sample_weight
+      :type: str
+
+      
+
+   .. py:attribute:: numeric_clipping_percentile
+      :type: float
+
+      
+
+   .. py:attribute:: target_transform
+      :type: abacusai.api_class.enums.RegressionTargetTransform
+
+      
+
+   .. py:attribute:: ignore_datetime_features
+      :type: bool
+
+      
+
+   .. py:attribute:: max_text_words
+      :type: int
+
+      
+
+   .. py:attribute:: perform_feature_selection
+      :type: bool
+
+      
+
+   .. py:attribute:: feature_selection_intensity
+      :type: int
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: int
+
+      
+
+   .. py:attribute:: pretrained_model_name
+      :type: str
+
+      
+
+   .. py:attribute:: is_multilingual
+      :type: bool
+
+      
+
+   .. py:attribute:: loss_function
+      :type: abacusai.api_class.enums.RegressionLossFunction
+
+      
+
+   .. py:attribute:: loss_parameters
+      :type: str
+
+      
+
+   .. py:attribute:: target_encode_categoricals
+      :type: bool
+
+      
+
+   .. py:attribute:: drop_original_categoricals
+      :type: bool
+
+      
+
+   .. py:attribute:: data_split_feature_group_table_name
+      :type: str
+
+      
+
+   .. py:attribute:: custom_loss_functions
+      :type: List[str]
+
+      
+
+   .. py:attribute:: custom_metrics
+      :type: List[str]
 
       
 
@@ -1310,6 +1586,83 @@ Classes
 
    .. py:attribute:: service_port
       :type: int
+
+      
+
+
+.. py:class:: CustomAlgorithmTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the CUSTOM_ALGORITHM problem type
+   :param problem_type: CUSTOM_ALGORITHM
+   :type problem_type: ProblemType
+   :param train_function_name: The name of the train function.
+   :type train_function_name: str
+   :param predict_many_function_name: The name of the predict many function.
+   :type predict_many_function_name: str
+   :param training_input_tables: List of tables to use for training.
+   :type training_input_tables: List[str]
+   :param predict_function_name: Optional name of the predict function if the predict many function is not given.
+   :type predict_function_name: str
+   :param train_module_name: The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
+   :type train_module_name: str
+   :param predict_module_name: The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
+   :type predict_module_name: str
+   :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+   :type test_split: int
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: train_function_name
+      :type: str
+
+      
+
+   .. py:attribute:: predict_many_function_name
+      :type: str
+
+      
+
+   .. py:attribute:: training_input_tables
+      :type: List[str]
+
+      
+
+   .. py:attribute:: predict_function_name
+      :type: str
+
+      
+
+   .. py:attribute:: train_module_name
+      :type: str
+
+      
+
+   .. py:attribute:: predict_module_name
+      :type: str
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+
+.. py:class:: OptimizationTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the OPTIMIZATION problem type
+   :param problem_type: OPTIMIZATION
+   :type problem_type: ProblemType
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
 
       
 

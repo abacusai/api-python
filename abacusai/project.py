@@ -198,6 +198,18 @@ class Project(AbstractApiClass):
         """
         return self.client.remove_column_mapping(self.project_id, dataset_id, column)
 
+    def describe_feature_group(self, feature_group_id: str):
+        """
+        Describe a feature group associated with a project
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            FeatureGroup: The feature group object.
+        """
+        return self.client.describe_project_feature_group(self.project_id, feature_group_id)
+
     def list_feature_groups(self, filter_feature_group_use: str = None):
         """
         List all the feature groups associated with a project
@@ -615,17 +627,18 @@ class Project(AbstractApiClass):
         """
         return self.client.create_vector_store(self.project_id, name, feature_group_id, cluster_name)
 
-    def list_vector_stores(self):
+    def list_vector_stores(self, limit: int = 100, start_after_id: str = None):
         """
         List all the vector stores.
 
         Args:
-            project_id (str): The ID of project that the vector store is created in.
+            limit (int): The number of vector stores to retrieve.
+            start_after_id (str): An offset parameter to exclude all vector stores up to this specified ID.
 
         Returns:
             VectorStore: All the vector stores in the organization associated with the specified project.
         """
-        return self.client.list_vector_stores(self.project_id)
+        return self.client.list_vector_stores(self.project_id, limit, start_after_id)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

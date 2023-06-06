@@ -104,7 +104,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.67.0'
+      :value: '0.68.0'
 
       
 
@@ -297,6 +297,19 @@ Attributes
       :rtype: Schema
 
 
+   .. py:method:: get_project_feature_group_config(feature_group_id, project_id)
+
+      Gets a feature group's project config
+
+      :param feature_group_id: Unique string identifier for the feature group.
+      :type feature_group_id: str
+      :param project_id: Unique string identifier for the project.
+      :type project_id: str
+
+      :returns: None
+      :rtype: ProjectConfig
+
+
    .. py:method:: validate_project(project_id, feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
@@ -389,6 +402,19 @@ Attributes
       :type is_including_detached_from_template: bool
 
       :returns: All the feature groups in the organization associated with the specified project.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: describe_project_feature_group(project_id, feature_group_id)
+
+      Describe a feature group associated with a project
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: The feature group object.
       :rtype: FeatureGroup
 
 
@@ -1859,12 +1885,16 @@ Attributes
       :rtype: LlmResponse
 
 
-   .. py:method:: list_vector_stores(project_id)
+   .. py:method:: list_vector_stores(project_id, limit = 100, start_after_id = None)
 
       List all the vector stores.
 
       :param project_id: The ID of project that the vector store is created in.
       :type project_id: str
+      :param limit: The number of vector stores to retrieve.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
+      :type start_after_id: str
 
       :returns: All the vector stores in the organization associated with the specified project.
       :rtype: VectorStore
@@ -1892,12 +1922,16 @@ Attributes
       :rtype: VectorStore
 
 
-   .. py:method:: list_vector_store_versions(vector_store_id)
+   .. py:method:: list_vector_store_versions(vector_store_id, limit = 100, start_after_version = None)
 
       List all the vector store versions with a given vector store ID.
 
       :param vector_store_id: A unique string identifier associated with the vector store.
       :type vector_store_id: str
+      :param limit: The number of vector store versions to retrieve.
+      :type limit: int
+      :param start_after_version: An offset parameter to exclude all vector store versions up to this specified one.
+      :type start_after_version: str
 
       :returns: All the vector store versions associated with the vector store.
       :rtype: VectorStoreVersion
@@ -2415,6 +2449,69 @@ Attributes
       Clears the current request context.
 
 
+   .. py:method:: streaming_evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None)
+
+      Generate response to the prompt using the specified model.
+      This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
+
+      :param prompt: Prompt to use for generation.
+      :type prompt: str
+      :param system_message: System message for models that support it.
+      :type system_message: str
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+      :type llm_name: str
+      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+      :type max_tokens: int
+
+      :returns: The response from the model, raw text and parsed components.
+      :rtype: LLMResponse
+
+
+   .. py:method:: _get_agent_async_app_request_id()
+
+      Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
+
+      :returns: The request ID for the current request being processed by the Agent.
+      :rtype: str
+
+
+   .. py:method:: _get_agent_async_app_caller()
+
+      Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+
+      :returns: The caller for the current request being processed by the Agent.
+      :rtype: str
+
+
+   .. py:method:: stream_message(message)
+
+      Streams a message to the current request context. Applicable within a AIAgent execute function.
+      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be printed on the console if used from notebook or python script.
+
+      :param message: The message to be streamed.
+      :type message: str
+
+
+   .. py:method:: _stream_llm_call_ui(llm_args)
+
+
+   .. py:method:: _call_aiagent_asyncapp_sync_message(request_id, caller, message=None, llm_args=None)
+
+      Calls the AI Agent AsyncApp sync message endpoint.
+
+      :param request_id: The request ID for the current request being processed by the Agent.
+      :type request_id: str
+      :param caller: The caller for the current request being processed by the Agent.
+      :type caller: str
+      :param message: The message to send to the AsyncApp.
+      :type message: str
+      :param llm_args: The LLM arguments to send to the AsyncApp.
+      :type llm_args: dict
+
+      :returns: The response from the AsyncApp.
+      :rtype: str
+
+
    .. py:method:: add_user_to_organization(email)
 
       Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2817,6 +2914,21 @@ Attributes
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
       :rtype: AnnotationEntry
+
+
+   .. py:method:: import_annotation_labels(feature_group_id, file, annotation_type)
+
+      Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
+
+      :param feature_group_id: The unique string identifier of the feature group.
+      :type feature_group_id: str
+      :param file: The file to import. Must be a csv file.
+      :type file: io.TextIOBase
+      :param annotation_type: The type of the annotation.
+      :type annotation_type: str
+
+      :returns: The annotation config for the feature group.
+      :rtype: AnnotationConfig
 
 
    .. py:method:: create_feature_group(table_name, sql, description = None)
@@ -6233,12 +6345,14 @@ Attributes
       :type pipeline_id: str
 
 
-   .. py:method:: list_pipeline_versions(pipeline_id)
+   .. py:method:: list_pipeline_versions(pipeline_id, limit = 200)
 
       Lists the pipeline versions for a specified pipeline
 
       :param pipeline_id: The ID of the pipeline to list versions for.
       :type pipeline_id: str
+      :param limit: The maximum number of pipeline versions to return.
+      :type limit: int
 
       :returns: A list of pipeline versions.
       :rtype: PipelineVersion
@@ -6702,6 +6816,23 @@ Attributes
 
       :returns: LLM input object comprising of information about the feature groups with given IDs.
       :rtype: LlmInput
+
+
+   .. py:method:: get_llm_parameters(prompt, system_message = None, llm_name = None, max_tokens = None)
+
+      Generate parameteres to the prompt using the given inputs
+
+      :param prompt: Prompt to use for generation.
+      :type prompt: str
+      :param system_message: System message for models that support it.
+      :type system_message: str
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+      :type llm_name: str
+      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+      :type max_tokens: int
+
+      :returns: The parameters for LLM using the given inputs.
+      :rtype: LlmParameters
 
 
    .. py:method:: create_vector_store(project_id, name, feature_group_id, cluster_name = None)

@@ -204,6 +204,17 @@ Classes
       :rtype: Schema
 
 
+   .. py:method:: describe_feature_group(feature_group_id)
+
+      Describe a feature group associated with a project
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: The feature group object.
+      :rtype: FeatureGroup
+
+
    .. py:method:: list_feature_groups(filter_feature_group_use = None)
 
       List all the feature groups associated with a project
@@ -675,12 +686,14 @@ Classes
       :rtype: VectorStore
 
 
-   .. py:method:: list_vector_stores()
+   .. py:method:: list_vector_stores(limit = 100, start_after_id = None)
 
       List all the vector stores.
 
-      :param project_id: The ID of project that the vector store is created in.
-      :type project_id: str
+      :param limit: The number of vector stores to retrieve.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
+      :type start_after_id: str
 
       :returns: All the vector stores in the organization associated with the specified project.
       :rtype: VectorStore

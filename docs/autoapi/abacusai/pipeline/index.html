@@ -120,6 +120,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.item_statistics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_input</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_parameters</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_response</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_artifacts_export</span></code></a></li>
@@ -165,6 +166,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../prediction_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../project_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
@@ -344,11 +346,11 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.pipeline.Pipeline.list_versions">
-<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.pipeline.Pipeline.list_versions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.pipeline.Pipeline.list_versions" title="Permalink to this definition"></a></dt>
 <dd><p>Lists the pipeline versions for a specified pipeline</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline to list versions for.</p>
+<dd class="field-odd"><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The maximum number of pipeline versions to return.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of pipeline versions.</p>

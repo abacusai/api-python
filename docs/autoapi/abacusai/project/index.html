@@ -20,7 +20,7 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="abacusai.project_dataset" href="../project_dataset/index.html" />
+    <link rel="next" title="abacusai.project_config" href="../project_config/index.html" />
     <link rel="prev" title="abacusai.problem_type" href="../problem_type/index.html" /> 
 </head>
 
@@ -120,6 +120,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.item_statistics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_input</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_parameters</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_response</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../model_artifacts_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.model_artifacts_export</span></code></a></li>
@@ -165,6 +166,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../project_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
@@ -485,6 +487,23 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../schema/index.html#abacusai.schema.Schema" title="abacusai.schema.Schema">Schema</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.project.Project.describe_feature_group">
+<span class="sig-name descname"><span class="pre">describe_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.describe_feature_group" title="Permalink to this definition"></a></dt>
+<dd><p>Describe a feature group associated with a project</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the feature group.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The feature group object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1067,11 +1086,14 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.list_vector_stores">
-<span class="sig-name descname"><span class="pre">list_vector_stores</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.list_vector_stores" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_vector_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.list_vector_stores" title="Permalink to this definition"></a></dt>
 <dd><p>List all the vector stores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of project that the vector store is created in.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of vector stores to retrieve.</p></li>
+<li><p><strong>start_after_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An offset parameter to exclude all vector stores up to this specified ID.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All the vector stores in the organization associated with the specified project.</p>
@@ -1151,7 +1173,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../problem_type/index.html" class="btn btn-neutral float-left" title="abacusai.problem_type" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../project_dataset/index.html" class="btn btn-neutral float-right" title="abacusai.project_dataset" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../project_config/index.html" class="btn btn-neutral float-right" title="abacusai.project_config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

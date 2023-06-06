@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None, projectConfig=None)
+.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None, projectConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -58,7 +58,7 @@ Classes
    :param databaseOutputError: If `True`, there were errors reported by the database connector while writing.
    :type databaseOutputError: bool
    :param projectConfig: Project config for this feature group.
-   :type projectConfig: dict
+   :type projectConfig: ProjectConfig
 
    .. py:method:: __repr__()
 

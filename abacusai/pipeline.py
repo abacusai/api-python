@@ -94,17 +94,17 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.delete_pipeline(self.pipeline_id)
 
-    def list_versions(self):
+    def list_versions(self, limit: int = 200):
         """
         Lists the pipeline versions for a specified pipeline
 
         Args:
-            pipeline_id (str): The ID of the pipeline to list versions for.
+            limit (int): The maximum number of pipeline versions to return.
 
         Returns:
             PipelineVersion: A list of pipeline versions.
         """
-        return self.client.list_pipeline_versions(self.pipeline_id)
+        return self.client.list_pipeline_versions(self.pipeline_id, limit)
 
     def run(self, pipeline_variable_mappings: list = None):
         """

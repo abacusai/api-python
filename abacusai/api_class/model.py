@@ -104,6 +104,107 @@ class PersonalizationTrainingConfig(TrainingConfig):
     downsample_item_popularity_percentile: float = dataclasses.field(default=None)
 
 
+class RegressionTrainingConfig(TrainingConfig):
+    """
+    Training config for the PREDICTIVE_MODELING problem type
+    Args:
+        problem_type (ProblemType): PREDICTIVE_MODELING
+        objective (RegressionObjective): Ranking scheme used to select final best model.
+        sort_objective (RegressionObjective): Ranking scheme used to sort models on the metrics page.
+        tree_hpo_mode: (RegressionTreeHPOMode): Turning off Rapid Experimentation will take longer to train.
+        type_of_split (RegressionTypeOfSplit): Type of data splitting into train/test (validation also).
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
+        disable_test_val_fold (bool): Do not create a TEST_VAL set. All records which would be part of the TEST_VAL fold otherwise, remain in the TEST fold.
+        k_fold_cross_validation (bool): Use this to force k-fold cross validation bagging on or off.
+        num_cv_folds (int): Specify the value of k in k-fold cross validation.
+        timestamp_based_splitting_column (str): Timestamp column selected for splitting into test and train.
+        timestamp_based_splitting_method (RegressionTimeSplitMethod): Method of selecting TEST set, top percentile wise or after a given timestamp.
+        test_splitting_timestamp (str): Rows with timestamp greater than this will be considered to be in the test set.
+        sampling_unit_keys (List[str]): Constrain train/test separation to partition a column.
+        test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
+        rebalance_classes (bool): Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
+                                  Re-balancing classes generally boosts recall at the cost of precision on rare classes.
+        rare_class_augmentation_threshold (float): Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold.
+        augmentation_strategy (RegressionAugmentationStrategy): Strategy to deal with class imbalance and data augmentation.
+        training_rows_downsample_ratio (float): Uses this ratio to train on a sample of the dataset provided.
+        active_labels_column (str): Specify a column to use as the active columns in a multi label setting.
+        min_categorical_count (int): Minimum threshold to consider a value different from the unknown placeholder.
+        sample_weight (str): Specify a column to use as the weight of a sample for training and eval.
+        numeric_clipping_percentile (float): Uses this option to clip the top and bottom x percentile of numeric feature columns where x is the value of this option.
+        target_transform (RegressionTargetTransform): Specify a transform (e.g. log, quantile) to apply to the target variable.
+        ignore_datetime_features (bool): Remove all datetime features from the model. Useful while generalizing to different time periods.
+        max_text_words (int): Maximum number of words to use from text fields.
+        perform_feature_selection (bool): If enabled, additional algorithms which support feature selection as a pretraining step will be trained separately with the selected subset of features. The details about their selected features can be found in their respective logs.
+        feature_selection_intensity (int): This determines the strictness with which features will be filtered out. 1 being very lenient (more features kept), 100 being very strict.
+        batch_size (BatchSize): Batch size.
+        dropout_rate (int): Dropout percentage rate.
+        pretrained_model_name (str): Enable algorithms which process text using pretrained multilingual NLP models.
+        is_multilingual (bool): Enable algorithms which process text using pretrained multilingual NLP models.
+        loss_function (RegressionLossFunction): Loss function to be used as objective for model training.
+        loss_parameters (str): Loss function params in format <key>=<value>;<key>=<value>;.....
+        target_encode_categoricals (bool): Use this to turn target encoding on categorical features on or off.
+        drop_original_categoricals (bool): This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
+        data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
+        custom_loss_functions (list[str]): Registered custom losses available for selection.
+        custom_metrics (list[str]): Registered custom metrics available for selection.
+
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.PREDICTIVE_MODELING, repr=False, init=False)
+    objective: enums.RegressionObjective = dataclasses.field(default=None)
+    sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
+    tree_hpo_mode: enums.RegressionTreeHPOMode = dataclasses.field(default=enums.RegressionTreeHPOMode.THOROUGH)
+
+    # data split related
+    type_of_split: enums.RegressionTypeOfSplit = dataclasses.field(default=None)
+    test_split: int = dataclasses.field(default=None)
+    disable_test_val_fold: bool = dataclasses.field(default=None)
+    k_fold_cross_validation: bool = dataclasses.field(default=None)
+    num_cv_folds: int = dataclasses.field(default=None)
+    timestamp_based_splitting_column: str = dataclasses.field(default=None)
+    timestamp_based_splitting_method: enums.RegressionTimeSplitMethod = dataclasses.field(default=None)
+    test_splitting_timestamp: str = dataclasses.field(default=None)
+    sampling_unit_keys: List[str] = dataclasses.field(default=None)
+    test_row_indicator: str = dataclasses.field(default=None)
+
+    # data augmentation
+    rebalance_classes: bool = dataclasses.field(default=None)
+    rare_class_augmentation_threshold: float = dataclasses.field(default=0.1)
+    augmentation_strategy: enums.RegressionAugmentationStrategy = dataclasses.field(default=None)
+    training_rows_downsample_ratio: float = dataclasses.field(default=None)
+
+    # multivalue categorical
+    active_labels_column: str = dataclasses.field(default=None)
+
+    # features and columns
+    min_categorical_count: int = dataclasses.field(default=None)
+    sample_weight: str = dataclasses.field(default=None)
+    numeric_clipping_percentile: float = dataclasses.field(default=None)
+    target_transform: enums.RegressionTargetTransform = dataclasses.field(default=None)
+    ignore_datetime_features: bool = dataclasses.field(default=None)
+    max_text_words: int = dataclasses.field(default=None)
+    perform_feature_selection: bool = dataclasses.field(default=None)
+    feature_selection_intensity: int = dataclasses.field(default=None)
+
+    # neural network
+    batch_size: enums.BatchSize = dataclasses.field(default=None)
+    dropout_rate: int = dataclasses.field(default=None)
+    pretrained_model_name: str = dataclasses.field(default=None)
+    is_multilingual: bool = dataclasses.field(default=None)
+
+    # loss function
+    loss_function: enums.RegressionLossFunction = dataclasses.field(default=None)
+    loss_parameters: str = dataclasses.field(default=None)
+
+    # target encoding
+    target_encode_categoricals: bool = dataclasses.field(default=None)
+    drop_original_categoricals: bool = dataclasses.field(default=None)
+
+    # Others
+    data_split_feature_group_table_name: str = dataclasses.field(default=None)
+    custom_loss_functions: List[str] = dataclasses.field(default=None)
+    custom_metrics: List[str] = dataclasses.field(default=None)
+
+
 @dataclasses.dataclass
 class ForecastingTrainingConfig(TrainingConfig):
     """
@@ -503,6 +604,40 @@ class CustomTrainedModelTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
+class CustomAlgorithmTrainingConfig(TrainingConfig):
+    """
+    Training config for the CUSTOM_ALGORITHM problem type
+    Args:
+        problem_type (ProblemType): CUSTOM_ALGORITHM
+        train_function_name (str): The name of the train function.
+        predict_many_function_name (str): The name of the predict many function.
+        training_input_tables (List[str]): List of tables to use for training.
+        predict_function_name (str): Optional name of the predict function if the predict many function is not given.
+        train_module_name (str): The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
+        predict_module_name (str): The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.CUSTOM_ALGORITHM, repr=False, init=False)
+    train_function_name: str = dataclasses.field(default=None)
+    predict_many_function_name: str = dataclasses.field(default=None)
+    training_input_tables: List[str] = dataclasses.field(default=None)
+    predict_function_name: str = dataclasses.field(default=None)
+    train_module_name: str = dataclasses.field(default=None)
+    predict_module_name: str = dataclasses.field(default=None)
+    test_split: int = dataclasses.field(default=None)
+
+
+@dataclasses.dataclass
+class OptimizationTrainingConfig(TrainingConfig):
+    """
+    Training config for the OPTIMIZATION problem type
+    Args:
+        problem_type (ProblemType): OPTIMIZATION
+    """
+    problem_type: enums.ProblemType = dataclasses.field(default=enums.ProblemType.OPTIMIZATION, repr=False, init=False)
+
+
+@dataclasses.dataclass
 class _TrainingConfigFactory(_ApiClassFactory):
     config_abstract_class = TrainingConfig
     config_class_key = 'problem_type'
@@ -519,7 +654,10 @@ class _TrainingConfigFactory(_ApiClassFactory):
         enums.ProblemType.FORECASTING: ForecastingTrainingConfig,
         enums.ProblemType.NAMED_ENTITY_EXTRACTION: NamedEntityExtractionTrainingConfig,
         enums.ProblemType.NATURAL_LANGUAGE_SEARCH: NaturalLanguageSearchTrainingConfig,
+        enums.ProblemType.PREDICTIVE_MODELING: RegressionTrainingConfig,
         enums.ProblemType.SENTENCE_BOUNDARY_DETECTION: SentenceBoundaryDetectionTrainingConfig,
         enums.ProblemType.SENTIMENT_DETECTION: SentimentDetectionTrainingConfig,
         enums.ProblemType.THEME_ANALYSIS: ThemeAnalysisTrainingConfig,
+        enums.ProblemType.CUSTOM_ALGORITHM: CustomAlgorithmTrainingConfig,
+        enums.ProblemType.OPTIMIZATION: OptimizationTrainingConfig
     }

@@ -90,17 +90,18 @@ class VectorStore(AbstractApiClass):
         """
         return self.client.delete_vector_store(self.vector_store_id)
 
-    def list_versions(self):
+    def list_versions(self, limit: int = 100, start_after_version: str = None):
         """
         List all the vector store versions with a given vector store ID.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            limit (int): The number of vector store versions to retrieve.
+            start_after_version (str): An offset parameter to exclude all vector store versions up to this specified one.
 
         Returns:
             VectorStoreVersion: All the vector store versions associated with the vector store.
         """
-        return self.client.list_vector_store_versions(self.vector_store_id)
+        return self.client.list_vector_store_versions(self.vector_store_id, limit, start_after_version)
 
     def lookup(self, query: str, deployment_token: str, limit_results: int = None):
         """

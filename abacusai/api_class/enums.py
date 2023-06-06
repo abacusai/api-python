@@ -47,6 +47,62 @@ class ProblemType(ApiEnum):
     THEME_ANALYSIS = 'theme_analysis'
 
 
+class RegressionObjective(ApiEnum):
+
+    AUC = 'auc'
+    ACCURACY = 'acc'
+    LOG_LOSS = 'log_loss'
+    PRECISION = 'precision'
+    RECALL = 'recall'
+    F1_SCORE = 'fscore'
+    MAE = 'mae'
+    MAPE = 'mape'
+    WAPE = 'wape'
+    RMSE = 'rmse'
+    R_SQUARED_COEFFICIENT_OF_DETERMINATION = 'r^2'
+
+
+class RegressionTreeHPOMode(ApiEnum):
+    RAPID = 'rapid',
+    THOROUGH = 'thorough'
+
+
+class RegressionAugmentationStrategy(ApiEnum):
+    SMOTE = 'smote'
+    RESAMPLE = 'resample'
+
+
+class RegressionTargetTransform(ApiEnum):
+    LOG = 'log'
+    QUANTILE = 'quantile'
+    YEO_JOHNSON = 'yeo-johnson'
+    BOX_COX = 'box-cox'
+
+
+class RegressionTypeOfSplit(ApiEnum):
+    RANDOM = 'Random Sampling'
+    TIMESTAMP_BASED = 'Timestamp Based'
+    ROW_INDICATOR_BASED = 'Row Indicator Based'
+
+
+class RegressionTimeSplitMethod(ApiEnum):
+    TEST_SPLIT_PERCENTAGE_BASED = 'Test Split Percentage Based'
+    TEST_START_TIMESTAMP_BASED = 'Test Start Timestamp Based'
+
+
+class RegressionLossFunction(ApiEnum):
+    HUBER = 'Huber'
+    MSE = 'Mean Squared Error'
+    MAE = 'Mean Absolute Error'
+    MAPE = 'Mean Absolute Percentage Error'
+    MSLE = 'Mean Squared Logarithmic Error'
+    TWEEDIE = 'Tweedie'
+    CROSS_ENTROPY = 'Cross Entropy'
+    FOCAL_CROSS_ENTROPY = 'Focal Cross Entropy'
+    AUTOMATIC = 'Automatic'
+    CUSTOM = 'Custom'
+
+
 class SamplingMethodType(ApiEnum):
     N_SAMPLING = 'N_SAMPLING'
     PERCENT_SAMPLING = 'PERCENT_SAMPLING'

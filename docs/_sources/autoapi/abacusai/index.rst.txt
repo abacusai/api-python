@@ -92,6 +92,7 @@ Submodules
    item_statistics/index.rst
    llm_code_block/index.rst
    llm_input/index.rst
+   llm_parameters/index.rst
    llm_response/index.rst
    model/index.rst
    model_artifacts_export/index.rst
@@ -134,6 +135,7 @@ Submodules
    prediction_metric_version/index.rst
    problem_type/index.rst
    project/index.rst
+   project_config/index.rst
    project_dataset/index.rst
    project_validation/index.rst
    python_function/index.rst
@@ -180,6 +182,7 @@ Classes
    abacusai._SamplingConfigFactory
    abacusai.TrainingConfig
    abacusai.PersonalizationTrainingConfig
+   abacusai.RegressionTrainingConfig
    abacusai.ForecastingTrainingConfig
    abacusai.NamedEntityExtractionTrainingConfig
    abacusai.NaturalLanguageSearchTrainingConfig
@@ -195,6 +198,8 @@ Classes
    abacusai.ThemeAnalysisTrainingConfig
    abacusai.AIAgentTrainingConfig
    abacusai.CustomTrainedModelTrainingConfig
+   abacusai.CustomAlgorithmTrainingConfig
+   abacusai.OptimizationTrainingConfig
    abacusai._TrainingConfigFactory
    abacusai.PythonFunctionArgument
    abacusai.OutputVariableMapping
@@ -646,6 +651,279 @@ Attributes
 
    .. py:attribute:: downsample_item_popularity_percentile
       :type: float
+
+      
+
+
+.. py:class:: RegressionTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the PREDICTIVE_MODELING problem type
+   :param problem_type: PREDICTIVE_MODELING
+   :type problem_type: ProblemType
+   :param objective: Ranking scheme used to select final best model.
+   :type objective: RegressionObjective
+   :param sort_objective: Ranking scheme used to sort models on the metrics page.
+   :type sort_objective: RegressionObjective
+   :param tree_hpo_mode: (RegressionTreeHPOMode): Turning off Rapid Experimentation will take longer to train.
+   :param type_of_split: Type of data splitting into train/test (validation also).
+   :type type_of_split: RegressionTypeOfSplit
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
+   :type test_split: int
+   :param disable_test_val_fold: Do not create a TEST_VAL set. All records which would be part of the TEST_VAL fold otherwise, remain in the TEST fold.
+   :type disable_test_val_fold: bool
+   :param k_fold_cross_validation: Use this to force k-fold cross validation bagging on or off.
+   :type k_fold_cross_validation: bool
+   :param num_cv_folds: Specify the value of k in k-fold cross validation.
+   :type num_cv_folds: int
+   :param timestamp_based_splitting_column: Timestamp column selected for splitting into test and train.
+   :type timestamp_based_splitting_column: str
+   :param timestamp_based_splitting_method: Method of selecting TEST set, top percentile wise or after a given timestamp.
+   :type timestamp_based_splitting_method: RegressionTimeSplitMethod
+   :param test_splitting_timestamp: Rows with timestamp greater than this will be considered to be in the test set.
+   :type test_splitting_timestamp: str
+   :param sampling_unit_keys: Constrain train/test separation to partition a column.
+   :type sampling_unit_keys: List[str]
+   :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
+   :type test_row_indicator: str
+   :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
+                             Re-balancing classes generally boosts recall at the cost of precision on rare classes.
+   :type rebalance_classes: bool
+   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold.
+   :type rare_class_augmentation_threshold: float
+   :param augmentation_strategy: Strategy to deal with class imbalance and data augmentation.
+   :type augmentation_strategy: RegressionAugmentationStrategy
+   :param training_rows_downsample_ratio: Uses this ratio to train on a sample of the dataset provided.
+   :type training_rows_downsample_ratio: float
+   :param active_labels_column: Specify a column to use as the active columns in a multi label setting.
+   :type active_labels_column: str
+   :param min_categorical_count: Minimum threshold to consider a value different from the unknown placeholder.
+   :type min_categorical_count: int
+   :param sample_weight: Specify a column to use as the weight of a sample for training and eval.
+   :type sample_weight: str
+   :param numeric_clipping_percentile: Uses this option to clip the top and bottom x percentile of numeric feature columns where x is the value of this option.
+   :type numeric_clipping_percentile: float
+   :param target_transform: Specify a transform (e.g. log, quantile) to apply to the target variable.
+   :type target_transform: RegressionTargetTransform
+   :param ignore_datetime_features: Remove all datetime features from the model. Useful while generalizing to different time periods.
+   :type ignore_datetime_features: bool
+   :param max_text_words: Maximum number of words to use from text fields.
+   :type max_text_words: int
+   :param perform_feature_selection: If enabled, additional algorithms which support feature selection as a pretraining step will be trained separately with the selected subset of features. The details about their selected features can be found in their respective logs.
+   :type perform_feature_selection: bool
+   :param feature_selection_intensity: This determines the strictness with which features will be filtered out. 1 being very lenient (more features kept), 100 being very strict.
+   :type feature_selection_intensity: int
+   :param batch_size: Batch size.
+   :type batch_size: BatchSize
+   :param dropout_rate: Dropout percentage rate.
+   :type dropout_rate: int
+   :param pretrained_model_name: Enable algorithms which process text using pretrained multilingual NLP models.
+   :type pretrained_model_name: str
+   :param is_multilingual: Enable algorithms which process text using pretrained multilingual NLP models.
+   :type is_multilingual: bool
+   :param loss_function: Loss function to be used as objective for model training.
+   :type loss_function: RegressionLossFunction
+   :param loss_parameters: Loss function params in format <key>=<value>;<key>=<value>;.....
+   :type loss_parameters: str
+   :param target_encode_categoricals: Use this to turn target encoding on categorical features on or off.
+   :type target_encode_categoricals: bool
+   :param drop_original_categoricals: This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
+   :type drop_original_categoricals: bool
+   :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
+   :type data_split_feature_group_table_name: str
+   :param custom_loss_functions: Registered custom losses available for selection.
+   :type custom_loss_functions: list[str]
+   :param custom_metrics: Registered custom metrics available for selection.
+   :type custom_metrics: list[str]
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: objective
+      :type: abacusai.api_class.enums.RegressionObjective
+
+      
+
+   .. py:attribute:: sort_objective
+      :type: abacusai.api_class.enums.RegressionObjective
+
+      
+
+   .. py:attribute:: tree_hpo_mode
+      :type: abacusai.api_class.enums.RegressionTreeHPOMode
+
+      
+
+   .. py:attribute:: type_of_split
+      :type: abacusai.api_class.enums.RegressionTypeOfSplit
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+   .. py:attribute:: disable_test_val_fold
+      :type: bool
+
+      
+
+   .. py:attribute:: k_fold_cross_validation
+      :type: bool
+
+      
+
+   .. py:attribute:: num_cv_folds
+      :type: int
+
+      
+
+   .. py:attribute:: timestamp_based_splitting_column
+      :type: str
+
+      
+
+   .. py:attribute:: timestamp_based_splitting_method
+      :type: abacusai.api_class.enums.RegressionTimeSplitMethod
+
+      
+
+   .. py:attribute:: test_splitting_timestamp
+      :type: str
+
+      
+
+   .. py:attribute:: sampling_unit_keys
+      :type: List[str]
+
+      
+
+   .. py:attribute:: test_row_indicator
+      :type: str
+
+      
+
+   .. py:attribute:: rebalance_classes
+      :type: bool
+
+      
+
+   .. py:attribute:: rare_class_augmentation_threshold
+      :type: float
+
+      
+
+   .. py:attribute:: augmentation_strategy
+      :type: abacusai.api_class.enums.RegressionAugmentationStrategy
+
+      
+
+   .. py:attribute:: training_rows_downsample_ratio
+      :type: float
+
+      
+
+   .. py:attribute:: active_labels_column
+      :type: str
+
+      
+
+   .. py:attribute:: min_categorical_count
+      :type: int
+
+      
+
+   .. py:attribute:: sample_weight
+      :type: str
+
+      
+
+   .. py:attribute:: numeric_clipping_percentile
+      :type: float
+
+      
+
+   .. py:attribute:: target_transform
+      :type: abacusai.api_class.enums.RegressionTargetTransform
+
+      
+
+   .. py:attribute:: ignore_datetime_features
+      :type: bool
+
+      
+
+   .. py:attribute:: max_text_words
+      :type: int
+
+      
+
+   .. py:attribute:: perform_feature_selection
+      :type: bool
+
+      
+
+   .. py:attribute:: feature_selection_intensity
+      :type: int
+
+      
+
+   .. py:attribute:: batch_size
+      :type: abacusai.api_class.enums.BatchSize
+
+      
+
+   .. py:attribute:: dropout_rate
+      :type: int
+
+      
+
+   .. py:attribute:: pretrained_model_name
+      :type: str
+
+      
+
+   .. py:attribute:: is_multilingual
+      :type: bool
+
+      
+
+   .. py:attribute:: loss_function
+      :type: abacusai.api_class.enums.RegressionLossFunction
+
+      
+
+   .. py:attribute:: loss_parameters
+      :type: str
+
+      
+
+   .. py:attribute:: target_encode_categoricals
+      :type: bool
+
+      
+
+   .. py:attribute:: drop_original_categoricals
+      :type: bool
+
+      
+
+   .. py:attribute:: data_split_feature_group_table_name
+      :type: str
+
+      
+
+   .. py:attribute:: custom_loss_functions
+      :type: List[str]
+
+      
+
+   .. py:attribute:: custom_metrics
+      :type: List[str]
 
       
 
@@ -1664,6 +1942,83 @@ Attributes
       
 
 
+.. py:class:: CustomAlgorithmTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the CUSTOM_ALGORITHM problem type
+   :param problem_type: CUSTOM_ALGORITHM
+   :type problem_type: ProblemType
+   :param train_function_name: The name of the train function.
+   :type train_function_name: str
+   :param predict_many_function_name: The name of the predict many function.
+   :type predict_many_function_name: str
+   :param training_input_tables: List of tables to use for training.
+   :type training_input_tables: List[str]
+   :param predict_function_name: Optional name of the predict function if the predict many function is not given.
+   :type predict_function_name: str
+   :param train_module_name: The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
+   :type train_module_name: str
+   :param predict_module_name: The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
+   :type predict_module_name: str
+   :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+   :type test_split: int
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:attribute:: train_function_name
+      :type: str
+
+      
+
+   .. py:attribute:: predict_many_function_name
+      :type: str
+
+      
+
+   .. py:attribute:: training_input_tables
+      :type: List[str]
+
+      
+
+   .. py:attribute:: predict_function_name
+      :type: str
+
+      
+
+   .. py:attribute:: train_module_name
+      :type: str
+
+      
+
+   .. py:attribute:: predict_module_name
+      :type: str
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
+
+      
+
+
+.. py:class:: OptimizationTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the OPTIMIZATION problem type
+   :param problem_type: OPTIMIZATION
+   :type problem_type: ProblemType
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+
 .. py:class:: _TrainingConfigFactory
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
@@ -2355,6 +2710,69 @@ Attributes
       Clears the current request context.
 
 
+   .. py:method:: streaming_evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None)
+
+      Generate response to the prompt using the specified model.
+      This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
+
+      :param prompt: Prompt to use for generation.
+      :type prompt: str
+      :param system_message: System message for models that support it.
+      :type system_message: str
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+      :type llm_name: str
+      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+      :type max_tokens: int
+
+      :returns: The response from the model, raw text and parsed components.
+      :rtype: LLMResponse
+
+
+   .. py:method:: _get_agent_async_app_request_id()
+
+      Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
+
+      :returns: The request ID for the current request being processed by the Agent.
+      :rtype: str
+
+
+   .. py:method:: _get_agent_async_app_caller()
+
+      Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+
+      :returns: The caller for the current request being processed by the Agent.
+      :rtype: str
+
+
+   .. py:method:: stream_message(message)
+
+      Streams a message to the current request context. Applicable within a AIAgent execute function.
+      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be printed on the console if used from notebook or python script.
+
+      :param message: The message to be streamed.
+      :type message: str
+
+
+   .. py:method:: _stream_llm_call_ui(llm_args)
+
+
+   .. py:method:: _call_aiagent_asyncapp_sync_message(request_id, caller, message=None, llm_args=None)
+
+      Calls the AI Agent AsyncApp sync message endpoint.
+
+      :param request_id: The request ID for the current request being processed by the Agent.
+      :type request_id: str
+      :param caller: The caller for the current request being processed by the Agent.
+      :type caller: str
+      :param message: The message to send to the AsyncApp.
+      :type message: str
+      :param llm_args: The LLM arguments to send to the AsyncApp.
+      :type llm_args: dict
+
+      :returns: The response from the AsyncApp.
+      :rtype: str
+
+
    .. py:method:: add_user_to_organization(email)
 
       Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -2757,6 +3175,21 @@ Attributes
 
       :returns: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
       :rtype: AnnotationEntry
+
+
+   .. py:method:: import_annotation_labels(feature_group_id, file, annotation_type)
+
+      Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
+
+      :param feature_group_id: The unique string identifier of the feature group.
+      :type feature_group_id: str
+      :param file: The file to import. Must be a csv file.
+      :type file: io.TextIOBase
+      :param annotation_type: The type of the annotation.
+      :type annotation_type: str
+
+      :returns: The annotation config for the feature group.
+      :rtype: AnnotationConfig
 
 
    .. py:method:: create_feature_group(table_name, sql, description = None)
@@ -6173,12 +6606,14 @@ Attributes
       :type pipeline_id: str
 
 
-   .. py:method:: list_pipeline_versions(pipeline_id)
+   .. py:method:: list_pipeline_versions(pipeline_id, limit = 200)
 
       Lists the pipeline versions for a specified pipeline
 
       :param pipeline_id: The ID of the pipeline to list versions for.
       :type pipeline_id: str
+      :param limit: The maximum number of pipeline versions to return.
+      :type limit: int
 
       :returns: A list of pipeline versions.
       :rtype: PipelineVersion
@@ -6644,6 +7079,23 @@ Attributes
       :rtype: LlmInput
 
 
+   .. py:method:: get_llm_parameters(prompt, system_message = None, llm_name = None, max_tokens = None)
+
+      Generate parameteres to the prompt using the given inputs
+
+      :param prompt: Prompt to use for generation.
+      :type prompt: str
+      :param system_message: System message for models that support it.
+      :type system_message: str
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+      :type llm_name: str
+      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+      :type max_tokens: int
+
+      :returns: The parameters for LLM using the given inputs.
+      :rtype: LlmParameters
+
+
    .. py:method:: create_vector_store(project_id, name, feature_group_id, cluster_name = None)
 
       Returns a vector store that stores embeddings for document chunks in a feature group.
@@ -6903,6 +7355,19 @@ Attributes
       :rtype: Schema
 
 
+   .. py:method:: get_project_feature_group_config(feature_group_id, project_id)
+
+      Gets a feature group's project config
+
+      :param feature_group_id: Unique string identifier for the feature group.
+      :type feature_group_id: str
+      :param project_id: Unique string identifier for the project.
+      :type project_id: str
+
+      :returns: None
+      :rtype: ProjectConfig
+
+
    .. py:method:: validate_project(project_id, feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
@@ -6995,6 +7460,19 @@ Attributes
       :type is_including_detached_from_template: bool
 
       :returns: All the feature groups in the organization associated with the specified project.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: describe_project_feature_group(project_id, feature_group_id)
+
+      Describe a feature group associated with a project
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: The feature group object.
       :rtype: FeatureGroup
 
 
@@ -8465,12 +8943,16 @@ Attributes
       :rtype: LlmResponse
 
 
-   .. py:method:: list_vector_stores(project_id)
+   .. py:method:: list_vector_stores(project_id, limit = 100, start_after_id = None)
 
       List all the vector stores.
 
       :param project_id: The ID of project that the vector store is created in.
       :type project_id: str
+      :param limit: The number of vector stores to retrieve.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
+      :type start_after_id: str
 
       :returns: All the vector stores in the organization associated with the specified project.
       :rtype: VectorStore
@@ -8498,12 +8980,16 @@ Attributes
       :rtype: VectorStore
 
 
-   .. py:method:: list_vector_store_versions(vector_store_id)
+   .. py:method:: list_vector_store_versions(vector_store_id, limit = 100, start_after_version = None)
 
       List all the vector store versions with a given vector store ID.
 
       :param vector_store_id: A unique string identifier associated with the vector store.
       :type vector_store_id: str
+      :param limit: The number of vector store versions to retrieve.
+      :type limit: int
+      :param start_after_version: An offset parameter to exclude all vector store versions up to this specified one.
+      :type start_after_version: str
 
       :returns: All the vector store versions associated with the vector store.
       :rtype: VectorStoreVersion
@@ -9270,7 +9756,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.67.0'
+   :value: '0.68.0'
 
    
 
