@@ -104,7 +104,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.68.0'
+      :value: '0.68.1'
 
       
 
@@ -1786,27 +1786,31 @@ Attributes
       :rtype: Module
 
 
-   .. py:method:: get_natural_language_explanation(feature_group_id = None, feature_group_version = None)
+   .. py:method:: get_natural_language_explanation(feature_group_id = None, feature_group_version = None, model_id = None)
 
-      Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+      Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
       :param feature_group_id: A unique string identifier associated with the Feature Group.
       :type feature_group_id: str
       :param feature_group_version: A unique string identifier associated with the Feature Group Version.
       :type feature_group_version: str
+      :param model_id: A unique string identifier associated with the Model.
+      :type model_id: str
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
 
 
-   .. py:method:: generate_natural_language_explanation(feature_group_id = None, feature_group_version = None)
+   .. py:method:: generate_natural_language_explanation(feature_group_id = None, feature_group_version = None, model_id = None)
 
-      Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+      Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
       :param feature_group_id: A unique string identifier associated with the Feature Group.
       :type feature_group_id: str
       :param feature_group_version: A unique string identifier associated with the Feature Group Version.
       :type feature_group_version: str
+      :param model_id: A unique string identifier associated with the Model.
+      :type model_id: str
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
@@ -2486,13 +2490,13 @@ Attributes
    .. py:method:: stream_message(message)
 
       Streams a message to the current request context. Applicable within a AIAgent execute function.
-      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be printed on the console if used from notebook or python script.
+      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
 
       :param message: The message to be streamed.
       :type message: str
 
 
-   .. py:method:: _stream_llm_call_ui(llm_args)
+   .. py:method:: _stream_llm_call(llm_args)
 
 
    .. py:method:: _call_aiagent_asyncapp_sync_message(request_id, caller, message=None, llm_args=None)
@@ -6717,7 +6721,7 @@ Attributes
       :rtype: NotebookCompletion
 
 
-   .. py:method:: set_natural_language_explanation(short_explanation, long_explanation, feature_group_id = None, feature_group_version = None)
+   .. py:method:: set_natural_language_explanation(short_explanation, long_explanation, feature_group_id = None, feature_group_version = None, model_id = None)
 
       Saves the natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
 
@@ -6729,6 +6733,8 @@ Attributes
       :type feature_group_id: str
       :param feature_group_version: A unique string identifier associated with the Feature Group Version.
       :type feature_group_version: str
+      :param model_id: A unique string identifier associated with the Model.
+      :type model_id: str
 
 
    .. py:method:: create_chat_session(project_id = None)

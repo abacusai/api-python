@@ -1,3 +1,4 @@
+from .api_class import ProblemType
 from .return_class import AbstractApiClass
 
 

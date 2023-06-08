@@ -1082,29 +1082,31 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.append_multiple_data(self.feature_group_id, streaming_token, data)
 
-    def get_natural_language_explanation(self, feature_group_version: str = None):
+    def get_natural_language_explanation(self, feature_group_version: str = None, model_id: str = None):
         """
-        Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+        Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
         Args:
             feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+            model_id (str): A unique string identifier associated with the Model.
 
         Returns:
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s).
         """
-        return self.client.get_natural_language_explanation(self.feature_group_id, feature_group_version)
+        return self.client.get_natural_language_explanation(self.feature_group_id, feature_group_version, model_id)
 
-    def generate_natural_language_explanation(self, feature_group_version: str = None):
+    def generate_natural_language_explanation(self, feature_group_version: str = None, model_id: str = None):
         """
-        Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+        Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
         Args:
             feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+            model_id (str): A unique string identifier associated with the Model.
 
         Returns:
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s).
         """
-        return self.client.generate_natural_language_explanation(self.feature_group_id, feature_group_version)
+        return self.client.generate_natural_language_explanation(self.feature_group_id, feature_group_version, model_id)
 
     def render_data_for_llm(self, token_budget: int = None, render_format: str = 'markdown'):
         """

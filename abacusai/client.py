@@ -24,7 +24,10 @@ from .algorithm import Algorithm
 from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
-from .api_class import ApiClass, FeatureGroupExportConfig, ParsingConfig, SamplingConfig, TrainingConfig
+from .api_class import (
+    ApiClass, ApiEnum, FeatureGroupExportConfig, ParsingConfig, ProblemType,
+    SamplingConfig, TrainingConfig
+)
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
     get_clean_function_source_code, get_object_from_context
@@ -208,7 +211,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.68.0'
+    client_version = '0.68.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -282,6 +285,14 @@ class BaseApiClient:
                 obj[key] = getattr(val, 'id', None)
             elif isinstance(val, ApiClass):
                 obj[key] = val.to_dict()
+            elif isinstance(val, list):
+                obj[key] = [val_elem.to_dict() if isinstance(
+                    val_elem, ApiClass) else val_elem for val_elem in val]
+            elif isinstance(val, dict):
+                obj[key] = {dict_key: dict_val.to_dict() if isinstance(
+                    dict_val, ApiClass) else dict_val for dict_key, dict_val in val.items()}
+            elif isinstance(val, ApiEnum):
+                obj[key] = val.value
             elif callable(val):
                 try:
                     obj[key] = inspect.getsource(val)
@@ -1828,27 +1839,29 @@ class ReadOnlyClient(BaseApiClient):
             Module: A list of modules"""
         return self._call_api('listModules', 'GET', query_params={}, parse_type=Module)
 
-    def get_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None) -> NaturalLanguageExplanation:
-        """Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+    def get_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None, model_id: str = None) -> NaturalLanguageExplanation:
+        """Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
         Args:
             feature_group_id (str): A unique string identifier associated with the Feature Group.
             feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+            model_id (str): A unique string identifier associated with the Model.
 
         Returns:
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s)."""
-        return self._call_api('getNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, parse_type=NaturalLanguageExplanation)
+        return self._call_api('getNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, parse_type=NaturalLanguageExplanation)
 
-    def generate_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None) -> NaturalLanguageExplanation:
-        """Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+    def generate_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None, model_id: str = None) -> NaturalLanguageExplanation:
+        """Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
         Args:
             feature_group_id (str): A unique string identifier associated with the Feature Group.
             feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+            model_id (str): A unique string identifier associated with the Model.
 
         Returns:
             NaturalLanguageExplanation: The object containing natural language explanation(s) as field(s)."""
-        return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, parse_type=NaturalLanguageExplanation)
+        return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, parse_type=NaturalLanguageExplanation)
 
     def get_chat_session(self, chat_session_id: str) -> ChatSession:
         """Gets a chat session from Abacus Chat.
@@ -2671,11 +2684,9 @@ class ApiClient(ReadOnlyClient):
         Returns:
             LLMResponse: The response from the model, raw text and parsed components.
         """
-        from .llm_response import LlmResponse
-
         llm_parameters = self.get_llm_parameters(
             prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
-        result = self._stream_llm_call_ui(llm_parameters.parameters)
+        result = self._stream_llm_call(llm_parameters.parameters)
         result = self._build_class(LlmResponse, result)
         return result
 
@@ -2700,7 +2711,7 @@ class ApiClient(ReadOnlyClient):
     def stream_message(self, message: str) -> None:
         """
         Streams a message to the current request context. Applicable within a AIAgent execute function.
-        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be printed on the console if used from notebook or python script.
+        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
 
         Args:
             message (str): The message to be streamed.
@@ -2713,7 +2724,7 @@ class ApiClient(ReadOnlyClient):
         self._call_aiagent_asyncapp_sync_message(
             request_id, caller, message=message)
 
-    def _stream_llm_call_ui(self, llm_args: dict):
+    def _stream_llm_call(self, llm_args: dict):
         request_id = self._get_agent_async_app_request_id()
         caller = self._get_agent_async_app_caller()
         if not request_id or not caller:
@@ -6022,15 +6033,16 @@ Creates a new feature group defined as the union of other feature group versions
             NotebookCompletion: A list of objects, each containing the type and contents of the new cell to be inserted."""
         return self._call_api('getNotebookCellCompletion', 'POST', query_params={}, body={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
 
-    def set_natural_language_explanation(self, short_explanation: str, long_explanation: str, feature_group_id: str = None, feature_group_version: str = None):
+    def set_natural_language_explanation(self, short_explanation: str, long_explanation: str, feature_group_id: str = None, feature_group_version: str = None, model_id: str = None):
         """Saves the natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
 
         Args:
             short_explanation (str): succinct explanation of the artifact with given ID
             long_explanation (str): verbose explanation of the artifact with given ID
             feature_group_id (str): A unique string identifier associated with the Feature Group.
-            feature_group_version (str): A unique string identifier associated with the Feature Group Version."""
-        return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version}, timeout=300)
+            feature_group_version (str): A unique string identifier associated with the Feature Group Version.
+            model_id (str): A unique string identifier associated with the Model."""
+        return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, timeout=300)
 
     def create_chat_session(self, project_id: str = None) -> ChatSession:
         """Creates a chat session with Abacus Chat.

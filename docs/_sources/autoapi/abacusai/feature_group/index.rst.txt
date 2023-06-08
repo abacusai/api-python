@@ -1112,23 +1112,27 @@ Classes
       :type data: list
 
 
-   .. py:method:: get_natural_language_explanation(feature_group_version = None)
+   .. py:method:: get_natural_language_explanation(feature_group_version = None, model_id = None)
 
-      Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+      Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
       :param feature_group_version: A unique string identifier associated with the Feature Group Version.
       :type feature_group_version: str
+      :param model_id: A unique string identifier associated with the Model.
+      :type model_id: str
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
 
 
-   .. py:method:: generate_natural_language_explanation(feature_group_version = None)
+   .. py:method:: generate_natural_language_explanation(feature_group_version = None, model_id = None)
 
-      Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
+      Generates natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
       :param feature_group_version: A unique string identifier associated with the Feature Group Version.
       :type feature_group_version: str
+      :param model_id: A unique string identifier associated with the Model.
+      :type model_id: str
 
       :returns: The object containing natural language explanation(s) as field(s).
       :rtype: NaturalLanguageExplanation
