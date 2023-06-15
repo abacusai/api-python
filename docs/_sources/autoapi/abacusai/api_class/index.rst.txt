@@ -15,6 +15,7 @@ Submodules
    enums/index.rst
    feature_group/index.rst
    model/index.rst
+   project/index.rst
    python_functions/index.rst
    refresh/index.rst
 
@@ -39,6 +40,7 @@ Classes
    abacusai.api_class.RegressionTimeSplitMethod
    abacusai.api_class.RegressionLossFunction
    abacusai.api_class.SamplingMethodType
+   abacusai.api_class.MergeMode
    abacusai.api_class.FillLogic
    abacusai.api_class.BatchSize
    abacusai.api_class.HolidayCalendars
@@ -65,6 +67,10 @@ Classes
    abacusai.api_class.NSamplingConfig
    abacusai.api_class.PercentSamplingConfig
    abacusai.api_class._SamplingConfigFactory
+   abacusai.api_class.MergeConfig
+   abacusai.api_class.LastNMergeConfig
+   abacusai.api_class.TimeWindowMergeConfig
+   abacusai.api_class._MergeConfigFactory
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.TrainingConfig
@@ -567,6 +573,25 @@ Classes
 
    .. py:attribute:: PERCENT_SAMPLING
       :value: 'PERCENT_SAMPLING'
+
+      
+
+
+.. py:class:: MergeMode
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: LAST_N
+      :value: 'LAST_N'
+
+      
+
+   .. py:attribute:: TIME_WINDOW
+      :value: 'TIME_WINDOW'
 
       
 
@@ -1504,6 +1529,84 @@ Classes
 
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
+.. py:class:: MergeConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   An abstract class for the merge config of a feature group
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: LastNMergeConfig
+
+   Bases: :py:obj:`MergeConfig`
+
+   Merge LAST N chunks/versions of an incremental dataset.
+
+   :param merge_mode: LAST_N
+   :type merge_mode: MergeMode
+   :param num_versions: The number of versions to merge. num_versions == 0 means merge all versions.
+   :type num_versions: int
+
+   .. py:attribute:: num_versions
+      :type: int
+
+      
+
+   .. py:attribute:: merge_mode
+      :type: abacusai.api_class.enums.MergeMode
+
+      
+
+
+.. py:class:: TimeWindowMergeConfig
+
+   Bases: :py:obj:`MergeConfig`
+
+   Merge rows within a given timewindow of the most recent timestamp
+
+   :param merge_mode: TIME_WINDOW
+   :type merge_mode: MergeMode
+   :param feature_name: Time based column to index on
+   :type feature_name: str
+   :param time_window_size_ms: Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
+   :type time_window_size_ms: int
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: time_window_size_ms
+      :type: int
+
+      
+
+   .. py:attribute:: merge_mode
+      :type: abacusai.api_class.enums.MergeMode
+
+      
+
+
+.. py:class:: _MergeConfigFactory
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_class_key
+      :value: 'merge_mode'
 
       
 

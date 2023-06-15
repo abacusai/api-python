@@ -185,6 +185,7 @@ Classes
    abacusai.RegressionTimeSplitMethod
    abacusai.RegressionLossFunction
    abacusai.SamplingMethodType
+   abacusai.MergeMode
    abacusai.FillLogic
    abacusai.BatchSize
    abacusai.HolidayCalendars
@@ -210,6 +211,10 @@ Classes
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
    abacusai._SamplingConfigFactory
+   abacusai.MergeConfig
+   abacusai.LastNMergeConfig
+   abacusai.TimeWindowMergeConfig
+   abacusai._MergeConfigFactory
    abacusai.TrainingConfig
    abacusai.PersonalizationTrainingConfig
    abacusai.RegressionTrainingConfig
@@ -721,6 +726,25 @@ Attributes
 
    .. py:attribute:: PERCENT_SAMPLING
       :value: 'PERCENT_SAMPLING'
+
+      
+
+
+.. py:class:: MergeMode
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: LAST_N
+      :value: 'LAST_N'
+
+      
+
+   .. py:attribute:: TIME_WINDOW
+      :value: 'TIME_WINDOW'
 
       
 
@@ -1626,6 +1650,84 @@ Attributes
 
    .. py:attribute:: config_class_key
       :value: 'sampling_method'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
+.. py:class:: MergeConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   An abstract class for the merge config of a feature group
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: LastNMergeConfig
+
+   Bases: :py:obj:`MergeConfig`
+
+   Merge LAST N chunks/versions of an incremental dataset.
+
+   :param merge_mode: LAST_N
+   :type merge_mode: MergeMode
+   :param num_versions: The number of versions to merge. num_versions == 0 means merge all versions.
+   :type num_versions: int
+
+   .. py:attribute:: num_versions
+      :type: int
+
+      
+
+   .. py:attribute:: merge_mode
+      :type: abacusai.api_class.enums.MergeMode
+
+      
+
+
+.. py:class:: TimeWindowMergeConfig
+
+   Bases: :py:obj:`MergeConfig`
+
+   Merge rows within a given timewindow of the most recent timestamp
+
+   :param merge_mode: TIME_WINDOW
+   :type merge_mode: MergeMode
+   :param feature_name: Time based column to index on
+   :type feature_name: str
+   :param time_window_size_ms: Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
+   :type time_window_size_ms: int
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: time_window_size_ms
+      :type: int
+
+      
+
+   .. py:attribute:: merge_mode
+      :type: abacusai.api_class.enums.MergeMode
+
+      
+
+
+.. py:class:: _MergeConfigFactory
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_class_key
+      :value: 'merge_mode'
 
       
 
@@ -4158,7 +4260,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -4534,7 +4636,7 @@ Attributes
               Args:
                   source_feature_group_id (str): Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
                   table_name (str): Unique string identifier to be given to this merge feature group.
-                  merge_config (dict): JSON object defining the merging method and its parameters.
+                  merge_config (MergeConfig): JSON object defining the merging method and its parameters.
                   description (str): Human-readable description of this feature group.
 
               Returns:
@@ -4593,7 +4695,10 @@ Attributes
       :param feature_group_id: Unique identifier associated with the feature group.
       :type feature_group_id: str
       :param merge_config: JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.
-      :type merge_config: dict
+      :type merge_config: MergeConfig
+
+      :returns: The updated FeatureGroup.
+      :rtype: FeatureGroup
 
 
    .. py:method:: set_feature_group_transform_config(feature_group_id, transform_config)
@@ -7103,7 +7208,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None, chat_config = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -7113,8 +7218,6 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
-      :type search_results: list
       :param chat_config: A dictionary specifiying the query chat config override
       :type chat_config: dict
 
@@ -7207,7 +7310,7 @@ Attributes
       :type forced_assignments: dict
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -7217,6 +7320,8 @@ Attributes
       :type deployment_id: str
       :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
+      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
+      :type add_constraints: list
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -8363,16 +8468,16 @@ Attributes
       :rtype: VectorStore
 
 
-   .. py:method:: update_vector_store(vector_store_id, feature_group_id = None, name = None)
+   .. py:method:: update_vector_store(vector_store_id, name = None, feature_group_id = None)
 
       Updates an existing vector store.
 
       :param vector_store_id: The unique ID associated with the vector store.
       :type vector_store_id: str
-      :param feature_group_id: The ID of the feature group to update the vector store with.
-      :type feature_group_id: str
       :param name: The name group to update the vector store with.
       :type name: str
+      :param feature_group_id: The ID of the feature group to update the vector store with.
+      :type feature_group_id: str
 
       :returns: The updated vector store.
       :rtype: VectorStore
@@ -8645,7 +8750,7 @@ Attributes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: get_annotations_status(feature_group_id, feature_name = None)
+   .. py:method:: get_annotations_status(feature_group_id, feature_name = None, check_for_materialization = False)
 
       Get the status of the annotations for a given feature group and feature.
 
@@ -8653,6 +8758,8 @@ Attributes
       :type feature_group_id: str
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
+      :param check_for_materialization: If True, check if the feature group needs to be materialized before using for annotations.
+      :type check_for_materialization: bool
 
       :returns: The status of the annotations for the given feature group and feature.
       :rtype: AnnotationsStatus
@@ -10633,7 +10740,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, search_results = None, chat_config = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -10643,8 +10750,6 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param search_results: A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
-      :type search_results: list
       :param chat_config: A dictionary specifiying the query chat config override
       :type chat_config: dict
 
@@ -10737,7 +10842,7 @@ Attributes
       :type forced_assignments: dict
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -10747,6 +10852,8 @@ Attributes
       :type deployment_id: str
       :param query_data: Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
       :type query_data: dict
+      :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
+      :type add_constraints: list
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -11007,7 +11114,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.68.1'
+   :value: '0.69.0'
 
    
 

@@ -258,12 +258,14 @@ Classes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: get_annotations_status(feature_name = None)
+   .. py:method:: get_annotations_status(feature_name = None, check_for_materialization = False)
 
       Get the status of the annotations for a given feature group and feature.
 
       :param feature_name: The name of the feature the annotation is on.
       :type feature_name: str
+      :param check_for_materialization: If True, check if the feature group needs to be materialized before using for annotations.
+      :type check_for_materialization: bool
 
       :returns: The status of the annotations for the given feature group and feature.
       :rtype: AnnotationsStatus
@@ -316,7 +318,10 @@ Classes
       Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
       :param merge_config: JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.
-      :type merge_config: dict
+      :type merge_config: MergeConfig
+
+      :returns: The updated FeatureGroup.
+      :rtype: FeatureGroup
 
 
    .. py:method:: set_transform_config(transform_config)

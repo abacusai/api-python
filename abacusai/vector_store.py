@@ -34,18 +34,18 @@ class VectorStore(AbstractApiClass):
         """
         return {'name': self.name, 'vector_store_id': self.vector_store_id, 'created_at': self.created_at, 'latest_vector_store_version': self._get_attribute_as_dict(self.latest_vector_store_version)}
 
-    def update(self, feature_group_id: str = None, name: str = None):
+    def update(self, name: str = None, feature_group_id: str = None):
         """
         Updates an existing vector store.
 
         Args:
-            feature_group_id (str): The ID of the feature group to update the vector store with.
             name (str): The name group to update the vector store with.
+            feature_group_id (str): The ID of the feature group to update the vector store with.
 
         Returns:
             VectorStore: The updated vector store.
         """
-        return self.client.update_vector_store(self.vector_store_id, feature_group_id, name)
+        return self.client.update_vector_store(self.vector_store_id, name, feature_group_id)
 
     def create_version(self):
         """

@@ -25,8 +25,8 @@ from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
-    ApiClass, ApiEnum, FeatureGroupExportConfig, ParsingConfig, ProblemType,
-    SamplingConfig, TrainingConfig
+    ApiClass, ApiEnum, FeatureGroupExportConfig, MergeConfig, ParsingConfig,
+    ProblemType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -211,7 +211,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.68.1'
+    client_version = '0.69.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -603,16 +603,17 @@ class ReadOnlyClient(BaseApiClient):
             AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value. Includes the verification information."""
         return self._call_api('verifyAndDescribeAnnotation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier}, parse_type=AnnotationEntry)
 
-    def get_annotations_status(self, feature_group_id: str, feature_name: str = None) -> AnnotationsStatus:
+    def get_annotations_status(self, feature_group_id: str, feature_name: str = None, check_for_materialization: bool = False) -> AnnotationsStatus:
         """Get the status of the annotations for a given feature group and feature.
 
         Args:
             feature_group_id (str): The ID of the feature group the annotation is on.
             feature_name (str): The name of the feature the annotation is on.
+            check_for_materialization (bool): If True, check if the feature group needs to be materialized before using for annotations.
 
         Returns:
             AnnotationsStatus: The status of the annotations for the given feature group and feature."""
-        return self._call_api('getAnnotationsStatus', 'GET', query_params={'featureGroupId': feature_group_id, 'featureName': feature_name}, parse_type=AnnotationsStatus)
+        return self._call_api('getAnnotationsStatus', 'GET', query_params={'featureGroupId': feature_group_id, 'featureName': feature_name, 'checkForMaterialization': check_for_materialization}, parse_type=AnnotationsStatus)
 
     def get_feature_group_schema(self, feature_group_id: str, project_id: str = None) -> Feature:
         """Returns a schema for a given FeatureGroup in a project.
@@ -2878,7 +2879,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_QA,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -3158,13 +3159,13 @@ class ApiClient(ReadOnlyClient):
             FeatureGroup: The created Feature Group."""
         return self._call_api('createSamplingFeatureGroup', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'tableName': table_name, 'samplingConfig': sampling_config, 'description': description}, parse_type=FeatureGroup)
 
-    def create_merge_feature_group(self, source_feature_group_id: str, table_name: str, merge_config: dict, description: str = None) -> FeatureGroup:
+    def create_merge_feature_group(self, source_feature_group_id: str, table_name: str, merge_config: Union[dict, MergeConfig], description: str = None) -> FeatureGroup:
         """Creates a new feature group defined as the union of other feature group versions.
 
         Args:
             source_feature_group_id (str): Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
             table_name (str): Unique string identifier to be given to this merge feature group.
-            merge_config (dict): JSON object defining the merging method and its parameters.
+            merge_config (MergeConfig): JSON object defining the merging method and its parameters.
             description (str): Human-readable description of this feature group.
 
         Returns:
@@ -3208,13 +3209,16 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The updated FeatureGroup."""
         return self._call_api('setFeatureGroupSamplingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'samplingConfig': sampling_config}, parse_type=FeatureGroup)
 
-    def set_feature_group_merge_config(self, feature_group_id: str, merge_config: dict):
+    def set_feature_group_merge_config(self, feature_group_id: str, merge_config: Union[dict, MergeConfig]) -> FeatureGroup:
         """Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
         Args:
             feature_group_id (str): Unique identifier associated with the feature group.
-            merge_config (dict): JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version."""
-        return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config})
+            merge_config (MergeConfig): JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.
+
+        Returns:
+            FeatureGroup: The updated FeatureGroup."""
+        return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config}, parse_type=FeatureGroup)
 
     def set_feature_group_transform_config(self, feature_group_id: str, transform_config: dict):
         """Set a TransformFeatureGroup’s transform config to the values provided.
@@ -5132,18 +5136,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, search_results: list = None, chat_config: dict = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, chat_config: dict = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
-            search_results (list): A list of chronologically ordered retrieved search results using the deployment. A retrieved search result is a dict with attributes:     msg_id (int): The corresponding message's index.      result (list): List of NlpSearchPrediction objects.
             chat_config (dict): A dictionary specifiying the query chat config override"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'searchResults': search_results, 'chatConfig': chat_config}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'chatConfig': chat_config}, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -5224,16 +5227,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments}, server_override=prediction_url)
 
-    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None) -> Dict:
         """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
             deployment_id (str): The unique identifier of a deployment created under the project.
-            query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range"""
+            query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
+            add_constraints (list): List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Check for any constraints violated by the overrides.
@@ -6139,17 +6143,17 @@ Creates a new feature group defined as the union of other feature group versions
             VectorStore: The newly created vector store."""
         return self._call_api('createVectorStore', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'clusterName': cluster_name}, parse_type=VectorStore)
 
-    def update_vector_store(self, vector_store_id: str, feature_group_id: str = None, name: str = None) -> VectorStore:
+    def update_vector_store(self, vector_store_id: str, name: str = None, feature_group_id: str = None) -> VectorStore:
         """Updates an existing vector store.
 
         Args:
             vector_store_id (str): The unique ID associated with the vector store.
-            feature_group_id (str): The ID of the feature group to update the vector store with.
             name (str): The name group to update the vector store with.
+            feature_group_id (str): The ID of the feature group to update the vector store with.
 
         Returns:
             VectorStore: The updated vector store."""
-        return self._call_api('updateVectorStore', 'POST', query_params={}, body={'vectorStoreId': vector_store_id, 'featureGroupId': feature_group_id, 'name': name}, parse_type=VectorStore)
+        return self._call_api('updateVectorStore', 'POST', query_params={}, body={'vectorStoreId': vector_store_id, 'name': name, 'featureGroupId': feature_group_id}, parse_type=VectorStore)
 
     def create_vector_store_version(self, vector_store_id: str) -> VectorStoreVersion:
         """Creates a vector store version from the latest version of the feature group that the vector store associated with.

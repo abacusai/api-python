@@ -108,6 +108,11 @@ class SamplingMethodType(ApiEnum):
     PERCENT_SAMPLING = 'PERCENT_SAMPLING'
 
 
+class MergeMode(ApiEnum):
+    LAST_N = 'LAST_N'
+    TIME_WINDOW = 'TIME_WINDOW'
+
+
 class FillLogic(ApiEnum):
     # back / future
     AVERAGE = 'average'

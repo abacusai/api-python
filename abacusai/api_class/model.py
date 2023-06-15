@@ -280,7 +280,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     force_prediction_length: bool = dataclasses.field(default=None)
     filter_items: bool = dataclasses.field(default=None)
     enable_feature_selection: bool = dataclasses.field(default=None)
-    enable_cold_start: bool = dataclasses.field(default=None)
+    enable_cold_start: bool = dataclasses.field(default=False)
     enable_multiple_backtests: bool = dataclasses.field(default=None)
     num_backtesting_windows: int = dataclasses.field(default=None)
     backtesting_window_step_size: int = dataclasses.field(default=None)

@@ -2,7 +2,7 @@ import io
 from typing import Union
 
 from .annotation_config import AnnotationConfig
-from .api_class import SamplingConfig
+from .api_class import MergeConfig, SamplingConfig
 from .code_source import CodeSource
 from .concatenation_config import ConcatenationConfig
 from .feature import Feature
@@ -263,17 +263,18 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_document_to_annotate(self.feature_group_id, feature_name, feature_group_row_identifier, get_previous)
 
-    def get_annotations_status(self, feature_name: str = None):
+    def get_annotations_status(self, feature_name: str = None, check_for_materialization: bool = False):
         """
         Get the status of the annotations for a given feature group and feature.
 
         Args:
             feature_name (str): The name of the feature the annotation is on.
+            check_for_materialization (bool): If True, check if the feature group needs to be materialized before using for annotations.
 
         Returns:
             AnnotationsStatus: The status of the annotations for the given feature group and feature.
         """
-        return self.client.get_annotations_status(self.feature_group_id, feature_name)
+        return self.client.get_annotations_status(self.feature_group_id, feature_name, check_for_materialization)
 
     def import_annotation_labels(self, file: io.TextIOBase, annotation_type: str):
         """
@@ -317,12 +318,15 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_group_sampling_config(self.feature_group_id, sampling_config)
 
-    def set_merge_config(self, merge_config: dict):
+    def set_merge_config(self, merge_config: Union[dict, MergeConfig]):
         """
         Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
         Args:
-            merge_config (dict): JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.
+            merge_config (MergeConfig): JSON object string specifying the merge rule. An empty merge_config will default to only including the latest dataset version.
+
+        Returns:
+            FeatureGroup: The updated FeatureGroup.
         """
         return self.client.set_feature_group_merge_config(self.feature_group_id, merge_config)
 

@@ -105,6 +105,18 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._SamplingConfigFactory" title="abacusai.api_class.feature_group._SamplingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_SamplingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.MergeConfig" title="abacusai.api_class.feature_group.MergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeConfig</span></code></a></p></td>
+<td><p>An abstract class for the merge config of a feature group</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.LastNMergeConfig" title="abacusai.api_class.feature_group.LastNMergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastNMergeConfig</span></code></a></p></td>
+<td><p>Merge LAST N chunks/versions of an incremental dataset.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group.TimeWindowMergeConfig" title="abacusai.api_class.feature_group.TimeWindowMergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowMergeConfig</span></code></a></p></td>
+<td><p>Merge rows within a given timewindow of the most recent timestamp</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.feature_group._MergeConfigFactory" title="abacusai.api_class.feature_group._MergeConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_MergeConfigFactory</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -195,6 +207,92 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.feature_group._SamplingConfigFactory.config_class_map">
 <span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.feature_group._SamplingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.MergeConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">MergeConfig</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.MergeConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>An abstract class for the merge config of a feature group</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.MergeConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.feature_group.MergeConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.LastNMergeConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">LastNMergeConfig</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.LastNMergeConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.feature_group.MergeConfig" title="abacusai.api_class.feature_group.MergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeConfig</span></code></a></p>
+<p>Merge LAST N chunks/versions of an incremental dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>merge_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.MergeMode" title="abacusai.api_class.enums.MergeMode"><em>MergeMode</em></a>) – LAST_N</p></li>
+<li><p><strong>num_versions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of versions to merge. num_versions == 0 means merge all versions.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.LastNMergeConfig.num_versions">
+<span class="sig-name descname"><span class="pre">num_versions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.LastNMergeConfig.num_versions" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.LastNMergeConfig.merge_mode">
+<span class="sig-name descname"><span class="pre">merge_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.MergeMode" title="abacusai.api_class.enums.MergeMode"><span class="pre">abacusai.api_class.enums.MergeMode</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.LastNMergeConfig.merge_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.TimeWindowMergeConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">TimeWindowMergeConfig</span></span><a class="headerlink" href="#abacusai.api_class.feature_group.TimeWindowMergeConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.feature_group.MergeConfig" title="abacusai.api_class.feature_group.MergeConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MergeConfig</span></code></a></p>
+<p>Merge rows within a given timewindow of the most recent timestamp</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>merge_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.MergeMode" title="abacusai.api_class.enums.MergeMode"><em>MergeMode</em></a>) – TIME_WINDOW</p></li>
+<li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Time based column to index on</p></li>
+<li><p><strong>time_window_size_ms</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.TimeWindowMergeConfig.feature_name">
+<span class="sig-name descname"><span class="pre">feature_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.TimeWindowMergeConfig.feature_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.TimeWindowMergeConfig.time_window_size_ms">
+<span class="sig-name descname"><span class="pre">time_window_size_ms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.TimeWindowMergeConfig.time_window_size_ms" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group.TimeWindowMergeConfig.merge_mode">
+<span class="sig-name descname"><span class="pre">merge_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.MergeMode" title="abacusai.api_class.enums.MergeMode"><span class="pre">abacusai.api_class.enums.MergeMode</span></a></em><a class="headerlink" href="#abacusai.api_class.feature_group.TimeWindowMergeConfig.merge_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._MergeConfigFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.feature_group.</span></span><span class="sig-name descname"><span class="pre">_MergeConfigFactory</span></span><a class="headerlink" href="#abacusai.api_class.feature_group._MergeConfigFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract._ApiClassFactory" title="abacusai.api_class.abstract._ApiClassFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract._ApiClassFactory</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._MergeConfigFactory.config_class_key">
+<span class="sig-name descname"><span class="pre">config_class_key</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'merge_mode'</span></em><a class="headerlink" href="#abacusai.api_class.feature_group._MergeConfigFactory.config_class_key" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.feature_group._MergeConfigFactory.config_class_map">
+<span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.feature_group._MergeConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
