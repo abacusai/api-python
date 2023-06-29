@@ -1,0 +1,50 @@
+:py:mod:`abacusai.data_metrics`
+===============================
+
+.. py:module:: abacusai.data_metrics
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.data_metrics.DataMetrics
+
+
+
+
+.. py:class:: DataMetrics(client, metrics=None, schema=None, numRows=None, numCols=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Processed Metrics and Schema for a dataset version or feature group version
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param metrics: A list of dicts with metrics for each columns
+   :type metrics: list[dict]
+   :param schema: A list of dicts with the schema for each metric
+   :type schema: list[dict]
+   :param numRows: The number of rows
+   :type numRows: int
+   :param numCols: The number of columns
+   :type numCols: int
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

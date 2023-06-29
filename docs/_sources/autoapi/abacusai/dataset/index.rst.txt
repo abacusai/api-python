@@ -238,30 +238,6 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: attach_to_project(project_id, dataset_type)
-
-      [DEPRECATED] Attach a dataset to the project.
-
-      Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
-
-
-      :param project_id: Unique identifier of the project to attach the dataset to.
-      :type project_id: str
-      :param dataset_type: Enum string representing the dataset type, associated with the use case of the project. Refer to the [Use Case Documentation](https://api.abacus.ai/app/help/useCases) for the supported dataset types per use case.
-      :type dataset_type: str
-
-      :returns: An array of column descriptions.
-      :rtype: Schema
-
-
-   .. py:method:: remove_from_project(project_id)
-
-      [DEPRECATED] Removes the dataset with the specified dataset from the project.
-
-      :param project_id: Unique string identifier of the project.
-      :type project_id: str
-
-
    .. py:method:: delete()
 
       Deletes the specified dataset from the organization.

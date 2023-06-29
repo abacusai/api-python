@@ -7,7 +7,7 @@ from .abstract import ApiClass
 @dataclasses.dataclass
 class FeatureMappingConfig(ApiClass):
     feature_name: str
-    feature_type: str = dataclasses.field(default=None)
+    feature_mapping: str = dataclasses.field(default=None)
     nested_feature_name: str = dataclasses.field(default=None)
 
 
@@ -20,5 +20,5 @@ class ProjectFeatureGroupTypeMappingsConfig(ApiClass):
     @classmethod
     def from_dict(cls, input_dict: dict):
         inst = cls(**input_dict)
-        inst.feature_mappings = [FeatureMappingConfig(**fm) for fm in input_dict.get('feature_mappings') or []]
+        inst.feature_mappings = [FeatureMappingConfig.from_dict(fm) for fm in input_dict.get('feature_mappings') or []]
         return inst

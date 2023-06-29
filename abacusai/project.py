@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import TrainingConfig
+from .api_class import DocumentRetrieverConfig, TrainingConfig
 from .return_class import AbstractApiClass
 
 
@@ -15,22 +15,20 @@ class Project(AbstractApiClass):
             useCase (str): The use case associated with the project.
             problemType (str): The problem type associated with the project.
             createdAt (str): The date and time when the project was created.
-            featureGroupsEnabled (bool): Project uses feature groups instead of datasets.
             tags (list[str]): List of tags associated with the project.
     """
 
-    def __init__(self, client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None, tags=None):
+    def __init__(self, client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None):
         super().__init__(client, projectId)
         self.project_id = projectId
         self.name = name
         self.use_case = useCase
         self.problem_type = problemType
         self.created_at = createdAt
-        self.feature_groups_enabled = featureGroupsEnabled
         self.tags = tags
 
     def __repr__(self):
-        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  feature_groups_enabled={repr(self.feature_groups_enabled)},\n  tags={repr(self.tags)})"
+        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  tags={repr(self.tags)})"
 
     def to_dict(self):
         """
@@ -39,7 +37,7 @@ class Project(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'problem_type': self.problem_type, 'created_at': self.created_at, 'feature_groups_enabled': self.feature_groups_enabled, 'tags': self.tags}
+        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'problem_type': self.problem_type, 'created_at': self.created_at, 'tags': self.tags}
 
     def refresh(self):
         """
@@ -62,30 +60,6 @@ class Project(AbstractApiClass):
             Project: The description of the project.
         """
         return self.client.describe_project(self.project_id)
-
-    def list_datasets(self):
-        """
-        Retrieves all datasets associated with a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
-
-        Args:
-            project_id (str): Unique string identifier associated with the project.
-
-        Returns:
-            ProjectDataset: A list representing all of the datasets attached to the project.
-        """
-        return self.client.list_project_datasets(self.project_id)
-
-    def get_schema(self, dataset_id: str):
-        """
-        [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
-
-        Args:
-            dataset_id (str): The unique ID associated with the dataset.
-
-        Returns:
-            Schema: An array of objects for each column in the specified dataset.
-        """
-        return self.client.get_schema(self.project_id, dataset_id)
 
     def rename(self, name: str):
         """
@@ -157,46 +131,17 @@ class Project(AbstractApiClass):
         """
         return self.client.validate_project(self.project_id, feature_group_ids)
 
-    def set_column_data_type(self, dataset_id: str, column: str, data_type: str):
+    def infer_feature_mappings(self, feature_group_id: str):
         """
-        Set the data type of a dataset's column.
+        Infer the feature mappings for the feature group in the project based on the problem type.
 
         Args:
-            dataset_id (str): The unique ID associated with the dataset.
-            column (str): The name of the column.
-            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL
+            feature_group_id (str): The unique ID associated with the feature group.
 
         Returns:
-            Schema: A list of objects that describes the resulting dataset's schema after the column's data type is set.
+            InferredFeatureMappings: A dict that contains the inferred feature mappings.
         """
-        return self.client.set_column_data_type(self.project_id, dataset_id, column, data_type)
-
-    def set_column_mapping(self, dataset_id: str, column: str, column_mapping: str):
-        """
-        Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
-
-        Args:
-            dataset_id (str): The unique ID associated with the dataset.
-            column (str): The name of the column.
-            column_mapping (str): The mapping of the column in the dataset. See a list of column mapping enums here.
-
-        Returns:
-            Schema: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set.
-        """
-        return self.client.set_column_mapping(self.project_id, dataset_id, column, column_mapping)
-
-    def remove_column_mapping(self, dataset_id: str, column: str):
-        """
-        Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
-
-        Args:
-            dataset_id (str): The unique ID associated with the dataset.
-            column (str): The name of the column.
-
-        Returns:
-            Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set.
-        """
-        return self.client.remove_column_mapping(self.project_id, dataset_id, column)
+        return self.client.infer_feature_mappings(self.project_id, feature_group_id)
 
     def describe_feature_group(self, feature_group_id: str):
         """
@@ -236,7 +181,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
-    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None):
+    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None, is_additional_model: bool = False):
         """
         Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -244,11 +189,12 @@ class Project(AbstractApiClass):
             feature_group_ids (list): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
             current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
+            is_additional_model (bool): Whether to get training config options for an additional model
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project.
         """
-        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config)
+        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config, is_additional_model)
 
     def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list):
         """
@@ -263,7 +209,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_train_test_data_split_feature_group(self.project_id, training_config, feature_group_ids)
 
-    def train_model(self, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None):
+    def train_model(self, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None, algorithm_training_configs: list = None):
         """
         Train a model for the specified project.
 
@@ -281,11 +227,12 @@ class Project(AbstractApiClass):
             builtin_algorithms (list): List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
+            algorithm_training_configs (list): List of algorithm specifc training configs that will be part of the model training AutoML run.
 
         Returns:
             Model: The new model which is being trained.
         """
-        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory)
+        return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory, algorithm_training_configs)
 
     def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False):
         """
@@ -610,7 +557,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
 
-    def create_vector_store(self, name: str, feature_group_id: str, cluster_name: str = None):
+    def create_document_retriever(self, name: str, feature_group_id: str, cluster_name: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """
         Returns a vector store that stores embeddings for document chunks in a feature group.
 
@@ -621,24 +568,25 @@ class Project(AbstractApiClass):
             name (str): The name of the vector store.
             feature_group_id (str): The ID of the feature group that the vector store is associated with.
             cluster_name (str): The name of the cluster that the vector store is created in.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
-            VectorStore: The newly created vector store.
+            DocumentRetriever: The newly created document retriever.
         """
-        return self.client.create_vector_store(self.project_id, name, feature_group_id, cluster_name)
+        return self.client.create_document_retriever(self.project_id, name, feature_group_id, cluster_name, document_retriever_config)
 
-    def list_vector_stores(self, limit: int = 100, start_after_id: str = None):
+    def list_document_retrievers(self, limit: int = 100, start_after_id: str = None):
         """
-        List all the vector stores.
+        List all the document retrievers.
 
         Args:
             limit (int): The number of vector stores to retrieve.
             start_after_id (str): An offset parameter to exclude all vector stores up to this specified ID.
 
         Returns:
-            VectorStore: All the vector stores in the organization associated with the specified project.
+            DocumentRetriever: All the document retrievers in the organization associated with the specified project.
         """
-        return self.client.list_vector_stores(self.project_id, limit, start_after_id)
+        return self.client.list_document_retrievers(self.project_id, limit, start_after_id)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

@@ -25,8 +25,8 @@ from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
-    ApiClass, ApiEnum, FeatureGroupExportConfig, MergeConfig, ParsingConfig,
-    ProblemType, SamplingConfig, TrainingConfig
+    ApiClass, ApiEnum, DocumentRetrieverConfig, FeatureGroupExportConfig,
+    MergeConfig, ParsingConfig, ProblemType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -42,6 +42,7 @@ from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
 from .custom_metric_version import CustomMetricVersion
 from .custom_train_function_info import CustomTrainFunctionInfo
+from .data_metrics import DataMetrics
 from .data_prep_logs import DataPrepLogs
 from .database_connector import DatabaseConnector
 from .dataset import Dataset
@@ -49,6 +50,11 @@ from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
+from .deployment_conversation import DeploymentConversation
+from .document_retriever import DocumentRetriever
+from .document_retriever_config import DocumentRetrieverConfig
+from .document_retriever_lookup_result import DocumentRetrieverLookupResult
+from .document_retriever_version import DocumentRetrieverVersion
 from .drift_distributions import DriftDistributions
 from .eda import Eda
 from .eda_collinearity import EdaCollinearity
@@ -72,6 +78,7 @@ from .file_connector_instructions import FileConnectorInstructions
 from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
 from .graph_dashboard import GraphDashboard
+from .inferred_feature_mappings import InferredFeatureMappings
 from .llm_input import LlmInput
 from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
@@ -96,11 +103,12 @@ from .organization_group import OrganizationGroup
 from .organization_search_result import OrganizationSearchResult
 from .pipeline import Pipeline
 from .pipeline_step import PipelineStep
+from .pipeline_step_version_logs import PipelineStepVersionLogs
 from .pipeline_version import PipelineVersion
+from .pipeline_version_logs import PipelineVersionLogs
 from .problem_type import ProblemType
 from .project import Project
 from .project_config import ProjectConfig
-from .project_dataset import ProjectDataset
 from .project_validation import ProjectValidation
 from .python_function import PythonFunction
 from .python_plot_function import PythonPlotFunction
@@ -117,9 +125,6 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
-from .vector_store import VectorStore
-from .vector_store_lookup_result import VectorStoreLookupResult
-from .vector_store_version import VectorStoreVersion
 from .webhook import Webhook
 
 
@@ -211,7 +216,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.69.0'
+    client_version = '0.71.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -221,7 +226,10 @@ class BaseApiClient:
         self.web_version = None
         self.api_endpoint = None
         self.prediction_endpoint = None
-        self.client_options = client_options or ClientOptions()
+        if not client_options:
+            client_options = ClientOptions(server=os.getenv(
+                'ABACUS_API_SERVER')) if os.getenv('ABACUS_API_SERVER') else ClientOptions()
+        self.client_options = client_options
         self.server = server or self.client_options.server
         # Deprecated
         self.service_discovery_url = None
@@ -545,29 +553,6 @@ class ReadOnlyClient(BaseApiClient):
             Project: A list of all projects in the Organization the user is currently logged in to."""
         return self._call_api('listProjects', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id}, parse_type=Project)
 
-    def list_project_datasets(self, project_id: str) -> ProjectDataset:
-        """Retrieves all datasets associated with a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
-
-        Args:
-            project_id (str): Unique string identifier associated with the project.
-
-        Returns:
-            ProjectDataset: A list representing all of the datasets attached to the project."""
-        return self._call_api('listProjectDatasets', 'GET', query_params={'projectId': project_id}, parse_type=ProjectDataset)
-
-    def get_schema(self, project_id: str, dataset_id: str) -> Schema:
-        """[DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            dataset_id (str): The unique ID associated with the dataset.
-
-        Returns:
-            Schema: An array of objects for each column in the specified dataset."""
-        logging.warning(
-            'This function (getSchema) is deprecated and will be removed in a future version. Use get_dataset_schema instead.')
-        return self._call_api('getSchema', 'GET', query_params={'projectId': project_id, 'datasetId': dataset_id}, parse_type=Schema)
-
     def get_project_feature_group_config(self, feature_group_id: str, project_id: str) -> ProjectConfig:
         """Gets a feature group's project config
 
@@ -589,6 +574,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ProjectValidation: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group."""
         return self._call_api('validateProject', 'GET', query_params={'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=ProjectValidation)
+
+    def infer_feature_mappings(self, project_id: str, feature_group_id: str) -> InferredFeatureMappings:
+        """Infer the feature mappings for the feature group in the project based on the problem type.
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            InferredFeatureMappings: A dict that contains the inferred feature mappings."""
+        return self._call_api('inferFeatureMappings', 'GET', query_params={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=InferredFeatureMappings)
 
     def verify_and_describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
         """Get the latest annotation entry for a given feature group, feature, and document along with verification information.
@@ -800,6 +796,19 @@ class ReadOnlyClient(BaseApiClient):
             FeatureGroupVersion: The feature group version."""
         return self._call_api('describeFeatureGroupVersion', 'GET', query_params={'featureGroupVersion': feature_group_version}, parse_type=FeatureGroupVersion)
 
+    def get_feature_group_version_metrics(self, feature_group_version: str, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True) -> DataMetrics:
+        """Get metrics for a specific feature group version.
+
+        Args:
+            feature_group_version (str): A unique string identifier associated with the feature group version.
+            selected_columns (list): A list of columns to order first.
+            include_charts (bool): A flag indicating whether charts should be included in the response. Default is false.
+            include_statistics (bool): A flag indicating whether statistics should be included in the response. Default is true.
+
+        Returns:
+            DataMetrics: The metrics for the specified feature group version."""
+        return self._call_api('getFeatureGroupVersionMetrics', 'GET', query_params={'featureGroupVersion': feature_group_version, 'selectedColumns': selected_columns, 'includeCharts': include_charts, 'includeStatistics': include_statistics}, parse_type=DataMetrics)
+
     def describe_feature_group_template(self, feature_group_template_id: str) -> FeatureGroupTemplate:
         """Describe a Feature Group Template.
 
@@ -867,6 +876,19 @@ class ReadOnlyClient(BaseApiClient):
             query_arguments (str): Additional query arguments to filter the data.
             sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`."""
         return self._call_api('setDatasetDatabaseConnectorConfig', 'GET', query_params={'datasetId': dataset_id, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query})
+
+    def get_dataset_version_metrics(self, dataset_version: str, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True) -> DataMetrics:
+        """Get metrics for a specific dataset version.
+
+        Args:
+            dataset_version (str): A unique string identifier associated with the dataset version.
+            selected_columns (list): A list of columns to order first.
+            include_charts (bool): A flag indicating whether charts should be included in the response. Default is false.
+            include_statistics (bool): A flag indicating whether statistics should be included in the response. Default is true.
+
+        Returns:
+            DataMetrics: The metrics for the specified Dataset version."""
+        return self._call_api('getDatasetVersionMetrics', 'GET', query_params={'datasetVersion': dataset_version, 'selectedColumns': selected_columns, 'includeCharts': include_charts, 'includeStatistics': include_statistics}, parse_type=DataMetrics)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         """Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -1713,6 +1735,26 @@ class ReadOnlyClient(BaseApiClient):
             Pipeline: Object describing the pipeline."""
         return self._call_api('resumePipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
 
+    def list_pipeline_version_logs(self, pipeline_version: str) -> PipelineVersionLogs:
+        """Gets the logs for the steps in a given pipeline version.
+
+        Args:
+            pipeline_version (str): The id of the pipeline version.
+
+        Returns:
+            PipelineVersionLogs: Object describing the logs for the steps in the pipeline."""
+        return self._call_api('listPipelineVersionLogs', 'GET', query_params={'pipelineVersion': pipeline_version}, parse_type=PipelineVersionLogs)
+
+    def get_step_version_logs(self, pipeline_step_version: str) -> PipelineStepVersionLogs:
+        """Gets the logs for a given step version.
+
+        Args:
+            pipeline_step_version (str): The id of the pipeline step version.
+
+        Returns:
+            PipelineStepVersionLogs: Object describing the pipeline step logs."""
+        return self._call_api('getStepVersionLogs', 'GET', query_params={'pipelineStepVersion': pipeline_step_version}, parse_type=PipelineStepVersionLogs)
+
     def describe_graph_dashboard(self, graph_dashboard_id: str) -> GraphDashboard:
         """Describes a given graph dashboard.
 
@@ -1884,6 +1926,26 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Abacus Chat"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
+    def get_deployment_conversation(self, deployment_conversation_id: str) -> DeploymentConversation:
+        """Gets a deployment conversation.
+
+        Args:
+            deployment_conversation_id (str): Unique ID of the conversation.
+
+        Returns:
+            DeploymentConversation: The deployment conversation."""
+        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id}, parse_type=DeploymentConversation)
+
+    def list_deployment_conversations(self, deployment_id: str) -> List[DeploymentConversation]:
+        """Lists all conversations for the given deployment and current user.
+
+        Args:
+            deployment_id (str): The deployment to get conversations for.
+
+        Returns:
+            DeploymentConversation: The deployment conversations."""
+        return self._call_api('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id}, parse_type=DeploymentConversation)
+
     def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> OrganizationSearchResult:
         """Search feature groups based on text and filters.
 
@@ -1923,8 +1985,8 @@ class ReadOnlyClient(BaseApiClient):
             LlmResponse: The response from the model, raw text and parsed components."""
         return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
 
-    def list_vector_stores(self, project_id: str, limit: int = 100, start_after_id: str = None) -> VectorStore:
-        """List all the vector stores.
+    def list_document_retrievers(self, project_id: str, limit: int = 100, start_after_id: str = None) -> DocumentRetriever:
+        """List all the document retrievers.
 
         Args:
             project_id (str): The ID of project that the vector store is created in.
@@ -1932,50 +1994,50 @@ class ReadOnlyClient(BaseApiClient):
             start_after_id (str): An offset parameter to exclude all vector stores up to this specified ID.
 
         Returns:
-            VectorStore: All the vector stores in the organization associated with the specified project."""
-        return self._call_api('listVectorStores', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=VectorStore)
+            DocumentRetriever: All the document retrievers in the organization associated with the specified project."""
+        return self._call_api('listDocumentRetrievers', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=DocumentRetriever)
 
-    def describe_vector_store(self, vector_store_id: str) -> VectorStore:
+    def describe_document_retriever(self, document_retriever_id: str) -> DocumentRetriever:
         """Describe a Vector Store.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
 
         Returns:
-            VectorStore: The vector store object."""
-        return self._call_api('describeVectorStore', 'GET', query_params={'vectorStoreId': vector_store_id}, parse_type=VectorStore)
+            DocumentRetriever: The document retriever object."""
+        return self._call_api('describeDocumentRetriever', 'GET', query_params={'documentRetrieverId': document_retriever_id}, parse_type=DocumentRetriever)
 
-    def describe_vector_store_by_name(self, name: str) -> VectorStore:
-        """Describe a vector store by its name.
+    def describe_document_retriever_by_name(self, name: str) -> DocumentRetriever:
+        """Describe a document retriever by its name.
 
         Args:
-            name (str): The unique name of the vector store to look up.
+            name (str): The unique name of the document retriever to look up.
 
         Returns:
-            VectorStore: The Vector Store."""
-        return self._call_api('describeVectorStoreByName', 'GET', query_params={'name': name}, parse_type=VectorStore)
+            DocumentRetriever: The Document Retriever."""
+        return self._call_api('describeDocumentRetrieverByName', 'GET', query_params={'name': name}, parse_type=DocumentRetriever)
 
-    def list_vector_store_versions(self, vector_store_id: str, limit: int = 100, start_after_version: str = None) -> VectorStoreVersion:
-        """List all the vector store versions with a given vector store ID.
+    def list_document_retriever_versions(self, document_retriever_id: str, limit: int = 100, start_after_version: str = None) -> DocumentRetrieverVersion:
+        """List all the document retriever versions with a given ID.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
             limit (int): The number of vector store versions to retrieve.
             start_after_version (str): An offset parameter to exclude all vector store versions up to this specified one.
 
         Returns:
-            VectorStoreVersion: All the vector store versions associated with the vector store."""
-        return self._call_api('listVectorStoreVersions', 'GET', query_params={'vectorStoreId': vector_store_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=VectorStoreVersion)
+            DocumentRetrieverVersion: All the document retriever versions associated with the document retriever."""
+        return self._call_api('listDocumentRetrieverVersions', 'GET', query_params={'documentRetrieverId': document_retriever_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DocumentRetrieverVersion)
 
-    def describe_vector_store_version(self, vector_store_version: str) -> VectorStoreVersion:
-        """Describe a vector store version.
+    def describe_document_retriever_version(self, document_retriever_version: str) -> DocumentRetrieverVersion:
+        """Describe a document retriever version.
 
         Args:
-            vector_store_version (str): A unique string identifier associated with the vector store version.
+            document_retriever_version (str): A unique string identifier associated with the document retriever version.
 
         Returns:
-            VectorStoreVersion: The vector store version object."""
-        return self._call_api('describeVectorStoreVersion', 'GET', query_params={'vectorStoreVersion': vector_store_version}, parse_type=VectorStoreVersion)
+            DocumentRetrieverVersion: The document retriever version object."""
+        return self._call_api('describeDocumentRetrieverVersion', 'GET', query_params={'documentRetrieverVersion': document_retriever_version}, parse_type=DocumentRetrieverVersion)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
@@ -2194,7 +2256,7 @@ class ApiClient(ReadOnlyClient):
                                            pipeline_id: str,
                                            step_name: str,
                                            function: callable,
-                                           step_input_mappings: list,
+                                           step_input_mappings: list = None,
                                            output_variable_mappings: list = None,
                                            step_dependencies: list = None,
                                            package_requirements: list = None):
@@ -2879,7 +2941,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project. For details, refer to."""
@@ -2958,15 +3020,6 @@ class ApiClient(ReadOnlyClient):
             feature_group_type (str): The feature group type to set the feature group as."""
         return self._call_api('setFeatureGroupType', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureGroupType': feature_group_type})
 
-    def use_feature_group_for_training(self, feature_group_id: str, project_id: str, use_for_training: bool = True):
-        """Use the feature group for model training input
-
-        Args:
-            feature_group_id (str): Unique string identifier associated with the feature group.
-            project_id (str): Unique string identifier associated with the project.
-            use_for_training (bool): Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training."""
-        return self._call_api('useFeatureGroupForTraining', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'useForTraining': use_for_training})
-
     def set_feature_mapping(self, project_id: str, feature_group_id: str, feature_name: str, feature_mapping: str = None, nested_column_name: str = None) -> Feature:
         """Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 
@@ -2980,44 +3033,6 @@ class ApiClient(ReadOnlyClient):
         Returns:
             Feature: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set."""
         return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping, 'nestedColumnName': nested_column_name}, parse_type=Feature)
-
-    def set_column_data_type(self, project_id: str, dataset_id: str, column: str, data_type: str) -> Schema:
-        """Set the data type of a dataset's column.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            dataset_id (str): The unique ID associated with the dataset.
-            column (str): The name of the column.
-            data_type (str): The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL
-
-        Returns:
-            Schema: A list of objects that describes the resulting dataset's schema after the column's data type is set."""
-        return self._call_api('setColumnDataType', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'dataType': data_type}, parse_type=Schema)
-
-    def set_column_mapping(self, project_id: str, dataset_id: str, column: str, column_mapping: str) -> Schema:
-        """Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            dataset_id (str): The unique ID associated with the dataset.
-            column (str): The name of the column.
-            column_mapping (str): The mapping of the column in the dataset. See a list of column mapping enums here.
-
-        Returns:
-            Schema: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set."""
-        return self._call_api('setColumnMapping', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'column': column, 'columnMapping': column_mapping}, parse_type=Schema)
-
-    def remove_column_mapping(self, project_id: str, dataset_id: str, column: str) -> Schema:
-        """Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
-
-        Args:
-            project_id (str): The unique ID associated with the project.
-            dataset_id (str): The unique ID associated with the dataset.
-            column (str): The name of the column.
-
-        Returns:
-            Schema: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set."""
-        return self._call_api('removeColumnMapping', 'DELETE', query_params={'projectId': project_id, 'datasetId': dataset_id, 'column': column}, parse_type=Schema)
 
     def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None, comments: dict = None, project_id: str = None, save_metadata: bool = False) -> AnnotationEntry:
         """Add an annotation entry to the database.
@@ -4197,33 +4212,6 @@ Creates a new feature group defined as the union of other feature group versions
             streaming_token (str): The streaming token to delete."""
         return self._call_api('deleteStreamingToken', 'DELETE', query_params={'streamingToken': streaming_token})
 
-    def attach_dataset_to_project(self, dataset_id: str, project_id: str, dataset_type: str) -> Schema:
-        """[DEPRECATED] Attach a dataset to the project.
-
-        Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
-
-
-        Args:
-            dataset_id (str): Unique identifier of the dataset to attach.
-            project_id (str): Unique identifier of the project to attach the dataset to.
-            dataset_type (str): Enum string representing the dataset type, associated with the use case of the project. Refer to the [Use Case Documentation](https://api.abacus.ai/app/help/useCases) for the supported dataset types per use case.
-
-        Returns:
-            Schema: An array of column descriptions."""
-        logging.warning(
-            'This function (attachDatasetToProject) is deprecated and will be removed in a future version.')
-        return self._call_api('attachDatasetToProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id, 'datasetType': dataset_type}, parse_type=Schema)
-
-    def remove_dataset_from_project(self, dataset_id: str, project_id: str):
-        """[DEPRECATED] Removes the dataset with the specified dataset from the project.
-
-        Args:
-            dataset_id (str): Unique string identifier of the dataset.
-            project_id (str): Unique string identifier of the project."""
-        logging.warning(
-            'This function (removeDatasetFromProject) is deprecated and will be removed in a future version.')
-        return self._call_api('removeDatasetFromProject', 'POST', query_params={'datasetId': dataset_id}, body={'projectId': project_id})
-
     def delete_dataset(self, dataset_id: str):
         """Deletes the specified dataset from the organization.
 
@@ -4231,7 +4219,7 @@ Creates a new feature group defined as the union of other feature group versions
             dataset_id (str): Unique string identifier of the dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None) -> TrainingConfigOptions:
+    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None, is_additional_model: bool = False) -> TrainingConfigOptions:
         """Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
         Args:
@@ -4239,10 +4227,11 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_ids (list): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
             current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
+            is_additional_model (bool): Whether to get training config options for an additional model
 
         Returns:
             TrainingConfigOptions: An array of options that can be specified when training a model in this project."""
-        return self._call_api('getTrainingConfigOptions', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain, 'currentTrainingConfig': current_training_config}, parse_type=TrainingConfigOptions)
+        return self._call_api('getTrainingConfigOptions', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain, 'currentTrainingConfig': current_training_config, 'isAdditionalModel': is_additional_model}, parse_type=TrainingConfigOptions)
 
     def create_train_test_data_split_feature_group(self, project_id: str, training_config: Union[dict, TrainingConfig], feature_group_ids: list) -> FeatureGroup:
         """Get the train and test data split without training the model. Only supported for models with custom algorithms.
@@ -4256,7 +4245,7 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The feature group containing the training data and folds information."""
         return self._call_api('createTrainTestDataSplitFeatureGroup', 'POST', query_params={}, body={'projectId': project_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=FeatureGroup)
 
-    def train_model(self, project_id: str, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None) -> Model:
+    def train_model(self, project_id: str, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None, algorithm_training_configs: list = None) -> Model:
         """Train a model for the specified project.
 
         This method trains a model in the given project, using user-specified training configurations defined in the `getTrainingConfigOptions` method.
@@ -4274,10 +4263,11 @@ Creates a new feature group defined as the union of other feature group versions
             builtin_algorithms (list): List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
+            algorithm_training_configs (list): List of algorithm specifc training configs that will be part of the model training AutoML run.
 
         Returns:
             Model: The new model which is being trained."""
-        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory}, parse_type=Model)
+        return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory, 'algorithmTrainingConfigs': algorithm_training_configs}, parse_type=Model)
 
     def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False) -> Model:
         """Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
@@ -4407,7 +4397,7 @@ Creates a new feature group defined as the union of other feature group versions
             Model: Model object after the prediction configuration is applied."""
         return self._call_api('setModelPredictionParams', 'PATCH', query_params={}, body={'modelId': model_id, 'predictionConfig': prediction_config}, parse_type=Model)
 
-    def retrain_model(self, model_id: str, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None) -> Model:
+    def retrain_model(self, model_id: str, deployment_ids: list = None, feature_group_ids: list = None, custom_algorithms: list = None, builtin_algorithms: list = None, custom_algorithm_configs: dict = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, algorithm_training_configs: list = None) -> Model:
         """Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
         Args:
@@ -4420,10 +4410,11 @@ Creates a new feature group defined as the union of other feature group versions
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
             training_config (TrainingConfig): The training config used to train this model.
+            algorithm_training_configs (list): List of algorithm specifc training configs that will be part of the model training AutoML run.
 
         Returns:
             Model: The model that is being retrained."""
-        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithms': custom_algorithms, 'builtinAlgorithms': builtin_algorithms, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config}, parse_type=Model)
+        return self._call_api('retrainModel', 'POST', query_params={}, body={'modelId': model_id, 'deploymentIds': deployment_ids, 'featureGroupIds': feature_group_ids, 'customAlgorithms': custom_algorithms, 'builtinAlgorithms': builtin_algorithms, 'customAlgorithmConfigs': custom_algorithm_configs, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'algorithmTrainingConfigs': algorithm_training_configs}, parse_type=Model)
 
     def delete_model(self, model_id: str):
         """Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
@@ -4650,7 +4641,7 @@ Creates a new feature group defined as the union of other feature group versions
             monitor_alert_id (str): The unique string identifier of the alert to delete."""
         return self._call_api('deleteMonitorAlert', 'DELETE', query_params={'monitorAlertId': monitor_alert_id})
 
-    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None) -> Deployment:
+    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
 
         A Deployment makes the trained model or feature group available for prediction requests.
@@ -4669,10 +4660,11 @@ Creates a new feature group defined as the union of other feature group versions
             start (bool): If true, will start the deployment; otherwise will create offline
             enable_batch_streaming_updates (bool): Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup.
             model_deployment_config (dict): The deployment config for model to deploy
+            deployment_config (dict): Additional parameters specific to different use_cases
 
         Returns:
             Deployment: The new model or feature group deployment."""
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'modelDeploymentConfig': model_deployment_config}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'modelDeploymentConfig': model_deployment_config, 'deploymentConfig': deployment_config}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str, name: str = None) -> DeploymentAuthToken:
         """Creates a deployment token for the specified project.
@@ -5136,17 +5128,18 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, chat_config: dict = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, chat_config: dict = None, filter_key_values: dict = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
-            chat_config (dict): A dictionary specifiying the query chat config override"""
+            chat_config (dict): A dictionary specifiying the query chat config override.
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'chatConfig': chat_config}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values}, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -5700,17 +5693,18 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name to identify the Python function."""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
-    def create_pipeline(self, pipeline_name: str, project_id: str = None, cron: str = None) -> Pipeline:
+    def create_pipeline(self, pipeline_name: str, project_id: str = None, cron: str = None, is_prod: bool = None) -> Pipeline:
         """Creates a pipeline for executing multiple steps.
 
         Args:
             pipeline_name (str): The name of the pipeline, which should be unique to the organization.
             project_id (str): A unique string identifier for the pipeline.
             cron (str): A cron-like string specifying the frequency of pipeline reruns.
+            is_prod (bool): Whether the pipeline is a production pipeline or not.
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
-        return self._call_api('createPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'cron': cron}, parse_type=Pipeline)
+        return self._call_api('createPipeline', 'POST', query_params={}, body={'pipelineName': pipeline_name, 'projectId': project_id, 'cron': cron, 'isProd': is_prod}, parse_type=Pipeline)
 
     def describe_pipeline(self, pipeline_id: str) -> Pipeline:
         """Describes a given pipeline.
@@ -5732,7 +5726,7 @@ Creates a new feature group defined as the union of other feature group versions
             Pipeline: An object describing a Pipeline"""
         return self._call_api('describePipelineByName', 'POST', query_params={}, body={'pipelineName': pipeline_name}, parse_type=Pipeline)
 
-    def update_pipeline(self, pipeline_id: str, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None) -> Pipeline:
+    def update_pipeline(self, pipeline_id: str, project_id: str = None, pipeline_variable_mappings: list = None, cron: str = None, is_prod: bool = None) -> Pipeline:
         """Updates a pipeline for executing multiple steps.
 
         Args:
@@ -5740,10 +5734,11 @@ Creates a new feature group defined as the union of other feature group versions
             project_id (str): A unique string identifier for the pipeline.
             pipeline_variable_mappings (list): List of Python function arguments for the pipeline.
             cron (str): A cron-like string specifying the frequency of the scheduled pipeline runs.
+            is_prod (bool): Whether the pipeline is a production pipeline or not.
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
-        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron}, parse_type=Pipeline)
+        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron, 'isProd': is_prod}, parse_type=Pipeline)
 
     def delete_pipeline(self, pipeline_id: str):
         """Deletes a pipeline.
@@ -6058,6 +6053,24 @@ Creates a new feature group defined as the union of other feature group versions
             ChatSession: The chat session with Abacus Chat"""
         return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id}, parse_type=ChatSession)
 
+    def create_deployment_conversation(self, deployment_id: str, name: str) -> DeploymentConversation:
+        """Creates a deployment conversation.
+
+        Args:
+            deployment_id (str): The deployment this conversation belongs to.
+            name (str): The name of the conversation.
+
+        Returns:
+            DeploymentConversation: The deployment conversation."""
+        return self._call_api('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name}, parse_type=DeploymentConversation)
+
+    def delete_deployment_conversation(self, deployment_conversation_id: str):
+        """Delete a Deployment Conversation.
+
+        Args:
+            deployment_conversation_id (str): A unique string identifier associated with the deployment conversation."""
+        return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id})
+
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
         """Creates a new AI agent.
 
@@ -6127,7 +6140,7 @@ Creates a new feature group defined as the union of other feature group versions
             LlmParameters: The parameters for LLM using the given inputs."""
         return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
 
-    def create_vector_store(self, project_id: str, name: str, feature_group_id: str, cluster_name: str = None) -> VectorStore:
+    def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, cluster_name: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
         """Returns a vector store that stores embeddings for document chunks in a feature group.
 
         Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
@@ -6138,49 +6151,51 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name of the vector store.
             feature_group_id (str): The ID of the feature group that the vector store is associated with.
             cluster_name (str): The name of the cluster that the vector store is created in.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
-            VectorStore: The newly created vector store."""
-        return self._call_api('createVectorStore', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'clusterName': cluster_name}, parse_type=VectorStore)
+            DocumentRetriever: The newly created document retriever."""
+        return self._call_api('createDocumentRetriever', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'clusterName': cluster_name, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetriever)
 
-    def update_vector_store(self, vector_store_id: str, name: str = None, feature_group_id: str = None) -> VectorStore:
-        """Updates an existing vector store.
+    def update_document_retriever(self, document_retriever_id: str, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
+        """Updates an existing document retriever.
 
         Args:
-            vector_store_id (str): The unique ID associated with the vector store.
+            document_retriever_id (str): The unique ID associated with the document retriever.
             name (str): The name group to update the vector store with.
-            feature_group_id (str): The ID of the feature group to update the vector store with.
+            feature_group_id (str): The ID of the feature group to update the document retriever with.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
-            VectorStore: The updated vector store."""
-        return self._call_api('updateVectorStore', 'POST', query_params={}, body={'vectorStoreId': vector_store_id, 'name': name, 'featureGroupId': feature_group_id}, parse_type=VectorStore)
+            DocumentRetriever: The updated document retriever."""
+        return self._call_api('updateDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'name': name, 'featureGroupId': feature_group_id, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetriever)
 
-    def create_vector_store_version(self, vector_store_id: str) -> VectorStoreVersion:
-        """Creates a vector store version from the latest version of the feature group that the vector store associated with.
+    def create_document_retriever_version(self, document_retriever_id: str) -> DocumentRetrieverVersion:
+        """Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
         Args:
-            vector_store_id (str): The unique ID associated with the vector store to create version with.
+            document_retriever_id (str): The unique ID associated with the document retriever to create version with.
 
         Returns:
-            VectorStoreVersion: The newly created vector store version."""
-        return self._call_api('createVectorStoreVersion', 'POST', query_params={}, body={'vectorStoreId': vector_store_id}, parse_type=VectorStoreVersion)
+            DocumentRetrieverVersion: The newly created document retriever version."""
+        return self._call_api('createDocumentRetrieverVersion', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id}, parse_type=DocumentRetrieverVersion)
 
-    def delete_vector_store(self, vector_store_id: str):
+    def delete_document_retriever(self, vector_store_id: str):
         """Delete a Vector Store.
 
         Args:
             vector_store_id (str): A unique string identifier associated with the vector store."""
-        return self._call_api('deleteVectorStore', 'DELETE', query_params={'vectorStoreId': vector_store_id})
+        return self._call_api('deleteDocumentRetriever', 'DELETE', query_params={'vectorStoreId': vector_store_id})
 
-    def lookup_vector_store(self, vector_store_id: str, query: str, deployment_token: str, limit_results: int = None) -> VectorStoreLookupResult:
-        """Lookup relevant documents from the vector store deployed with given query.
+    def lookup_document_retriever(self, document_retriever_id: str, query: str, deployment_token: str, limit_results: int = None) -> DocumentRetrieverLookupResult:
+        """Lookup relevant documents from the document retriever deployed with given query.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
             query (str): The query to search for.
             deployment_token (str): A deployment token used to authenticate access to created vector store.
             limit_results (int): If provided, will limit the number of results to the value specified.
 
         Returns:
-            VectorStoreLookupResult: The relevant documentation results found from the vector store."""
-        return self._call_api('lookupVectorStore', 'POST', query_params={'deploymentToken': deployment_token}, body={'vectorStoreId': vector_store_id, 'query': query, 'limitResults': limit_results}, parse_type=VectorStoreLookupResult)
+            DocumentRetrieverLookupResult: The relevant documentation results found from the document retriever."""
+        return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'limitResults': limit_results}, parse_type=DocumentRetrieverLookupResult)

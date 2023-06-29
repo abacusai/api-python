@@ -55,3 +55,15 @@ class PipelineStepVersion(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         return {'step_name': self.step_name, 'pipeline_step_version': self.pipeline_step_version, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'output_errors': self.output_errors, 'python_function_id': self.python_function_id, 'function_variable_mappings': self.function_variable_mappings, 'step_dependencies': self.step_dependencies, 'output_variable_mappings': self.output_variable_mappings, 'pipeline_step_version_references': self._get_attribute_as_dict(self.pipeline_step_version_references)}
+
+    def get_step_version_logs(self):
+        """
+        Gets the logs for a given step version.
+
+        Args:
+            pipeline_step_version (str): The id of the pipeline step version.
+
+        Returns:
+            PipelineStepVersionLogs: Object describing the pipeline step logs.
+        """
+        return self.client.get_step_version_logs(self.pipeline_step_version)

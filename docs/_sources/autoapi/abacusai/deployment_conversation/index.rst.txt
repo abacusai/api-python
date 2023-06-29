@@ -1,0 +1,71 @@
+:py:mod:`abacusai.deployment_conversation`
+==========================================
+
+.. py:module:: abacusai.deployment_conversation
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.deployment_conversation.DeploymentConversation
+
+
+
+
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, history={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A deployment conversation.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param deploymentConversationId: The unique identifier of the deployment conversation.
+   :type deploymentConversationId: str
+   :param name: The name of the deployment conversation.
+   :type name: str
+   :param deploymentId: The deployment id associated with the deployment conversation.
+   :type deploymentId: str
+   :param createdAt: The timestamp at which the deployment conversation was created.
+   :type createdAt: str
+   :param history: The history of the deployment conversation.
+   :type history: DeploymentConversationEvent
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: get()
+
+      Gets a deployment conversation.
+
+      :param deployment_conversation_id: Unique ID of the conversation.
+      :type deployment_conversation_id: str
+
+      :returns: The deployment conversation.
+      :rtype: DeploymentConversation
+
+
+   .. py:method:: delete()
+
+      Delete a Deployment Conversation.
+
+      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
+      :type deployment_conversation_id: str
+
+
+

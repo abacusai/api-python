@@ -272,6 +272,28 @@ Classes
       :rtype: BatchPrediction
 
 
+   .. py:method:: create_conversation(name)
+
+      Creates a deployment conversation.
+
+      :param name: The name of the conversation.
+      :type name: str
+
+      :returns: The deployment conversation.
+      :rtype: DeploymentConversation
+
+
+   .. py:method:: list_conversations()
+
+      Lists all conversations for the given deployment and current user.
+
+      :param deployment_id: The deployment to get conversations for.
+      :type deployment_id: str
+
+      :returns: The deployment conversations.
+      :rtype: DeploymentConversation
+
+
    .. py:method:: wait_for_deployment(wait_states={'PENDING', 'DEPLOYING'}, timeout=480)
 
       A waiting call until deployment is completed.

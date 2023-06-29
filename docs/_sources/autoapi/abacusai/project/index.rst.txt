@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, featureGroupsEnabled=None, tags=None)
+.. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,8 +35,6 @@ Classes
    :type problemType: str
    :param createdAt: The date and time when the project was created.
    :type createdAt: str
-   :param featureGroupsEnabled: Project uses feature groups instead of datasets.
-   :type featureGroupsEnabled: bool
    :param tags: List of tags associated with the project.
    :type tags: list[str]
 
@@ -70,28 +68,6 @@ Classes
 
       :returns: The description of the project.
       :rtype: Project
-
-
-   .. py:method:: list_datasets()
-
-      Retrieves all datasets associated with a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
-
-      :param project_id: Unique string identifier associated with the project.
-      :type project_id: str
-
-      :returns: A list representing all of the datasets attached to the project.
-      :rtype: ProjectDataset
-
-
-   .. py:method:: get_schema(dataset_id)
-
-      [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
-
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-
-      :returns: An array of objects for each column in the specified dataset.
-      :rtype: Schema
 
 
    .. py:method:: rename(name)
@@ -161,47 +137,15 @@ Classes
       :rtype: ProjectValidation
 
 
-   .. py:method:: set_column_data_type(dataset_id, column, data_type)
+   .. py:method:: infer_feature_mappings(feature_group_id)
 
-      Set the data type of a dataset's column.
+      Infer the feature mappings for the feature group in the project based on the problem type.
 
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param column: The name of the column.
-      :type column: str
-      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL
-      :type data_type: str
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
 
-      :returns: A list of objects that describes the resulting dataset's schema after the column's data type is set.
-      :rtype: Schema
-
-
-   .. py:method:: set_column_mapping(dataset_id, column, column_mapping)
-
-      Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
-
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param column: The name of the column.
-      :type column: str
-      :param column_mapping: The mapping of the column in the dataset. See a list of column mapping enums here.
-      :type column_mapping: str
-
-      :returns: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set.
-      :rtype: Schema
-
-
-   .. py:method:: remove_column_mapping(dataset_id, column)
-
-      Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
-
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param column: The name of the column.
-      :type column: str
-
-      :returns: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set.
-      :rtype: Schema
+      :returns: A dict that contains the inferred feature mappings.
+      :rtype: InferredFeatureMappings
 
 
    .. py:method:: describe_feature_group(feature_group_id)
@@ -241,7 +185,7 @@ Classes
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None)
+   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None, is_additional_model = False)
 
       Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -251,6 +195,8 @@ Classes
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
       :type current_training_config: TrainingConfig
+      :param is_additional_model: Whether to get training config options for an additional model
+      :type is_additional_model: bool
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
@@ -269,7 +215,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None)
+   .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
 
       Train a model for the specified project.
 
@@ -296,6 +242,8 @@ Classes
       :type cpu_size: str
       :param memory: Memory (in GB) for the user-defined algorithms during training.
       :type memory: int
+      :param algorithm_training_configs: List of algorithm specifc training configs that will be part of the model training AutoML run.
+      :type algorithm_training_configs: list
 
       :returns: The new model which is being trained.
       :rtype: Model
@@ -668,7 +616,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_vector_store(name, feature_group_id, cluster_name = None)
+   .. py:method:: create_document_retriever(name, feature_group_id, cluster_name = None, document_retriever_config = None)
 
       Returns a vector store that stores embeddings for document chunks in a feature group.
 
@@ -681,22 +629,24 @@ Classes
       :type feature_group_id: str
       :param cluster_name: The name of the cluster that the vector store is created in.
       :type cluster_name: str
+      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+      :type document_retriever_config: DocumentRetrieverConfig
 
-      :returns: The newly created vector store.
-      :rtype: VectorStore
+      :returns: The newly created document retriever.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: list_vector_stores(limit = 100, start_after_id = None)
+   .. py:method:: list_document_retrievers(limit = 100, start_after_id = None)
 
-      List all the vector stores.
+      List all the document retrievers.
 
       :param limit: The number of vector stores to retrieve.
       :type limit: int
       :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
       :type start_after_id: str
 
-      :returns: All the vector stores in the organization associated with the specified project.
-      :rtype: VectorStore
+      :returns: All the document retrievers in the organization associated with the specified project.
+      :rtype: DocumentRetriever
 
 
    .. py:method:: attach_dataset(dataset_id, project_dataset_type)

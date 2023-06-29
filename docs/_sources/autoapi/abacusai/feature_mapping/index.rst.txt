@@ -1,0 +1,46 @@
+:py:mod:`abacusai.feature_mapping`
+==================================
+
+.. py:module:: abacusai.feature_mapping
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_mapping.FeatureMapping
+
+
+
+
+.. py:class:: FeatureMapping(client, featureMapping=None, featureName=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A description of the data use for a feature
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureMapping: The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
+   :type featureMapping: str
+   :param featureName: The unique name of the feature.
+   :type featureName: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

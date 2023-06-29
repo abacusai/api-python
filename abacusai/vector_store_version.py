@@ -34,28 +34,6 @@ class VectorStoreVersion(AbstractApiClass):
         """
         return {'vector_store_id': self.vector_store_id, 'vector_store_version': self.vector_store_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version}
 
-    def refresh(self):
-        """
-        Calls describe and refreshes the current object's fields
-
-        Returns:
-            VectorStoreVersion: The current object
-        """
-        self.__dict__.update(self.describe().__dict__)
-        return self
-
-    def describe(self):
-        """
-        Describe a vector store version.
-
-        Args:
-            vector_store_version (str): A unique string identifier associated with the vector store version.
-
-        Returns:
-            VectorStoreVersion: The vector store version object.
-        """
-        return self.client.describe_vector_store_version(self.vector_store_version)
-
     def wait_for_results(self, timeout=3600):
         """
         A waiting call until vector store version indexing and deployment is complete.

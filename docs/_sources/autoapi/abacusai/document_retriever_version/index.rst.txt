@@ -1,0 +1,95 @@
+:py:mod:`abacusai.document_retriever_version`
+=============================================
+
+.. py:module:: abacusai.document_retriever_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.document_retriever_version.DocumentRetrieverVersion
+
+
+
+
+.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A version of document retriever.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param documentRetrieverId: The unique identifier of the vector store.
+   :type documentRetrieverId: str
+   :param documentRetrieverVersion: The unique identifier of the vector store version.
+   :type documentRetrieverVersion: str
+   :param createdAt: When the vector store was created.
+   :type createdAt: str
+   :param status: The status of creating vector store version.
+   :type status: str
+   :param featureGroupVersion: The unique identifier of the feature group version at which the vector store version is created.
+   :type featureGroupVersion: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: DocumentRetrieverVersion
+
+
+   .. py:method:: describe()
+
+      Describe a document retriever version.
+
+      :param document_retriever_version: A unique string identifier associated with the document retriever version.
+      :type document_retriever_version: str
+
+      :returns: The document retriever version object.
+      :rtype: DocumentRetrieverVersion
+
+
+   .. py:method:: wait_for_results(timeout=3600)
+
+      A waiting call until document retriever version is complete.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: wait_until_ready(timeout=3600)
+
+      A waiting call until the document retriever version is ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the document retriever version.
+
+      :returns: A string describing the status of a document retriever version (pending, complete, etc.).
+      :rtype: str
+
+
+

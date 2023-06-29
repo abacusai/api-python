@@ -46,6 +46,20 @@ class DatasetVersion(AbstractApiClass):
         """
         return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
 
+    def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):
+        """
+        Get metrics for a specific dataset version.
+
+        Args:
+            selected_columns (list): A list of columns to order first.
+            include_charts (bool): A flag indicating whether charts should be included in the response. Default is false.
+            include_statistics (bool): A flag indicating whether statistics should be included in the response. Default is true.
+
+        Returns:
+            DataMetrics: The metrics for the specified Dataset version.
+        """
+        return self.client.get_dataset_version_metrics(self.dataset_version, selected_columns, include_charts, include_statistics)
+
     def refresh(self):
         """
         Calls describe and refreshes the current object's fields

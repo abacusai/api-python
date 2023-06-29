@@ -18,6 +18,7 @@ Classes
    abacusai.api_class.model.ForecastingTrainingConfig
    abacusai.api_class.model.NamedEntityExtractionTrainingConfig
    abacusai.api_class.model.NaturalLanguageSearchTrainingConfig
+   abacusai.api_class.model.ChatLLMTrainingConfig
    abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig
    abacusai.api_class.model.SentimentDetectionTrainingConfig
    abacusai.api_class.model.DocumentClassificationTrainingConfig
@@ -64,14 +65,17 @@ Classes
 
       
 
+   .. py:attribute:: algorithm
+      :type: str
+
+      
+
 
 .. py:class:: PersonalizationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PERSONALIZATION problem type
-   :param problem_type: PERSONALIZATION
-   :type problem_type: ProblemType
    :param objective: Ranking scheme used to select final best model.
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -136,11 +140,6 @@ Classes
    :type max_user_history_len_percentile: int
    :param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
    :type downsample_item_popularity_percentile: float
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -302,14 +301,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: RegressionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PREDICTIVE_MODELING problem type
-   :param problem_type: PREDICTIVE_MODELING
-   :type problem_type: ProblemType
    :param objective: Ranking scheme used to select final best model.
    :type objective: RegressionObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -338,7 +338,7 @@ Classes
    :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                              Re-balancing classes generally boosts recall at the cost of precision on rare classes.
    :type rebalance_classes: bool
-   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold.
+   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1
    :type rare_class_augmentation_threshold: float
    :param augmentation_strategy: Strategy to deal with class imbalance and data augmentation.
    :type augmentation_strategy: RegressionAugmentationStrategy
@@ -384,11 +384,6 @@ Classes
    :type custom_loss_functions: list[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: list[str]
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.RegressionObjective
@@ -575,14 +570,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: ForecastingTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the FORECASTING problem type
-   :param problem_type: FORECASTING
-   :type problem_type: ProblemType
    :param prediction_length: How many timesteps in the future to predict.
    :type prediction_length: int
    :param objective: Ranking scheme used to select final best model.
@@ -700,11 +696,6 @@ Classes
    :type custom_loss_functions: list[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: list[str]
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: prediction_length
       :type: int
@@ -1001,14 +992,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
-   :param problem_type: NAMED_ENTITY_EXTRACTION
-   :type problem_type: ProblemType
    :param objective: Ranking scheme used to select final best model.
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -1029,11 +1021,6 @@ Classes
    :type document_format: NLPDocumentFormat
    :param include_longformer: Whether to include the longformer model.
    :type include_longformer: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.NERObjective
@@ -1085,14 +1072,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
-   :param problem_type: NATURAL_LANGUAGE_SEARCH
-   :type problem_type: ProblemType
    :param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
    :type abacus_internal_model: bool
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -1105,11 +1093,6 @@ Classes
    :type chunk_overlap_fraction: float
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: abacus_internal_model
       :type: bool
@@ -1141,25 +1124,66 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ChatLLMTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the CHAT_LLM problem type
+   :param llm_name:
+   :type llm_name: str
+   :param vector_stores: List of vector store names to use for the feature stores this model was trained with.
+   :type vector_stores: List[str]
+   :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
+   :type num_completion_tokens: int
+   :param system_message: The generative LLM system message
+   :type system_message: str
+   :param temperature: The generative LLM temperature
+   :type temperature: float
+
+   .. py:attribute:: llm_name
+      :type: str
+
+      
+
+   .. py:attribute:: vector_stores
+      :type: List[str]
+
+      
+
+   .. py:attribute:: num_completion_tokens
+      :type: int
+
+      
+
+   .. py:attribute:: system_message
+      :type: str
+
+      
+
+   .. py:attribute:: temperature
+      :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
-   :param problem_type: SENTENCE_BOUNDARY_DETECTION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -1176,14 +1200,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: SentimentDetectionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTIMENT_DETECTION problem type
-   :param problem_type: SENTIMENT_DETECTION
-   :type problem_type: ProblemType
    :param sentiment_type: Type of sentiment to detect.
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -1194,11 +1219,6 @@ Classes
    :type batch_size: BatchSize
    :param compute_metrics: Whether to compute metrics.
    :type compute_metrics: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: sentiment_type
       :type: abacusai.api_class.enums.SentimentType
@@ -1225,14 +1245,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DocumentClassificationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
-   :param problem_type: DOCUMENT_CLASSIFICATION
-   :type problem_type: ProblemType
    :param zero_shot_hypotheses: Zero shot hypotheses. Example text: 'This text is about pricing'.
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -1241,11 +1262,6 @@ Classes
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: zero_shot_hypotheses
       :type: List[str]
@@ -1267,25 +1283,21 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
-   :param problem_type: DOCUMENT_SUMMARIZATION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -1301,6 +1313,9 @@ Classes
       :type: abacusai.api_class.enums.BatchSize
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
@@ -1308,19 +1323,12 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_VISUALIZATION problem type
-   :param problem_type: DOCUMENT_VISUALIZATION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -1337,26 +1345,25 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: ClusteringTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
-   :param problem_type: CLUSTERING
-   :type problem_type: ProblemType
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: num_clusters_selection
       :type: int
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
@@ -1364,17 +1371,10 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING_TIMESERIES problem type
-   :param problem_type: CLUSTERING_TIMESERIES
-   :type problem_type: ProblemType
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
    :param imputation: Imputation method for missing values.
    :type imputation: ClusteringImputationMethod
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: num_clusters_selection
       :type: int
@@ -1386,14 +1386,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: CumulativeForecastingTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUMULATIVE_FORECASTING problem type
-   :param problem_type: CUMULATIVE_FORECASTING
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param historical_frequency: Forecast frequency
@@ -1406,11 +1407,6 @@ Classes
    :type skip_target_transform: bool
    :param predict_residuals: Predict residuals instead of totals at each prediction step.
    :type predict_residuals: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -1442,14 +1438,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: AnomalyDetectionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the ANOMALY_DETECTION problem type
-   :param problem_type: ANOMALY_DETECTION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
    :type test_split: int
    :param value_high: Detect unusually high values.
@@ -1464,11 +1461,6 @@ Classes
    :type spike_down: bool
    :param trend_change: Detect changes to the trend.
    :type trend_change: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -1505,19 +1497,18 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
-   :param problem_type: THEME_ANALYSIS
-   :type problem_type: ProblemType
 
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: AIAgentTrainingConfig
@@ -1525,20 +1516,16 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the AI_AGENT problem type
-   :param problem_type: AI_AGENT
-   :type problem_type: ProblemType
    :param description: Description of the agent function.
    :type description: str
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: description
       :type: str
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
@@ -1546,8 +1533,6 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
-   :param problem_type: CUSTOM_TRAINED_MODEL
-   :type problem_type: ProblemType
    :param max_catalog_size: Maximum expected catalog size.
    :type max_catalog_size: int
    :param max_dimension: Maximum expected dimension of the catalog.
@@ -1558,11 +1543,6 @@ Classes
    :type docker_image_uri: str
    :param service_port: Service port.
    :type service_port: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: max_catalog_size
       :type: int
@@ -1589,14 +1569,15 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: CustomAlgorithmTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_ALGORITHM problem type
-   :param problem_type: CUSTOM_ALGORITHM
-   :type problem_type: ProblemType
    :param train_function_name: The name of the train function.
    :type train_function_name: str
    :param predict_many_function_name: The name of the predict many function.
@@ -1611,11 +1592,6 @@ Classes
    :type predict_module_name: str
    :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
    :type test_split: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: train_function_name
       :type: str
@@ -1652,19 +1628,18 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: OptimizationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
-   :param problem_type: OPTIMIZATION
-   :type problem_type: ProblemType
 
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: _TrainingConfigFactory

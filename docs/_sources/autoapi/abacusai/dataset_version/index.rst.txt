@@ -61,6 +61,21 @@ Classes
       :rtype: dict
 
 
+   .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
+
+      Get metrics for a specific dataset version.
+
+      :param selected_columns: A list of columns to order first.
+      :type selected_columns: list
+      :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
+      :type include_charts: bool
+      :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
+      :type include_statistics: bool
+
+      :returns: The metrics for the specified Dataset version.
+      :rtype: DataMetrics
+
+
    .. py:method:: refresh()
 
       Calls describe and refreshes the current object's fields

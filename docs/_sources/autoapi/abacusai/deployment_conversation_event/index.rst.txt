@@ -1,0 +1,52 @@
+:py:mod:`abacusai.deployment_conversation_event`
+================================================
+
+.. py:module:: abacusai.deployment_conversation_event
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.deployment_conversation_event.DeploymentConversationEvent
+
+
+
+
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, modelVersion=None, searchResults=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A single deployment conversation message.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param role: The role of the message sender
+   :type role: str
+   :param text: The text of the message
+   :type text: str
+   :param timestamp: The timestamp at which the message was sent
+   :type timestamp: str
+   :param modelVersion: The model instance id associated with the message.
+   :type modelVersion: str
+   :param searchResults: The search results for the message.
+   :type searchResults: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

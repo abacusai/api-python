@@ -195,16 +195,6 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_group_type(self.feature_group_id, project_id, feature_group_type)
 
-    def use_for_training(self, project_id: str, use_for_training: bool = True):
-        """
-        Use the feature group for model training input
-
-        Args:
-            project_id (str): Unique string identifier associated with the project.
-            use_for_training (bool): Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training.
-        """
-        return self.client.use_feature_group_for_training(self.feature_group_id, project_id, use_for_training)
-
     def describe_annotation(self, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None):
         """
         Get the latest annotation entry for a given feature group, feature, and document.

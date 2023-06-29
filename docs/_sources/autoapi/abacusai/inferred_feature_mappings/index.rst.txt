@@ -1,0 +1,46 @@
+:py:mod:`abacusai.inferred_feature_mappings`
+============================================
+
+.. py:module:: abacusai.inferred_feature_mappings
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.inferred_feature_mappings.InferredFeatureMappings
+
+
+
+
+.. py:class:: InferredFeatureMappings(client, error=None, featureMappings={})
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A description of the data use for a feature
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param error: Error message if there was an error inferring the feature mappings
+   :type error: str
+   :param featureMappings: The inferred feature mappings
+   :type featureMappings: FeatureMapping
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

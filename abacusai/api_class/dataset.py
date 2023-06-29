@@ -1,10 +1,10 @@
-from dataclasses import dataclass, field
+import dataclasses
 
 from .abstract import ApiClass
 
 
-@dataclass
+@dataclasses.dataclass
 class ParsingConfig(ApiClass):
-    escape: str = field(default='"')
-    csv_delimiter: str = field(default=None)
-    file_path_with_schema: str = field(default=None)
+    escape: str = dataclasses.field(default='"')
+    csv_delimiter: str = dataclasses.field(default=None)
+    file_path_with_schema: str = dataclasses.field(default=None)

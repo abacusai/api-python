@@ -256,6 +256,30 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns)
 
+    def create_conversation(self, name: str):
+        """
+        Creates a deployment conversation.
+
+        Args:
+            name (str): The name of the conversation.
+
+        Returns:
+            DeploymentConversation: The deployment conversation.
+        """
+        return self.client.create_deployment_conversation(self.deployment_id, name)
+
+    def list_conversations(self):
+        """
+        Lists all conversations for the given deployment and current user.
+
+        Args:
+            deployment_id (str): The deployment to get conversations for.
+
+        Returns:
+            DeploymentConversation: The deployment conversations.
+        """
+        return self.client.list_deployment_conversations(self.deployment_id)
+
     def wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480):
         """
         A waiting call until deployment is completed.

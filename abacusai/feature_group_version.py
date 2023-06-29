@@ -156,6 +156,20 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.describe_feature_group_version(self.feature_group_version)
 
+    def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):
+        """
+        Get metrics for a specific feature group version.
+
+        Args:
+            selected_columns (list): A list of columns to order first.
+            include_charts (bool): A flag indicating whether charts should be included in the response. Default is false.
+            include_statistics (bool): A flag indicating whether statistics should be included in the response. Default is true.
+
+        Returns:
+            DataMetrics: The metrics for the specified feature group version.
+        """
+        return self.client.get_feature_group_version_metrics(self.feature_group_version, selected_columns, include_charts, include_statistics)
+
     def wait_for_results(self, timeout=3600):
         """
         A waiting call until feature group version is materialized

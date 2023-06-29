@@ -309,17 +309,18 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, chat_config: dict = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, chat_config: dict = None, filter_key_values: dict = None) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
             messages (list): A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
-            chat_config (dict): A dictionary specifiying the query chat config override"""
+            chat_config (dict): A dictionary specifiying the query chat config override.
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'chatConfig': chat_config}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values}, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.

@@ -1,0 +1,54 @@
+:py:mod:`abacusai.api_class.vector_store`
+=========================================
+
+.. py:module:: abacusai.api_class.vector_store
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.vector_store.VectorStoreConfig
+   abacusai.api_class.vector_store.DocumentRetrieverConfig
+
+
+
+
+.. py:class:: VectorStoreConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Configs for vector store indexing.
+
+   :param chunk_size: The size of text chunks in the vector store.
+   :type chunk_size: int
+   :param chunk_overlap_fraction: The fraction of overlap between chunks.
+   :type chunk_overlap_fraction: float
+
+   .. py:attribute:: chunk_size
+      :type: int
+
+      
+
+   .. py:attribute:: chunk_overlap_fraction
+      :type: float
+
+      
+
+   .. py:attribute:: text_encoder
+      :type: abacusai.api_class.enums.VectorStoreTextEncoder
+
+      
+
+
+.. py:class:: DocumentRetrieverConfig
+
+   Bases: :py:obj:`VectorStoreConfig`
+
+   Configs for document retriever.
+
+

@@ -78,6 +78,17 @@ Classes
       :rtype: PipelineVersion
 
 
+   .. py:method:: list_logs()
+
+      Gets the logs for the steps in a given pipeline version.
+
+      :param pipeline_version: The id of the pipeline version.
+      :type pipeline_version: str
+
+      :returns: Object describing the logs for the steps in the pipeline.
+      :rtype: PipelineVersionLogs
+
+
    .. py:method:: wait_for_pipeline(timeout=1200)
 
       A waiting call until all the stages in a pipeline version have completed.

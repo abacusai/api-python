@@ -1,4 +1,6 @@
+from .api_class import VectorStoreConfig
 from .return_class import AbstractApiClass
+from .vector_store_config import VectorStoreConfig
 from .vector_store_version import VectorStoreVersion
 
 
@@ -12,18 +14,21 @@ class VectorStore(AbstractApiClass):
             vectorStoreId (str): The unique identifier of the vector store.
             createdAt (str): When the vector store was created.
             latestVectorStoreVersion (VectorStoreVersion): The latest version of vector store.
+            vectorStoreConfig (VectorStoreConfig): The config for vector store creation.
     """
 
-    def __init__(self, client, name=None, vectorStoreId=None, createdAt=None, latestVectorStoreVersion={}):
+    def __init__(self, client, name=None, vectorStoreId=None, createdAt=None, latestVectorStoreVersion={}, vectorStoreConfig={}):
         super().__init__(client, vectorStoreId)
         self.name = name
         self.vector_store_id = vectorStoreId
         self.created_at = createdAt
         self.latest_vector_store_version = client._build_class(
             VectorStoreVersion, latestVectorStoreVersion)
+        self.vector_store_config = client._build_class(
+            VectorStoreConfig, vectorStoreConfig)
 
     def __repr__(self):
-        return f"VectorStore(name={repr(self.name)},\n  vector_store_id={repr(self.vector_store_id)},\n  created_at={repr(self.created_at)},\n  latest_vector_store_version={repr(self.latest_vector_store_version)})"
+        return f"VectorStore(name={repr(self.name)},\n  vector_store_id={repr(self.vector_store_id)},\n  created_at={repr(self.created_at)},\n  latest_vector_store_version={repr(self.latest_vector_store_version)},\n  vector_store_config={repr(self.vector_store_config)})"
 
     def to_dict(self):
         """
@@ -32,90 +37,16 @@ class VectorStore(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'vector_store_id': self.vector_store_id, 'created_at': self.created_at, 'latest_vector_store_version': self._get_attribute_as_dict(self.latest_vector_store_version)}
+        return {'name': self.name, 'vector_store_id': self.vector_store_id, 'created_at': self.created_at, 'latest_vector_store_version': self._get_attribute_as_dict(self.latest_vector_store_version), 'vector_store_config': self._get_attribute_as_dict(self.vector_store_config)}
 
-    def update(self, name: str = None, feature_group_id: str = None):
-        """
-        Updates an existing vector store.
-
-        Args:
-            name (str): The name group to update the vector store with.
-            feature_group_id (str): The ID of the feature group to update the vector store with.
-
-        Returns:
-            VectorStore: The updated vector store.
-        """
-        return self.client.update_vector_store(self.vector_store_id, name, feature_group_id)
-
-    def create_version(self):
-        """
-        Creates a vector store version from the latest version of the feature group that the vector store associated with.
-
-        Args:
-            vector_store_id (str): The unique ID associated with the vector store to create version with.
-
-        Returns:
-            VectorStoreVersion: The newly created vector store version.
-        """
-        return self.client.create_vector_store_version(self.vector_store_id)
-
-    def refresh(self):
-        """
-        Calls describe and refreshes the current object's fields
-
-        Returns:
-            VectorStore: The current object
-        """
-        self.__dict__.update(self.describe().__dict__)
-        return self
-
-    def describe(self):
-        """
-        Describe a Vector Store.
-
-        Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
-
-        Returns:
-            VectorStore: The vector store object.
-        """
-        return self.client.describe_vector_store(self.vector_store_id)
-
-    def delete(self):
+    def delete_document_retriever(self):
         """
         Delete a Vector Store.
 
         Args:
             vector_store_id (str): A unique string identifier associated with the vector store.
         """
-        return self.client.delete_vector_store(self.vector_store_id)
-
-    def list_versions(self, limit: int = 100, start_after_version: str = None):
-        """
-        List all the vector store versions with a given vector store ID.
-
-        Args:
-            limit (int): The number of vector store versions to retrieve.
-            start_after_version (str): An offset parameter to exclude all vector store versions up to this specified one.
-
-        Returns:
-            VectorStoreVersion: All the vector store versions associated with the vector store.
-        """
-        return self.client.list_vector_store_versions(self.vector_store_id, limit, start_after_version)
-
-    def lookup(self, query: str, deployment_token: str, limit_results: int = None):
-        """
-        Lookup relevant documents from the vector store deployed with given query.
-
-        Args:
-            query (str): The query to search for.
-            deployment_token (str): A deployment token used to authenticate access to created vector store.
-            limit_results (int): If provided, will limit the number of results to the value specified.
-
-        Returns:
-            VectorStoreLookupResult: The relevant documentation results found from the vector store.
-        """
-        return self.client.lookup_vector_store(self.vector_store_id, query, deployment_token, limit_results)
+        return self.client.delete_document_retriever(self.vector_store_id)
 
     def wait_until_ready(self, timeout: int = 3600):
         """

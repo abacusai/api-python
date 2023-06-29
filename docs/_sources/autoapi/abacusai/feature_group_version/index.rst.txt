@@ -161,6 +161,21 @@ Classes
       :rtype: FeatureGroupVersion
 
 
+   .. py:method:: get_metrics(selected_columns = None, include_charts = False, include_statistics = True)
+
+      Get metrics for a specific feature group version.
+
+      :param selected_columns: A list of columns to order first.
+      :type selected_columns: list
+      :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
+      :type include_charts: bool
+      :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
+      :type include_statistics: bool
+
+      :returns: The metrics for the specified feature group version.
+      :rtype: DataMetrics
+
+
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until feature group version is materialized

@@ -42,6 +42,7 @@ Submodules
    custom_metric_version/index.rst
    custom_train_function_info/index.rst
    data_consistency_duplication/index.rst
+   data_metrics/index.rst
    data_prep_logs/index.rst
    data_quality_results/index.rst
    database_connector/index.rst
@@ -50,8 +51,14 @@ Submodules
    dataset_version/index.rst
    deployment/index.rst
    deployment_auth_token/index.rst
+   deployment_conversation/index.rst
+   deployment_conversation_event/index.rst
    document/index.rst
    document_annotation/index.rst
+   document_retriever/index.rst
+   document_retriever_config/index.rst
+   document_retriever_lookup_result/index.rst
+   document_retriever_version/index.rst
    document_store/index.rst
    document_store_import/index.rst
    drift_distribution/index.rst
@@ -74,12 +81,12 @@ Submodules
    feature_group_export_config/index.rst
    feature_group_export_download_url/index.rst
    feature_group_lineage/index.rst
-   feature_group_metrics/index.rst
    feature_group_refresh_export_config/index.rst
    feature_group_template/index.rst
    feature_group_template_variable_options/index.rst
    feature_group_version/index.rst
    feature_importance/index.rst
+   feature_mapping/index.rst
    feature_record/index.rst
    file_connector/index.rst
    file_connector_instructions/index.rst
@@ -89,6 +96,7 @@ Submodules
    generated_pit_feature_config_option/index.rst
    graph_dashboard/index.rst
    indexing_config/index.rst
+   inferred_feature_mappings/index.rst
    item_statistics/index.rst
    llm_code_block/index.rst
    llm_input/index.rst
@@ -122,8 +130,10 @@ Submodules
    pipeline_reference/index.rst
    pipeline_step/index.rst
    pipeline_step_version/index.rst
+   pipeline_step_version_logs/index.rst
    pipeline_step_version_reference/index.rst
    pipeline_version/index.rst
+   pipeline_version_logs/index.rst
    point_in_time_feature/index.rst
    point_in_time_group/index.rst
    point_in_time_group_feature/index.rst
@@ -160,6 +170,7 @@ Submodules
    user/index.rst
    user_exception/index.rst
    vector_store/index.rst
+   vector_store_config/index.rst
    vector_store_lookup_result/index.rst
    vector_store_version/index.rst
    webhook/index.rst
@@ -206,6 +217,7 @@ Classes
    abacusai.ClusteringImputationMethod
    abacusai.ConnectorType
    abacusai.PythonFunctionArgumentType
+   abacusai.VectorStoreTextEncoder
    abacusai._ApiClassFactory
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
@@ -221,6 +233,7 @@ Classes
    abacusai.ForecastingTrainingConfig
    abacusai.NamedEntityExtractionTrainingConfig
    abacusai.NaturalLanguageSearchTrainingConfig
+   abacusai.ChatLLMTrainingConfig
    abacusai.SentenceBoundaryDetectionTrainingConfig
    abacusai.SentimentDetectionTrainingConfig
    abacusai.DocumentClassificationTrainingConfig
@@ -242,6 +255,8 @@ Classes
    abacusai.FileConnectorExportConfig
    abacusai.DatabaseConnectorExportConfig
    abacusai._FeatureGroupExportConfigFactory
+   abacusai.VectorStoreConfig
+   abacusai.DocumentRetrieverConfig
    abacusai.ApiClient
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
@@ -379,6 +394,11 @@ Attributes
 
    .. py:attribute:: NATURAL_LANGUAGE_SEARCH
       :value: 'nlp_search'
+
+      
+
+   .. py:attribute:: CHAT_LLM
+      :value: 'chat_llm'
 
       
 
@@ -1549,6 +1569,35 @@ Attributes
       
 
 
+.. py:class:: VectorStoreTextEncoder
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: OPENAI
+      :value: 'OPENAI'
+
+      
+
+   .. py:attribute:: E5
+      :value: 'E5'
+
+      
+
+   .. py:attribute:: E5_SMALL
+      :value: 'E5_SMALL'
+
+      
+
+   .. py:attribute:: SENTENCE_BERT
+      :value: 'SENTENCE_BERT'
+
+      
+
+
 .. py:class:: _ApiClassFactory
 
    Bases: :py:obj:`abc.ABC`
@@ -1763,14 +1812,17 @@ Attributes
 
       
 
+   .. py:attribute:: algorithm
+      :type: str
+
+      
+
 
 .. py:class:: PersonalizationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PERSONALIZATION problem type
-   :param problem_type: PERSONALIZATION
-   :type problem_type: ProblemType
    :param objective: Ranking scheme used to select final best model.
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -1835,11 +1887,6 @@ Attributes
    :type max_user_history_len_percentile: int
    :param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
    :type downsample_item_popularity_percentile: float
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -2001,14 +2048,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: RegressionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PREDICTIVE_MODELING problem type
-   :param problem_type: PREDICTIVE_MODELING
-   :type problem_type: ProblemType
    :param objective: Ranking scheme used to select final best model.
    :type objective: RegressionObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -2037,7 +2085,7 @@ Attributes
    :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                              Re-balancing classes generally boosts recall at the cost of precision on rare classes.
    :type rebalance_classes: bool
-   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold.
+   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1
    :type rare_class_augmentation_threshold: float
    :param augmentation_strategy: Strategy to deal with class imbalance and data augmentation.
    :type augmentation_strategy: RegressionAugmentationStrategy
@@ -2083,11 +2131,6 @@ Attributes
    :type custom_loss_functions: list[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: list[str]
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.RegressionObjective
@@ -2274,14 +2317,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: ForecastingTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the FORECASTING problem type
-   :param problem_type: FORECASTING
-   :type problem_type: ProblemType
    :param prediction_length: How many timesteps in the future to predict.
    :type prediction_length: int
    :param objective: Ranking scheme used to select final best model.
@@ -2399,11 +2443,6 @@ Attributes
    :type custom_loss_functions: list[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: list[str]
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: prediction_length
       :type: int
@@ -2700,14 +2739,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
-   :param problem_type: NAMED_ENTITY_EXTRACTION
-   :type problem_type: ProblemType
    :param objective: Ranking scheme used to select final best model.
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -2728,11 +2768,6 @@ Attributes
    :type document_format: NLPDocumentFormat
    :param include_longformer: Whether to include the longformer model.
    :type include_longformer: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.NERObjective
@@ -2784,14 +2819,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
-   :param problem_type: NATURAL_LANGUAGE_SEARCH
-   :type problem_type: ProblemType
    :param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
    :type abacus_internal_model: bool
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -2804,11 +2840,6 @@ Attributes
    :type chunk_overlap_fraction: float
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: abacus_internal_model
       :type: bool
@@ -2840,25 +2871,66 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ChatLLMTrainingConfig
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the CHAT_LLM problem type
+   :param llm_name:
+   :type llm_name: str
+   :param vector_stores: List of vector store names to use for the feature stores this model was trained with.
+   :type vector_stores: List[str]
+   :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
+   :type num_completion_tokens: int
+   :param system_message: The generative LLM system message
+   :type system_message: str
+   :param temperature: The generative LLM temperature
+   :type temperature: float
+
+   .. py:attribute:: llm_name
+      :type: str
+
+      
+
+   .. py:attribute:: vector_stores
+      :type: List[str]
+
+      
+
+   .. py:attribute:: num_completion_tokens
+      :type: int
+
+      
+
+   .. py:attribute:: system_message
+      :type: str
+
+      
+
+   .. py:attribute:: temperature
+      :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
-   :param problem_type: SENTENCE_BOUNDARY_DETECTION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -2875,14 +2947,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: SentimentDetectionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTIMENT_DETECTION problem type
-   :param problem_type: SENTIMENT_DETECTION
-   :type problem_type: ProblemType
    :param sentiment_type: Type of sentiment to detect.
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -2893,11 +2966,6 @@ Attributes
    :type batch_size: BatchSize
    :param compute_metrics: Whether to compute metrics.
    :type compute_metrics: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: sentiment_type
       :type: abacusai.api_class.enums.SentimentType
@@ -2924,14 +2992,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DocumentClassificationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
-   :param problem_type: DOCUMENT_CLASSIFICATION
-   :type problem_type: ProblemType
    :param zero_shot_hypotheses: Zero shot hypotheses. Example text: 'This text is about pricing'.
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -2940,11 +3009,6 @@ Attributes
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: zero_shot_hypotheses
       :type: List[str]
@@ -2966,25 +3030,21 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
-   :param problem_type: DOCUMENT_SUMMARIZATION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -3000,6 +3060,9 @@ Attributes
       :type: abacusai.api_class.enums.BatchSize
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
@@ -3007,19 +3070,12 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_VISUALIZATION problem type
-   :param problem_type: DOCUMENT_VISUALIZATION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: float
    :param batch_size: Batch size for neural network.
    :type batch_size: BatchSize
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -3036,26 +3092,25 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: ClusteringTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
-   :param problem_type: CLUSTERING
-   :type problem_type: ProblemType
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: num_clusters_selection
       :type: int
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
@@ -3063,17 +3118,10 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING_TIMESERIES problem type
-   :param problem_type: CLUSTERING_TIMESERIES
-   :type problem_type: ProblemType
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
    :param imputation: Imputation method for missing values.
    :type imputation: ClusteringImputationMethod
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: num_clusters_selection
       :type: int
@@ -3085,14 +3133,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: CumulativeForecastingTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUMULATIVE_FORECASTING problem type
-   :param problem_type: CUMULATIVE_FORECASTING
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param historical_frequency: Forecast frequency
@@ -3105,11 +3154,6 @@ Attributes
    :type skip_target_transform: bool
    :param predict_residuals: Predict residuals instead of totals at each prediction step.
    :type predict_residuals: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -3141,14 +3185,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: AnomalyDetectionTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the ANOMALY_DETECTION problem type
-   :param problem_type: ANOMALY_DETECTION
-   :type problem_type: ProblemType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
    :type test_split: int
    :param value_high: Detect unusually high values.
@@ -3163,11 +3208,6 @@ Attributes
    :type spike_down: bool
    :param trend_change: Detect changes to the trend.
    :type trend_change: bool
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: test_split
       :type: int
@@ -3204,19 +3244,18 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
-   :param problem_type: THEME_ANALYSIS
-   :type problem_type: ProblemType
 
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: AIAgentTrainingConfig
@@ -3224,20 +3263,16 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the AI_AGENT problem type
-   :param problem_type: AI_AGENT
-   :type problem_type: ProblemType
    :param description: Description of the agent function.
    :type description: str
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: description
       :type: str
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
@@ -3245,8 +3280,6 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
-   :param problem_type: CUSTOM_TRAINED_MODEL
-   :type problem_type: ProblemType
    :param max_catalog_size: Maximum expected catalog size.
    :type max_catalog_size: int
    :param max_dimension: Maximum expected dimension of the catalog.
@@ -3257,11 +3290,6 @@ Attributes
    :type docker_image_uri: str
    :param service_port: Service port.
    :type service_port: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: max_catalog_size
       :type: int
@@ -3288,14 +3316,15 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: CustomAlgorithmTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_ALGORITHM problem type
-   :param problem_type: CUSTOM_ALGORITHM
-   :type problem_type: ProblemType
    :param train_function_name: The name of the train function.
    :type train_function_name: str
    :param predict_many_function_name: The name of the predict many function.
@@ -3310,11 +3339,6 @@ Attributes
    :type predict_module_name: str
    :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
    :type test_split: int
-
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
-
-      
 
    .. py:attribute:: train_function_name
       :type: str
@@ -3351,19 +3375,18 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: OptimizationTrainingConfig
 
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
-   :param problem_type: OPTIMIZATION
-   :type problem_type: ProblemType
 
-   .. py:attribute:: problem_type
-      :type: abacusai.api_class.enums.ProblemType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: _TrainingConfigFactory
@@ -3566,6 +3589,40 @@ Attributes
       
 
 
+.. py:class:: VectorStoreConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Configs for vector store indexing.
+
+   :param chunk_size: The size of text chunks in the vector store.
+   :type chunk_size: int
+   :param chunk_overlap_fraction: The fraction of overlap between chunks.
+   :type chunk_overlap_fraction: float
+
+   .. py:attribute:: chunk_size
+      :type: int
+
+      
+
+   .. py:attribute:: chunk_overlap_fraction
+      :type: float
+
+      
+
+   .. py:attribute:: text_encoder
+      :type: abacusai.api_class.enums.VectorStoreTextEncoder
+
+      
+
+
+.. py:class:: DocumentRetrieverConfig
+
+   Bases: :py:obj:`VectorStoreConfig`
+
+   Configs for document retriever.
+
+
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
    Bases: :py:obj:`ReadOnlyClient`
@@ -3703,7 +3760,7 @@ Attributes
       :type use_gpu: bool
 
 
-   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
 
       Creates a step in a given pipeline from a python function.
 
@@ -4260,7 +4317,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project. For details, refer to.
@@ -4358,18 +4415,6 @@ Attributes
       :type feature_group_type: str
 
 
-   .. py:method:: use_feature_group_for_training(feature_group_id, project_id, use_for_training = True)
-
-      Use the feature group for model training input
-
-      :param feature_group_id: Unique string identifier associated with the feature group.
-      :type feature_group_id: str
-      :param project_id: Unique string identifier associated with the project.
-      :type project_id: str
-      :param use_for_training: Boolean variable to include or exclude a feature group from a model's training. Only one feature group per type can be used for training.
-      :type use_for_training: bool
-
-
    .. py:method:: set_feature_mapping(project_id, feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
@@ -4387,55 +4432,6 @@ Attributes
 
       :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
       :rtype: Feature
-
-
-   .. py:method:: set_column_data_type(project_id, dataset_id, column, data_type)
-
-      Set the data type of a dataset's column.
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param column: The name of the column.
-      :type column: str
-      :param data_type: The type of data in the column. Refer to the [guide on feature types](FEATURE_TYPES_URL) for more information. Note: Some ColumnMappings will restrict the options or explicitly set the DataType. Possible values:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL
-      :type data_type: str
-
-      :returns: A list of objects that describes the resulting dataset's schema after the column's data type is set.
-      :rtype: Schema
-
-
-   .. py:method:: set_column_mapping(project_id, dataset_id, column, column_mapping)
-
-      Set a dataset's column mapping. If the column mapping is single-use and already set in another column in this dataset, this call will first remove the other column's mapping and move it to this column.
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param column: The name of the column.
-      :type column: str
-      :param column_mapping: The mapping of the column in the dataset. See a list of column mapping enums here.
-      :type column_mapping: str
-
-      :returns: A list of columns that describes the resulting dataset's schema after the column's columnMapping is set.
-      :rtype: Schema
-
-
-   .. py:method:: remove_column_mapping(project_id, dataset_id, column)
-
-      Removes a column mapping from a column in the dataset. Returns a list of all columns with their mappings once the change is made.
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-      :param column: The name of the column.
-      :type column: str
-
-      :returns: A list of objects that describes the resulting dataset's schema after the column's columnMapping is set.
-      :rtype: Schema
 
 
    .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None, status = None, comments = None, project_id = None, save_metadata = False)
@@ -5980,34 +5976,6 @@ Attributes
       :type streaming_token: str
 
 
-   .. py:method:: attach_dataset_to_project(dataset_id, project_id, dataset_type)
-
-      [DEPRECATED] Attach a dataset to the project.
-
-      Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
-
-
-      :param dataset_id: Unique identifier of the dataset to attach.
-      :type dataset_id: str
-      :param project_id: Unique identifier of the project to attach the dataset to.
-      :type project_id: str
-      :param dataset_type: Enum string representing the dataset type, associated with the use case of the project. Refer to the [Use Case Documentation](https://api.abacus.ai/app/help/useCases) for the supported dataset types per use case.
-      :type dataset_type: str
-
-      :returns: An array of column descriptions.
-      :rtype: Schema
-
-
-   .. py:method:: remove_dataset_from_project(dataset_id, project_id)
-
-      [DEPRECATED] Removes the dataset with the specified dataset from the project.
-
-      :param dataset_id: Unique string identifier of the dataset.
-      :type dataset_id: str
-      :param project_id: Unique string identifier of the project.
-      :type project_id: str
-
-
    .. py:method:: delete_dataset(dataset_id)
 
       Deletes the specified dataset from the organization.
@@ -6016,7 +5984,7 @@ Attributes
       :type dataset_id: str
 
 
-   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None)
+   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None, is_additional_model = False)
 
       Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -6028,6 +5996,8 @@ Attributes
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
       :type current_training_config: TrainingConfig
+      :param is_additional_model: Whether to get training config options for an additional model
+      :type is_additional_model: bool
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: TrainingConfigOptions
@@ -6048,7 +6018,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None)
+   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
 
       Train a model for the specified project.
 
@@ -6077,6 +6047,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the user-defined algorithms during training.
       :type memory: int
+      :param algorithm_training_configs: List of algorithm specifc training configs that will be part of the model training AutoML run.
+      :type algorithm_training_configs: list
 
       :returns: The new model which is being trained.
       :rtype: Model
@@ -6266,7 +6238,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(model_id, deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None)
+   .. py:method:: retrain_model(model_id, deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None, algorithm_training_configs = None)
 
       Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
@@ -6288,6 +6260,8 @@ Attributes
       :type memory: int
       :param training_config: The training config used to train this model.
       :type training_config: TrainingConfig
+      :param algorithm_training_configs: List of algorithm specifc training configs that will be part of the model training AutoML run.
+      :type algorithm_training_configs: list
 
       :returns: The model that is being retrained.
       :rtype: Model
@@ -6590,7 +6564,7 @@ Attributes
       :type monitor_alert_id: str
 
 
-   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None)
+   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None, deployment_config = None)
 
       Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -6621,6 +6595,8 @@ Attributes
       :type enable_batch_streaming_updates: bool
       :param model_deployment_config: The deployment config for model to deploy
       :type model_deployment_config: dict
+      :param deployment_config: Additional parameters specific to different use_cases
+      :type deployment_config: dict
 
       :returns: The new model or feature group deployment.
       :rtype: Deployment
@@ -7208,7 +7184,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None, filter_key_values = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -7218,8 +7194,10 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param chat_config: A dictionary specifiying the query chat config override
+      :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :type filter_key_values: dict
 
 
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
@@ -7894,7 +7872,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_pipeline(pipeline_name, project_id = None, cron = None)
+   .. py:method:: create_pipeline(pipeline_name, project_id = None, cron = None, is_prod = None)
 
       Creates a pipeline for executing multiple steps.
 
@@ -7904,6 +7882,8 @@ Attributes
       :type project_id: str
       :param cron: A cron-like string specifying the frequency of pipeline reruns.
       :type cron: str
+      :param is_prod: Whether the pipeline is a production pipeline or not.
+      :type is_prod: bool
 
       :returns: An object that describes a Pipeline.
       :rtype: Pipeline
@@ -7931,7 +7911,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: update_pipeline(pipeline_id, project_id = None, pipeline_variable_mappings = None, cron = None)
+   .. py:method:: update_pipeline(pipeline_id, project_id = None, pipeline_variable_mappings = None, cron = None, is_prod = None)
 
       Updates a pipeline for executing multiple steps.
 
@@ -7943,6 +7923,8 @@ Attributes
       :type pipeline_variable_mappings: list
       :param cron: A cron-like string specifying the frequency of the scheduled pipeline runs.
       :type cron: str
+      :param is_prod: Whether the pipeline is a production pipeline or not.
+      :type is_prod: bool
 
       :returns: An object that describes a Pipeline.
       :rtype: Pipeline
@@ -8355,6 +8337,27 @@ Attributes
       :rtype: ChatSession
 
 
+   .. py:method:: create_deployment_conversation(deployment_id, name)
+
+      Creates a deployment conversation.
+
+      :param deployment_id: The deployment this conversation belongs to.
+      :type deployment_id: str
+      :param name: The name of the conversation.
+      :type name: str
+
+      :returns: The deployment conversation.
+      :rtype: DeploymentConversation
+
+
+   .. py:method:: delete_deployment_conversation(deployment_conversation_id)
+
+      Delete a Deployment Conversation.
+
+      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
+      :type deployment_conversation_id: str
+
+
    .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
 
       Creates a new AI agent.
@@ -8448,7 +8451,7 @@ Attributes
       :rtype: LlmParameters
 
 
-   .. py:method:: create_vector_store(project_id, name, feature_group_id, cluster_name = None)
+   .. py:method:: create_document_retriever(project_id, name, feature_group_id, cluster_name = None, document_retriever_config = None)
 
       Returns a vector store that stores embeddings for document chunks in a feature group.
 
@@ -8463,38 +8466,42 @@ Attributes
       :type feature_group_id: str
       :param cluster_name: The name of the cluster that the vector store is created in.
       :type cluster_name: str
+      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+      :type document_retriever_config: DocumentRetrieverConfig
 
-      :returns: The newly created vector store.
-      :rtype: VectorStore
+      :returns: The newly created document retriever.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: update_vector_store(vector_store_id, name = None, feature_group_id = None)
+   .. py:method:: update_document_retriever(document_retriever_id, name = None, feature_group_id = None, document_retriever_config = None)
 
-      Updates an existing vector store.
+      Updates an existing document retriever.
 
-      :param vector_store_id: The unique ID associated with the vector store.
-      :type vector_store_id: str
+      :param document_retriever_id: The unique ID associated with the document retriever.
+      :type document_retriever_id: str
       :param name: The name group to update the vector store with.
       :type name: str
-      :param feature_group_id: The ID of the feature group to update the vector store with.
+      :param feature_group_id: The ID of the feature group to update the document retriever with.
       :type feature_group_id: str
+      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+      :type document_retriever_config: DocumentRetrieverConfig
 
-      :returns: The updated vector store.
-      :rtype: VectorStore
-
-
-   .. py:method:: create_vector_store_version(vector_store_id)
-
-      Creates a vector store version from the latest version of the feature group that the vector store associated with.
-
-      :param vector_store_id: The unique ID associated with the vector store to create version with.
-      :type vector_store_id: str
-
-      :returns: The newly created vector store version.
-      :rtype: VectorStoreVersion
+      :returns: The updated document retriever.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: delete_vector_store(vector_store_id)
+   .. py:method:: create_document_retriever_version(document_retriever_id)
+
+      Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
+
+      :param document_retriever_id: The unique ID associated with the document retriever to create version with.
+      :type document_retriever_id: str
+
+      :returns: The newly created document retriever version.
+      :rtype: DocumentRetrieverVersion
+
+
+   .. py:method:: delete_document_retriever(vector_store_id)
 
       Delete a Vector Store.
 
@@ -8502,12 +8509,12 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: lookup_vector_store(vector_store_id, query, deployment_token, limit_results = None)
+   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, limit_results = None)
 
-      Lookup relevant documents from the vector store deployed with given query.
+      Lookup relevant documents from the document retriever deployed with given query.
 
-      :param vector_store_id: A unique string identifier associated with the vector store.
-      :type vector_store_id: str
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
       :param query: The query to search for.
       :type query: str
       :param deployment_token: A deployment token used to authenticate access to created vector store.
@@ -8515,8 +8522,8 @@ Attributes
       :param limit_results: If provided, will limit the number of results to the value specified.
       :type limit_results: int
 
-      :returns: The relevant documentation results found from the vector store.
-      :rtype: VectorStoreLookupResult
+      :returns: The relevant documentation results found from the document retriever.
+      :rtype: DocumentRetrieverLookupResult
 
 
 
@@ -8683,30 +8690,6 @@ Attributes
       :rtype: Project
 
 
-   .. py:method:: list_project_datasets(project_id)
-
-      Retrieves all datasets associated with a specified project. This API returns all attributes of each dataset, such as its name, type, and ID.
-
-      :param project_id: Unique string identifier associated with the project.
-      :type project_id: str
-
-      :returns: A list representing all of the datasets attached to the project.
-      :rtype: ProjectDataset
-
-
-   .. py:method:: get_schema(project_id, dataset_id)
-
-      [DEPRECATED] Returns a schema given a specific dataset in a project. The schema of the dataset consists of the columns in the dataset, the data type of the column, and the column's column mapping.
-
-      :param project_id: The unique ID associated with the project.
-      :type project_id: str
-      :param dataset_id: The unique ID associated with the dataset.
-      :type dataset_id: str
-
-      :returns: An array of objects for each column in the specified dataset.
-      :rtype: Schema
-
-
    .. py:method:: get_project_feature_group_config(feature_group_id, project_id)
 
       Gets a feature group's project config
@@ -8731,6 +8714,19 @@ Attributes
 
       :returns: The project validation. If the specified project is missing required columns or feature groups, the response includes an array of objects for each missing required feature group and the missing required features in each feature group.
       :rtype: ProjectValidation
+
+
+   .. py:method:: infer_feature_mappings(project_id, feature_group_id)
+
+      Infer the feature mappings for the feature group in the project based on the problem type.
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :returns: A dict that contains the inferred feature mappings.
+      :rtype: InferredFeatureMappings
 
 
    .. py:method:: verify_and_describe_annotation(feature_group_id, feature_name = None, doc_id = None, feature_group_row_identifier = None)
@@ -8982,6 +8978,23 @@ Attributes
       :rtype: FeatureGroupVersion
 
 
+   .. py:method:: get_feature_group_version_metrics(feature_group_version, selected_columns = None, include_charts = False, include_statistics = True)
+
+      Get metrics for a specific feature group version.
+
+      :param feature_group_version: A unique string identifier associated with the feature group version.
+      :type feature_group_version: str
+      :param selected_columns: A list of columns to order first.
+      :type selected_columns: list
+      :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
+      :type include_charts: bool
+      :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
+      :type include_statistics: bool
+
+      :returns: The metrics for the specified feature group version.
+      :rtype: DataMetrics
+
+
    .. py:method:: describe_feature_group_template(feature_group_template_id)
 
       Describe a Feature Group Template.
@@ -9065,6 +9078,23 @@ Attributes
       :type query_arguments: str
       :param sql_query: The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns` and `query_arguments`.
       :type sql_query: str
+
+
+   .. py:method:: get_dataset_version_metrics(dataset_version, selected_columns = None, include_charts = False, include_statistics = True)
+
+      Get metrics for a specific dataset version.
+
+      :param dataset_version: A unique string identifier associated with the dataset version.
+      :type dataset_version: str
+      :param selected_columns: A list of columns to order first.
+      :type selected_columns: list
+      :param include_charts: A flag indicating whether charts should be included in the response. Default is false.
+      :type include_charts: bool
+      :param include_statistics: A flag indicating whether statistics should be included in the response. Default is true.
+      :type include_statistics: bool
+
+      :returns: The metrics for the specified Dataset version.
+      :rtype: DataMetrics
 
 
    .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
@@ -10055,6 +10085,28 @@ Attributes
       :rtype: Pipeline
 
 
+   .. py:method:: list_pipeline_version_logs(pipeline_version)
+
+      Gets the logs for the steps in a given pipeline version.
+
+      :param pipeline_version: The id of the pipeline version.
+      :type pipeline_version: str
+
+      :returns: Object describing the logs for the steps in the pipeline.
+      :rtype: PipelineVersionLogs
+
+
+   .. py:method:: get_step_version_logs(pipeline_step_version)
+
+      Gets the logs for a given step version.
+
+      :param pipeline_step_version: The id of the pipeline step version.
+      :type pipeline_step_version: str
+
+      :returns: Object describing the pipeline step logs.
+      :rtype: PipelineStepVersionLogs
+
+
    .. py:method:: describe_graph_dashboard(graph_dashboard_id)
 
       Describes a given graph dashboard.
@@ -10250,6 +10302,28 @@ Attributes
       :rtype: ChatSession
 
 
+   .. py:method:: get_deployment_conversation(deployment_conversation_id)
+
+      Gets a deployment conversation.
+
+      :param deployment_conversation_id: Unique ID of the conversation.
+      :type deployment_conversation_id: str
+
+      :returns: The deployment conversation.
+      :rtype: DeploymentConversation
+
+
+   .. py:method:: list_deployment_conversations(deployment_id)
+
+      Lists all conversations for the given deployment and current user.
+
+      :param deployment_id: The deployment to get conversations for.
+      :type deployment_id: str
+
+      :returns: The deployment conversations.
+      :rtype: DeploymentConversation
+
+
    .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
 
       Search feature groups based on text and filters.
@@ -10301,9 +10375,9 @@ Attributes
       :rtype: LlmResponse
 
 
-   .. py:method:: list_vector_stores(project_id, limit = 100, start_after_id = None)
+   .. py:method:: list_document_retrievers(project_id, limit = 100, start_after_id = None)
 
-      List all the vector stores.
+      List all the document retrievers.
 
       :param project_id: The ID of project that the vector store is created in.
       :type project_id: str
@@ -10312,56 +10386,56 @@ Attributes
       :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
       :type start_after_id: str
 
-      :returns: All the vector stores in the organization associated with the specified project.
-      :rtype: VectorStore
+      :returns: All the document retrievers in the organization associated with the specified project.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: describe_vector_store(vector_store_id)
+   .. py:method:: describe_document_retriever(document_retriever_id)
 
       Describe a Vector Store.
 
-      :param vector_store_id: A unique string identifier associated with the vector store.
-      :type vector_store_id: str
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
 
-      :returns: The vector store object.
-      :rtype: VectorStore
+      :returns: The document retriever object.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: describe_vector_store_by_name(name)
+   .. py:method:: describe_document_retriever_by_name(name)
 
-      Describe a vector store by its name.
+      Describe a document retriever by its name.
 
-      :param name: The unique name of the vector store to look up.
+      :param name: The unique name of the document retriever to look up.
       :type name: str
 
-      :returns: The Vector Store.
-      :rtype: VectorStore
+      :returns: The Document Retriever.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: list_vector_store_versions(vector_store_id, limit = 100, start_after_version = None)
+   .. py:method:: list_document_retriever_versions(document_retriever_id, limit = 100, start_after_version = None)
 
-      List all the vector store versions with a given vector store ID.
+      List all the document retriever versions with a given ID.
 
-      :param vector_store_id: A unique string identifier associated with the vector store.
-      :type vector_store_id: str
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
       :param limit: The number of vector store versions to retrieve.
       :type limit: int
       :param start_after_version: An offset parameter to exclude all vector store versions up to this specified one.
       :type start_after_version: str
 
-      :returns: All the vector store versions associated with the vector store.
-      :rtype: VectorStoreVersion
+      :returns: All the document retriever versions associated with the document retriever.
+      :rtype: DocumentRetrieverVersion
 
 
-   .. py:method:: describe_vector_store_version(vector_store_version)
+   .. py:method:: describe_document_retriever_version(document_retriever_version)
 
-      Describe a vector store version.
+      Describe a document retriever version.
 
-      :param vector_store_version: A unique string identifier associated with the vector store version.
-      :type vector_store_version: str
+      :param document_retriever_version: A unique string identifier associated with the document retriever version.
+      :type document_retriever_version: str
 
-      :returns: The vector store version object.
-      :rtype: VectorStoreVersion
+      :returns: The document retriever version object.
+      :rtype: DocumentRetrieverVersion
 
 
 
@@ -10740,7 +10814,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None, filter_key_values = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -10750,8 +10824,10 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param chat_config: A dictionary specifiying the query chat config override
+      :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :type filter_key_values: dict
 
 
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
@@ -11114,7 +11190,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.69.0'
+   :value: '0.71.0'
 
    
 

@@ -26,6 +26,7 @@ class ProblemType(ApiEnum):
     CUMULATIVE_FORECASTING = 'cumulative_forecasting'
     NAMED_ENTITY_EXTRACTION = 'nlp_ner'
     NATURAL_LANGUAGE_SEARCH = 'nlp_search'
+    CHAT_LLM = 'chat_llm'
     SENTENCE_BOUNDARY_DETECTION = 'nlp_sentence_boundary_detection'
     SENTIMENT_DETECTION = 'nlp_sentiment'
     DOCUMENT_CLASSIFICATION = 'nlp_classification'
@@ -301,3 +302,10 @@ class PythonFunctionArgumentType(ApiEnum):
     MONITOR_ID = 'MONITOR_ID'
     BATCH_PREDICTION_ID = 'BATCH_PREDICTION_ID'
     DEPLOYMENT_ID = 'DEPLOYMENT_ID'
+
+
+class VectorStoreTextEncoder(ApiEnum):
+    OPENAI = 'OPENAI'
+    E5 = 'E5'
+    E5_SMALL = 'E5_SMALL'
+    SENTENCE_BERT = 'SENTENCE_BERT'

@@ -68,6 +68,18 @@ class PipelineVersion(AbstractApiClass):
         """
         return self.client.describe_pipeline_version(self.pipeline_version)
 
+    def list_logs(self):
+        """
+        Gets the logs for the steps in a given pipeline version.
+
+        Args:
+            pipeline_version (str): The id of the pipeline version.
+
+        Returns:
+            PipelineVersionLogs: Object describing the logs for the steps in the pipeline.
+        """
+        return self.client.list_pipeline_version_logs(self.pipeline_version)
+
     def wait_for_pipeline(self, timeout=1200):
         """
         A waiting call until all the stages in a pipeline version have completed.

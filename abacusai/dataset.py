@@ -227,31 +227,6 @@ class Dataset(AbstractApiClass):
         """
         return self.client.list_dataset_versions(self.dataset_id, limit, start_after_version)
 
-    def attach_to_project(self, project_id: str, dataset_type: str):
-        """
-        [DEPRECATED] Attach a dataset to the project.
-
-        Use this method to attach a dataset that is already in the organization to another project. The dataset type is required to let the AI engine know what type of schema should be used.
-
-
-        Args:
-            project_id (str): Unique identifier of the project to attach the dataset to.
-            dataset_type (str): Enum string representing the dataset type, associated with the use case of the project. Refer to the [Use Case Documentation](https://api.abacus.ai/app/help/useCases) for the supported dataset types per use case.
-
-        Returns:
-            Schema: An array of column descriptions.
-        """
-        return self.client.attach_dataset_to_project(self.dataset_id, project_id, dataset_type)
-
-    def remove_from_project(self, project_id: str):
-        """
-        [DEPRECATED] Removes the dataset with the specified dataset from the project.
-
-        Args:
-            project_id (str): Unique string identifier of the project.
-        """
-        return self.client.remove_dataset_from_project(self.dataset_id, project_id)
-
     def delete(self):
         """
         Deletes the specified dataset from the organization.
