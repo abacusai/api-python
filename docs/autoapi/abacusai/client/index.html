@@ -86,10 +86,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation_event/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_conversation_event</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_annotation</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_config</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_lookup_result</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_store_import/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store_import</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distribution</span></code></a></li>
@@ -375,7 +371,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.71.0'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.71.1'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3178,9 +3174,9 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_document_retrievers">
-<span class="sig-name descname"><span class="pre">list_document_retrievers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_document_retrievers" title="Permalink to this definition"></a></dt>
-<dd><p>List all the document retrievers.</p>
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_vector_stores">
+<span class="sig-name descname"><span class="pre">list_vector_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_vector_stores" title="Permalink to this definition"></a></dt>
+<dd><p>List all the vector stores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -3190,82 +3186,82 @@
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>All the document retrievers in the organization associated with the specified project.</p>
+<dd class="field-even"><p>All the vector stores in the organization associated with the specified project.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever/index.html#abacusai.document_retriever.DocumentRetriever" title="abacusai.document_retriever.DocumentRetriever">DocumentRetriever</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store/index.html#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_document_retriever">
-<span class="sig-name descname"><span class="pre">describe_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_document_retriever" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_vector_store">
+<span class="sig-name descname"><span class="pre">describe_vector_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_vector_store" title="Permalink to this definition"></a></dt>
 <dd><p>Describe a Vector Store.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p>
+<dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The document retriever object.</p>
+<dd class="field-even"><p>The vector store object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever/index.html#abacusai.document_retriever.DocumentRetriever" title="abacusai.document_retriever.DocumentRetriever">DocumentRetriever</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store/index.html#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_document_retriever_by_name">
-<span class="sig-name descname"><span class="pre">describe_document_retriever_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_document_retriever_by_name" title="Permalink to this definition"></a></dt>
-<dd><p>Describe a document retriever by its name.</p>
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_vector_store_by_name">
+<span class="sig-name descname"><span class="pre">describe_vector_store_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_vector_store_by_name" title="Permalink to this definition"></a></dt>
+<dd><p>Describe a vector store by its name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique name of the document retriever to look up.</p>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique name of the vector store to look up.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The Document Retriever.</p>
+<dd class="field-even"><p>The Vector Store.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever/index.html#abacusai.document_retriever.DocumentRetriever" title="abacusai.document_retriever.DocumentRetriever">DocumentRetriever</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store/index.html#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_document_retriever_versions">
-<span class="sig-name descname"><span class="pre">list_document_retriever_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_document_retriever_versions" title="Permalink to this definition"></a></dt>
-<dd><p>List all the document retriever versions with a given ID.</p>
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_vector_store_versions">
+<span class="sig-name descname"><span class="pre">list_vector_store_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_vector_store_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List all the vector store versions with a given vector store ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p></li>
+<li><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p></li>
 <li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of vector store versions to retrieve.</p></li>
 <li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An offset parameter to exclude all vector store versions up to this specified one.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>All the document retriever versions associated with the document retriever.</p>
+<dd class="field-even"><p>All the vector store versions associated with the vector store.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever_version/index.html#abacusai.document_retriever_version.DocumentRetrieverVersion" title="abacusai.document_retriever_version.DocumentRetrieverVersion">DocumentRetrieverVersion</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_version/index.html#abacusai.vector_store_version.VectorStoreVersion" title="abacusai.vector_store_version.VectorStoreVersion">VectorStoreVersion</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_document_retriever_version">
-<span class="sig-name descname"><span class="pre">describe_document_retriever_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_document_retriever_version" title="Permalink to this definition"></a></dt>
-<dd><p>Describe a document retriever version.</p>
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_vector_store_version">
+<span class="sig-name descname"><span class="pre">describe_vector_store_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_version</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_vector_store_version" title="Permalink to this definition"></a></dt>
+<dd><p>Describe a vector store version.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>document_retriever_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the document retriever version.</p>
+<dd class="field-odd"><p><strong>vector_store_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store version.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The document retriever version object.</p>
+<dd class="field-even"><p>The vector store version object.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever_version/index.html#abacusai.document_retriever_version.DocumentRetrieverVersion" title="abacusai.document_retriever_version.DocumentRetrieverVersion">DocumentRetrieverVersion</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_version/index.html#abacusai.vector_store_version.VectorStoreVersion" title="abacusai.vector_store_version.VectorStoreVersion">VectorStoreVersion</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -9274,8 +9270,8 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_document_retriever">
-<span class="sig-name descname"><span class="pre">create_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_retriever_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_document_retriever" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_vector_store">
+<span class="sig-name descname"><span class="pre">create_vector_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector_store_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_vector_store" title="Permalink to this definition"></a></dt>
 <dd><p>Returns a vector store that stores embeddings for document chunks in a feature group.</p>
 <p>Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.</p>
 <dl class="field-list simple">
@@ -9285,60 +9281,60 @@ feature groups for those input feature groups.</p>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the vector store.</p></li>
 <li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the feature group that the vector store is associated with.</p></li>
 <li><p><strong>cluster_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the cluster that the vector store is created in.</p></li>
-<li><p><strong>document_retriever_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.DocumentRetrieverConfig" title="abacusai.api_class.DocumentRetrieverConfig"><em>DocumentRetrieverConfig</em></a>) – The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.</p></li>
+<li><p><strong>vector_store_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.VectorStoreConfig" title="abacusai.api_class.VectorStoreConfig"><em>VectorStoreConfig</em></a>) – The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The newly created document retriever.</p>
+<dd class="field-even"><p>The newly created vector store.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever/index.html#abacusai.document_retriever.DocumentRetriever" title="abacusai.document_retriever.DocumentRetriever">DocumentRetriever</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store/index.html#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.update_document_retriever">
-<span class="sig-name descname"><span class="pre">update_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_retriever_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_document_retriever" title="Permalink to this definition"></a></dt>
-<dd><p>Updates an existing document retriever.</p>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.update_vector_store">
+<span class="sig-name descname"><span class="pre">update_vector_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector_store_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_vector_store" title="Permalink to this definition"></a></dt>
+<dd><p>Updates an existing vector store.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the document retriever.</p></li>
+<li><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the vector store.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name group to update the vector store with.</p></li>
-<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the feature group to update the document retriever with.</p></li>
-<li><p><strong>document_retriever_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.DocumentRetrieverConfig" title="abacusai.api_class.DocumentRetrieverConfig"><em>DocumentRetrieverConfig</em></a>) – The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.</p></li>
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the feature group to update the vector store with.</p></li>
+<li><p><strong>vector_store_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.VectorStoreConfig" title="abacusai.api_class.VectorStoreConfig"><em>VectorStoreConfig</em></a>) – The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated document retriever.</p>
+<dd class="field-even"><p>The updated vector store.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever/index.html#abacusai.document_retriever.DocumentRetriever" title="abacusai.document_retriever.DocumentRetriever">DocumentRetriever</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store/index.html#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_document_retriever_version">
-<span class="sig-name descname"><span class="pre">create_document_retriever_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_document_retriever_version" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a document retriever version from the latest version of the feature group that the document retriever associated with.</p>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_vector_store_version">
+<span class="sig-name descname"><span class="pre">create_vector_store_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_vector_store_version" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a vector store version from the latest version of the feature group that the vector store associated with.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the document retriever to create version with.</p>
+<dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the vector store to create version with.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The newly created document retriever version.</p>
+<dd class="field-even"><p>The newly created vector store version.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever_version/index.html#abacusai.document_retriever_version.DocumentRetrieverVersion" title="abacusai.document_retriever_version.DocumentRetrieverVersion">DocumentRetrieverVersion</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_version/index.html#abacusai.vector_store_version.VectorStoreVersion" title="abacusai.vector_store_version.VectorStoreVersion">VectorStoreVersion</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_document_retriever">
-<span class="sig-name descname"><span class="pre">delete_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_document_retriever" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_vector_store">
+<span class="sig-name descname"><span class="pre">delete_vector_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_vector_store" title="Permalink to this definition"></a></dt>
 <dd><p>Delete a Vector Store.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9348,23 +9344,23 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.lookup_document_retriever">
-<span class="sig-name descname"><span class="pre">lookup_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_document_retriever" title="Permalink to this definition"></a></dt>
-<dd><p>Lookup relevant documents from the document retriever deployed with given query.</p>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.lookup_vector_store">
+<span class="sig-name descname"><span class="pre">lookup_vector_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector_store_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_vector_store" title="Permalink to this definition"></a></dt>
+<dd><p>Lookup relevant documents from the vector store deployed with given query.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p></li>
+<li><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p></li>
 <li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The query to search for.</p></li>
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A deployment token used to authenticate access to created vector store.</p></li>
 <li><p><strong>limit_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will limit the number of results to the value specified.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The relevant documentation results found from the document retriever.</p>
+<dd class="field-even"><p>The relevant documentation results found from the vector store.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../document_retriever_lookup_result/index.html#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult">DocumentRetrieverLookupResult</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_lookup_result/index.html#abacusai.vector_store_lookup_result.VectorStoreLookupResult" title="abacusai.vector_store_lookup_result.VectorStoreLookupResult">VectorStoreLookupResult</a></p>
 </dd>
 </dl>
 </dd></dl>

@@ -83,10 +83,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation_event/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_conversation_event</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_annotation</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_config</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_lookup_result</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../document_retriever_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_store/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_store_import/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_store_import</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.drift_distribution</span></code></a></li>
@@ -288,12 +284,122 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.delete_document_retriever">
-<span class="sig-name descname"><span class="pre">delete_document_retriever</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.delete_document_retriever" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vector_store_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.update" title="Permalink to this definition"></a></dt>
+<dd><p>Updates an existing vector store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name group to update the vector store with.</p></li>
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the feature group to update the vector store with.</p></li>
+<li><p><strong>vector_store_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.VectorStoreConfig" title="abacusai.api_class.VectorStoreConfig"><em>VectorStoreConfig</em></a>) – The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated vector store.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.create_version">
+<span class="sig-name descname"><span class="pre">create_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.create_version" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a vector store version from the latest version of the feature group that the vector store associated with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID associated with the vector store to create version with.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The newly created vector store version.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_version/index.html#abacusai.vector_store_version.VectorStoreVersion" title="abacusai.vector_store_version.VectorStoreVersion">VectorStoreVersion</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Calls describe and refreshes the current object’s fields</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current object</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.describe">
+<span class="sig-name descname"><span class="pre">describe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.describe" title="Permalink to this definition"></a></dt>
+<dd><p>Describe a Vector Store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The vector store object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#abacusai.vector_store.VectorStore" title="abacusai.vector_store.VectorStore">VectorStore</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.delete" title="Permalink to this definition"></a></dt>
 <dd><p>Delete a Vector Store.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the vector store.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.list_versions">
+<span class="sig-name descname"><span class="pre">list_versions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_after_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.list_versions" title="Permalink to this definition"></a></dt>
+<dd><p>List all the vector store versions with a given vector store ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of vector store versions to retrieve.</p></li>
+<li><p><strong>start_after_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An offset parameter to exclude all vector store versions up to this specified one.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All the vector store versions associated with the vector store.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_version/index.html#abacusai.vector_store_version.VectorStoreVersion" title="abacusai.vector_store_version.VectorStoreVersion">VectorStoreVersion</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.vector_store.VectorStore.lookup">
+<span class="sig-name descname"><span class="pre">lookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.vector_store.VectorStore.lookup" title="Permalink to this definition"></a></dt>
+<dd><p>Lookup relevant documents from the vector store deployed with given query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The query to search for.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A deployment token used to authenticate access to created vector store.</p></li>
+<li><p><strong>limit_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will limit the number of results to the value specified.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The relevant documentation results found from the vector store.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../vector_store_lookup_result/index.html#abacusai.vector_store_lookup_result.VectorStoreLookupResult" title="abacusai.vector_store_lookup_result.VectorStoreLookupResult">VectorStoreLookupResult</a></p>
 </dd>
 </dl>
 </dd></dl>

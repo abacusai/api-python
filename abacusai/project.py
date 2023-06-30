@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import DocumentRetrieverConfig, TrainingConfig
+from .api_class import TrainingConfig, VectorStoreConfig
 from .return_class import AbstractApiClass
 
 
@@ -557,7 +557,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
 
-    def create_document_retriever(self, name: str, feature_group_id: str, cluster_name: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
+    def create_vector_store(self, name: str, feature_group_id: str, cluster_name: str = None, vector_store_config: Union[dict, VectorStoreConfig] = None):
         """
         Returns a vector store that stores embeddings for document chunks in a feature group.
 
@@ -568,25 +568,25 @@ class Project(AbstractApiClass):
             name (str): The name of the vector store.
             feature_group_id (str): The ID of the feature group that the vector store is associated with.
             cluster_name (str): The name of the cluster that the vector store is created in.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            vector_store_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.
 
         Returns:
-            DocumentRetriever: The newly created document retriever.
+            VectorStore: The newly created vector store.
         """
-        return self.client.create_document_retriever(self.project_id, name, feature_group_id, cluster_name, document_retriever_config)
+        return self.client.create_vector_store(self.project_id, name, feature_group_id, cluster_name, vector_store_config)
 
-    def list_document_retrievers(self, limit: int = 100, start_after_id: str = None):
+    def list_vector_stores(self, limit: int = 100, start_after_id: str = None):
         """
-        List all the document retrievers.
+        List all the vector stores.
 
         Args:
             limit (int): The number of vector stores to retrieve.
             start_after_id (str): An offset parameter to exclude all vector stores up to this specified ID.
 
         Returns:
-            DocumentRetriever: All the document retrievers in the organization associated with the specified project.
+            VectorStore: All the vector stores in the organization associated with the specified project.
         """
-        return self.client.list_document_retrievers(self.project_id, limit, start_after_id)
+        return self.client.list_vector_stores(self.project_id, limit, start_after_id)
 
     def attach_dataset(self, dataset_id, project_dataset_type):
         """

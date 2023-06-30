@@ -55,10 +55,6 @@ Submodules
    deployment_conversation_event/index.rst
    document/index.rst
    document_annotation/index.rst
-   document_retriever/index.rst
-   document_retriever_config/index.rst
-   document_retriever_lookup_result/index.rst
-   document_retriever_version/index.rst
    document_store/index.rst
    document_store_import/index.rst
    drift_distribution/index.rst
@@ -256,7 +252,6 @@ Classes
    abacusai.DatabaseConnectorExportConfig
    abacusai._FeatureGroupExportConfigFactory
    abacusai.VectorStoreConfig
-   abacusai.DocumentRetrieverConfig
    abacusai.ApiClient
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
@@ -3614,13 +3609,6 @@ Attributes
       :type: abacusai.api_class.enums.VectorStoreTextEncoder
 
       
-
-
-.. py:class:: DocumentRetrieverConfig
-
-   Bases: :py:obj:`VectorStoreConfig`
-
-   Configs for document retriever.
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
@@ -8451,7 +8439,7 @@ Attributes
       :rtype: LlmParameters
 
 
-   .. py:method:: create_document_retriever(project_id, name, feature_group_id, cluster_name = None, document_retriever_config = None)
+   .. py:method:: create_vector_store(project_id, name, feature_group_id, cluster_name = None, vector_store_config = None)
 
       Returns a vector store that stores embeddings for document chunks in a feature group.
 
@@ -8466,42 +8454,42 @@ Attributes
       :type feature_group_id: str
       :param cluster_name: The name of the cluster that the vector store is created in.
       :type cluster_name: str
-      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
-      :type document_retriever_config: DocumentRetrieverConfig
+      :param vector_store_config: The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.
+      :type vector_store_config: VectorStoreConfig
 
-      :returns: The newly created document retriever.
-      :rtype: DocumentRetriever
+      :returns: The newly created vector store.
+      :rtype: VectorStore
 
 
-   .. py:method:: update_document_retriever(document_retriever_id, name = None, feature_group_id = None, document_retriever_config = None)
+   .. py:method:: update_vector_store(vector_store_id, name = None, feature_group_id = None, vector_store_config = None)
 
-      Updates an existing document retriever.
+      Updates an existing vector store.
 
-      :param document_retriever_id: The unique ID associated with the document retriever.
-      :type document_retriever_id: str
+      :param vector_store_id: The unique ID associated with the vector store.
+      :type vector_store_id: str
       :param name: The name group to update the vector store with.
       :type name: str
-      :param feature_group_id: The ID of the feature group to update the document retriever with.
+      :param feature_group_id: The ID of the feature group to update the vector store with.
       :type feature_group_id: str
-      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
-      :type document_retriever_config: DocumentRetrieverConfig
+      :param vector_store_config: The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.
+      :type vector_store_config: VectorStoreConfig
 
-      :returns: The updated document retriever.
-      :rtype: DocumentRetriever
-
-
-   .. py:method:: create_document_retriever_version(document_retriever_id)
-
-      Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
-
-      :param document_retriever_id: The unique ID associated with the document retriever to create version with.
-      :type document_retriever_id: str
-
-      :returns: The newly created document retriever version.
-      :rtype: DocumentRetrieverVersion
+      :returns: The updated vector store.
+      :rtype: VectorStore
 
 
-   .. py:method:: delete_document_retriever(vector_store_id)
+   .. py:method:: create_vector_store_version(vector_store_id)
+
+      Creates a vector store version from the latest version of the feature group that the vector store associated with.
+
+      :param vector_store_id: The unique ID associated with the vector store to create version with.
+      :type vector_store_id: str
+
+      :returns: The newly created vector store version.
+      :rtype: VectorStoreVersion
+
+
+   .. py:method:: delete_vector_store(vector_store_id)
 
       Delete a Vector Store.
 
@@ -8509,12 +8497,12 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, limit_results = None)
+   .. py:method:: lookup_vector_store(vector_store_id, query, deployment_token, limit_results = None)
 
-      Lookup relevant documents from the document retriever deployed with given query.
+      Lookup relevant documents from the vector store deployed with given query.
 
-      :param document_retriever_id: A unique string identifier associated with the document retriever.
-      :type document_retriever_id: str
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
       :param query: The query to search for.
       :type query: str
       :param deployment_token: A deployment token used to authenticate access to created vector store.
@@ -8522,8 +8510,8 @@ Attributes
       :param limit_results: If provided, will limit the number of results to the value specified.
       :type limit_results: int
 
-      :returns: The relevant documentation results found from the document retriever.
-      :rtype: DocumentRetrieverLookupResult
+      :returns: The relevant documentation results found from the vector store.
+      :rtype: VectorStoreLookupResult
 
 
 
@@ -10375,9 +10363,9 @@ Attributes
       :rtype: LlmResponse
 
 
-   .. py:method:: list_document_retrievers(project_id, limit = 100, start_after_id = None)
+   .. py:method:: list_vector_stores(project_id, limit = 100, start_after_id = None)
 
-      List all the document retrievers.
+      List all the vector stores.
 
       :param project_id: The ID of project that the vector store is created in.
       :type project_id: str
@@ -10386,56 +10374,56 @@ Attributes
       :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
       :type start_after_id: str
 
-      :returns: All the document retrievers in the organization associated with the specified project.
-      :rtype: DocumentRetriever
+      :returns: All the vector stores in the organization associated with the specified project.
+      :rtype: VectorStore
 
 
-   .. py:method:: describe_document_retriever(document_retriever_id)
+   .. py:method:: describe_vector_store(vector_store_id)
 
       Describe a Vector Store.
 
-      :param document_retriever_id: A unique string identifier associated with the document retriever.
-      :type document_retriever_id: str
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
 
-      :returns: The document retriever object.
-      :rtype: DocumentRetriever
+      :returns: The vector store object.
+      :rtype: VectorStore
 
 
-   .. py:method:: describe_document_retriever_by_name(name)
+   .. py:method:: describe_vector_store_by_name(name)
 
-      Describe a document retriever by its name.
+      Describe a vector store by its name.
 
-      :param name: The unique name of the document retriever to look up.
+      :param name: The unique name of the vector store to look up.
       :type name: str
 
-      :returns: The Document Retriever.
-      :rtype: DocumentRetriever
+      :returns: The Vector Store.
+      :rtype: VectorStore
 
 
-   .. py:method:: list_document_retriever_versions(document_retriever_id, limit = 100, start_after_version = None)
+   .. py:method:: list_vector_store_versions(vector_store_id, limit = 100, start_after_version = None)
 
-      List all the document retriever versions with a given ID.
+      List all the vector store versions with a given vector store ID.
 
-      :param document_retriever_id: A unique string identifier associated with the document retriever.
-      :type document_retriever_id: str
+      :param vector_store_id: A unique string identifier associated with the vector store.
+      :type vector_store_id: str
       :param limit: The number of vector store versions to retrieve.
       :type limit: int
       :param start_after_version: An offset parameter to exclude all vector store versions up to this specified one.
       :type start_after_version: str
 
-      :returns: All the document retriever versions associated with the document retriever.
-      :rtype: DocumentRetrieverVersion
+      :returns: All the vector store versions associated with the vector store.
+      :rtype: VectorStoreVersion
 
 
-   .. py:method:: describe_document_retriever_version(document_retriever_version)
+   .. py:method:: describe_vector_store_version(vector_store_version)
 
-      Describe a document retriever version.
+      Describe a vector store version.
 
-      :param document_retriever_version: A unique string identifier associated with the document retriever version.
-      :type document_retriever_version: str
+      :param vector_store_version: A unique string identifier associated with the vector store version.
+      :type vector_store_version: str
 
-      :returns: The document retriever version object.
-      :rtype: DocumentRetrieverVersion
+      :returns: The vector store version object.
+      :rtype: VectorStoreVersion
 
 
 
@@ -11190,7 +11178,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.71.0'
+   :value: '0.71.1'
 
    
 
