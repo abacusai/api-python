@@ -616,9 +616,9 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_vector_store(name, feature_group_id, cluster_name = None, vector_store_config = None)
+   .. py:method:: create_document_retriever(name, feature_group_id, cluster_name = None, document_retriever_config = None)
 
-      Returns a vector store that stores embeddings for document chunks in a feature group.
+      Returns a document retriever that stores embeddings for document chunks in a feature group.
 
       Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
 
@@ -629,24 +629,24 @@ Classes
       :type feature_group_id: str
       :param cluster_name: The name of the cluster that the vector store is created in.
       :type cluster_name: str
-      :param vector_store_config: The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.
-      :type vector_store_config: VectorStoreConfig
+      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+      :type document_retriever_config: DocumentRetrieverConfig
 
-      :returns: The newly created vector store.
-      :rtype: VectorStore
+      :returns: The newly created document retriever.
+      :rtype: DocumentRetriever
 
 
-   .. py:method:: list_vector_stores(limit = 100, start_after_id = None)
+   .. py:method:: list_document_retrievers(limit = 100, start_after_id = None)
 
-      List all the vector stores.
+      List all the document retrievers.
 
-      :param limit: The number of vector stores to retrieve.
+      :param limit: The number of document retrievers to return.
       :type limit: int
-      :param start_after_id: An offset parameter to exclude all vector stores up to this specified ID.
+      :param start_after_id: An offset parameter to exclude all document retrievers up to this specified ID.
       :type start_after_id: str
 
-      :returns: All the vector stores in the organization associated with the specified project.
-      :rtype: VectorStore
+      :returns: All the document retrievers in the organization associated with the specified project.
+      :rtype: DocumentRetriever
 
 
    .. py:method:: attach_dataset(dataset_id, project_dataset_type)

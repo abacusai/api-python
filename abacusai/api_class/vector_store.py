@@ -15,4 +15,11 @@ class VectorStoreConfig(ApiClass):
     """
     chunk_size: int = dataclasses.field(default=512)
     chunk_overlap_fraction: float = dataclasses.field(default=0.1)
-    text_encoder: VectorStoreTextEncoder = dataclasses.field(default=VectorStoreTextEncoder.OPENAI)
+    text_encoder: VectorStoreTextEncoder = dataclasses.field(default=VectorStoreTextEncoder.E5)
+
+
+@dataclasses.dataclass
+class DocumentRetrieverConfig(VectorStoreConfig):
+    """
+    Configs for document retriever.
+    """

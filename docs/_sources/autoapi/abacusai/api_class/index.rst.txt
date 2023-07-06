@@ -98,6 +98,9 @@ Classes
    abacusai.api_class.OptimizationTrainingConfig
    abacusai.api_class._TrainingConfigFactory
    abacusai.api_class.ApiClass
+   abacusai.api_class.FeatureMappingConfig
+   abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig
+   abacusai.api_class.ApiClass
    abacusai.api_class.PythonFunctionArgument
    abacusai.api_class.OutputVariableMapping
    abacusai.api_class.ApiClass
@@ -109,6 +112,7 @@ Classes
    abacusai.api_class.ApiClass
    abacusai.api_class.VectorStoreTextEncoder
    abacusai.api_class.VectorStoreConfig
+   abacusai.api_class.DocumentRetrieverConfig
 
 
 
@@ -1422,11 +1426,6 @@ Classes
 
    .. py:attribute:: E5
       :value: 'E5'
-
-      
-
-   .. py:attribute:: E5_SMALL
-      :value: 'E5_SMALL'
 
       
 
@@ -2808,8 +2807,8 @@ Classes
    Training config for the CHAT_LLM problem type
    :param llm_name:
    :type llm_name: str
-   :param vector_stores: List of vector store names to use for the feature stores this model was trained with.
-   :type vector_stores: List[str]
+   :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
+   :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
    :type num_completion_tokens: int
    :param system_message: The generative LLM system message
@@ -2822,7 +2821,7 @@ Classes
 
       
 
-   .. py:attribute:: vector_stores
+   .. py:attribute:: document_retrievers
       :type: List[str]
 
       
@@ -3368,6 +3367,88 @@ Classes
 
 
 
+.. py:class:: FeatureMappingConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: feature_mapping
+      :type: str
+
+      
+
+   .. py:attribute:: nested_feature_name
+      :type: str
+
+      
+
+
+.. py:class:: ProjectFeatureGroupTypeMappingsConfig
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: feature_group_id
+      :type: str
+
+      
+
+   .. py:attribute:: feature_group_type
+      :type: str
+
+      
+
+   .. py:attribute:: feature_mappings
+      :type: List[FeatureMappingConfig]
+
+      
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: ApiClass
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
 .. py:class:: PythonFunctionArgument
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
@@ -3653,11 +3734,6 @@ Classes
 
       
 
-   .. py:attribute:: E5_SMALL
-      :value: 'E5_SMALL'
-
-      
-
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
 
@@ -3689,5 +3765,12 @@ Classes
       :type: abacusai.api_class.enums.VectorStoreTextEncoder
 
       
+
+
+.. py:class:: DocumentRetrieverConfig
+
+   Bases: :py:obj:`VectorStoreConfig`
+
+   Configs for document retriever.
 
 

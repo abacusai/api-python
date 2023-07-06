@@ -1135,8 +1135,8 @@ Classes
    Training config for the CHAT_LLM problem type
    :param llm_name:
    :type llm_name: str
-   :param vector_stores: List of vector store names to use for the feature stores this model was trained with.
-   :type vector_stores: List[str]
+   :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
+   :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
    :type num_completion_tokens: int
    :param system_message: The generative LLM system message
@@ -1149,7 +1149,7 @@ Classes
 
       
 
-   .. py:attribute:: vector_stores
+   .. py:attribute:: document_retrievers
       :type: List[str]
 
       

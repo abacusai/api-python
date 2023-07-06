@@ -407,13 +407,13 @@ class ChatLLMTrainingConfig(TrainingConfig):
     Training config for the CHAT_LLM problem type
     Args:
         llm_name (str):
-        vector_stores (List[str]): List of vector store names to use for the feature stores this model was trained with.
+        document_retrievers (List[str]): List of document retriever names to use for the feature stores this model was trained with.
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
         system_message (str): The generative LLM system message
         temperature (float): The generative LLM temperature
     """
     llm_name: str = None
-    vector_stores: List[str] = None
+    document_retrievers: List[str] = None
     num_completion_tokens: int = None
     system_message: str = None
     temperature: float = None

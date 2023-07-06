@@ -25,8 +25,8 @@ from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
-    ApiClass, ApiEnum, FeatureGroupExportConfig, MergeConfig, ParsingConfig,
-    ProblemType, SamplingConfig, TrainingConfig, VectorStoreConfig
+    ApiClass, ApiEnum, DocumentRetrieverConfig, FeatureGroupExportConfig,
+    MergeConfig, ParsingConfig, ProblemType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -51,6 +51,10 @@ from .dataset_version import DatasetVersion
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
+from .document_retriever import DocumentRetriever
+from .document_retriever_config import DocumentRetrieverConfig
+from .document_retriever_lookup_result import DocumentRetrieverLookupResult
+from .document_retriever_version import DocumentRetrieverVersion
 from .drift_distributions import DriftDistributions
 from .eda import Eda
 from .eda_collinearity import EdaCollinearity
@@ -121,10 +125,6 @@ from .upload_part import UploadPart
 from .use_case import UseCase
 from .use_case_requirements import UseCaseRequirements
 from .user import User
-from .vector_store import VectorStore
-from .vector_store_config import VectorStoreConfig
-from .vector_store_lookup_result import VectorStoreLookupResult
-from .vector_store_version import VectorStoreVersion
 from .webhook import Webhook
 
 
@@ -216,7 +216,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.71.1'
+    client_version = '0.72.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -242,6 +242,8 @@ class BaseApiClient:
                     self.server = endpoint_info['apiEndpoint']
             except Exception:
                 logging.error('Invalid API Key')
+        skip_version_check = skip_version_check or self.client_version.startswith(
+            'g')
         if not skip_version_check:
             try:
                 self.web_version = self._call_api('version', 'GET')
@@ -1985,59 +1987,59 @@ class ReadOnlyClient(BaseApiClient):
             LlmResponse: The response from the model, raw text and parsed components."""
         return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
 
-    def list_vector_stores(self, project_id: str, limit: int = 100, start_after_id: str = None) -> VectorStore:
-        """List all the vector stores.
+    def list_document_retrievers(self, project_id: str, limit: int = 100, start_after_id: str = None) -> DocumentRetriever:
+        """List all the document retrievers.
 
         Args:
-            project_id (str): The ID of project that the vector store is created in.
-            limit (int): The number of vector stores to retrieve.
-            start_after_id (str): An offset parameter to exclude all vector stores up to this specified ID.
+            project_id (str): The ID of project that the document retriever is created in.
+            limit (int): The number of document retrievers to return.
+            start_after_id (str): An offset parameter to exclude all document retrievers up to this specified ID.
 
         Returns:
-            VectorStore: All the vector stores in the organization associated with the specified project."""
-        return self._call_api('listVectorStores', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=VectorStore)
+            DocumentRetriever: All the document retrievers in the organization associated with the specified project."""
+        return self._call_api('listDocumentRetrievers', 'GET', query_params={'projectId': project_id, 'limit': limit, 'startAfterId': start_after_id}, parse_type=DocumentRetriever)
 
-    def describe_vector_store(self, vector_store_id: str) -> VectorStore:
-        """Describe a Vector Store.
+    def describe_document_retriever(self, document_retriever_id: str) -> DocumentRetriever:
+        """Describe a Document Retriever.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
 
         Returns:
-            VectorStore: The vector store object."""
-        return self._call_api('describeVectorStore', 'GET', query_params={'vectorStoreId': vector_store_id}, parse_type=VectorStore)
+            DocumentRetriever: The document retriever object."""
+        return self._call_api('describeDocumentRetriever', 'GET', query_params={'documentRetrieverId': document_retriever_id}, parse_type=DocumentRetriever)
 
-    def describe_vector_store_by_name(self, name: str) -> VectorStore:
-        """Describe a vector store by its name.
+    def describe_document_retriever_by_name(self, name: str) -> DocumentRetriever:
+        """Describe a document retriever by its name.
 
         Args:
-            name (str): The unique name of the vector store to look up.
+            name (str): The unique name of the document retriever to look up.
 
         Returns:
-            VectorStore: The Vector Store."""
-        return self._call_api('describeVectorStoreByName', 'GET', query_params={'name': name}, parse_type=VectorStore)
+            DocumentRetriever: The Document Retriever."""
+        return self._call_api('describeDocumentRetrieverByName', 'GET', query_params={'name': name}, parse_type=DocumentRetriever)
 
-    def list_vector_store_versions(self, vector_store_id: str, limit: int = 100, start_after_version: str = None) -> VectorStoreVersion:
-        """List all the vector store versions with a given vector store ID.
+    def list_document_retriever_versions(self, document_retriever_id: str, limit: int = 100, start_after_version: str = None) -> DocumentRetrieverVersion:
+        """List all the document retriever versions with a given ID.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
             limit (int): The number of vector store versions to retrieve.
-            start_after_version (str): An offset parameter to exclude all vector store versions up to this specified one.
+            start_after_version (str): An offset parameter to exclude all document retriever versions up to this specified one.
 
         Returns:
-            VectorStoreVersion: All the vector store versions associated with the vector store."""
-        return self._call_api('listVectorStoreVersions', 'GET', query_params={'vectorStoreId': vector_store_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=VectorStoreVersion)
+            DocumentRetrieverVersion: All the document retriever versions associated with the document retriever."""
+        return self._call_api('listDocumentRetrieverVersions', 'GET', query_params={'documentRetrieverId': document_retriever_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DocumentRetrieverVersion)
 
-    def describe_vector_store_version(self, vector_store_version: str) -> VectorStoreVersion:
-        """Describe a vector store version.
+    def describe_document_retriever_version(self, document_retriever_version: str) -> DocumentRetrieverVersion:
+        """Describe a document retriever version.
 
         Args:
-            vector_store_version (str): A unique string identifier associated with the vector store version.
+            document_retriever_version (str): A unique string identifier associated with the document retriever version.
 
         Returns:
-            VectorStoreVersion: The vector store version object."""
-        return self._call_api('describeVectorStoreVersion', 'GET', query_params={'vectorStoreVersion': vector_store_version}, parse_type=VectorStoreVersion)
+            DocumentRetrieverVersion: The document retriever version object."""
+        return self._call_api('describeDocumentRetrieverVersion', 'GET', query_params={'documentRetrieverVersion': document_retriever_version}, parse_type=DocumentRetrieverVersion)
 
 
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
@@ -4641,7 +4643,7 @@ Creates a new feature group defined as the union of other feature group versions
             monitor_alert_id (str): The unique string identifier of the alert to delete."""
         return self._call_api('deleteMonitorAlert', 'DELETE', query_params={'monitorAlertId': monitor_alert_id})
 
-    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
+    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, additional_model_name: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
 
         A Deployment makes the trained model or feature group available for prediction requests.
@@ -4652,6 +4654,7 @@ Creates a new feature group defined as the union of other feature group versions
             model_id (str): The unique ID associated with the model.
             model_version (str): The unique ID associated with the model version to deploy.
             algorithm (str): The unique ID associated with the algorithm to deploy.
+            additional_model_name (str): The unique name associated with the additional model to deploy.
             feature_group_id (str): The unique ID associated with a feature group.
             project_id (str): The unique ID associated with a project.
             description (str): The description for the deployment.
@@ -4664,7 +4667,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             Deployment: The new model or feature group deployment."""
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'modelDeploymentConfig': model_deployment_config, 'deploymentConfig': deployment_config}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'additionalModelName': additional_model_name, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'modelDeploymentConfig': model_deployment_config, 'deploymentConfig': deployment_config}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str, name: str = None) -> DeploymentAuthToken:
         """Creates a deployment token for the specified project.
@@ -6140,8 +6143,8 @@ Creates a new feature group defined as the union of other feature group versions
             LlmParameters: The parameters for LLM using the given inputs."""
         return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
 
-    def create_vector_store(self, project_id: str, name: str, feature_group_id: str, cluster_name: str = None, vector_store_config: Union[dict, VectorStoreConfig] = None) -> VectorStore:
-        """Returns a vector store that stores embeddings for document chunks in a feature group.
+    def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, cluster_name: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
+        """Returns a document retriever that stores embeddings for document chunks in a feature group.
 
         Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
 
@@ -6151,51 +6154,51 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name of the vector store.
             feature_group_id (str): The ID of the feature group that the vector store is associated with.
             cluster_name (str): The name of the cluster that the vector store is created in.
-            vector_store_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
-            VectorStore: The newly created vector store."""
-        return self._call_api('createVectorStore', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'clusterName': cluster_name, 'vectorStoreConfig': vector_store_config}, parse_type=VectorStore)
+            DocumentRetriever: The newly created document retriever."""
+        return self._call_api('createDocumentRetriever', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'clusterName': cluster_name, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetriever)
 
-    def update_vector_store(self, vector_store_id: str, name: str = None, feature_group_id: str = None, vector_store_config: Union[dict, VectorStoreConfig] = None) -> VectorStore:
-        """Updates an existing vector store.
+    def update_document_retriever(self, document_retriever_id: str, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
+        """Updates an existing document retriever.
 
         Args:
-            vector_store_id (str): The unique ID associated with the vector store.
-            name (str): The name group to update the vector store with.
-            feature_group_id (str): The ID of the feature group to update the vector store with.
-            vector_store_config (VectorStoreConfig): The configuration, including chunk_size and chunk_overlap_fraction, for vector store indexing.
+            document_retriever_id (str): The unique ID associated with the document retriever.
+            name (str): The name group to update the document retriever with.
+            feature_group_id (str): The ID of the feature group to update the document retriever with.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
-            VectorStore: The updated vector store."""
-        return self._call_api('updateVectorStore', 'POST', query_params={}, body={'vectorStoreId': vector_store_id, 'name': name, 'featureGroupId': feature_group_id, 'vectorStoreConfig': vector_store_config}, parse_type=VectorStore)
+            DocumentRetriever: The updated document retriever."""
+        return self._call_api('updateDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'name': name, 'featureGroupId': feature_group_id, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetriever)
 
-    def create_vector_store_version(self, vector_store_id: str) -> VectorStoreVersion:
-        """Creates a vector store version from the latest version of the feature group that the vector store associated with.
+    def create_document_retriever_version(self, document_retriever_id: str) -> DocumentRetrieverVersion:
+        """Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
         Args:
-            vector_store_id (str): The unique ID associated with the vector store to create version with.
+            document_retriever_id (str): The unique ID associated with the document retriever to create version with.
 
         Returns:
-            VectorStoreVersion: The newly created vector store version."""
-        return self._call_api('createVectorStoreVersion', 'POST', query_params={}, body={'vectorStoreId': vector_store_id}, parse_type=VectorStoreVersion)
+            DocumentRetrieverVersion: The newly created document retriever version."""
+        return self._call_api('createDocumentRetrieverVersion', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id}, parse_type=DocumentRetrieverVersion)
 
-    def delete_vector_store(self, vector_store_id: str):
-        """Delete a Vector Store.
-
-        Args:
-            vector_store_id (str): A unique string identifier associated with the vector store."""
-        return self._call_api('deleteVectorStore', 'DELETE', query_params={'vectorStoreId': vector_store_id})
-
-    def lookup_vector_store(self, vector_store_id: str, query: str, deployment_token: str, limit_results: int = None) -> VectorStoreLookupResult:
-        """Lookup relevant documents from the vector store deployed with given query.
+    def delete_document_retriever(self, vector_store_id: str):
+        """Delete a Document Retriever.
 
         Args:
-            vector_store_id (str): A unique string identifier associated with the vector store.
+            vector_store_id (str): A unique string identifier associated with the document retriever."""
+        return self._call_api('deleteDocumentRetriever', 'DELETE', query_params={'vectorStoreId': vector_store_id})
+
+    def lookup_document_retriever(self, document_retriever_id: str, query: str, deployment_token: str, limit_results: int = None) -> DocumentRetrieverLookupResult:
+        """Lookup relevant documents from the document retriever deployed with given query.
+
+        Args:
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
             query (str): The query to search for.
             deployment_token (str): A deployment token used to authenticate access to created vector store.
             limit_results (int): If provided, will limit the number of results to the value specified.
 
         Returns:
-            VectorStoreLookupResult: The relevant documentation results found from the vector store."""
-        return self._call_api('lookupVectorStore', 'POST', query_params={'deploymentToken': deployment_token}, body={'vectorStoreId': vector_store_id, 'query': query, 'limitResults': limit_results}, parse_type=VectorStoreLookupResult)
+            DocumentRetrieverLookupResult: The relevant documentation results found from the document retriever."""
+        return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'limitResults': limit_results}, parse_type=DocumentRetrieverLookupResult)
