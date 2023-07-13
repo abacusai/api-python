@@ -1837,7 +1837,7 @@ Attributes
    :param recent_days_for_training: Limit training data to a certain latest number of days.
    :type recent_days_for_training: int
    :param training_start_date: Only consider training interaction data after this date. Specified in the timezone of the dataset.
-   :type training_start_date: datetime
+   :type training_start_date: str
    :param test_on_user_split: Use user splits instead of using time splits, when validating and testing the model.
    :type test_on_user_split: bool
    :param test_split_on_last_k_items: Use last k items instead of global timestamp splits, when validating and testing the model.
@@ -1926,7 +1926,7 @@ Attributes
       
 
    .. py:attribute:: training_start_date
-      :type: datetime.datetime
+      :type: str
 
       
 
@@ -2357,7 +2357,7 @@ Attributes
    :param test_by_item: Partition train/test data by item rather than time if true.
    :type test_by_item: bool
    :param test_start: Limit training data to dates before the given test start.
-   :type test_start: datetime
+   :type test_start: str
    :param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
    :type test_split: int
    :param loss_function: Loss function for training neural network.
@@ -2527,7 +2527,7 @@ Attributes
       
 
    .. py:attribute:: test_start
-      :type: datetime.datetime
+      :type: str
 
       
 
@@ -3646,6 +3646,8 @@ Attributes
    :type chunk_size: int
    :param chunk_overlap_fraction: The fraction of overlap between chunks.
    :type chunk_overlap_fraction: float
+   :param text_encoder: Encoder used to index texts from the documents.
+   :type text_encoder: VectorStoreTextEncoder
 
    .. py:attribute:: chunk_size
       :type: int
@@ -7113,7 +7115,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token, deployment_id, query_data, threshold = None)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
 
       Returns a list of scored labels for a document.
 
@@ -7123,8 +7125,6 @@ Attributes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
-      :param threshold: This argument is deprecated and will be ignored.
-      :type threshold: None
 
 
    .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
@@ -7145,7 +7145,7 @@ Attributes
       :type verbose: bool
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -7171,6 +7171,10 @@ Attributes
       :type exclude_items: list
       :param explore_fraction: Explore fraction.
       :type explore_fraction: float
+      :param diversity_attribute_name: item attribute column name which is used to ensure diversity of prediction results.
+      :type diversity_attribute_name: str
+      :param diversity_max_results_per_value: maximum number of results per value of diversity_attribute_name.
+      :type diversity_max_results_per_value: int
 
 
    .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
@@ -7191,7 +7195,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None)
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -7209,6 +7213,10 @@ Attributes
       :type score_field: str
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there is a type of item that might be less popular but you want to promote it or there is an item that always comes up and you want to demote it.
       :type scaling_factors: list
+      :param diversity_attribute_name: item attribute column name which is used to ensure diversity of prediction results.
+      :type diversity_attribute_name: str
+      :param diversity_max_results_per_value: maximum number of results per value of diversity_attribute_name.
+      :type diversity_max_results_per_value: int
 
 
    .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
@@ -7243,6 +7251,22 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :type filter_key_values: dict
+
+
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, chat_config = None, filter_key_values = None)
+
+      Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
+
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param message: A message from the user
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
+      :type deployment_conversation_id: str
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
@@ -8407,6 +8431,22 @@ Attributes
       :type deployment_conversation_id: str
 
 
+   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None)
+
+      Sets a deployment conversation message as useful or not useful
+
+      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
+      :type deployment_conversation_id: str
+      :param message_index: The index of the deployment conversation message
+      :type message_index: int
+      :param is_useful: If the message is useful. If true, the message is useful. If false, clear the useful flag.
+      :type is_useful: bool
+      :param is_not_useful: If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
+      :type is_not_useful: bool
+      :param feedback: Optional feedback on why the message is useful or not useful
+      :type feedback: str
+
+
    .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
 
       Creates a new AI agent.
@@ -8500,7 +8540,7 @@ Attributes
       :rtype: LlmParameters
 
 
-   .. py:method:: create_document_retriever(project_id, name, feature_group_id, cluster_name = None, document_retriever_config = None)
+   .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)
 
       Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -8513,8 +8553,6 @@ Attributes
       :type name: str
       :param feature_group_id: The ID of the feature group that the vector store is associated with.
       :type feature_group_id: str
-      :param cluster_name: The name of the cluster that the vector store is created in.
-      :type cluster_name: str
       :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
       :type document_retriever_config: DocumentRetrieverConfig
 
@@ -9602,7 +9640,7 @@ Attributes
       Gets a list of Model Monitors for an organization.
 
       :param only_starred: Whether to return only starred Model Monitors. Defaults to False.
-      :type only_starred: None
+      :type only_starred: bool
 
       :returns: A list of Model Monitors.
       :rtype: ModelMonitor
@@ -10743,7 +10781,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token, deployment_id, query_data, threshold = None)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
 
       Returns a list of scored labels for a document.
 
@@ -10753,8 +10791,6 @@ Attributes
       :type deployment_id: str
       :param query_data: Dictionary where key is "Content" and value is the text from which entities are to be extracted.
       :type query_data: dict
-      :param threshold: This argument is deprecated and will be ignored.
-      :type threshold: None
 
 
    .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
@@ -10775,7 +10811,7 @@ Attributes
       :type verbose: bool
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -10801,6 +10837,10 @@ Attributes
       :type exclude_items: list
       :param explore_fraction: Explore fraction.
       :type explore_fraction: float
+      :param diversity_attribute_name: item attribute column name which is used to ensure diversity of prediction results.
+      :type diversity_attribute_name: str
+      :param diversity_max_results_per_value: maximum number of results per value of diversity_attribute_name.
+      :type diversity_max_results_per_value: int
 
 
    .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
@@ -10821,7 +10861,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None)
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -10839,6 +10879,10 @@ Attributes
       :type score_field: str
       :param scaling_factors: It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there is a type of item that might be less popular but you want to promote it or there is an item that always comes up and you want to demote it.
       :type scaling_factors: list
+      :param diversity_attribute_name: item attribute column name which is used to ensure diversity of prediction results.
+      :type diversity_attribute_name: str
+      :param diversity_max_results_per_value: maximum number of results per value of diversity_attribute_name.
+      :type diversity_max_results_per_value: int
 
 
    .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
@@ -10873,6 +10917,22 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :type filter_key_values: dict
+
+
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, chat_config = None, filter_key_values = None)
+
+      Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
+
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param message: A message from the user
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
+      :type deployment_conversation_id: str
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
@@ -11239,7 +11299,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.72.0'
+   :value: '0.72.5'
 
    
 

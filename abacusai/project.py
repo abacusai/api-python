@@ -557,7 +557,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
 
-    def create_document_retriever(self, name: str, feature_group_id: str, cluster_name: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
+    def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """
         Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -567,13 +567,12 @@ class Project(AbstractApiClass):
         Args:
             name (str): The name of the vector store.
             feature_group_id (str): The ID of the feature group that the vector store is associated with.
-            cluster_name (str): The name of the cluster that the vector store is created in.
             document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetriever: The newly created document retriever.
         """
-        return self.client.create_document_retriever(self.project_id, name, feature_group_id, cluster_name, document_retriever_config)
+        return self.client.create_document_retriever(self.project_id, name, feature_group_id, document_retriever_config)
 
     def list_document_retrievers(self, limit: int = 100, start_after_id: str = None):
         """

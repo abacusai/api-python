@@ -28,8 +28,8 @@ class ModelVersion(AbstractApiClass):
             trainingFeatureGroupIds (list): The unique identifiers of the feature groups used as inputs during training to create this ModelVersion.
             trainingVectorStoreVersions (list): The vector store version IDs used as inputs during training to create this ModelVersion.
             deployableAlgorithms (list): List of deployable algorithms.
-            bestAlgorithm (str): Best performing algorithm.
-            defaultAlgorithm (str): Default algorithm that the user has selected.
+            bestAlgorithm (dict): Best performing algorithm.
+            defaultAlgorithm (dict): Default algorithm that the user has selected.
             featureAnalysisStatus (str): Lifecycle of the feature analysis stage.
             dataClusterInfo (dict): Information about the models for different data clusters.
             customAlgorithmConfigs (dict): User-defined configs for each of the user-defined custom algorithms.

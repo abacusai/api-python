@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None, projectConfig={})
+.. py:class:: FeatureGroupExport(client, featureGroupExportId=None, failedWrites=None, totalWrites=None, featureGroupVersion=None, connectorType=None, outputLocation=None, fileFormat=None, databaseConnectorId=None, objectName=None, writeMode=None, databaseFeatureMapping=None, idColumn=None, status=None, createdAt=None, exportCompletedAt=None, additionalIdColumns=None, error=None, databaseOutputError=None, projectConfig={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -27,6 +27,10 @@ Classes
    :type client: ApiClient
    :param featureGroupExportId: Unique identifier for this export.
    :type featureGroupExportId: str
+   :param failedWrites: Number of failed writes.
+   :type failedWrites: int
+   :param totalWrites: Total number of writes.
+   :type totalWrites: int
    :param featureGroupVersion: Version of the feature group being exported.
    :type featureGroupVersion: str
    :param connectorType: The type of connector

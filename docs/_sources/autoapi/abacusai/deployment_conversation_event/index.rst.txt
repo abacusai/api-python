@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, modelVersion=None, searchResults=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,6 +35,10 @@ Classes
    :type modelVersion: str
    :param searchResults: The search results for the message.
    :type searchResults: dict
+   :param isUseful: Whether this message was marked as useful or not
+   :type isUseful: bool
+   :param feedback: The feedback provided for the message
+   :type feedback: str
 
    .. py:method:: __repr__()
 

@@ -260,6 +260,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.get_object_from_context" title="abacusai.api_client_utils.get_object_from_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_object_from_context</span></code></a>(client, context, ...)</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_fd" title="abacusai.api_client_utils.load_as_pandas_from_avro_fd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_fd</span></code></a>(fd)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_client_utils.load_as_pandas_from_avro_files" title="abacusai.api_client_utils.load_as_pandas_from_avro_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_as_pandas_from_avro_files</span></code></a>(files, download_method)</p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -306,6 +312,30 @@
 <dt class="sig sig-object py" id="abacusai.api_client_utils.get_object_from_context">
 <span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">get_object_from_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.get_object_from_context" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.load_as_pandas_from_avro_fd">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">load_as_pandas_from_avro_fd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.load_as_pandas_from_avro_fd" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fd</strong> (<em>IO</em>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.load_as_pandas_from_avro_files">
+<span class="sig-prename descclassname"><span class="pre">abacusai.api_client_utils.</span></span><span class="sig-name descname"><span class="pre">load_as_pandas_from_avro_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.load_as_pandas_from_avro_files" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – </p></li>
+<li><p><strong>download_method</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 </section>

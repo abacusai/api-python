@@ -1,6 +1,4 @@
 import os
-import tempfile
-from concurrent.futures import ThreadPoolExecutor
 
 from .return_class import AbstractApiClass
 
@@ -97,24 +95,9 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         Returns:
             DataFrame: A pandas dataframe displaying the data from execution.
         """
-        import fastavro
-        import pandas as pd
 
-        file_parts = range(self.client._call_api('getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={
-                           'featureGroupOperationRunId': self.feature_group_operation_run_id}))
-        data_df = pd.DataFrame()
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                df_parts = []
-                file_futures = [executor.submit(
-                    self._download_avro_file, file_part, tmp_dir) for file_part in file_parts]
-                for future in file_futures:
-                    part_path = future.result()
-                    with open(part_path, 'rb') as part_data:
-                        reader = fastavro.reader(part_data)
-                        df_parts.append(pd.DataFrame([r for r in reader]))
-                data_df = pd.concat(df_parts, ignore_index=True)
-            for col in data_df.columns:
-                if pd.core.dtypes.common.is_datetime64_ns_dtype(data_df[col]):
-                    data_df[col] = data_df[col].dt.tz_localize(None)
-        return data_df
+        from .api_client_utils import load_as_pandas_from_avro_files
+
+        file_parts = range(self.client._call_api(
+            'getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={'featureGroupOperationRunId': self.feature_group_operation_run_id}))
+        return load_as_pandas_from_avro_files(file_parts, self._download_avro_file, max_workers=max_workers)

@@ -8,7 +8,7 @@ class VectorStoreConfig(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            chunkSize (int): The size of chunks for vector store.
+            chunkSize (int): The size of chunks for vector store, i.e., maximum number of words in the chunk.
             chunkOverlapFraction (float): The fraction of overlap between two consecutive chunks.
             textEncoder (str): The text encoder used to encode texts in the vector store.
     """

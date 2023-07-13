@@ -1,6 +1,4 @@
 import os
-import tempfile
-from concurrent.futures import ThreadPoolExecutor
 
 from .annotation_config import AnnotationConfig
 from .code_source import CodeSource
@@ -220,47 +218,9 @@ class FeatureGroupVersion(AbstractApiClass):
         Returns:
             DataFrame: A pandas dataframe displaying the data in the feature group version.
         """
-        import fastavro
-        import pandas as pd
 
-        from .api_client_utils import avro_to_pandas_dtype, get_non_nullable_type
+        from .api_client_utils import load_as_pandas_from_avro_files
 
         file_parts = range(self.client._call_api(
             '_getFeatureGroupVersionPartCount', 'GET', query_params={'featureGroupVersion': self.id}))
-        data_df = pd.DataFrame()
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            with tempfile.TemporaryDirectory() as tmp_dir:
-                df_parts = []
-                file_futures = [executor.submit(
-                    self._download_avro_file, file_part, tmp_dir) for file_part in file_parts]
-                for future in file_futures:
-                    part_path = future.result()
-                    with open(part_path, 'rb') as part_data:
-                        reader = fastavro.reader(part_data)
-                        schema = reader.writer_schema
-                        col_dtypes = {}
-                        for field in schema['fields']:
-                            field_name = field['name']
-                            field_type = field['type']
-                            if isinstance(field_type, list):
-                                field_type = get_non_nullable_type(field_type)
-                            pandas_dtype = avro_to_pandas_dtype(field_type)
-                            col_dtypes[field_name] = pandas_dtype
-                        df_part = pd.DataFrame.from_records(
-                            [r for r in reader], columns=col_dtypes.keys())
-
-                        for col in df_part.columns:
-                            if col_dtypes[col] == 'datetime':
-                                df_part[col] = pd.to_datetime(
-                                    df_part[col], errors='coerce')
-
-                            if pd.core.dtypes.common.is_datetime64_ns_dtype(df_part[col]):
-                                df_part[col] = df_part[col].dt.tz_localize(
-                                    None)
-                            elif str(df_part[col].dtype).lower() != str(col_dtypes[col]).lower():
-                                df_part[col] = df_part[col].astype(
-                                    col_dtypes[col])
-                        df_parts.append(df_part)
-            data_df = pd.concat(df_parts, ignore_index=True)
-
-        return data_df
+        return load_as_pandas_from_avro_files(file_parts, self._download_avro_file, max_workers=max_workers)

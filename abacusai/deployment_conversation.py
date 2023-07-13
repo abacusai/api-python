@@ -56,3 +56,15 @@ class DeploymentConversation(AbstractApiClass):
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
         """
         return self.client.delete_deployment_conversation(self.deployment_conversation_id)
+
+    def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None):
+        """
+        Sets a deployment conversation message as useful or not useful
+
+        Args:
+            message_index (int): The index of the deployment conversation message
+            is_useful (bool): If the message is useful. If true, the message is useful. If false, clear the useful flag.
+            is_not_useful (bool): If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
+            feedback (str): Optional feedback on why the message is useful or not useful
+        """
+        return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback)

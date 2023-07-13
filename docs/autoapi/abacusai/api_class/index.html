@@ -2046,7 +2046,7 @@ inheritance.</p>
 :param recent_days_for_training: Limit training data to a certain latest number of days.
 :type recent_days_for_training: int
 :param training_start_date: Only consider training interaction data after this date. Specified in the timezone of the dataset.
-:type training_start_date: datetime
+:type training_start_date: str
 :param test_on_user_split: Use user splits instead of using time splits, when validating and testing the model.
 :type test_on_user_split: bool
 :param test_split_on_last_k_items: Use last k items instead of global timestamp splits, when validating and testing the model.
@@ -2135,7 +2135,7 @@ inheritance.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.training_start_date">
-<span class="sig-name descname"><span class="pre">training_start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.11)"><span class="pre">datetime.datetime</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.training_start_date" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">training_start_date</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.training_start_date" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2554,7 +2554,7 @@ inheritance.</p>
 :param test_by_item: Partition train/test data by item rather than time if true.
 :type test_by_item: bool
 :param test_start: Limit training data to dates before the given test start.
-:type test_start: datetime
+:type test_start: str
 :param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
 :type test_split: int
 :param loss_function: Loss function for training neural network.
@@ -2724,7 +2724,7 @@ inheritance.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ForecastingTrainingConfig.test_start">
-<span class="sig-name descname"><span class="pre">test_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.11)"><span class="pre">datetime.datetime</span></a></em><a class="headerlink" href="#abacusai.api_class.ForecastingTrainingConfig.test_start" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">test_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ForecastingTrainingConfig.test_start" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4117,6 +4117,7 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The size of text chunks in the vector store.</p></li>
 <li><p><strong>chunk_overlap_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – The fraction of overlap between chunks.</p></li>
+<li><p><strong>text_encoder</strong> (<a class="reference internal" href="#id46" title="abacusai.api_class.VectorStoreTextEncoder"><em>VectorStoreTextEncoder</em></a>) – Encoder used to index texts from the documents.</p></li>
 </ul>
 </dd>
 </dl>

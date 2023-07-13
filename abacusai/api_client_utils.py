@@ -3,7 +3,7 @@ import json
 import re
 import string
 from textwrap import dedent
-from typing import Callable
+from typing import IO, Callable, List
 
 
 INVALID_PANDAS_COLUMN_NAME_CHARACTERS = '[^A-Za-z0-9_]'
@@ -95,3 +95,56 @@ def get_object_from_context(client, context, variable_name, return_type):
         pass
 
     return typed_value
+
+
+def load_as_pandas_from_avro_fd(fd: IO):
+    import fastavro
+    import pandas as pd
+
+    reader = fastavro.reader(fd)
+    schema = reader.writer_schema
+    col_dtypes = {}
+    for field in schema['fields']:
+        field_name = field['name']
+        field_type = field['type']
+        if isinstance(field_type, list):
+            field_type = get_non_nullable_type(field_type)
+        pandas_dtype = avro_to_pandas_dtype(field_type)
+        col_dtypes[field_name] = pandas_dtype
+    df_part = pd.DataFrame.from_records(
+        [r for r in reader], columns=col_dtypes.keys())
+
+    for col in df_part.columns:
+        if col_dtypes[col] == 'datetime':
+            df_part[col] = pd.to_datetime(
+                df_part[col], errors='coerce')
+
+        if pd.core.dtypes.common.is_datetime64_ns_dtype(df_part[col]):
+            df_part[col] = df_part[col].dt.tz_localize(
+                None)
+        elif str(df_part[col].dtype).lower() != str(col_dtypes[col]).lower():
+            df_part[col] = df_part[col].astype(
+                col_dtypes[col])
+    return df_part
+
+
+def load_as_pandas_from_avro_files(files: List[str], download_method: Callable, max_workers: int = 10):
+    import tempfile
+    from concurrent.futures import ThreadPoolExecutor
+
+    import pandas as pd
+
+    data_df = pd.DataFrame()
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            df_parts = []
+            file_futures = [executor.submit(
+                download_method, file_part, tmp_dir) for file_part in files]
+            for future in file_futures:
+                part_path = future.result()
+                with open(part_path, 'rb') as part_data:
+                    df_part = load_as_pandas_from_avro_fd(part_data)
+                    df_parts.append(df_part)
+        data_df = pd.concat(df_parts, ignore_index=True)
+
+    return data_df

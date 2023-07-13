@@ -616,7 +616,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_document_retriever(name, feature_group_id, cluster_name = None, document_retriever_config = None)
+   .. py:method:: create_document_retriever(name, feature_group_id, document_retriever_config = None)
 
       Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -627,8 +627,6 @@ Classes
       :type name: str
       :param feature_group_id: The ID of the feature group that the vector store is associated with.
       :type feature_group_id: str
-      :param cluster_name: The name of the cluster that the vector store is created in.
-      :type cluster_name: str
       :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
       :type document_retriever_config: DocumentRetrieverConfig
 

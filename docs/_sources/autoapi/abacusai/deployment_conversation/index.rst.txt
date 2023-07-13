@@ -68,4 +68,18 @@ Classes
       :type deployment_conversation_id: str
 
 
+   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None)
+
+      Sets a deployment conversation message as useful or not useful
+
+      :param message_index: The index of the deployment conversation message
+      :type message_index: int
+      :param is_useful: If the message is useful. If true, the message is useful. If false, clear the useful flag.
+      :type is_useful: bool
+      :param is_not_useful: If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
+      :type is_not_useful: bool
+      :param feedback: Optional feedback on why the message is useful or not useful
+      :type feedback: str
+
+
 

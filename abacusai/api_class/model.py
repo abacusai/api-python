@@ -1,5 +1,4 @@
 import dataclasses
-from datetime import datetime
 from typing import Dict, List
 
 from . import enums
@@ -29,7 +28,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
         session_event_types (List[str]): List of event types to treat as occurrences of sessions.
         test_split (int): Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
         recent_days_for_training (int): Limit training data to a certain latest number of days.
-        training_start_date (datetime): Only consider training interaction data after this date. Specified in the timezone of the dataset.
+        training_start_date (str): Only consider training interaction data after this date. Specified in the timezone of the dataset.
         test_on_user_split (bool): Use user splits instead of using time splits, when validating and testing the model.
         test_split_on_last_k_items (bool): Use last k items instead of global timestamp splits, when validating and testing the model.
         test_last_items_length (int): Number of items to leave out for each user when using leave k out folds.
@@ -69,7 +68,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     # data split
     test_split: int = dataclasses.field(default=None)
     recent_days_for_training: int = dataclasses.field(default=None)
-    training_start_date: datetime = dataclasses.field(default=None)
+    training_start_date: str = dataclasses.field(default=None)
     test_on_user_split: bool = dataclasses.field(default=None)
     test_split_on_last_k_items: bool = dataclasses.field(default=None)
     test_last_items_length: int = dataclasses.field(default=None)
@@ -231,7 +230,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         experimentation_mode (ExperimentationMode): Selecting Thorough Experimentation will take longer to train.
         type_of_split (ForecastingDataSplitType): Type of data splitting into train/test.
         test_by_item (bool): Partition train/test data by item rather than time if true.
-        test_start (datetime): Limit training data to dates before the given test start.
+        test_start (str): Limit training data to dates before the given test start.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
         loss_function (ForecastingLossFunction): Loss function for training neural network.
         underprediction_weight (float): Weight for underpredictions
@@ -292,7 +291,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     # Data split params
     type_of_split: enums.ForecastingDataSplitType = dataclasses.field(default=None)
     test_by_item: bool = dataclasses.field(default=None)
-    test_start: datetime = dataclasses.field(default=None)
+    test_start: str = dataclasses.field(default=None)
     test_split: int = dataclasses.field(default=None)
     # Neural network
     loss_function: enums.ForecastingLossFunction = dataclasses.field(default=None)
