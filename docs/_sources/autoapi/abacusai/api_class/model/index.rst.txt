@@ -381,9 +381,9 @@ Classes
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
    :param custom_loss_functions: Registered custom losses available for selection.
-   :type custom_loss_functions: list[str]
+   :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
-   :type custom_metrics: list[str]
+   :type custom_metrics: List[str]
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.RegressionObjective
@@ -588,7 +588,7 @@ Classes
    :param forecast_frequency: Forecast frequency.
    :type forecast_frequency: ForecastingFrequency
    :param probability_quantiles: Prediction quantiles.
-   :type probability_quantiles: list[float]
+   :type probability_quantiles: List[float]
    :param force_prediction_length: Force length of test window to be the same as prediction length.
    :type force_prediction_length: int
    :param filter_items: Filter items with small history and volume.
@@ -685,17 +685,17 @@ Classes
    :param handle_zeros_as_missing_values: If True, handle zero values in demand as missing data.
    :type handle_zeros_as_missing_values: bool
    :param datetime_holiday_calendars: Holiday calendars to augment training with.
-   :type datetime_holiday_calendars: list[HolidayCalendars]
+   :type datetime_holiday_calendars: List[HolidayCalendars]
    :param fill_missing_values: Strategy for filling in missing values.
-   :type fill_missing_values: list[dict]
+   :type fill_missing_values: List[dict]
    :param enable_clustering: Enable clustering in forecasting.
    :type enable_clustering: bool
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
    :param custom_loss_functions: Registered custom losses available for selection.
-   :type custom_loss_functions: list[str]
+   :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
-   :type custom_metrics: list[str]
+   :type custom_metrics: List[str]
 
    .. py:attribute:: prediction_length
       :type: int
@@ -1143,6 +1143,8 @@ Classes
    :type system_message: str
    :param temperature: The generative LLM temperature
    :type temperature: float
+   :param search_title_column: Include the title column values in the retrieved search results
+   :type search_title_column: str
 
    .. py:attribute:: llm_name
       :type: str
@@ -1166,6 +1168,11 @@ Classes
 
    .. py:attribute:: temperature
       :type: float
+
+      
+
+   .. py:attribute:: search_title_column
+      :type: str
 
       
 

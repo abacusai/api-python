@@ -123,7 +123,7 @@ Classes
       :type nested_column_name: str
 
       :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
-      :rtype: Feature
+      :rtype: list[Feature]
 
 
    .. py:method:: validate(feature_group_ids = None)
@@ -167,7 +167,7 @@ Classes
       :type filter_feature_group_use: str
 
       :returns: All the Feature Groups in a project.
-      :rtype: FeatureGroup
+      :rtype: list[FeatureGroup]
 
 
    .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, should_include_all_system_templates = False)
@@ -182,7 +182,7 @@ Classes
       :type should_include_all_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
-      :rtype: FeatureGroupTemplate
+      :rtype: list[FeatureGroupTemplate]
 
 
    .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None, is_additional_model = False)
@@ -199,7 +199,7 @@ Classes
       :type is_additional_model: bool
 
       :returns: An array of options that can be specified when training a model in this project.
-      :rtype: TrainingConfigOptions
+      :rtype: list[TrainingConfigOptions]
 
 
    .. py:method:: create_train_test_data_split_feature_group(training_config, feature_group_ids)
@@ -295,7 +295,7 @@ Classes
       :type project_id: str
 
       :returns: A list of models.
-      :rtype: Model
+      :rtype: list[Model]
 
 
    .. py:method:: get_custom_train_function_info(feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -356,7 +356,7 @@ Classes
       :type project_id: str
 
       :returns: A list of model monitors.
-      :rtype: ModelMonitor
+      :rtype: list[ModelMonitor]
 
 
    .. py:method:: create_vision_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
@@ -444,7 +444,7 @@ Classes
       :type project_id: str
 
       :returns: List of EDA objects.
-      :rtype: Eda
+      :rtype: list[Eda]
 
 
    .. py:method:: create_monitor_alert(model_monitor_id, alert_name, condition_config, action_config)
@@ -486,7 +486,7 @@ Classes
       :type project_id: str
 
       :returns: An array of deployments.
-      :rtype: Deployment
+      :rtype: list[Deployment]
 
 
    .. py:method:: list_deployment_tokens()
@@ -497,7 +497,7 @@ Classes
       :type project_id: str
 
       :returns: A list of deployment tokens.
-      :rtype: DeploymentAuthToken
+      :rtype: list[DeploymentAuthToken]
 
 
    .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
@@ -522,7 +522,7 @@ Classes
       :type notebook_ids: list
 
       :returns: List of all refresh policies in the organization.
-      :rtype: RefreshPolicy
+      :rtype: list[RefreshPolicy]
 
 
    .. py:method:: list_batch_predictions()
@@ -533,7 +533,7 @@ Classes
       :type project_id: str
 
       :returns: List of batch prediction jobs.
-      :rtype: BatchPrediction
+      :rtype: list[BatchPrediction]
 
 
    .. py:method:: list_pipelines()
@@ -544,7 +544,7 @@ Classes
       :type project_id: str
 
       :returns: A list of pipelines.
-      :rtype: Pipeline
+      :rtype: list[Pipeline]
 
 
    .. py:method:: create_graph_dashboard(name, python_function_ids = None)
@@ -568,7 +568,7 @@ Classes
       :type project_id: str
 
       :returns: A list of graph dashboards.
-      :rtype: GraphDashboard
+      :rtype: list[GraphDashboard]
 
 
    .. py:method:: list_builtin_algorithms(feature_group_ids, training_config = None)
@@ -581,7 +581,7 @@ Classes
       :type training_config: dict
 
       :returns: List of applicable builtin algorithms.
-      :rtype: Algorithm
+      :rtype: list[Algorithm]
 
 
    .. py:method:: create_chat_session()
@@ -609,10 +609,10 @@ Classes
       :type memory: int
       :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
-      :param description: A description of the agent, including its purpose and instructions. Returns:
+      :param description: A description of the agent, including its purpose and instructions.
       :type description: str
 
-      :returns: None
+      :returns: The new agent
       :rtype: Model
 
 
@@ -644,7 +644,7 @@ Classes
       :type start_after_id: str
 
       :returns: All the document retrievers in the organization associated with the specified project.
-      :rtype: DocumentRetriever
+      :rtype: list[DocumentRetriever]
 
 
    .. py:method:: attach_dataset(dataset_id, project_dataset_type)

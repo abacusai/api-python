@@ -192,6 +192,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_auth_token</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_client</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_connector</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../test_point_predictions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.test_point_predictions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../training_config_options/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.training_config_options</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../type_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.type_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../upload/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.upload</span></code></a></li>
@@ -367,7 +368,7 @@
 <dd class="field-odd"><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the project.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p>The feature group’s project configuration.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../project_config/index.html#abacusai.project_config.ProjectConfig" title="abacusai.project_config.ProjectConfig">ProjectConfig</a></p>
@@ -457,7 +458,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p>The updated annotation entry.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../annotation_entry/index.html#abacusai.annotation_entry.AnnotationEntry" title="abacusai.annotation_entry.AnnotationEntry">AnnotationEntry</a></p>
@@ -616,7 +617,7 @@
 <dd class="field-even"><p>A list of objects for each column in the specified feature group.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature/index.html#abacusai.feature.Feature" title="abacusai.feature.Feature">Feature</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>[<a class="reference internal" href="../feature/index.html#abacusai.feature.Feature" title="abacusai.feature.Feature">Feature</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -949,6 +950,28 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The feature group after the point in time group has been created.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.generate_point_in_time_features">
+<span class="sig-name descname"><span class="pre">generate_point_in_time_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_functions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.generate_point_in_time_features" title="Permalink to this definition"></a></dt>
+<dd><p>Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the point-in-time group.</p></li>
+<li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of columns to generate point-in-time features for.</p></li>
+<li><p><strong>window_functions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of window functions to operate on.</p></li>
+<li><p><strong>prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prefix for generated features, defaults to group name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Feature group object with newly added point-in-time features.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
@@ -1369,7 +1392,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-even"><p>List of feature group exports</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_export/index.html#abacusai.feature_group_export.FeatureGroupExport" title="abacusai.feature_group_export.FeatureGroupExport">FeatureGroupExport</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>[<a class="reference internal" href="../feature_group_export/index.html#abacusai.feature_group_export.FeatureGroupExport" title="abacusai.feature_group_export.FeatureGroupExport">FeatureGroupExport</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1506,7 +1529,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-even"><p>A list of feature group versions.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_version/index.html#abacusai.feature_group_version.FeatureGroupVersion" title="abacusai.feature_group_version.FeatureGroupVersion">FeatureGroupVersion</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)">list</a>[<a class="reference internal" href="../feature_group_version/index.html#abacusai.feature_group_version.FeatureGroupVersion" title="abacusai.feature_group_version.FeatureGroupVersion">FeatureGroupVersion</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1544,7 +1567,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-odd"><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier associated with the feature group to use for suggesting values to use in the template.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dd class="field-even"><p>The suggested feature group template.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../feature_group_template/index.html#abacusai.feature_group_template.FeatureGroupTemplate" title="abacusai.feature_group_template.FeatureGroupTemplate">FeatureGroupTemplate</a></p>

@@ -162,7 +162,7 @@ Classes
       :param project_id: Unique string identifier for the project.
       :type project_id: str
 
-      :returns: None
+      :returns: The feature group's project configuration.
       :rtype: ProjectConfig
 
 
@@ -229,7 +229,7 @@ Classes
       :param save_metadata: If True, save the metadata for the annotation entry.
       :type save_metadata: bool
 
-      :returns: None
+      :returns: The updated annotation entry.
       :rtype: AnnotationEntry
 
 
@@ -338,7 +338,7 @@ Classes
       :type project_id: str
 
       :returns: A list of objects for each column in the specified feature group.
-      :rtype: Feature
+      :rtype: list[Feature]
 
 
    .. py:method:: create_feature(name, select_expression)
@@ -610,6 +610,23 @@ Classes
       :type lookback_until_position: int
 
       :returns: The feature group after the point in time group has been created.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: generate_point_in_time_features(group_name, columns, window_functions, prefix = None)
+
+      Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
+
+      :param group_name: Name of the point-in-time group.
+      :type group_name: str
+      :param columns: List of columns to generate point-in-time features for.
+      :type columns: list
+      :param window_functions: List of window functions to operate on.
+      :type window_functions: list
+      :param prefix: Prefix for generated features, defaults to group name
+      :type prefix: str
+
+      :returns: Feature group object with newly added point-in-time features.
       :rtype: FeatureGroup
 
 
@@ -930,7 +947,7 @@ Classes
       :type feature_group_id: str
 
       :returns: List of feature group exports
-      :rtype: FeatureGroupExport
+      :rtype: list[FeatureGroupExport]
 
 
    .. py:method:: set_modifier_lock(locked = True)
@@ -1024,7 +1041,7 @@ Classes
       :type start_after_version: str
 
       :returns: A list of feature group versions.
-      :rtype: FeatureGroupVersion
+      :rtype: list[FeatureGroupVersion]
 
 
    .. py:method:: create_template(name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
@@ -1055,7 +1072,7 @@ Classes
       :param feature_group_id: Unique identifier associated with the feature group to use for suggesting values to use in the template.
       :type feature_group_id: str
 
-      :returns: None
+      :returns: The suggested feature group template.
       :rtype: FeatureGroupTemplate
 
 

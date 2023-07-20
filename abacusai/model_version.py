@@ -100,6 +100,21 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.set_model_objective(self.model_version, metric)
 
+    def query_test_point_predictions(self, model_name: str, to_row: int, from_row: int = 0, sql_where_clause: str = ''):
+        """
+        Query the test points predictions data for a specific algorithm.
+
+        Args:
+            model_name (str): The model name
+            to_row (int): Ending row index to return.
+            from_row (int): Starting row index to return.
+            sql_where_clause (str): The SQL WHERE clause used to filter the data.
+
+        Returns:
+            TestPointPredictions: TestPointPrediction
+        """
+        return self.client.query_test_point_predictions(self.model_version, model_name, to_row, from_row, sql_where_clause)
+
     def delete(self):
         """
         Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.
@@ -164,7 +179,7 @@ class ModelVersion(AbstractApiClass):
             model_version (str): The unique version ID of the model version.
 
         Returns:
-            DataPrepLogs: A list of logs.
+            list[DataPrepLogs]: A list of logs.
         """
         return self.client.get_training_data_logs(self.model_version)
 

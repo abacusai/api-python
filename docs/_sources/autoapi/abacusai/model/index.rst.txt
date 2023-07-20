@@ -285,7 +285,7 @@ Classes
       :type start_after_version: str
 
       :returns: An array of model versions.
-      :rtype: ModelVersion
+      :rtype: list[ModelVersion]
 
 
    .. py:method:: retrain(deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None, algorithm_training_configs = None)
@@ -341,7 +341,7 @@ Classes
       :type limit: int
 
       :returns: List of model artifacts exports.
-      :rtype: ModelArtifactsExport
+      :rtype: list[ModelArtifactsExport]
 
 
    .. py:method:: get_training_types_for_deployment(model_version = None, algorithm = None)
@@ -372,7 +372,7 @@ Classes
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
 
-      :returns: None
+      :returns: The updated agent
       :rtype: Model
 
 

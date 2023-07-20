@@ -161,6 +161,7 @@ Submodules
    streaming_auth_token/index.rst
    streaming_client/index.rst
    streaming_connector/index.rst
+   test_point_predictions/index.rst
    training_config_options/index.rst
    type_violation/index.rst
    upload/index.rst
@@ -1640,7 +1641,7 @@ Attributes
    :param sample_count: The number of rows to include in the sample
    :type sample_count: int
    :param key_columns: The feature(s) to use as the key(s) when sampling
-   :type key_columns: list[str]
+   :type key_columns: List[str]
 
    .. py:attribute:: sample_count
       :type: int
@@ -1669,7 +1670,7 @@ Attributes
    :param sample_percent: The percentage of the rows to sample
    :type sample_percent: float
    :param key_columns: The feature(s) to use as the key(s) when sampling
-   :type key_columns: list[str]
+   :type key_columns: List[str]
 
    .. py:attribute:: sample_percent
       :type: float
@@ -2125,9 +2126,9 @@ Attributes
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
    :param custom_loss_functions: Registered custom losses available for selection.
-   :type custom_loss_functions: list[str]
+   :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
-   :type custom_metrics: list[str]
+   :type custom_metrics: List[str]
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.RegressionObjective
@@ -2332,7 +2333,7 @@ Attributes
    :param forecast_frequency: Forecast frequency.
    :type forecast_frequency: ForecastingFrequency
    :param probability_quantiles: Prediction quantiles.
-   :type probability_quantiles: list[float]
+   :type probability_quantiles: List[float]
    :param force_prediction_length: Force length of test window to be the same as prediction length.
    :type force_prediction_length: int
    :param filter_items: Filter items with small history and volume.
@@ -2429,17 +2430,17 @@ Attributes
    :param handle_zeros_as_missing_values: If True, handle zero values in demand as missing data.
    :type handle_zeros_as_missing_values: bool
    :param datetime_holiday_calendars: Holiday calendars to augment training with.
-   :type datetime_holiday_calendars: list[HolidayCalendars]
+   :type datetime_holiday_calendars: List[HolidayCalendars]
    :param fill_missing_values: Strategy for filling in missing values.
-   :type fill_missing_values: list[dict]
+   :type fill_missing_values: List[dict]
    :param enable_clustering: Enable clustering in forecasting.
    :type enable_clustering: bool
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
    :param custom_loss_functions: Registered custom losses available for selection.
-   :type custom_loss_functions: list[str]
+   :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
-   :type custom_metrics: list[str]
+   :type custom_metrics: List[str]
 
    .. py:attribute:: prediction_length
       :type: int
@@ -2887,6 +2888,8 @@ Attributes
    :type system_message: str
    :param temperature: The generative LLM temperature
    :type temperature: float
+   :param search_title_column: Include the title column values in the retrieved search results
+   :type search_title_column: str
 
    .. py:attribute:: llm_name
       :type: str
@@ -2910,6 +2913,11 @@ Attributes
 
    .. py:attribute:: temperature
       :type: float
+
+      
+
+   .. py:attribute:: search_title_column
+      :type: str
 
       
 
@@ -3809,7 +3817,35 @@ Attributes
       :type use_gpu: bool
 
 
-   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+   .. py:method:: update_model_from_functions(model_id, train_function, predict_function = None, predict_many_function = None, initialize_function = None, training_input_tables = None, cpu_size = None, memory = None, included_modules = None, package_requirements = None, use_gpu = False)
+
+      Creates a model from a python function. Please pass in all the functions, even if you don't update it.
+
+      :param model_id: The id of the model to update
+      :type model_id: str
+      :param train_function: The training fucntion callable to serialize and upload
+      :type train_function: callable
+      :param predict_function: The predict function callable to serialize and upload
+      :type predict_function: callable
+      :param predict_many_function: The predict many function callable to serialize and upload
+      :type predict_many_function: callable
+      :param initialize_function: The initialize function callable to serialize and upload
+      :type initialize_function: callable
+      :param training_input_tables: The input table names of the feature groups to pass to the train function
+      :type training_input_tables: list
+      :param cpu_size: Size of the cpu for the training function
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the training function
+      :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: List
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
+      :param use_gpu: Whether this model needs gpu
+      :type use_gpu: bool
+
+
+   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Creates a step in a given pipeline from a python function.
 
@@ -3820,16 +3856,20 @@ Attributes
       :param function: The python function.
       :type function: callable
       :param step_input_mappings: List of Python function arguments.
-      :type step_input_mappings: list[PythonFunctionArguments]
+      :type step_input_mappings: List[PythonFunctionArguments]
       :param output_variable_mappings: List of Python function ouputs.
-      :type output_variable_mappings: list[PythonFunctionArguments]
+      :type output_variable_mappings: List[PythonFunctionArguments]
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: List[str]
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param cpu_size: Size of the CPU for the step function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the step function.
+      :type memory: int
 
 
-   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Updates a pipeline step from a python function.
 
@@ -3838,13 +3878,17 @@ Attributes
       :param function: The python function.
       :type function: callable
       :param step_input_mappings: List of Python function arguments.
-      :type step_input_mappings: list[PythonFunctionArguments]
+      :type step_input_mappings: List[PythonFunctionArguments]
       :param output_variable_mappings: List of Python function ouputs.
-      :type output_variable_mappings: list[PythonFunctionArguments]
+      :type output_variable_mappings: List[PythonFunctionArguments]
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: List[str]
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param cpu_size: Size of the CPU for the step function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the step function.
+      :type memory: int
 
 
    .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None, included_modules = None)
@@ -4369,7 +4413,7 @@ Attributes
       :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
-      :returns: This object represents the newly created project. For details, refer to.
+      :returns: This object represents the newly created project.
       :rtype: Project
 
 
@@ -4480,7 +4524,7 @@ Attributes
       :type nested_column_name: str
 
       :returns: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
-      :rtype: Feature
+      :rtype: list[Feature]
 
 
    .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', document = None, status = None, comments = None, project_id = None, save_metadata = False)
@@ -4548,7 +4592,7 @@ Attributes
       :param save_metadata: If True, save the metadata for the annotation entry.
       :type save_metadata: bool
 
-      :returns: None
+      :returns: The updated annotation entry.
       :rtype: AnnotationEntry
 
 
@@ -5069,6 +5113,25 @@ Attributes
       :type lookback_until_position: int
 
       :returns: The feature group after the point in time group has been created.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: generate_point_in_time_features(feature_group_id, group_name, columns, window_functions, prefix = None)
+
+      Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
+
+      :param feature_group_id: Unique string identifier associated with the feature group.
+      :type feature_group_id: str
+      :param group_name: Name of the point-in-time group.
+      :type group_name: str
+      :param columns: List of columns to generate point-in-time features for.
+      :type columns: list
+      :param window_functions: List of window functions to operate on.
+      :type window_functions: list
+      :param prefix: Prefix for generated features, defaults to group name
+      :type prefix: str
+
+      :returns: Feature group object with newly added point-in-time features.
       :rtype: FeatureGroup
 
 
@@ -6049,7 +6112,7 @@ Attributes
       :type is_additional_model: bool
 
       :returns: An array of options that can be specified when training a model in this project.
-      :rtype: TrainingConfigOptions
+      :rtype: list[TrainingConfigOptions]
 
 
    .. py:method:: create_train_test_data_split_feature_group(project_id, training_config, feature_group_ids)
@@ -7241,7 +7304,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None, filter_key_values = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -7251,8 +7314,14 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param chat_config: A dictionary specifiying the query chat config override.
-      :type chat_config: dict
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
 
@@ -8021,7 +8090,7 @@ Attributes
       :type limit: int
 
       :returns: A list of pipeline versions.
-      :rtype: PipelineVersion
+      :rtype: list[PipelineVersion]
 
 
    .. py:method:: run_pipeline(pipeline_id, pipeline_variable_mappings = None)
@@ -8037,7 +8106,7 @@ Attributes
       :rtype: PipelineVersion
 
 
-   .. py:method:: create_pipeline_step(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+   .. py:method:: create_pipeline_step(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Creates a step in a given pipeline.
 
@@ -8057,6 +8126,10 @@ Attributes
       :type step_dependencies: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param cpu_size: Size of the CPU for the step function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the step function.
+      :type memory: int
 
       :returns: Object describing the pipeline.
       :rtype: Pipeline
@@ -8070,7 +8143,7 @@ Attributes
       :type pipeline_step_id: str
 
 
-   .. py:method:: update_pipeline_step(pipeline_step_id, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None)
+   .. py:method:: update_pipeline_step(pipeline_step_id, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Creates a step in a given pipeline.
 
@@ -8088,6 +8161,10 @@ Attributes
       :type step_dependencies: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
+      :param cpu_size: Size of the CPU for the step function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the step function.
+      :type memory: int
 
       :returns: Object describing the pipeline.
       :rtype: PipelineStep
@@ -8253,7 +8330,7 @@ Attributes
       :type training_config: dict
 
       :returns: List of applicable builtin algorithms.
-      :rtype: Algorithm
+      :rtype: list[Algorithm]
 
 
    .. py:method:: create_custom_loss_function_with_source_code(name, loss_function_type, loss_function_name, loss_function_source_code)
@@ -8380,7 +8457,7 @@ Attributes
       :type completion_type: str
 
       :returns: A list of objects, each containing the type and contents of the new cell to be inserted.
-      :rtype: NotebookCompletion
+      :rtype: list[NotebookCompletion]
 
 
    .. py:method:: set_natural_language_explanation(short_explanation, long_explanation, feature_group_id = None, feature_group_version = None, model_id = None)
@@ -8463,10 +8540,10 @@ Attributes
       :type memory: int
       :param package_requirements: A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
-      :param description: A description of the agent, including its purpose and instructions. Returns:
+      :param description: A description of the agent, including its purpose and instructions.
       :type description: str
 
-      :returns: None
+      :returns: The new agent
       :rtype: Model
 
 
@@ -8487,7 +8564,7 @@ Attributes
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
 
-      :returns: None
+      :returns: The updated agent
       :rtype: Model
 
 
@@ -8596,7 +8673,7 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, limit_results = None)
+   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, filters = None, limit = None, result_columns = None)
 
       Lookup relevant documents from the document retriever deployed with given query.
 
@@ -8606,11 +8683,15 @@ Attributes
       :type query: str
       :param deployment_token: A deployment token used to authenticate access to created vector store.
       :type deployment_token: str
-      :param limit_results: If provided, will limit the number of results to the value specified.
-      :type limit_results: int
+      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filters: dict
+      :param limit: If provided, will limit the number of results to the value specified.
+      :type limit: int
+      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
+      :type result_columns: list
 
       :returns: The relevant documentation results found from the document retriever.
-      :rtype: DocumentRetrieverLookupResult
+      :rtype: list[DocumentRetrieverLookupResult]
 
 
 
@@ -8663,7 +8744,7 @@ Attributes
       Lists all of the user's API keys
 
       :returns: List of API Keys for the current user's organization.
-      :rtype: ApiKey
+      :rtype: list[ApiKey]
 
 
    .. py:method:: list_organization_users()
@@ -8671,7 +8752,7 @@ Attributes
       Retrieves a list of all users in the organization, including pending users who have been invited.
 
       :returns: An array of all the users in the organization.
-      :rtype: User
+      :rtype: list[User]
 
 
    .. py:method:: describe_user()
@@ -8687,7 +8768,7 @@ Attributes
       Lists all Organizations Groups
 
       :returns: A list of all the organization groups within this organization.
-      :rtype: OrganizationGroup
+      :rtype: list[OrganizationGroup]
 
 
    .. py:method:: describe_organization_group(organization_group_id)
@@ -8720,7 +8801,7 @@ Attributes
       :type deployment_id: str
 
       :returns: List of the webhooks attached to the given deployment ID.
-      :rtype: Webhook
+      :rtype: list[Webhook]
 
 
    .. py:method:: list_use_cases()
@@ -8728,7 +8809,7 @@ Attributes
       Retrieves a list of all use cases with descriptions. Use the given mappings to specify a use case when needed.
 
       :returns: A list of `UseCase` objects describing all the use cases addressed by the platform. For details, please refer to.
-      :rtype: UseCase
+      :rtype: list[UseCase]
 
 
    .. py:method:: describe_problem_type(problem_type)
@@ -8750,7 +8831,7 @@ Attributes
       :type use_case: str
 
       :returns: The feature requirements of the use case are returned, including all the feature groups required for the use case along with their descriptions and feature mapping details.
-      :rtype: UseCaseRequirements
+      :rtype: list[UseCaseRequirements]
 
 
    .. py:method:: describe_project(project_id)
@@ -8774,7 +8855,7 @@ Attributes
       :type start_after_id: str
 
       :returns: A list of all projects in the Organization the user is currently logged in to.
-      :rtype: Project
+      :rtype: list[Project]
 
 
    .. py:method:: get_project_feature_group_config(feature_group_id, project_id)
@@ -8786,7 +8867,7 @@ Attributes
       :param project_id: Unique string identifier for the project.
       :type project_id: str
 
-      :returns: None
+      :returns: The feature group's project configuration.
       :rtype: ProjectConfig
 
 
@@ -8858,7 +8939,15 @@ Attributes
       :type project_id: str
 
       :returns: A list of objects for each column in the specified feature group.
-      :rtype: Feature
+      :rtype: list[Feature]
+
+
+   .. py:method:: get_point_in_time_feature_group_creation_options()
+
+      Returns the options that can be used to generate PIT features.
+
+      :returns: List of possible generated aggregation function options.
+      :rtype: list[GeneratedPitFeatureConfigOption]
 
 
    .. py:method:: describe_feature_group(feature_group_id)
@@ -8897,7 +8986,7 @@ Attributes
       :type is_including_detached_from_template: bool
 
       :returns: All the feature groups in the organization associated with the specified project.
-      :rtype: FeatureGroup
+      :rtype: list[FeatureGroup]
 
 
    .. py:method:: describe_project_feature_group(project_id, feature_group_id)
@@ -8923,7 +9012,7 @@ Attributes
       :type filter_feature_group_use: str
 
       :returns: All the Feature Groups in a project.
-      :rtype: FeatureGroup
+      :rtype: list[FeatureGroup]
 
 
    .. py:method:: list_python_function_feature_groups(name, limit = 100)
@@ -8936,7 +9025,7 @@ Attributes
       :type limit: int
 
       :returns: All the feature groups associated with the specified Python function ID.
-      :rtype: FeatureGroup
+      :rtype: list[FeatureGroup]
 
 
    .. py:method:: execute_async_feature_group_operation(query = None)
@@ -9002,7 +9091,7 @@ Attributes
       :type feature_group_id: str
 
       :returns: List of feature group exports
-      :rtype: FeatureGroupExport
+      :rtype: list[FeatureGroupExport]
 
 
    .. py:method:: get_feature_group_export_connector_errors(feature_group_export_id)
@@ -9051,7 +9140,7 @@ Attributes
       :type start_after_version: str
 
       :returns: A list of feature group versions.
-      :rtype: FeatureGroupVersion
+      :rtype: list[FeatureGroupVersion]
 
 
    .. py:method:: describe_feature_group_version(feature_group_version)
@@ -9107,7 +9196,7 @@ Attributes
       :type should_include_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
-      :rtype: FeatureGroupTemplate
+      :rtype: list[FeatureGroupTemplate]
 
 
    .. py:method:: list_project_feature_group_templates(project_id, limit = 100, start_after_id = None, should_include_all_system_templates = False)
@@ -9124,7 +9213,7 @@ Attributes
       :type should_include_all_system_templates: bool
 
       :returns: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
-      :rtype: FeatureGroupTemplate
+      :rtype: list[FeatureGroupTemplate]
 
 
    .. py:method:: suggest_feature_group_template_for_feature_group(feature_group_id)
@@ -9134,7 +9223,7 @@ Attributes
       :param feature_group_id: Unique identifier associated with the feature group to use for suggesting values to use in the template.
       :type feature_group_id: str
 
-      :returns: None
+      :returns: The suggested feature group template.
       :rtype: FeatureGroupTemplate
 
 
@@ -9146,7 +9235,7 @@ Attributes
       :type dataset_id: str
 
       :returns: List of column schema definitions.
-      :rtype: DatasetColumn
+      :rtype: list[DatasetColumn]
 
 
    .. py:method:: set_dataset_database_connector_config(dataset_id, database_connector_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
@@ -9202,7 +9291,7 @@ Attributes
       Retrieves a list of all database connectors along with their associated attributes.
 
       :returns: An object containing the database connector and its attributes.
-      :rtype: DatabaseConnector
+      :rtype: list[DatabaseConnector]
 
 
    .. py:method:: list_file_connectors()
@@ -9210,7 +9299,7 @@ Attributes
       Retrieves a list of all connected services in the organization and their current verification status.
 
       :returns: A list of cloud storage buckets connected to the organization.
-      :rtype: FileConnector
+      :rtype: list[FileConnector]
 
 
    .. py:method:: list_database_connector_objects(database_connector_id)
@@ -9236,7 +9325,7 @@ Attributes
       Retrieves a list of all application connectors along with their associated attributes.
 
       :returns: A list of application connectors.
-      :rtype: ApplicationConnector
+      :rtype: list[ApplicationConnector]
 
 
    .. py:method:: list_application_connector_objects(application_connector_id)
@@ -9252,7 +9341,7 @@ Attributes
       Retrieves a list of all streaming connectors along with their corresponding attributes.
 
       :returns: A list of StreamingConnector objects.
-      :rtype: StreamingConnector
+      :rtype: list[StreamingConnector]
 
 
    .. py:method:: list_streaming_tokens()
@@ -9260,7 +9349,7 @@ Attributes
       Retrieves a list of all streaming tokens.
 
       :returns: A list of streaming tokens and their associated attributes.
-      :rtype: StreamingAuthToken
+      :rtype: list[StreamingAuthToken]
 
 
    .. py:method:: get_recent_feature_group_streamed_data(feature_group_id)
@@ -9276,7 +9365,7 @@ Attributes
       Lists all pending uploads
 
       :returns: A list of ongoing uploads in the organization.
-      :rtype: Upload
+      :rtype: list[Upload]
 
 
    .. py:method:: describe_upload(upload_id)
@@ -9302,7 +9391,7 @@ Attributes
       :type exclude_streaming: bool
 
       :returns: List of datasets.
-      :rtype: Dataset
+      :rtype: list[Dataset]
 
 
    .. py:method:: describe_dataset(dataset_id)
@@ -9339,7 +9428,7 @@ Attributes
       :type start_after_version: str
 
       :returns: A list of dataset versions.
-      :rtype: DatasetVersion
+      :rtype: list[DatasetVersion]
 
 
    .. py:method:: get_docstore_document(doc_id)
@@ -9392,7 +9481,7 @@ Attributes
       :type project_id: str
 
       :returns: A list of models.
-      :rtype: Model
+      :rtype: list[Model]
 
 
    .. py:method:: describe_model(model_id)
@@ -9436,6 +9525,25 @@ Attributes
       :rtype: ModelMetrics
 
 
+   .. py:method:: query_test_point_predictions(model_version, model_name, to_row, from_row = 0, sql_where_clause = '')
+
+      Query the test points predictions data for a specific algorithm.
+
+      :param model_version: The unique ID associated with the model version.
+      :type model_version: str
+      :param model_name: The model name
+      :type model_name: str
+      :param to_row: Ending row index to return.
+      :type to_row: int
+      :param from_row: Starting row index to return.
+      :type from_row: int
+      :param sql_where_clause: The SQL WHERE clause used to filter the data.
+      :type sql_where_clause: str
+
+      :returns: TestPointPrediction
+      :rtype: TestPointPredictions
+
+
    .. py:method:: list_model_versions(model_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions for a given model.
@@ -9448,7 +9556,7 @@ Attributes
       :type start_after_version: str
 
       :returns: An array of model versions.
-      :rtype: ModelVersion
+      :rtype: list[ModelVersion]
 
 
    .. py:method:: describe_model_version(model_version)
@@ -9481,7 +9589,7 @@ Attributes
       :type model_version: str
 
       :returns: A list of logs.
-      :rtype: DataPrepLogs
+      :rtype: list[DataPrepLogs]
 
 
    .. py:method:: set_default_model_algorithm(model_id = None, algorithm = None, data_cluster_type = None)
@@ -9547,7 +9655,7 @@ Attributes
       :type limit: int
 
       :returns: List of model artifacts exports.
-      :rtype: ModelArtifactsExport
+      :rtype: list[ModelArtifactsExport]
 
 
    .. py:method:: list_model_monitors(project_id)
@@ -9558,7 +9666,7 @@ Attributes
       :type project_id: str
 
       :returns: A list of model monitors.
-      :rtype: ModelMonitor
+      :rtype: list[ModelMonitor]
 
 
    .. py:method:: describe_model_monitor(model_monitor_id)
@@ -9606,7 +9714,7 @@ Attributes
       :type start_after_version: str
 
       :returns: A list of model monitor versions.
-      :rtype: ModelMonitorVersion
+      :rtype: list[ModelMonitorVersion]
 
 
    .. py:method:: describe_model_monitor_version(model_monitor_version)
@@ -9643,7 +9751,7 @@ Attributes
       :type only_starred: bool
 
       :returns: A list of Model Monitors.
-      :rtype: ModelMonitor
+      :rtype: list[ModelMonitor]
 
 
    .. py:method:: get_model_monitor_chart_from_organization(chart_type, limit = 15)
@@ -9656,7 +9764,7 @@ Attributes
       :type limit: int
 
       :returns: List of ModelMonitorSummaryForOrganization objects describing accuracy, bias, drift, or integrity for all model monitors in an organization.
-      :rtype: ModelMonitorSummaryFromOrg
+      :rtype: list[ModelMonitorSummaryFromOrg]
 
 
    .. py:method:: get_model_monitor_summary_from_organization()
@@ -9664,7 +9772,7 @@ Attributes
       Gets a consolidated summary of model monitors for an organization.
 
       :returns: A list of `ModelMonitorSummaryForOrganization` objects describing accuracy, bias, drift, and integrity for all model monitors in an organization.
-      :rtype: ModelMonitorOrgSummary
+      :rtype: list[ModelMonitorOrgSummary]
 
 
    .. py:method:: list_eda(project_id)
@@ -9675,7 +9783,7 @@ Attributes
       :type project_id: str
 
       :returns: List of EDA objects.
-      :rtype: Eda
+      :rtype: list[Eda]
 
 
    .. py:method:: describe_eda(eda_id)
@@ -9701,7 +9809,7 @@ Attributes
       :type start_after_version: str
 
       :returns: A list of EDA versions.
-      :rtype: EdaVersion
+      :rtype: list[EdaVersion]
 
 
    .. py:method:: describe_eda_version(eda_version)
@@ -9808,7 +9916,7 @@ Attributes
       :type model_monitor_id: str
 
       :returns: A list of monitor alerts.
-      :rtype: MonitorAlert
+      :rtype: list[MonitorAlert]
 
 
    .. py:method:: list_monitor_alert_versions_for_monitor_version(model_monitor_version)
@@ -9819,7 +9927,7 @@ Attributes
       :type model_monitor_version: str
 
       :returns: A list of monitor alert versions.
-      :rtype: MonitorAlertVersion
+      :rtype: list[MonitorAlertVersion]
 
 
    .. py:method:: get_model_monitoring_logs(model_monitor_version, stdout = False, stderr = False)
@@ -9895,7 +10003,7 @@ Attributes
       :type project_id: str
 
       :returns: An array of deployments.
-      :rtype: Deployment
+      :rtype: list[Deployment]
 
 
    .. py:method:: list_deployment_tokens(project_id)
@@ -9906,7 +10014,7 @@ Attributes
       :type project_id: str
 
       :returns: A list of deployment tokens.
-      :rtype: DeploymentAuthToken
+      :rtype: list[DeploymentAuthToken]
 
 
    .. py:method:: get_api_endpoint(deployment_token = None, deployment_id = None, streaming_token = None, feature_group_id = None, model_id = None)
@@ -9989,7 +10097,7 @@ Attributes
       :type notebook_ids: list
 
       :returns: List of all refresh policies in the organization.
-      :rtype: RefreshPolicy
+      :rtype: list[RefreshPolicy]
 
 
    .. py:method:: list_refresh_pipeline_runs(refresh_policy_id)
@@ -10000,7 +10108,7 @@ Attributes
       :type refresh_policy_id: str
 
       :returns: List of refresh pipeline runs for the given refresh policy ID.
-      :rtype: RefreshPipelineRun
+      :rtype: list[RefreshPipelineRun]
 
 
    .. py:method:: download_batch_prediction_result_chunk(batch_prediction_version, offset = 0, chunk_size = 10485760)
@@ -10031,7 +10139,7 @@ Attributes
       :type project_id: str
 
       :returns: List of batch prediction jobs.
-      :rtype: BatchPrediction
+      :rtype: list[BatchPrediction]
 
 
    .. py:method:: describe_batch_prediction(batch_prediction_id)
@@ -10057,7 +10165,7 @@ Attributes
       :type start_after_version: str
 
       :returns: List of batch prediction versions.
-      :rtype: BatchPredictionVersion
+      :rtype: list[BatchPredictionVersion]
 
 
    .. py:method:: describe_batch_prediction_version(batch_prediction_version)
@@ -10090,7 +10198,7 @@ Attributes
       :type function_type: str
 
       :returns: A list of PythonFunction objects.
-      :rtype: PythonFunction
+      :rtype: list[PythonFunction]
 
 
    .. py:method:: list_pipelines(project_id = None)
@@ -10101,7 +10209,7 @@ Attributes
       :type project_id: str
 
       :returns: A list of pipelines.
-      :rtype: Pipeline
+      :rtype: list[Pipeline]
 
 
    .. py:method:: describe_pipeline_version(pipeline_version)
@@ -10213,7 +10321,7 @@ Attributes
       :type project_id: str
 
       :returns: A list of graph dashboards.
-      :rtype: GraphDashboard
+      :rtype: list[GraphDashboard]
 
 
    .. py:method:: delete_graph_from_dashboard(graph_reference_id)
@@ -10256,7 +10364,7 @@ Attributes
       :type project_id: str
 
       :returns: A list of algorithms.
-      :rtype: Algorithm
+      :rtype: list[Algorithm]
 
 
    .. py:method:: describe_custom_loss_function(name)
@@ -10315,7 +10423,7 @@ Attributes
       :type problem_type: str
 
       :returns: A list of custom metrics.
-      :rtype: CustomMetric
+      :rtype: list[CustomMetric]
 
 
    .. py:method:: describe_module(name)
@@ -10334,7 +10442,7 @@ Attributes
       List all the modules
 
       :returns: A list of modules
-      :rtype: Module
+      :rtype: list[Module]
 
 
    .. py:method:: get_natural_language_explanation(feature_group_id = None, feature_group_version = None, model_id = None)
@@ -10408,7 +10516,7 @@ Attributes
       :type deployment_id: str
 
       :returns: The deployment conversations.
-      :rtype: DeploymentConversation
+      :rtype: list[DeploymentConversation]
 
 
    .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
@@ -10425,7 +10533,7 @@ Attributes
       :type feature_group_ids: list
 
       :returns: A list of search results, each containing the retrieved object and its relevance score
-      :rtype: OrganizationSearchResult
+      :rtype: list[OrganizationSearchResult]
 
 
    .. py:method:: render_feature_group_data_for_llm(feature_group_id, token_budget = None, render_format = 'markdown')
@@ -10474,7 +10582,7 @@ Attributes
       :type start_after_id: str
 
       :returns: All the document retrievers in the organization associated with the specified project.
-      :rtype: DocumentRetriever
+      :rtype: list[DocumentRetriever]
 
 
    .. py:method:: describe_document_retriever(document_retriever_id)
@@ -10511,7 +10619,7 @@ Attributes
       :type start_after_version: str
 
       :returns: All the document retriever versions associated with the document retriever.
-      :rtype: DocumentRetrieverVersion
+      :rtype: list[DocumentRetrieverVersion]
 
 
    .. py:method:: describe_document_retriever_version(document_retriever_version)
@@ -10907,7 +11015,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None, filter_key_values = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -10917,8 +11025,14 @@ Attributes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param chat_config: A dictionary specifiying the query chat config override.
-      :type chat_config: dict
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
 
@@ -11299,7 +11413,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.72.5'
+   :value: '0.73.0'
 
    
 

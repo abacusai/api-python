@@ -146,8 +146,8 @@ class RegressionTrainingConfig(TrainingConfig):
         target_encode_categoricals (bool): Use this to turn target encoding on categorical features on or off.
         drop_original_categoricals (bool): This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
-        custom_loss_functions (list[str]): Registered custom losses available for selection.
-        custom_metrics (list[str]): Registered custom metrics available for selection.
+        custom_loss_functions (List[str]): Registered custom losses available for selection.
+        custom_metrics (List[str]): Registered custom metrics available for selection.
 
     """
     objective: enums.RegressionObjective = dataclasses.field(default=None)
@@ -217,7 +217,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         objective (ForecastingObjective): Ranking scheme used to select final best model.
         sort_objective (ForecastingObjective): Ranking scheme used to sort models on the metrics page.
         forecast_frequency (ForecastingFrequency): Forecast frequency.
-        probability_quantiles (list[float]): Prediction quantiles.
+        probability_quantiles (List[float]): Prediction quantiles.
         force_prediction_length (int): Force length of test window to be the same as prediction length.
         filter_items (bool): Filter items with small history and volume.
         enable_feature_selection (bool): Enable feature selection.
@@ -266,12 +266,12 @@ class ForecastingTrainingConfig(TrainingConfig):
         use_item_id (bool): Include a feature to indicate the item being forecast.
         use_all_item_totals (bool): Include as input total target across items.
         handle_zeros_as_missing_values (bool): If True, handle zero values in demand as missing data.
-        datetime_holiday_calendars (list[HolidayCalendars]): Holiday calendars to augment training with.
-        fill_missing_values (list[dict]): Strategy for filling in missing values.
+        datetime_holiday_calendars (List[HolidayCalendars]): Holiday calendars to augment training with.
+        fill_missing_values (List[dict]): Strategy for filling in missing values.
         enable_clustering (bool): Enable clustering in forecasting.
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
-        custom_loss_functions (list[str]): Registered custom losses available for selection.
-        custom_metrics (list[str]): Registered custom metrics available for selection.
+        custom_loss_functions (List[str]): Registered custom losses available for selection.
+        custom_metrics (List[str]): Registered custom metrics available for selection.
     """
     prediction_length: int = dataclasses.field(default=None)
     objective: enums.ForecastingObjective = dataclasses.field(default=None)
@@ -410,12 +410,14 @@ class ChatLLMTrainingConfig(TrainingConfig):
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
         system_message (str): The generative LLM system message
         temperature (float): The generative LLM temperature
+        search_title_column (str): Include the title column values in the retrieved search results
     """
     llm_name: str = None
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
     system_message: str = None
     temperature: float = None
+    search_title_column: str = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

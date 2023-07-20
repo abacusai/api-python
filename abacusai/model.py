@@ -257,7 +257,7 @@ class Model(AbstractApiClass):
             start_after_version (str): Unique string identifier of the version after which the list starts.
 
         Returns:
-            ModelVersion: An array of model versions.
+            list[ModelVersion]: An array of model versions.
         """
         return self.client.list_model_versions(self.model_id, limit, start_after_version)
 
@@ -308,7 +308,7 @@ class Model(AbstractApiClass):
             limit (int): Maximum length of the list of all exports.
 
         Returns:
-            ModelArtifactsExport: List of model artifacts exports.
+            list[ModelArtifactsExport]: List of model artifacts exports.
         """
         return self.client.list_model_artifacts_exports(self.model_id, limit)
 
@@ -337,7 +337,7 @@ class Model(AbstractApiClass):
             description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
-            Model: None
+            Model: The updated agent
         """
         return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description)
 

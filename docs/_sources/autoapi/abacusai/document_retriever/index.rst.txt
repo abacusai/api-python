@@ -104,10 +104,10 @@ Classes
       :type start_after_version: str
 
       :returns: All the document retriever versions associated with the document retriever.
-      :rtype: DocumentRetrieverVersion
+      :rtype: list[DocumentRetrieverVersion]
 
 
-   .. py:method:: lookup(query, deployment_token, limit_results = None)
+   .. py:method:: lookup(query, deployment_token, filters = None, limit = None, result_columns = None)
 
       Lookup relevant documents from the document retriever deployed with given query.
 
@@ -115,11 +115,15 @@ Classes
       :type query: str
       :param deployment_token: A deployment token used to authenticate access to created vector store.
       :type deployment_token: str
-      :param limit_results: If provided, will limit the number of results to the value specified.
-      :type limit_results: int
+      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filters: dict
+      :param limit: If provided, will limit the number of results to the value specified.
+      :type limit: int
+      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
+      :type result_columns: list
 
       :returns: The relevant documentation results found from the document retriever.
-      :rtype: DocumentRetrieverLookupResult
+      :rtype: list[DocumentRetrieverLookupResult]
 
 
    .. py:method:: wait_until_ready(timeout = 3600)

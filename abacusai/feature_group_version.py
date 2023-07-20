@@ -1,4 +1,5 @@
 import os
+import time
 
 from .annotation_config import AnnotationConfig
 from .code_source import CodeSource
@@ -197,15 +198,25 @@ class FeatureGroupVersion(AbstractApiClass):
 
     # internal call
     def _download_avro_file(self, file_part, tmp_dir):
+        from .client import ApiException
         offset = 0
         part_path = os.path.join(tmp_dir, f'{file_part}.avro')
         with open(part_path, 'wb') as file:
+            retries = 0
             while True:
-                with self.client._call_api('_downloadFeatureGroupVersionPartChunk', 'GET', query_params={'featureGroupVersion': self.id, 'part': file_part, 'offset': offset}, streamable_response=True) as chunk:
-                    bytes_written = file.write(chunk.read())
-                if not bytes_written:
-                    break
-                offset += bytes_written
+                try:
+                    with self.client._call_api('_downloadFeatureGroupVersionPartChunk', 'GET', query_params={'featureGroupVersion': self.id, 'part': file_part, 'offset': offset}, streamable_response=True) as chunk:
+                        bytes_written = file.write(chunk.read())
+                        if not bytes_written:
+                            break
+                        offset += bytes_written
+                        retries = 0
+                except ApiException as e:
+                    if e.status_code == 500 and retries < 3:
+                        time.sleep(1)
+                        retries += 1
+                        continue
+                    raise
         return part_path
 
     def load_as_pandas(self, max_workers=10):

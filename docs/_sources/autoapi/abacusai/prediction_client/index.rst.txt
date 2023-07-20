@@ -394,7 +394,7 @@ Classes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, chat_config = None, filter_key_values = None)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -404,8 +404,14 @@ Classes
       :type deployment_id: str
       :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
       :type messages: list
-      :param chat_config: A dictionary specifiying the query chat config override.
-      :type chat_config: dict
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
 

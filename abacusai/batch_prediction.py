@@ -122,7 +122,7 @@ class BatchPrediction(AbstractApiClass):
             start_after_version (str): Version to start after.
 
         Returns:
-            BatchPredictionVersion: List of batch prediction versions.
+            list[BatchPredictionVersion]: List of batch prediction versions.
         """
         return self.client.list_batch_prediction_versions(self.batch_prediction_id, limit, start_after_version)
 

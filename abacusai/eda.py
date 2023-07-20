@@ -91,7 +91,7 @@ class Eda(AbstractApiClass):
             start_after_version (str): The ID of the version after which the list starts.
 
         Returns:
-            EdaVersion: A list of EDA versions.
+            list[EdaVersion]: A list of EDA versions.
         """
         return self.client.list_eda_versions(self.eda_id, limit, start_after_version)
 

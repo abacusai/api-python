@@ -106,7 +106,7 @@ Classes
       :type deployment_id: str
 
       :returns: List of the webhooks attached to the given deployment ID.
-      :rtype: Webhook
+      :rtype: list[Webhook]
 
 
    .. py:method:: refresh()
@@ -305,7 +305,7 @@ Classes
       :type deployment_id: str
 
       :returns: The deployment conversations.
-      :rtype: DeploymentConversation
+      :rtype: list[DeploymentConversation]
 
 
    .. py:method:: wait_for_deployment(wait_states={'PENDING', 'DEPLOYING'}, timeout=480)

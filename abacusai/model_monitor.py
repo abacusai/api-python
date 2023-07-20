@@ -129,7 +129,7 @@ class ModelMonitor(AbstractApiClass):
             start_after_version (str): The ID of the version after which the list starts.
 
         Returns:
-            ModelMonitorVersion: A list of model monitor versions.
+            list[ModelMonitorVersion]: A list of model monitor versions.
         """
         return self.client.list_model_monitor_versions(self.model_monitor_id, limit, start_after_version)
 
@@ -159,6 +159,6 @@ class ModelMonitor(AbstractApiClass):
             model_monitor_id (str): The unique ID associated with the model monitor.
 
         Returns:
-            MonitorAlert: A list of monitor alerts.
+            list[MonitorAlert]: A list of monitor alerts.
         """
         return self.client.list_monitor_alerts_for_monitor(self.model_monitor_id)

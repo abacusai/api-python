@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, pipelineStepVersionReferences={})
+.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, pipelineStepVersionReferences={})
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53,6 +53,10 @@ Classes
    :type stepDependencies: list[str]
    :param outputVariableMappings: The mappings for the output variables to the step.
    :type outputVariableMappings: dict
+   :param cpuSize: CPU size specified for the step function.
+   :type cpuSize: str
+   :param memory: Memory in GB specified for the step function.
+   :type memory: int
    :param pipelineStepVersionReferences: A list to the output instances of the pipeline step version.
    :type pipelineStepVersionReferences: PipelineStepVersionReference
 

@@ -22,10 +22,12 @@ class PipelineStepVersion(AbstractApiClass):
             functionVariableMappings (dict): The mappings for function parameters' names.
             stepDependencies (list[str]): List of steps this step depends on.
             outputVariableMappings (dict): The mappings for the output variables to the step.
+            cpuSize (str): CPU size specified for the step function.
+            memory (int): Memory in GB specified for the step function.
             pipelineStepVersionReferences (PipelineStepVersionReference): A list to the output instances of the pipeline step version.
     """
 
-    def __init__(self, client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, pipelineStepVersionReferences={}):
+    def __init__(self, client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, pipelineStepVersionReferences={}):
         super().__init__(client, pipelineStepVersion)
         self.step_name = stepName
         self.pipeline_step_version = pipelineStepVersion
@@ -41,11 +43,13 @@ class PipelineStepVersion(AbstractApiClass):
         self.function_variable_mappings = functionVariableMappings
         self.step_dependencies = stepDependencies
         self.output_variable_mappings = outputVariableMappings
+        self.cpu_size = cpuSize
+        self.memory = memory
         self.pipeline_step_version_references = client._build_class(
             PipelineStepVersionReference, pipelineStepVersionReferences)
 
     def __repr__(self):
-        return f"PipelineStepVersion(step_name={repr(self.step_name)},\n  pipeline_step_version={repr(self.pipeline_step_version)},\n  pipeline_step_id={repr(self.pipeline_step_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  output_errors={repr(self.output_errors)},\n  python_function_id={repr(self.python_function_id)},\n  function_variable_mappings={repr(self.function_variable_mappings)},\n  step_dependencies={repr(self.step_dependencies)},\n  output_variable_mappings={repr(self.output_variable_mappings)},\n  pipeline_step_version_references={repr(self.pipeline_step_version_references)})"
+        return f"PipelineStepVersion(step_name={repr(self.step_name)},\n  pipeline_step_version={repr(self.pipeline_step_version)},\n  pipeline_step_id={repr(self.pipeline_step_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  output_errors={repr(self.output_errors)},\n  python_function_id={repr(self.python_function_id)},\n  function_variable_mappings={repr(self.function_variable_mappings)},\n  step_dependencies={repr(self.step_dependencies)},\n  output_variable_mappings={repr(self.output_variable_mappings)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  pipeline_step_version_references={repr(self.pipeline_step_version_references)})"
 
     def to_dict(self):
         """
@@ -54,7 +58,7 @@ class PipelineStepVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'step_name': self.step_name, 'pipeline_step_version': self.pipeline_step_version, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'output_errors': self.output_errors, 'python_function_id': self.python_function_id, 'function_variable_mappings': self.function_variable_mappings, 'step_dependencies': self.step_dependencies, 'output_variable_mappings': self.output_variable_mappings, 'pipeline_step_version_references': self._get_attribute_as_dict(self.pipeline_step_version_references)}
+        return {'step_name': self.step_name, 'pipeline_step_version': self.pipeline_step_version, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'output_errors': self.output_errors, 'python_function_id': self.python_function_id, 'function_variable_mappings': self.function_variable_mappings, 'step_dependencies': self.step_dependencies, 'output_variable_mappings': self.output_variable_mappings, 'cpu_size': self.cpu_size, 'memory': self.memory, 'pipeline_step_version_references': self._get_attribute_as_dict(self.pipeline_step_version_references)}
 
     def get_step_version_logs(self):
         """

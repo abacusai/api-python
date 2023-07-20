@@ -98,23 +98,25 @@ class DocumentRetriever(AbstractApiClass):
             start_after_version (str): An offset parameter to exclude all document retriever versions up to this specified one.
 
         Returns:
-            DocumentRetrieverVersion: All the document retriever versions associated with the document retriever.
+            list[DocumentRetrieverVersion]: All the document retriever versions associated with the document retriever.
         """
         return self.client.list_document_retriever_versions(self.document_retriever_id, limit, start_after_version)
 
-    def lookup(self, query: str, deployment_token: str, limit_results: int = None):
+    def lookup(self, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None):
         """
         Lookup relevant documents from the document retriever deployed with given query.
 
         Args:
             query (str): The query to search for.
             deployment_token (str): A deployment token used to authenticate access to created vector store.
-            limit_results (int): If provided, will limit the number of results to the value specified.
+            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            limit (int): If provided, will limit the number of results to the value specified.
+            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
 
         Returns:
-            DocumentRetrieverLookupResult: The relevant documentation results found from the document retriever.
+            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
         """
-        return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, limit_results)
+        return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, filters, limit, result_columns)
 
     def wait_until_ready(self, timeout: int = 3600):
         """

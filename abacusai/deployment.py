@@ -95,7 +95,7 @@ class Deployment(AbstractApiClass):
             deployment_id (str): Unique identifier of the target deployment.
 
         Returns:
-            Webhook: List of the webhooks attached to the given deployment ID.
+            list[Webhook]: List of the webhooks attached to the given deployment ID.
         """
         return self.client.list_deployment_webhooks(self.deployment_id)
 
@@ -288,7 +288,7 @@ class Deployment(AbstractApiClass):
             deployment_id (str): The deployment to get conversations for.
 
         Returns:
-            DeploymentConversation: The deployment conversations.
+            list[DeploymentConversation]: The deployment conversations.
         """
         return self.client.list_deployment_conversations(self.deployment_id)
 

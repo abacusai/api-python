@@ -120,7 +120,7 @@ class ModelMonitorVersion(AbstractApiClass):
             model_monitor_version (str): The unique ID associated with the model monitor.
 
         Returns:
-            MonitorAlertVersion: A list of monitor alert versions.
+            list[MonitorAlertVersion]: A list of monitor alert versions.
         """
         return self.client.list_monitor_alert_versions_for_monitor_version(self.model_monitor_version)
 

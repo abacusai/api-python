@@ -115,7 +115,7 @@ class Project(AbstractApiClass):
             nested_column_name (str): The name of the nested column if the input feature is part of a nested feature group for the given feature_group_id.
 
         Returns:
-            Feature: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
+            list[Feature]: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set.
         """
         return self.client.set_feature_mapping(self.project_id, feature_group_id, feature_name, feature_mapping, nested_column_name)
 
@@ -163,7 +163,7 @@ class Project(AbstractApiClass):
             filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups present in this project to be returned if they are of the given use. Possible values are:  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT.
 
         Returns:
-            FeatureGroup: All the Feature Groups in a project.
+            list[FeatureGroup]: All the Feature Groups in a project.
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
 
@@ -177,7 +177,7 @@ class Project(AbstractApiClass):
             should_include_all_system_templates (bool): If True, will include built-in templates.
 
         Returns:
-            FeatureGroupTemplate: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
+            list[FeatureGroupTemplate]: All the feature groups in the organization, optionally limited by the feature group that created the template(s).
         """
         return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
@@ -192,7 +192,7 @@ class Project(AbstractApiClass):
             is_additional_model (bool): Whether to get training config options for an additional model
 
         Returns:
-            TrainingConfigOptions: An array of options that can be specified when training a model in this project.
+            list[TrainingConfigOptions]: An array of options that can be specified when training a model in this project.
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config, is_additional_model)
 
@@ -269,7 +269,7 @@ class Project(AbstractApiClass):
             project_id (str): Unique string identifier associated with the project.
 
         Returns:
-            Model: A list of models.
+            list[Model]: A list of models.
         """
         return self.client.list_models(self.project_id)
 
@@ -319,7 +319,7 @@ class Project(AbstractApiClass):
             project_id (str): Unique string identifier associated with the project.
 
         Returns:
-            ModelMonitor: A list of model monitors.
+            list[ModelMonitor]: A list of model monitors.
         """
         return self.client.list_model_monitors(self.project_id)
 
@@ -389,7 +389,7 @@ class Project(AbstractApiClass):
             project_id (str): Unique string identifier associated with the project.
 
         Returns:
-            Eda: List of EDA objects.
+            list[Eda]: List of EDA objects.
         """
         return self.client.list_eda(self.project_id)
 
@@ -431,7 +431,7 @@ class Project(AbstractApiClass):
             project_id (str): The unique identifier associated with the project.
 
         Returns:
-            Deployment: An array of deployments.
+            list[Deployment]: An array of deployments.
         """
         return self.client.list_deployments(self.project_id)
 
@@ -443,7 +443,7 @@ class Project(AbstractApiClass):
             project_id (str): The unique ID associated with the project.
 
         Returns:
-            DeploymentAuthToken: A list of deployment tokens.
+            list[DeploymentAuthToken]: A list of deployment tokens.
         """
         return self.client.list_deployment_tokens(self.project_id)
 
@@ -462,7 +462,7 @@ class Project(AbstractApiClass):
             notebook_ids (list): Comma-separated list of Notebook IDs.
 
         Returns:
-            RefreshPolicy: List of all refresh policies in the organization.
+            list[RefreshPolicy]: List of all refresh policies in the organization.
         """
         return self.client.list_refresh_policies(self.project_id, dataset_ids, feature_group_id, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, prediction_metric_ids, notebook_ids)
 
@@ -474,7 +474,7 @@ class Project(AbstractApiClass):
             project_id (str): Unique string identifier of the project.
 
         Returns:
-            BatchPrediction: List of batch prediction jobs.
+            list[BatchPrediction]: List of batch prediction jobs.
         """
         return self.client.list_batch_predictions(self.project_id)
 
@@ -486,7 +486,7 @@ class Project(AbstractApiClass):
             project_id (str): Unique string identifier for the project to list graph dashboards from.
 
         Returns:
-            Pipeline: A list of pipelines.
+            list[Pipeline]: A list of pipelines.
         """
         return self.client.list_pipelines(self.project_id)
 
@@ -511,7 +511,7 @@ class Project(AbstractApiClass):
             project_id (str): Unique string identifier for the project to list graph dashboards from.
 
         Returns:
-            GraphDashboard: A list of graph dashboards.
+            list[GraphDashboard]: A list of graph dashboards.
         """
         return self.client.list_graph_dashboards(self.project_id)
 
@@ -524,7 +524,7 @@ class Project(AbstractApiClass):
             training_config (dict): The training configuration key/value pairs used to train with the algorithm.
 
         Returns:
-            Algorithm: List of applicable builtin algorithms.
+            list[Algorithm]: List of applicable builtin algorithms.
         """
         return self.client.list_builtin_algorithms(self.project_id, feature_group_ids, training_config)
 
@@ -550,10 +550,10 @@ class Project(AbstractApiClass):
             name (str): The name you want your agent to have, defaults to "<Project Name> Agent".
             memory (int): The memory allocation (in GB) for the agent.
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-            description (str): A description of the agent, including its purpose and instructions. Returns:
+            description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
-            Model: None
+            Model: The new agent
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
 
@@ -583,7 +583,7 @@ class Project(AbstractApiClass):
             start_after_id (str): An offset parameter to exclude all document retrievers up to this specified ID.
 
         Returns:
-            DocumentRetriever: All the document retrievers in the organization associated with the specified project.
+            list[DocumentRetriever]: All the document retrievers in the organization associated with the specified project.
         """
         return self.client.list_document_retrievers(self.project_id, limit, start_after_id)
 

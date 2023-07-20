@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None)
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,6 +29,8 @@ Classes
    :type document: str
    :param score: Score of the document with respect to the query.
    :type score: float
+   :param properties: Properties of the retrieved documents.
+   :type properties: dict
 
    .. py:method:: __repr__()
 

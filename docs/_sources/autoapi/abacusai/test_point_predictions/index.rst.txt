@@ -1,0 +1,52 @@
+:py:mod:`abacusai.test_point_predictions`
+=========================================
+
+.. py:module:: abacusai.test_point_predictions
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.test_point_predictions.TestPointPredictions
+
+
+
+
+.. py:class:: TestPointPredictions(client, count=None, columns=None, data=None, summarizedMetrics=None, errorDescription=None)
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Test Point Predictions
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param count: Count of total rows in the preview data for the SQL.
+   :type count: int
+   :param columns: The returned columns
+   :type columns: list
+   :param data: A list of data rows, each represented as a list.
+   :type data: list
+   :param summarizedMetrics: A map between the problem type metrics and the mean of the results matching the query
+   :type summarizedMetrics: dict
+   :param errorDescription: Description of an error in case of failure.
+   :type errorDescription: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -100,7 +100,7 @@ class RefreshPolicy(AbstractApiClass):
             refresh_policy_id (str): Unique identifier associated with the refresh policy.
 
         Returns:
-            RefreshPipelineRun: List of refresh pipeline runs for the given refresh policy ID.
+            list[RefreshPipelineRun]: List of refresh pipeline runs for the given refresh policy ID.
         """
         return self.client.list_refresh_pipeline_runs(self.refresh_policy_id)
 

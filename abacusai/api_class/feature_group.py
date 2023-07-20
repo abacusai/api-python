@@ -23,7 +23,7 @@ class NSamplingConfig(SamplingConfig):
     Args:
         sampling_method (SamplingMethodType): N_SAMPLING
         sample_count (int): The number of rows to include in the sample
-        key_columns (list[str]): The feature(s) to use as the key(s) when sampling
+        key_columns (List[str]): The feature(s) to use as the key(s) when sampling
     """
     sample_count: int
     key_columns: List[str] = dataclasses.field(default_factory=list)
@@ -38,7 +38,7 @@ class PercentSamplingConfig(SamplingConfig):
     Args:
         sampling_method (SamplingMethodType): PERCENT_SAMPLING
         sample_percent (float): The percentage of the rows to sample
-        key_columns (list[str]): The feature(s) to use as the key(s) when sampling
+        key_columns (List[str]): The feature(s) to use as the key(s) when sampling
     """
     sample_percent: float
     key_columns: List[str] = dataclasses.field(default_factory=list)

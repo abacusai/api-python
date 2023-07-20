@@ -175,7 +175,7 @@ class Dataset(AbstractApiClass):
             dataset_id (str): Unique string identifier of the dataset schema to look up.
 
         Returns:
-            DatasetColumn: List of column schema definitions.
+            list[DatasetColumn]: List of column schema definitions.
         """
         return self.client.get_dataset_schema(self.dataset_id)
 
@@ -223,7 +223,7 @@ class Dataset(AbstractApiClass):
             start_after_version (str): The ID of the version after which the list starts.
 
         Returns:
-            DatasetVersion: A list of dataset versions.
+            list[DatasetVersion]: A list of dataset versions.
         """
         return self.client.list_dataset_versions(self.dataset_id, limit, start_after_version)
 

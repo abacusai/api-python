@@ -172,7 +172,7 @@ class FeatureGroup(AbstractApiClass):
             project_id (str): Unique string identifier for the project.
 
         Returns:
-            ProjectConfig: None
+            ProjectConfig: The feature group's project configuration.
         """
         return self.client.get_project_feature_group_config(self.feature_group_id, project_id)
 
@@ -235,7 +235,7 @@ class FeatureGroup(AbstractApiClass):
             save_metadata (bool): If True, save the metadata for the annotation entry.
 
         Returns:
-            AnnotationEntry: None
+            AnnotationEntry: The updated annotation entry.
         """
         return self.client.update_annotation_status(self.feature_group_id, feature_name, status, doc_id, feature_group_row_identifier, save_metadata)
 
@@ -346,7 +346,7 @@ class FeatureGroup(AbstractApiClass):
             project_id (str): The unique ID associated with the project.
 
         Returns:
-            Feature: A list of objects for each column in the specified feature group.
+            list[Feature]: A list of objects for each column in the specified feature group.
         """
         return self.client.get_feature_group_schema(self.feature_group_id, project_id)
 
@@ -592,6 +592,21 @@ class FeatureGroup(AbstractApiClass):
             FeatureGroup: The feature group after the point in time group has been created.
         """
         return self.client.create_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
+
+    def generate_point_in_time_features(self, group_name: str, columns: list, window_functions: list, prefix: str = None):
+        """
+        Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
+
+        Args:
+            group_name (str): Name of the point-in-time group.
+            columns (list): List of columns to generate point-in-time features for.
+            window_functions (list): List of window functions to operate on.
+            prefix (str): Prefix for generated features, defaults to group name
+
+        Returns:
+            FeatureGroup: Feature group object with newly added point-in-time features.
+        """
+        return self.client.generate_point_in_time_features(self.feature_group_id, group_name, columns, window_functions, prefix)
 
     def update_point_in_time_group(self, group_name: str, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None):
         """
@@ -891,7 +906,7 @@ class FeatureGroup(AbstractApiClass):
             feature_group_id (str): Unique identifier of the feature group
 
         Returns:
-            FeatureGroupExport: List of feature group exports
+            list[FeatureGroupExport]: List of feature group exports
         """
         return self.client.list_feature_group_exports(self.feature_group_id)
 
@@ -994,7 +1009,7 @@ class FeatureGroup(AbstractApiClass):
             start_after_version (str): Results will start after this version.
 
         Returns:
-            FeatureGroupVersion: A list of feature group versions.
+            list[FeatureGroupVersion]: A list of feature group versions.
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
 
@@ -1023,7 +1038,7 @@ class FeatureGroup(AbstractApiClass):
             feature_group_id (str): Unique identifier associated with the feature group to use for suggesting values to use in the template.
 
         Returns:
-            FeatureGroupTemplate: None
+            FeatureGroupTemplate: The suggested feature group template.
         """
         return self.client.suggest_feature_group_template_for_feature_group(self.feature_group_id)
 
