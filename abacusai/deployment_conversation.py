@@ -68,3 +68,12 @@ class DeploymentConversation(AbstractApiClass):
             feedback (str): Optional feedback on why the message is useful or not useful
         """
         return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback)
+
+    def rename(self, name: str):
+        """
+        Rename a Deployment Conversation.
+
+        Args:
+            name (str): The new name of the conversation.
+        """
+        return self.client.rename_deployment_conversation(self.deployment_conversation_id, name)

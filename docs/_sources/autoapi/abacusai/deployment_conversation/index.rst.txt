@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, history={})
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A deployment conversation.
@@ -80,6 +81,14 @@ Classes
       :type is_not_useful: bool
       :param feedback: Optional feedback on why the message is useful or not useful
       :type feedback: str
+
+
+   .. py:method:: rename(name)
+
+      Rename a Deployment Conversation.
+
+      :param name: The new name of the conversation.
+      :type name: str
 
 
 

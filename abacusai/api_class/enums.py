@@ -104,6 +104,13 @@ class RegressionLossFunction(ApiEnum):
     CUSTOM = 'Custom'
 
 
+class ExplainerType(Enum):
+    KERNEL_EXPLAINER = 'KERNEL_EXPLAINER'
+    LIME_EXPLAINER = 'LIME_EXPLAINER'
+    TREE_EXPLAINER = 'TREE_EXPLAINER'
+    EBM_EXPLAINER = 'EBM_EXPLAINER'
+
+
 class SamplingMethodType(ApiEnum):
     N_SAMPLING = 'N_SAMPLING'
     PERCENT_SAMPLING = 'PERCENT_SAMPLING'
@@ -302,6 +309,22 @@ class PythonFunctionArgumentType(ApiEnum):
     MONITOR_ID = 'MONITOR_ID'
     BATCH_PREDICTION_ID = 'BATCH_PREDICTION_ID'
     DEPLOYMENT_ID = 'DEPLOYMENT_ID'
+
+
+class PythonFunctionOutputArgumentType(ApiEnum):
+    NTEGER = 'INTEGER'
+    STRING = 'STRING'
+    BOOLEAN = 'BOOLEAN'
+    FLOAT = 'FLOAT'
+    JSON = 'JSON'
+    LIST = 'LIST'
+    DATASET_ID = 'DATASET_ID'
+    MODEL_ID = 'MODEL_ID'
+    FEATURE_GROUP_ID = 'FEATURE_GROUP_ID'
+    MONITOR_ID = 'MONITOR_ID'
+    BATCH_PREDICTION_ID = 'BATCH_PREDICTION_ID'
+    DEPLOYMENT_ID = 'DEPLOYMENT_ID'
+    ANY = 'ANY'
 
 
 class VectorStoreTextEncoder(ApiEnum):

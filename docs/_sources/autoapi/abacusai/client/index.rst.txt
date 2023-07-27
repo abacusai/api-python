@@ -63,6 +63,7 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
+
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -72,6 +73,7 @@ Attributes
 
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`Exception`
 
@@ -92,6 +94,7 @@ Attributes
 
 .. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
+
    Abstract Base API Client
 
    :param api_key: The api key to use as authentication to the server
@@ -104,7 +107,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.73.0'
+      :value: '0.73.1'
 
       
 
@@ -140,6 +143,7 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -2060,6 +2064,7 @@ Attributes
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
+
    Bases: :py:obj:`ReadOnlyClient`
 
    Abacus.AI API Client
@@ -2236,7 +2241,7 @@ Attributes
       :param step_input_mappings: List of Python function arguments.
       :type step_input_mappings: List[PythonFunctionArguments]
       :param output_variable_mappings: List of Python function ouputs.
-      :type output_variable_mappings: List[PythonFunctionArguments]
+      :type output_variable_mappings: List[OutputVariableMapping]
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: List[str]
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
@@ -2258,7 +2263,7 @@ Attributes
       :param step_input_mappings: List of Python function arguments.
       :type step_input_mappings: List[PythonFunctionArguments]
       :param output_variable_mappings: List of Python function ouputs.
-      :type output_variable_mappings: List[PythonFunctionArguments]
+      :type output_variable_mappings: List[OutputVariableMapping]
       :param step_dependencies: List of step names this step depends on.
       :type step_dependencies: List[str]
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
@@ -4821,7 +4826,7 @@ Attributes
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor.
       :type refresh_schedule: str
-      :param target_value: A target positive value for the label to compute bias and PR/AUC for performance page (old style until UI is on prod).
+      :param target_value: A target positive value for the label to compute bias and PR/AUC for performance page.
       :type target_value: str
       :param target_value_bias: A target positive value for the label to compute bias.
       :type target_value_bias: str
@@ -5986,8 +5991,8 @@ Attributes
       :type table_name: str
       :param name: Name of the batch prediction job.
       :type name: str
-      :param global_prediction_args: Argument(s) to pass on every prediction call.
-      :type global_prediction_args: dict
+      :param global_prediction_args: Batch Prediction args specific to problem type.
+      :type global_prediction_args: BatchPredictionArgs
       :param explanations: If true, SHAP explanations will be provided for each prediction, if supported by the use case.
       :type explanations: bool
       :param output_format: Format of the batch prediction output (CSV or JSON).
@@ -6034,8 +6039,8 @@ Attributes
       :type batch_prediction_id: str
       :param deployment_id: Unique identifier of the deployment.
       :type deployment_id: str
-      :param global_prediction_args: Argument(s) to pass on every prediction call.
-      :type global_prediction_args: dict
+      :param global_prediction_args: Batch Prediction args specific to problem type.
+      :type global_prediction_args: BatchPredictionArgs
       :param explanations: If True, SHAP explanations for each prediction will be provided, if supported by the use case.
       :type explanations: bool
       :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
@@ -6108,21 +6113,6 @@ Attributes
       :type batch_prediction_id: str
 
       :returns: The batch prediction description.
-      :rtype: BatchPrediction
-
-
-   .. py:method:: set_batch_prediction_dataset(batch_prediction_id, dataset_type, dataset_id = None)
-
-      [Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.
-
-      :param batch_prediction_id: Unique identifier of the batch prediction.
-      :type batch_prediction_id: str
-      :param dataset_type: Enum string of the dataset type to set.
-      :type dataset_type: str
-      :param dataset_id: Unique identifier of the dataset to set.
-      :type dataset_id: str
-
-      :returns: Description of the batch prediction.
       :rtype: BatchPrediction
 
 
@@ -6902,6 +6892,16 @@ Attributes
       :type feedback: str
 
 
+   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name)
+
+      Rename a Deployment Conversation.
+
+      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
+      :type deployment_conversation_id: str
+      :param name: The new name of the conversation.
+      :type name: str
+
+
    .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
 
       Creates a new AI agent.
@@ -7051,7 +7051,7 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, filters = None, limit = None, result_columns = None)
+   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None)
 
       Lookup relevant documents from the document retriever deployed with given query.
 
@@ -7067,6 +7067,10 @@ Attributes
       :type limit: int
       :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
       :type result_columns: list
+      :param max_words: If provided, will limit the total number of words in the results to the value specified.
+      :type max_words: int
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
+      :type num_retrieval_margin_words: int
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

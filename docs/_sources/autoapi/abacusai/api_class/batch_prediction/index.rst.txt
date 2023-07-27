@@ -1,0 +1,148 @@
+:py:mod:`abacusai.api_class.batch_prediction`
+=============================================
+
+.. py:module:: abacusai.api_class.batch_prediction
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.batch_prediction.BatchPredictionArgs
+   abacusai.api_class.batch_prediction.PredictiveModelingBatchPredictionArgs
+   abacusai.api_class.batch_prediction._BatchPredictionArgsFactory
+
+
+
+
+.. py:class:: BatchPredictionArgs
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:attribute:: kwargs
+      :type: dict
+
+      
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+
+.. py:class:: PredictiveModelingBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the PREDICTIVE_MODELING problem type
+   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+   :type for_eval: bool
+   :param explainer_type: The type of explainer to use to generate explanations on the batch prediction.
+   :type explainer_type: enums.ExplainerType
+   :param number_of_samples_to_use_for_explainer: Number Of Samples To Use For Kernel Explainer.
+   :type number_of_samples_to_use_for_explainer: int
+   :param include_multi_class_explanations: If True, Includes explanations for all classes in multi-class classification.
+   :type include_multi_class_explanations: bool
+   :param features_considered_constant_for_explanations: Comma separate list of fields to treat as constant in SHAP explanations.
+   :type features_considered_constant_for_explanations: str
+   :param importance_of_records_in_nested_columns: Returns importance of each index in the specified nested column instead of SHAP column explanations.
+   :type importance_of_records_in_nested_columns: str
+   :param explanation_filter_lower_bound: If set explanations will be limited to predictions above this value, Range: [0, 1].
+   :type explanation_filter_lower_bound: float
+   :param explanation_filter_upper_bound: If set explanations will be limited to predictions below this value, Range: [0, 1].
+   :type explanation_filter_upper_bound: float
+   :param bound_label: For classification problems specifies the label to which the explanation bounds are applied.
+   :type bound_label: str
+   :param output_columns: A list of column names to include in the prediction result.
+   :type output_columns: list
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: explainer_type
+      :type: abacusai.api_class.enums.ExplainerType
+
+      
+
+   .. py:attribute:: number_of_samples_to_use_for_explainer
+      :type: int
+
+      
+
+   .. py:attribute:: include_multi_class_explanations
+      :type: bool
+
+      
+
+   .. py:attribute:: features_considered_constant_for_explanations
+      :type: str
+
+      
+
+   .. py:attribute:: importance_of_records_in_nested_columns
+      :type: str
+
+      
+
+   .. py:attribute:: explanation_filter_lower_bound
+      :type: float
+
+      
+
+   .. py:attribute:: explanation_filter_upper_bound
+      :type: float
+
+      
+
+   .. py:attribute:: explanation_filter_label
+      :type: str
+
+      
+
+   .. py:attribute:: output_columns
+      :type: list
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _BatchPredictionArgsFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'problemType'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+

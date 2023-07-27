@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
+.. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +32,8 @@ Classes
    :type documentRetrieverId: str
    :param createdAt: When the vector store was created.
    :type createdAt: str
+   :param featureGroupId: The feature group id associated with the document retriever.
+   :type featureGroupId: str
    :param latestDocumentRetrieverVersion: The latest version of vector store.
    :type latestDocumentRetrieverVersion: DocumentRetrieverVersion
    :param documentRetrieverConfig: The config for vector store creation.
@@ -107,7 +110,7 @@ Classes
       :rtype: list[DocumentRetrieverVersion]
 
 
-   .. py:method:: lookup(query, deployment_token, filters = None, limit = None, result_columns = None)
+   .. py:method:: lookup(query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None)
 
       Lookup relevant documents from the document retriever deployed with given query.
 
@@ -121,6 +124,10 @@ Classes
       :type limit: int
       :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
       :type result_columns: list
+      :param max_words: If provided, will limit the total number of words in the results to the value specified.
+      :type max_words: int
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
+      :type num_retrieval_margin_words: int
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

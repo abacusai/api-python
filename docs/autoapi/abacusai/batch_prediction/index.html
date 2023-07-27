@@ -47,6 +47,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.ai_building_task</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation_config</span></code></a></li>
@@ -177,7 +178,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_config</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function_validator</span></code></a></li>
@@ -384,7 +384,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the deployment.</p></li>
-<li><p><strong>global_prediction_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Argument(s) to pass on every prediction call.</p></li>
+<li><p><strong>global_prediction_args</strong> (<a class="reference internal" href="../api_class/batch_prediction/index.html#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="abacusai.api_class.batch_prediction.BatchPredictionArgs"><em>BatchPredictionArgs</em></a>) – Batch Prediction args specific to problem type.</p></li>
 <li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If True, SHAP explanations for each prediction will be provided, if supported by the use case.</p></li>
 <li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If specified, sets the format of the batch prediction output (CSV or JSON).</p></li>
 <li><p><strong>csv_input_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prefix to prepend to the input columns, only applies when output format is CSV.</p></li>
@@ -471,26 +471,6 @@
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The batch prediction description.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.batch_prediction.BatchPrediction.set_dataset">
-<span class="sig-name descname"><span class="pre">set_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.batch_prediction.BatchPrediction.set_dataset" title="Permalink to this definition"></a></dt>
-<dd><p>[Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Enum string of the dataset type to set.</p></li>
-<li><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the dataset to set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Description of the batch prediction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>

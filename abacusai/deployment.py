@@ -1,4 +1,6 @@
-from .api_class import FeatureGroupExportConfig
+from typing import Union
+
+from .api_class import BatchPredictionArgs, FeatureGroupExportConfig
 from .feature_group_export_config import FeatureGroupExportConfig
 from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass
@@ -243,14 +245,14 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, chat_config, filter_key_values)
 
-    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None):
+    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None):
         """
         Creates a batch prediction job description for the given deployment.
 
         Args:
             table_name (str): Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.
             name (str): Name of the batch prediction job.
-            global_prediction_args (dict): Argument(s) to pass on every prediction call.
+            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             explanations (bool): If true, SHAP explanations will be provided for each prediction, if supported by the use case.
             output_format (str): Format of the batch prediction output (CSV or JSON).
             output_location (str): Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.

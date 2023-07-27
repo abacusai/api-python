@@ -47,6 +47,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai</span></code></a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.ai_building_task</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../annotation_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.annotation_config</span></code></a></li>
@@ -177,7 +178,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_config</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../project_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../project_validation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.project_validation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function_validator</span></code></a></li>
@@ -376,7 +376,7 @@
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.73.0'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.73.1'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3544,7 +3544,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <li><p><strong>step_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the step.</p></li>
 <li><p><strong>function</strong> (<em>callable</em>) – The python function.</p></li>
 <li><p><strong>step_input_mappings</strong> (<em>List</em><em>[</em><em>PythonFunctionArguments</em><em>]</em>) – List of Python function arguments.</p></li>
-<li><p><strong>output_variable_mappings</strong> (<em>List</em><em>[</em><em>PythonFunctionArguments</em><em>]</em>) – List of Python function ouputs.</p></li>
+<li><p><strong>output_variable_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="../api_class/index.html#abacusai.api_class.OutputVariableMapping" title="abacusai.api_class.OutputVariableMapping"><em>OutputVariableMapping</em></a><em>]</em>) – List of Python function ouputs.</p></li>
 <li><p><strong>step_dependencies</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – List of step names this step depends on.</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the CPU for the step function.</p></li>
@@ -3564,7 +3564,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <li><p><strong>pipeline_step_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the pipeline_step to update.</p></li>
 <li><p><strong>function</strong> (<em>callable</em>) – The python function.</p></li>
 <li><p><strong>step_input_mappings</strong> (<em>List</em><em>[</em><em>PythonFunctionArguments</em><em>]</em>) – List of Python function arguments.</p></li>
-<li><p><strong>output_variable_mappings</strong> (<em>List</em><em>[</em><em>PythonFunctionArguments</em><em>]</em>) – List of Python function ouputs.</p></li>
+<li><p><strong>output_variable_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="../api_class/index.html#abacusai.api_class.OutputVariableMapping" title="abacusai.api_class.OutputVariableMapping"><em>OutputVariableMapping</em></a><em>]</em>) – List of Python function ouputs.</p></li>
 <li><p><strong>step_dependencies</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em>) – List of step names this step depends on.</p></li>
 <li><p><strong>package_requirements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – List of package requirement strings. For example: [‘numpy==1.2.3’, ‘pandas&gt;=1.4.0’].</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Size of the CPU for the step function.</p></li>
@@ -6720,7 +6720,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>training_feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique ID of the training data feature group.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name you want your model monitor to have. Defaults to “&lt;Project Name&gt; Model Monitor”.</p></li>
 <li><p><strong>refresh_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor.</p></li>
-<li><p><strong>target_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A target positive value for the label to compute bias and PR/AUC for performance page (old style until UI is on prod).</p></li>
+<li><p><strong>target_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A target positive value for the label to compute bias and PR/AUC for performance page.</p></li>
 <li><p><strong>target_value_bias</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A target positive value for the label to compute bias.</p></li>
 <li><p><strong>target_value_performance</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A target positive value for the label to compute PR curve/AUC for performance page.</p></li>
 <li><p><strong>feature_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.</p></li>
@@ -8162,7 +8162,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique string identifier for the deployment.</p></li>
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the batch prediction job.</p></li>
-<li><p><strong>global_prediction_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Argument(s) to pass on every prediction call.</p></li>
+<li><p><strong>global_prediction_args</strong> (<a class="reference internal" href="../api_class/batch_prediction/index.html#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="abacusai.api_class.batch_prediction.BatchPredictionArgs"><em>BatchPredictionArgs</em></a>) – Batch Prediction args specific to problem type.</p></li>
 <li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If true, SHAP explanations will be provided for each prediction, if supported by the use case.</p></li>
 <li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Format of the batch prediction output (CSV or JSON).</p></li>
 <li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.</p></li>
@@ -8211,7 +8211,7 @@ feature groups for those input feature groups.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the batch prediction.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the deployment.</p></li>
-<li><p><strong>global_prediction_args</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – Argument(s) to pass on every prediction call.</p></li>
+<li><p><strong>global_prediction_args</strong> (<a class="reference internal" href="../api_class/batch_prediction/index.html#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="abacusai.api_class.batch_prediction.BatchPredictionArgs"><em>BatchPredictionArgs</em></a>) – Batch Prediction args specific to problem type.</p></li>
 <li><p><strong>explanations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – If True, SHAP explanations for each prediction will be provided, if supported by the use case.</p></li>
 <li><p><strong>output_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – If specified, sets the format of the batch prediction output (CSV or JSON).</p></li>
 <li><p><strong>csv_input_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Prefix to prepend to the input columns, only applies when output format is CSV.</p></li>
@@ -8303,27 +8303,6 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The batch prediction description.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_batch_prediction_dataset">
-<span class="sig-name descname"><span class="pre">set_batch_prediction_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_prediction_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_batch_prediction_dataset" title="Permalink to this definition"></a></dt>
-<dd><p>[Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>batch_prediction_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the batch prediction.</p></li>
-<li><p><strong>dataset_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Enum string of the dataset type to set.</p></li>
-<li><p><strong>dataset_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of the dataset to set.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Description of the batch prediction.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../batch_prediction/index.html#abacusai.batch_prediction.BatchPrediction" title="abacusai.batch_prediction.BatchPrediction">BatchPrediction</a></p>
@@ -9296,6 +9275,20 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.rename_deployment_conversation">
+<span class="sig-name descname"><span class="pre">rename_deployment_conversation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.rename_deployment_conversation" title="Permalink to this definition"></a></dt>
+<dd><p>Rename a Deployment Conversation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the deployment conversation.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The new name of the conversation.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_agent">
 <span class="sig-name descname"><span class="pre">create_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function_source_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_function_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_requirements</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a new AI agent.</p>
@@ -9484,7 +9477,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.lookup_document_retriever">
-<span class="sig-name descname"><span class="pre">lookup_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_document_retriever" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">lookup_document_retriever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_document_retriever" title="Permalink to this definition"></a></dt>
 <dd><p>Lookup relevant documents from the document retriever deployed with given query.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -9495,6 +9488,8 @@ feature groups for those input feature groups.</p>
 <li><p><strong>filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrieved search results.</p></li>
 <li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will limit the number of results to the value specified.</p></li>
 <li><p><strong>result_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – If provided, will limit the column properties present in each result to those specified in this list.</p></li>
+<li><p><strong>max_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will limit the total number of words in the results to the value specified.</p></li>
+<li><p><strong>num_retrieval_margin_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will add this number of words from left and right of the returned chunks.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, createdAt=None, chatHistory={})
+.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, createdAt=None, chatHistory={}, nextAiBuildingTask={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -35,6 +36,8 @@ Classes
    :type createdAt: str
    :param chatHistory: The chat history for the conversation
    :type chatHistory: ChatMessage
+   :param nextAiBuildingTask: The next AI building task for the chat session
+   :type nextAiBuildingTask: AiBuildingTask
 
    .. py:method:: __repr__()
 

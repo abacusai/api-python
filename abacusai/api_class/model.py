@@ -277,7 +277,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     objective: enums.ForecastingObjective = dataclasses.field(default=None)
     sort_objective: enums.ForecastingObjective = dataclasses.field(default=None)
     forecast_frequency: enums.ForecastingFrequency = dataclasses.field(default=None)
-    probability_quantiles: List[float] = dataclasses.field(default=None)
+    probability_quantiles: List[float] = dataclasses.field(default=None, metadata={'aichat': 'If None, defaults to [0.1, 0.5, 0.9]. If specified, then that list of quantiles will be used. You usually want to include the defaults.'})
     force_prediction_length: bool = dataclasses.field(default=None)
     filter_items: bool = dataclasses.field(default=None)
     enable_feature_selection: bool = dataclasses.field(default=None)
@@ -405,14 +405,12 @@ class ChatLLMTrainingConfig(TrainingConfig):
     """
     Training config for the CHAT_LLM problem type
     Args:
-        llm_name (str):
         document_retrievers (List[str]): List of document retriever names to use for the feature stores this model was trained with.
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
         system_message (str): The generative LLM system message
         temperature (float): The generative LLM temperature
         search_title_column (str): Include the title column values in the retrieved search results
     """
-    llm_name: str = None
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
     system_message: str = None

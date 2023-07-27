@@ -25,8 +25,9 @@ from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
-    ApiClass, ApiEnum, DocumentRetrieverConfig, FeatureGroupExportConfig,
-    MergeConfig, ParsingConfig, ProblemType, SamplingConfig, TrainingConfig
+    ApiClass, ApiEnum, BatchPredictionArgs, DocumentRetrieverConfig,
+    FeatureGroupExportConfig, MergeConfig, ParsingConfig, ProblemType,
+    SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -218,7 +219,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.73.0'
+    client_version = '0.73.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2318,7 +2319,7 @@ class ApiClient(ReadOnlyClient):
             step_name (str): The name of the step.
             function (callable): The python function.
             step_input_mappings (List[PythonFunctionArguments]): List of Python function arguments.
-            output_variable_mappings (List[PythonFunctionArguments]): List of Python function ouputs.
+            output_variable_mappings (List[OutputVariableMapping]): List of Python function ouputs.
             step_dependencies (List[str]): List of step names this step depends on.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
@@ -2353,7 +2354,7 @@ class ApiClient(ReadOnlyClient):
             pipeline_step_id (str): The ID of the pipeline_step to update.
             function (callable): The python function.
             step_input_mappings (List[PythonFunctionArguments]): List of Python function arguments.
-            output_variable_mappings (List[PythonFunctionArguments]): List of Python function ouputs.
+            output_variable_mappings (List[OutputVariableMapping]): List of Python function ouputs.
             step_dependencies (List[str]): List of step names this step depends on.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
@@ -4541,7 +4542,7 @@ Creates a new feature group defined as the union of other feature group versions
             training_feature_group_id (str): The unique ID of the training data feature group.
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor.
-            target_value (str): A target positive value for the label to compute bias and PR/AUC for performance page (old style until UI is on prod).
+            target_value (str): A target positive value for the label to compute bias and PR/AUC for performance page.
             target_value_bias (str): A target positive value for the label to compute bias.
             target_value_performance (str): A target positive value for the label to compute PR curve/AUC for performance page.
             feature_mappings (dict): A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.
@@ -5463,14 +5464,14 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
-    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: dict = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
+    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
 
         Args:
             deployment_id (str): Unique string identifier for the deployment.
             table_name (str): Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.
             name (str): Name of the batch prediction job.
-            global_prediction_args (dict): Argument(s) to pass on every prediction call.
+            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             explanations (bool): If true, SHAP explanations will be provided for each prediction, if supported by the use case.
             output_format (str): Format of the batch prediction output (CSV or JSON).
             output_location (str): Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
@@ -5497,13 +5498,13 @@ Creates a new feature group defined as the union of other feature group versions
             BatchPredictionVersion: The batch prediction version started by this method call."""
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
 
-    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None) -> BatchPrediction:
+    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None) -> BatchPrediction:
         """Update a batch prediction job description.
 
         Args:
             batch_prediction_id (str): Unique identifier of the batch prediction.
             deployment_id (str): Unique identifier of the deployment.
-            global_prediction_args (dict): Argument(s) to pass on every prediction call.
+            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             explanations (bool): If True, SHAP explanations for each prediction will be provided, if supported by the use case.
             output_format (str): If specified, sets the format of the batch prediction output (CSV or JSON).
             csv_input_prefix (str): Prefix to prepend to the input columns, only applies when output format is CSV.
@@ -5561,18 +5562,6 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             BatchPrediction: The batch prediction description."""
         return self._call_api('setBatchPredictionOutputToConsole', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPrediction)
-
-    def set_batch_prediction_dataset(self, batch_prediction_id: str, dataset_type: str, dataset_id: str = None) -> BatchPrediction:
-        """[Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.
-
-        Args:
-            batch_prediction_id (str): Unique identifier of the batch prediction.
-            dataset_type (str): Enum string of the dataset type to set.
-            dataset_id (str): Unique identifier of the dataset to set.
-
-        Returns:
-            BatchPrediction: Description of the batch prediction."""
-        return self._call_api('setBatchPredictionDataset', 'POST', query_params={'datasetId': dataset_id}, body={'batchPredictionId': batch_prediction_id, 'datasetType': dataset_type}, parse_type=BatchPrediction)
 
     def set_batch_prediction_feature_group(self, batch_prediction_id: str, feature_group_type: str, feature_group_id: str = None) -> BatchPrediction:
         """Sets the batch prediction input feature group.
@@ -6180,6 +6169,14 @@ Creates a new feature group defined as the union of other feature group versions
             feedback (str): Optional feedback on why the message is useful or not useful"""
         return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
 
+    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str):
+        """Rename a Deployment Conversation.
+
+        Args:
+            deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
+            name (str): The new name of the conversation."""
+        return self._call_api('renameDeploymentConversation', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
+
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
         """Creates a new AI agent.
 
@@ -6295,7 +6292,7 @@ Creates a new feature group defined as the union of other feature group versions
             vector_store_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('deleteDocumentRetriever', 'DELETE', query_params={'vectorStoreId': vector_store_id})
 
-    def lookup_document_retriever(self, document_retriever_id: str, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_document_retriever(self, document_retriever_id: str, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup relevant documents from the document retriever deployed with given query.
 
         Args:
@@ -6305,7 +6302,9 @@ Creates a new feature group defined as the union of other feature group versions
             filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             limit (int): If provided, will limit the number of results to the value specified.
             result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
+            max_words (int): If provided, will limit the total number of words in the results to the value specified.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
-        return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'filters': filters, 'limit': limit, 'resultColumns': result_columns}, parse_type=DocumentRetrieverLookupResult)
+        return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'filters': filters, 'limit': limit, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words}, parse_type=DocumentRetrieverLookupResult)

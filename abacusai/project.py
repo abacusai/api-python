@@ -297,7 +297,7 @@ class Project(AbstractApiClass):
             training_feature_group_id (str): The unique ID of the training data feature group.
             name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
             refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor.
-            target_value (str): A target positive value for the label to compute bias and PR/AUC for performance page (old style until UI is on prod).
+            target_value (str): A target positive value for the label to compute bias and PR/AUC for performance page.
             target_value_bias (str): A target positive value for the label to compute bias.
             target_value_performance (str): A target positive value for the label to compute PR curve/AUC for performance page.
             feature_mappings (dict): A JSON map to override features for prediction_feature_group, where keys are column names and the values are feature data use types.

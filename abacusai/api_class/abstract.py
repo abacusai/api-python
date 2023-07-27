@@ -97,9 +97,22 @@ class _ApiClassFactory(ABC):
         if isinstance(config_class_type, str):
             config_class_type = config_class_type.upper()
         config_class = cls.config_class_map.get(config_class_type)
-        if config_class is None and support_kwargs:
-            config = {'kwargs': config}
-            config_class = cls.config_abstract_class
+        if support_kwargs:
+            if config_class:
+                field_names = set((field.name) for field in dataclasses.fields(config_class))
+                trimmed_config = {}
+                kwargs = {}
+                for k, v in config.items():
+                    if snake_case(k) in field_names:
+                        trimmed_config[k] = v
+                    else:
+                        kwargs[k] = v
+                if len(kwargs):
+                    trimmed_config['kwargs'] = kwargs
+                config = trimmed_config
+            else:
+                config = {'kwargs': config}
+                config_class = cls.config_abstract_class
         if config_class is None:
             raise ValueError(f'Invalid type {config_class_type}')
 

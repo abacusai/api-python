@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    abstract/index.rst
+   batch_prediction/index.rst
    dataset/index.rst
    enums/index.rst
    feature_group/index.rst
@@ -30,6 +31,11 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.ApiClass
+   abacusai.api_class._ApiClassFactory
+   abacusai.api_class.BatchPredictionArgs
+   abacusai.api_class.PredictiveModelingBatchPredictionArgs
+   abacusai.api_class._BatchPredictionArgsFactory
+   abacusai.api_class.ApiClass
    abacusai.api_class.ParsingConfig
    abacusai.api_class.ApiEnum
    abacusai.api_class.ProblemType
@@ -40,6 +46,7 @@ Classes
    abacusai.api_class.RegressionTypeOfSplit
    abacusai.api_class.RegressionTimeSplitMethod
    abacusai.api_class.RegressionLossFunction
+   abacusai.api_class.ExplainerType
    abacusai.api_class.SamplingMethodType
    abacusai.api_class.MergeMode
    abacusai.api_class.FillLogic
@@ -62,6 +69,7 @@ Classes
    abacusai.api_class.ClusteringImputationMethod
    abacusai.api_class.ConnectorType
    abacusai.api_class.PythonFunctionArgumentType
+   abacusai.api_class.PythonFunctionOutputArgumentType
    abacusai.api_class.VectorStoreTextEncoder
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
@@ -119,6 +127,192 @@ Classes
 
 .. py:class:: ApiClass
 
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: _ApiClassFactory
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+   .. py:method:: from_dict(config)
+      :classmethod:
+
+
+
+.. py:class:: BatchPredictionArgs
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:attribute:: kwargs
+      :type: dict
+
+      
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+
+.. py:class:: PredictiveModelingBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the PREDICTIVE_MODELING problem type
+   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+   :type for_eval: bool
+   :param explainer_type: The type of explainer to use to generate explanations on the batch prediction.
+   :type explainer_type: enums.ExplainerType
+   :param number_of_samples_to_use_for_explainer: Number Of Samples To Use For Kernel Explainer.
+   :type number_of_samples_to_use_for_explainer: int
+   :param include_multi_class_explanations: If True, Includes explanations for all classes in multi-class classification.
+   :type include_multi_class_explanations: bool
+   :param features_considered_constant_for_explanations: Comma separate list of fields to treat as constant in SHAP explanations.
+   :type features_considered_constant_for_explanations: str
+   :param importance_of_records_in_nested_columns: Returns importance of each index in the specified nested column instead of SHAP column explanations.
+   :type importance_of_records_in_nested_columns: str
+   :param explanation_filter_lower_bound: If set explanations will be limited to predictions above this value, Range: [0, 1].
+   :type explanation_filter_lower_bound: float
+   :param explanation_filter_upper_bound: If set explanations will be limited to predictions below this value, Range: [0, 1].
+   :type explanation_filter_upper_bound: float
+   :param bound_label: For classification problems specifies the label to which the explanation bounds are applied.
+   :type bound_label: str
+   :param output_columns: A list of column names to include in the prediction result.
+   :type output_columns: list
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: explainer_type
+      :type: abacusai.api_class.enums.ExplainerType
+
+      
+
+   .. py:attribute:: number_of_samples_to_use_for_explainer
+      :type: int
+
+      
+
+   .. py:attribute:: include_multi_class_explanations
+      :type: bool
+
+      
+
+   .. py:attribute:: features_considered_constant_for_explanations
+      :type: str
+
+      
+
+   .. py:attribute:: importance_of_records_in_nested_columns
+      :type: str
+
+      
+
+   .. py:attribute:: explanation_filter_lower_bound
+      :type: float
+
+      
+
+   .. py:attribute:: explanation_filter_upper_bound
+      :type: float
+
+      
+
+   .. py:attribute:: explanation_filter_label
+      :type: str
+
+      
+
+   .. py:attribute:: output_columns
+      :type: list
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _BatchPredictionArgsFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'problemType'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
+.. py:class:: ApiClass
+
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -151,6 +345,7 @@ Classes
 
 .. py:class:: ParsingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -174,6 +369,7 @@ Classes
 
 .. py:class:: ApiEnum
 
+
    Bases: :py:obj:`enum.Enum`
 
    Generic enumeration.
@@ -192,6 +388,7 @@ Classes
 
 
 .. py:class:: ProblemType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -342,6 +539,7 @@ Classes
 
 .. py:class:: RegressionObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -406,6 +604,7 @@ Classes
 
 .. py:class:: RegressionTreeHPOMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -425,6 +624,7 @@ Classes
 
 .. py:class:: RegressionAugmentationStrategy
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -443,6 +643,7 @@ Classes
 
 
 .. py:class:: RegressionTargetTransform
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -473,6 +674,7 @@ Classes
 
 .. py:class:: RegressionTypeOfSplit
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -497,6 +699,7 @@ Classes
 
 .. py:class:: RegressionTimeSplitMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -515,6 +718,7 @@ Classes
 
 
 .. py:class:: RegressionLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -573,7 +777,38 @@ Classes
       
 
 
+.. py:class:: ExplainerType
+
+
+   Bases: :py:obj:`enum.Enum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: KERNEL_EXPLAINER
+      :value: 'KERNEL_EXPLAINER'
+
+      
+
+   .. py:attribute:: LIME_EXPLAINER
+      :value: 'LIME_EXPLAINER'
+
+      
+
+   .. py:attribute:: TREE_EXPLAINER
+      :value: 'TREE_EXPLAINER'
+
+      
+
+   .. py:attribute:: EBM_EXPLAINER
+      :value: 'EBM_EXPLAINER'
+
+      
+
+
 .. py:class:: SamplingMethodType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -594,6 +829,7 @@ Classes
 
 .. py:class:: MergeMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -612,6 +848,7 @@ Classes
 
 
 .. py:class:: FillLogic
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -666,6 +903,7 @@ Classes
 
 
 .. py:class:: BatchSize
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -726,6 +964,7 @@ Classes
 
 .. py:class:: HolidayCalendars
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -750,6 +989,7 @@ Classes
 
 .. py:class:: ExperimentationMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -769,6 +1009,7 @@ Classes
 
 .. py:class:: PersonalizationTrainingMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -787,6 +1028,7 @@ Classes
 
 
 .. py:class:: PersonalizationObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -842,6 +1084,7 @@ Classes
 
 .. py:class:: ForecastingObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -890,6 +1133,7 @@ Classes
 
 
 .. py:class:: ForecastingFrequency
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -950,6 +1194,7 @@ Classes
 
 .. py:class:: ForecastingDataSplitType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -978,6 +1223,7 @@ Classes
 
 
 .. py:class:: ForecastingLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1073,6 +1319,7 @@ Classes
 
 .. py:class:: ForecastingLocalScaling
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1117,6 +1364,7 @@ Classes
 
 .. py:class:: ForecastingFillMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1141,6 +1389,7 @@ Classes
 
 .. py:class:: ForecastingQuanitlesExtensionMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1164,6 +1413,7 @@ Classes
 
 
 .. py:class:: NERObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1204,6 +1454,7 @@ Classes
 
 .. py:class:: NERModelType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1238,6 +1489,7 @@ Classes
 
 .. py:class:: NLPDocumentFormat
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1267,6 +1519,7 @@ Classes
 
 .. py:class:: SentimentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1285,6 +1538,7 @@ Classes
 
 
 .. py:class:: ClusteringImputationMethod
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1309,6 +1563,7 @@ Classes
 
 
 .. py:class:: ConnectorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1338,6 +1593,7 @@ Classes
 
 
 .. py:class:: PythonFunctionArgumentType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1411,7 +1667,83 @@ Classes
       
 
 
+.. py:class:: PythonFunctionOutputArgumentType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: NTEGER
+      :value: 'INTEGER'
+
+      
+
+   .. py:attribute:: STRING
+      :value: 'STRING'
+
+      
+
+   .. py:attribute:: BOOLEAN
+      :value: 'BOOLEAN'
+
+      
+
+   .. py:attribute:: FLOAT
+      :value: 'FLOAT'
+
+      
+
+   .. py:attribute:: JSON
+      :value: 'JSON'
+
+      
+
+   .. py:attribute:: LIST
+      :value: 'LIST'
+
+      
+
+   .. py:attribute:: DATASET_ID
+      :value: 'DATASET_ID'
+
+      
+
+   .. py:attribute:: MODEL_ID
+      :value: 'MODEL_ID'
+
+      
+
+   .. py:attribute:: FEATURE_GROUP_ID
+      :value: 'FEATURE_GROUP_ID'
+
+      
+
+   .. py:attribute:: MONITOR_ID
+      :value: 'MONITOR_ID'
+
+      
+
+   .. py:attribute:: BATCH_PREDICTION_ID
+      :value: 'BATCH_PREDICTION_ID'
+
+      
+
+   .. py:attribute:: DEPLOYMENT_ID
+      :value: 'DEPLOYMENT_ID'
+
+      
+
+   .. py:attribute:: ANY
+      :value: 'ANY'
+
+      
+
+
 .. py:class:: VectorStoreTextEncoder
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1436,6 +1768,7 @@ Classes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -1469,6 +1802,7 @@ Classes
 
 .. py:class:: _ApiClassFactory
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -1493,6 +1827,7 @@ Classes
 
 .. py:class:: SamplingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the sampling config of a feature group
@@ -1502,6 +1837,7 @@ Classes
 
 
 .. py:class:: NSamplingConfig
+
 
    Bases: :py:obj:`SamplingConfig`
 
@@ -1532,6 +1868,7 @@ Classes
 
 .. py:class:: PercentSamplingConfig
 
+
    Bases: :py:obj:`SamplingConfig`
 
    The fraction of distinct values of the feature group to include in the sample.
@@ -1561,6 +1898,7 @@ Classes
 
 .. py:class:: _SamplingConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -1578,6 +1916,7 @@ Classes
 
 .. py:class:: MergeConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
@@ -1587,6 +1926,7 @@ Classes
 
 
 .. py:class:: LastNMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -1609,6 +1949,7 @@ Classes
 
 
 .. py:class:: TimeWindowMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -1639,6 +1980,7 @@ Classes
 
 .. py:class:: _MergeConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -1655,6 +1997,7 @@ Classes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -1688,6 +2031,7 @@ Classes
 
 .. py:class:: _ApiClassFactory
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -1711,6 +2055,7 @@ Classes
 
 
 .. py:class:: TrainingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -1744,6 +2089,7 @@ Classes
 
 
 .. py:class:: PersonalizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1978,6 +2324,7 @@ Classes
 
 
 .. py:class:: RegressionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -2247,6 +2594,7 @@ Classes
 
 
 .. py:class:: ForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -2670,6 +3018,7 @@ Classes
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
@@ -2750,6 +3099,7 @@ Classes
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
@@ -2802,11 +3152,10 @@ Classes
 
 .. py:class:: ChatLLMTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
-   :param llm_name:
-   :type llm_name: str
    :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -2817,11 +3166,6 @@ Classes
    :type temperature: float
    :param search_title_column: Include the title column values in the retrieved search results
    :type search_title_column: str
-
-   .. py:attribute:: llm_name
-      :type: str
-
-      
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -2854,6 +3198,7 @@ Classes
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
@@ -2884,6 +3229,7 @@ Classes
 
 
 .. py:class:: SentimentDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -2930,6 +3276,7 @@ Classes
 
 .. py:class:: DocumentClassificationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
@@ -2968,6 +3315,7 @@ Classes
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
@@ -2998,6 +3346,7 @@ Classes
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3030,6 +3379,7 @@ Classes
 
 .. py:class:: ClusteringTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
@@ -3046,6 +3396,7 @@ Classes
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3070,6 +3421,7 @@ Classes
 
 
 .. py:class:: CumulativeForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3122,6 +3474,7 @@ Classes
 
 
 .. py:class:: AnomalyDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3182,6 +3535,7 @@ Classes
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
@@ -3191,6 +3545,7 @@ Classes
 
 
 .. py:class:: AIAgentTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3208,6 +3563,7 @@ Classes
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3253,6 +3609,7 @@ Classes
 
 
 .. py:class:: CustomAlgorithmTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3313,6 +3670,7 @@ Classes
 
 .. py:class:: OptimizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
@@ -3322,6 +3680,7 @@ Classes
 
 
 .. py:class:: _TrainingConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -3343,6 +3702,7 @@ Classes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -3376,6 +3736,7 @@ Classes
 
 .. py:class:: FeatureMappingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -3398,6 +3759,7 @@ Classes
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -3425,6 +3787,7 @@ Classes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -3457,6 +3820,7 @@ Classes
 
 
 .. py:class:: PythonFunctionArgument
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -3501,17 +3865,18 @@ Classes
 
 .. py:class:: OutputVariableMapping
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    A config class for python function arguments
 
-   :param variable_type: The type of the python function argument
-   :type variable_type: PythonFunctionArgumentType
+   :param variable_type: The type of the python function output argument
+   :type variable_type: PythonFunctionOutputArgumentType
    :param name: The name of the python function variable
    :type name: str
 
    .. py:attribute:: variable_type
-      :type: abacusai.api_class.enums.PythonFunctionArgumentType
+      :type: abacusai.api_class.enums.PythonFunctionOutputArgumentType
 
       
 
@@ -3522,6 +3887,7 @@ Classes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -3555,6 +3921,7 @@ Classes
 
 .. py:class:: _ApiClassFactory
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -3579,6 +3946,7 @@ Classes
 
 .. py:class:: FeatureGroupExportConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -3591,6 +3959,7 @@ Classes
 
 
 .. py:class:: FileConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -3621,6 +3990,7 @@ Classes
 
 
 .. py:class:: DatabaseConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -3672,6 +4042,7 @@ Classes
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -3692,6 +4063,7 @@ Classes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -3725,6 +4097,7 @@ Classes
 
 .. py:class:: VectorStoreTextEncoder
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3748,6 +4121,7 @@ Classes
 
 
 .. py:class:: VectorStoreConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -3777,6 +4151,7 @@ Classes
 
 
 .. py:class:: DocumentRetrieverConfig
+
 
    Bases: :py:obj:`VectorStoreConfig`
 

@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, refreshSchedules={}, featureGroupExportConfig={})
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A model deployment
@@ -257,8 +258,8 @@ Classes
       :type table_name: str
       :param name: Name of the batch prediction job.
       :type name: str
-      :param global_prediction_args: Argument(s) to pass on every prediction call.
-      :type global_prediction_args: dict
+      :param global_prediction_args: Batch Prediction args specific to problem type.
+      :type global_prediction_args: BatchPredictionArgs
       :param explanations: If true, SHAP explanations will be provided for each prediction, if supported by the use case.
       :type explanations: bool
       :param output_format: Format of the batch prediction output (CSV or JSON).

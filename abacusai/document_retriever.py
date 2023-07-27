@@ -15,22 +15,24 @@ class DocumentRetriever(AbstractApiClass):
             name (str): The name of the document retriever.
             documentRetrieverId (str): The unique identifier of the vector store.
             createdAt (str): When the vector store was created.
+            featureGroupId (str): The feature group id associated with the document retriever.
             latestDocumentRetrieverVersion (DocumentRetrieverVersion): The latest version of vector store.
             documentRetrieverConfig (DocumentRetrieverConfig): The config for vector store creation.
     """
 
-    def __init__(self, client, name=None, documentRetrieverId=None, createdAt=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={}):
+    def __init__(self, client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={}):
         super().__init__(client, documentRetrieverId)
         self.name = name
         self.document_retriever_id = documentRetrieverId
         self.created_at = createdAt
+        self.feature_group_id = featureGroupId
         self.latest_document_retriever_version = client._build_class(
             DocumentRetrieverVersion, latestDocumentRetrieverVersion)
         self.document_retriever_config = client._build_class(
             DocumentRetrieverConfig, documentRetrieverConfig)
 
     def __repr__(self):
-        return f"DocumentRetriever(name={repr(self.name)},\n  document_retriever_id={repr(self.document_retriever_id)},\n  created_at={repr(self.created_at)},\n  latest_document_retriever_version={repr(self.latest_document_retriever_version)},\n  document_retriever_config={repr(self.document_retriever_config)})"
+        return f"DocumentRetriever(name={repr(self.name)},\n  document_retriever_id={repr(self.document_retriever_id)},\n  created_at={repr(self.created_at)},\n  feature_group_id={repr(self.feature_group_id)},\n  latest_document_retriever_version={repr(self.latest_document_retriever_version)},\n  document_retriever_config={repr(self.document_retriever_config)})"
 
     def to_dict(self):
         """
@@ -39,7 +41,7 @@ class DocumentRetriever(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'document_retriever_id': self.document_retriever_id, 'created_at': self.created_at, 'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
+        return {'name': self.name, 'document_retriever_id': self.document_retriever_id, 'created_at': self.created_at, 'feature_group_id': self.feature_group_id, 'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
 
     def update(self, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """
@@ -102,7 +104,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.client.list_document_retriever_versions(self.document_retriever_id, limit, start_after_version)
 
-    def lookup(self, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None):
+    def lookup(self, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None):
         """
         Lookup relevant documents from the document retriever deployed with given query.
 
@@ -112,11 +114,13 @@ class DocumentRetriever(AbstractApiClass):
             filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             limit (int): If provided, will limit the number of results to the value specified.
             result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
+            max_words (int): If provided, will limit the total number of words in the results to the value specified.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
         """
-        return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, filters, limit, result_columns)
+        return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, filters, limit, result_columns, max_words, num_retrieval_margin_words)
 
     def wait_until_ready(self, timeout: int = 3600):
         """

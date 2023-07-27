@@ -1,3 +1,6 @@
+from typing import Union
+
+from .api_class import BatchPredictionArgs
 from .batch_prediction_version import BatchPredictionVersion
 from .prediction_input import PredictionInput
 from .refresh_schedule import RefreshSchedule
@@ -126,13 +129,13 @@ class BatchPrediction(AbstractApiClass):
         """
         return self.client.list_batch_prediction_versions(self.batch_prediction_id, limit, start_after_version)
 
-    def update(self, deployment_id: str = None, global_prediction_args: dict = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None):
+    def update(self, deployment_id: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None):
         """
         Update a batch prediction job description.
 
         Args:
             deployment_id (str): Unique identifier of the deployment.
-            global_prediction_args (dict): Argument(s) to pass on every prediction call.
+            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             explanations (bool): If True, SHAP explanations for each prediction will be provided, if supported by the use case.
             output_format (str): If specified, sets the format of the batch prediction output (CSV or JSON).
             csv_input_prefix (str): Prefix to prepend to the input columns, only applies when output format is CSV.
@@ -196,19 +199,6 @@ class BatchPrediction(AbstractApiClass):
             BatchPrediction: The batch prediction description.
         """
         return self.client.set_batch_prediction_output_to_console(self.batch_prediction_id)
-
-    def set_dataset(self, dataset_type: str, dataset_id: str = None):
-        """
-        [Deprecated] Sets the batch prediction input dataset for legacy dataset-based projects.
-
-        Args:
-            dataset_type (str): Enum string of the dataset type to set.
-            dataset_id (str): Unique identifier of the dataset to set.
-
-        Returns:
-            BatchPrediction: Description of the batch prediction.
-        """
-        return self.client.set_batch_prediction_dataset(self.batch_prediction_id, dataset_type, dataset_id)
 
     def set_feature_group(self, feature_group_type: str, feature_group_id: str = None):
         """

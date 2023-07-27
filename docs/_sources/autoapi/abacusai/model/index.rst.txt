@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -63,6 +64,8 @@ Classes
    :type algorithmModelConfigs: list[dict]
    :param trainingVectorStoreVersions: The vector store version IDs used as inputs during training to create this ModelVersion.
    :type trainingVectorStoreVersions: list
+   :param documentRetrievers: List of document retrievers use to create this model.
+   :type documentRetrievers: list
    :param isPythonModel: If this model is handled as python model
    :type isPythonModel: bool
    :param defaultAlgorithm: If set, this algorithm will always be used when deploying the model regardless of the model metrics

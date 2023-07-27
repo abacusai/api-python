@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None)
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A project is a container which holds datasets, models and deployments
@@ -327,7 +328,7 @@ Classes
       :type name: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically retrain the created model monitor.
       :type refresh_schedule: str
-      :param target_value: A target positive value for the label to compute bias and PR/AUC for performance page (old style until UI is on prod).
+      :param target_value: A target positive value for the label to compute bias and PR/AUC for performance page.
       :type target_value: str
       :param target_value_bias: A target positive value for the label to compute bias.
       :type target_value_bias: str
