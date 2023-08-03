@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineVersion(client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={})
+.. py:class:: PipelineVersion(client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={}, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -46,6 +46,8 @@ Classes
    :type pipelineVariableMappings: dict
    :param stepVersions: A list of the pipeline step versions.
    :type stepVersions: PipelineStepVersion
+   :param codeSource: information on the source code
+   :type codeSource: CodeSource
 
    .. py:method:: __repr__()
 
@@ -74,6 +76,19 @@ Classes
 
       :param pipeline_version: Unique string identifier for the pipeline version
       :type pipeline_version: str
+
+      :returns: Object describing the pipeline version
+      :rtype: PipelineVersion
+
+
+   .. py:method:: reset(steps = None, include_downstream_steps = True)
+
+      Reruns a pipeline version for the given steps and downstream steps if specified.
+
+      :param steps: List of pipeline step names to rerun.
+      :type steps: list
+      :param include_downstream_steps: Whether to rerun downstream steps from the steps you have passed
+      :type include_downstream_steps: bool
 
       :returns: Object describing the pipeline version
       :rtype: PipelineVersion

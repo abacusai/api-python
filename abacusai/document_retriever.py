@@ -122,6 +122,21 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, filters, limit, result_columns, max_words, num_retrieval_margin_words)
 
+    def get_document_snippet(self, deployment_token: str, document_id: str, start_word_index: None = None, end_word_index: None = None):
+        """
+        Get a snippet from documents in the document retriever.
+
+        Args:
+            deployment_token (str): A deployment token used to authenticate access to created vector store.
+            document_id (str): The ID of the document to retrieve the snippet from.
+            start_word_index (None): If provided, will start the snippet at the index (of words in the document) specified.
+            end_word_index (None): If provided, will end the snippet at the index of (of words in the document) specified.
+
+        Returns:
+            DocumentRetrieverLookupResult: The documentation snippet found from the document retriever.
+        """
+        return self.client.get_document_snippet(self.document_retriever_id, deployment_token, document_id, start_word_index, end_word_index)
+
     def wait_until_ready(self, timeout: int = 3600):
         """
         A waiting call until document retriever is ready.

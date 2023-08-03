@@ -17,12 +17,12 @@ Classes
 
 
 
-.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, createdAt=None, chatHistory={}, nextAiBuildingTask={})
+.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, chatHistory={}, nextAiBuildingTask={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
-   A chat session with Abacus Chat.
+   A chat session with Abacus AI Chat.
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
@@ -32,8 +32,12 @@ Classes
    :type chatSessionId: str
    :param projectId: The project id associated with the chat session
    :type projectId: str
+   :param name: The name of the chat session
+   :type name: str
    :param createdAt: The timestamp at which the chat session was created
    :type createdAt: str
+   :param status: The status of the chat sessions
+   :type status: str
    :param chatHistory: The chat history for the conversation
    :type chatHistory: ChatMessage
    :param nextAiBuildingTask: The next AI building task for the chat session
@@ -54,13 +58,37 @@ Classes
 
    .. py:method:: get()
 
-      Gets a chat session from Abacus Chat.
+      Gets a chat session from Abacus AI Chat.
 
-      :param chat_session_id: The chat session id
+      :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
 
-      :returns: The chat session with Abacus Chat
+      :returns: The chat session with Abacus AI Chat
       :rtype: ChatSession
+
+
+   .. py:method:: delete_chat_message(message_index)
+
+      Deletes a message in a chat session
+
+      :param message_index: The index of the chat message within the UI.
+      :type message_index: int
+
+
+   .. py:method:: export()
+
+      Exports a chat session to an HTML file
+
+      :param chat_session_id: Unique ID of the chat session.
+      :type chat_session_id: str
+
+
+   .. py:method:: rename(name)
+
+      Renames a chat session with Abacus AI Chat.
+
+      :param name: The new name of the chat session.
+      :type name: str
 
 
 

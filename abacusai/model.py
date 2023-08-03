@@ -339,7 +339,7 @@ class Model(AbstractApiClass):
             description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
-            Model: The updated agent
+            Agent: The updated agent
         """
         return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description)
 

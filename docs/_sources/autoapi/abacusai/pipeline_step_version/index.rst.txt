@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, pipelineStepVersionReferences={})
+.. py:class:: PipelineStepVersion(client, stepName=None, pipelineStepVersion=None, pipelineStepId=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, status=None, error=None, outputErrors=None, pythonFunctionId=None, functionVariableMappings=None, stepDependencies=None, outputVariableMappings=None, cpuSize=None, memory=None, pipelineStepVersionReferences={}, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -60,6 +60,8 @@ Classes
    :type memory: int
    :param pipelineStepVersionReferences: A list to the output instances of the pipeline step version.
    :type pipelineStepVersionReferences: PipelineStepVersionReference
+   :param codeSource: Information about the source code of the pipeline step version.
+   :type codeSource: CodeSource
 
    .. py:method:: __repr__()
 
@@ -72,6 +74,24 @@ Classes
 
       :returns: The dict value representation of the class parameters
       :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: PipelineStepVersion
+
+
+   .. py:method:: describe()
+
+      Describes a pipeline step version.
+
+      :param pipeline_step_version: The ID of the pipeline step version.
+      :type pipeline_step_version: str
+
+      :rtype: PipelineStepVersion
 
 
    .. py:method:: get_step_version_logs()

@@ -1,3 +1,4 @@
+from .code_source import CodeSource
 from .python_function import PythonFunction
 from .return_class import AbstractApiClass
 
@@ -19,9 +20,10 @@ class PipelineStep(AbstractApiClass):
             cpuSize (str): CPU size specified for the step function.
             memory (int): Memory in GB specified for the step function.
             pythonFunction (PythonFunction): Information about the python function for the step.
+            codeSource (CodeSource): Information about the source code of the step function.
     """
 
-    def __init__(self, client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, pythonFunction={}):
+    def __init__(self, client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, pythonFunction={}, codeSource={}):
         super().__init__(client, pipelineStepId)
         self.pipeline_step_id = pipelineStepId
         self.pipeline_id = pipelineId
@@ -35,9 +37,10 @@ class PipelineStep(AbstractApiClass):
         self.memory = memory
         self.python_function = client._build_class(
             PythonFunction, pythonFunction)
+        self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PipelineStep(pipeline_step_id={repr(self.pipeline_step_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  step_name={repr(self.step_name)},\n  pipeline_name={repr(self.pipeline_name)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  python_function_id={repr(self.python_function_id)},\n  step_dependencies={repr(self.step_dependencies)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  python_function={repr(self.python_function)})"
+        return f"PipelineStep(pipeline_step_id={repr(self.pipeline_step_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  step_name={repr(self.step_name)},\n  pipeline_name={repr(self.pipeline_name)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  python_function_id={repr(self.python_function_id)},\n  step_dependencies={repr(self.step_dependencies)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  python_function={repr(self.python_function)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -46,7 +49,7 @@ class PipelineStep(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id, 'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'python_function': self._get_attribute_as_dict(self.python_function)}
+        return {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id, 'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'python_function': self._get_attribute_as_dict(self.python_function), 'code_source': self._get_attribute_as_dict(self.code_source)}
 
     def delete(self):
         """

@@ -107,7 +107,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.73.2'
+      :value: '0.73.3'
 
       
 
@@ -944,14 +944,14 @@ Attributes
       :rtype: ModelMetrics
 
 
-   .. py:method:: query_test_point_predictions(model_version, model_name, to_row, from_row = 0, sql_where_clause = '')
+   .. py:method:: query_test_point_predictions(model_version, algorithm, to_row, from_row = 0, sql_where_clause = '')
 
       Query the test points predictions data for a specific algorithm.
 
       :param model_version: The unique ID associated with the model version.
       :type model_version: str
-      :param model_name: The model name
-      :type model_name: str
+      :param algorithm: The algorithm id
+      :type algorithm: str
       :param to_row: Ending row index to return.
       :type to_row: int
       :param from_row: Starting row index to return.
@@ -1666,6 +1666,16 @@ Attributes
       :rtype: PipelineStep
 
 
+   .. py:method:: describe_pipeline_step_version(pipeline_step_version)
+
+      Describes a pipeline step version.
+
+      :param pipeline_step_version: The ID of the pipeline step version.
+      :type pipeline_step_version: str
+
+      :rtype: PipelineStepVersion
+
+
    .. py:method:: unset_pipeline_refresh_schedule(pipeline_id)
 
       Deletes the refresh schedule for a given pipeline.
@@ -1864,6 +1874,21 @@ Attributes
       :rtype: list[Module]
 
 
+   .. py:method:: query_feature_group_code_generator(query, language, project_id = None)
+
+      Send a query to the feature group code generator tool to generate code for the query.
+
+      :param query: A natural language query which specifies what the user wants out of the feature group or its code.
+      :type query: str
+      :param language: The language in which code is to be generated. One of 'sql' or 'python'.
+      :type language: str
+      :param project_id: A unique string identifier of the project in context of which the query is.
+      :type project_id: str
+
+      :returns: The response from the model, raw text and parsed components.
+      :rtype: LlmResponse
+
+
    .. py:method:: get_natural_language_explanation(feature_group_id = None, feature_group_version = None, model_id = None)
 
       Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
@@ -1896,12 +1921,12 @@ Attributes
 
    .. py:method:: get_chat_session(chat_session_id)
 
-      Gets a chat session from Abacus Chat.
+      Gets a chat session from Abacus AI Chat.
 
-      :param chat_session_id: The chat session id
+      :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
 
-      :returns: The chat session with Abacus Chat
+      :returns: The chat session with Abacus AI Chat
       :rtype: ChatSession
 
 
@@ -1912,7 +1937,7 @@ Attributes
       :param most_recent_per_project: An optional parameter whether to only return the most recent chat session per project. Default False.
       :type most_recent_per_project: bool
 
-      :returns: The chat sessions with Abacus Chat
+      :returns: The chat sessions with Abacus AI Chat
       :rtype: ChatSession
 
 
@@ -1938,6 +1963,28 @@ Attributes
       :rtype: list[DeploymentConversation]
 
 
+   .. py:method:: describe_agent(agent_id)
+
+      Retrieves a full description of the specified model.
+
+      :param agent_id: Unique string identifier associated with the model.
+      :type agent_id: str
+
+      :returns: Description of the agent.
+      :rtype: Agent
+
+
+   .. py:method:: describe_agent_version(agent_version)
+
+      Retrieves a full description of the specified agent version.
+
+      :param agent_version: Unique string identifier of the agent version.
+      :type agent_version: str
+
+      :returns: A agent version.
+      :rtype: AgentVersion
+
+
    .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
 
       Search feature groups based on text and filters.
@@ -1953,40 +2000,6 @@ Attributes
 
       :returns: A list of search results, each containing the retrieved object and its relevance score
       :rtype: list[OrganizationSearchResult]
-
-
-   .. py:method:: render_feature_group_data_for_llm(feature_group_id, token_budget = None, render_format = 'markdown')
-
-      Encode feature groups as language model inputs.
-
-      :param feature_group_id: The ID of the feature groups to be encoded.
-      :type feature_group_id: str
-      :param token_budget: Enforce a given budget for each encoded feature group.
-      :type token_budget: int
-      :param render_format: One of `['markdown', 'json']`
-      :type render_format: str
-
-      :returns: LLM input object comprising of information about the feature group with given ID.
-      :rtype: LlmInput
-
-
-   .. py:method:: query_feature_group_code_generator(query, language, project_id = None, llm_name = None, max_tokens = None)
-
-      Send a query to the feature group code generator tool to generate code for the query.
-
-      :param query: A natural language query which specifies what the user wants out of the feature group or its code.
-      :type query: str
-      :param language: The language in which code is to be generated. One of 'sql' or 'python'.
-      :type language: str
-      :param project_id: A unique string identifier of the project in context of which the query is.
-      :type project_id: str
-      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
-      :type llm_name: str
-      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
-      :type max_tokens: int
-
-      :returns: The response from the model, raw text and parsed components.
-      :rtype: LlmResponse
 
 
    .. py:method:: list_document_retrievers(project_id, limit = 100, start_after_id = None)
@@ -4479,7 +4492,7 @@ Attributes
       :type dataset_id: str
 
 
-   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None, is_additional_model = False)
+   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None)
 
       Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -4491,8 +4504,6 @@ Attributes
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
       :type current_training_config: TrainingConfig
-      :param is_additional_model: Whether to get training config options for an additional model
-      :type is_additional_model: bool
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: list[TrainingConfigOptions]
@@ -5059,7 +5070,7 @@ Attributes
       :type monitor_alert_id: str
 
 
-   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, additional_model_name = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None, deployment_config = None)
+   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None, deployment_config = None)
 
       Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -5074,8 +5085,6 @@ Attributes
       :type model_version: str
       :param algorithm: The unique ID associated with the algorithm to deploy.
       :type algorithm: str
-      :param additional_model_name: The unique name associated with the additional model to deploy.
-      :type additional_model_name: str
       :param feature_group_id: The unique ID associated with a feature group.
       :type feature_group_id: str
       :param project_id: The unique ID associated with a project.
@@ -6476,6 +6485,21 @@ Attributes
       :rtype: PipelineVersion
 
 
+   .. py:method:: reset_pipeline_version(pipeline_version, steps = None, include_downstream_steps = True)
+
+      Reruns a pipeline version for the given steps and downstream steps if specified.
+
+      :param pipeline_version: The id of the pipeline version.
+      :type pipeline_version: str
+      :param steps: List of pipeline step names to rerun.
+      :type steps: list
+      :param include_downstream_steps: Whether to rerun downstream steps from the steps you have passed
+      :type include_downstream_steps: bool
+
+      :returns: Object describing the pipeline version
+      :rtype: PipelineVersion
+
+
    .. py:method:: create_pipeline_step(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Creates a step in a given pipeline.
@@ -6846,15 +6870,45 @@ Attributes
       :type model_id: str
 
 
-   .. py:method:: create_chat_session(project_id = None)
+   .. py:method:: create_chat_session(project_id = None, name = None)
 
-      Creates a chat session with Abacus Chat.
+      Creates a chat session with Abacus AI Chat.
 
-      :param project_id: The project this chat session belongs to
+      :param project_id: The unique project identifier this chat session belongs to
       :type project_id: str
+      :param name: The name of the chat session. Defaults to the project name.
+      :type name: str
 
-      :returns: The chat session with Abacus Chat
+      :returns: The chat session with Abacus AI Chat
       :rtype: ChatSession
+
+
+   .. py:method:: delete_chat_message(chat_session_id, message_index)
+
+      Deletes a message in a chat session
+
+      :param chat_session_id: Unique ID of the chat session.
+      :type chat_session_id: str
+      :param message_index: The index of the chat message within the UI.
+      :type message_index: int
+
+
+   .. py:method:: export_chat_session(chat_session_id)
+
+      Exports a chat session to an HTML file
+
+      :param chat_session_id: Unique ID of the chat session.
+      :type chat_session_id: str
+
+
+   .. py:method:: rename_chat_session(chat_session_id, name)
+
+      Renames a chat session with Abacus AI Chat.
+
+      :param chat_session_id: Unique ID of the chat session.
+      :type chat_session_id: str
+      :param name: The new name of the chat session.
+      :type name: str
 
 
    .. py:method:: create_deployment_conversation(deployment_id, name)
@@ -6924,7 +6978,7 @@ Attributes
       :type description: str
 
       :returns: The new agent
-      :rtype: Model
+      :rtype: Agent
 
 
    .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None)
@@ -6945,7 +6999,7 @@ Attributes
       :type description: str
 
       :returns: The updated agent
-      :rtype: Model
+      :rtype: Agent
 
 
    .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None)
@@ -7076,6 +7130,25 @@ Attributes
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
+
+
+   .. py:method:: get_document_snippet(document_retriever_id, deployment_token, document_id, start_word_index = None, end_word_index = None)
+
+      Get a snippet from documents in the document retriever.
+
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
+      :param deployment_token: A deployment token used to authenticate access to created vector store.
+      :type deployment_token: str
+      :param document_id: The ID of the document to retrieve the snippet from.
+      :type document_id: str
+      :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.
+      :type start_word_index: None
+      :param end_word_index: If provided, will end the snippet at the index of (of words in the document) specified.
+      :type end_word_index: None
+
+      :returns: The documentation snippet found from the document retriever.
+      :rtype: DocumentRetrieverLookupResult
 
 
 

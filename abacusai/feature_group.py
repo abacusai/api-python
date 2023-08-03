@@ -1117,19 +1117,6 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.generate_natural_language_explanation(self.feature_group_id, feature_group_version, model_id)
 
-    def render_data_for_llm(self, token_budget: int = None, render_format: str = 'markdown'):
-        """
-        Encode feature groups as language model inputs.
-
-        Args:
-            token_budget (int): Enforce a given budget for each encoded feature group.
-            render_format (str): One of `['markdown', 'json']`
-
-        Returns:
-            LlmInput: LLM input object comprising of information about the feature group with given ID.
-        """
-        return self.client.render_feature_group_data_for_llm(self.feature_group_id, token_budget, render_format)
-
     def wait_for_dataset(self, timeout: int = 7200):
         """
             A waiting call until the feature group's dataset, if any, is ready for use.

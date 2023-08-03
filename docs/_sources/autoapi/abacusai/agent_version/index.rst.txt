@@ -1,0 +1,98 @@
+:py:mod:`abacusai.agent_version`
+================================
+
+.. py:module:: abacusai.agent_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.agent_version.AgentVersion
+
+
+
+
+.. py:class:: AgentVersion(client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, codeSource={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A version of an AI agent.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param agentVersion: The unique identifier of an agent version.
+   :type agentVersion: str
+   :param status: The current status of the model.
+   :type status: str
+   :param agentId: A reference to the agent this version belongs to.
+   :type agentId: str
+   :param agentConfig: The config options used to create this agent.
+   :type agentConfig: dict
+   :param publishingStartedAt: The start time and date of the training process in ISO-8601 format.
+   :type publishingStartedAt: str
+   :param publishingCompletedAt: The end time and date of the training process in ISO-8601 format.
+   :type publishingCompletedAt: str
+   :param pendingDeploymentIds: List of deployment IDs where deployment is pending.
+   :type pendingDeploymentIds: list
+   :param failedDeploymentIds: List of failed deployment IDs.
+   :type failedDeploymentIds: list
+   :param error: Relevant error if the status is FAILED.
+   :type error: str
+   :param codeSource: If a python model, information on where the source code is located.
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: AgentVersion
+
+
+   .. py:method:: describe()
+
+      Retrieves a full description of the specified agent version.
+
+      :param agent_version: Unique string identifier of the agent version.
+      :type agent_version: str
+
+      :returns: A agent version.
+      :rtype: AgentVersion
+
+
+   .. py:method:: wait_for_publish(timeout=None)
+
+      A waiting call until agent gets published.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the model version under training.
+
+      :returns: A string describing the status of a model training (pending, complete, etc.).
+      :rtype: str
+
+
+

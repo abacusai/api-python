@@ -20,6 +20,8 @@ from packaging import version
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 
+from .agent import Agent
+from .agent_version import AgentVersion
 from .algorithm import Algorithm
 from .annotation_config import AnnotationConfig
 from .annotation_entry import AnnotationEntry
@@ -105,6 +107,7 @@ from .organization_group import OrganizationGroup
 from .organization_search_result import OrganizationSearchResult
 from .pipeline import Pipeline
 from .pipeline_step import PipelineStep
+from .pipeline_step_version import PipelineStepVersion
 from .pipeline_step_version_logs import PipelineStepVersionLogs
 from .pipeline_version import PipelineVersion
 from .pipeline_version_logs import PipelineVersionLogs
@@ -219,7 +222,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.73.2'
+    client_version = '0.73.3'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1118,19 +1121,19 @@ class ReadOnlyClient(BaseApiClient):
             ModelMetrics: An object containing the model metrics and explanations for what each metric means."""
         return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics, 'returnGraphs': return_graphs}, parse_type=ModelMetrics)
 
-    def query_test_point_predictions(self, model_version: str, model_name: str, to_row: int, from_row: int = 0, sql_where_clause: str = '') -> TestPointPredictions:
+    def query_test_point_predictions(self, model_version: str, algorithm: str, to_row: int, from_row: int = 0, sql_where_clause: str = '') -> TestPointPredictions:
         """Query the test points predictions data for a specific algorithm.
 
         Args:
             model_version (str): The unique ID associated with the model version.
-            model_name (str): The model name
+            algorithm (str): The algorithm id
             to_row (int): Ending row index to return.
             from_row (int): Starting row index to return.
             sql_where_clause (str): The SQL WHERE clause used to filter the data.
 
         Returns:
             TestPointPredictions: TestPointPrediction"""
-        return self._call_api('queryTestPointPredictions', 'GET', query_params={'modelVersion': model_version, 'modelName': model_name, 'toRow': to_row, 'fromRow': from_row, 'sqlWhereClause': sql_where_clause}, parse_type=TestPointPredictions)
+        return self._call_api('queryTestPointPredictions', 'GET', query_params={'modelVersion': model_version, 'algorithm': algorithm, 'toRow': to_row, 'fromRow': from_row, 'sqlWhereClause': sql_where_clause}, parse_type=TestPointPredictions)
 
     def list_model_versions(self, model_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelVersion]:
         """Retrieves a list of versions for a given model.
@@ -1731,6 +1734,16 @@ class ReadOnlyClient(BaseApiClient):
             PipelineStep: An object describing the pipeline step."""
         return self._call_api('describePipelineStepByName', 'GET', query_params={'pipelineId': pipeline_id, 'stepName': step_name}, parse_type=PipelineStep)
 
+    def describe_pipeline_step_version(self, pipeline_step_version: str) -> PipelineStepVersion:
+        """Describes a pipeline step version.
+
+        Args:
+            pipeline_step_version (str): The ID of the pipeline step version.
+
+        Returns:
+            PipelineStepVersion: """
+        return self._call_api('describePipelineStepVersion', 'GET', query_params={'pipelineStepVersion': pipeline_step_version}, parse_type=PipelineStepVersion)
+
     def unset_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
         """Deletes the refresh schedule for a given pipeline.
 
@@ -1908,6 +1921,18 @@ class ReadOnlyClient(BaseApiClient):
             list[Module]: A list of modules"""
         return self._call_api('listModules', 'GET', query_params={}, parse_type=Module)
 
+    def query_feature_group_code_generator(self, query: str, language: str, project_id: str = None) -> LlmResponse:
+        """Send a query to the feature group code generator tool to generate code for the query.
+
+        Args:
+            query (str): A natural language query which specifies what the user wants out of the feature group or its code.
+            language (str): The language in which code is to be generated. One of 'sql' or 'python'.
+            project_id (str): A unique string identifier of the project in context of which the query is.
+
+        Returns:
+            LlmResponse: The response from the model, raw text and parsed components."""
+        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id}, parse_type=LlmResponse, timeout=300)
+
     def get_natural_language_explanation(self, feature_group_id: str = None, feature_group_version: str = None, model_id: str = None) -> NaturalLanguageExplanation:
         """Returns the saved natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version or Model
 
@@ -1933,13 +1958,13 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, parse_type=NaturalLanguageExplanation)
 
     def get_chat_session(self, chat_session_id: str) -> ChatSession:
-        """Gets a chat session from Abacus Chat.
+        """Gets a chat session from Abacus AI Chat.
 
         Args:
-            chat_session_id (str): The chat session id
+            chat_session_id (str): Unique ID of the chat session.
 
         Returns:
-            ChatSession: The chat session with Abacus Chat"""
+            ChatSession: The chat session with Abacus AI Chat"""
         return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
 
     def list_chat_sessions(self, most_recent_per_project: bool = False) -> ChatSession:
@@ -1949,7 +1974,7 @@ class ReadOnlyClient(BaseApiClient):
             most_recent_per_project (bool): An optional parameter whether to only return the most recent chat session per project. Default False.
 
         Returns:
-            ChatSession: The chat sessions with Abacus Chat"""
+            ChatSession: The chat sessions with Abacus AI Chat"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
     def get_deployment_conversation(self, deployment_conversation_id: str) -> DeploymentConversation:
@@ -1972,6 +1997,26 @@ class ReadOnlyClient(BaseApiClient):
             list[DeploymentConversation]: The deployment conversations."""
         return self._call_api('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id}, parse_type=DeploymentConversation)
 
+    def describe_agent(self, agent_id: str) -> Agent:
+        """Retrieves a full description of the specified model.
+
+        Args:
+            agent_id (str): Unique string identifier associated with the model.
+
+        Returns:
+            Agent: Description of the agent."""
+        return self._call_api('describeAgent', 'GET', query_params={'agentId': agent_id}, parse_type=Agent)
+
+    def describe_agent_version(self, agent_version: str) -> AgentVersion:
+        """Retrieves a full description of the specified agent version.
+
+        Args:
+            agent_version (str): Unique string identifier of the agent version.
+
+        Returns:
+            AgentVersion: A agent version."""
+        return self._call_api('describeAgentVersion', 'GET', query_params={'agentVersion': agent_version}, parse_type=AgentVersion)
+
     def search_feature_groups(self, text: str, num_results: int = 10, project_id: str = None, feature_group_ids: list = None) -> List[OrganizationSearchResult]:
         """Search feature groups based on text and filters.
 
@@ -1984,32 +2029,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[OrganizationSearchResult]: A list of search results, each containing the retrieved object and its relevance score"""
         return self._call_api('searchFeatureGroups', 'GET', query_params={'text': text, 'numResults': num_results, 'projectId': project_id, 'featureGroupIds': feature_group_ids}, parse_type=OrganizationSearchResult)
-
-    def render_feature_group_data_for_llm(self, feature_group_id: str, token_budget: int = None, render_format: str = 'markdown') -> LlmInput:
-        """Encode feature groups as language model inputs.
-
-        Args:
-            feature_group_id (str): The ID of the feature groups to be encoded.
-            token_budget (int): Enforce a given budget for each encoded feature group.
-            render_format (str): One of `['markdown', 'json']`
-
-        Returns:
-            LlmInput: LLM input object comprising of information about the feature group with given ID."""
-        return self._call_api('renderFeatureGroupDataForLLM', 'GET', query_params={'featureGroupId': feature_group_id, 'tokenBudget': token_budget, 'renderFormat': render_format}, parse_type=LlmInput)
-
-    def query_feature_group_code_generator(self, query: str, language: str, project_id: str = None, llm_name: str = None, max_tokens: int = None) -> LlmResponse:
-        """Send a query to the feature group code generator tool to generate code for the query.
-
-        Args:
-            query (str): A natural language query which specifies what the user wants out of the feature group or its code.
-            language (str): The language in which code is to be generated. One of 'sql' or 'python'.
-            project_id (str): A unique string identifier of the project in context of which the query is.
-            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
-            max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
-
-        Returns:
-            LlmResponse: The response from the model, raw text and parsed components."""
-        return self._call_api('queryFeatureGroupCodeGenerator', 'GET', query_params={'query': query, 'language': language, 'projectId': project_id, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmResponse, timeout=300)
 
     def list_document_retrievers(self, project_id: str, limit: int = 100, start_after_id: str = None) -> List[DocumentRetriever]:
         """List all the document retrievers.
@@ -4296,7 +4315,7 @@ Creates a new feature group defined as the union of other feature group versions
             dataset_id (str): Unique string identifier of the dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
 
-    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None, is_additional_model: bool = False) -> List[TrainingConfigOptions]:
+    def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None) -> List[TrainingConfigOptions]:
         """Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
         Args:
@@ -4304,11 +4323,10 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_ids (list): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
             current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
-            is_additional_model (bool): Whether to get training config options for an additional model
 
         Returns:
             list[TrainingConfigOptions]: An array of options that can be specified when training a model in this project."""
-        return self._call_api('getTrainingConfigOptions', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain, 'currentTrainingConfig': current_training_config, 'isAdditionalModel': is_additional_model}, parse_type=TrainingConfigOptions)
+        return self._call_api('getTrainingConfigOptions', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupIds': feature_group_ids, 'forRetrain': for_retrain, 'currentTrainingConfig': current_training_config}, parse_type=TrainingConfigOptions)
 
     def create_train_test_data_split_feature_group(self, project_id: str, training_config: Union[dict, TrainingConfig], feature_group_ids: list) -> FeatureGroup:
         """Get the train and test data split without training the model. Only supported for models with custom algorithms.
@@ -4718,7 +4736,7 @@ Creates a new feature group defined as the union of other feature group versions
             monitor_alert_id (str): The unique string identifier of the alert to delete."""
         return self._call_api('deleteMonitorAlert', 'DELETE', query_params={'monitorAlertId': monitor_alert_id})
 
-    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, additional_model_name: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
+    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
 
         A Deployment makes the trained model or feature group available for prediction requests.
@@ -4729,7 +4747,6 @@ Creates a new feature group defined as the union of other feature group versions
             model_id (str): The unique ID associated with the model.
             model_version (str): The unique ID associated with the model version to deploy.
             algorithm (str): The unique ID associated with the algorithm to deploy.
-            additional_model_name (str): The unique name associated with the additional model to deploy.
             feature_group_id (str): The unique ID associated with a feature group.
             project_id (str): The unique ID associated with a project.
             description (str): The description for the deployment.
@@ -4742,7 +4759,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             Deployment: The new model or feature group deployment."""
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'additionalModelName': additional_model_name, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'modelDeploymentConfig': model_deployment_config, 'deploymentConfig': deployment_config}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'modelDeploymentConfig': model_deployment_config, 'deploymentConfig': deployment_config}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str, name: str = None) -> DeploymentAuthToken:
         """Creates a deployment token for the specified project.
@@ -5853,6 +5870,18 @@ Creates a new feature group defined as the union of other feature group versions
             PipelineVersion: The object describing the pipeline"""
         return self._call_api('runPipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'pipelineVariableMappings': pipeline_variable_mappings}, parse_type=PipelineVersion)
 
+    def reset_pipeline_version(self, pipeline_version: str, steps: list = None, include_downstream_steps: bool = True) -> PipelineVersion:
+        """Reruns a pipeline version for the given steps and downstream steps if specified.
+
+        Args:
+            pipeline_version (str): The id of the pipeline version.
+            steps (list): List of pipeline step names to rerun.
+            include_downstream_steps (bool): Whether to rerun downstream steps from the steps you have passed
+
+        Returns:
+            PipelineVersion: Object describing the pipeline version"""
+        return self._call_api('resetPipelineVersion', 'POST', query_params={}, body={'pipelineVersion': pipeline_version, 'steps': steps, 'includeDownstreamSteps': include_downstream_steps}, parse_type=PipelineVersion)
+
     def create_pipeline_step(self, pipeline_id: str, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None) -> Pipeline:
         """Creates a step in a given pipeline.
 
@@ -6131,15 +6160,39 @@ Creates a new feature group defined as the union of other feature group versions
             model_id (str): A unique string identifier associated with the Model."""
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, timeout=300)
 
-    def create_chat_session(self, project_id: str = None) -> ChatSession:
-        """Creates a chat session with Abacus Chat.
+    def create_chat_session(self, project_id: str = None, name: str = None) -> ChatSession:
+        """Creates a chat session with Abacus AI Chat.
 
         Args:
-            project_id (str): The project this chat session belongs to
+            project_id (str): The unique project identifier this chat session belongs to
+            name (str): The name of the chat session. Defaults to the project name.
 
         Returns:
-            ChatSession: The chat session with Abacus Chat"""
-        return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id}, parse_type=ChatSession)
+            ChatSession: The chat session with Abacus AI Chat"""
+        return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id, 'name': name}, parse_type=ChatSession)
+
+    def delete_chat_message(self, chat_session_id: str, message_index: int):
+        """Deletes a message in a chat session
+
+        Args:
+            chat_session_id (str): Unique ID of the chat session.
+            message_index (int): The index of the chat message within the UI."""
+        return self._call_api('deleteChatMessage', 'DELETE', query_params={'chatSessionId': chat_session_id, 'messageIndex': message_index})
+
+    def export_chat_session(self, chat_session_id: str):
+        """Exports a chat session to an HTML file
+
+        Args:
+            chat_session_id (str): Unique ID of the chat session."""
+        return self._call_api('exportChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id})
+
+    def rename_chat_session(self, chat_session_id: str, name: str):
+        """Renames a chat session with Abacus AI Chat.
+
+        Args:
+            chat_session_id (str): Unique ID of the chat session.
+            name (str): The new name of the chat session."""
+        return self._call_api('renameChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'name': name})
 
     def create_deployment_conversation(self, deployment_id: str, name: str) -> DeploymentConversation:
         """Creates a deployment conversation.
@@ -6178,7 +6231,7 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The new name of the conversation."""
         return self._call_api('renameDeploymentConversation', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
 
-    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
+    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Agent:
         """Creates a new AI agent.
 
         Args:
@@ -6191,10 +6244,10 @@ Creates a new feature group defined as the union of other feature group versions
             description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
-            Model: The new agent"""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Model)
+            Agent: The new agent"""
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Model:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Agent:
         """Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
         Args:
@@ -6206,8 +6259,8 @@ Creates a new feature group defined as the union of other feature group versions
             description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
-            Model: The updated agent"""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Model)
+            Agent: The updated agent"""
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Agent)
 
     def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
@@ -6309,3 +6362,17 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'filters': filters, 'limit': limit, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words}, parse_type=DocumentRetrieverLookupResult)
+
+    def get_document_snippet(self, document_retriever_id: str, deployment_token: str, document_id: str, start_word_index: None = None, end_word_index: None = None) -> DocumentRetrieverLookupResult:
+        """Get a snippet from documents in the document retriever.
+
+        Args:
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
+            deployment_token (str): A deployment token used to authenticate access to created vector store.
+            document_id (str): The ID of the document to retrieve the snippet from.
+            start_word_index (None): If provided, will start the snippet at the index (of words in the document) specified.
+            end_word_index (None): If provided, will end the snippet at the index of (of words in the document) specified.
+
+        Returns:
+            DocumentRetrieverLookupResult: The documentation snippet found from the document retriever."""
+        return self._call_api('getDocumentSnippet', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'documentId': document_id, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index}, parse_type=DocumentRetrieverLookupResult)

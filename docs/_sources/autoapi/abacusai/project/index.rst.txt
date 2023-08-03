@@ -186,7 +186,7 @@ Classes
       :rtype: list[FeatureGroupTemplate]
 
 
-   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None, is_additional_model = False)
+   .. py:method:: get_training_config_options(feature_group_ids = None, for_retrain = False, current_training_config = None)
 
       Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -196,8 +196,6 @@ Classes
       :type for_retrain: bool
       :param current_training_config: The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
       :type current_training_config: TrainingConfig
-      :param is_additional_model: Whether to get training config options for an additional model
-      :type is_additional_model: bool
 
       :returns: An array of options that can be specified when training a model in this project.
       :rtype: list[TrainingConfigOptions]
@@ -585,14 +583,14 @@ Classes
       :rtype: list[Algorithm]
 
 
-   .. py:method:: create_chat_session()
+   .. py:method:: create_chat_session(name = None)
 
-      Creates a chat session with Abacus Chat.
+      Creates a chat session with Abacus AI Chat.
 
-      :param project_id: The project this chat session belongs to
-      :type project_id: str
+      :param name: The name of the chat session. Defaults to the project name.
+      :type name: str
 
-      :returns: The chat session with Abacus Chat
+      :returns: The chat session with Abacus AI Chat
       :rtype: ChatSession
 
 
@@ -614,7 +612,7 @@ Classes
       :type description: str
 
       :returns: The new agent
-      :rtype: Model
+      :rtype: Agent
 
 
    .. py:method:: create_document_retriever(name, feature_group_id, document_retriever_config = None)

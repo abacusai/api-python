@@ -1151,19 +1151,6 @@ Classes
       :rtype: NaturalLanguageExplanation
 
 
-   .. py:method:: render_data_for_llm(token_budget = None, render_format = 'markdown')
-
-      Encode feature groups as language model inputs.
-
-      :param token_budget: Enforce a given budget for each encoded feature group.
-      :type token_budget: int
-      :param render_format: One of `['markdown', 'json']`
-      :type render_format: str
-
-      :returns: LLM input object comprising of information about the feature group with given ID.
-      :rtype: LlmInput
-
-
    .. py:method:: wait_for_dataset(timeout = 7200)
 
           A waiting call until the feature group's dataset, if any, is ready for use.

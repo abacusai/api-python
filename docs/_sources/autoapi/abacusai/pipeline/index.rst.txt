@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Pipeline(client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, notebookId=None, cron=None, nextRunTime=None, isProd=None, steps={}, pipelineReferences={}, latestPipelineVersion={})
+.. py:class:: Pipeline(client, pipelineName=None, pipelineId=None, createdAt=None, pipelineVariableMappings=None, notebookId=None, cron=None, nextRunTime=None, isProd=None, warning=None, steps={}, pipelineReferences={}, latestPipelineVersion={}, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -42,12 +42,16 @@ Classes
    :type nextRunTime: str
    :param isProd: Whether this pipeline is a production pipeline.
    :type isProd: bool
+   :param warning: Warning message for possible errors that might occur if the pipeline is run.
+   :type warning: str
    :param steps: A list of the pipeline steps attached to the pipeline.
    :type steps: PipelineStep
    :param pipelineReferences: A list of references from the pipeline to other objects
    :type pipelineReferences: PipelineReference
    :param latestPipelineVersion: The latest version of the pipeline.
    :type latestPipelineVersion: PipelineVersion
+   :param codeSource: information on the source code
+   :type codeSource: CodeSource
 
    .. py:method:: __repr__()
 
@@ -197,6 +201,28 @@ Classes
 
       :returns: Object describing the pipeline.
       :rtype: Pipeline
+
+
+   .. py:method:: create_step_from_function(step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+
+      Creates a step in the pipeline from a python function.
+
+      :param step_name: The name of the step.
+      :type step_name: str
+      :param function: The python function.
+      :type function: callable
+      :param step_input_mappings: List of Python function arguments.
+      :type step_input_mappings: List[PythonFunctionArguments]
+      :param output_variable_mappings: List of Python function ouputs.
+      :type output_variable_mappings: List[OutputVariableMapping]
+      :param step_dependencies: List of step names this step depends on.
+      :type step_dependencies: List[str]
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: list
+      :param cpu_size: Size of the CPU for the step function.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the step function.
+      :type memory: int
 
 
 

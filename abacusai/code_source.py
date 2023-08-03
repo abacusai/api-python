@@ -41,3 +41,16 @@ class CodeSource(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         return {'source_type': self.source_type, 'source_code': self.source_code, 'application_connector_id': self.application_connector_id, 'application_connector_info': self.application_connector_info, 'package_requirements': self.package_requirements, 'status': self.status, 'error': self.error, 'publishing_msg': self.publishing_msg, 'module_dependencies': self.module_dependencies}
+
+    def import_as_cell(self):
+        """
+        Adds the source code as an unexecuted cell in the notebook.
+        """
+        if not self.source_code:
+            print('No source code to import.')
+        from IPython.core.getipython import get_ipython
+        try:
+            shell = get_ipython()
+            shell.set_next_input(self.source_code)
+        except Exception:
+            print('Unable to import source code as cells.')

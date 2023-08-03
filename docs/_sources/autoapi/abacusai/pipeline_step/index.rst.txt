@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PipelineStep(client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, pythonFunction={})
+.. py:class:: PipelineStep(client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, pythonFunction={}, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -48,6 +48,8 @@ Classes
    :type memory: int
    :param pythonFunction: Information about the python function for the step.
    :type pythonFunction: PythonFunction
+   :param codeSource: Information about the source code of the step function.
+   :type codeSource: CodeSource
 
    .. py:method:: __repr__()
 

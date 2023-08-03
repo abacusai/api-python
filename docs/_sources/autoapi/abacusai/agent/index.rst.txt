@@ -1,0 +1,96 @@
+:py:mod:`abacusai.agent`
+========================
+
+.. py:module:: abacusai.agent
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.agent.Agent
+
+
+
+
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, codeSource={}, latestAgentVersion={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An AI agent.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The user-friendly name for the agent.
+   :type name: str
+   :param agentId: The unique identifier of the agent.
+   :type agentId: str
+   :param createdAt: Date and time at which the agent was created.
+   :type createdAt: str
+   :param projectId: The project this agent belongs to.
+   :type projectId: str
+   :param predictFunctionName: Name of the function found in the source code that will be executed run predictions through agent. It is not executed when this function is run.
+   :type predictFunctionName: str
+   :param sourceCode: Python code used to make the agent.
+   :type sourceCode: str
+   :param agentConfig: The config options used to create this agent.
+   :type agentConfig: dict
+   :param latestAgentVersion: The latest agent version.
+   :type latestAgentVersion: AgentVersion
+   :param codeSource: If a python model, information on the source code
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: Agent
+
+
+   .. py:method:: describe()
+
+      Retrieves a full description of the specified model.
+
+      :param agent_id: Unique string identifier associated with the model.
+      :type agent_id: str
+
+      :returns: Description of the agent.
+      :rtype: Agent
+
+
+   .. py:method:: wait_for_publish(timeout=None)
+
+      A waiting call until agent is published.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the agent publishing.
+
+      :returns: A string describing the status of a agent publishing (pending, complete, etc.).
+      :rtype: str
+
+
+

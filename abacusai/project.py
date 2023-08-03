@@ -181,7 +181,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_project_feature_group_templates(self.project_id, limit, start_after_id, should_include_all_system_templates)
 
-    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None, is_additional_model: bool = False):
+    def get_training_config_options(self, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None):
         """
         Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -189,12 +189,11 @@ class Project(AbstractApiClass):
             feature_group_ids (list): The feature group IDs to be used for training.
             for_retrain (bool): Whether the training config options are used for retraining.
             current_training_config (TrainingConfig): The current state of the training config, with some options set, which shall be used to get new options after refresh. This is `None` by default initially.
-            is_additional_model (bool): Whether to get training config options for an additional model
 
         Returns:
             list[TrainingConfigOptions]: An array of options that can be specified when training a model in this project.
         """
-        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config, is_additional_model)
+        return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config)
 
     def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list):
         """
@@ -528,17 +527,17 @@ class Project(AbstractApiClass):
         """
         return self.client.list_builtin_algorithms(self.project_id, feature_group_ids, training_config)
 
-    def create_chat_session(self):
+    def create_chat_session(self, name: str = None):
         """
-        Creates a chat session with Abacus Chat.
+        Creates a chat session with Abacus AI Chat.
 
         Args:
-            project_id (str): The project this chat session belongs to
+            name (str): The name of the chat session. Defaults to the project name.
 
         Returns:
-            ChatSession: The chat session with Abacus Chat
+            ChatSession: The chat session with Abacus AI Chat
         """
-        return self.client.create_chat_session(self.project_id)
+        return self.client.create_chat_session(self.project_id, name)
 
     def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None):
         """
@@ -553,7 +552,7 @@ class Project(AbstractApiClass):
             description (str): A description of the agent, including its purpose and instructions.
 
         Returns:
-            Model: The new agent
+            Agent: The new agent
         """
         return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
 

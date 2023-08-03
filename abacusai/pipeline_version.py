@@ -1,3 +1,4 @@
+from .code_source import CodeSource
 from .pipeline_step_version import PipelineStepVersion
 from .return_class import AbstractApiClass
 
@@ -18,9 +19,10 @@ class PipelineVersion(AbstractApiClass):
             error (str): The relevant error, if the status is FAILED.
             pipelineVariableMappings (dict): A description of the function variables into the pipeline.
             stepVersions (PipelineStepVersion): A list of the pipeline step versions.
+            codeSource (CodeSource): information on the source code
     """
 
-    def __init__(self, client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={}):
+    def __init__(self, client, pipelineName=None, pipelineId=None, pipelineVersion=None, createdAt=None, updatedAt=None, completedAt=None, status=None, error=None, pipelineVariableMappings=None, stepVersions={}, codeSource={}):
         super().__init__(client, pipelineVersion)
         self.pipeline_name = pipelineName
         self.pipeline_id = pipelineId
@@ -33,9 +35,10 @@ class PipelineVersion(AbstractApiClass):
         self.pipeline_variable_mappings = pipelineVariableMappings
         self.step_versions = client._build_class(
             PipelineStepVersion, stepVersions)
+        self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PipelineVersion(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  step_versions={repr(self.step_versions)})"
+        return f"PipelineVersion(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  step_versions={repr(self.step_versions)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -44,7 +47,7 @@ class PipelineVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions)}
+        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions), 'code_source': self._get_attribute_as_dict(self.code_source)}
 
     def refresh(self):
         """
@@ -67,6 +70,19 @@ class PipelineVersion(AbstractApiClass):
             PipelineVersion: Object describing the pipeline version
         """
         return self.client.describe_pipeline_version(self.pipeline_version)
+
+    def reset(self, steps: list = None, include_downstream_steps: bool = True):
+        """
+        Reruns a pipeline version for the given steps and downstream steps if specified.
+
+        Args:
+            steps (list): List of pipeline step names to rerun.
+            include_downstream_steps (bool): Whether to rerun downstream steps from the steps you have passed
+
+        Returns:
+            PipelineVersion: Object describing the pipeline version
+        """
+        return self.client.reset_pipeline_version(self.pipeline_version, steps, include_downstream_steps)
 
     def list_logs(self):
         """

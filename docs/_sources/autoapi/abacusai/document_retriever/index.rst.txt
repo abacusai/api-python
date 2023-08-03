@@ -133,6 +133,23 @@ Classes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
+   .. py:method:: get_document_snippet(deployment_token, document_id, start_word_index = None, end_word_index = None)
+
+      Get a snippet from documents in the document retriever.
+
+      :param deployment_token: A deployment token used to authenticate access to created vector store.
+      :type deployment_token: str
+      :param document_id: The ID of the document to retrieve the snippet from.
+      :type document_id: str
+      :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.
+      :type start_word_index: None
+      :param end_word_index: If provided, will end the snippet at the index of (of words in the document) specified.
+      :type end_word_index: None
+
+      :returns: The documentation snippet found from the document retriever.
+      :rtype: DocumentRetrieverLookupResult
+
+
    .. py:method:: wait_until_ready(timeout = 3600)
 
       A waiting call until document retriever is ready.
