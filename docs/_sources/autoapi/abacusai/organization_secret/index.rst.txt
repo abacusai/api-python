@@ -1,0 +1,49 @@
+:py:mod:`abacusai.organization_secret`
+======================================
+
+.. py:module:: abacusai.organization_secret
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.organization_secret.OrganizationSecret
+
+
+
+
+.. py:class:: OrganizationSecret(client, secretKey=None, value=None, createdAt=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Organization secret
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param secretKey: The key of the secret
+   :type secretKey: str
+   :param value: The value of the secret
+   :type value: str
+   :param createdAt: The date and time when the secret was created, in ISO-8601 format.
+   :type createdAt: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -466,6 +466,17 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=prediction_url)
 
+    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None) -> Dict:
+        """Generate text from a document
+
+        Args:
+            deployment_token (str): Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
+            deployment_id (str): Unique identifier of a deployment created under the project.
+            document (io.TextIOBase): Input document which can be an image, pdf, or word document (Some formats might not be supported yet)"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'document': document}, server_override=prediction_url)
+
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
         """Transcribe the audio
 
@@ -567,3 +578,17 @@ class PredictionClient(BaseApiClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
+
+    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
+        """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url)

@@ -80,6 +80,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_column/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_column</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_version_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_version_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_auth_token</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_conversation</span></code></a></li>
@@ -160,6 +161,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_search_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_secret</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline_reference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_reference</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline_step/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_step</span></code></a></li>
@@ -382,8 +384,11 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.document_retriever.DocumentRetriever.lookup">
-<span class="sig-name descname"><span class="pre">lookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever.DocumentRetriever.lookup" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">lookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever.DocumentRetriever.lookup" title="Permalink to this definition"></a></dt>
 <dd><p>Lookup relevant documents from the document retriever deployed with given query.</p>
+<p>Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -394,6 +399,7 @@
 <li><p><strong>result_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – If provided, will limit the column properties present in each result to those specified in this list.</p></li>
 <li><p><strong>max_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will limit the total number of words in the results to the value specified.</p></li>
 <li><p><strong>num_retrieval_margin_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will add this number of words from left and right of the returned chunks.</p></li>
+<li><p><strong>max_words_per_chunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -414,8 +420,8 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A deployment token used to authenticate access to created vector store.</p></li>
 <li><p><strong>document_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ID of the document to retrieve the snippet from.</p></li>
-<li><p><strong>start_word_index</strong> (<em>None</em>) – If provided, will start the snippet at the index (of words in the document) specified.</p></li>
-<li><p><strong>end_word_index</strong> (<em>None</em>) – If provided, will end the snippet at the index of (of words in the document) specified.</p></li>
+<li><p><strong>start_word_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will start the snippet at the index (of words in the document) specified.</p></li>
+<li><p><strong>end_word_index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – If provided, will end the snippet at the index of (of words in the document) specified.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -423,6 +429,17 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../document_retriever_lookup_result/index.html#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult">DocumentRetrieverLookupResult</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.document_retriever.DocumentRetriever.restart">
+<span class="sig-name descname"><span class="pre">restart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.document_retriever.DocumentRetriever.restart" title="Permalink to this definition"></a></dt>
+<dd><p>Restart the document retriever if it is stopped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p>
 </dd>
 </dl>
 </dd></dl>

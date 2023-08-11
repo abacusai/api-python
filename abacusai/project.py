@@ -160,7 +160,7 @@ class Project(AbstractApiClass):
         List all the feature groups associated with a project
 
         Args:
-            filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups present in this project to be returned if they are of the given use. Possible values are:  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT.
+            filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
 
         Returns:
             list[FeatureGroup]: All the Feature Groups in a project.

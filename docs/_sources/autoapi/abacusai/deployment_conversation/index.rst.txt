@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, externalSessionId=None, history={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,6 +34,8 @@ Classes
    :type deploymentId: str
    :param createdAt: The timestamp at which the deployment conversation was created.
    :type createdAt: str
+   :param externalSessionId: The external session id associated with the deployment conversation.
+   :type externalSessionId: str
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 
@@ -50,23 +52,23 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: get()
+   .. py:method:: get(deployment_id = None)
 
       Gets a deployment conversation.
 
-      :param deployment_conversation_id: Unique ID of the conversation.
-      :type deployment_conversation_id: str
+      :param deployment_id: (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+      :type deployment_id: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
 
 
-   .. py:method:: delete()
+   .. py:method:: delete(deployment_id = None)
 
       Delete a Deployment Conversation.
 
-      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
-      :type deployment_conversation_id: str
+      :param deployment_id: (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+      :type deployment_id: str
 
 
    .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None)
@@ -83,12 +85,14 @@ Classes
       :type feedback: str
 
 
-   .. py:method:: rename(name)
+   .. py:method:: rename(name, deployment_id = None)
 
       Rename a Deployment Conversation.
 
       :param name: The new name of the conversation.
       :type name: str
+      :param deployment_id: (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+      :type deployment_id: str
 
 
 

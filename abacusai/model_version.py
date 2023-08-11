@@ -35,10 +35,11 @@ class ModelVersion(AbstractApiClass):
             customAlgorithmConfigs (dict): User-defined configs for each of the user-defined custom algorithms.
             trainedModelTypes (list): List of trained model types.
             useGpu (bool): Whether this model version is using gpu
+            partialComplete (bool): If true, all required algorithms have completed training.
             codeSource (CodeSource): If a python model, information on where the source code is located.
     """
 
-    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, codeSource={}):
+    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, codeSource={}):
         super().__init__(client, modelVersion)
         self.model_version = modelVersion
         self.status = status
@@ -65,10 +66,11 @@ class ModelVersion(AbstractApiClass):
         self.custom_algorithm_configs = customAlgorithmConfigs
         self.trained_model_types = trainedModelTypes
         self.use_gpu = useGpu
+        self.partial_complete = partialComplete
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  training_vector_store_versions={repr(self.training_vector_store_versions)},\n  deployable_algorithms={repr(self.deployable_algorithms)},\n  best_algorithm={repr(self.best_algorithm)},\n  default_algorithm={repr(self.default_algorithm)},\n  feature_analysis_status={repr(self.feature_analysis_status)},\n  data_cluster_info={repr(self.data_cluster_info)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  trained_model_types={repr(self.trained_model_types)},\n  use_gpu={repr(self.use_gpu)},\n  code_source={repr(self.code_source)})"
+        return f"ModelVersion(model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  training_started_at={repr(self.training_started_at)},\n  training_completed_at={repr(self.training_completed_at)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  automl_complete={repr(self.automl_complete)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  training_vector_store_versions={repr(self.training_vector_store_versions)},\n  deployable_algorithms={repr(self.deployable_algorithms)},\n  best_algorithm={repr(self.best_algorithm)},\n  default_algorithm={repr(self.default_algorithm)},\n  feature_analysis_status={repr(self.feature_analysis_status)},\n  data_cluster_info={repr(self.data_cluster_info)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  trained_model_types={repr(self.trained_model_types)},\n  use_gpu={repr(self.use_gpu)},\n  partial_complete={repr(self.partial_complete)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -77,7 +79,7 @@ class ModelVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'training_vector_store_versions': self.training_vector_store_versions, 'deployable_algorithms': self.deployable_algorithms, 'best_algorithm': self.best_algorithm, 'default_algorithm': self.default_algorithm, 'feature_analysis_status': self.feature_analysis_status, 'data_cluster_info': self.data_cluster_info, 'custom_algorithm_configs': self.custom_algorithm_configs, 'trained_model_types': self.trained_model_types, 'use_gpu': self.use_gpu, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'dataset_versions': self.dataset_versions, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'training_vector_store_versions': self.training_vector_store_versions, 'deployable_algorithms': self.deployable_algorithms, 'best_algorithm': self.best_algorithm, 'default_algorithm': self.default_algorithm, 'feature_analysis_status': self.feature_analysis_status, 'data_cluster_info': self.data_cluster_info, 'custom_algorithm_configs': self.custom_algorithm_configs, 'trained_model_types': self.trained_model_types, 'use_gpu': self.use_gpu, 'partial_complete': self.partial_complete, 'code_source': self._get_attribute_as_dict(self.code_source)}
 
     def describe_train_test_data_split_feature_group_version(self):
         """
@@ -216,7 +218,13 @@ class ModelVersion(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
-        return self.client._poll(self, {'PENDING', 'TRAINING'}, delay=30, timeout=timeout)
+        start_time = time.time()
+        while True:
+            if timeout and time.time() - start_time > timeout:
+                raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
+            self.refresh()
+            if self.partial_complete:
+                return self
 
     def wait_for_full_automl(self, timeout=None):
         """

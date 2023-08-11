@@ -104,9 +104,14 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.client.list_document_retriever_versions(self.document_retriever_id, limit, start_after_version)
 
-    def lookup(self, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None):
+    def lookup(self, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None):
         """
         Lookup relevant documents from the document retriever deployed with given query.
+
+        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
 
         Args:
             query (str): The query to search for.
@@ -116,26 +121,36 @@ class DocumentRetriever(AbstractApiClass):
             result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
+            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
         """
-        return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, filters, limit, result_columns, max_words, num_retrieval_margin_words)
+        return self.client.lookup_document_retriever(self.document_retriever_id, query, deployment_token, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk)
 
-    def get_document_snippet(self, deployment_token: str, document_id: str, start_word_index: None = None, end_word_index: None = None):
+    def get_document_snippet(self, deployment_token: str, document_id: str, start_word_index: int = None, end_word_index: int = None):
         """
         Get a snippet from documents in the document retriever.
 
         Args:
             deployment_token (str): A deployment token used to authenticate access to created vector store.
             document_id (str): The ID of the document to retrieve the snippet from.
-            start_word_index (None): If provided, will start the snippet at the index (of words in the document) specified.
-            end_word_index (None): If provided, will end the snippet at the index of (of words in the document) specified.
+            start_word_index (int): If provided, will start the snippet at the index (of words in the document) specified.
+            end_word_index (int): If provided, will end the snippet at the index of (of words in the document) specified.
 
         Returns:
             DocumentRetrieverLookupResult: The documentation snippet found from the document retriever.
         """
         return self.client.get_document_snippet(self.document_retriever_id, deployment_token, document_id, start_word_index, end_word_index)
+
+    def restart(self):
+        """
+        Restart the document retriever if it is stopped.
+
+        Args:
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
+        """
+        return self.client.restart_document_retriever(self.document_retriever_id)
 
     def wait_until_ready(self, timeout: int = 3600):
         """

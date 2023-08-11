@@ -245,7 +245,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, chat_config, filter_key_values)
 
-    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None):
+    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """
         Creates a batch prediction job description for the given deployment.
 
@@ -264,11 +264,12 @@ class Deployment(AbstractApiClass):
             csv_explanations_prefix (str): Prefix to prepend to the explanation columns, only applies when output format is CSV.
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version.
             result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list.
+            input_feature_groups (dict): A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
 
         Returns:
             BatchPrediction: The batch prediction description.
         """
-        return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns)
+        return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, input_feature_groups)
 
     def create_conversation(self, name: str):
         """

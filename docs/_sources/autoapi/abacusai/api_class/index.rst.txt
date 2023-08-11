@@ -2064,18 +2064,23 @@ Classes
 
    Derive from this class to define new enumerations.
 
-   .. py:attribute:: OPENAI
-      :value: 'OPENAI'
-
-      
-
    .. py:attribute:: E5
       :value: 'E5'
 
       
 
+   .. py:attribute:: OPENAI
+      :value: 'OPENAI'
+
+      
+
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
+
+      
+
+   .. py:attribute:: E5_SMALL
+      :value: 'E5_SMALL'
 
       
 
@@ -2411,7 +2416,7 @@ Classes
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
    :type sort_objective: PersonalizationObjective
-   :param training_mode: whether to train in production or experimental mode.
+   :param training_mode: whether to train in production or experimental mode. Defaults to EXP.
    :type training_mode: PersonalizationTrainingMode
    :param target_action_types: List of action types to use as targets for training.
    :type target_action_types: List[str]
@@ -2443,6 +2448,8 @@ Classes
    :type sequential_training: bool
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
+   :param optimized_event_type: The final event type to optimize for and compute metrics on.
+   :type optimized_event_type: str
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: int
    :param batch_size: Batch size for neural network.
@@ -2453,14 +2460,10 @@ Classes
    :type disable_gpu: boo
    :param filter_history: Do not recommend items the user has already interacted with.
    :type filter_history: bool
-   :param explore_lookback_hours: Number of hours since creation time that an item is eligible for explore fraction.
-   :type explore_lookback_hours: int
    :param max_history_length: Maximum length of user-item history to include user in training examples.
    :type max_history_length: int
    :param compute_rerank_metrics: Compute metrics based on rerank results.
    :type compute_rerank_metrics: bool
-   :param item_id_dropout: Fraction of item_id values to randomly dropout during training.
-   :type item_id_dropout: float
    :param add_time_features: Include interaction time as a feature.
    :type add_time_features: bool
    :param disable_timestamp_scalar_features: Exclude timestamp scalar features.
@@ -2562,6 +2565,11 @@ Classes
 
       
 
+   .. py:attribute:: optimized_event_type
+      :type: str
+
+      
+
    .. py:attribute:: dropout_rate
       :type: int
 
@@ -2587,11 +2595,6 @@ Classes
 
       
 
-   .. py:attribute:: explore_lookback_hours
-      :type: int
-
-      
-
    .. py:attribute:: max_history_length
       :type: int
 
@@ -2599,11 +2602,6 @@ Classes
 
    .. py:attribute:: compute_rerank_metrics
       :type: bool
-
-      
-
-   .. py:attribute:: item_id_dropout
-      :type: float
 
       
 
@@ -3477,8 +3475,8 @@ Classes
    :type system_message: str
    :param temperature: The generative LLM temperature
    :type temperature: float
-   :param search_title_column: Include the title column values in the retrieved search results
-   :type search_title_column: str
+   :param metadata_columns: Include the metadata column values in the retrieved search results.
+   :type metadata_columns: list
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -3500,8 +3498,8 @@ Classes
 
       
 
-   .. py:attribute:: search_title_column
-      :type: str
+   .. py:attribute:: metadata_columns
+      :type: list
 
       
 
@@ -4417,18 +4415,23 @@ Classes
 
    Derive from this class to define new enumerations.
 
-   .. py:attribute:: OPENAI
-      :value: 'OPENAI'
-
-      
-
    .. py:attribute:: E5
       :value: 'E5'
 
       
 
+   .. py:attribute:: OPENAI
+      :value: 'OPENAI'
+
+      
+
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
+
+      
+
+   .. py:attribute:: E5_SMALL
+      :value: 'E5_SMALL'
 
       
 

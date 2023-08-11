@@ -2308,18 +2308,23 @@ inheritance.</p>
 <p>Generic enumeration.</p>
 <p>Derive from this class to define new enumerations.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.VectorStoreTextEncoder.OPENAI">
-<span class="sig-name descname"><span class="pre">OPENAI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI'</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreTextEncoder.OPENAI" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.VectorStoreTextEncoder.E5">
 <span class="sig-name descname"><span class="pre">E5</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'E5'</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreTextEncoder.E5" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.VectorStoreTextEncoder.OPENAI">
+<span class="sig-name descname"><span class="pre">OPENAI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI'</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreTextEncoder.OPENAI" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.VectorStoreTextEncoder.SENTENCE_BERT">
 <span class="sig-name descname"><span class="pre">SENTENCE_BERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SENTENCE_BERT'</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreTextEncoder.SENTENCE_BERT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.VectorStoreTextEncoder.E5_SMALL">
+<span class="sig-name descname"><span class="pre">E5_SMALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'E5_SMALL'</span></em><a class="headerlink" href="#abacusai.api_class.VectorStoreTextEncoder.E5_SMALL" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2698,7 +2703,7 @@ inheritance.</p>
 :type objective: PersonalizationObjective
 :param sort_objective: Ranking scheme used to sort models on the metrics page.
 :type sort_objective: PersonalizationObjective
-:param training_mode: whether to train in production or experimental mode.
+:param training_mode: whether to train in production or experimental mode. Defaults to EXP.
 :type training_mode: PersonalizationTrainingMode
 :param target_action_types: List of action types to use as targets for training.
 :type target_action_types: List[str]
@@ -2730,6 +2735,8 @@ inheritance.</p>
 :type sequential_training: bool
 :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
 :type data_split_feature_group_table_name: str
+:param optimized_event_type: The final event type to optimize for and compute metrics on.
+:type optimized_event_type: str
 :param dropout_rate: Dropout rate for neural network.
 :type dropout_rate: int
 :param batch_size: Batch size for neural network.
@@ -2740,14 +2747,10 @@ inheritance.</p>
 :type disable_gpu: boo
 :param filter_history: Do not recommend items the user has already interacted with.
 :type filter_history: bool
-:param explore_lookback_hours: Number of hours since creation time that an item is eligible for explore fraction.
-:type explore_lookback_hours: int
 :param max_history_length: Maximum length of user-item history to include user in training examples.
 :type max_history_length: int
 :param compute_rerank_metrics: Compute metrics based on rerank results.
 :type compute_rerank_metrics: bool
-:param item_id_dropout: Fraction of item_id values to randomly dropout during training.
-:type item_id_dropout: float
 :param add_time_features: Include interaction time as a feature.
 :type add_time_features: bool
 :param disable_timestamp_scalar_features: Exclude timestamp scalar features.
@@ -2849,6 +2852,11 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.optimized_event_type">
+<span class="sig-name descname"><span class="pre">optimized_event_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.optimized_event_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.dropout_rate">
 <span class="sig-name descname"><span class="pre">dropout_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.dropout_rate" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2874,11 +2882,6 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.explore_lookback_hours">
-<span class="sig-name descname"><span class="pre">explore_lookback_hours</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.explore_lookback_hours" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.max_history_length">
 <span class="sig-name descname"><span class="pre">max_history_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.max_history_length" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -2886,11 +2889,6 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.compute_rerank_metrics">
 <span class="sig-name descname"><span class="pre">compute_rerank_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.compute_rerank_metrics" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.PersonalizationTrainingConfig.item_id_dropout">
-<span class="sig-name descname"><span class="pre">item_id_dropout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.PersonalizationTrainingConfig.item_id_dropout" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -3753,8 +3751,8 @@ inheritance.</p>
 :type system_message: str
 :param temperature: The generative LLM temperature
 :type temperature: float
-:param search_title_column: Include the title column values in the retrieved search results
-:type search_title_column: str</p>
+:param metadata_columns: Include the metadata column values in the retrieved search results.
+:type metadata_columns: list</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.document_retrievers">
 <span class="sig-name descname"><span class="pre">document_retrievers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.document_retrievers" title="Permalink to this definition"></a></dt>
@@ -3776,8 +3774,8 @@ inheritance.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.search_title_column">
-<span class="sig-name descname"><span class="pre">search_title_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.search_title_column" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.metadata_columns">
+<span class="sig-name descname"><span class="pre">metadata_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.metadata_columns" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -4757,17 +4755,22 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <p>Derive from this class to define new enumerations.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id58">
-<span class="sig-name descname"><span class="pre">OPENAI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI'</span></em><a class="headerlink" href="#id58" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">E5</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'E5'</span></em><a class="headerlink" href="#id58" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id59">
-<span class="sig-name descname"><span class="pre">E5</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'E5'</span></em><a class="headerlink" href="#id59" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">OPENAI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OPENAI'</span></em><a class="headerlink" href="#id59" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="id60">
 <span class="sig-name descname"><span class="pre">SENTENCE_BERT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SENTENCE_BERT'</span></em><a class="headerlink" href="#id60" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id61">
+<span class="sig-name descname"><span class="pre">E5_SMALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'E5_SMALL'</span></em><a class="headerlink" href="#id61" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

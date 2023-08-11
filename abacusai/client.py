@@ -51,6 +51,7 @@ from .database_connector import DatabaseConnector
 from .dataset import Dataset
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
+from .dataset_version_logs import DatasetVersionLogs
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
@@ -105,6 +106,7 @@ from .natural_language_explanation import NaturalLanguageExplanation
 from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
 from .organization_search_result import OrganizationSearchResult
+from .organization_secret import OrganizationSecret
 from .pipeline import Pipeline
 from .pipeline_step import PipelineStep
 from .pipeline_step_version import PipelineStepVersion
@@ -140,8 +142,10 @@ DEFAULT_SERVER = 'https://api.abacus.ai'
 _request_context = threading.local()
 
 
-def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 504), session=None):
+def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500: bool = False):
     session = session or requests.Session()
+    if retry_500:
+        status_forcelist = (500, *status_forcelist)
     retry = Retry(
         total=retries,
         read=retries,
@@ -222,7 +226,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.73.3'
+    client_version = '0.74.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -318,7 +322,7 @@ class BaseApiClient:
 
     def _call_api(
             self, action, method, query_params=None,
-            body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None):
+            body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None, retry_500: bool = False):
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
                    'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id}
         url = (server_override or self.server) + '/api/v0/' + action
@@ -329,8 +333,8 @@ class BaseApiClient:
                 'deploymentId') if query_params else None, query_params.get('deploymentToken') if query_params else None)
             if discovered_url:
                 url = discovered_url + '/api/' + action
-        response = self._request(url, method, query_params=query_params, headers=headers,
-                                 body=body, files=files, stream=streamable_response, timeout=timeout)
+        response = self._request(url, method, query_params=query_params, headers=headers, body=body,
+                                 files=files, stream=streamable_response, timeout=timeout, retry_500=retry_500)
 
         result = None
         success = False
@@ -379,19 +383,20 @@ class BaseApiClient:
         return return_class(self, **{key: val for key, val in values.items() if key in type_inputs})
 
     def _request(self, url, method, query_params=None, headers=None,
-                 body=None, files=None, stream=False, timeout=None):
+                 body=None, files=None, stream=False, timeout=None, retry_500: bool = False):
+        _session = _requests_retry_session(retry_500=retry_500)
         if method == 'GET':
             cleaned_params = {key: ','.join([str(item) for item in val]) if isinstance(
                 val, list) else val for key, val in query_params.items()} if query_params else query_params
-            return _requests_retry_session().get(url, params=cleaned_params, headers=headers, stream=stream)
+            return _session.get(url, params=cleaned_params, headers=headers, stream=stream)
         elif method == 'POST':
-            return _requests_retry_session().post(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
+            return _session.post(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
         elif method == 'PUT':
-            return _requests_retry_session().put(url, params=query_params, data=body, headers=headers, files=files, timeout=timeout or 200)
+            return _session.put(url, params=query_params, data=body, headers=headers, files=files, timeout=timeout or 200)
         elif method == 'PATCH':
-            return _requests_retry_session().patch(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
+            return _session.patch(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
         elif method == 'DELETE':
-            return _requests_retry_session().delete(url, params=query_params, data=body, headers=headers)
+            return _session.delete(url, params=query_params, data=body, headers=headers)
         else:
             raise ValueError(
                 'HTTP method must be `GET`, `POST`, `PATCH`, `PUT` or `DELETE`'
@@ -686,7 +691,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             project_id (str): The unique ID associated with the project.
-            filter_feature_group_use (str): The feature group use filter, when given as an argument, only allows feature groups present in this project to be returned if they are of the given use. Possible values are:  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT.
+            filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
 
         Returns:
             list[FeatureGroup]: All the Feature Groups in a project."""
@@ -1040,6 +1045,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[DatasetVersion]: A list of dataset versions."""
         return self._call_api('listDatasetVersions', 'GET', query_params={'datasetId': dataset_id, 'limit': limit, 'startAfterVersion': start_after_version}, parse_type=DatasetVersion)
+
+    def get_dataset_version_logs(self, dataset_version: str) -> DatasetVersionLogs:
+        """Retrieves the dataset import logs.
+
+        Args:
+            dataset_version (str): The unique version ID of the dataset version.
+
+        Returns:
+            DatasetVersionLogs: The logs for the specified dataset version."""
+        return self._call_api('getDatasetVersionLogs', 'GET', query_params={'datasetVersion': dataset_version}, parse_type=DatasetVersionLogs)
 
     def get_docstore_document(self, doc_id: str) -> io.BytesIO:
         """Return a document store document by id.
@@ -1502,15 +1517,6 @@ class ReadOnlyClient(BaseApiClient):
             nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
         return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
 
-    def get_outliers_for_batch_prediction_feature(self, batch_prediction_version: str, feature_name: str = None, nested_feature_name: str = None) -> Dict:
-        """Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
-
-        Args:
-            batch_prediction_version (str): Unique string identifier for a batch prediction version created under the project.
-            feature_name (str): Name of the feature to view the distribution of.
-            nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
-        return self._call_api('getOutliersForBatchPredictionFeature', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
-
     def describe_deployment(self, deployment_id: str) -> Deployment:
         """Retrieves a full description of the specified deployment.
 
@@ -1622,7 +1628,7 @@ class ReadOnlyClient(BaseApiClient):
             batch_prediction_version (str): Unique string identifier of the batch prediction version to get the results from.
             offset (int): The offset to read from.
             chunk_size (int): The maximum amount of data to read."""
-        return self._call_api('downloadBatchPredictionResultChunk', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True)
+        return self._call_api('downloadBatchPredictionResultChunk', 'GET', query_params={'batchPredictionVersion': batch_prediction_version, 'offset': offset, 'chunkSize': chunk_size}, streamable_response=True, retry_500=True)
 
     def get_batch_prediction_connector_errors(self, batch_prediction_version: str) -> io.BytesIO:
         """Returns a stream containing the batch prediction database connection write errors, if any writes failed for the specified batch prediction job.
@@ -1921,6 +1927,23 @@ class ReadOnlyClient(BaseApiClient):
             list[Module]: A list of modules"""
         return self._call_api('listModules', 'GET', query_params={}, parse_type=Module)
 
+    def get_organization_secret(self, secret_key: str) -> OrganizationSecret:
+        """Gets a secret.
+
+        Args:
+            secret_key (str): The secret key.
+
+        Returns:
+            OrganizationSecret: The secret."""
+        return self._call_api('getOrganizationSecret', 'GET', query_params={'secretKey': secret_key}, parse_type=OrganizationSecret)
+
+    def list_organization_secrets(self) -> List[OrganizationSecret]:
+        """Lists all secrets for an organization.
+
+        Returns:
+            list[OrganizationSecret]: list of secrets belonging to the organization."""
+        return self._call_api('listOrganizationSecrets', 'GET', query_params={}, parse_type=OrganizationSecret)
+
     def query_feature_group_code_generator(self, query: str, language: str, project_id: str = None) -> LlmResponse:
         """Send a query to the feature group code generator tool to generate code for the query.
 
@@ -1977,15 +2000,16 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Abacus AI Chat"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
             deployment_conversation_id (str): Unique ID of the conversation.
+            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id}, parse_type=DeploymentConversation)
+        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id}, parse_type=DeploymentConversation)
 
     def list_deployment_conversations(self, deployment_id: str) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -3023,7 +3047,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project."""
@@ -3669,7 +3693,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('removeConcatenationConfig', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
     def set_feature_group_indexing_config(self, feature_group_id: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None):
-        """Sets various attributes of the feature group used for deployment lookups and streaming updates.
+        """Sets various attributes of the feature group used for primary key, deployment lookups and streaming updates.
 
         Args:
             feature_group_id (str): Unique string identifier for the feature group.
@@ -4006,7 +4030,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             UploadPart: The object 'UploadPart' which encapsulates the hash and the etag for the part that got uploaded."""
-        return self._call_api('uploadPart', 'POST', query_params={'uploadId': upload_id, 'partNumber': part_number}, parse_type=UploadPart, files={'partData': part_data})
+        return self._call_api('uploadPart', 'POST', query_params={'uploadId': upload_id, 'partNumber': part_number}, parse_type=UploadPart, files={'partData': part_data}, retry_500=True)
 
     def mark_upload_complete(self, upload_id: str) -> Upload:
         """Marks an upload process as complete.
@@ -5380,6 +5404,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=prediction_url)
 
+    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None) -> Dict:
+        """Generate text from a document
+
+        Args:
+            deployment_token (str): Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
+            deployment_id (str): Unique identifier of a deployment created under the project.
+            document (io.TextIOBase): Input document which can be an image, pdf, or word document (Some formats might not be supported yet)"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'document': document}, server_override=prediction_url)
+
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
         """Transcribe the audio
 
@@ -5482,7 +5517,21 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
-    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None) -> BatchPrediction:
+    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
+        """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url)
+
+    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
 
         Args:
@@ -5501,10 +5550,11 @@ Creates a new feature group defined as the union of other feature group versions
             csv_explanations_prefix (str): Prefix to prepend to the explanation columns, only applies when output format is CSV.
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version.
             result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list.
+            input_feature_groups (dict): A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
 
         Returns:
             BatchPrediction: The batch prediction description."""
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'tableName': table_name, 'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'tableName': table_name, 'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns, 'inputFeatureGroups': input_feature_groups}, parse_type=BatchPrediction)
 
     def start_batch_prediction(self, batch_prediction_id: str) -> BatchPredictionVersion:
         """Creates a new batch prediction version job for a given batch prediction job description.
@@ -6138,6 +6188,35 @@ Creates a new feature group defined as the union of other feature group versions
             Module: The updated module."""
         return self._call_api('updateModule', 'PATCH', query_params={}, body={'name': name, 'sourceCode': source_code}, parse_type=Module)
 
+    def create_organization_secret(self, secret_key: str, value: str) -> OrganizationSecret:
+        """Creates a secret which can be accessed in functions and notebooks.
+
+        Args:
+            secret_key (str): The secret key.
+            value (str): The secret value.
+
+        Returns:
+            OrganizationSecret: The created secret."""
+        return self._call_api('createOrganizationSecret', 'POST', query_params={}, body={'secretKey': secret_key, 'value': value}, parse_type=OrganizationSecret)
+
+    def delete_organization_secret(self, secret_key: str):
+        """Deletes a secret.
+
+        Args:
+            secret_key (str): The secret key."""
+        return self._call_api('deleteOrganizationSecret', 'DELETE', query_params={'secretKey': secret_key})
+
+    def update_organization_secret(self, secret_key: str, value: str) -> OrganizationSecret:
+        """Updates a secret.
+
+        Args:
+            secret_key (str): The secret key.
+            value (str): The secret value.
+
+        Returns:
+            OrganizationSecret: The updated secret."""
+        return self._call_api('updateOrganizationSecret', 'PATCH', query_params={}, body={'secretKey': secret_key, 'value': value}, parse_type=OrganizationSecret)
+
     def get_notebook_cell_completion(self, previous_cells: list, completion_type: str = None) -> List[NotebookCompletion]:
         """Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
 
@@ -6172,7 +6251,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id, 'name': name}, parse_type=ChatSession)
 
     def delete_chat_message(self, chat_session_id: str, message_index: int):
-        """Deletes a message in a chat session
+        """Deletes a message in a chat session and its associated response.
 
         Args:
             chat_session_id (str): Unique ID of the chat session.
@@ -6205,12 +6284,13 @@ Creates a new feature group defined as the union of other feature group versions
             DeploymentConversation: The deployment conversation."""
         return self._call_api('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name}, parse_type=DeploymentConversation)
 
-    def delete_deployment_conversation(self, deployment_conversation_id: str):
+    def delete_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None):
         """Delete a Deployment Conversation.
 
         Args:
-            deployment_conversation_id (str): A unique string identifier associated with the deployment conversation."""
-        return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id})
+            deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
+            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents"""
+        return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id})
 
     def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None):
         """Sets a deployment conversation message as useful or not useful
@@ -6223,13 +6303,14 @@ Creates a new feature group defined as the union of other feature group versions
             feedback (str): Optional feedback on why the message is useful or not useful"""
         return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
 
-    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str):
+    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None):
         """Rename a Deployment Conversation.
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
-            name (str): The new name of the conversation."""
-        return self._call_api('renameDeploymentConversation', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
+            name (str): The new name of the conversation.
+            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents"""
+        return self._call_api('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
 
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Agent:
         """Creates a new AI agent.
@@ -6346,8 +6427,13 @@ Creates a new feature group defined as the union of other feature group versions
             vector_store_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('deleteDocumentRetriever', 'DELETE', query_params={'vectorStoreId': vector_store_id})
 
-    def lookup_document_retriever(self, document_retriever_id: str, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_document_retriever(self, document_retriever_id: str, query: str, deployment_token: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup relevant documents from the document retriever deployed with given query.
+
+        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
 
         Args:
             document_retriever_id (str): A unique string identifier associated with the document retriever.
@@ -6358,21 +6444,29 @@ Creates a new feature group defined as the union of other feature group versions
             result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
+            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
-        return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'filters': filters, 'limit': limit, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words}, parse_type=DocumentRetrieverLookupResult)
+        return self._call_api('lookupDocumentRetriever', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'filters': filters, 'limit': limit, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk}, parse_type=DocumentRetrieverLookupResult)
 
-    def get_document_snippet(self, document_retriever_id: str, deployment_token: str, document_id: str, start_word_index: None = None, end_word_index: None = None) -> DocumentRetrieverLookupResult:
+    def get_document_snippet(self, document_retriever_id: str, deployment_token: str, document_id: str, start_word_index: int = None, end_word_index: int = None) -> DocumentRetrieverLookupResult:
         """Get a snippet from documents in the document retriever.
 
         Args:
             document_retriever_id (str): A unique string identifier associated with the document retriever.
             deployment_token (str): A deployment token used to authenticate access to created vector store.
             document_id (str): The ID of the document to retrieve the snippet from.
-            start_word_index (None): If provided, will start the snippet at the index (of words in the document) specified.
-            end_word_index (None): If provided, will end the snippet at the index of (of words in the document) specified.
+            start_word_index (int): If provided, will start the snippet at the index (of words in the document) specified.
+            end_word_index (int): If provided, will end the snippet at the index of (of words in the document) specified.
 
         Returns:
             DocumentRetrieverLookupResult: The documentation snippet found from the document retriever."""
         return self._call_api('getDocumentSnippet', 'POST', query_params={'deploymentToken': deployment_token}, body={'documentRetrieverId': document_retriever_id, 'documentId': document_id, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index}, parse_type=DocumentRetrieverLookupResult)
+
+    def restart_document_retriever(self, document_retriever_id: str):
+        """Restart the document retriever if it is stopped.
+
+        Args:
+            document_retriever_id (str): A unique string identifier associated with the document retriever."""
+        return self._call_api('restartDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id})

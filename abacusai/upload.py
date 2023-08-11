@@ -1,5 +1,4 @@
 import io
-import time
 from concurrent.futures import ThreadPoolExecutor
 
 from .return_class import AbstractApiClass
@@ -106,22 +105,13 @@ class Upload(AbstractApiClass):
 
     def upload_part(self, upload_args):
         """
-        Uploads a file part. If the upload fails, it will retry up to 3 times with a short backoff before raising an exception.
+        Uploads a file part.
 
         Returns:
             UploadPart: The object 'UploadPart' that encapsulates the hash and the etag for the part that got uploaded.
         """
         (part_number, part_data) = upload_args
-        retries = 0
-        while True:
-            try:
-                return self.part(part_number, part_data)
-            except Exception:
-                if retries > 2:
-                    raise
-                part_data.seek(0, 0)
-                retries += 1
-                time.sleep(retries)
+        return self.part(part_number, part_data)
 
     def upload_file(self, file, threads=10, chunksize=1024 * 1024 * 10, wait_timeout=600):
         """

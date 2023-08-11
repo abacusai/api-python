@@ -20,7 +20,7 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="abacusai.deployment" href="../deployment/index.html" />
+    <link rel="next" title="abacusai.dataset_version_logs" href="../dataset_version_logs/index.html" />
     <link rel="prev" title="abacusai.dataset_column" href="../dataset_column/index.html" /> 
 </head>
 
@@ -83,6 +83,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_version_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_version_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_auth_token</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_conversation</span></code></a></li>
@@ -160,6 +161,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_search_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_secret</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline_reference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_reference</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline_step/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_step</span></code></a></li>
@@ -349,6 +351,23 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.dataset_version.DatasetVersion.get_logs">
+<span class="sig-name descname"><span class="pre">get_logs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.dataset_version.DatasetVersion.get_logs" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the dataset import logs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The unique version ID of the dataset version.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The logs for the specified dataset version.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../dataset_version_logs/index.html#abacusai.dataset_version_logs.DatasetVersionLogs" title="abacusai.dataset_version_logs.DatasetVersionLogs">DatasetVersionLogs</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.dataset_version.DatasetVersion.wait_for_import">
 <span class="sig-name descname"><span class="pre">wait_for_import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">900</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.dataset_version.DatasetVersion.wait_for_import" title="Permalink to this definition"></a></dt>
 <dd><p>A waiting call until dataset version is imported.</p>
@@ -395,7 +414,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../dataset_column/index.html" class="btn btn-neutral float-left" title="abacusai.dataset_column" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../deployment/index.html" class="btn btn-neutral float-right" title="abacusai.deployment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../dataset_version_logs/index.html" class="btn btn-neutral float-right" title="abacusai.dataset_version_logs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

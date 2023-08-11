@@ -110,9 +110,14 @@ Classes
       :rtype: list[DocumentRetrieverVersion]
 
 
-   .. py:method:: lookup(query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None)
+   .. py:method:: lookup(query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
 
       Lookup relevant documents from the document retriever deployed with given query.
+
+      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
 
       :param query: The query to search for.
       :type query: str
@@ -128,6 +133,8 @@ Classes
       :type max_words: int
       :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
       :type num_retrieval_margin_words: int
+      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+      :type max_words_per_chunk: int
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -142,12 +149,20 @@ Classes
       :param document_id: The ID of the document to retrieve the snippet from.
       :type document_id: str
       :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.
-      :type start_word_index: None
+      :type start_word_index: int
       :param end_word_index: If provided, will end the snippet at the index of (of words in the document) specified.
-      :type end_word_index: None
+      :type end_word_index: int
 
       :returns: The documentation snippet found from the document retriever.
       :rtype: DocumentRetrieverLookupResult
+
+
+   .. py:method:: restart()
+
+      Restart the document retriever if it is stopped.
+
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
 
 
    .. py:method:: wait_until_ready(timeout = 3600)

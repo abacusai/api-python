@@ -80,6 +80,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_column/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_column</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_version</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dataset_version_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_version_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_auth_token</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_conversation</span></code></a></li>
@@ -157,6 +158,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_search_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_secret</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline_reference/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_reference</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../pipeline_step/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.pipeline_step</span></code></a></li>
@@ -953,6 +955,24 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.get_text_from_document">
+<span class="sig-name descname"><span class="pre">get_text_from_document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.get_text_from_document" title="Permalink to this definition"></a></dt>
+<dd><p>Generate text from a document</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Unique identifier of a deployment created under the project.</p></li>
+<li><p><strong>document</strong> (<a class="reference external" href="https://docs.python.org/3/library/io.html#io.TextIOBase" title="(in Python v3.11)"><em>io.TextIOBase</em></a>) – Input document which can be an image, pdf, or word document (Some formats might not be supported yet)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.transcribe_audio">
 <span class="sig-name descname"><span class="pre">transcribe_audio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">audio</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.transcribe_audio" title="Permalink to this definition"></a></dt>
 <dd><p>Transcribe the audio</p>
@@ -1109,6 +1129,27 @@
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
 <li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
 <li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the paramter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.prediction_client.PredictionClient.execute_conversation_agent">
+<span class="sig-name descname"><span class="pre">execute_conversation_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keyword_arguments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.prediction_client.PredictionClient.execute_conversation_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
+<li><p><strong>arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.11)"><em>list</em></a>) – Positional arguments to the agent execute function.</p></li>
+<li><p><strong>keyword_arguments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – A dictionary where each ‘key’ represents the paramter name and its corresponding ‘value’ represents the value of that parameter for the agent execute function.</p></li>
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the deployment conversation used for the conversation.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

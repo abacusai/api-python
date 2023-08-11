@@ -52,6 +52,7 @@ Submodules
    dataset/index.rst
    dataset_column/index.rst
    dataset_version/index.rst
+   dataset_version_logs/index.rst
    deployment/index.rst
    deployment_auth_token/index.rst
    deployment_conversation/index.rst
@@ -129,6 +130,7 @@ Submodules
    null_violation/index.rst
    organization_group/index.rst
    organization_search_result/index.rst
+   organization_secret/index.rst
    pipeline/index.rst
    pipeline_reference/index.rst
    pipeline_step/index.rst
@@ -2191,18 +2193,23 @@ Attributes
 
    Derive from this class to define new enumerations.
 
-   .. py:attribute:: OPENAI
-      :value: 'OPENAI'
-
-      
-
    .. py:attribute:: E5
       :value: 'E5'
 
       
 
+   .. py:attribute:: OPENAI
+      :value: 'OPENAI'
+
+      
+
    .. py:attribute:: SENTENCE_BERT
       :value: 'SENTENCE_BERT'
+
+      
+
+   .. py:attribute:: E5_SMALL
+      :value: 'E5_SMALL'
 
       
 
@@ -2422,7 +2429,7 @@ Attributes
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
    :type sort_objective: PersonalizationObjective
-   :param training_mode: whether to train in production or experimental mode.
+   :param training_mode: whether to train in production or experimental mode. Defaults to EXP.
    :type training_mode: PersonalizationTrainingMode
    :param target_action_types: List of action types to use as targets for training.
    :type target_action_types: List[str]
@@ -2454,6 +2461,8 @@ Attributes
    :type sequential_training: bool
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
+   :param optimized_event_type: The final event type to optimize for and compute metrics on.
+   :type optimized_event_type: str
    :param dropout_rate: Dropout rate for neural network.
    :type dropout_rate: int
    :param batch_size: Batch size for neural network.
@@ -2464,14 +2473,10 @@ Attributes
    :type disable_gpu: boo
    :param filter_history: Do not recommend items the user has already interacted with.
    :type filter_history: bool
-   :param explore_lookback_hours: Number of hours since creation time that an item is eligible for explore fraction.
-   :type explore_lookback_hours: int
    :param max_history_length: Maximum length of user-item history to include user in training examples.
    :type max_history_length: int
    :param compute_rerank_metrics: Compute metrics based on rerank results.
    :type compute_rerank_metrics: bool
-   :param item_id_dropout: Fraction of item_id values to randomly dropout during training.
-   :type item_id_dropout: float
    :param add_time_features: Include interaction time as a feature.
    :type add_time_features: bool
    :param disable_timestamp_scalar_features: Exclude timestamp scalar features.
@@ -2573,6 +2578,11 @@ Attributes
 
       
 
+   .. py:attribute:: optimized_event_type
+      :type: str
+
+      
+
    .. py:attribute:: dropout_rate
       :type: int
 
@@ -2598,11 +2608,6 @@ Attributes
 
       
 
-   .. py:attribute:: explore_lookback_hours
-      :type: int
-
-      
-
    .. py:attribute:: max_history_length
       :type: int
 
@@ -2610,11 +2615,6 @@ Attributes
 
    .. py:attribute:: compute_rerank_metrics
       :type: bool
-
-      
-
-   .. py:attribute:: item_id_dropout
-      :type: float
 
       
 
@@ -3488,8 +3488,8 @@ Attributes
    :type system_message: str
    :param temperature: The generative LLM temperature
    :type temperature: float
-   :param search_title_column: Include the title column values in the retrieved search results
-   :type search_title_column: str
+   :param metadata_columns: Include the metadata column values in the retrieved search results.
+   :type metadata_columns: list
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -3511,8 +3511,8 @@ Attributes
 
       
 
-   .. py:attribute:: search_title_column
-      :type: str
+   .. py:attribute:: metadata_columns
+      :type: list
 
       
 
@@ -5031,7 +5031,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -5885,7 +5885,7 @@ Attributes
 
    .. py:method:: set_feature_group_indexing_config(feature_group_id, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
-      Sets various attributes of the feature group used for deployment lookups and streaming updates.
+      Sets various attributes of the feature group used for primary key, deployment lookups and streaming updates.
 
       :param feature_group_id: Unique string identifier for the feature group.
       :type feature_group_id: str
@@ -8103,6 +8103,18 @@ Attributes
       :type top_n: int
 
 
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None)
+
+      Generate text from a document
+
+      :param deployment_token: Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: Unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
+      :type document: io.TextIOBase
+
+
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
 
       Transcribe the audio
@@ -8217,7 +8229,25 @@ Attributes
       :type keyword_arguments: dict
 
 
-   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
+
+      Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+
+
+   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -8251,6 +8281,8 @@ Attributes
       :type output_includes_metadata: bool
       :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list.
       :type result_input_columns: list
+      :param input_feature_groups: A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
+      :type input_feature_groups: dict
 
       :returns: The batch prediction description.
       :rtype: BatchPrediction
@@ -9066,6 +9098,40 @@ Attributes
       :rtype: Module
 
 
+   .. py:method:: create_organization_secret(secret_key, value)
+
+      Creates a secret which can be accessed in functions and notebooks.
+
+      :param secret_key: The secret key.
+      :type secret_key: str
+      :param value: The secret value.
+      :type value: str
+
+      :returns: The created secret.
+      :rtype: OrganizationSecret
+
+
+   .. py:method:: delete_organization_secret(secret_key)
+
+      Deletes a secret.
+
+      :param secret_key: The secret key.
+      :type secret_key: str
+
+
+   .. py:method:: update_organization_secret(secret_key, value)
+
+      Updates a secret.
+
+      :param secret_key: The secret key.
+      :type secret_key: str
+      :param value: The secret value.
+      :type value: str
+
+      :returns: The updated secret.
+      :rtype: OrganizationSecret
+
+
    .. py:method:: get_notebook_cell_completion(previous_cells, completion_type = None)
 
       Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
@@ -9110,7 +9176,7 @@ Attributes
 
    .. py:method:: delete_chat_message(chat_session_id, message_index)
 
-      Deletes a message in a chat session
+      Deletes a message in a chat session and its associated response.
 
       :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
@@ -9149,12 +9215,14 @@ Attributes
       :rtype: DeploymentConversation
 
 
-   .. py:method:: delete_deployment_conversation(deployment_conversation_id)
+   .. py:method:: delete_deployment_conversation(deployment_conversation_id, deployment_id = None)
 
       Delete a Deployment Conversation.
 
       :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
       :type deployment_conversation_id: str
+      :param deployment_id: (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+      :type deployment_id: str
 
 
    .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None)
@@ -9173,7 +9241,7 @@ Attributes
       :type feedback: str
 
 
-   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name)
+   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name, deployment_id = None)
 
       Rename a Deployment Conversation.
 
@@ -9181,6 +9249,8 @@ Attributes
       :type deployment_conversation_id: str
       :param name: The new name of the conversation.
       :type name: str
+      :param deployment_id: (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+      :type deployment_id: str
 
 
    .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
@@ -9332,9 +9402,14 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None)
+   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
 
       Lookup relevant documents from the document retriever deployed with given query.
+
+      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
 
       :param document_retriever_id: A unique string identifier associated with the document retriever.
       :type document_retriever_id: str
@@ -9352,6 +9427,8 @@ Attributes
       :type max_words: int
       :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
       :type num_retrieval_margin_words: int
+      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+      :type max_words_per_chunk: int
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -9368,12 +9445,20 @@ Attributes
       :param document_id: The ID of the document to retrieve the snippet from.
       :type document_id: str
       :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.
-      :type start_word_index: None
+      :type start_word_index: int
       :param end_word_index: If provided, will end the snippet at the index of (of words in the document) specified.
-      :type end_word_index: None
+      :type end_word_index: int
 
       :returns: The documentation snippet found from the document retriever.
       :rtype: DocumentRetrieverLookupResult
+
+
+   .. py:method:: restart_document_retriever(document_retriever_id)
+
+      Restart the document retriever if it is stopped.
+
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
 
 
 
@@ -9693,7 +9778,7 @@ Attributes
 
       :param project_id: The unique ID associated with the project.
       :type project_id: str
-      :param filter_feature_group_use: The feature group use filter, when given as an argument, only allows feature groups present in this project to be returned if they are of the given use. Possible values are:  DATA_WRANGLING,  TRAINING_INPUT,  BATCH_PREDICTION_INPUT,  BATCH_PREDICTION_OUTPUT.
+      :param filter_feature_group_use: The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
       :type filter_feature_group_use: str
 
       :returns: All the Feature Groups in a project.
@@ -10114,6 +10199,17 @@ Attributes
 
       :returns: A list of dataset versions.
       :rtype: list[DatasetVersion]
+
+
+   .. py:method:: get_dataset_version_logs(dataset_version)
+
+      Retrieves the dataset import logs.
+
+      :param dataset_version: The unique version ID of the dataset version.
+      :type dataset_version: str
+
+      :returns: The logs for the specified dataset version.
+      :rtype: DatasetVersionLogs
 
 
    .. py:method:: get_docstore_document(doc_id)
@@ -10657,18 +10753,6 @@ Attributes
       :type nested_feature_name: str
 
 
-   .. py:method:: get_outliers_for_batch_prediction_feature(batch_prediction_version, feature_name = None, nested_feature_name = None)
-
-      Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
-
-      :param batch_prediction_version: Unique string identifier for a batch prediction version created under the project.
-      :type batch_prediction_version: str
-      :param feature_name: Name of the feature to view the distribution of.
-      :type feature_name: str
-      :param nested_feature_name: Optionally, the name of the nested feature that the feature is in.
-      :type nested_feature_name: str
-
-
    .. py:method:: describe_deployment(deployment_id)
 
       Retrieves a full description of the specified deployment.
@@ -11140,6 +11224,25 @@ Attributes
       :rtype: list[Module]
 
 
+   .. py:method:: get_organization_secret(secret_key)
+
+      Gets a secret.
+
+      :param secret_key: The secret key.
+      :type secret_key: str
+
+      :returns: The secret.
+      :rtype: OrganizationSecret
+
+
+   .. py:method:: list_organization_secrets()
+
+      Lists all secrets for an organization.
+
+      :returns: list of secrets belonging to the organization.
+      :rtype: list[OrganizationSecret]
+
+
    .. py:method:: query_feature_group_code_generator(query, language, project_id = None)
 
       Send a query to the feature group code generator tool to generate code for the query.
@@ -11207,12 +11310,14 @@ Attributes
       :rtype: ChatSession
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id, deployment_id = None)
 
       Gets a deployment conversation.
 
       :param deployment_conversation_id: Unique ID of the conversation.
       :type deployment_conversation_id: str
+      :param deployment_id: (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+      :type deployment_id: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -11896,6 +12001,18 @@ Attributes
       :type top_n: int
 
 
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None)
+
+      Generate text from a document
+
+      :param deployment_token: Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
+      :type deployment_token: str
+      :param deployment_id: Unique identifier of a deployment created under the project.
+      :type deployment_id: str
+      :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
+      :type document: io.TextIOBase
+
+
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
 
       Transcribe the audio
@@ -12010,6 +12127,24 @@ Attributes
       :type keyword_arguments: dict
 
 
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
+
+      Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+
+
 
 .. py:class:: StreamingClient(client_options = None)
 
@@ -12115,7 +12250,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.73.3'
+   :value: '0.74.0'
 
    
 

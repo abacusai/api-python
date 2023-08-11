@@ -328,6 +328,7 @@ class PythonFunctionOutputArgumentType(ApiEnum):
 
 
 class VectorStoreTextEncoder(ApiEnum):
-    OPENAI = 'OPENAI'
     E5 = 'E5'
+    OPENAI = 'OPENAI'
     SENTENCE_BERT = 'SENTENCE_BERT'
+    E5_SMALL = 'E5_SMALL'

@@ -250,7 +250,7 @@ Classes
       :type filter_key_values: dict
 
 
-   .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None)
+   .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -282,6 +282,8 @@ Classes
       :type output_includes_metadata: bool
       :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list.
       :type result_input_columns: list
+      :param input_feature_groups: A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
+      :type input_feature_groups: dict
 
       :returns: The batch prediction description.
       :rtype: BatchPrediction

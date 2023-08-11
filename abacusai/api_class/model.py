@@ -22,7 +22,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     Args:
         objective (PersonalizationObjective): Ranking scheme used to select final best model.
         sort_objective (PersonalizationObjective): Ranking scheme used to sort models on the metrics page.
-        training_mode (PersonalizationTrainingMode): whether to train in production or experimental mode.
+        training_mode (PersonalizationTrainingMode): whether to train in production or experimental mode. Defaults to EXP.
         target_action_types (List[str]): List of action types to use as targets for training.
         target_action_weights (Dict[str, float]): Dictionary of action types to weights for training.
         session_event_types (List[str]): List of event types to treat as occurrences of sessions.
@@ -38,15 +38,14 @@ class PersonalizationTrainingConfig(TrainingConfig):
         full_data_retraining (bool): Train models separately with all the data.
         sequential_training (bool): Train a mode sequentially through time.
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
+        optimized_event_type (str): The final event type to optimize for and compute metrics on.
         dropout_rate (int): Dropout rate for neural network.
         batch_size (BatchSize): Batch size for neural network.
         disable_transformer (bool): Disable training the transformer algorithm.
         disable_gpu (boo): Disable training on GPU.
         filter_history (bool): Do not recommend items the user has already interacted with.
-        explore_lookback_hours (int): Number of hours since creation time that an item is eligible for explore fraction.
         max_history_length (int): Maximum length of user-item history to include user in training examples.
         compute_rerank_metrics (bool): Compute metrics based on rerank results.
-        item_id_dropout (float): Fraction of item_id values to randomly dropout during training.
         add_time_features (bool): Include interaction time as a feature.
         disable_timestamp_scalar_features (bool): Exclude timestamp scalar features.
         compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
@@ -57,7 +56,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
     sort_objective: enums.PersonalizationObjective = dataclasses.field(default=None)
-    training_mode: enums.PersonalizationTrainingMode = dataclasses.field(default=None)
+    training_mode: enums.PersonalizationTrainingMode = dataclasses.field(default=enums.PersonalizationTrainingMode.EXPERIMENTAL)
 
     # advanced options
     # interactions
@@ -78,6 +77,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     full_data_retraining: bool = dataclasses.field(default=None)
     sequential_training: bool = dataclasses.field(default=None)
     data_split_feature_group_table_name: str = dataclasses.field(default=None)
+    optimized_event_type: str = dataclasses.field(default=None)
 
     # neural network
     dropout_rate: int = dataclasses.field(default=None)
@@ -87,12 +87,10 @@ class PersonalizationTrainingConfig(TrainingConfig):
 
     # prediction
     filter_history: bool = dataclasses.field(default=None)
-    explore_lookback_hours: int = dataclasses.field(default=None)
 
     # data distribution
     max_history_length: int = dataclasses.field(default=None)
     compute_rerank_metrics: bool = dataclasses.field(default=None)
-    item_id_dropout: float = dataclasses.field(default=None)
     add_time_features: bool = dataclasses.field(default=None)
     disable_timestamp_scalar_features: bool = dataclasses.field(default=None)
     compute_session_metrics: bool = dataclasses.field(default=None)
@@ -409,13 +407,13 @@ class ChatLLMTrainingConfig(TrainingConfig):
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
         system_message (str): The generative LLM system message
         temperature (float): The generative LLM temperature
-        search_title_column (str): Include the title column values in the retrieved search results
+        metadata_columns (list): Include the metadata column values in the retrieved search results.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
     system_message: str = None
     temperature: float = None
-    search_title_column: str = None
+    metadata_columns: list = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM
@@ -696,6 +694,7 @@ class _TrainingConfigFactory(_ApiClassFactory):
         enums.ProblemType.NAMED_ENTITY_EXTRACTION: NamedEntityExtractionTrainingConfig,
         enums.ProblemType.NATURAL_LANGUAGE_SEARCH: NaturalLanguageSearchTrainingConfig,
         enums.ProblemType.CHAT_LLM: ChatLLMTrainingConfig,
+        enums.ProblemType.PERSONALIZATION: PersonalizationTrainingConfig,
         enums.ProblemType.PREDICTIVE_MODELING: RegressionTrainingConfig,
         enums.ProblemType.SENTENCE_BOUNDARY_DETECTION: SentenceBoundaryDetectionTrainingConfig,
         enums.ProblemType.SENTIMENT_DETECTION: SentimentDetectionTrainingConfig,

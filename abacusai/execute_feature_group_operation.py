@@ -72,7 +72,6 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
     def describe(self):
         return self.client.describe_async_feature_group_operation(self.feature_group_operation_run_id)
 
-    # internal call
     def _download_avro_file(self, file_part, tmp_dir):
         offset = 0
         part_path = os.path.join(tmp_dir, f'{file_part}.avro')

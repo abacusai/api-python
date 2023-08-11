@@ -57,7 +57,7 @@ class ChatSession(AbstractApiClass):
 
     def delete_chat_message(self, message_index: int):
         """
-        Deletes a message in a chat session
+        Deletes a message in a chat session and its associated response.
 
         Args:
             message_index (int): The index of the chat message within the UI.

@@ -82,6 +82,18 @@ class DatasetVersion(AbstractApiClass):
         """
         return self.client.describe_dataset_version(self.dataset_version)
 
+    def get_logs(self):
+        """
+        Retrieves the dataset import logs.
+
+        Args:
+            dataset_version (str): The unique version ID of the dataset version.
+
+        Returns:
+            DatasetVersionLogs: The logs for the specified dataset version.
+        """
+        return self.client.get_dataset_version_logs(self.dataset_version)
+
     def wait_for_import(self, timeout=900):
         """
         A waiting call until dataset version is imported.
