@@ -12,6 +12,7 @@ Submodules
 
    abstract/index.rst
    batch_prediction/index.rst
+   blob_input/index.rst
    dataset/index.rst
    enums/index.rst
    feature_group/index.rst
@@ -43,6 +44,8 @@ Classes
    abacusai.api_class.SentenceBoundaryDetectionBatchPredictionArgs
    abacusai.api_class.ThemeAnalysisBatchPredictionArgs
    abacusai.api_class._BatchPredictionArgsFactory
+   abacusai.api_class.ApiClass
+   abacusai.api_class.BlobInput
    abacusai.api_class.ApiClass
    abacusai.api_class.ParsingConfig
    abacusai.api_class.ApiEnum
@@ -79,6 +82,7 @@ Classes
    abacusai.api_class.PythonFunctionArgumentType
    abacusai.api_class.PythonFunctionOutputArgumentType
    abacusai.api_class.VectorStoreTextEncoder
+   abacusai.api_class.LLMName
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.SamplingConfig
@@ -105,6 +109,7 @@ Classes
    abacusai.api_class.DocumentVisualizationTrainingConfig
    abacusai.api_class.ClusteringTrainingConfig
    abacusai.api_class.ClusteringTimeseriesTrainingConfig
+   abacusai.api_class.EventAnomalyTrainingConfig
    abacusai.api_class.CumulativeForecastingTrainingConfig
    abacusai.api_class.AnomalyDetectionTrainingConfig
    abacusai.api_class.ThemeAnalysisTrainingConfig
@@ -656,6 +661,84 @@ Classes
 
 
 
+.. py:class:: BlobInput
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Binary large object input data.
+
+   :param filename: The original filename of the blob.
+   :type filename: str
+   :param contents: The binary contents of the blob.
+   :type contents: bytes
+   :param mime_type: The mime type of the blob.
+   :type mime_type: str
+   :param size: The size of the blob in bytes.
+   :type size: int
+
+   .. py:attribute:: filename
+      :type: str
+
+      
+
+   .. py:attribute:: contents
+      :type: bytes
+
+      
+
+   .. py:attribute:: mime_type
+      :type: str
+
+      
+
+   .. py:attribute:: size
+      :type: int
+
+      
+
+   .. py:method:: from_local_file(file_path)
+      :classmethod:
+
+
+   .. py:method:: from_contents(contents, filename = None)
+      :classmethod:
+
+
+
+.. py:class:: ApiClass
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
 .. py:class:: ParsingConfig
 
 
@@ -721,6 +804,11 @@ Classes
 
    .. py:attribute:: ANOMALY_OUTLIERS
       :value: 'anomaly'
+
+      
+
+   .. py:attribute:: EVENT_ANOMALY
+      :value: 'event_anomaly'
 
       
 
@@ -2081,6 +2169,56 @@ Classes
 
    .. py:attribute:: E5_SMALL
       :value: 'E5_SMALL'
+
+      
+
+
+.. py:class:: LLMName
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: OPENAI_GPT4
+      :value: 'OPENAI_GPT4'
+
+      
+
+   .. py:attribute:: OPENAI_GPT3_5
+      :value: 'OPENAI_GPT3_5'
+
+      
+
+   .. py:attribute:: OPENAI_GPT3_5_SHORT
+      :value: 'OPENAI_GPT3_5_SHORT'
+
+      
+
+   .. py:attribute:: CLAUDE_V2
+      :value: 'CLAUDE_V2'
+
+      
+
+   .. py:attribute:: ABACUS
+      :value: 'ABACUS'
+
+      
+
+   .. py:attribute:: ABACUS_LONG
+      :value: 'ABACUS_LONG'
+
+      
+
+   .. py:attribute:: ABACUS_LARGE
+      :value: 'ABACUS_LARGE'
+
+      
+
+   .. py:attribute:: PALM
+      :value: 'PALM'
 
       
 
@@ -3731,6 +3869,24 @@ Classes
 
 
 
+.. py:class:: EventAnomalyTrainingConfig
+
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the EVENT_ANOMALY problem type
+   :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
+   :type anomaly_fraction: float
+
+   .. py:attribute:: anomaly_fraction
+      :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: CumulativeForecastingTrainingConfig
 
 
@@ -3985,6 +4141,13 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
+   :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 14400.
+   :type solve_time_limit: float
+
+   .. py:attribute:: solve_time_limit
+      :type: float
+
+      
 
    .. py:method:: __post_init__()
 

@@ -1,0 +1,150 @@
+:py:mod:`abacusai.prediction_operator`
+======================================
+
+.. py:module:: abacusai.prediction_operator
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.prediction_operator.PredictionOperator
+
+
+
+
+.. py:class:: PredictionOperator(client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, codeSource={}, latestPredictionOperatorVersion={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A prediction operator.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name for the prediction operator.
+   :type name: str
+   :param predictionOperatorId: The unique identifier of the prediction operator.
+   :type predictionOperatorId: str
+   :param createdAt: Date and time at which the prediction operator was created.
+   :type createdAt: str
+   :param updatedAt: Date and time at which the prediction operator was updated.
+   :type updatedAt: str
+   :param projectId: The project this prediction operator belongs to.
+   :type projectId: str
+   :param predictFunctionName: Name of the function found in the source code that will be executed to run predictions.
+   :type predictFunctionName: str
+   :param sourceCode: Python code used to make the prediction operator.
+   :type sourceCode: str
+   :param initializeFunctionName: Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
+   :type initializeFunctionName: str
+   :param notebookId: The unique string identifier of the notebook used to create or edit the prediction operator.
+   :type notebookId: str
+   :param codeSource: If a python model, information on the source code.
+   :type codeSource: CodeSource
+   :param latestPredictionOperatorVersion: The unique string identifier of the latest version.
+   :type latestPredictionOperatorVersion: PredictionOperatorVersion
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: PredictionOperator
+
+
+   .. py:method:: describe()
+
+      Describe an existing prediction operator.
+
+      :param prediction_operator_id: The unique ID of the prediction operator. Returns
+      :type prediction_operator_id: str
+
+      :rtype: PredictionOperator
+
+
+   .. py:method:: update(name = None, feature_group_ids = None, source_code = None, initialize_function_name = None, predict_function_name = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
+
+      Update an existing prediction operator.
+
+      :param name: Name of the prediction operator.
+      :type name: str
+      :param feature_group_ids: List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
+      :type feature_group_ids: list
+      :param source_code: Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
+      :type source_code: str
+      :param initialize_function_name: Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
+      :type initialize_function_name: str
+      :param predict_function_name: Name of the function found in the source code that will be executed to run predictions.
+      :type predict_function_name: str
+      :param cpu_size: Size of the CPU for the prediction operator.
+      :type cpu_size: str
+      :param memory: Memory (in GB) for the  prediction operator.
+      :type memory: int
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+      :type package_requirements: list
+      :param use_gpu: Whether this prediction operator needs gpu. Returns
+      :type use_gpu: bool
+
+      :rtype: PredictionOperator
+
+
+   .. py:method:: delete()
+
+      Delete an existing prediction operator.
+
+      :param prediction_operator_id: The unique ID of the prediction operator.
+      :type prediction_operator_id: str
+
+
+   .. py:method:: deploy(auto_deploy = True)
+
+      Deploy the prediction operator.
+
+      :param auto_deploy: Flag to enable the automatic deployment when a new prediction operator version is created.
+      :type auto_deploy: bool
+
+      :returns: The created deployment object.
+      :rtype: Deployment
+
+
+   .. py:method:: create_version()
+
+      Create a new version of the prediction operator.
+
+      :param prediction_operator_id: The unique ID of the prediction operator.
+      :type prediction_operator_id: str
+
+      :returns: The created prediction operator version object.
+      :rtype: PredictionOperatorVersion
+
+
+   .. py:method:: list_versions()
+
+      List all the prediction operator versions for a prediction operator.
+
+      :param prediction_operator_id: The unique ID of the prediction operator.
+      :type prediction_operator_id: str
+
+      :returns: A list of prediction operator version objects.
+      :rtype: list[PredictionOperatorVersion]
+
+
+

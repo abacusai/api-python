@@ -407,6 +407,18 @@ class Project(AbstractApiClass):
         """
         return self.client.create_monitor_alert(self.project_id, model_monitor_id, alert_name, condition_config, action_config)
 
+    def list_prediction_operators(self):
+        """
+        List all the prediction operators inside a project.
+
+        Args:
+            project_id (str): The unique ID of the project. Returns
+
+        Returns:
+            PredictionOperator: 
+        """
+        return self.client.list_prediction_operators(self.project_id)
+
     def create_deployment_token(self, name: str = None):
         """
         Creates a deployment token for the specified project.

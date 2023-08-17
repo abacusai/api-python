@@ -1,0 +1,64 @@
+:py:mod:`abacusai.api_class.blob_input`
+=======================================
+
+.. py:module:: abacusai.api_class.blob_input
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.blob_input.BlobInput
+
+
+
+
+.. py:class:: BlobInput
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Binary large object input data.
+
+   :param filename: The original filename of the blob.
+   :type filename: str
+   :param contents: The binary contents of the blob.
+   :type contents: bytes
+   :param mime_type: The mime type of the blob.
+   :type mime_type: str
+   :param size: The size of the blob in bytes.
+   :type size: int
+
+   .. py:attribute:: filename
+      :type: str
+
+      
+
+   .. py:attribute:: contents
+      :type: bytes
+
+      
+
+   .. py:attribute:: mime_type
+      :type: str
+
+      
+
+   .. py:attribute:: size
+      :type: int
+
+      
+
+   .. py:method:: from_local_file(file_path)
+      :classmethod:
+
+
+   .. py:method:: from_contents(contents, filename = None)
+      :classmethod:
+
+
+

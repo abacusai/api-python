@@ -93,6 +93,18 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.update_pipeline(self.pipeline_id, project_id, pipeline_variable_mappings, cron, is_prod)
 
+    def rename(self, pipeline_name: str):
+        """
+        Renames a pipeline.
+
+        Args:
+            pipeline_name (str): The new name of the pipeline.
+
+        Returns:
+            Pipeline: An object that describes a Pipeline.
+        """
+        return self.client.rename_pipeline(self.pipeline_id, pipeline_name)
+
     def delete(self):
         """
         Deletes a pipeline.

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, refreshSchedules={}, featureGroupExportConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -66,6 +66,10 @@ Classes
    :type pendingModelVersion: dict
    :param modelDeploymentConfig: The config for which model to be deployed.
    :type modelDeploymentConfig: dict
+   :param predictionOperatorId: The prediction operator ID that is currently deployed.
+   :type predictionOperatorId: str
+   :param predictionOperatorVersion: The prediction operator version ID that is currently deployed.
+   :type predictionOperatorVersion: str
    :param refreshSchedules: A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: The export config (file connector or database connector information) for feature group deployment exports.
@@ -174,6 +178,14 @@ Classes
 
       :param feature_group_version: Unique string identifier for the feature group version.
       :type feature_group_version: str
+
+
+   .. py:method:: set_prediction_operator_version(prediction_operator_version)
+
+      Promotes a prediction operator version to be served in the deployment.
+
+      :param prediction_operator_version: Unique string identifier for the prediction operator version.
+      :type prediction_operator_version: str
 
 
    .. py:method:: start()

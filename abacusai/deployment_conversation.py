@@ -43,7 +43,7 @@ class DeploymentConversation(AbstractApiClass):
         Gets a deployment conversation.
 
         Args:
-            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+            deployment_id (str): (Optional) The deployment this conversation belongs to.
 
         Returns:
             DeploymentConversation: The deployment conversation.
@@ -55,7 +55,7 @@ class DeploymentConversation(AbstractApiClass):
         Delete a Deployment Conversation.
 
         Args:
-            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+            deployment_id (str): (Optional) The deployment this conversation belongs to.
         """
         return self.client.delete_deployment_conversation(self.deployment_conversation_id, deployment_id)
 
@@ -77,6 +77,6 @@ class DeploymentConversation(AbstractApiClass):
 
         Args:
             name (str): The new name of the conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+            deployment_id (str): (Optional) The deployment this conversation belongs to.
         """
         return self.client.rename_deployment_conversation(self.deployment_conversation_id, name, deployment_id)

@@ -1,4 +1,5 @@
 from .batch_prediction import *
+from .blob_input import *
 from .dataset import *
 from .enums import *
 from .feature_group import *

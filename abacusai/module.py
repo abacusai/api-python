@@ -10,7 +10,7 @@ class Module(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             name (str): The name to identify the algorithm. Only uppercase letters, numbers, and underscores are allowed.
             createdAt (str): The date and time when the Python function was created, in ISO-8601 format.
-            notebookId (str): The unique string identifier of the notebook used to create or edit the loss function.
+            notebookId (str): The unique string identifier of the notebook used to create or edit the module.
             codeSource (CodeSource): Information about the source code of the Python function.
     """
 

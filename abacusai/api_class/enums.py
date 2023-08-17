@@ -21,6 +21,7 @@ class ProblemType(ApiEnum):
     AI_AGENT = 'ai_agent'
     ANOMALY_DETECTION = 'anomaly_new'
     ANOMALY_OUTLIERS = 'anomaly'
+    EVENT_ANOMALY = 'event_anomaly'
     CLUSTERING = 'clustering'
     CLUSTERING_TIMESERIES = 'clustering_timeseries'
     CUMULATIVE_FORECASTING = 'cumulative_forecasting'
@@ -332,3 +333,14 @@ class VectorStoreTextEncoder(ApiEnum):
     OPENAI = 'OPENAI'
     SENTENCE_BERT = 'SENTENCE_BERT'
     E5_SMALL = 'E5_SMALL'
+
+
+class LLMName(ApiEnum):
+    OPENAI_GPT4 = 'OPENAI_GPT4'
+    OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
+    OPENAI_GPT3_5_SHORT = 'OPENAI_GPT3_5_SHORT'
+    CLAUDE_V2 = 'CLAUDE_V2'
+    ABACUS = 'ABACUS'
+    ABACUS_LONG = 'ABACUS_LONG'
+    ABACUS_LARGE = 'ABACUS_LARGE'
+    PALM = 'PALM'

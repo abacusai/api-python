@@ -550,6 +550,19 @@ class ClusteringTimeseriesTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
+class EventAnomalyTrainingConfig(TrainingConfig):
+    """
+    Training config for the EVENT_ANOMALY problem type
+    Args:
+        anomaly_fraction (float): The fraction of the dataset to classify as anomalous, between 0 and 0.5
+    """
+    anomaly_fraction: float = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.problem_type = enums.ProblemType.EVENT_ANOMALY
+
+
+@dataclasses.dataclass
 class CumulativeForecastingTrainingConfig(TrainingConfig):
     """
     Training config for the CUMULATIVE_FORECASTING problem type
@@ -670,7 +683,11 @@ class CustomAlgorithmTrainingConfig(TrainingConfig):
 class OptimizationTrainingConfig(TrainingConfig):
     """
     Training config for the OPTIMIZATION problem type
+    Args:
+        solve_time_limit (float): The maximum time in seconds to spend solving the problem. Accepts values between 0 and 14400.
+
     """
+    solve_time_limit: float = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.OPTIMIZATION
@@ -690,6 +707,7 @@ class _TrainingConfigFactory(_ApiClassFactory):
         enums.ProblemType.DOCUMENT_CLASSIFICATION: DocumentClassificationTrainingConfig,
         enums.ProblemType.DOCUMENT_SUMMARIZATION: DocumentSummarizationTrainingConfig,
         enums.ProblemType.DOCUMENT_VISUALIZATION: DocumentVisualizationTrainingConfig,
+        enums.ProblemType.EVENT_ANOMALY: EventAnomalyTrainingConfig,
         enums.ProblemType.FORECASTING: ForecastingTrainingConfig,
         enums.ProblemType.NAMED_ENTITY_EXTRACTION: NamedEntityExtractionTrainingConfig,
         enums.ProblemType.NATURAL_LANGUAGE_SEARCH: NaturalLanguageSearchTrainingConfig,

@@ -103,7 +103,6 @@ from .module import Module
 from .monitor_alert import MonitorAlert
 from .monitor_alert_version import MonitorAlertVersion
 from .natural_language_explanation import NaturalLanguageExplanation
-from .notebook_completion import NotebookCompletion
 from .organization_group import OrganizationGroup
 from .organization_search_result import OrganizationSearchResult
 from .organization_secret import OrganizationSecret
@@ -113,6 +112,8 @@ from .pipeline_step_version import PipelineStepVersion
 from .pipeline_step_version_logs import PipelineStepVersionLogs
 from .pipeline_version import PipelineVersion
 from .pipeline_version_logs import PipelineVersionLogs
+from .prediction_operator import PredictionOperator
+from .prediction_operator_version import PredictionOperatorVersion
 from .problem_type import ProblemType
 from .project import Project
 from .project_config import ProjectConfig
@@ -226,7 +227,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.74.0'
+    client_version = '0.75.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1517,6 +1518,36 @@ class ReadOnlyClient(BaseApiClient):
             nested_feature_name (str): Optionally, the name of the nested feature that the feature is in."""
         return self._call_api('getOutliersForFeature', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'featureName': feature_name, 'nestedFeatureName': nested_feature_name})
 
+    def describe_prediction_operator(self, prediction_operator_id: str) -> PredictionOperator:
+        """Describe an existing prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator. Returns
+
+        Returns:
+            PredictionOperator: """
+        return self._call_api('describePredictionOperator', 'GET', query_params={'predictionOperatorId': prediction_operator_id}, parse_type=PredictionOperator)
+
+    def list_prediction_operators(self, project_id: str) -> PredictionOperator:
+        """List all the prediction operators inside a project.
+
+        Args:
+            project_id (str): The unique ID of the project. Returns
+
+        Returns:
+            PredictionOperator: """
+        return self._call_api('listPredictionOperators', 'GET', query_params={'projectId': project_id}, parse_type=PredictionOperator)
+
+    def list_prediction_operator_versions(self, prediction_operator_id: str) -> List[PredictionOperatorVersion]:
+        """List all the prediction operator versions for a prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator.
+
+        Returns:
+            list[PredictionOperatorVersion]: A list of prediction operator version objects."""
+        return self._call_api('listPredictionOperatorVersions', 'GET', query_params={'predictionOperatorId': prediction_operator_id}, parse_type=PredictionOperatorVersion)
+
     def describe_deployment(self, deployment_id: str) -> Deployment:
         """Retrieves a full description of the specified deployment.
 
@@ -2005,7 +2036,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Args:
             deployment_conversation_id (str): Unique ID of the conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents
+            deployment_id (str): (Optional) The deployment this conversation belongs to.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
@@ -2296,6 +2327,69 @@ class ApiClient(ReadOnlyClient):
         # TODO: if waited-for results not successful, return informaive error
         feature_group_version_pandas_df = feature_group_version_object.load_as_pandas()
         return session.createDataFrame(feature_group_version_pandas_df)
+
+    def create_prediction_operator_from_functions(self, name: str, project_id: str,  predict_function: callable = None, initialize_function: callable = None, feature_group_ids: list = None, cpu_size: str = None, memory: int = None, included_modules: list = None, package_requirements: list = None, use_gpu: bool = False):
+        """
+        Create a new prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator.
+            name (str): Name of the prediction operator.
+            function_source_code (str): Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
+            predict_function_name (str): Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
+            predict_function_name (str): Name of the function found in the source code that will be executed to run predictions.
+            feature_group_ids (list): List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes.
+            cpu_size (str): Size of the CPU for the prediction operator.
+            memory (int): Memory (in GB) for the  prediction operator.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            use_gpu (bool): Whether this rediction operator needs gpu.
+        Returns
+            PredictionOperator: The updated prediction operator object.
+        """
+        if initialize_function and not predict_function:
+            raise Exception(
+                'please provide predict function along with the initialize function')
+        function_source_code = None
+        initialize_function_name = None
+        predict_function_name = None
+        if predict_function:
+            function_source_code = inspect.getsource(predict_function)
+            predict_function_name = predict_function.__name__
+        if initialize_function is not None:
+            initialize_function_name = initialize_function.__name__
+            function_source_code = inspect.getsource(
+                initialize_function) + '\n\n' + function_source_code
+        if function_source_code:
+            function_source_code = include_modules(
+                function_source_code, included_modules)
+        return self.create_prediction_operator(name=name, project_id=project_id, source_code=function_source_code, predict_function_name=predict_function_name, initialize_function_name=initialize_function_name, feature_group_ids=feature_group_ids, cpu_size=cpu_size, memory=memory, package_requirements=package_requirements, use_gpu=use_gpu)
+
+    def update_prediction_operator_from_functions(self, prediction_operator_id: str, name: str = None, predict_function: callable = None, initialize_function: callable = None, feature_group_ids: list = None, cpu_size: str = None, memory: int = None, included_modules: list = None, package_requirements: list = None, use_gpu: bool = False):
+        """
+        Update an existing prediction operator.
+
+        Args:
+            name (str): The name of the prediction operator
+            project_id (str): The project to create the prediction in
+            predict_function (callable): The predict function callable to serialize and upload
+            initialize_function (callable): The initialize function callable to serialize and upload
+            initialize_input_tables (list): The input table names of the feature groups to pass to the train function
+            cpu_size (str): Size of the cpu for the training function
+            memory (int): Memory (in GB) for the training function
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
+            use_gpu (bool): Whether this prediction needs gpu
+        """
+        function_source_code = inspect.getsource(predict_function)
+        initialize_function_name = None
+        predict_function_name = predict_function.__name__
+        if initialize_function is not None:
+            initialize_function_name = initialize_function.__name__
+            function_source_code = inspect.getsource(
+                initialize_function) + '\n\n' + function_source_code
+        function_source_code = include_modules(
+            function_source_code, included_modules)
+        return self.update_prediction_operator(prediction_operator_id=prediction_operator_id, name=name, source_code=function_source_code, predict_function_name=predict_function_name, initialize_function_name=initialize_function_name, feature_group_ids=feature_group_ids, cpu_size=cpu_size, memory=memory, package_requirements=package_requirements, use_gpu=use_gpu)
 
     def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None, use_gpu: bool = False):
         """
@@ -3047,7 +3141,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project."""
@@ -4760,6 +4854,82 @@ Creates a new feature group defined as the union of other feature group versions
             monitor_alert_id (str): The unique string identifier of the alert to delete."""
         return self._call_api('deleteMonitorAlert', 'DELETE', query_params={'monitorAlertId': monitor_alert_id})
 
+    def create_prediction_operator(self, name: str, project_id: str, source_code: str = None, predict_function_name: str = None, initialize_function_name: str = None, feature_group_ids: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = False) -> PredictionOperator:
+        """Create a new prediction operator.
+
+        Args:
+            name (str): Name of the prediction operator.
+            project_id (str): The unique ID of the associated project.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
+            predict_function_name (str): Name of the function found in the source code that will be executed to run predictions.
+            initialize_function_name (str): Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
+            feature_group_ids (list): List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
+            cpu_size (str): Size of the CPU for the prediction operator.
+            memory (int): Memory (in GB) for the  prediction operator.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            use_gpu (bool): Whether this prediction operator needs gpu. Returns
+
+        Returns:
+            PredictionOperator: """
+        return self._call_api('createPredictionOperator', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'sourceCode': source_code, 'predictFunctionName': predict_function_name, 'initializeFunctionName': initialize_function_name, 'featureGroupIds': feature_group_ids, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=PredictionOperator)
+
+    def update_prediction_operator(self, prediction_operator_id: str, name: str = None, feature_group_ids: list = None, source_code: str = None, initialize_function_name: str = None, predict_function_name: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> PredictionOperator:
+        """Update an existing prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator.
+            name (str): Name of the prediction operator.
+            feature_group_ids (list): List of feature groups that are supplied to the initialize function as parameters. Each of the parameters are materialized Dataframes. The order should match the initialize function's parameters.
+            source_code (str): Contents of a valid Python source code file. The source code should contain the function `predictFunctionName`, and the function 'initializeFunctionName' if defined.
+            initialize_function_name (str): Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
+            predict_function_name (str): Name of the function found in the source code that will be executed to run predictions.
+            cpu_size (str): Size of the CPU for the prediction operator.
+            memory (int): Memory (in GB) for the  prediction operator.
+            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            use_gpu (bool): Whether this prediction operator needs gpu. Returns
+
+        Returns:
+            PredictionOperator: """
+        return self._call_api('updatePredictionOperator', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id, 'name': name, 'featureGroupIds': feature_group_ids, 'sourceCode': source_code, 'initializeFunctionName': initialize_function_name, 'predictFunctionName': predict_function_name, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=PredictionOperator)
+
+    def delete_prediction_operator(self, prediction_operator_id: str):
+        """Delete an existing prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator."""
+        return self._call_api('deletePredictionOperator', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id})
+
+    def deploy_prediction_operator(self, prediction_operator_id: str, auto_deploy: bool = True) -> Deployment:
+        """Deploy the prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator.
+            auto_deploy (bool): Flag to enable the automatic deployment when a new prediction operator version is created.
+
+        Returns:
+            Deployment: The created deployment object."""
+        return self._call_api('deployPredictionOperator', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id, 'autoDeploy': auto_deploy}, parse_type=Deployment)
+
+    def create_prediction_operator_version(self, prediction_operator_id: str) -> PredictionOperatorVersion:
+        """Create a new version of the prediction operator.
+
+        Args:
+            prediction_operator_id (str): The unique ID of the prediction operator.
+
+        Returns:
+            PredictionOperatorVersion: The created prediction operator version object."""
+        return self._call_api('createPredictionOperatorVersion', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id}, parse_type=PredictionOperatorVersion)
+
+    def delete_prediction_operator_version(self, prediction_operator_version: str) -> PredictionOperatorVersion:
+        """Delete a prediction operator version.
+
+        Args:
+            prediction_operator_version (str): The unique ID of the prediction operator version.
+
+        Returns:
+            PredictionOperatorVersion: """
+        return self._call_api('deletePredictionOperatorVersion', 'POST', query_params={}, body={'predictionOperatorVersion': prediction_operator_version}, parse_type=PredictionOperatorVersion)
+
     def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -4843,6 +5013,14 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): Unique string identifier for the deployment.
             feature_group_version (str): Unique string identifier for the feature group version."""
         return self._call_api('setDeploymentFeatureGroupVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'featureGroupVersion': feature_group_version})
+
+    def set_deployment_prediction_operator_version(self, deployment_id: str, prediction_operator_version: str):
+        """Promotes a prediction operator version to be served in the deployment.
+
+        Args:
+            deployment_id (str): Unique string identifier for the deployment.
+            prediction_operator_version (str): Unique string identifier for the prediction operator version."""
+        return self._call_api('setDeploymentPredictionOperatorVersion', 'PATCH', query_params={'deploymentId': deployment_id}, body={'predictionOperatorVersion': prediction_operator_version})
 
     def start_deployment(self, deployment_id: str):
         """Restarts the specified deployment that was previously suspended.
@@ -5114,6 +5292,17 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('isAnomaly', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+
+    def get_event_anomaly_score(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
+        """Returns an anomaly score for an event.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            query_data (dict): The input data for the prediction."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getEventAnomalyScore', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
         """Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
@@ -5531,6 +5720,19 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url)
 
+    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+        """Executes a deployed AI agent function with binary data as inputs.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            blob (io.TextIOBase): The multipart/form-data of the binary data.
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, files={'blob': blob}, server_override=prediction_url)
+
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
 
@@ -5889,7 +6091,18 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             Pipeline: An object that describes a Pipeline."""
-        return self._call_api('updatePipeline', 'POST', query_params={}, body={'pipelineId': pipeline_id, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron, 'isProd': is_prod}, parse_type=Pipeline)
+        return self._call_api('updatePipeline', 'PATCH', query_params={}, body={'pipelineId': pipeline_id, 'projectId': project_id, 'pipelineVariableMappings': pipeline_variable_mappings, 'cron': cron, 'isProd': is_prod}, parse_type=Pipeline)
+
+    def rename_pipeline(self, pipeline_id: str, pipeline_name: str) -> Pipeline:
+        """Renames a pipeline.
+
+        Args:
+            pipeline_id (str): The ID of the pipeline to rename.
+            pipeline_name (str): The new name of the pipeline.
+
+        Returns:
+            Pipeline: An object that describes a Pipeline."""
+        return self._call_api('renamePipeline', 'PATCH', query_params={}, body={'pipelineId': pipeline_id, 'pipelineName': pipeline_name}, parse_type=Pipeline)
 
     def delete_pipeline(self, pipeline_id: str):
         """Deletes a pipeline.
@@ -5974,7 +6187,18 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             PipelineStep: Object describing the pipeline."""
-        return self._call_api('updatePipelineStep', 'POST', query_params={}, body={'pipelineStepId': pipeline_step_id, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements, 'cpuSize': cpu_size, 'memory': memory}, parse_type=PipelineStep)
+        return self._call_api('updatePipelineStep', 'PATCH', query_params={}, body={'pipelineStepId': pipeline_step_id, 'functionName': function_name, 'sourceCode': source_code, 'stepInputMappings': step_input_mappings, 'outputVariableMappings': output_variable_mappings, 'stepDependencies': step_dependencies, 'packageRequirements': package_requirements, 'cpuSize': cpu_size, 'memory': memory}, parse_type=PipelineStep)
+
+    def rename_pipeline_step(self, pipeline_step_id: str, step_name: str) -> PipelineStep:
+        """Renames a step in a given pipeline.
+
+        Args:
+            pipeline_step_id (str): The ID of the pipeline_step to update.
+            step_name (str): The name of the step.
+
+        Returns:
+            PipelineStep: Object describing the pipeline."""
+        return self._call_api('renamePipelineStep', 'PATCH', query_params={}, body={'pipelineStepId': pipeline_step_id, 'stepName': step_name}, parse_type=PipelineStep)
 
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
@@ -6217,17 +6441,6 @@ Creates a new feature group defined as the union of other feature group versions
             OrganizationSecret: The updated secret."""
         return self._call_api('updateOrganizationSecret', 'PATCH', query_params={}, body={'secretKey': secret_key, 'value': value}, parse_type=OrganizationSecret)
 
-    def get_notebook_cell_completion(self, previous_cells: list, completion_type: str = None) -> List[NotebookCompletion]:
-        """Calls an autocomplete LLM with the input 'previousCells' which is all the previous context of a notebook in the format [{'type':'code/markdown', 'content':'cell text'}].
-
-        Args:
-            previous_cells (list): A list of cells from Notebook for OpenAI to autocomplete.
-            completion_type (str): Specify the type based on which the completion is done.
-
-        Returns:
-            list[NotebookCompletion]: A list of objects, each containing the type and contents of the new cell to be inserted."""
-        return self._call_api('getNotebookCellCompletion', 'POST', query_params={}, body={'previousCells': previous_cells, 'completionType': completion_type}, parse_type=NotebookCompletion)
-
     def set_natural_language_explanation(self, short_explanation: str, long_explanation: str, feature_group_id: str = None, feature_group_version: str = None, model_id: str = None):
         """Saves the natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
 
@@ -6289,7 +6502,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents"""
+            deployment_id (str): (Optional) The deployment this conversation belongs to."""
         return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id})
 
     def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None):
@@ -6309,7 +6522,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
             name (str): The new name of the conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to. Must be provided for AI Agents"""
+            deployment_id (str): (Optional) The deployment this conversation belongs to."""
         return self._call_api('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
 
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Agent:
@@ -6349,7 +6562,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             prompt (str): Prompt to use for generation.
             system_message (str): System message for models that support it.
-            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'CLAUDE_V2', 'ABACUS', 'ABACUS_LONG', 'PALM', or 'LLAMA2_CHAT'. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
 
         Returns:

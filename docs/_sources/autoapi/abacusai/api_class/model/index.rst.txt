@@ -26,6 +26,7 @@ Classes
    abacusai.api_class.model.DocumentVisualizationTrainingConfig
    abacusai.api_class.model.ClusteringTrainingConfig
    abacusai.api_class.model.ClusteringTimeseriesTrainingConfig
+   abacusai.api_class.model.EventAnomalyTrainingConfig
    abacusai.api_class.model.CumulativeForecastingTrainingConfig
    abacusai.api_class.model.AnomalyDetectionTrainingConfig
    abacusai.api_class.model.ThemeAnalysisTrainingConfig
@@ -1397,6 +1398,24 @@ Classes
 
 
 
+.. py:class:: EventAnomalyTrainingConfig
+
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the EVENT_ANOMALY problem type
+   :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
+   :type anomaly_fraction: float
+
+   .. py:attribute:: anomaly_fraction
+      :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: CumulativeForecastingTrainingConfig
 
 
@@ -1651,6 +1670,13 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
+   :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 14400.
+   :type solve_time_limit: float
+
+   .. py:attribute:: solve_time_limit
+      :type: float
+
+      
 
    .. py:method:: __post_init__()
 

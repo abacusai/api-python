@@ -1,0 +1,65 @@
+:py:mod:`abacusai.prediction_operator_version`
+==============================================
+
+.. py:module:: abacusai.prediction_operator_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.prediction_operator_version.PredictionOperatorVersion
+
+
+
+
+.. py:class:: PredictionOperatorVersion(client, predictionOperatorId=None, predictionOperatorVersion=None, createdAt=None, updatedAt=None, sourceCode=None, codeSource={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A prediction operator version.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param predictionOperatorId: The unique identifier of the prediction operator.
+   :type predictionOperatorId: str
+   :param predictionOperatorVersion: The unique identifier of the prediction operator version.
+   :type predictionOperatorVersion: str
+   :param createdAt: Date and time at which the prediction operator was created.
+   :type createdAt: str
+   :param updatedAt: Date and time at which the prediction operator was updated.
+   :type updatedAt: str
+   :param sourceCode: Python code used to make the prediction operator.
+   :type sourceCode: str
+   :param codeSource: If a python model, information on the source code.
+   :type codeSource: CodeSource
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: delete()
+
+      Delete a prediction operator version.
+
+      :param prediction_operator_version: The unique ID of the prediction operator version.
+      :type prediction_operator_version: str
+
+      :rtype: PredictionOperatorVersion
+
+
+
