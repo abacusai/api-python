@@ -1,0 +1,96 @@
+:py:mod:`abacusai.holdout_analysis`
+===================================
+
+.. py:module:: abacusai.holdout_analysis
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.holdout_analysis.HoldoutAnalysis
+
+
+
+
+.. py:class:: HoldoutAnalysis(client, holdoutAnalysisId=None, name=None, featureGroupIds=None, modelId=None, modelName=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A holdout analysis object.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param holdoutAnalysisId: The unique identifier of the holdout analysis.
+   :type holdoutAnalysisId: str
+   :param name: The name of the holdout analysis.
+   :type name: str
+   :param featureGroupIds: The feature group ids associated with the holdout analysis.
+   :type featureGroupIds: list[str]
+   :param modelId: The model id associated with the holdout analysis.
+   :type modelId: str
+   :param modelName: The model name associated with the holdout analysis.
+   :type modelName: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: rerun(model_version = None, algorithm = None)
+
+      Rerun a holdout analysis. A different model version and algorithm can be specified which should be under the same model.
+
+      :param model_version: (optional) Version of the model to use for the holdout analysis
+      :type model_version: str
+      :param algorithm: (optional) ID of algorithm to use for the holdout analysis
+      :type algorithm: str
+
+      :returns: The created holdout analysis version
+      :rtype: HoldoutAnalysisVersion
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: HoldoutAnalysis
+
+
+   .. py:method:: describe()
+
+      Get a holdout analysis.
+
+      :param holdout_analysis_id: ID of the holdout analysis to get
+      :type holdout_analysis_id: str
+
+      :returns: The holdout analysis
+      :rtype: HoldoutAnalysis
+
+
+   .. py:method:: list_versions()
+
+      List holdout analysis versions for a holdout analysis.
+
+      :param holdout_analysis_id: ID of the holdout analysis to list holdout analysis versions for
+      :type holdout_analysis_id: str
+
+      :returns: The holdout analysis versions
+      :rtype: list[HoldoutAnalysisVersion]
+
+
+

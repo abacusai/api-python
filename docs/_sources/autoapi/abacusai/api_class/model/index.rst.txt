@@ -72,6 +72,10 @@ Classes
 
       
 
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
 
 .. py:class:: PersonalizationTrainingConfig
 
@@ -335,7 +339,7 @@ Classes
    :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                              Re-balancing classes generally boosts recall at the cost of precision on rare classes.
    :type rebalance_classes: bool
-   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1
+   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1 for classification problems with rare classes.
    :type rare_class_augmentation_threshold: float
    :param augmentation_strategy: Strategy to deal with class imbalance and data augmentation.
    :type augmentation_strategy: RegressionAugmentationStrategy
@@ -1548,9 +1552,16 @@ Classes
    Training config for the AI_AGENT problem type
    :param description: Description of the agent function.
    :type description: str
+   :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
+   :type enable_binary_input: bool
 
    .. py:attribute:: description
       :type: str
+
+      
+
+   .. py:attribute:: enable_binary_input
+      :type: bool
 
       
 
@@ -1670,7 +1681,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
-   :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 14400.
+   :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
 
    .. py:attribute:: solve_time_limit

@@ -14,6 +14,10 @@ class TrainingConfig(ApiClass):
     problem_type: enums.ProblemType = dataclasses.field(default=None, repr=False, init=False)
     algorithm: str = dataclasses.field(default=None)
 
+    @classmethod
+    def _get_builder(cls):
+        return _TrainingConfigFactory
+
 
 @dataclasses.dataclass
 class PersonalizationTrainingConfig(TrainingConfig):
@@ -123,7 +127,7 @@ class RegressionTrainingConfig(TrainingConfig):
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
         rebalance_classes (bool): Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                                   Re-balancing classes generally boosts recall at the cost of precision on rare classes.
-        rare_class_augmentation_threshold (float): Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1
+        rare_class_augmentation_threshold (float): Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1 for classification problems with rare classes.
         augmentation_strategy (RegressionAugmentationStrategy): Strategy to deal with class imbalance and data augmentation.
         training_rows_downsample_ratio (float): Uses this ratio to train on a sample of the dataset provided.
         active_labels_column (str): Specify a column to use as the active columns in a multi label setting.
@@ -166,7 +170,7 @@ class RegressionTrainingConfig(TrainingConfig):
 
     # data augmentation
     rebalance_classes: bool = dataclasses.field(default=None)
-    rare_class_augmentation_threshold: float = dataclasses.field(default=0.1)
+    rare_class_augmentation_threshold: float = dataclasses.field(default=None)
     augmentation_strategy: enums.RegressionAugmentationStrategy = dataclasses.field(default=None)
     training_rows_downsample_ratio: float = dataclasses.field(default=None)
 
@@ -626,8 +630,10 @@ class AIAgentTrainingConfig(TrainingConfig):
     Training config for the AI_AGENT problem type
     Args:
         description (str): Description of the agent function.
+        enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
     """
     description: str = dataclasses.field(default=None)
+    enable_binary_input: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.AI_AGENT
@@ -684,7 +690,7 @@ class OptimizationTrainingConfig(TrainingConfig):
     """
     Training config for the OPTIMIZATION problem type
     Args:
-        solve_time_limit (float): The maximum time in seconds to spend solving the problem. Accepts values between 0 and 14400.
+        solve_time_limit (float): The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
 
     """
     solve_time_limit: float = dataclasses.field(default=None)

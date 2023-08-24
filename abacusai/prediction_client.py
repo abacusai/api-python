@@ -323,7 +323,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, chat_config: dict = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -335,12 +335,13 @@ class PredictionClient(BaseApiClient):
             system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
-            chat_config (dict): A dictionary specifiying the query chat config override."""
+            chat_config (dict): A dictionary specifiying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'chatConfig': chat_config}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -348,8 +349,9 @@ class PredictionClient(BaseApiClient):
             message (str): A message from the user
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results."""
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values})
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response."""
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values, 'ignoreDocuments': ignore_documents})
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.

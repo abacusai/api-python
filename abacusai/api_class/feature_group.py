@@ -10,6 +10,11 @@ class SamplingConfig(ApiClass):
     """
     An abstract class for the sampling config of a feature group
     """
+
+    @classmethod
+    def _get_builder(cls):
+        return _SamplingConfigFactory
+
     def __post_init__(self):
         if self.__class__ == SamplingConfig:
             raise TypeError('Cannot instantiate abstract SamplingConfig class.')
@@ -59,6 +64,11 @@ class MergeConfig(ApiClass):
     """
     An abstract class for the merge config of a feature group
     """
+
+    @classmethod
+    def _get_builder(self):
+        return _MergeConfigFactory
+
     def __post_init__(self):
         if self.__class__ == MergeConfig:
             raise TypeError('Cannot instantiate abstract MergeConfig class.')

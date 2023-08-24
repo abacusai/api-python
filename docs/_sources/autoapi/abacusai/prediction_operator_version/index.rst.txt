@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PredictionOperatorVersion(client, predictionOperatorId=None, predictionOperatorVersion=None, createdAt=None, updatedAt=None, sourceCode=None, codeSource={})
+.. py:class:: PredictionOperatorVersion(client, predictionOperatorId=None, predictionOperatorVersion=None, createdAt=None, updatedAt=None, sourceCode=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupVersions=None, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36,6 +36,14 @@ Classes
    :type updatedAt: str
    :param sourceCode: Python code used to make the prediction operator.
    :type sourceCode: str
+   :param memory: Memory in GB specified for the prediction operator version.
+   :type memory: int
+   :param useGpu: Whether this prediction operator version is using gpu.
+   :type useGpu: bool
+   :param featureGroupIds: A list of Feature Group IDs used for initializing.
+   :type featureGroupIds: list
+   :param featureGroupVersions: A list of Feature Group version IDs used for initializing.
+   :type featureGroupVersions: list
    :param codeSource: If a python model, information on the source code.
    :type codeSource: CodeSource
 

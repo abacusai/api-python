@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PredictionOperator(client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, codeSource={}, latestPredictionOperatorVersion={})
+.. py:class:: PredictionOperator(client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupTableNames=None, codeSource={}, refreshSchedules={}, latestPredictionOperatorVersion={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,10 +44,20 @@ Classes
    :type initializeFunctionName: str
    :param notebookId: The unique string identifier of the notebook used to create or edit the prediction operator.
    :type notebookId: str
+   :param memory: Memory in GB specified for the prediction operator.
+   :type memory: int
+   :param useGpu: Whether this prediction operator is using gpu.
+   :type useGpu: bool
+   :param featureGroupIds: A list of Feature Group IDs used for initializing.
+   :type featureGroupIds: list
+   :param featureGroupTableNames: A list of Feature Group table names used for initializing.
+   :type featureGroupTableNames: list
    :param codeSource: If a python model, information on the source code.
    :type codeSource: CodeSource
    :param latestPredictionOperatorVersion: The unique string identifier of the latest version.
    :type latestPredictionOperatorVersion: PredictionOperatorVersion
+   :param refreshSchedules: List of refresh schedules that indicate when the next prediction operator version will be processed
+   :type refreshSchedules: RefreshSchedule
 
    .. py:method:: __repr__()
 

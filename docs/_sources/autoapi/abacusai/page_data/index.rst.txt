@@ -1,0 +1,57 @@
+:py:mod:`abacusai.page_data`
+============================
+
+.. py:module:: abacusai.page_data
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.page_data.PageData
+
+
+
+
+.. py:class:: PageData(client, docId=None, page=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Data extracted from a docstore page.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param docId: Unique Docstore string identifier for the document.
+   :type docId: str
+   :param page: The page number. Starts from 0.
+   :type page: int
+   :param pageCount: The total number of pages in document.
+   :type pageCount: int
+   :param pageText: The text extracted from the page.
+   :type pageText: str
+   :param pageTokenStartOffset: The offset of the first token in the page.
+   :type pageTokenStartOffset: int
+   :param tokenCount: The number of tokens in the page.
+   :type tokenCount: int
+   :param tokens: The tokens in the page.
+   :type tokens: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

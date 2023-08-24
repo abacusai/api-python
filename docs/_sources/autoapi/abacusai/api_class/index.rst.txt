@@ -14,13 +14,13 @@ Submodules
    batch_prediction/index.rst
    blob_input/index.rst
    dataset/index.rst
+   document_retriever/index.rst
    enums/index.rst
    feature_group/index.rst
    model/index.rst
    project/index.rst
    python_functions/index.rst
    refresh/index.rst
-   vector_store/index.rst
 
 
 Package Contents
@@ -43,11 +43,16 @@ Classes
    abacusai.api_class.PretrainedModelsBatchPredictionArgs
    abacusai.api_class.SentenceBoundaryDetectionBatchPredictionArgs
    abacusai.api_class.ThemeAnalysisBatchPredictionArgs
+   abacusai.api_class.ChatLLMBatchPredictionArgs
    abacusai.api_class._BatchPredictionArgsFactory
    abacusai.api_class.ApiClass
    abacusai.api_class.BlobInput
    abacusai.api_class.ApiClass
    abacusai.api_class.ParsingConfig
+   abacusai.api_class.ApiClass
+   abacusai.api_class.VectorStoreTextEncoder
+   abacusai.api_class.VectorStoreConfig
+   abacusai.api_class.DocumentRetrieverConfig
    abacusai.api_class.ApiEnum
    abacusai.api_class.ProblemType
    abacusai.api_class.RegressionObjective
@@ -130,10 +135,6 @@ Classes
    abacusai.api_class.FileConnectorExportConfig
    abacusai.api_class.DatabaseConnectorExportConfig
    abacusai.api_class._FeatureGroupExportConfigFactory
-   abacusai.api_class.ApiClass
-   abacusai.api_class.VectorStoreTextEncoder
-   abacusai.api_class.VectorStoreConfig
-   abacusai.api_class.DocumentRetrieverConfig
 
 
 
@@ -157,6 +158,10 @@ Classes
       
 
    .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
 
 
    .. py:method:: to_dict()
@@ -218,6 +223,16 @@ Classes
       :type: abacusai.api_class.enums.ProblemType
 
       
+
+   .. py:attribute:: name
+      :type: str
+      :value: 'batch_prediction_args'
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
 
 
 .. py:class:: AnomalyDetectionBatchPredictionArgs
@@ -606,6 +621,31 @@ Classes
 
 
 
+.. py:class:: ChatLLMBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the ChatLLM problem type
+   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+   :type for_eval: bool
+   :param product: Generate a response for every question and chunk combination
+   :type product: bool
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: product
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: _BatchPredictionArgsFactory
 
 
@@ -647,6 +687,10 @@ Classes
       
 
    .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
 
 
    .. py:method:: to_dict()
@@ -727,6 +771,10 @@ Classes
    .. py:method:: __post_init__()
 
 
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -761,6 +809,111 @@ Classes
       :type: str
 
       
+
+
+.. py:class:: ApiClass
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: VectorStoreTextEncoder
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: E5
+      :value: 'E5'
+
+      
+
+   .. py:attribute:: OPENAI
+      :value: 'OPENAI'
+
+      
+
+   .. py:attribute:: SENTENCE_BERT
+      :value: 'SENTENCE_BERT'
+
+      
+
+   .. py:attribute:: E5_SMALL
+      :value: 'E5_SMALL'
+
+      
+
+
+.. py:class:: VectorStoreConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Configs for vector store indexing.
+
+   :param chunk_size: The size of text chunks in the vector store.
+   :type chunk_size: int
+   :param chunk_overlap_fraction: The fraction of overlap between chunks.
+   :type chunk_overlap_fraction: float
+   :param text_encoder: Encoder used to index texts from the documents.
+   :type text_encoder: VectorStoreTextEncoder
+
+   .. py:attribute:: chunk_size
+      :type: int
+
+      
+
+   .. py:attribute:: chunk_overlap_fraction
+      :type: float
+
+      
+
+   .. py:attribute:: text_encoder
+      :type: abacusai.api_class.enums.VectorStoreTextEncoder
+
+      
+
+
+.. py:class:: DocumentRetrieverConfig
+
+
+   Bases: :py:obj:`VectorStoreConfig`
+
+   Configs for document retriever.
 
 
 .. py:class:: ApiEnum
@@ -2244,6 +2397,10 @@ Classes
    .. py:method:: __post_init__()
 
 
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -2287,6 +2444,10 @@ Classes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the sampling config of a feature group
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
 
    .. py:method:: __post_init__()
 
@@ -2376,6 +2537,10 @@ Classes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
 
    .. py:method:: __post_init__()
 
@@ -2473,6 +2638,10 @@ Classes
    .. py:method:: __post_init__()
 
 
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -2542,6 +2711,10 @@ Classes
       :type: str
 
       
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
 
 
 .. py:class:: PersonalizationTrainingConfig
@@ -2806,7 +2979,7 @@ Classes
    :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                              Re-balancing classes generally boosts recall at the cost of precision on rare classes.
    :type rebalance_classes: bool
-   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1
+   :param rare_class_augmentation_threshold: Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1 for classification problems with rare classes.
    :type rare_class_augmentation_threshold: float
    :param augmentation_strategy: Strategy to deal with class imbalance and data augmentation.
    :type augmentation_strategy: RegressionAugmentationStrategy
@@ -4019,9 +4192,16 @@ Classes
    Training config for the AI_AGENT problem type
    :param description: Description of the agent function.
    :type description: str
+   :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
+   :type enable_binary_input: bool
 
    .. py:attribute:: description
       :type: str
+
+      
+
+   .. py:attribute:: enable_binary_input
+      :type: bool
 
       
 
@@ -4141,7 +4321,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
-   :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 14400.
+   :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
 
    .. py:attribute:: solve_time_limit
@@ -4194,6 +4374,10 @@ Classes
       
 
    .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
 
 
    .. py:method:: to_dict()
@@ -4279,6 +4463,10 @@ Classes
       
 
    .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
 
 
    .. py:method:: to_dict()
@@ -4381,6 +4569,10 @@ Classes
    .. py:method:: __post_init__()
 
 
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -4430,6 +4622,10 @@ Classes
       :type: abacusai.api_class.enums.ConnectorType
 
       
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
 
 
 .. py:class:: FileConnectorExportConfig
@@ -4534,106 +4730,5 @@ Classes
    .. py:attribute:: config_class_map
 
       
-
-
-.. py:class:: ApiClass
-
-
-   Bases: :py:obj:`abc.ABC`
-
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
-
-   .. py:attribute:: _upper_snake_case_keys
-      :type: bool
-
-      
-
-   .. py:attribute:: _support_kwargs
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
-
-
-   .. py:method:: to_dict()
-
-      Standardizes converting an ApiClass to dictionary.
-      Keys of response dictionary are converted to camel case.
-      This also validates the fields ( type, value, etc ) received in the dictionary.
-
-
-   .. py:method:: from_dict(input_dict)
-      :classmethod:
-
-
-
-.. py:class:: VectorStoreTextEncoder
-
-
-   Bases: :py:obj:`ApiEnum`
-
-   Generic enumeration.
-
-   Derive from this class to define new enumerations.
-
-   .. py:attribute:: E5
-      :value: 'E5'
-
-      
-
-   .. py:attribute:: OPENAI
-      :value: 'OPENAI'
-
-      
-
-   .. py:attribute:: SENTENCE_BERT
-      :value: 'SENTENCE_BERT'
-
-      
-
-   .. py:attribute:: E5_SMALL
-      :value: 'E5_SMALL'
-
-      
-
-
-.. py:class:: VectorStoreConfig
-
-
-   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
-
-   Configs for vector store indexing.
-
-   :param chunk_size: The size of text chunks in the vector store.
-   :type chunk_size: int
-   :param chunk_overlap_fraction: The fraction of overlap between chunks.
-   :type chunk_overlap_fraction: float
-   :param text_encoder: Encoder used to index texts from the documents.
-   :type text_encoder: VectorStoreTextEncoder
-
-   .. py:attribute:: chunk_size
-      :type: int
-
-      
-
-   .. py:attribute:: chunk_overlap_fraction
-      :type: float
-
-      
-
-   .. py:attribute:: text_encoder
-      :type: abacusai.api_class.enums.VectorStoreTextEncoder
-
-      
-
-
-.. py:class:: DocumentRetrieverConfig
-
-
-   Bases: :py:obj:`VectorStoreConfig`
-
-   Configs for document retriever.
 
 

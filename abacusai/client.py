@@ -24,6 +24,7 @@ from .agent import Agent
 from .agent_version import AgentVersion
 from .algorithm import Algorithm
 from .annotation_config import AnnotationConfig
+from .annotation_document import AnnotationDocument
 from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
@@ -83,6 +84,8 @@ from .file_connector_verification import FileConnectorVerification
 from .function_logs import FunctionLogs
 from .generated_pit_feature_config_option import GeneratedPitFeatureConfigOption
 from .graph_dashboard import GraphDashboard
+from .holdout_analysis import HoldoutAnalysis
+from .holdout_analysis_version import HoldoutAnalysisVersion
 from .inferred_feature_mappings import InferredFeatureMappings
 from .llm_input import LlmInput
 from .llm_parameters import LlmParameters
@@ -106,6 +109,7 @@ from .natural_language_explanation import NaturalLanguageExplanation
 from .organization_group import OrganizationGroup
 from .organization_search_result import OrganizationSearchResult
 from .organization_secret import OrganizationSecret
+from .page_data import PageData
 from .pipeline import Pipeline
 from .pipeline_step import PipelineStep
 from .pipeline_step_version import PipelineStepVersion
@@ -227,7 +231,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.75.0'
+    client_version = '0.75.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -380,6 +384,8 @@ class BaseApiClient:
             return None
         if isinstance(values, list):
             return [self._build_class(return_class, val) for val in values if val is not None]
+        if issubclass(return_class, ApiClass):
+            return return_class.from_dict(values)
         type_inputs = inspect.signature(return_class.__init__).parameters
         return return_class(self, **{key: val for key, val in values.items() if key in type_inputs})
 
@@ -1073,6 +1079,17 @@ class ReadOnlyClient(BaseApiClient):
             max_height (int): Rescales the returned image so the height is less than or equal to the given maximum height, while preserving the aspect ratio."""
         return self._call_api('getDocstoreImage', 'GET', query_params={'docId': doc_id, 'maxWidth': max_width, 'maxHeight': max_height}, streamable_response=True)
 
+    def get_docstore_page_data(self, doc_id: str, page: int) -> PageData:
+        """Returns the extracted page data for a document page.
+
+        Args:
+            doc_id (str): A unique Docstore string identifier for the document.
+            page (int): The page number to retrieve. Page numbers start from 0.
+
+        Returns:
+            PageData: The extracted page data."""
+        return self._call_api('getDocstorePageData', 'GET', query_params={'docId': doc_id, 'page': page}, parse_type=PageData)
+
     def describe_train_test_data_split_feature_group(self, model_id: str) -> FeatureGroup:
         """Get the train and test data split for a trained model by its unique identifier. This is only supported for models with custom algorithms.
 
@@ -1121,8 +1138,8 @@ class ReadOnlyClient(BaseApiClient):
             metric (str): The metric to use to determine the best model."""
         return self._call_api('setModelObjective', 'GET', query_params={'modelVersion': model_version, 'metric': metric})
 
-    def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False) -> ModelMetrics:
-        """Retrieves a full list of metrics for the specified model.
+    def get_model_metrics(self, model_id: str, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False, include_all_metrics: bool = False, validation: bool = False) -> ModelMetrics:
+        """Retrieves metrics for all the algorithms trained in this model version.
 
         If only the model's unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.
 
@@ -1132,10 +1149,12 @@ class ReadOnlyClient(BaseApiClient):
             model_version (str): Version of the model.
             baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
             return_graphs (bool): If true, will return the information used for the graphs on the model metrics page.
+            include_all_metrics (bool): If true, will return all metrics, including those that are not used for the model's score.
+            validation (bool): If true, will return the validation metrics instead of the test metrics.
 
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means."""
-        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics, 'returnGraphs': return_graphs}, parse_type=ModelMetrics)
+        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'baselineMetrics': baseline_metrics, 'returnGraphs': return_graphs, 'includeAllMetrics': include_all_metrics, 'validation': validation}, parse_type=ModelMetrics)
 
     def query_test_point_predictions(self, model_version: str, algorithm: str, to_row: int, from_row: int = 0, sql_where_clause: str = '') -> TestPointPredictions:
         """Query the test points predictions data for a specific algorithm.
@@ -1444,6 +1463,48 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             EdaForecastingAnalysis: Object with forecasting analysis that includes sales_across_time, cummulative_contribution, missing_value_distribution, history_length, num_rows_histogram, product_maturity data."""
         return self._call_api('getEdaForecastingAnalysis', 'GET', query_params={'edaVersion': eda_version}, parse_type=EdaForecastingAnalysis)
+
+    def list_holdout_analysis(self, project_id: str, model_id: str = None) -> List[HoldoutAnalysis]:
+        """List holdout analyses for a project. Optionally, filter by model.
+
+        Args:
+            project_id (str): ID of the project to list holdout analyses for
+            model_id (str): (optional) ID of the model to filter by
+
+        Returns:
+            list[HoldoutAnalysis]: The holdout analyses"""
+        return self._call_api('listHoldoutAnalysis', 'GET', query_params={'projectId': project_id, 'modelId': model_id}, parse_type=HoldoutAnalysis)
+
+    def describe_holdout_analysis(self, holdout_analysis_id: str) -> HoldoutAnalysis:
+        """Get a holdout analysis.
+
+        Args:
+            holdout_analysis_id (str): ID of the holdout analysis to get
+
+        Returns:
+            HoldoutAnalysis: The holdout analysis"""
+        return self._call_api('describeHoldoutAnalysis', 'GET', query_params={'holdoutAnalysisId': holdout_analysis_id}, parse_type=HoldoutAnalysis)
+
+    def list_holdout_analysis_versions(self, holdout_analysis_id: str) -> List[HoldoutAnalysisVersion]:
+        """List holdout analysis versions for a holdout analysis.
+
+        Args:
+            holdout_analysis_id (str): ID of the holdout analysis to list holdout analysis versions for
+
+        Returns:
+            list[HoldoutAnalysisVersion]: The holdout analysis versions"""
+        return self._call_api('listHoldoutAnalysisVersions', 'GET', query_params={'holdoutAnalysisId': holdout_analysis_id}, parse_type=HoldoutAnalysisVersion)
+
+    def describe_holdout_analysis_version(self, holdout_analysis_version: str, get_metrics: bool = False) -> HoldoutAnalysisVersion:
+        """Get a holdout analysis version.
+
+        Args:
+            holdout_analysis_version (str): ID of the holdout analysis version to get
+            get_metrics (bool): (optional) Whether to get the metrics for the holdout analysis version
+
+        Returns:
+            HoldoutAnalysisVersion: The holdout analysis version"""
+        return self._call_api('describeHoldoutAnalysisVersion', 'GET', query_params={'holdoutAnalysisVersion': holdout_analysis_version, 'getMetrics': get_metrics}, parse_type=HoldoutAnalysisVersion)
 
     def describe_monitor_alert(self, monitor_alert_id: str) -> MonitorAlert:
         """Describes a given monitor alert id
@@ -2031,16 +2092,17 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Abacus AI Chat"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
-            deployment_conversation_id (str): Unique ID of the conversation.
+            deployment_conversation_id (str): (Optional) Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
+            external_session_id (str): (Optional) External session ID of the conversation.
             deployment_id (str): (Optional) The deployment this conversation belongs to.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id}, parse_type=DeploymentConversation)
+        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id}, parse_type=DeploymentConversation)
 
     def list_deployment_conversations(self, deployment_id: str) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -2380,15 +2442,19 @@ class ApiClient(ReadOnlyClient):
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
             use_gpu (bool): Whether this prediction needs gpu
         """
-        function_source_code = inspect.getsource(predict_function)
+        function_source_code = None
         initialize_function_name = None
-        predict_function_name = predict_function.__name__
+        predict_function_name = None
+        if predict_function:
+            function_source_code = inspect.getsource(predict_function)
+            predict_function_name = predict_function.__name__
         if initialize_function is not None:
             initialize_function_name = initialize_function.__name__
             function_source_code = inspect.getsource(
                 initialize_function) + '\n\n' + function_source_code
-        function_source_code = include_modules(
-            function_source_code, included_modules)
+        if function_source_code:
+            function_source_code = include_modules(
+                function_source_code, included_modules)
         return self.update_prediction_operator(prediction_operator_id=prediction_operator_id, name=name, source_code=function_source_code, predict_function_name=predict_function_name, initialize_function_name=initialize_function_name, feature_group_ids=feature_group_ids, cpu_size=cpu_size, memory=memory, package_requirements=package_requirements, use_gpu=use_gpu)
 
     def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None, use_gpu: bool = False):
@@ -3234,7 +3300,7 @@ class ApiClient(ReadOnlyClient):
             list[Feature]: A list of objects that describes the resulting feature group's schema after the feature's featureMapping is set."""
         return self._call_api('setFeatureMapping', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureMapping': feature_mapping, 'nestedColumnName': nested_column_name}, parse_type=Feature)
 
-    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', document: str = None, status: str = None, comments: dict = None, project_id: str = None, save_metadata: bool = False) -> AnnotationEntry:
+    def add_annotation(self, annotation: dict, feature_group_id: str, feature_name: str, doc_id: str = None, feature_group_row_identifier: str = None, annotation_source: str = 'ui', status: str = None, comments: dict = None, project_id: str = None, save_metadata: bool = False, pages: list = None) -> AnnotationEntry:
         """Add an annotation entry to the database.
 
         Args:
@@ -3244,15 +3310,15 @@ class ApiClient(ReadOnlyClient):
             doc_id (str): The ID of the primary document the annotation is on. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the feature group's primary / identifier key value. At least one of the doc_id or feature_group_row_identifier must be provided in order to identify the correct annotation.
             annotation_source (str): Indicator of whether the annotation came from the UI, bulk upload, etc.
-            document (str): The document the annotation is on. This is optional.
             status (str): The status of the annotation. Can be one of 'todo', 'in_progress', 'done'. This is optional.
             comments (dict): Comments for the annotation. This is a dictionary of feature name to the corresponding comment. This is optional.
             project_id (str): The ID of the project that the annotation is associated with. This is optional.
             save_metadata (bool): Whether to save the metadata for the annotation. This is optional.
+            pages (list): pages (list): List of page numbers to consider while processing the annotation. This is optional. doc_id must be provided if pages is provided.
 
         Returns:
             AnnotationEntry: The annotation entry that was added."""
-        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'document': document, 'status': status, 'comments': comments, 'projectId': project_id, 'saveMetadata': save_metadata}, parse_type=AnnotationEntry)
+        return self._call_api('addAnnotation', 'POST', query_params={}, body={'annotation': annotation, 'featureGroupId': feature_group_id, 'featureName': feature_name, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'annotationSource': annotation_source, 'status': status, 'comments': comments, 'projectId': project_id, 'saveMetadata': save_metadata, 'pages': pages}, parse_type=AnnotationEntry)
 
     def describe_annotation(self, feature_group_id: str, feature_name: str = None, doc_id: str = None, feature_group_row_identifier: str = None) -> AnnotationEntry:
         """Get the latest annotation entry for a given feature group, feature, and document.
@@ -3282,18 +3348,19 @@ class ApiClient(ReadOnlyClient):
             AnnotationEntry: The updated annotation entry."""
         return self._call_api('updateAnnotationStatus', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'status': status, 'docId': doc_id, 'featureGroupRowIdentifier': feature_group_row_identifier, 'saveMetadata': save_metadata}, parse_type=AnnotationEntry)
 
-    def get_document_to_annotate(self, feature_group_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False) -> AnnotationEntry:
-        """Get an available document that needs to be annotated for a given feature group and feature.
+    def get_document_to_annotate(self, feature_group_id: str, project_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False) -> AnnotationDocument:
+        """Get an available document that needs to be annotated for a annotation feature group.
 
         Args:
             feature_group_id (str): The ID of the feature group the annotation is on.
+            project_id (str): The ID of the project that the annotation is associated with.
             feature_name (str): The name of the feature the annotation is on.
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. If provided, fetch the immediate next (or previous) available document.
             get_previous (bool): If True, get the previous document instead of the next document. Applicable if feature_group_row_identifier is provided.
 
         Returns:
-            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value."""
-        return self._call_api('getDocumentToAnnotate', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'featureName': feature_name, 'featureGroupRowIdentifier': feature_group_row_identifier, 'getPrevious': get_previous}, parse_type=AnnotationEntry)
+            AnnotationDocument: The document to annotate."""
+        return self._call_api('getDocumentToAnnotate', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'projectId': project_id, 'featureName': feature_name, 'featureGroupRowIdentifier': feature_group_row_identifier, 'getPrevious': get_previous}, parse_type=AnnotationDocument)
 
     def import_annotation_labels(self, feature_group_id: str, file: io.TextIOBase, annotation_type: str) -> AnnotationConfig:
         """Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
@@ -4153,7 +4220,7 @@ Creates a new feature group defined as the union of other feature group versions
             incremental (bool): Signifies if the dataset is an incremental dataset.
             is_documentset (bool): Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
-            merge_file_schemas (bool): Signifies if the merge file schema policy is enabled.
+            merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
             reference_only_documentset (bool): Signifies if the data reference only policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
 
@@ -4246,7 +4313,7 @@ Creates a new feature group defined as the union of other feature group versions
             is_documentset (bool): Signifies if the dataset is a docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
-            merge_file_schemas (bool): Signifies whether to merge the schemas of all files in the dataset.
+            merge_file_schemas (bool): Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
@@ -4810,6 +4877,32 @@ Creates a new feature group defined as the union of other feature group versions
             eda_version (str): Unique string identifier of the EDA version to delete."""
         return self._call_api('deleteEdaVersion', 'DELETE', query_params={'edaVersion': eda_version})
 
+    def create_holdout_analysis(self, name: str, model_id: str, feature_group_ids: list, model_version: str = None, algorithm: str = None) -> HoldoutAnalysis:
+        """Create a holdout analysis for a model
+
+        Args:
+            name (str): Name of the holdout analysis
+            model_id (str): ID of the model to create a holdout analysis for
+            feature_group_ids (list): List of feature group IDs to use for the holdout analysis
+            model_version (str): (optional) Version of the model to use for the holdout analysis
+            algorithm (str): (optional) ID of algorithm to use for the holdout analysis
+
+        Returns:
+            HoldoutAnalysis: The created holdout analysis"""
+        return self._call_api('createHoldoutAnalysis', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'featureGroupIds': feature_group_ids, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=HoldoutAnalysis)
+
+    def rerun_holdout_analysis(self, holdout_analysis_id: str, model_version: str = None, algorithm: str = None) -> HoldoutAnalysisVersion:
+        """Rerun a holdout analysis. A different model version and algorithm can be specified which should be under the same model.
+
+        Args:
+            holdout_analysis_id (str): ID of the holdout analysis to rerun
+            model_version (str): (optional) Version of the model to use for the holdout analysis
+            algorithm (str): (optional) ID of algorithm to use for the holdout analysis
+
+        Returns:
+            HoldoutAnalysisVersion: The created holdout analysis version"""
+        return self._call_api('rerunHoldoutAnalysis', 'POST', query_params={}, body={'holdoutAnalysisId': holdout_analysis_id, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=HoldoutAnalysisVersion)
+
     def create_monitor_alert(self, project_id: str, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict) -> MonitorAlert:
         """Create a monitor alert for the given conditions and monitor
 
@@ -5079,7 +5172,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The ID of the deployment for which the export type is set."""
         return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
-    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, prediction_operator_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type.
 
         A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.
@@ -5098,11 +5191,12 @@ Creates a new feature group defined as the union of other feature group versions
             prediction_metric_ids (list): Comma-separated list of prediction metric IDs.
             model_monitor_ids (list): Comma-separated list of model monitor IDs.
             notebook_id (str): Notebook ID associated with refresh policy.
+            prediction_operator_id (str): Prediction Operator ID associated with refresh policy.
             feature_group_export_config (FeatureGroupExportConfig): Feature group export configuration.
 
         Returns:
             RefreshPolicy: The created refresh policy."""
-        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id, 'predictionOperatorId': prediction_operator_id, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
 
     def delete_refresh_policy(self, refresh_policy_id: str):
         """Delete a refresh policy.
@@ -5439,7 +5533,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, chat_config: dict = None) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -5451,12 +5545,13 @@ Creates a new feature group defined as the union of other feature group versions
             system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
-            chat_config (dict): A dictionary specifiying the query chat config override."""
+            chat_config (dict): A dictionary specifiying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'chatConfig': chat_config}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -5464,8 +5559,9 @@ Creates a new feature group defined as the union of other feature group versions
             message (str): A message from the user
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results."""
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values})
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response."""
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values, 'ignoreDocuments': ignore_documents})
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -6525,7 +6621,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): (Optional) The deployment this conversation belongs to."""
         return self._call_api('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
 
-    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Agent:
+    def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False) -> Agent:
         """Creates a new AI agent.
 
         Args:
@@ -6536,12 +6632,13 @@ Creates a new feature group defined as the union of other feature group versions
             memory (int): The memory allocation (in GB) for the agent.
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): A description of the agent, including its purpose and instructions.
+            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
 
         Returns:
             Agent: The new agent"""
-        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Agent)
+        return self._call_api('createAgent', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'name': name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input}, parse_type=Agent)
 
-    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None) -> Agent:
+    def update_agent(self, model_id: str, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False) -> Agent:
         """Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
         Args:
@@ -6551,10 +6648,11 @@ Creates a new feature group defined as the union of other feature group versions
             memory (int): Memory (in GB) for the agent.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             description (str): A description of the agent, including its purpose and instructions.
+            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
 
         Returns:
             Agent: The updated agent"""
-        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description}, parse_type=Agent)
+        return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input}, parse_type=Agent)
 
     def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.

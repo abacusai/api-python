@@ -39,13 +39,14 @@ class Model(AbstractApiClass):
             customAlgorithmConfigs (dict): User-defined configs for each of the user-defined custom algorithm
             restrictedAlgorithms (dict): User-selected algorithms to train.
             useGpu (bool): If this model uses gpu.
+            notebookId (str): The notebook associated with this model.
             latestModelVersion (ModelVersion): The latest model version.
             location (ModelLocation): Location information for models that are imported.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained
             codeSource (CodeSource): If a python model, information on the source code
     """
 
-    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
+    def __init__(self, client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}):
         super().__init__(client, modelId)
         self.name = name
         self.model_id = modelId
@@ -72,6 +73,7 @@ class Model(AbstractApiClass):
         self.custom_algorithm_configs = customAlgorithmConfigs
         self.restricted_algorithms = restrictedAlgorithms
         self.use_gpu = useGpu
+        self.notebook_id = notebookId
         self.location = client._build_class(ModelLocation, location)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
@@ -80,7 +82,7 @@ class Model(AbstractApiClass):
             ModelVersion, latestModelVersion)
 
     def __repr__(self):
-        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  algorithm_model_configs={repr(self.algorithm_model_configs)},\n  training_vector_store_versions={repr(self.training_vector_store_versions)},\n  document_retrievers={repr(self.document_retrievers)},\n  is_python_model={repr(self.is_python_model)},\n  default_algorithm={repr(self.default_algorithm)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  restricted_algorithms={repr(self.restricted_algorithms)},\n  use_gpu={repr(self.use_gpu)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
+        return f"Model(name={repr(self.name)},\n  model_id={repr(self.model_id)},\n  model_config={repr(self.model_config)},\n  model_prediction_config={repr(self.model_prediction_config)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  shared={repr(self.shared)},\n  shared_at={repr(self.shared_at)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  training_input_tables={repr(self.training_input_tables)},\n  source_code={repr(self.source_code)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  training_feature_group_ids={repr(self.training_feature_group_ids)},\n  algorithm_model_configs={repr(self.algorithm_model_configs)},\n  training_vector_store_versions={repr(self.training_vector_store_versions)},\n  document_retrievers={repr(self.document_retrievers)},\n  is_python_model={repr(self.is_python_model)},\n  default_algorithm={repr(self.default_algorithm)},\n  custom_algorithm_configs={repr(self.custom_algorithm_configs)},\n  restricted_algorithms={repr(self.restricted_algorithms)},\n  use_gpu={repr(self.use_gpu)},\n  notebook_id={repr(self.notebook_id)},\n  location={repr(self.location)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  code_source={repr(self.code_source)},\n  latest_model_version={repr(self.latest_model_version)})"
 
     def to_dict(self):
         """
@@ -89,7 +91,7 @@ class Model(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'algorithm_model_configs': self.algorithm_model_configs, 'training_vector_store_versions': self.training_vector_store_versions, 'document_retrievers': self.document_retrievers, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'use_gpu': self.use_gpu, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
+        return {'name': self.name, 'model_id': self.model_id, 'model_config': self.model_config, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'algorithm_model_configs': self.algorithm_model_configs, 'training_vector_store_versions': self.training_vector_store_versions, 'document_retrievers': self.document_retrievers, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'use_gpu': self.use_gpu, 'notebook_id': self.notebook_id, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version)}
 
     def describe_train_test_data_split_feature_group(self):
         """
@@ -233,9 +235,9 @@ class Model(AbstractApiClass):
         """
         return self.client.set_model_prediction_params(self.model_id, prediction_config)
 
-    def get_metrics(self, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False):
+    def get_metrics(self, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False, include_all_metrics: bool = False, validation: bool = False):
         """
-        Retrieves a full list of metrics for the specified model.
+        Retrieves metrics for all the algorithms trained in this model version.
 
         If only the model's unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.
 
@@ -244,11 +246,13 @@ class Model(AbstractApiClass):
             model_version (str): Version of the model.
             baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
             return_graphs (bool): If true, will return the information used for the graphs on the model metrics page.
+            include_all_metrics (bool): If true, will return all metrics, including those that are not used for the model's score.
+            validation (bool): If true, will return the validation metrics instead of the test metrics.
 
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means.
         """
-        return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics, return_graphs)
+        return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics, return_graphs, include_all_metrics, validation)
 
     def list_versions(self, limit: int = 100, start_after_version: str = None):
         """
@@ -327,7 +331,7 @@ class Model(AbstractApiClass):
         """
         return self.client.get_model_training_types_for_deployment(self.model_id, model_version, algorithm)
 
-    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None):
+    def update_agent(self, function_source_code: str = None, agent_function_name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False):
         """
         Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -337,11 +341,12 @@ class Model(AbstractApiClass):
             memory (int): Memory (in GB) for the agent.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             description (str): A description of the agent, including its purpose and instructions.
+            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
 
         Returns:
             Agent: The updated agent
         """
-        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description)
+        return self.client.update_agent(self.model_id, function_source_code, agent_function_name, memory, package_requirements, description, enable_binary_input)
 
     def wait_for_training(self, timeout=None):
         """

@@ -41,6 +41,10 @@ class ApiClass(ABC):
         if inspect.isabstract(self):
             raise ValueError(f'Cannot instantiate abstract class {self.__class__.__name__}')
 
+    @classmethod
+    def _get_builder(cls):
+        return None
+
     def to_dict(self):
         """
         Standardizes converting an ApiClass to dictionary.
@@ -76,6 +80,8 @@ class ApiClass(ABC):
 
     @classmethod
     def from_dict(cls, input_dict: dict):
+        if builder := cls._get_builder():
+            return builder.from_dict(input_dict)
         if not cls._upper_snake_case_keys:
             input_dict = {snake_case(k): v for k, v in input_dict.items()}
         return cls(**input_dict)
@@ -115,5 +121,6 @@ class _ApiClassFactory(ABC):
                 config_class = cls.config_abstract_class
         if config_class is None:
             raise ValueError(f'Invalid type {config_class_type}')
-
-        return config_class.from_dict(config)
+        if not config_class._upper_snake_case_keys:
+            config = {snake_case(k): v for k, v in config.items()}
+        return config_class(**config)

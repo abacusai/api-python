@@ -392,6 +392,18 @@ class Project(AbstractApiClass):
         """
         return self.client.list_eda(self.project_id)
 
+    def list_holdout_analysis(self, model_id: str = None):
+        """
+        List holdout analyses for a project. Optionally, filter by model.
+
+        Args:
+            model_id (str): (optional) ID of the model to filter by
+
+        Returns:
+            list[HoldoutAnalysis]: The holdout analyses
+        """
+        return self.client.list_holdout_analysis(self.project_id, model_id)
+
     def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict):
         """
         Create a monitor alert for the given conditions and monitor
@@ -551,7 +563,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id, name)
 
-    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None):
+    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False):
         """
         Creates a new AI agent.
 
@@ -562,11 +574,12 @@ class Project(AbstractApiClass):
             memory (int): The memory allocation (in GB) for the agent.
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): A description of the agent, including its purpose and instructions.
+            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
 
         Returns:
             Agent: The new agent
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input)
 
     def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: LlmResponse(client, content=None, tokens=None, stopReason=None, codeBlocks={})
+.. py:class:: LlmResponse(client, content=None, tokens=None, stopReason=None, llmName=None, codeBlocks={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,6 +32,8 @@ Classes
    :type tokens: int
    :param stopReason: The reason due to which the response generation stopped.
    :type stopReason: str
+   :param llmName: The name of the LLM model used to generate the response.
+   :type llmName: str
    :param codeBlocks: A list of parsed code blocks from raw LLM Response
    :type codeBlocks: LlmCodeBlock
 

@@ -22,6 +22,7 @@ Classes
    abacusai.api_class.batch_prediction.PretrainedModelsBatchPredictionArgs
    abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs
    abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs
+   abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs
    abacusai.api_class.batch_prediction._BatchPredictionArgsFactory
 
 
@@ -49,6 +50,16 @@ Classes
       :type: abacusai.api_class.enums.ProblemType
 
       
+
+   .. py:attribute:: name
+      :type: str
+      :value: 'batch_prediction_args'
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
 
 
 .. py:class:: AnomalyDetectionBatchPredictionArgs
@@ -430,6 +441,31 @@ Classes
 
    .. py:attribute:: analysis_days
       :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ChatLLMBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the ChatLLM problem type
+   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+   :type for_eval: bool
+   :param product: Generate a response for every question and chunk combination
+   :type product: bool
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: product
+      :type: bool
 
       
 

@@ -1,0 +1,53 @@
+:py:mod:`abacusai.annotation_document`
+======================================
+
+.. py:module:: abacusai.annotation_document
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.annotation_document.AnnotationDocument
+
+
+
+
+.. py:class:: AnnotationDocument(client, docId=None, featureGroupRowIdentifier=None, featureGroupRowIndex=None, totalRows=None, isAnnotationPresent=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Document to be annotated.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param docId: The docstore Document ID of the document.
+   :type docId: str
+   :param featureGroupRowIdentifier: The key value of the feature group row the annotation is on. Usually the primary key value.
+   :type featureGroupRowIdentifier: str
+   :param featureGroupRowIndex: The index of the document row in the feature group.
+   :type featureGroupRowIndex: int
+   :param totalRows: The total number of rows in the feature group.
+   :type totalRows: int
+   :param isAnnotationPresent: Whether the document already has an annotation. Returns None if feature group is not under annotations review mode.
+   :type isAnnotationPresent: bool
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

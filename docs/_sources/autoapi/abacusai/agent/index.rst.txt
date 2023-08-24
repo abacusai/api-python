@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, codeSource={}, latestAgentVersion={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, codeSource={}, latestAgentVersion={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,12 +34,16 @@ Classes
    :type createdAt: str
    :param projectId: The project this agent belongs to.
    :type projectId: str
+   :param notebookId: The notebook associated with the agent.
+   :type notebookId: str
    :param predictFunctionName: Name of the function found in the source code that will be executed run predictions through agent. It is not executed when this function is run.
    :type predictFunctionName: str
    :param sourceCode: Python code used to make the agent.
    :type sourceCode: str
    :param agentConfig: The config options used to create this agent.
    :type agentConfig: dict
+   :param memory: Memory in GB specified for the deployment resources for the agent.
+   :type memory: int
    :param latestAgentVersion: The latest agent version.
    :type latestAgentVersion: AgentVersion
    :param codeSource: If a python model, information on the source code

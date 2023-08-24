@@ -38,17 +38,18 @@ class DeploymentConversation(AbstractApiClass):
         """
         return {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at, 'external_session_id': self.external_session_id, 'history': self._get_attribute_as_dict(self.history)}
 
-    def get(self, deployment_id: str = None):
+    def get(self, external_session_id: str = None, deployment_id: str = None):
         """
         Gets a deployment conversation.
 
         Args:
+            external_session_id (str): (Optional) External session ID of the conversation.
             deployment_id (str): (Optional) The deployment this conversation belongs to.
 
         Returns:
             DeploymentConversation: The deployment conversation.
         """
-        return self.client.get_deployment_conversation(self.deployment_conversation_id, deployment_id)
+        return self.client.get_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id)
 
     def delete(self, deployment_id: str = None):
         """

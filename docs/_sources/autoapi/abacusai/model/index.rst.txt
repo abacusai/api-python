@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
+.. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -76,6 +76,8 @@ Classes
    :type restrictedAlgorithms: dict
    :param useGpu: If this model uses gpu.
    :type useGpu: bool
+   :param notebookId: The notebook associated with this model.
+   :type notebookId: str
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -260,9 +262,9 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: get_metrics(model_version = None, baseline_metrics = False, return_graphs = False)
+   .. py:method:: get_metrics(model_version = None, baseline_metrics = False, return_graphs = False, include_all_metrics = False, validation = False)
 
-      Retrieves a full list of metrics for the specified model.
+      Retrieves metrics for all the algorithms trained in this model version.
 
       If only the model's unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.
 
@@ -273,6 +275,10 @@ Classes
       :type baseline_metrics: bool
       :param return_graphs: If true, will return the information used for the graphs on the model metrics page.
       :type return_graphs: bool
+      :param include_all_metrics: If true, will return all metrics, including those that are not used for the model's score.
+      :type include_all_metrics: bool
+      :param validation: If true, will return the validation metrics instead of the test metrics.
+      :type validation: bool
 
       :returns: An object containing the model metrics and explanations for what each metric means.
       :rtype: ModelMetrics
@@ -360,7 +366,7 @@ Classes
       :rtype: ModelTrainingTypeForDeployment
 
 
-   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None)
+   .. py:method:: update_agent(function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -374,6 +380,8 @@ Classes
       :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
+      :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
+      :type enable_binary_input: bool
 
       :returns: The updated agent
       :rtype: Agent

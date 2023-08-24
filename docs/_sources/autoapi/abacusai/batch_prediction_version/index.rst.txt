@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, globalPredictionArgs=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, batchInputs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, batchInputs={}, globalPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,8 +44,6 @@ Classes
    :type predictionsStartedAt: str
    :param predictionsCompletedAt: Predictions completion date and time
    :type predictionsCompletedAt: str
-   :param globalPredictionArgs: Argument(s) passed to every prediction call
-   :type globalPredictionArgs: dict
    :param databaseOutputError: If true, there were errors reported by the database connector while writing
    :type databaseOutputError: bool
    :param totalPredictions: Number of predictions performed in this batch prediction job
@@ -94,6 +92,8 @@ Classes
    :type algorithm: str
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
+   :param globalPredictionArgs: Argument(s) passed to every prediction call
+   :type globalPredictionArgs: BatchPredictionArgs
 
    .. py:method:: __repr__()
 

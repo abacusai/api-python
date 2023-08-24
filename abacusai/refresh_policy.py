@@ -26,10 +26,11 @@ class RefreshPolicy(AbstractApiClass):
             modelMonitorIds (list[str]): Comma-separated list of Model Monitor IDs that this refresh policy applies to
             notebookId (str): Notebook ID that this refresh policy applies to
             paused (bool): True if the refresh policy is paused
+            predictionOperatorId (str): Prediction Operator ID that this refresh policy applies to
             featureGroupExportConfig (FeatureGroupRefreshExportConfig): The export configuration for the feature group. Only applicable if refresh_type is FEATUREGROUP.
     """
 
-    def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, featureGroupId=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None, featureGroupExportConfig={}):
+    def __init__(self, client, refreshPolicyId=None, name=None, cron=None, nextRunTime=None, createdAt=None, refreshType=None, projectId=None, datasetIds=None, featureGroupId=None, modelIds=None, deploymentIds=None, predictionMetricIds=None, modelMonitorIds=None, notebookId=None, paused=None, predictionOperatorId=None, featureGroupExportConfig={}):
         super().__init__(client, refreshPolicyId)
         self.refresh_policy_id = refreshPolicyId
         self.name = name
@@ -46,11 +47,12 @@ class RefreshPolicy(AbstractApiClass):
         self.model_monitor_ids = modelMonitorIds
         self.notebook_id = notebookId
         self.paused = paused
+        self.prediction_operator_id = predictionOperatorId
         self.feature_group_export_config = client._build_class(
             FeatureGroupRefreshExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  feature_group_id={repr(self.feature_group_id)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  model_monitor_ids={repr(self.model_monitor_ids)},\n  notebook_id={repr(self.notebook_id)},\n  paused={repr(self.paused)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
+        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  feature_group_id={repr(self.feature_group_id)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  model_monitor_ids={repr(self.model_monitor_ids)},\n  notebook_id={repr(self.notebook_id)},\n  paused={repr(self.paused)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
 
     def to_dict(self):
         """
@@ -59,7 +61,7 @@ class RefreshPolicy(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'feature_group_id': self.feature_group_id, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused, 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
+        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'feature_group_id': self.feature_group_id, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused, 'prediction_operator_id': self.prediction_operator_id, 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
 
     def delete(self):
         """

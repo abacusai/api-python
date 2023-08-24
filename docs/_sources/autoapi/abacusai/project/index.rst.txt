@@ -446,6 +446,17 @@ Classes
       :rtype: list[Eda]
 
 
+   .. py:method:: list_holdout_analysis(model_id = None)
+
+      List holdout analyses for a project. Optionally, filter by model.
+
+      :param model_id: (optional) ID of the model to filter by
+      :type model_id: str
+
+      :returns: The holdout analyses
+      :rtype: list[HoldoutAnalysis]
+
+
    .. py:method:: create_monitor_alert(model_monitor_id, alert_name, condition_config, action_config)
 
       Create a monitor alert for the given conditions and monitor
@@ -604,7 +615,7 @@ Classes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None)
+   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
 
       Creates a new AI agent.
 
@@ -620,6 +631,8 @@ Classes
       :type package_requirements: list
       :param description: A description of the agent, including its purpose and instructions.
       :type description: str
+      :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
+      :type enable_binary_input: bool
 
       :returns: The new agent
       :rtype: Agent

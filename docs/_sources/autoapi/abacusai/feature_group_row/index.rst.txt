@@ -1,0 +1,53 @@
+:py:mod:`abacusai.feature_group_row`
+====================================
+
+.. py:module:: abacusai.feature_group_row
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_row.FeatureGroupRow
+
+
+
+
+.. py:class:: FeatureGroupRow(client, featureGroupId=None, primaryKey=None, createdAt=None, updatedAt=None, contents=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A row of a feature group.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupId: The ID of the feature group this row belongs to.
+   :type featureGroupId: str
+   :param primaryKey: Value of the primary key for this row.
+   :type primaryKey: str
+   :param createdAt: The timestamp this feature group row was created in ISO-8601 format.
+   :type createdAt: str
+   :param updatedAt: The timestamp when this feature group row was last updated in ISO-8601 format.
+   :type updatedAt: str
+   :param contents: A dictionary of feature names and values for this row.
+   :type contents: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

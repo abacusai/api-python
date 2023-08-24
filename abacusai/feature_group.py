@@ -237,19 +237,20 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_annotation_status(self.feature_group_id, feature_name, status, doc_id, feature_group_row_identifier, save_metadata)
 
-    def get_document_to_annotate(self, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False):
+    def get_document_to_annotate(self, project_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False):
         """
-        Get an available document that needs to be annotated for a given feature group and feature.
+        Get an available document that needs to be annotated for a annotation feature group.
 
         Args:
+            project_id (str): The ID of the project that the annotation is associated with.
             feature_name (str): The name of the feature the annotation is on.
             feature_group_row_identifier (str): The key value of the feature group row the annotation is on (cast to string). Usually the primary key value. If provided, fetch the immediate next (or previous) available document.
             get_previous (bool): If True, get the previous document instead of the next document. Applicable if feature_group_row_identifier is provided.
 
         Returns:
-            AnnotationEntry: The latest annotation entry for the given feature group, feature, document, and/or annotation key value.
+            AnnotationDocument: The document to annotate.
         """
-        return self.client.get_document_to_annotate(self.feature_group_id, feature_name, feature_group_row_identifier, get_previous)
+        return self.client.get_document_to_annotate(self.feature_group_id, project_id, feature_name, feature_group_row_identifier, get_previous)
 
     def get_annotations_status(self, feature_name: str = None, check_for_materialization: bool = False):
         """

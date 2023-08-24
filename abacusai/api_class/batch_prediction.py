@@ -10,6 +10,11 @@ class BatchPredictionArgs(ApiClass):
 
     kwargs: dict = dataclasses.field(default_factory=dict)
     problem_type: enums.ProblemType = dataclasses.field(default=None)
+    name: str = 'batch_prediction_args'
+
+    @classmethod
+    def _get_builder(cls):
+        return _BatchPredictionArgsFactory
 
 
 @dataclasses.dataclass
@@ -179,7 +184,7 @@ class ThemeAnalysisBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the THEME_ANALYSIS problem type
     Args:
-        for_eval(bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         analysis_frequency (str): The length of each analysis interval.
         start_date (str): The end point for predictions.
         analysis_days (int): How many days to analyze.
@@ -191,6 +196,21 @@ class ThemeAnalysisBatchPredictionArgs(BatchPredictionArgs):
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.THEME_ANALYSIS
+
+
+@dataclasses.dataclass
+class ChatLLMBatchPredictionArgs(BatchPredictionArgs):
+    """
+    Batch Prediction Config for the ChatLLM problem type
+    Args:
+        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+        product (bool): Generate a response for every question and chunk combination
+    """
+    for_eval: bool = dataclasses.field(default=None)
+    product: bool = None
+
+    def __post_init__(self):
+        self.problem_type = enums.ProblemType.CHAT_LLM
 
 
 @dataclasses.dataclass
@@ -207,4 +227,5 @@ class _BatchPredictionArgsFactory(_ApiClassFactory):
         enums.ProblemType.PRETRAINED_MODELS: PretrainedModelsBatchPredictionArgs,
         enums.ProblemType.SENTENCE_BOUNDARY_DETECTION: SentenceBoundaryDetectionBatchPredictionArgs,
         enums.ProblemType.THEME_ANALYSIS: ThemeAnalysisBatchPredictionArgs,
+        enums.ProblemType.CHAT_LLM: ChatLLMBatchPredictionArgs,
     }

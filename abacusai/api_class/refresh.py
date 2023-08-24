@@ -9,6 +9,10 @@ from .abstract import ApiClass, _ApiClassFactory
 class FeatureGroupExportConfig(ApiClass):
     connector_type: enums.ConnectorType = dataclasses.field(default=None)
 
+    @classmethod
+    def _get_builder(cls):
+        return _FeatureGroupExportConfigFactory
+
 
 @dataclasses.dataclass
 class FileConnectorExportConfig(FeatureGroupExportConfig):

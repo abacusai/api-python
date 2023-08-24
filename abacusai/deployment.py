@@ -34,11 +34,12 @@ class Deployment(AbstractApiClass):
             modelDeploymentConfig (dict): The config for which model to be deployed.
             predictionOperatorId (str): The prediction operator ID that is currently deployed.
             predictionOperatorVersion (str): The prediction operator version ID that is currently deployed.
+            pendingPredictionOperatorVersion (str): The prediction operator version ID that the deployment is switching to.
             refreshSchedules (RefreshSchedule): A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
             featureGroupExportConfig (FeatureGroupExportConfig): The export config (file connector or database connector information) for feature group deployment exports.
     """
 
-    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, refreshSchedules={}, featureGroupExportConfig={}):
+    def __init__(self, client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, refreshSchedules={}, featureGroupExportConfig={}):
         super().__init__(client, deploymentId)
         self.deployment_id = deploymentId
         self.name = name
@@ -62,13 +63,14 @@ class Deployment(AbstractApiClass):
         self.model_deployment_config = modelDeploymentConfig
         self.prediction_operator_id = predictionOperatorId
         self.prediction_operator_version = predictionOperatorVersion
+        self.pending_prediction_operator_version = pendingPredictionOperatorVersion
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
         self.feature_group_export_config = client._build_class(
             FeatureGroupExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  algo_name={repr(self.algo_name)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  batch_streaming_updates={repr(self.batch_streaming_updates)},\n  algorithm={repr(self.algorithm)},\n  pending_model_version={repr(self.pending_model_version)},\n  model_deployment_config={repr(self.model_deployment_config)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  prediction_operator_version={repr(self.prediction_operator_version)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
+        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  algo_name={repr(self.algo_name)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  batch_streaming_updates={repr(self.batch_streaming_updates)},\n  algorithm={repr(self.algorithm)},\n  pending_model_version={repr(self.pending_model_version)},\n  model_deployment_config={repr(self.model_deployment_config)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  prediction_operator_version={repr(self.prediction_operator_version)},\n  pending_prediction_operator_version={repr(self.pending_prediction_operator_version)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
 
     def to_dict(self):
         """
@@ -77,7 +79,7 @@ class Deployment(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'algo_name': self.algo_name, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates, 'algorithm': self.algorithm, 'pending_model_version': self.pending_model_version, 'model_deployment_config': self.model_deployment_config, 'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
+        return {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'algo_name': self.algo_name, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates, 'algorithm': self.algorithm, 'pending_model_version': self.pending_model_version, 'model_deployment_config': self.model_deployment_config, 'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'pending_prediction_operator_version': self.pending_prediction_operator_version, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
 
     def create_webhook(self, endpoint: str, webhook_event_type: str, payload_template: dict = None):
         """
@@ -246,7 +248,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
 
-    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None):
+    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None, ignore_documents: bool = False):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -255,8 +257,9 @@ class Deployment(AbstractApiClass):
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
             chat_config (dict): A dictionary specifiying the query chat config override.
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
         """
-        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, chat_config, filter_key_values)
+        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, chat_config, filter_key_values, ignore_documents)
 
     def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """
@@ -332,7 +335,8 @@ class Deployment(AbstractApiClass):
         while True:
             if timeout and time.time() - start_time > timeout:
                 raise TimeoutError(f'Maximum wait time of {timeout}s exceeded')
-            if not self.refresh().pending_model_version:
+            self.refresh()
+            if not self.pending_model_version and not self.pending_prediction_operator_version:
                 break
             time.sleep(5)
         return self.refresh()

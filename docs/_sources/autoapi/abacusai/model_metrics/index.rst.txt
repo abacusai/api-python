@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMetrics(client, modelId=None, modelVersion=None, metrics=None, baselineMetrics=None, targetColumn=None, trainValTestSplit=None, infoLogs=None)
+.. py:class:: ModelMetrics(client, algoMetrics=None, selectedAlgorithm=None, modelId=None, modelVersion=None, metricNames=None, targetColumn=None, trainValTestSplit=None, trainingCompletedAt=None, baselineMetrics=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -26,20 +26,24 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param modelId: The Model
+   :param algoMetrics: Dictionary mapping algorithm ID to algorithm name and algorithm metrics dictionary
+   :type algoMetrics: dict
+   :param selectedAlgorithm: The algorithm ID of the selected (default) algorithm that will be used in deployments of this Model Version
+   :type selectedAlgorithm: str
+   :param modelId: The Model ID
    :type modelId: str
    :param modelVersion: The Model Version
    :type modelVersion: str
-   :param metrics: Key/value pairs of metrics and their values
-   :type metrics: dict
-   :param baselineMetrics: Key/value pairs of the baseline model metrics and their values
-   :type baselineMetrics: dict
-   :param targetColumn: The target column the model is predicting
+   :param metricNames: Maps shorthand names of the metrics to their verbose names
+   :type metricNames: dict
+   :param targetColumn: The target feature that the model was trained to predict
    :type targetColumn: str
    :param trainValTestSplit: Info on train, val and test split
    :type trainValTestSplit: dict
-   :param infoLogs: Model training logs
-   :type infoLogs: list
+   :param trainingCompletedAt: Timestamp when training was completed
+   :type trainingCompletedAt: datetime
+   :param baselineMetrics: Key/value pairs of the baseline model metrics and their values
+   :type baselineMetrics: dict
 
    .. py:method:: __repr__()
 

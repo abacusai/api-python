@@ -123,7 +123,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs" title="abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemeAnalysisBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the THEME_ANALYSIS problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.batch_prediction._BatchPredictionArgsFactory" title="abacusai.api_class.batch_prediction._BatchPredictionArgsFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_BatchPredictionArgsFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs" title="abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMBatchPredictionArgs</span></code></a></p></td>
+<td><p>Batch Prediction Config for the ChatLLM problem type</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.batch_prediction._BatchPredictionArgsFactory" title="abacusai.api_class.batch_prediction._BatchPredictionArgsFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_BatchPredictionArgsFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
@@ -147,6 +150,16 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs.problem_type">
 <span class="sig-name descname"><span class="pre">problem_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ProblemType" title="abacusai.api_class.enums.ProblemType"><span class="pre">abacusai.api_class.enums.ProblemType</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs.problem_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'batch_prediction_args'</span></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs._get_builder">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_builder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs._get_builder" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -542,6 +555,32 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.batch_prediction.</span></span><span class="sig-name descname"><span class="pre">ChatLLMBatchPredictionArgs</span></span><a class="headerlink" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="abacusai.api_class.batch_prediction.BatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchPredictionArgs</span></code></a></p>
+<p>Batch Prediction Config for the ChatLLM problem type
+:param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+:type for_eval: bool
+:param product: Generate a response for every question and chunk combination
+:type product: bool</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.for_eval">
+<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.for_eval" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.product">
+<span class="sig-name descname"><span class="pre">product</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.product" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs.__post_init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

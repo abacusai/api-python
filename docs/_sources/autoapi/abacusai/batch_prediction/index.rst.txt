@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, globalPredictionArgs=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, globalPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36,8 +36,6 @@ Classes
    :type deploymentId: str
    :param fileConnectorOutputLocation: Contains information about where the batch predictions are written to.
    :type fileConnectorOutputLocation: str
-   :param globalPredictionArgs: Argument(s) passed to every prediction call.
-   :type globalPredictionArgs: dict
    :param databaseConnectorId: The database connector to write the results to.
    :type databaseConnectorId: str
    :param databaseOutputConfiguration: Contains information about where the batch predictions are written to.
@@ -76,6 +74,8 @@ Classes
    :type latestBatchPredictionVersion: BatchPredictionVersion
    :param refreshSchedules: List of refresh schedules that dictate the next time the batch prediction will be run.
    :type refreshSchedules: RefreshSchedule
+   :param globalPredictionArgs: Argument(s) passed to every prediction call.
+   :type globalPredictionArgs: BatchPredictionArgs
 
    .. py:method:: __repr__()
 

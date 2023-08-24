@@ -1,0 +1,100 @@
+:py:mod:`abacusai.holdout_analysis_version`
+===========================================
+
+.. py:module:: abacusai.holdout_analysis_version
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.holdout_analysis_version.HoldoutAnalysisVersion
+
+
+
+
+.. py:class:: HoldoutAnalysisVersion(client, holdoutAnalysisVersion=None, holdoutAnalysisId=None, createdAt=None, status=None, error=None, modelId=None, modelVersion=None, algorithm=None, algoName=None, metrics=None, metricInfos=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A holdout analysis version object.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param holdoutAnalysisVersion: The unique identifier of the holdout analysis version.
+   :type holdoutAnalysisVersion: str
+   :param holdoutAnalysisId: The unique identifier of the holdout analysis.
+   :type holdoutAnalysisId: str
+   :param createdAt: The timestamp at which the holdout analysis version was created.
+   :type createdAt: str
+   :param status: The status of the holdout analysis version.
+   :type status: str
+   :param error: The error message if the status is FAILED.
+   :type error: str
+   :param modelId: The model id associated with the holdout analysis.
+   :type modelId: str
+   :param modelVersion: The model version associated with the holdout analysis.
+   :type modelVersion: str
+   :param algorithm: The algorithm used to train the model.
+   :type algorithm: str
+   :param algoName: The name of the algorithm used to train the model.
+   :type algoName: str
+   :param metrics: The metrics of the holdout analysis version.
+   :type metrics: dict
+   :param metricInfos: The metric infos of the holdout analysis version.
+   :type metricInfos: dict
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: HoldoutAnalysisVersion
+
+
+   .. py:method:: describe(get_metrics = False)
+
+      Get a holdout analysis version.
+
+      :param get_metrics: (optional) Whether to get the metrics for the holdout analysis version
+      :type get_metrics: bool
+
+      :returns: The holdout analysis version
+      :rtype: HoldoutAnalysisVersion
+
+
+   .. py:method:: wait_for_results(timeout=3600)
+
+      A waiting call until holdout analysis for the version is complete
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the holdout analysis version.
+
+      :returns: A string describing the status of a holdout analysis version (pending, complete, etc.).
+      :rtype: str
+
+
+

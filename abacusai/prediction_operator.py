@@ -1,5 +1,6 @@
 from .code_source import CodeSource
 from .prediction_operator_version import PredictionOperatorVersion
+from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass
 
 
@@ -18,11 +19,16 @@ class PredictionOperator(AbstractApiClass):
             sourceCode (str): Python code used to make the prediction operator.
             initializeFunctionName (str): Name of the optional initialize function found in the source code. This function will generate anything used by predictions, based on input feature groups.
             notebookId (str): The unique string identifier of the notebook used to create or edit the prediction operator.
+            memory (int): Memory in GB specified for the prediction operator.
+            useGpu (bool): Whether this prediction operator is using gpu.
+            featureGroupIds (list): A list of Feature Group IDs used for initializing.
+            featureGroupTableNames (list): A list of Feature Group table names used for initializing.
             codeSource (CodeSource): If a python model, information on the source code.
             latestPredictionOperatorVersion (PredictionOperatorVersion): The unique string identifier of the latest version.
+            refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next prediction operator version will be processed
     """
 
-    def __init__(self, client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, codeSource={}, latestPredictionOperatorVersion={}):
+    def __init__(self, client, name=None, predictionOperatorId=None, createdAt=None, updatedAt=None, projectId=None, predictFunctionName=None, sourceCode=None, initializeFunctionName=None, notebookId=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupTableNames=None, codeSource={}, refreshSchedules={}, latestPredictionOperatorVersion={}):
         super().__init__(client, predictionOperatorId)
         self.name = name
         self.prediction_operator_id = predictionOperatorId
@@ -33,12 +39,18 @@ class PredictionOperator(AbstractApiClass):
         self.source_code = sourceCode
         self.initialize_function_name = initializeFunctionName
         self.notebook_id = notebookId
+        self.memory = memory
+        self.use_gpu = useGpu
+        self.feature_group_ids = featureGroupIds
+        self.feature_group_table_names = featureGroupTableNames
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.refresh_schedules = client._build_class(
+            RefreshSchedule, refreshSchedules)
         self.latest_prediction_operator_version = client._build_class(
             PredictionOperatorVersion, latestPredictionOperatorVersion)
 
     def __repr__(self):
-        return f"PredictionOperator(name={repr(self.name)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  project_id={repr(self.project_id)},\n  predict_function_name={repr(self.predict_function_name)},\n  source_code={repr(self.source_code)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  notebook_id={repr(self.notebook_id)},\n  code_source={repr(self.code_source)},\n  latest_prediction_operator_version={repr(self.latest_prediction_operator_version)})"
+        return f"PredictionOperator(name={repr(self.name)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  project_id={repr(self.project_id)},\n  predict_function_name={repr(self.predict_function_name)},\n  source_code={repr(self.source_code)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  notebook_id={repr(self.notebook_id)},\n  memory={repr(self.memory)},\n  use_gpu={repr(self.use_gpu)},\n  feature_group_ids={repr(self.feature_group_ids)},\n  feature_group_table_names={repr(self.feature_group_table_names)},\n  code_source={repr(self.code_source)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_prediction_operator_version={repr(self.latest_prediction_operator_version)})"
 
     def to_dict(self):
         """
@@ -47,7 +59,7 @@ class PredictionOperator(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'prediction_operator_id': self.prediction_operator_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'project_id': self.project_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'initialize_function_name': self.initialize_function_name, 'notebook_id': self.notebook_id, 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_prediction_operator_version': self._get_attribute_as_dict(self.latest_prediction_operator_version)}
+        return {'name': self.name, 'prediction_operator_id': self.prediction_operator_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'project_id': self.project_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'initialize_function_name': self.initialize_function_name, 'notebook_id': self.notebook_id, 'memory': self.memory, 'use_gpu': self.use_gpu, 'feature_group_ids': self.feature_group_ids, 'feature_group_table_names': self.feature_group_table_names, 'code_source': self._get_attribute_as_dict(self.code_source), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_prediction_operator_version': self._get_attribute_as_dict(self.latest_prediction_operator_version)}
 
     def refresh(self):
         """
