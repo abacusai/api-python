@@ -63,7 +63,6 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
-
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -73,7 +72,6 @@ Attributes
 
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`Exception`
 
@@ -94,7 +92,6 @@ Attributes
 
 .. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
-
    Abstract Base API Client
 
    :param api_key: The api key to use as authentication to the server
@@ -107,7 +104,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.75.5'
+      :value: '0.75.6'
 
       
 
@@ -143,7 +140,6 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
-
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -2194,7 +2190,6 @@ Attributes
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
-
 
    Bases: :py:obj:`ReadOnlyClient`
 
