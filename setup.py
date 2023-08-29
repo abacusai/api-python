@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
 
-__version__ = '0.75.6'
+__version__ = '0.75.7'
 
 
 setup(name='abacusai',
@@ -12,7 +12,7 @@ setup(name='abacusai',
       author_email='dev@abacus.ai',
       license='MIT',
       packages=find_packages(),
-      install_requires=['packaging', 'requests', 'pandas', 'fastavro', 'magic'],
+      install_requires=['packaging', 'requests', 'pandas', 'fastavro'],
       zip_safe=True,
       package_data={'': ['public.pem']},
       include_package_data=True,
