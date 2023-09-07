@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None)
+.. py:class:: DocumentRetrieverLookupResult(client, document=None, score=None, properties=None, pages=None, boundingBoxes=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,6 +32,10 @@ Classes
    :type score: float
    :param properties: Properties of the retrieved documents.
    :type properties: dict
+   :param pages: Pages of the retrieved text from the original document.
+   :type pages: list
+   :param boundingBoxes: Bounding boxes of the retrieved text from the original document.
+   :type boundingBoxes: list
 
    .. py:method:: __repr__()
 

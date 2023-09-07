@@ -19,6 +19,7 @@ Submodules
    :titlesonly:
    :maxdepth: 1
 
+   abacus_api/index.rst
    agent/index.rst
    agent_version/index.rst
    ai_building_task/index.rst
@@ -40,6 +41,7 @@ Submodules
    client/index.rst
    code_source/index.rst
    concatenation_config/index.rst
+   cpu_gpu_memory_specs/index.rst
    cryptography/index.rst
    custom_loss_function/index.rst
    custom_metric/index.rst
@@ -111,6 +113,7 @@ Submodules
    llm_input/index.rst
    llm_parameters/index.rst
    llm_response/index.rst
+   memory_options/index.rst
    model/index.rst
    model_artifacts_export/index.rst
    model_blueprint_export/index.rst
@@ -159,6 +162,7 @@ Submodules
    problem_type/index.rst
    project/index.rst
    project_config/index.rst
+   project_feature_group_schema_version/index.rst
    project_validation/index.rst
    python_function/index.rst
    python_function_validator/index.rst
@@ -170,6 +174,7 @@ Submodules
    resolved_feature_group_template/index.rst
    return_class/index.rst
    schema/index.rst
+   slack_connector_response/index.rst
    streaming_auth_token/index.rst
    streaming_client/index.rst
    streaming_connector/index.rst
@@ -182,7 +187,6 @@ Submodules
    use_case_requirements/index.rst
    user/index.rst
    user_exception/index.rst
-   vector_store_lookup_result/index.rst
    webhook/index.rst
 
 
@@ -247,6 +251,11 @@ Classes
    abacusai.PythonFunctionArgumentType
    abacusai.PythonFunctionOutputArgumentType
    abacusai.LLMName
+   abacusai.MonitorAlertType
+   abacusai.FeatureDriftType
+   abacusai.DataIntegrityViolationType
+   abacusai.BiasType
+   abacusai.AlertActionType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -278,6 +287,15 @@ Classes
    abacusai.CustomAlgorithmTrainingConfig
    abacusai.OptimizationTrainingConfig
    abacusai._TrainingConfigFactory
+   abacusai.AlertConditionConfig
+   abacusai.AccuracyBelowThresholdConditionConfig
+   abacusai.FeatureDriftConditionConfig
+   abacusai.DataIntegrityViolationConditionConfig
+   abacusai.BiasViolationConditionConfig
+   abacusai._AlertConditionConfigFactory
+   abacusai.AlertActionConfig
+   abacusai.EmailActionConfig
+   abacusai._AlertActionConfigFactory
    abacusai.FeatureMappingConfig
    abacusai.ProjectFeatureGroupTypeMappingsConfig
    abacusai.PythonFunctionArgument
@@ -305,6 +323,7 @@ Attributes
 
 
 .. py:class:: ApiClass
+
 
    Bases: :py:obj:`abc.ABC`
 
@@ -342,6 +361,7 @@ Attributes
 
 .. py:class:: _ApiClassFactory
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -365,6 +385,7 @@ Attributes
 
 
 .. py:class:: BatchPredictionArgs
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -398,6 +419,7 @@ Attributes
 
 
 .. py:class:: AnomalyDetectionBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -458,6 +480,7 @@ Attributes
 
 .. py:class:: AnomalyOutliersBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_OUTLIERS problem type
@@ -481,6 +504,7 @@ Attributes
 
 
 .. py:class:: ForecastingBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -541,6 +565,7 @@ Attributes
 
 .. py:class:: NamedEntityExtractionBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
@@ -564,6 +589,7 @@ Attributes
 
 
 .. py:class:: PersonalizationBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -602,6 +628,7 @@ Attributes
 
 
 .. py:class:: PredictiveModelingBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -683,6 +710,7 @@ Attributes
 
 .. py:class:: PretrainedModelsBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
@@ -714,6 +742,7 @@ Attributes
 
 .. py:class:: SentenceBoundaryDetectionBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
@@ -737,6 +766,7 @@ Attributes
 
 
 .. py:class:: ThemeAnalysisBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -776,6 +806,7 @@ Attributes
 
 .. py:class:: ChatLLMBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ChatLLM problem type
@@ -800,6 +831,7 @@ Attributes
 
 .. py:class:: _BatchPredictionArgsFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -820,6 +852,7 @@ Attributes
 
 
 .. py:class:: BlobInput
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -865,6 +898,7 @@ Attributes
 
 .. py:class:: ParsingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -887,6 +921,7 @@ Attributes
 
 
 .. py:class:: VectorStoreTextEncoder
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -917,6 +952,7 @@ Attributes
 
 .. py:class:: VectorStoreConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Configs for vector store indexing.
@@ -946,12 +982,14 @@ Attributes
 
 .. py:class:: DocumentRetrieverConfig
 
+
    Bases: :py:obj:`VectorStoreConfig`
 
    Configs for document retriever.
 
 
 .. py:class:: ApiEnum
+
 
    Bases: :py:obj:`enum.Enum`
 
@@ -971,6 +1009,7 @@ Attributes
 
 
 .. py:class:: ProblemType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1126,6 +1165,7 @@ Attributes
 
 .. py:class:: RegressionObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1190,6 +1230,7 @@ Attributes
 
 .. py:class:: RegressionTreeHPOMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1209,6 +1250,7 @@ Attributes
 
 .. py:class:: RegressionAugmentationStrategy
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1227,6 +1269,7 @@ Attributes
 
 
 .. py:class:: RegressionTargetTransform
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1257,6 +1300,7 @@ Attributes
 
 .. py:class:: RegressionTypeOfSplit
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1281,6 +1325,7 @@ Attributes
 
 .. py:class:: RegressionTimeSplitMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1299,6 +1344,7 @@ Attributes
 
 
 .. py:class:: RegressionLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1359,6 +1405,7 @@ Attributes
 
 .. py:class:: ExplainerType
 
+
    Bases: :py:obj:`enum.Enum`
 
    Generic enumeration.
@@ -1388,6 +1435,7 @@ Attributes
 
 .. py:class:: SamplingMethodType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1407,6 +1455,7 @@ Attributes
 
 .. py:class:: MergeMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1425,6 +1474,7 @@ Attributes
 
 
 .. py:class:: FillLogic
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1479,6 +1529,7 @@ Attributes
 
 
 .. py:class:: BatchSize
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1539,6 +1590,7 @@ Attributes
 
 .. py:class:: HolidayCalendars
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1563,6 +1615,7 @@ Attributes
 
 .. py:class:: ExperimentationMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1582,6 +1635,7 @@ Attributes
 
 .. py:class:: PersonalizationTrainingMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1600,6 +1654,7 @@ Attributes
 
 
 .. py:class:: PersonalizationObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1655,6 +1710,7 @@ Attributes
 
 .. py:class:: ForecastingObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1703,6 +1759,7 @@ Attributes
 
 
 .. py:class:: ForecastingFrequency
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1763,6 +1820,7 @@ Attributes
 
 .. py:class:: ForecastingDataSplitType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1791,6 +1849,7 @@ Attributes
 
 
 .. py:class:: ForecastingLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1886,6 +1945,7 @@ Attributes
 
 .. py:class:: ForecastingLocalScaling
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1930,6 +1990,7 @@ Attributes
 
 .. py:class:: ForecastingFillMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1954,6 +2015,7 @@ Attributes
 
 .. py:class:: ForecastingQuanitlesExtensionMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1977,6 +2039,7 @@ Attributes
 
 
 .. py:class:: NERObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2017,6 +2080,7 @@ Attributes
 
 .. py:class:: NERModelType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2051,6 +2115,7 @@ Attributes
 
 .. py:class:: NLPDocumentFormat
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2080,6 +2145,7 @@ Attributes
 
 .. py:class:: SentimentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2098,6 +2164,7 @@ Attributes
 
 
 .. py:class:: ClusteringImputationMethod
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2122,6 +2189,7 @@ Attributes
 
 
 .. py:class:: ConnectorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2151,6 +2219,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionArgumentType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2226,6 +2295,7 @@ Attributes
 
 .. py:class:: PythonFunctionOutputArgumentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2300,6 +2370,7 @@ Attributes
 
 .. py:class:: LLMName
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2347,7 +2418,148 @@ Attributes
       
 
 
+.. py:class:: MonitorAlertType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: ACCURACY_BELOW_THRESHOLD
+      :value: 'AccuracyBelowThreshold'
+
+      
+
+   .. py:attribute:: FEATURE_DRIFT
+      :value: 'FeatureDrift'
+
+      
+
+   .. py:attribute:: DATA_INTEGRITY_VIOLATIONS
+      :value: 'DataIntegrityViolations'
+
+      
+
+   .. py:attribute:: BIAS_VIOLATIONS
+      :value: 'BiasViolations'
+
+      
+
+
+.. py:class:: FeatureDriftType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: KL
+      :value: 'kl'
+
+      
+
+   .. py:attribute:: KS
+      :value: 'ks'
+
+      
+
+   .. py:attribute:: WS
+      :value: 'ws'
+
+      
+
+   .. py:attribute:: JS
+      :value: 'js'
+
+      
+
+
+.. py:class:: DataIntegrityViolationType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: NULL_VIOLATIONS
+      :value: 'null_violations'
+
+      
+
+   .. py:attribute:: TYPE_MISMATCH_VIOLATIONS
+      :value: 'type_mismatch_violations'
+
+      
+
+   .. py:attribute:: RANGE_VIOLATIONS
+      :value: 'range_violations'
+
+      
+
+   .. py:attribute:: CATEGORICAL_RANGE_VIOLATION
+      :value: 'categorical_range_violations'
+
+      
+
+   .. py:attribute:: TOTAL_VIOLATIONS
+      :value: 'total_violations'
+
+      
+
+
+.. py:class:: BiasType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: DEMOGRAPHIC_PARITY
+      :value: 'demographic_parity'
+
+      
+
+   .. py:attribute:: EQUAL_OPPORTUNITY
+      :value: 'equal_opportunity'
+
+      
+
+   .. py:attribute:: GROUP_BENEFIT_EQUALITY
+      :value: 'group_benefit'
+
+      
+
+   .. py:attribute:: TOTAL
+      :value: 'total'
+
+      
+
+
+.. py:class:: AlertActionType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: EMAIL
+      :value: 'Email'
+
+      
+
+
 .. py:class:: SamplingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -2362,6 +2574,7 @@ Attributes
 
 
 .. py:class:: NSamplingConfig
+
 
    Bases: :py:obj:`SamplingConfig`
 
@@ -2392,6 +2605,7 @@ Attributes
 
 .. py:class:: PercentSamplingConfig
 
+
    Bases: :py:obj:`SamplingConfig`
 
    The fraction of distinct values of the feature group to include in the sample.
@@ -2421,6 +2635,7 @@ Attributes
 
 .. py:class:: _SamplingConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -2438,6 +2653,7 @@ Attributes
 
 .. py:class:: MergeConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
@@ -2451,6 +2667,7 @@ Attributes
 
 
 .. py:class:: LastNMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -2473,6 +2690,7 @@ Attributes
 
 
 .. py:class:: TimeWindowMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -2503,6 +2721,7 @@ Attributes
 
 .. py:class:: _MergeConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -2519,6 +2738,7 @@ Attributes
 
 
 .. py:class:: TrainingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -2556,6 +2776,7 @@ Attributes
 
 
 .. py:class:: PersonalizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -2783,6 +3004,7 @@ Attributes
 
 
 .. py:class:: RegressionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3052,6 +3274,7 @@ Attributes
 
 
 .. py:class:: ForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3475,6 +3698,7 @@ Attributes
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
@@ -3555,6 +3779,7 @@ Attributes
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
@@ -3607,6 +3832,7 @@ Attributes
 
 .. py:class:: ChatLLMTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
@@ -3652,6 +3878,7 @@ Attributes
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
@@ -3682,6 +3909,7 @@ Attributes
 
 
 .. py:class:: SentimentDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3728,6 +3956,7 @@ Attributes
 
 .. py:class:: DocumentClassificationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
@@ -3766,6 +3995,7 @@ Attributes
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
@@ -3796,6 +4026,7 @@ Attributes
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3828,6 +4059,7 @@ Attributes
 
 .. py:class:: ClusteringTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
@@ -3844,6 +4076,7 @@ Attributes
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3869,6 +4102,7 @@ Attributes
 
 .. py:class:: EventAnomalyTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
@@ -3885,6 +4119,7 @@ Attributes
 
 
 .. py:class:: CumulativeForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3937,6 +4172,7 @@ Attributes
 
 
 .. py:class:: AnomalyDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3997,6 +4233,7 @@ Attributes
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
@@ -4006,6 +4243,7 @@ Attributes
 
 
 .. py:class:: AIAgentTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4030,6 +4268,7 @@ Attributes
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4075,6 +4314,7 @@ Attributes
 
 
 .. py:class:: CustomAlgorithmTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4135,6 +4375,7 @@ Attributes
 
 .. py:class:: OptimizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
@@ -4151,6 +4392,7 @@ Attributes
 
 
 .. py:class:: _TrainingConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -4171,7 +4413,213 @@ Attributes
       
 
 
+.. py:class:: AlertConditionConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: alert_type
+      :type: abacusai.api_class.enums.MonitorAlertType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: AccuracyBelowThresholdConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Accuracy Below Threshold Condition Config for Monitor Alerts
+   :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold: float
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+
+.. py:class:: FeatureDriftConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Feature Drift Condition Config for Monitor Alerts
+   :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+   :type feature_drift_type: str
+   :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold: float
+   :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
+   :type minimum_violations: int
+
+   .. py:attribute:: feature_drift_type
+      :type: abacusai.api_class.enums.FeatureDriftType
+
+      
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+   .. py:attribute:: minimum_violations
+      :type: int
+
+      
+
+
+.. py:class:: DataIntegrityViolationConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Data Integrity Violation Condition Config for Monitor Alerts
+   :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
+   :type data_integrity_type: enums.DataIntegrityViolationType
+   :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
+   :type minimum_violations: int
+
+   .. py:attribute:: data_integrity_type
+      :type: abacusai.api_class.enums.DataIntegrityViolationType
+
+      
+
+   .. py:attribute:: minimum_violations
+      :type: int
+
+      
+
+
+.. py:class:: BiasViolationConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Bias Violation Condition Config for Monitor Alerts
+   :param bias_type: This option selects the bias metric to monitor for this alert.
+   :type bias_type: enums.BiasType
+   :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold: float
+   :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
+   :type minimum_violations: int
+
+   .. py:attribute:: bias_type
+      :type: abacusai.api_class.enums.BiasType
+
+      
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+   .. py:attribute:: minimum_violations
+      :type: int
+
+      
+
+
+.. py:class:: _AlertConditionConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'alert_type'
+
+      
+
+   .. py:attribute:: config_class_key_value_camel_case
+      :value: True
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
+.. py:class:: AlertActionConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: action_type
+      :type: abacusai.api_class.enums.AlertActionType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: EmailActionConfig
+
+
+   Bases: :py:obj:`AlertActionConfig`
+
+   Email Action Config for Monitor Alerts
+   :param email_recipients: List of email addresses to send the alert to.
+   :type email_recipients: List[str]
+   :param email_body: Body of the email to send.
+   :type email_body: str
+
+   .. py:attribute:: email_recipients
+      :type: List[str]
+
+      
+
+   .. py:attribute:: email_body
+      :type: str
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _AlertActionConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'action_type'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
 .. py:class:: FeatureMappingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -4195,6 +4643,7 @@ Attributes
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -4222,6 +4671,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionArgument
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -4266,6 +4716,7 @@ Attributes
 
 .. py:class:: OutputVariableMapping
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    A config class for python function arguments
@@ -4288,6 +4739,7 @@ Attributes
 
 .. py:class:: FeatureGroupExportConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -4304,6 +4756,7 @@ Attributes
 
 
 .. py:class:: FileConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -4334,6 +4787,7 @@ Attributes
 
 
 .. py:class:: DatabaseConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -4385,6 +4839,7 @@ Attributes
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -4405,6 +4860,7 @@ Attributes
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`ReadOnlyClient`
 
@@ -4648,7 +5104,7 @@ Attributes
       :type memory: int
 
 
-   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Updates a pipeline step from a python function.
 
@@ -5443,7 +5899,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None)
+   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None)
 
       Creates a new feature in a Feature Group from user-provided code. Currently supported code languages are Python.
 
@@ -5474,6 +5930,8 @@ Attributes
       :type python_function_name: str
       :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
       :type python_function_bindings: list
+      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
+      :type use_gpu: bool
 
       :returns: The created feature group
       :rtype: FeatureGroup
@@ -6157,7 +6615,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None)
+   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None, use_gpu = None)
 
       Updates the function definition for a feature group
 
@@ -6179,60 +6637,10 @@ Attributes
       :type use_original_csv_names: bool
       :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
       :type python_function_bindings: list
+      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
+      :type use_gpu: bool
 
       :returns: The updated feature group.
-      :rtype: FeatureGroup
-
-
-   .. py:method:: update_feature_group_zip(feature_group_id, function_name, module_name, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Updates the ZIP file for a feature group created using `createFeatureGroupFromZip`.
-
-      :param feature_group_id: The unique ID associated with the feature group.
-      :type feature_group_id: str
-      :param function_name: The name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: The path to the file with the feature group function.
-      :type module_name: str
-      :param input_feature_groups: A list of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param cpu_size: The size of the CPU for the feature group function.
-      :type cpu_size: str
-      :param memory: The memory (in GB) for the feature group function.
-      :type memory: int
-      :param package_requirements: A list of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
-      :type package_requirements: list
-
-      :returns: The Upload to upload the ZIP file to.
-      :rtype: Upload
-
-
-   .. py:method:: update_feature_group_git(feature_group_id, application_connector_id = None, branch_name = None, python_root = None, function_name = None, module_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Updates a feature group created using `createFeatureGroupFromGit`.
-
-      :param feature_group_id: Unique string identifier associated with the feature group.
-      :type feature_group_id: str
-      :param application_connector_id: Unique string identifier associated with the git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the git repository to be used for training.
-      :type branch_name: str
-      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-      :type python_root: str
-      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: Path to the file with the feature group function.
-      :type module_name: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param cpu_size: Size of the cpu for the feature group function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-
-      :returns: The updated FeatureGroup.
       :rtype: FeatureGroup
 
 
@@ -6820,7 +7228,7 @@ Attributes
 
       :param bucket: The fully qualified Azure Blob Storage Bucket URI.
       :type bucket: str
-      :param connection_string: The Connection String {product_name} should use to authenticate when accessing this bucket.
+      :param connection_string: The Connection String Abacus.AI should use to authenticate when accessing this bucket.
       :type connection_string: str
 
       :returns: An object with the roleArn and verification status for the specified bucket.
@@ -7445,9 +7853,9 @@ Attributes
       :param alert_name: Name of the alert.
       :type alert_name: str
       :param condition_config: Condition to run the actions for the alert.
-      :type condition_config: dict
+      :type condition_config: AlertConditionConfig
       :param action_config: Configuration for the action of the alert.
-      :type action_config: dict
+      :type action_config: AlertActionConfig
 
       :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
@@ -7462,9 +7870,9 @@ Attributes
       :param alert_name: Name of the alert.
       :type alert_name: str
       :param condition_config: Condition to run the actions for the alert.
-      :type condition_config: dict
+      :type condition_config: AlertConditionConfig
       :param action_config: Configuration for the action of the alert.
-      :type action_config: dict
+      :type action_config: AlertActionConfig
 
       :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
@@ -7587,7 +7995,7 @@ Attributes
       :rtype: PredictionOperatorVersion
 
 
-   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, model_deployment_config = None, deployment_config = None)
+   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, skip_metrics_check = False, model_deployment_config = None, deployment_config = None)
 
       Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -7616,6 +8024,8 @@ Attributes
       :type start: bool
       :param enable_batch_streaming_updates: Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup.
       :type enable_batch_streaming_updates: bool
+      :param skip_metrics_check: Flag to skip metric regression with this current deployment
+      :type skip_metrics_check: bool
       :param model_deployment_config: The deployment config for model to deploy
       :type model_deployment_config: dict
       :param deployment_config: Additional parameters specific to different use_cases
@@ -7641,14 +8051,18 @@ Attributes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: update_deployment(deployment_id, description = None)
+   .. py:method:: update_deployment(deployment_id, description = None, auto_deploy = None, skip_metrics_check = None)
 
-      Updates a deployment's description.
+      Updates a deployment's properties.
 
       :param deployment_id: Unique identifier of the deployment to update.
       :type deployment_id: str
       :param description: The new description for the deployment.
       :type description: str
+      :param auto_deploy: Flag to enable the automatic deployment when a new Model Version finishes training.
+      :type auto_deploy: bool
+      :param skip_metrics_check: Flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on
+      :type skip_metrics_check: bool
 
 
    .. py:method:: rename_deployment(deployment_id, name)
@@ -8423,7 +8837,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, return_detected_images = False)
 
       Generate text from a document
 
@@ -8433,6 +8847,8 @@ Attributes
       :type deployment_id: str
       :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
       :type document: io.TextIOBase
+      :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
+      :type return_detected_images: bool
 
 
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
@@ -8890,18 +9306,6 @@ Attributes
       :type catalog_id: str
 
 
-   .. py:method:: upsert_data(feature_group_id, streaming_token, data)
-
-      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, in JSON format.
-      :type data: dict
-
-
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -8936,6 +9340,42 @@ Attributes
       :type streaming_token: str
       :param data: Data to record, as a list of JSON objects.
       :type data: list
+
+
+   .. py:method:: upsert_data(feature_group_id, streaming_token = None, data = None)
+
+      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
+
+      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
+      :type feature_group_id: str
+      :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
+      :type streaming_token: str
+      :param data: The data to record, in JSON format.
+      :type data: dict
+
+      :rtype: FeatureGroupRow
+
+
+   .. py:method:: delete_data(feature_group_id, primary_key)
+
+      Deletes a row from the feature group given the primary key
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param primary_key: The primary key value for which to delete the feature group row
+      :type primary_key: str
+
+
+   .. py:method:: add_feature_group_document(feature_group_id, document)
+
+      Adds a document to the feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param document: The multipart/form-data of the document to add to the feature group.
+      :type document: io.TextIOBase
+
+      :rtype: FeatureGroupDocument
 
 
    .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
@@ -9551,6 +9991,19 @@ Attributes
       :type name: str
 
 
+   .. py:method:: suggest_abacus_apis(query, limit = 5)
+
+      Suggests several Abacus APIs that are most relevant to the supplied natural language query.
+
+      :param query: The natural language query to find Abacus APIs for
+      :type query: str
+      :param limit: The maximum number of APIs to return
+      :type limit: int
+
+      :returns: A list of suggested Abacus APIs
+      :rtype: list[AbacusApi]
+
+
    .. py:method:: create_deployment_conversation(deployment_id, name)
 
       Creates a deployment conversation.
@@ -9650,7 +10103,7 @@ Attributes
       :rtype: Agent
 
 
-   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None)
+   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = None)
 
       Generate response to the prompt using the specified model.
 
@@ -9662,6 +10115,8 @@ Attributes
       :type llm_name: str
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
+      :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 1.0. A range of 0.0 - 1.0 is allowed.
+      :type temperature: float
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse
@@ -9755,9 +10210,9 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: lookup_document_retriever(document_retriever_id, query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
 
-      Lookup relevant documents from the document retriever deployed with given query.
+      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
       Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
       from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
@@ -9768,8 +10223,6 @@ Attributes
       :type document_retriever_id: str
       :param query: The query to search for.
       :type query: str
-      :param deployment_token: A deployment token used to authenticate access to created vector store.
-      :type deployment_token: str
       :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
       :type filters: dict
       :param limit: If provided, will limit the number of results to the value specified.
@@ -9787,14 +10240,12 @@ Attributes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
-   .. py:method:: get_document_snippet(document_retriever_id, deployment_token, document_id, start_word_index = None, end_word_index = None)
+   .. py:method:: get_document_snippet(document_retriever_id, document_id, start_word_index = None, end_word_index = None)
 
       Get a snippet from documents in the document retriever.
 
       :param document_retriever_id: A unique string identifier associated with the document retriever.
       :type document_retriever_id: str
-      :param deployment_token: A deployment token used to authenticate access to created vector store.
-      :type deployment_token: str
       :param document_id: The ID of the document to retrieve the snippet from.
       :type document_id: str
       :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.
@@ -9817,6 +10268,7 @@ Attributes
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`Exception`
 
    Default ApiException raised by APIs
@@ -9836,6 +10288,7 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
+
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -9845,6 +10298,7 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -10649,7 +11103,7 @@ Attributes
       :type metric: str
 
 
-   .. py:method:: get_model_metrics(model_id, model_version = None, baseline_metrics = False, return_graphs = False, include_all_metrics = False, validation = False)
+   .. py:method:: get_model_metrics(model_id, model_version = None, return_graphs = False, include_all_metrics = False, validation = False)
 
       Retrieves metrics for all the algorithms trained in this model version.
 
@@ -10660,8 +11114,6 @@ Attributes
       :type model_id: str
       :param model_version: Version of the model.
       :type model_version: str
-      :param baseline_metrics: If true, will also return the baseline model metrics for comparison.
-      :type baseline_metrics: bool
       :param return_graphs: If true, will return the information used for the graphs on the model metrics page.
       :type return_graphs: bool
       :param include_all_metrics: If true, will return all metrics, including those that are not used for the model's score.
@@ -11394,6 +11846,34 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
+   .. py:method:: get_data(feature_group_id, primary_key = None, num_rows = None)
+
+      Gets the feature group rows.
+
+      If primary key is set, row corresponding to primary_key is returned.
+      If num_rows is set, we return maximum of num_rows latest updated rows.
+
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+      :param primary_key: The primary key value for which to find the feature group row
+      :type primary_key: str
+      :param num_rows: Maximum number of rows to return from the feature group
+      :type num_rows: int
+
+      :rtype: FeatureGroupRow
+
+
+   .. py:method:: list_pending_feature_group_documents(feature_group_id)
+
+      Lists all pending documents added to feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :rtype: FeatureGroupDocument
+
+
    .. py:method:: describe_python_function(name)
 
       Describe a Python Function.
@@ -11890,6 +12370,7 @@ Attributes
    
 
 .. py:class:: PredictionClient(client_options = None)
+
 
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
@@ -12464,7 +12945,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, return_detected_images = False)
 
       Generate text from a document
 
@@ -12474,6 +12955,8 @@ Attributes
       :type deployment_id: str
       :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
       :type document: io.TextIOBase
+      :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
+      :type return_detected_images: bool
 
 
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
@@ -12627,6 +13110,7 @@ Attributes
 
 .. py:class:: StreamingClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
@@ -12678,18 +13162,6 @@ Attributes
       :type catalog_id: str
 
 
-   .. py:method:: upsert_data(feature_group_id, streaming_token, data)
-
-      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, in JSON format.
-      :type data: dict
-
-
    .. py:method:: append_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -12728,7 +13200,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.75.7'
+   :value: '0.76.5'
 
    
 

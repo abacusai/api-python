@@ -57,6 +57,7 @@ class FeatureGroup(AbstractApiClass):
             useOriginalCsvNames (bool): If true, the feature group will use the original column names in the source dataset.
             pythonFunctionBindings (dict): Config specifying variable names, types, and values to use when resolving a Python feature group.
             pythonFunctionName (str): Name of the Python function the feature group was built from.
+            useGpu (bool): Whether this feature group is using gpu
             features (Feature): List of resolved features.
             duplicateFeatures (Feature): List of duplicate features.
             pointInTimeGroups (PointInTimeGroup): List of Point In Time Groups.
@@ -71,7 +72,7 @@ class FeatureGroup(AbstractApiClass):
             projectConfig (ProjectConfig): Project-specific config for this feature group.
     """
 
-    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectConfig={}, latestFeatureGroupVersion={}):
+    def __init__(self, client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectConfig={}, latestFeatureGroupVersion={}):
         super().__init__(client, featureGroupId)
         self.modification_lock = modificationLock
         self.feature_group_id = featureGroupId
@@ -108,6 +109,7 @@ class FeatureGroup(AbstractApiClass):
         self.use_original_csv_names = useOriginalCsvNames
         self.python_function_bindings = pythonFunctionBindings
         self.python_function_name = pythonFunctionName
+        self.use_gpu = useGpu
         self.features = client._build_class(Feature, features)
         self.duplicate_features = client._build_class(
             Feature, duplicateFeatures)
@@ -131,7 +133,7 @@ class FeatureGroup(AbstractApiClass):
             FeatureGroupVersion, latestFeatureGroupVersion)
 
     def __repr__(self):
-        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  referenced_feature_groups={repr(self.referenced_feature_groups)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  sampling_config={repr(self.sampling_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  template_bindings={repr(self.template_bindings)},\n  feature_expression={repr(self.feature_expression)},\n  use_original_csv_names={repr(self.use_original_csv_names)},\n  python_function_bindings={repr(self.python_function_bindings)},\n  python_function_name={repr(self.python_function_name)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  annotation_config={repr(self.annotation_config)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  feature_group_template={repr(self.feature_group_template)},\n  explanation={repr(self.explanation)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  project_config={repr(self.project_config)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
+        return f"FeatureGroup(modification_lock={repr(self.modification_lock)},\n  feature_group_id={repr(self.feature_group_id)},\n  name={repr(self.name)},\n  feature_group_source_type={repr(self.feature_group_source_type)},\n  table_name={repr(self.table_name)},\n  sql={repr(self.sql)},\n  dataset_id={repr(self.dataset_id)},\n  function_source_code={repr(self.function_source_code)},\n  function_name={repr(self.function_name)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  description={repr(self.description)},\n  feature_group_type={repr(self.feature_group_type)},\n  sql_error={repr(self.sql_error)},\n  latest_version_outdated={repr(self.latest_version_outdated)},\n  referenced_feature_groups={repr(self.referenced_feature_groups)},\n  tags={repr(self.tags)},\n  primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)},\n  streaming_enabled={repr(self.streaming_enabled)},\n  incremental={repr(self.incremental)},\n  merge_config={repr(self.merge_config)},\n  transform_config={repr(self.transform_config)},\n  sampling_config={repr(self.sampling_config)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  streaming_ready={repr(self.streaming_ready)},\n  feature_tags={repr(self.feature_tags)},\n  module_name={repr(self.module_name)},\n  template_bindings={repr(self.template_bindings)},\n  feature_expression={repr(self.feature_expression)},\n  use_original_csv_names={repr(self.use_original_csv_names)},\n  python_function_bindings={repr(self.python_function_bindings)},\n  python_function_name={repr(self.python_function_name)},\n  use_gpu={repr(self.use_gpu)},\n  features={repr(self.features)},\n  duplicate_features={repr(self.duplicate_features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  annotation_config={repr(self.annotation_config)},\n  concatenation_config={repr(self.concatenation_config)},\n  indexing_config={repr(self.indexing_config)},\n  code_source={repr(self.code_source)},\n  feature_group_template={repr(self.feature_group_template)},\n  explanation={repr(self.explanation)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  project_config={repr(self.project_config)},\n  latest_feature_group_version={repr(self.latest_feature_group_version)})"
 
     def to_dict(self):
         """
@@ -140,7 +142,7 @@ class FeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'referenced_feature_groups': self.referenced_feature_groups, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'template_bindings': self.template_bindings, 'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'explanation': self._get_attribute_as_dict(self.explanation), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'project_config': self._get_attribute_as_dict(self.project_config), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
+        return {'modification_lock': self.modification_lock, 'feature_group_id': self.feature_group_id, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'feature_group_type': self.feature_group_type, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'referenced_feature_groups': self.referenced_feature_groups, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'incremental': self.incremental, 'merge_config': self.merge_config, 'transform_config': self.transform_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name, 'template_bindings': self.template_bindings, 'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'use_gpu': self.use_gpu, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'explanation': self._get_attribute_as_dict(self.explanation), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'project_config': self._get_attribute_as_dict(self.project_config), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """
@@ -827,7 +829,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_dataset_feature_group_feature_expression(self.feature_group_id, feature_expression)
 
-    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None):
+    def update_function_definition(self, function_source_code: str = None, function_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_original_csv_names: bool = False, python_function_bindings: list = None, use_gpu: bool = None):
         """
         Updates the function definition for a feature group
 
@@ -840,48 +842,12 @@ class FeatureGroup(AbstractApiClass):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             use_original_csv_names (bool): If set to `True`, feature group uses the original column names for input feature groups from CSV datasets.
             python_function_bindings (list): List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            use_gpu (bool): Whether the feature group needs a gpu or not. Otherwise default to CPU.
 
         Returns:
             FeatureGroup: The updated feature group.
         """
-        return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements, use_original_csv_names, python_function_bindings)
-
-    def update_zip(self, function_name: str, module_name: str, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
-        """
-        Updates the ZIP file for a feature group created using `createFeatureGroupFromZip`.
-
-        Args:
-            function_name (str): The name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            module_name (str): The path to the file with the feature group function.
-            input_feature_groups (list): A list of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): The size of the CPU for the feature group function.
-            memory (int): The memory (in GB) for the feature group function.
-            package_requirements (list): A list of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
-
-        Returns:
-            Upload: The Upload to upload the ZIP file to.
-        """
-        return self.client.update_feature_group_zip(self.feature_group_id, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
-
-    def update_git(self, application_connector_id: str = None, branch_name: str = None, python_root: str = None, function_name: str = None, module_name: str = None, input_feature_groups: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None):
-        """
-        Updates a feature group created using `createFeatureGroupFromGit`.
-
-        Args:
-            application_connector_id (str): Unique string identifier associated with the git application connector.
-            branch_name (str): Name of the branch in the git repository to be used for training.
-            python_root (str): Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-            function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            module_name (str): Path to the file with the feature group function.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-            cpu_size (str): Size of the cpu for the feature group function.
-            memory (int): Memory (in GB) for the feature group function.
-            package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-
-        Returns:
-            FeatureGroup: The updated FeatureGroup.
-        """
-        return self.client.update_feature_group_git(self.feature_group_id, application_connector_id, branch_name, python_root, function_name, module_name, input_feature_groups, cpu_size, memory, package_requirements)
+        return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements, use_original_csv_names, python_function_bindings, use_gpu)
 
     def update_feature(self, name: str, select_expression: str = None, new_name: str = None):
         """
@@ -1050,16 +1016,6 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
 
-    def upsert_data(self, streaming_token: str, data: dict):
-        """
-        Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-        Args:
-            streaming_token (str): The streaming token for authenticating requests.
-            data (dict): The data to record, in JSON format.
-        """
-        return self.client.upsert_data(self.feature_group_id, streaming_token, data)
-
     def append_data(self, streaming_token: str, data: dict):
         """
         Appends new data into the feature group for a given lookup key recordId.
@@ -1089,6 +1045,69 @@ class FeatureGroup(AbstractApiClass):
             data (list): Data to record, as a list of JSON objects.
         """
         return self.client.append_multiple_data(self.feature_group_id, streaming_token, data)
+
+    def upsert_data(self, streaming_token: str = None, data: dict = None):
+        """
+        Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
+
+        Args:
+            streaming_token (str): Optional streaming token for authenticating requests if upserting to streaming FG.
+            data (dict): The data to record, in JSON format.
+
+        Returns:
+            FeatureGroupRow: 
+        """
+        return self.client.upsert_data(self.feature_group_id, streaming_token, data)
+
+    def delete_data(self, primary_key: str):
+        """
+        Deletes a row from the feature group given the primary key
+
+        Args:
+            primary_key (str): The primary key value for which to delete the feature group row
+        """
+        return self.client.delete_data(self.feature_group_id, primary_key)
+
+    def get_data(self, primary_key: str = None, num_rows: int = None):
+        """
+        Gets the feature group rows.
+
+        If primary key is set, row corresponding to primary_key is returned.
+        If num_rows is set, we return maximum of num_rows latest updated rows.
+
+
+        Args:
+            primary_key (str): The primary key value for which to find the feature group row
+            num_rows (int): Maximum number of rows to return from the feature group
+
+        Returns:
+            FeatureGroupRow: 
+        """
+        return self.client.get_data(self.feature_group_id, primary_key, num_rows)
+
+    def add_document(self, document: io.TextIOBase):
+        """
+        Adds a document to the feature group.
+
+        Args:
+            document (io.TextIOBase): The multipart/form-data of the document to add to the feature group.
+
+        Returns:
+            FeatureGroupDocument: 
+        """
+        return self.client.add_feature_group_document(self.feature_group_id, document)
+
+    def list_pending_documents(self):
+        """
+        Lists all pending documents added to feature group.
+
+        Args:
+            feature_group_id (str): The unique ID associated with the feature group.
+
+        Returns:
+            FeatureGroupDocument: 
+        """
+        return self.client.list_pending_feature_group_documents(self.feature_group_id)
 
     def get_natural_language_explanation(self, feature_group_version: str = None, model_id: str = None):
         """
@@ -1188,6 +1207,20 @@ class FeatureGroup(AbstractApiClass):
         """
         latest_version = self.materialize().latest_feature_group_version
         return latest_version.load_as_pandas()
+
+    def load_as_pandas_documents(self, doc_id_column: str, document_column: str):
+        """
+        Loads a feature group with documents data into a pandas dataframe.
+
+        Args:
+            doc_id_feature (str): The name of the feature / column containing the document ID.
+            document_feature (str): The name of the feature / column containing the page infos. This column will be replaced with the extracted document data.
+
+        Returns:
+            DataFrame: A pandas dataframe containing the extracted document data.
+        """
+        latest_version = self.materialize().latest_feature_group_version
+        return latest_version.load_as_pandas_documents(doc_id_column, document_column)
 
     def describe_dataset(self):
         """

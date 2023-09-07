@@ -1,5 +1,7 @@
+import importlib
 import inspect
 import json
+import os
 import re
 import string
 from textwrap import dedent
@@ -139,7 +141,7 @@ def load_as_pandas_from_avro_files(files: List[str], download_method: Callable, 
         with tempfile.TemporaryDirectory() as tmp_dir:
             df_parts = []
             file_futures = [executor.submit(
-                download_method, file_part, tmp_dir) for file_part in files]
+                download_method, file_part, tmp_dir, i) for i, file_part in enumerate(files)]
             for future in file_futures:
                 part_path = future.result()
                 with open(part_path, 'rb') as part_data:
@@ -148,3 +150,111 @@ def load_as_pandas_from_avro_files(files: List[str], download_method: Callable, 
         data_df = pd.concat(df_parts, ignore_index=True)
 
     return data_df
+
+
+class DocstoreUtils:
+    """Utility class for loading docstore data.
+    Needs to be updated if docstore formats change."""
+
+    PREDICTION_PREFIX = 'prediction'
+    FIRST_PAGE = 'first_page'
+    LAST_PAGE = 'last_page'
+    PAGE_TEXT = 'page_text'
+    PAGES = 'pages'
+    TOKENS = 'tokens'
+    PAGES_ZIP_METADATA = 'pages_zip_metadata'
+    PAGE_DATA = 'page_data'
+
+    @staticmethod
+    def get_archive_id(doc_id: str):
+        parts = doc_id.split('-')
+        if len(parts) < 3:
+            raise ValueError(f'Unsupported doc_id: {doc_id}')
+
+        if parts[0] == DocstoreUtils.PREDICTION_PREFIX:
+            raise ValueError(f'Unsupported doc_id: {doc_id}')
+
+        dataset_version, archive_number, _ = parts[:3]
+        return f'{dataset_version}-{archive_number}'
+
+    @staticmethod
+    def get_page_id(doc_id: str, page: int):
+        return f'{doc_id}-page-{page}'
+
+    @classmethod
+    def get_pandas_pages_df(cls, df, feature_group_version: str, doc_id_column: str, document_column: str,
+                            get_docstore_resource_bytes: Callable[..., bytes], max_workers: int = 10):
+        from concurrent.futures import ThreadPoolExecutor
+
+        import pandas as pd
+
+        group_by_archive = df.groupby(
+            df[doc_id_column].apply(lambda x: cls.get_archive_id(x)))
+        load_pages_args = []
+
+        for archive_id, archive_group_df in group_by_archive:
+            pages_metadata_bytes = get_docstore_resource_bytes(
+                feature_group_version, cls.PAGES_ZIP_METADATA, archive_id)
+            pages_metadata = json.loads(pages_metadata_bytes.decode('utf-8'))
+
+            for doc_id, pages_ref in archive_group_df[[doc_id_column, document_column]].values:
+                if not pages_ref:
+                    continue
+                for page in range(pages_ref[cls.FIRST_PAGE], pages_ref[cls.LAST_PAGE] + 1):
+                    page_id = cls.get_page_id(doc_id, page)
+                    offset, size = pages_metadata[page_id]
+                    load_pages_args.append((archive_id, offset, size))
+
+        def load_page(archive_id: str, offset: int, size: int):
+            page_bytes = get_docstore_resource_bytes(
+                feature_group_version, cls.PAGE_DATA, archive_id, offset=offset, size=size)
+            return page_bytes.decode('utf-8')
+
+        with ThreadPoolExecutor(max_workers) as executor:
+            pages_list = executor.map(
+                lambda args: load_page(*args), load_pages_args)
+
+        pages_df = pd.DataFrame([json.loads(page) for page in pages_list])
+        return pages_df
+
+    @classmethod
+    def get_pandas_documents_df(cls, df, feature_group_version: str, doc_id_column: str, document_column: str,
+                                get_docstore_resource_bytes: Callable, max_workers: int = 10):
+        pages_ref_column = f'__{document_column}'
+        original_columns = df.columns
+
+        # Re-name page_ids column so that the generated document column does not have the same name
+        df = df.rename(columns={document_column: pages_ref_column})
+        pages_df = cls.get_pandas_pages_df(df, feature_group_version, doc_id_column, pages_ref_column,
+                                           get_docstore_resource_bytes, max_workers)
+
+        # Convert column with tokens per page (list of list) to column with Document format:
+        # {TOKENS: [list of tokens in document], PAGES: [list of pages in document]}.
+        # No need to sort as page_df is already sorted.
+        def combine_doc_info(group):
+            pages = list(group[cls.PAGE_TEXT])
+            if cls.TOKENS in group:
+                tokens = [tok for page_tokens in group[cls.TOKENS]
+                          for tok in page_tokens]
+                return {cls.PAGES: pages, cls.TOKENS: tokens}
+            return {cls.PAGES: pages}
+
+        doc_infos = pages_df.groupby(doc_id_column).apply(
+            combine_doc_info).reset_index(name=document_column)
+        document_df = df.merge(doc_infos, on=doc_id_column, how='left')
+        document_df = document_df[original_columns]
+        return document_df
+
+
+def try_abacus_internal_copy(src_suffix, dst_local, raise_exception=True):
+    """ Retuns true if the file was copied, false otherwise"""
+    if os.environ.get('ABACUS_GENERATED_ARTIFACTS_DIR') and importlib.util.find_spec('abacus_internal') and importlib.util.find_spec('abacus_internal.cloud_copy'):
+        try:
+            from abacus_internal.cloud_copy import copy_cloud_file_to_local
+            copy_cloud_file_to_local(src_suffix, dst_local)
+        except Exception:
+            if raise_exception:
+                raise Exception(
+                    'Something went wrong while executing in Abacus environment. Please contact support')
+        return True
+    return False

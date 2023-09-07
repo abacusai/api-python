@@ -72,12 +72,17 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
     def describe(self):
         return self.client.describe_async_feature_group_operation(self.feature_group_operation_run_id)
 
-    def _download_avro_file(self, file_part, tmp_dir):
+    def _download_avro_file(self, file_part, tmp_dir, part_index):
+        from .api_client_utils import try_abacus_internal_copy
+
+        part_path = os.path.join(tmp_dir, f'{part_index}.avro')
+        if try_abacus_internal_copy(file_part, part_path):
+            return part_path
+
         offset = 0
-        part_path = os.path.join(tmp_dir, f'{file_part}.avro')
         with open(part_path, 'wb') as file:
             while True:
-                with self.client._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': self.feature_group_operation_run_id, 'part': file_part, 'offset': offset}, streamable_response=True) as chunk:
+                with self.client._call_api('downloadExecuteFeatureGroupOperationResultPartChunk', 'GET', query_params={'featureGroupOperationRunId': self.feature_group_operation_run_id, 'part': part_index, 'offset': offset}, streamable_response=True) as chunk:
                     bytes_written = file.write(chunk.read())
                 if not bytes_written:
                     break
@@ -97,6 +102,6 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
 
         from .api_client_utils import load_as_pandas_from_avro_files
 
-        file_parts = range(self.client._call_api(
-            'getExecuteFeatureGroupOperationResultPartCount', 'POST', query_params={'featureGroupOperationRunId': self.feature_group_operation_run_id}))
+        file_parts = self.client._call_api(
+            '_getExecuteFeatureGroupOperationResultParts', 'POST', query_params={'featureGroupOperationRunId': self.feature_group_operation_run_id})
         return load_as_pandas_from_avro_files(file_parts, self._download_avro_file, max_workers=max_workers)

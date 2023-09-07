@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import DocumentRetrieverConfig, TrainingConfig
+from .api_class import AlertActionConfig, AlertConditionConfig, DocumentRetrieverConfig, TrainingConfig
 from .return_class import AbstractApiClass
 
 
@@ -404,15 +404,15 @@ class Project(AbstractApiClass):
         """
         return self.client.list_holdout_analysis(self.project_id, model_id)
 
-    def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: dict, action_config: dict):
+    def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
         """
         Create a monitor alert for the given conditions and monitor
 
         Args:
             model_monitor_id (str): Unique string identifier for the model monitor created under the project.
             alert_name (str): Name of the alert.
-            condition_config (dict): Condition to run the actions for the alert.
-            action_config (dict): Configuration for the action of the alert.
+            condition_config (AlertConditionConfig): Condition to run the actions for the alert.
+            action_config (AlertActionConfig): Configuration for the action of the alert.
 
         Returns:
             MonitorAlert: Object describing the monitor alert.

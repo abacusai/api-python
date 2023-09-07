@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: Algorithm(client, name=None, problemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, algorithmId=None, useGpu=None, algorithmTrainingConfig=None, isRealtimeDeployable=None, codeSource={})
+.. py:class:: Algorithm(client, name=None, problemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, algorithmId=None, useGpu=None, algorithmTrainingConfig=None, onlyOfflineDeployable=None, codeSource={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -53,8 +54,8 @@ Classes
    :type useGpu: bool
    :param algorithmTrainingConfig: The algorithm specific training config
    :type algorithmTrainingConfig: dict
-   :param isRealtimeDeployable: Whether or not the algorithm is allowed to be deployed in real time
-   :type isRealtimeDeployable: bool
+   :param onlyOfflineDeployable: Whether or not the algorithm is only allowed to be deployed offline
+   :type onlyOfflineDeployable: bool
    :param codeSource: Info about the source code of the algorithm
    :type codeSource: CodeSource
 

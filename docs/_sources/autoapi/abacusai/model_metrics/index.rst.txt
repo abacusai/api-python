@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: ModelMetrics(client, algoMetrics=None, selectedAlgorithm=None, modelId=None, modelVersion=None, metricNames=None, targetColumn=None, trainValTestSplit=None, trainingCompletedAt=None, baselineMetrics=None)
+.. py:class:: ModelMetrics(client, algoMetrics=None, selectedAlgorithm=None, selectedAlgorithmName=None, modelId=None, modelVersion=None, metricNames=None, targetColumn=None, trainValTestSplit=None, trainingCompletedAt=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -29,6 +30,8 @@ Classes
    :type algoMetrics: dict
    :param selectedAlgorithm: The algorithm ID of the selected (default) algorithm that will be used in deployments of this Model Version
    :type selectedAlgorithm: str
+   :param selectedAlgorithmName: The algorithm name of the selected (default) algorithm that will be used in deployments of this Model Version
+   :type selectedAlgorithmName: str
    :param modelId: The Model ID
    :type modelId: str
    :param modelVersion: The Model Version
@@ -41,8 +44,6 @@ Classes
    :type trainValTestSplit: dict
    :param trainingCompletedAt: Timestamp when training was completed
    :type trainingCompletedAt: datetime
-   :param baselineMetrics: Key/value pairs of the baseline model metrics and their values
-   :type baselineMetrics: dict
 
    .. py:method:: __repr__()
 

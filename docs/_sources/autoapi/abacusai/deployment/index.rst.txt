@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, refreshSchedules={}, featureGroupExportConfig={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -51,6 +52,8 @@ Classes
    :type callsPerSecond: int
    :param autoDeploy: A flag marking the deployment as eligible for auto deployments whenever any model in the project finishes training.
    :type autoDeploy: bool
+   :param skipMetricsCheck: A flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on
+   :type skipMetricsCheck: bool
    :param algoName: The name of the algorithm that is currently deployed.
    :type algoName: str
    :param regions: A list of regions that the deployment has been deployed to.
@@ -134,12 +137,16 @@ Classes
       :rtype: Deployment
 
 
-   .. py:method:: update(description = None)
+   .. py:method:: update(description = None, auto_deploy = None, skip_metrics_check = None)
 
-      Updates a deployment's description.
+      Updates a deployment's properties.
 
       :param description: The new description for the deployment.
       :type description: str
+      :param auto_deploy: Flag to enable the automatic deployment when a new Model Version finishes training.
+      :type auto_deploy: bool
+      :param skip_metrics_check: Flag to skip metric regression with this current deployment. This field is only relevant when auto_deploy is on
+      :type skip_metrics_check: bool
 
 
    .. py:method:: rename(name)

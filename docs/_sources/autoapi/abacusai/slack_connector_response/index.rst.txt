@@ -1,0 +1,47 @@
+:py:mod:`abacusai.slack_connector_response`
+===========================================
+
+.. py:module:: abacusai.slack_connector_response
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.slack_connector_response.SlackConnectorResponse
+
+
+
+
+.. py:class:: SlackConnectorResponse(client, text=None, attachments=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The response to a slack command formatted to be readable by Slack
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param text: The text body of the response, which becomes the returned message
+   :type text: str
+   :param attachments: The attachments to the text body
+   :type attachments: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, datasetVersions=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -39,8 +40,6 @@ Classes
    :type trainingStartedAt: str
    :param trainingCompletedAt: The end time and date of the training process in ISO-8601 format.
    :type trainingCompletedAt: str
-   :param datasetVersions: A list of Dataset version IDs used for model training.
-   :type datasetVersions: list
    :param featureGroupVersions: A list of Feature Group version IDs used for model training.
    :type featureGroupVersions: list
    :param error: Relevant error if the status is FAILED.
@@ -77,6 +76,8 @@ Classes
    :type useGpu: bool
    :param partialComplete: If true, all required algorithms have completed training.
    :type partialComplete: bool
+   :param modelFeatureGroupSchemaMappings: mapping of feature group to schema version
+   :type modelFeatureGroupSchemaMappings: dict
    :param codeSource: If a python model, information on where the source code is located.
    :type codeSource: CodeSource
 

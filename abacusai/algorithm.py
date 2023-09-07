@@ -22,11 +22,11 @@ class Algorithm(AbstractApiClass):
             algorithmId (str): The unique identifier of the algorithm
             useGpu (bool): Whether to use gpu for model training
             algorithmTrainingConfig (dict): The algorithm specific training config
-            isRealtimeDeployable (bool): Whether or not the algorithm is allowed to be deployed in real time
+            onlyOfflineDeployable (bool): Whether or not the algorithm is only allowed to be deployed offline
             codeSource (CodeSource): Info about the source code of the algorithm
     """
 
-    def __init__(self, client, name=None, problemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, algorithmId=None, useGpu=None, algorithmTrainingConfig=None, isRealtimeDeployable=None, codeSource={}):
+    def __init__(self, client, name=None, problemType=None, createdAt=None, updatedAt=None, isDefaultEnabled=None, trainingInputMappings=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, configOptions=None, algorithmId=None, useGpu=None, algorithmTrainingConfig=None, onlyOfflineDeployable=None, codeSource={}):
         super().__init__(client, algorithmId)
         self.name = name
         self.problem_type = problemType
@@ -42,11 +42,11 @@ class Algorithm(AbstractApiClass):
         self.algorithm_id = algorithmId
         self.use_gpu = useGpu
         self.algorithm_training_config = algorithmTrainingConfig
-        self.is_realtime_deployable = isRealtimeDeployable
+        self.only_offline_deployable = onlyOfflineDeployable
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"Algorithm(name={repr(self.name)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  is_default_enabled={repr(self.is_default_enabled)},\n  training_input_mappings={repr(self.training_input_mappings)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  config_options={repr(self.config_options)},\n  algorithm_id={repr(self.algorithm_id)},\n  use_gpu={repr(self.use_gpu)},\n  algorithm_training_config={repr(self.algorithm_training_config)},\n  is_realtime_deployable={repr(self.is_realtime_deployable)},\n  code_source={repr(self.code_source)})"
+        return f"Algorithm(name={repr(self.name)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  is_default_enabled={repr(self.is_default_enabled)},\n  training_input_mappings={repr(self.training_input_mappings)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  config_options={repr(self.config_options)},\n  algorithm_id={repr(self.algorithm_id)},\n  use_gpu={repr(self.use_gpu)},\n  algorithm_training_config={repr(self.algorithm_training_config)},\n  only_offline_deployable={repr(self.only_offline_deployable)},\n  code_source={repr(self.code_source)})"
 
     def to_dict(self):
         """
@@ -55,4 +55,4 @@ class Algorithm(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'problem_type': self.problem_type, 'created_at': self.created_at, 'updated_at': self.updated_at, 'is_default_enabled': self.is_default_enabled, 'training_input_mappings': self.training_input_mappings, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'config_options': self.config_options, 'algorithm_id': self.algorithm_id, 'use_gpu': self.use_gpu, 'algorithm_training_config': self.algorithm_training_config, 'is_realtime_deployable': self.is_realtime_deployable, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {'name': self.name, 'problem_type': self.problem_type, 'created_at': self.created_at, 'updated_at': self.updated_at, 'is_default_enabled': self.is_default_enabled, 'training_input_mappings': self.training_input_mappings, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'config_options': self.config_options, 'algorithm_id': self.algorithm_id, 'use_gpu': self.use_gpu, 'algorithm_training_config': self.algorithm_training_config, 'only_offline_deployable': self.only_offline_deployable, 'code_source': self._get_attribute_as_dict(self.code_source)}

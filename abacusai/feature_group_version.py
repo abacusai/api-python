@@ -202,12 +202,17 @@ class FeatureGroupVersion(AbstractApiClass):
         return self.describe().status
 
     # internal call
-    def _download_avro_file(self, file_part, tmp_dir):
+    def _download_avro_file(self, file_part, tmp_dir, part_index):
+        from .api_client_utils import try_abacus_internal_copy
+
+        part_path = os.path.join(tmp_dir, f'{part_index}.avro')
+        if try_abacus_internal_copy(file_part, part_path):
+            return part_path
+
         offset = 0
-        part_path = os.path.join(tmp_dir, f'{file_part}.avro')
         with open(part_path, 'wb') as file:
             while True:
-                with self.client._call_api('_downloadFeatureGroupVersionPartChunk', 'GET', query_params={'featureGroupVersion': self.id, 'part': file_part, 'offset': offset}, streamable_response=True, retry_500=True) as chunk:
+                with self.client._call_api('_downloadFeatureGroupVersionPartChunk', 'GET', query_params={'featureGroupVersion': self.id, 'part': part_index, 'offset': offset}, streamable_response=True, retry_500=True) as chunk:
                     bytes_written = file.write(chunk.read())
                     if not bytes_written:
                         break
@@ -228,6 +233,34 @@ class FeatureGroupVersion(AbstractApiClass):
 
         from .api_client_utils import load_as_pandas_from_avro_files
 
-        file_parts = range(self.client._call_api(
-            '_getFeatureGroupVersionPartCount', 'GET', query_params={'featureGroupVersion': self.id}, retry_500=True))
+        file_parts = self.client._call_api(
+            '_getFeatureGroupVersionParts', 'GET', query_params={'featureGroupVersion': self.id}, retry_500=True)
         return load_as_pandas_from_avro_files(file_parts, self._download_avro_file, max_workers=max_workers)
+
+    def load_as_pandas_documents(self, doc_id_column: str, document_column: str, max_workers=10):
+        """
+        Loads a feature group with documents data into a pandas dataframe.
+
+        Args:
+            doc_id_feature (str): The name of the feature / column containing the document ID.
+            document_feature (str): The name of the feature / column containing the page infos. This column will be replaced with the extracted document data.
+            max_workers (int, optional): The number of threads.
+
+        Returns:
+            DataFrame: A pandas dataframe containing the extracted document data.
+        """
+
+        from .api_client_utils import DocstoreUtils
+
+        def get_docstore_resource_bytes(feature_group_version, resource_type, archive_id, offset=None, size=None):
+            with self.client._call_api('_downloadDocstoreResourceChunk', 'GET',
+                                       query_params={'featureGroupVersion': feature_group_version, 'resourceType':
+                                                     resource_type, 'archiveId': archive_id, 'offset': offset, 'size': size},
+                                       streamable_response=True, retry_500=True) as chunk:
+                bytes = chunk.read()
+            return bytes
+
+        feature_group_version = self.id
+        df = self.load_as_pandas(max_workers=max_workers)
+        return DocstoreUtils.get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column,
+                                                     get_docstore_resource_bytes, max_workers=max_workers)

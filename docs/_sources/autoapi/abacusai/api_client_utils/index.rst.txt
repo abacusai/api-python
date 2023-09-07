@@ -7,6 +7,14 @@
 Module Contents
 ---------------
 
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_client_utils.DocstoreUtils
+
+
 
 Functions
 ~~~~~~~~~
@@ -20,6 +28,7 @@ Functions
    abacusai.api_client_utils.get_object_from_context
    abacusai.api_client_utils.load_as_pandas_from_avro_fd
    abacusai.api_client_utils.load_as_pandas_from_avro_files
+   abacusai.api_client_utils.try_abacus_internal_copy
 
 
 
@@ -55,5 +64,73 @@ Attributes
 
 
 .. py:function:: load_as_pandas_from_avro_files(files, download_method, max_workers = 10)
+
+
+.. py:class:: DocstoreUtils
+
+
+   Utility class for loading docstore data.
+   Needs to be updated if docstore formats change.
+
+   .. py:attribute:: PREDICTION_PREFIX
+      :value: 'prediction'
+
+      
+
+   .. py:attribute:: FIRST_PAGE
+      :value: 'first_page'
+
+      
+
+   .. py:attribute:: LAST_PAGE
+      :value: 'last_page'
+
+      
+
+   .. py:attribute:: PAGE_TEXT
+      :value: 'page_text'
+
+      
+
+   .. py:attribute:: PAGES
+      :value: 'pages'
+
+      
+
+   .. py:attribute:: TOKENS
+      :value: 'tokens'
+
+      
+
+   .. py:attribute:: PAGES_ZIP_METADATA
+      :value: 'pages_zip_metadata'
+
+      
+
+   .. py:attribute:: PAGE_DATA
+      :value: 'page_data'
+
+      
+
+   .. py:method:: get_archive_id(doc_id)
+      :staticmethod:
+
+
+   .. py:method:: get_page_id(doc_id, page)
+      :staticmethod:
+
+
+   .. py:method:: get_pandas_pages_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, max_workers = 10)
+      :classmethod:
+
+
+   .. py:method:: get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, max_workers = 10)
+      :classmethod:
+
+
+
+.. py:function:: try_abacus_internal_copy(src_suffix, dst_local, raise_exception=True)
+
+   Retuns true if the file was copied, false otherwise
 
 

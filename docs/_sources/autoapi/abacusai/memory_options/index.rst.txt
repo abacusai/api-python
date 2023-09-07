@@ -1,0 +1,47 @@
+:py:mod:`abacusai.memory_options`
+=================================
+
+.. py:module:: abacusai.memory_options
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.memory_options.MemoryOptions
+
+
+
+
+.. py:class:: MemoryOptions(client, cpu={}, gpu={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The overall memory options for executing a job
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param cpu: Contains information about the default CPU and list of CPU memory & size options
+   :type cpu: CpuGpuMemorySpecs
+   :param gpu: Contains information about the default GPU and list of GPU memory & size options
+   :type gpu: CpuGpuMemorySpecs
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

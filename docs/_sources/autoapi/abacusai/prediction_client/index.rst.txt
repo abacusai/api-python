@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: PredictionClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Prediction API Client. Does not utilize authentication and only contains public prediction methods
@@ -592,7 +593,7 @@ Classes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, return_detected_images = False)
 
       Generate text from a document
 
@@ -602,6 +603,8 @@ Classes
       :type deployment_id: str
       :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
       :type document: io.TextIOBase
+      :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
+      :type return_detected_images: bool
 
 
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)

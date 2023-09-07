@@ -52,17 +52,6 @@ class StreamingClient(BaseApiClient):
             streaming_token, model_id=model_id)
         return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'upserts': upserts, 'catalogId': catalog_id}, server_override=prediction_url)
 
-    def upsert_data(self, feature_group_id: str, streaming_token: str, data: dict):
-        """Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-        Args:
-            feature_group_id (str): A unique string identifier of the streaming feature group to record data to.
-            streaming_token (str): The streaming token for authenticating requests.
-            data (dict): The data to record, in JSON format."""
-        prediction_url = self._get_streaming_endpoint(
-            streaming_token, feature_group_id=feature_group_id)
-        return self._call_api('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
-
     def append_data(self, feature_group_id: str, streaming_token: str, data: dict):
         """Appends new data into the feature group for a given lookup key recordId.
 

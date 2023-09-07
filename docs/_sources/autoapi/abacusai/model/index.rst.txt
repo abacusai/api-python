@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: Model(client, name=None, modelId=None, modelConfig=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={})
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A model
@@ -261,7 +262,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: get_metrics(model_version = None, baseline_metrics = False, return_graphs = False, include_all_metrics = False, validation = False)
+   .. py:method:: get_metrics(model_version = None, return_graphs = False, include_all_metrics = False, validation = False)
 
       Retrieves metrics for all the algorithms trained in this model version.
 
@@ -270,8 +271,6 @@ Classes
 
       :param model_version: Version of the model.
       :type model_version: str
-      :param baseline_metrics: If true, will also return the baseline model metrics for comparison.
-      :type baseline_metrics: bool
       :param return_graphs: If true, will return the information used for the graphs on the model metrics page.
       :type return_graphs: bool
       :param include_all_metrics: If true, will return all metrics, including those that are not used for the model's score.

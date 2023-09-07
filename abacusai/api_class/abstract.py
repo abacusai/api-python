@@ -80,10 +80,11 @@ class ApiClass(ABC):
 
     @classmethod
     def from_dict(cls, input_dict: dict):
-        if builder := cls._get_builder():
-            return builder.from_dict(input_dict)
-        if not cls._upper_snake_case_keys:
-            input_dict = {snake_case(k): v for k, v in input_dict.items()}
+        if input_dict:
+            if builder := cls._get_builder():
+                return builder.from_dict(input_dict)
+            if not cls._upper_snake_case_keys:
+                input_dict = {snake_case(k): v for k, v in input_dict.items()}
         return cls(**input_dict)
 
 

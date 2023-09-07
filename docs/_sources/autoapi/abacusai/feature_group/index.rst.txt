@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectConfig={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, featureGroupType=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectConfig={}, latestFeatureGroupVersion={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -95,6 +96,8 @@ Classes
    :type pythonFunctionBindings: dict
    :param pythonFunctionName: Name of the Python function the feature group was built from.
    :type pythonFunctionName: str
+   :param useGpu: Whether this feature group is using gpu
+   :type useGpu: bool
    :param features: List of resolved features.
    :type features: Feature
    :param duplicateFeatures: List of duplicate features.
@@ -851,7 +854,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_function_definition(function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None)
+   .. py:method:: update_function_definition(function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None, use_gpu = None)
 
       Updates the function definition for a feature group
 
@@ -871,56 +874,10 @@ Classes
       :type use_original_csv_names: bool
       :param python_function_bindings: List of arguments to be supplied to the function as parameters in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
       :type python_function_bindings: list
+      :param use_gpu: Whether the feature group needs a gpu or not. Otherwise default to CPU.
+      :type use_gpu: bool
 
       :returns: The updated feature group.
-      :rtype: FeatureGroup
-
-
-   .. py:method:: update_zip(function_name, module_name, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Updates the ZIP file for a feature group created using `createFeatureGroupFromZip`.
-
-      :param function_name: The name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: The path to the file with the feature group function.
-      :type module_name: str
-      :param input_feature_groups: A list of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param cpu_size: The size of the CPU for the feature group function.
-      :type cpu_size: str
-      :param memory: The memory (in GB) for the feature group function.
-      :type memory: int
-      :param package_requirements: A list of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
-      :type package_requirements: list
-
-      :returns: The Upload to upload the ZIP file to.
-      :rtype: Upload
-
-
-   .. py:method:: update_git(application_connector_id = None, branch_name = None, python_root = None, function_name = None, module_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None)
-
-      Updates a feature group created using `createFeatureGroupFromGit`.
-
-      :param application_connector_id: Unique string identifier associated with the git application connector.
-      :type application_connector_id: str
-      :param branch_name: Name of the branch in the git repository to be used for training.
-      :type branch_name: str
-      :param python_root: Path from the top level of the git repository to the directory containing the Python source code. If not provided, the default is the root of the git repository.
-      :type python_root: str
-      :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-      :type function_name: str
-      :param module_name: Path to the file with the feature group function.
-      :type module_name: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
-      :type input_feature_groups: list
-      :param cpu_size: Size of the cpu for the feature group function.
-      :type cpu_size: str
-      :param memory: Memory (in GB) for the feature group function.
-      :type memory: int
-      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-      :type package_requirements: list
-
-      :returns: The updated FeatureGroup.
       :rtype: FeatureGroup
 
 
@@ -1084,16 +1041,6 @@ Classes
       :type feature_group_id: str
 
 
-   .. py:method:: upsert_data(streaming_token, data)
-
-      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, in JSON format.
-      :type data: dict
-
-
    .. py:method:: append_data(streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
@@ -1122,6 +1069,62 @@ Classes
       :type streaming_token: str
       :param data: Data to record, as a list of JSON objects.
       :type data: list
+
+
+   .. py:method:: upsert_data(streaming_token = None, data = None)
+
+      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
+
+      :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
+      :type streaming_token: str
+      :param data: The data to record, in JSON format.
+      :type data: dict
+
+      :rtype: FeatureGroupRow
+
+
+   .. py:method:: delete_data(primary_key)
+
+      Deletes a row from the feature group given the primary key
+
+      :param primary_key: The primary key value for which to delete the feature group row
+      :type primary_key: str
+
+
+   .. py:method:: get_data(primary_key = None, num_rows = None)
+
+      Gets the feature group rows.
+
+      If primary key is set, row corresponding to primary_key is returned.
+      If num_rows is set, we return maximum of num_rows latest updated rows.
+
+
+      :param primary_key: The primary key value for which to find the feature group row
+      :type primary_key: str
+      :param num_rows: Maximum number of rows to return from the feature group
+      :type num_rows: int
+
+      :rtype: FeatureGroupRow
+
+
+   .. py:method:: add_document(document)
+
+      Adds a document to the feature group.
+
+      :param document: The multipart/form-data of the document to add to the feature group.
+      :type document: io.TextIOBase
+
+      :rtype: FeatureGroupDocument
+
+
+   .. py:method:: list_pending_documents()
+
+      Lists all pending documents added to feature group.
+
+      :param feature_group_id: The unique ID associated with the feature group.
+      :type feature_group_id: str
+
+      :rtype: FeatureGroupDocument
 
 
    .. py:method:: get_natural_language_explanation(feature_group_version = None, model_id = None)
@@ -1195,6 +1198,19 @@ Classes
       Loads the feature groups into a python pandas dataframe.
 
       :returns: A pandas dataframe with annotations and text_snippet columns.
+      :rtype: DataFrame
+
+
+   .. py:method:: load_as_pandas_documents(doc_id_column, document_column)
+
+      Loads a feature group with documents data into a pandas dataframe.
+
+      :param doc_id_feature: The name of the feature / column containing the document ID.
+      :type doc_id_feature: str
+      :param document_feature: The name of the feature / column containing the page infos. This column will be replaced with the extracted document data.
+      :type document_feature: str
+
+      :returns: A pandas dataframe containing the extracted document data.
       :rtype: DataFrame
 
 

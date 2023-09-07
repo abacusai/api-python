@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
+.. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -33,6 +34,8 @@ Classes
    :type createdAt: str
    :param featureGroupId: The feature group id associated with the document retriever.
    :type featureGroupId: str
+   :param featureGroupName: The feature group name associated with the document retriever.
+   :type featureGroupName: str
    :param latestDocumentRetrieverVersion: The latest version of vector store.
    :type latestDocumentRetrieverVersion: DocumentRetrieverVersion
    :param documentRetrieverConfig: The config for vector store creation.
@@ -109,9 +112,9 @@ Classes
       :rtype: list[DocumentRetrieverVersion]
 
 
-   .. py:method:: lookup(query, deployment_token, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
 
-      Lookup relevant documents from the document retriever deployed with given query.
+      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
       Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
       from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
@@ -120,8 +123,6 @@ Classes
 
       :param query: The query to search for.
       :type query: str
-      :param deployment_token: A deployment token used to authenticate access to created vector store.
-      :type deployment_token: str
       :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
       :type filters: dict
       :param limit: If provided, will limit the number of results to the value specified.
@@ -139,12 +140,10 @@ Classes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
-   .. py:method:: get_document_snippet(deployment_token, document_id, start_word_index = None, end_word_index = None)
+   .. py:method:: get_document_snippet(document_id, start_word_index = None, end_word_index = None)
 
       Get a snippet from documents in the document retriever.
 
-      :param deployment_token: A deployment token used to authenticate access to created vector store.
-      :type deployment_token: str
       :param document_id: The ID of the document to retrieve the snippet from.
       :type document_id: str
       :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.

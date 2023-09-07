@@ -1,3 +1,6 @@
+from typing import Union
+
+from .api_class import AlertActionConfig, AlertConditionConfig
 from .monitor_alert_version import MonitorAlertVersion
 from .return_class import AbstractApiClass
 
@@ -46,14 +49,14 @@ class MonitorAlert(AbstractApiClass):
         """
         return {'name': self.name, 'monitor_alert_id': self.monitor_alert_id, 'created_at': self.created_at, 'project_id': self.project_id, 'model_monitor_id': self.model_monitor_id, 'condition_config': self.condition_config, 'action_config': self.action_config, 'condition_description': self.condition_description, 'action_description': self.action_description, 'latest_monitor_alert_version': self._get_attribute_as_dict(self.latest_monitor_alert_version)}
 
-    def update(self, alert_name: str = None, condition_config: dict = None, action_config: dict = None):
+    def update(self, alert_name: str = None, condition_config: Union[dict, AlertConditionConfig] = None, action_config: Union[dict, AlertActionConfig] = None):
         """
         Update monitor alert
 
         Args:
             alert_name (str): Name of the alert.
-            condition_config (dict): Condition to run the actions for the alert.
-            action_config (dict): Configuration for the action of the alert.
+            condition_config (AlertConditionConfig): Condition to run the actions for the alert.
+            action_config (AlertActionConfig): Configuration for the action of the alert.
 
         Returns:
             MonitorAlert: Object describing the monitor alert.

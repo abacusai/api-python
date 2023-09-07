@@ -235,7 +235,7 @@ class Model(AbstractApiClass):
         """
         return self.client.set_model_prediction_params(self.model_id, prediction_config)
 
-    def get_metrics(self, model_version: str = None, baseline_metrics: bool = False, return_graphs: bool = False, include_all_metrics: bool = False, validation: bool = False):
+    def get_metrics(self, model_version: str = None, return_graphs: bool = False, include_all_metrics: bool = False, validation: bool = False):
         """
         Retrieves metrics for all the algorithms trained in this model version.
 
@@ -244,7 +244,6 @@ class Model(AbstractApiClass):
 
         Args:
             model_version (str): Version of the model.
-            baseline_metrics (bool): If true, will also return the baseline model metrics for comparison.
             return_graphs (bool): If true, will return the information used for the graphs on the model metrics page.
             include_all_metrics (bool): If true, will return all metrics, including those that are not used for the model's score.
             validation (bool): If true, will return the validation metrics instead of the test metrics.
@@ -252,7 +251,7 @@ class Model(AbstractApiClass):
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means.
         """
-        return self.client.get_model_metrics(self.model_id, model_version, baseline_metrics, return_graphs, include_all_metrics, validation)
+        return self.client.get_model_metrics(self.model_id, model_version, return_graphs, include_all_metrics, validation)
 
     def list_versions(self, limit: int = 100, start_after_version: str = None):
         """

@@ -344,3 +344,36 @@ class LLMName(ApiEnum):
     ABACUS_LONG = 'ABACUS_LONG'
     ABACUS_LARGE = 'ABACUS_LARGE'
     PALM = 'PALM'
+
+
+class MonitorAlertType(ApiEnum):
+    ACCURACY_BELOW_THRESHOLD = 'AccuracyBelowThreshold'
+    FEATURE_DRIFT = 'FeatureDrift'
+    DATA_INTEGRITY_VIOLATIONS = 'DataIntegrityViolations'
+    BIAS_VIOLATIONS = 'BiasViolations'
+
+
+class FeatureDriftType(ApiEnum):
+    KL = 'kl'
+    KS = 'ks'
+    WS = 'ws'
+    JS = 'js'
+
+
+class DataIntegrityViolationType(ApiEnum):
+    NULL_VIOLATIONS = 'null_violations'
+    TYPE_MISMATCH_VIOLATIONS = 'type_mismatch_violations'
+    RANGE_VIOLATIONS = 'range_violations'
+    CATEGORICAL_RANGE_VIOLATION = 'categorical_range_violations'
+    TOTAL_VIOLATIONS = 'total_violations'
+
+
+class BiasType(ApiEnum):
+    DEMOGRAPHIC_PARITY = 'demographic_parity'
+    EQUAL_OPPORTUNITY = 'equal_opportunity'
+    GROUP_BENEFIT_EQUALITY = 'group_benefit'
+    TOTAL = 'total'
+
+
+class AlertActionType(ApiEnum):
+    EMAIL = 'Email'

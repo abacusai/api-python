@@ -30,12 +30,12 @@ class HoldoutAnalysisVersion(AbstractApiClass):
         self.model_id = modelId
         self.model_version = modelVersion
         self.algorithm = algorithm
-        self.algoName = algoName
+        self.algo_name = algoName
         self.metrics = metrics
         self.metric_infos = metricInfos
 
     def __repr__(self):
-        return f"HoldoutAnalysisVersion(holdout_analysis_version={repr(self.holdout_analysis_version)},\n  holdout_analysis_id={repr(self.holdout_analysis_id)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  algorithm={repr(self.algorithm)},\n  algoName={repr(self.algoName)},\n  metrics={repr(self.metrics)},\n  metric_infos={repr(self.metric_infos)})"
+        return f"HoldoutAnalysisVersion(holdout_analysis_version={repr(self.holdout_analysis_version)},\n  holdout_analysis_id={repr(self.holdout_analysis_id)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  algorithm={repr(self.algorithm)},\n  algo_name={repr(self.algo_name)},\n  metrics={repr(self.metrics)},\n  metric_infos={repr(self.metric_infos)})"
 
     def to_dict(self):
         """
@@ -44,7 +44,7 @@ class HoldoutAnalysisVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'holdout_analysis_version': self.holdout_analysis_version, 'holdout_analysis_id': self.holdout_analysis_id, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'model_id': self.model_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'algoName': self.algoName, 'metrics': self.metrics, 'metric_infos': self.metric_infos}
+        return {'holdout_analysis_version': self.holdout_analysis_version, 'holdout_analysis_id': self.holdout_analysis_id, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'model_id': self.model_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'algo_name': self.algo_name, 'metrics': self.metrics, 'metric_infos': self.metric_infos}
 
     def refresh(self):
         """

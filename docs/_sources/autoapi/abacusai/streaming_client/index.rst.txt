@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: StreamingClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
@@ -68,18 +69,6 @@ Classes
       :type upserts: list
       :param catalog_id: Name of the catalog in the model to update.
       :type catalog_id: str
-
-
-   .. py:method:: upsert_data(feature_group_id, streaming_token, data)
-
-      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: The streaming token for authenticating requests.
-      :type streaming_token: str
-      :param data: The data to record, in JSON format.
-      :type data: dict
 
 
    .. py:method:: append_data(feature_group_id, streaming_token, data)

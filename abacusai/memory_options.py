@@ -1,0 +1,30 @@
+from .cpu_gpu_memory_specs import CpuGpuMemorySpecs
+from .return_class import AbstractApiClass
+
+
+class MemoryOptions(AbstractApiClass):
+    """
+        The overall memory options for executing a job
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            cpu (CpuGpuMemorySpecs): Contains information about the default CPU and list of CPU memory & size options
+            gpu (CpuGpuMemorySpecs): Contains information about the default GPU and list of GPU memory & size options
+    """
+
+    def __init__(self, client, cpu={}, gpu={}):
+        super().__init__(client, None)
+        self.cpu = client._build_class(CpuGpuMemorySpecs, cpu)
+        self.gpu = client._build_class(CpuGpuMemorySpecs, gpu)
+
+    def __repr__(self):
+        return f"MemoryOptions(cpu={repr(self.cpu)},\n  gpu={repr(self.gpu)})"
+
+    def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
+        return {'cpu': self._get_attribute_as_dict(self.cpu), 'gpu': self._get_attribute_as_dict(self.gpu)}
