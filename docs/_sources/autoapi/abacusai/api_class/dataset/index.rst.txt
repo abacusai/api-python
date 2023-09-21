@@ -13,6 +13,7 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.dataset.ParsingConfig
+   abacusai.api_class.dataset.DocumentProcessingConfig
 
 
 
@@ -37,6 +38,33 @@ Classes
 
    .. py:attribute:: file_path_with_schema
       :type: str
+
+      
+
+
+.. py:class:: DocumentProcessingConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: convert_to_markdown
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: use_doctr
+      :type: bool
+      :value: True
 
       
 

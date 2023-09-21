@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, externalSessionId=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, externalSessionId=None, regenerateAttempt=None, history={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36,6 +36,8 @@ Classes
    :type createdAt: str
    :param externalSessionId: The external session id associated with the deployment conversation.
    :type externalSessionId: str
+   :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
+   :type regenerateAttempt: int
    :param history: The history of the deployment conversation.
    :type history: DeploymentConversationEvent
 
@@ -52,28 +54,32 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: get(external_session_id = None, deployment_id = None)
+   .. py:method:: get(external_session_id = None, deployment_id = None, deployment_token = None)
 
       Gets a deployment conversation.
 
-      :param external_session_id: (Optional) External session ID of the conversation.
+      :param external_session_id: External session ID of the conversation.
       :type external_session_id: str
-      :param deployment_id: (Optional) The deployment this conversation belongs to.
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
 
 
-   .. py:method:: delete(deployment_id = None)
+   .. py:method:: delete(deployment_id = None, deployment_token = None)
 
       Delete a Deployment Conversation.
 
-      :param deployment_id: (Optional) The deployment this conversation belongs to.
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
 
-   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None)
+   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -85,16 +91,22 @@ Classes
       :type is_not_useful: bool
       :param feedback: Optional feedback on why the message is useful or not useful
       :type feedback: str
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
+      :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
 
-   .. py:method:: rename(name, deployment_id = None)
+   .. py:method:: rename(name, deployment_id = None, deployment_token = None)
 
       Rename a Deployment Conversation.
 
       :param name: The new name of the conversation.
       :type name: str
-      :param deployment_id: (Optional) The deployment this conversation belongs to.
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
 
 

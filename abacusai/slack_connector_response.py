@@ -8,16 +8,16 @@ class SlackConnectorResponse(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             text (str): The text body of the response, which becomes the returned message
-            attachments (list): The attachments to the text body
+            blocks (list): List of blocks in the response
     """
 
-    def __init__(self, client, text=None, attachments=None):
+    def __init__(self, client, text=None, blocks=None):
         super().__init__(client, None)
         self.text = text
-        self.attachments = attachments
+        self.blocks = blocks
 
     def __repr__(self):
-        return f"SlackConnectorResponse(text={repr(self.text)},\n  attachments={repr(self.attachments)})"
+        return f"SlackConnectorResponse(text={repr(self.text)},\n  blocks={repr(self.blocks)})"
 
     def to_dict(self):
         """
@@ -26,4 +26,4 @@ class SlackConnectorResponse(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'text': self.text, 'attachments': self.attachments}
+        return {'text': self.text, 'blocks': self.blocks}

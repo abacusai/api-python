@@ -666,8 +666,8 @@ Classes
    :type use_log_transforms: bool
    :param smooth_history: Smooth (low pass filter) the timeseries.
    :type smooth_history: float
-   :param skip_local_scale_target: Skip using per training/prediction window target scaling.
-   :type skip_local_scale_target: bool
+   :param local_scale_target: Using per training/prediction window target scaling.
+   :type local_scale_target: bool
    :param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
    :type timeseries_weight_column: str
    :param item_attributes_weight_column: If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
@@ -914,7 +914,7 @@ Classes
 
       
 
-   .. py:attribute:: skip_local_scale_target
+   .. py:attribute:: local_scale_target
       :type: bool
 
       

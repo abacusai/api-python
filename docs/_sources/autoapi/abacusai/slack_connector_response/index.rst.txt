@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: SlackConnectorResponse(client, text=None, attachments=None)
+.. py:class:: SlackConnectorResponse(client, text=None, blocks=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -28,8 +28,8 @@ Classes
    :type client: ApiClient
    :param text: The text body of the response, which becomes the returned message
    :type text: str
-   :param attachments: The attachments to the text body
-   :type attachments: list
+   :param blocks: List of blocks in the response
+   :type blocks: list
 
    .. py:method:: __repr__()
 

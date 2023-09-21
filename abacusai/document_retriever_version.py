@@ -12,18 +12,20 @@ class DocumentRetrieverVersion(AbstractApiClass):
             createdAt (str): When the vector store was created.
             status (str): The status of creating vector store version.
             featureGroupVersion (str): The unique identifier of the feature group version at which the vector store version is created.
+            error (str): The error message when it failed to create the document retriever version.
     """
 
-    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None):
+    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None):
         super().__init__(client, documentRetrieverVersion)
         self.document_retriever_id = documentRetrieverId
         self.document_retriever_version = documentRetrieverVersion
         self.created_at = createdAt
         self.status = status
         self.feature_group_version = featureGroupVersion
+        self.error = error
 
     def __repr__(self):
-        return f"DocumentRetrieverVersion(document_retriever_id={repr(self.document_retriever_id)},\n  document_retriever_version={repr(self.document_retriever_version)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  feature_group_version={repr(self.feature_group_version)})"
+        return f"DocumentRetrieverVersion(document_retriever_id={repr(self.document_retriever_id)},\n  document_retriever_version={repr(self.document_retriever_version)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  feature_group_version={repr(self.feature_group_version)},\n  error={repr(self.error)})"
 
     def to_dict(self):
         """
@@ -32,7 +34,7 @@ class DocumentRetrieverVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version}
+        return {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version, 'error': self.error}
 
     def refresh(self):
         """

@@ -39,6 +39,7 @@ from .api_client_utils import (
 )
 from .api_endpoint import ApiEndpoint
 from .api_key import ApiKey
+from .app_user_group import AppUserGroup
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
@@ -212,6 +213,7 @@ class ApiException(Exception):
         message (str): The error message
         http_status (int): The https status code raised by the server
         exception (str): The exception class raised by the server
+        request_id (str): The request id
     """
 
     def __init__(self, message: str, http_status: int, exception: str = None, request_id: str = None):
@@ -224,6 +226,274 @@ class ApiException(Exception):
         return f'{self.exception}({self.http_status}): {self.message}'
 
 
+class MissingParameterError(ApiException):
+    """
+    Missing parameter error raised by APIs. This is usually raised when a required parameter is missing in the request.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class InvalidParameterError(ApiException):
+    """
+    Raised when an invalid parameter is provided.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class InvalidEnumParameterError(ApiException):
+    """
+    Raised when an invalid enumeration parameter is provided.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class PaymentMethodRequired(ApiException):
+    """
+    Raised when a payment method is required.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class InvalidRequest(ApiException):
+    """
+    Invalid request error raised by APIs. This is usually raised when the request is invalid or malformed.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class GenericPermissionDeniedError(ApiException):
+    """
+    Generic permission denied error raised by APIs. This is usually raised when permission is denied.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class PermissionDeniedError(ApiException):
+    """
+    Permission denied error raised by APIs. This is usually raised when a specific operation is not permitted.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class PaidPlanRequired(ApiException):
+    """
+    Paid plan required error raised by APIs. This is usually raised when a paid plan is required for an operation.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class Generic404Error(ApiException):
+    """
+    Generic 404 error raised by APIs. This is usually raised when a resource is not found.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class DataNotFoundError(ApiException):
+    """
+    Data not found error raised by APIs. This is usually raised when specific data is not found.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class MethodNotAllowed(ApiException):
+    """
+    Method not allowed error raised by APIs. This is usually raised when a specific http method is not allowed for a resource.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class RequestTimeoutError(ApiException):
+    """
+    Exception raised when a timeout occurs during API request.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class ConflictError(ApiException):
+    """
+    Exception raised when a conflict occurs during API request.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class AlreadyExistsError(ApiException):
+    """
+    Exception raised when the entity being created already exists.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class NotReadyError(ApiException):
+    """
+    Not ready exception raised by APIs. This is usually raised when the operation requested is not ready.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class FailedDependencyError(ApiException):
+    """
+    Failed dependency exception raised by APIs. This is usually raised when the operation failed due to a dependency error.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class TooManyRequestsError(ApiException):
+    """
+    Too many requests exception raised by APIs. This is usually raised when the rate limit for requests has been exceeded.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class InstanceNotModifiedError(ApiException):
+    """
+    InstanceNotModifiedError exception raised by APIs. This is usually raised when an instance is not modified.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class GatewayTimeoutError(ApiException):
+    """
+    Gateway timeout error raised by APIs. This is usually raised when a request
+    times out waiting for a response from the gateway.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class InternalServerError(ApiException):
+    """
+    Internal server error raised by APIs. This is usually raised when the server
+    encounters an unexpected error while processing the request.
+
+    Args:
+        message (str): The error message
+        http_status (int): The https status code raised by the server
+        exception (str): The exception class raised by the server
+        request_id (str): The request id
+    """
+
+
+class _ApiExceptionFactory:
+    """
+    Factory class to build exceptions raised by APIs
+
+    """
+    @classmethod
+    def from_response(cls, message: str, http_status: int, exception: str = None, request_id: str = None):
+        if http_status == 504:
+            message = 'Gateway timeout, please try again later'
+            return GatewayTimeoutError(message, http_status, exception, request_id)
+        elif http_status == 429:
+            message = 'Too many requests. Please slow down your API requests'
+            return TooManyRequestsError(message, http_status, exception, request_id)
+        elif http_status > 502 and http_status not in (501, 503):
+            message = 'Internal Server Error, please contact dev@abacus.ai for support'
+            return InternalServerError(message, http_status, exception, request_id)
+
+        if exception == 'TimeoutError':
+            exception = 'RequestTimeoutError'
+        try:
+            class_type = globals()[exception]
+        except KeyError:
+            class_type = ApiException
+        return class_type(message, http_status, exception, request_id)
+
+
 class BaseApiClient:
     """
     Abstract Base API Client
@@ -234,7 +504,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.76.5'
+    client_version = '0.77.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -244,6 +514,7 @@ class BaseApiClient:
         self.web_version = None
         self.api_endpoint = None
         self.prediction_endpoint = None
+        self.proxy_endpoint = None
         if not client_options:
             client_options = ClientOptions(server=os.getenv(
                 'ABACUS_API_SERVER')) if os.getenv('ABACUS_API_SERVER') else ClientOptions()
@@ -256,6 +527,7 @@ class BaseApiClient:
             try:
                 endpoint_info = self._call_api('getApiEndpoint', 'GET')
                 self.prediction_endpoint = endpoint_info['predictEndpoint']
+                self.proxy_endpoint = endpoint_info['proxyEndpoint']
                 if not self.server:
                     self.server = endpoint_info['apiEndpoint']
             except Exception:
@@ -366,19 +638,13 @@ class BaseApiClient:
                 f"_call_api caught an exception {e} in processing json_data {json_data}. API call url method body: {url} {method} '{json.dumps(body)}'")
             error_message = response.text
         if not success:
-            if response.status_code == 504:
-                error_message = 'Gateway timeout, please try again later'
-            elif response.status_code == 429:
-                error_message = 'Too many requests. Please slow down your API requests'
-            elif response.status_code > 502 and response.status_code not in (501, 503):
-                error_message = 'Internal Server Error, please contact dev@abacus.ai for support'
-            elif response.status_code == 404 and not self.client_options.exception_on_404:
+            if response.status_code == 404 and not self.client_options.exception_on_404:
                 return None
             if request_id is None and response.headers:
                 request_id = response.headers.get('x-request-id')
             if request_id:
                 error_message += f". Request ID: {request_id}"
-            raise ApiException(
+            raise _ApiExceptionFactory.from_response(
                 error_message, response.status_code, error_type, request_id)
         return result
 
@@ -1141,7 +1407,7 @@ class ReadOnlyClient(BaseApiClient):
             metric (str): The metric to use to determine the best model."""
         return self._call_api('setModelObjective', 'GET', query_params={'modelVersion': model_version, 'metric': metric})
 
-    def get_model_metrics(self, model_id: str, model_version: str = None, return_graphs: bool = False, include_all_metrics: bool = False, validation: bool = False) -> ModelMetrics:
+    def get_model_metrics(self, model_id: str, model_version: str = None, return_graphs: bool = False, validation: bool = False) -> ModelMetrics:
         """Retrieves metrics for all the algorithms trained in this model version.
 
         If only the model's unique identifier (model_id) is specified, the latest trained version of the model (model_version) is used.
@@ -1150,13 +1416,12 @@ class ReadOnlyClient(BaseApiClient):
         Args:
             model_id (str): Unique string identifier for the model.
             model_version (str): Version of the model.
-            return_graphs (bool): If true, will return the information used for the graphs on the model metrics page.
-            include_all_metrics (bool): If true, will return all metrics, including those that are not used for the model's score.
+            return_graphs (bool): If true, will return the information used for the graphs on the model metrics page such as PR Curve per label.
             validation (bool): If true, will return the validation metrics instead of the test metrics.
 
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means."""
-        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'returnGraphs': return_graphs, 'includeAllMetrics': include_all_metrics, 'validation': validation}, parse_type=ModelMetrics)
+        return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'returnGraphs': return_graphs, 'validation': validation}, parse_type=ModelMetrics)
 
     def query_test_point_predictions(self, model_version: str, algorithm: str, to_row: int, from_row: int = 0, sql_where_clause: str = '') -> TestPointPredictions:
         """Query the test points predictions data for a specific algorithm.
@@ -2120,17 +2385,18 @@ class ReadOnlyClient(BaseApiClient):
             ChatSession: The chat sessions with Abacus AI Chat"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
-    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None) -> DeploymentConversation:
+    def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None) -> DeploymentConversation:
         """Gets a deployment conversation.
 
         Args:
-            deployment_conversation_id (str): (Optional) Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
-            external_session_id (str): (Optional) External session ID of the conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to.
+            deployment_conversation_id (str): Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
+            external_session_id (str): External session ID of the conversation.
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id}, parse_type=DeploymentConversation)
+        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token}, parse_type=DeploymentConversation)
 
     def list_deployment_conversations(self, deployment_id: str) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -2141,6 +2407,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
         return self._call_api('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id}, parse_type=DeploymentConversation)
+
+    def get_app_user_group(self, user_group_id: str) -> AppUserGroup:
+        """Gets an App User Group.
+
+        Args:
+            user_group_id (str): The ID of the App User Group.
+
+        Returns:
+            AppUserGroup: The App User Group."""
+        return self._call_api('getAppUserGroup', 'GET', query_params={'userGroupId': user_group_id}, parse_type=AppUserGroup)
 
     def describe_agent(self, agent_id: str) -> Agent:
         """Retrieves a full description of the specified model.
@@ -3121,6 +3397,42 @@ class ApiClient(ReadOnlyClient):
         else:
             raise Exception(
                 f'Error calling AI Agent AsyncApp sync message endpoint. Status code: {response.status_code}. Response: {response.text}')
+
+    def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 600):
+        start_time = time.time()
+        while time.time() - start_time <= timeout:
+            response = self._request(
+                url=url, method=method, body=body, headers=headers)
+            response = response.json()
+            if response['status'] not in wait_states:
+                return response
+            time.sleep(delay)
+        raise Exception('Maximum timeout Exceeded')
+
+    def _proxy_request(self, name: str, body: dict = None, parse_type=None):
+        headers = {'APIKEY': self.api_key}
+        if self.server:
+            headers['SERVER'] = self.server
+        endpoint = self.proxy_endpoint
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        create_request_endpoint = f'{endpoint}/api/create{name}Request'
+        status_request_endpoint = f'{endpoint}/api/get{name}Status'
+        create_request = self._request(
+            url=create_request_endpoint, method='POST', headers=headers, body=body)
+        if create_request.status_code != 200:
+            raise Exception(create_request.text)
+        request_id = create_request.json()['request_id']
+        response = self._status_poll(url=status_request_endpoint, wait_states={
+                                     'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
+        if response['status'] == 'FAILED':
+            raise Exception('Something went wrong')
+        result = response['result']
+        if result['success']:
+            return self._build_class(parse_type, result['result'])
+        error_message = result.get('error_message') or 'Something went wrong'
+        raise Exception(error_message)
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -5532,7 +5844,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -5544,23 +5856,30 @@ Creates a new feature group defined as the union of other feature group versions
             system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
+        return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
             deployment_id (str): The unique identifier to a deployment created under the project.
             message (str): A message from the user
-            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
-            chat_config (dict): A dictionary specifiying the query chat config override.
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+            external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifiying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response."""
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'chatConfig': chat_config, 'filterKeyValues': filter_key_values, 'ignoreDocuments': ignore_documents})
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents})
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -5629,29 +5948,31 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None) -> Dict:
+    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None) -> Dict:
         """Get all positive assignments that match a query.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
-            forced_assignments (dict): Set of assignments to force and resolve before returning query results."""
+            forced_assignments (dict): Set of assignments to force and resolve before returning query results.
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments}, server_override=prediction_url)
+        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
 
-    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None) -> Dict:
+    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None, solve_time_limit_seconds: float = None) -> Dict:
         """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
         Args:
             deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it can be safely embedded in an application or website.
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
-            add_constraints (list): List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value."""
+            add_constraints (list): List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints}, server_override=prediction_url)
+        return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
         """Check for any constraints violated by the overrides.
@@ -5802,7 +6123,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
-    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
+    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
@@ -5811,10 +6132,11 @@ Creates a new feature group defined as the union of other feature group versions
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
-            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+            regenerate (bool): If True, will regenerate the response from the last query."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, server_override=prediction_url)
+        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate}, server_override=prediction_url)
 
     def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Executes a deployed AI agent function with binary data as inputs.
@@ -6602,37 +6924,40 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The new name of the chat session."""
         return self._call_api('renameChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'name': name})
 
-    def suggest_abacus_apis(self, query: str, limit: int = 5) -> List[AbacusApi]:
+    def suggest_abacus_apis(self, query: str, verbosity: int = 1, limit: int = 5) -> List[AbacusApi]:
         """Suggests several Abacus APIs that are most relevant to the supplied natural language query.
 
         Args:
             query (str): The natural language query to find Abacus APIs for
+            verbosity (int): The verbosity level of the suggested Abacus APIs. Ranges from 0 to 2, with 0 being the least verbose and 2 being the most verbose.
             limit (int): The maximum number of APIs to return
 
         Returns:
             list[AbacusApi]: A list of suggested Abacus APIs"""
-        return self._call_api('suggestAbacusApis', 'POST', query_params={}, body={'query': query, 'limit': limit}, parse_type=AbacusApi)
+        return self._call_api('suggestAbacusApis', 'POST', query_params={}, body={'query': query, 'verbosity': verbosity, 'limit': limit}, parse_type=AbacusApi)
 
-    def create_deployment_conversation(self, deployment_id: str, name: str) -> DeploymentConversation:
+    def create_deployment_conversation(self, deployment_id: str, name: str, deployment_token: str = None) -> DeploymentConversation:
         """Creates a deployment conversation.
 
         Args:
             deployment_id (str): The deployment this conversation belongs to.
             name (str): The name of the conversation.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._call_api('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name}, parse_type=DeploymentConversation)
+        return self._call_api('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'name': name}, parse_type=DeploymentConversation)
 
-    def delete_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None):
+    def delete_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None, deployment_token: str = None):
         """Delete a Deployment Conversation.
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to."""
-        return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id})
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
+        return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token})
 
-    def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None):
+    def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, deployment_id: str = None, deployment_token: str = None):
         """Sets a deployment conversation message as useful or not useful
 
         Args:
@@ -6640,17 +6965,64 @@ Creates a new feature group defined as the union of other feature group versions
             message_index (int): The index of the deployment conversation message
             is_useful (bool): If the message is useful. If true, the message is useful. If false, clear the useful flag.
             is_not_useful (bool): If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
-            feedback (str): Optional feedback on why the message is useful or not useful"""
-        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
+            feedback (str): Optional feedback on why the message is useful or not useful
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
+        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
 
-    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None):
+    def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None, deployment_token: str = None):
         """Rename a Deployment Conversation.
 
         Args:
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
             name (str): The new name of the conversation.
-            deployment_id (str): (Optional) The deployment this conversation belongs to."""
-        return self._call_api('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
+        return self._call_api('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
+
+    def create_app_user_group(self, name: str) -> AppUserGroup:
+        """Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
+
+        Args:
+            name (str): The name of the App User Group.
+
+        Returns:
+            AppUserGroup: The App User Group."""
+        return self._call_api('createAppUserGroup', 'POST', query_params={}, body={'name': name}, parse_type=AppUserGroup)
+
+    def delete_app_user_group(self, user_group_id: str):
+        """Deletes an App User Group.
+
+        Args:
+            user_group_id (str): The ID of the App User Group."""
+        return self._call_api('deleteAppUserGroup', 'DELETE', query_params={'userGroupId': user_group_id})
+
+    def invite_user_to_app_user_group(self, email: str, user_group_id: str):
+        """Invite a user to an App User Group. This method will send the specified email address an invitation link to join a specific user group.
+
+        This will allow them to use any chatbots that this user group has access to.
+
+
+        Args:
+            email (str): The email address to invite to your user group.
+            user_group_id (str): The ID of the App User Group to invite the user to."""
+        return self._call_api('inviteUserToAppUserGroup', 'POST', query_params={}, body={'email': email, 'userGroupId': user_group_id})
+
+    def add_users_to_app_user_group(self, user_group_id: str, user_emails: list):
+        """Adds users to a App User Group.
+
+        Args:
+            user_group_id (str): The ID of the App User Group.
+            user_emails (list): The emails of the users to add to the App User Group."""
+        return self._call_api('addUsersToAppUserGroup', 'POST', query_params={}, body={'userGroupId': user_group_id, 'userEmails': user_emails})
+
+    def remove_users_from_app_user_group(self, user_group_id: str, user_emails: list):
+        """Removes users from an App User Group.
+
+        Args:
+            user_group_id (str): The ID of the App User Group.
+            user_emails (list): The emails of the users to remove from the App User Group."""
+        return self._call_api('removeUsersFromAppUserGroup', 'POST', query_params={}, body={'userGroupId': user_group_id, 'userEmails': user_emails})
 
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False) -> Agent:
         """Creates a new AI agent.
@@ -6697,7 +7069,10 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature}, parse_type=LlmResponse, timeout=300)
+        try:
+            return self._proxy_request('EvaluatePrompt', body={'prompt': prompt, 'system_message': system_message, 'llm_name': llm_name, 'max_tokens': max_tokens, 'temperature': temperature}, parse_type=LlmResponse)
+        except Exception:
+            return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'useProxyServiceFlow': False}, parse_type=LlmResponse, timeout=300)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.
@@ -6811,3 +7186,25 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             document_retriever_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('restartDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id})
+
+    def get_relevant_snippets(self, documents: list, query: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False) -> List[DocumentRetrieverLookupResult]:
+        """Get relevant snippets from documents with respect to the query. Document retrievers may be created on-the-fly to perform lookup.
+
+        Args:
+            documents (list): A list of document store IDs to retrieve the snippets from.
+            query (str): The query that the documents are relevant to.
+            document_retriever_config (DocumentRetrieverConfig): If provided, used to configure the retrieval steps like chunking for embeddings.
+            honor_sentence_boundary (bool): If provided, will honor sentence boundary when returning the snippets.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned snippets.
+            max_words_per_snippet (int): If provided, will limit the number of words in each snippet to the value specified.
+            max_snippets_per_document (int): If provided, will limit the number of snippets retrieved from each document to the value specified.
+            start_word_index (int): If provided, will start the snippet at the index (of words in the document) specified.
+            end_word_index (int): If provided, will end the snippet at the index of (of words in the document) specified.
+            including_bounding_boxes (bool): If true, will include the bounding boxes of the snippets if they are available.
+
+        Returns:
+            list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
+        try:
+            return self._proxy_request('GetRelevantSnippets', body={'documents': documents, 'query': query, 'document_retriever_config': document_retriever_config, 'honor_sentence_boundary': honor_sentence_boundary, 'num_retrieval_margin_words': num_retrieval_margin_words, 'max_words_per_snippet': max_words_per_snippet, 'max_snippets_per_document': max_snippets_per_document, 'start_word_index': start_word_index, 'end_word_index': end_word_index, 'including_bounding_boxes': including_bounding_boxes}, parse_type=DocumentRetrieverLookupResult)
+        except Exception:
+            return self._call_api('getRelevantSnippets', 'POST', query_params={}, body={'documents': documents, 'query': query, 'documentRetrieverConfig': document_retriever_config, 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'useProxyServiceFlow': False}, parse_type=DocumentRetrieverLookupResult)

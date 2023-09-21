@@ -252,18 +252,24 @@ class Deployment(AbstractApiClass):
         """
         return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
 
-    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, chat_config: dict = None, filter_key_values: dict = None, ignore_documents: bool = False):
+    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
             message (str): A message from the user
-            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
-            chat_config (dict): A dictionary specifiying the query chat config override.
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+            external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifiying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
         """
-        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, chat_config, filter_key_values, ignore_documents)
+        return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents)
 
     def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """
@@ -291,17 +297,18 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, input_feature_groups)
 
-    def create_conversation(self, name: str):
+    def create_conversation(self, name: str, deployment_token: str = None):
         """
         Creates a deployment conversation.
 
         Args:
             name (str): The name of the conversation.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
 
         Returns:
             DeploymentConversation: The deployment conversation.
         """
-        return self.client.create_deployment_conversation(self.deployment_id, name)
+        return self.client.create_deployment_conversation(self.deployment_id, name, deployment_token)
 
     def list_conversations(self):
         """

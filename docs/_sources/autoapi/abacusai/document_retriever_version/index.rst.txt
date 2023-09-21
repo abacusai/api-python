@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None)
+.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36,6 +36,8 @@ Classes
    :type status: str
    :param featureGroupVersion: The unique identifier of the feature group version at which the vector store version is created.
    :type featureGroupVersion: str
+   :param error: The error message when it failed to create the document retriever version.
+   :type error: str
 
    .. py:method:: __repr__()
 

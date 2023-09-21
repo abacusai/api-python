@@ -15,8 +15,8 @@ class ModelMonitor(AbstractApiClass):
             projectId (str): The project this model belongs to.
             trainingFeatureGroupId (list[str]): Feature group IDs that this model monitor is monitoring.
             predictionFeatureGroupId (list[str]): Feature group IDs that this model monitor is monitoring.
-            predictionFeatureGroupVersion (list[str]): Feature group version that this model monitor is monitoring.
-            trainingFeatureGroupVersion (list[str]): Feature group version that this model monitor is monitoring.
+            predictionFeatureGroupVersion (list[str]): Feature group versions that this model monitor is monitoring.
+            trainingFeatureGroupVersion (list[str]): Feature group versions that this model monitor is monitoring.
             alertConfig (dict): Alerting configuration for this model monitor.
             biasMetricId (str): The bias metric ID
             latestBiasMetricVersionId (str): Lastest prediction metric instance for bias
@@ -25,7 +25,7 @@ class ModelMonitor(AbstractApiClass):
             metricConfigs (dict): Configurations for model monitor
             featureGroupMonitorConfigs (dict): Configurations for feature group monitor
             metricTypes (dict): List of metric types
-            modelId (list[str]): Model ID that this model monitor is monitoring.
+            modelId (str): Model ID that this model monitor is monitoring.
             starred (bool): Whether this model monitor is starred.
             batchPredictionId (str): The batch prediction ID this model monitor monitors
             monitorType (str): The type of the monitor, one of MODEL_MONITOR, or FEATURE_GROUP_MONITOR

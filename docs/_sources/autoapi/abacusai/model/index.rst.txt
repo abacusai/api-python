@@ -262,7 +262,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: get_metrics(model_version = None, return_graphs = False, include_all_metrics = False, validation = False)
+   .. py:method:: get_metrics(model_version = None, return_graphs = False, validation = False)
 
       Retrieves metrics for all the algorithms trained in this model version.
 
@@ -271,10 +271,8 @@ Classes
 
       :param model_version: Version of the model.
       :type model_version: str
-      :param return_graphs: If true, will return the information used for the graphs on the model metrics page.
+      :param return_graphs: If true, will return the information used for the graphs on the model metrics page such as PR Curve per label.
       :type return_graphs: bool
-      :param include_all_metrics: If true, will return all metrics, including those that are not used for the model's score.
-      :type include_all_metrics: bool
       :param validation: If true, will return the validation metrics instead of the test metrics.
       :type validation: bool
 

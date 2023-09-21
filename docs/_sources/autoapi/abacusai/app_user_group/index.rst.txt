@@ -1,0 +1,49 @@
+:py:mod:`abacusai.app_user_group`
+=================================
+
+.. py:module:: abacusai.app_user_group
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.app_user_group.AppUserGroup
+
+
+
+
+.. py:class:: AppUserGroup(client, name=None, userGroupId=None, users={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An app user group. This is used to determine which users have permissions for external chatbots.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the user group.
+   :type name: str
+   :param userGroupId: The unique identifier of the user group.
+   :type userGroupId: str
+   :param users: The users in the user group.
+   :type users: User
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

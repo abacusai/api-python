@@ -50,6 +50,7 @@ Classes
    abacusai.api_class.BlobInput
    abacusai.api_class.ApiClass
    abacusai.api_class.ParsingConfig
+   abacusai.api_class.DocumentProcessingConfig
    abacusai.api_class.ApiClass
    abacusai.api_class.VectorStoreTextEncoder
    abacusai.api_class.VectorStoreConfig
@@ -824,6 +825,33 @@ Classes
 
    .. py:attribute:: file_path_with_schema
       :type: str
+
+      
+
+
+.. py:class:: DocumentProcessingConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: convert_to_markdown
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: use_doctr
+      :type: bool
+      :value: True
 
       
 
@@ -2372,23 +2400,33 @@ Classes
 
       
 
-   .. py:attribute:: ABACUS
-      :value: 'ABACUS'
+   .. py:attribute:: ABACUS_GIRAFFE
+      :value: 'ABACUS_GIRAFFE'
 
       
 
-   .. py:attribute:: ABACUS_LONG
-      :value: 'ABACUS_LONG'
+   .. py:attribute:: ABACUS_LLAMA2_QA
+      :value: 'ABACUS_LLAMA2_QA'
 
       
 
-   .. py:attribute:: ABACUS_LARGE
-      :value: 'ABACUS_LARGE'
+   .. py:attribute:: ABACUS_LLAMA2_CODE
+      :value: 'ABACUS_LLAMA2_CODE'
+
+      
+
+   .. py:attribute:: LLAMA2_CHAT
+      :value: 'LLAMA2_CHAT'
 
       
 
    .. py:attribute:: PALM
       :value: 'PALM'
+
+      
+
+   .. py:attribute:: PALM_TEXT
+      :value: 'PALM_TEXT'
 
       
 
@@ -3463,8 +3501,8 @@ Classes
    :type use_log_transforms: bool
    :param smooth_history: Smooth (low pass filter) the timeseries.
    :type smooth_history: float
-   :param skip_local_scale_target: Skip using per training/prediction window target scaling.
-   :type skip_local_scale_target: bool
+   :param local_scale_target: Using per training/prediction window target scaling.
+   :type local_scale_target: bool
    :param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
    :type timeseries_weight_column: str
    :param item_attributes_weight_column: If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
@@ -3711,7 +3749,7 @@ Classes
 
       
 
-   .. py:attribute:: skip_local_scale_target
+   .. py:attribute:: local_scale_target
       :type: bool
 
       

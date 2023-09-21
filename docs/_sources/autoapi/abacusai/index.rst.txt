@@ -32,6 +32,7 @@ Submodules
    api_client_utils/index.rst
    api_endpoint/index.rst
    api_key/index.rst
+   app_user_group/index.rst
    application_connector/index.rst
    batch_prediction/index.rst
    batch_prediction_version/index.rst
@@ -214,6 +215,7 @@ Classes
    abacusai._BatchPredictionArgsFactory
    abacusai.BlobInput
    abacusai.ParsingConfig
+   abacusai.DocumentProcessingConfig
    abacusai.VectorStoreTextEncoder
    abacusai.VectorStoreConfig
    abacusai.DocumentRetrieverConfig
@@ -916,6 +918,33 @@ Attributes
 
    .. py:attribute:: file_path_with_schema
       :type: str
+
+      
+
+
+.. py:class:: DocumentProcessingConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: convert_to_markdown
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: use_doctr
+      :type: bool
+      :value: True
 
       
 
@@ -2397,23 +2426,33 @@ Attributes
 
       
 
-   .. py:attribute:: ABACUS
-      :value: 'ABACUS'
+   .. py:attribute:: ABACUS_GIRAFFE
+      :value: 'ABACUS_GIRAFFE'
 
       
 
-   .. py:attribute:: ABACUS_LONG
-      :value: 'ABACUS_LONG'
+   .. py:attribute:: ABACUS_LLAMA2_QA
+      :value: 'ABACUS_LLAMA2_QA'
 
       
 
-   .. py:attribute:: ABACUS_LARGE
-      :value: 'ABACUS_LARGE'
+   .. py:attribute:: ABACUS_LLAMA2_CODE
+      :value: 'ABACUS_LLAMA2_CODE'
+
+      
+
+   .. py:attribute:: LLAMA2_CHAT
+      :value: 'LLAMA2_CHAT'
 
       
 
    .. py:attribute:: PALM
       :value: 'PALM'
+
+      
+
+   .. py:attribute:: PALM_TEXT
+      :value: 'PALM_TEXT'
 
       
 
@@ -3364,8 +3403,8 @@ Attributes
    :type use_log_transforms: bool
    :param smooth_history: Smooth (low pass filter) the timeseries.
    :type smooth_history: float
-   :param skip_local_scale_target: Skip using per training/prediction window target scaling.
-   :type skip_local_scale_target: bool
+   :param local_scale_target: Using per training/prediction window target scaling.
+   :type local_scale_target: bool
    :param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
    :type timeseries_weight_column: str
    :param item_attributes_weight_column: If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
@@ -3612,7 +3651,7 @@ Attributes
 
       
 
-   .. py:attribute:: skip_local_scale_target
+   .. py:attribute:: local_scale_target
       :type: bool
 
       
@@ -5503,6 +5542,12 @@ Attributes
 
       :returns: The response from the AsyncApp.
       :rtype: str
+
+
+   .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 600)
+
+
+   .. py:method:: _proxy_request(name, body = None, parse_type=None)
 
 
    .. py:method:: add_user_to_organization(email)
@@ -8651,7 +8696,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -8671,13 +8716,15 @@ Attributes
       :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, chat_config = None, filter_key_values = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -8685,12 +8732,24 @@ Attributes
       :type deployment_id: str
       :param message: A message from the user
       :type message: str
-      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
       :type deployment_conversation_id: str
-      :param chat_config: A dictionary specifiying the query chat config override.
-      :type chat_config: dict
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
 
@@ -8769,7 +8828,7 @@ Attributes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None)
 
       Get all positive assignments that match a query.
 
@@ -8781,9 +8840,11 @@ Attributes
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -8795,6 +8856,8 @@ Attributes
       :type query_data: dict
       :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
       :type add_constraints: list
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -8965,7 +9028,7 @@ Attributes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -8981,6 +9044,8 @@ Attributes
       :type deployment_conversation_id: str
       :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
       :type external_session_id: str
+      :param regenerate: If True, will regenerate the response from the last query.
+      :type regenerate: bool
 
 
    .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None)
@@ -9991,12 +10056,14 @@ Attributes
       :type name: str
 
 
-   .. py:method:: suggest_abacus_apis(query, limit = 5)
+   .. py:method:: suggest_abacus_apis(query, verbosity = 1, limit = 5)
 
       Suggests several Abacus APIs that are most relevant to the supplied natural language query.
 
       :param query: The natural language query to find Abacus APIs for
       :type query: str
+      :param verbosity: The verbosity level of the suggested Abacus APIs. Ranges from 0 to 2, with 0 being the least verbose and 2 being the most verbose.
+      :type verbosity: int
       :param limit: The maximum number of APIs to return
       :type limit: int
 
@@ -10004,7 +10071,7 @@ Attributes
       :rtype: list[AbacusApi]
 
 
-   .. py:method:: create_deployment_conversation(deployment_id, name)
+   .. py:method:: create_deployment_conversation(deployment_id, name, deployment_token = None)
 
       Creates a deployment conversation.
 
@@ -10012,22 +10079,26 @@ Attributes
       :type deployment_id: str
       :param name: The name of the conversation.
       :type name: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
 
 
-   .. py:method:: delete_deployment_conversation(deployment_conversation_id, deployment_id = None)
+   .. py:method:: delete_deployment_conversation(deployment_conversation_id, deployment_id = None, deployment_token = None)
 
       Delete a Deployment Conversation.
 
       :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
       :type deployment_conversation_id: str
-      :param deployment_id: (Optional) The deployment this conversation belongs to.
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
 
-   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None)
+   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -10041,9 +10112,13 @@ Attributes
       :type is_not_useful: bool
       :param feedback: Optional feedback on why the message is useful or not useful
       :type feedback: str
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
+      :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
 
-   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name, deployment_id = None)
+   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name, deployment_id = None, deployment_token = None)
 
       Rename a Deployment Conversation.
 
@@ -10051,8 +10126,62 @@ Attributes
       :type deployment_conversation_id: str
       :param name: The new name of the conversation.
       :type name: str
-      :param deployment_id: (Optional) The deployment this conversation belongs to.
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
+
+
+   .. py:method:: create_app_user_group(name)
+
+      Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
+
+      :param name: The name of the App User Group.
+      :type name: str
+
+      :returns: The App User Group.
+      :rtype: AppUserGroup
+
+
+   .. py:method:: delete_app_user_group(user_group_id)
+
+      Deletes an App User Group.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+
+
+   .. py:method:: invite_user_to_app_user_group(email, user_group_id)
+
+      Invite a user to an App User Group. This method will send the specified email address an invitation link to join a specific user group.
+
+      This will allow them to use any chatbots that this user group has access to.
+
+
+      :param email: The email address to invite to your user group.
+      :type email: str
+      :param user_group_id: The ID of the App User Group to invite the user to.
+      :type user_group_id: str
+
+
+   .. py:method:: add_users_to_app_user_group(user_group_id, user_emails)
+
+      Adds users to a App User Group.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+      :param user_emails: The emails of the users to add to the App User Group.
+      :type user_emails: list
+
+
+   .. py:method:: remove_users_from_app_user_group(user_group_id, user_emails)
+
+      Removes users from an App User Group.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+      :param user_emails: The emails of the users to remove from the App User Group.
+      :type user_emails: list
 
 
    .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
@@ -10265,6 +10394,35 @@ Attributes
       :type document_retriever_id: str
 
 
+   .. py:method:: get_relevant_snippets(documents, query, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False)
+
+      Get relevant snippets from documents with respect to the query. Document retrievers may be created on-the-fly to perform lookup.
+
+      :param documents: A list of document store IDs to retrieve the snippets from.
+      :type documents: list
+      :param query: The query that the documents are relevant to.
+      :type query: str
+      :param document_retriever_config: If provided, used to configure the retrieval steps like chunking for embeddings.
+      :type document_retriever_config: DocumentRetrieverConfig
+      :param honor_sentence_boundary: If provided, will honor sentence boundary when returning the snippets.
+      :type honor_sentence_boundary: bool
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned snippets.
+      :type num_retrieval_margin_words: int
+      :param max_words_per_snippet: If provided, will limit the number of words in each snippet to the value specified.
+      :type max_words_per_snippet: int
+      :param max_snippets_per_document: If provided, will limit the number of snippets retrieved from each document to the value specified.
+      :type max_snippets_per_document: int
+      :param start_word_index: If provided, will start the snippet at the index (of words in the document) specified.
+      :type start_word_index: int
+      :param end_word_index: If provided, will end the snippet at the index of (of words in the document) specified.
+      :type end_word_index: int
+      :param including_bounding_boxes: If true, will include the bounding boxes of the snippets if they are available.
+      :type including_bounding_boxes: bool
+
+      :returns: The snippets found from the documents.
+      :rtype: list[DocumentRetrieverLookupResult]
+
+
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
 
@@ -10279,6 +10437,8 @@ Attributes
    :type http_status: int
    :param exception: The exception class raised by the server
    :type exception: str
+   :param request_id: The request id
+   :type request_id: str
 
    .. py:method:: __str__()
 
@@ -11103,7 +11263,7 @@ Attributes
       :type metric: str
 
 
-   .. py:method:: get_model_metrics(model_id, model_version = None, return_graphs = False, include_all_metrics = False, validation = False)
+   .. py:method:: get_model_metrics(model_id, model_version = None, return_graphs = False, validation = False)
 
       Retrieves metrics for all the algorithms trained in this model version.
 
@@ -11114,10 +11274,8 @@ Attributes
       :type model_id: str
       :param model_version: Version of the model.
       :type model_version: str
-      :param return_graphs: If true, will return the information used for the graphs on the model metrics page.
+      :param return_graphs: If true, will return the information used for the graphs on the model metrics page such as PR Curve per label.
       :type return_graphs: bool
-      :param include_all_metrics: If true, will return all metrics, including those that are not used for the model's score.
-      :type include_all_metrics: bool
       :param validation: If true, will return the validation metrics instead of the test metrics.
       :type validation: bool
 
@@ -12236,16 +12394,18 @@ Attributes
       :rtype: ChatSession
 
 
-   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None)
+   .. py:method:: get_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, deployment_token = None)
 
       Gets a deployment conversation.
 
-      :param deployment_conversation_id: (Optional) Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
+      :param deployment_conversation_id: Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
       :type deployment_conversation_id: str
-      :param external_session_id: (Optional) External session ID of the conversation.
+      :param external_session_id: External session ID of the conversation.
       :type external_session_id: str
-      :param deployment_id: (Optional) The deployment this conversation belongs to.
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
 
       :returns: The deployment conversation.
       :rtype: DeploymentConversation
@@ -12260,6 +12420,17 @@ Attributes
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
+
+
+   .. py:method:: get_app_user_group(user_group_id)
+
+      Gets an App User Group.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+
+      :returns: The App User Group.
+      :rtype: AppUserGroup
 
 
    .. py:method:: describe_agent(agent_id)
@@ -12759,7 +12930,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -12779,13 +12950,15 @@ Attributes
       :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, chat_config = None, filter_key_values = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -12793,12 +12966,24 @@ Attributes
       :type deployment_id: str
       :param message: A message from the user
       :type message: str
-      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
       :type deployment_conversation_id: str
-      :param chat_config: A dictionary specifiying the query chat config override.
-      :type chat_config: dict
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
 
@@ -12877,7 +13062,7 @@ Attributes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None)
 
       Get all positive assignments that match a query.
 
@@ -12889,9 +13074,11 @@ Attributes
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -12903,6 +13090,8 @@ Attributes
       :type query_data: dict
       :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
       :type add_constraints: list
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -13073,7 +13262,7 @@ Attributes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -13089,6 +13278,8 @@ Attributes
       :type deployment_conversation_id: str
       :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
       :type external_session_id: str
+      :param regenerate: If True, will regenerate the response from the last query.
+      :type regenerate: bool
 
 
    .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None)
@@ -13200,7 +13391,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.76.5'
+   :value: '0.77.0'
 
    
 

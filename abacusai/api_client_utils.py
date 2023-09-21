@@ -36,12 +36,17 @@ def avro_to_pandas_dtype(avro_type):
         'boolean': 'bool',
         'bytes': 'object',
         'null': 'object',
-        'date': 'datetime',
+        'date': 'object',
+        'datetime': 'datetime',
     }
 
     if isinstance(avro_type, dict):
-        avro_type = 'date' if avro_type.get('logicalType') in [
-            'date', 'timestamp-micros'] else avro_type['type']
+        if avro_type.get('logicalType') in ['timestamp-micros']:
+            avro_type = 'datetime'
+        elif avro_type.get('logicalType') in ['date']:
+            avro_type = 'date'
+        else:
+            avro_type = avro_type['type']
 
     return avro_pandas_dtypes.get(avro_type, 'object')
 
@@ -156,6 +161,7 @@ class DocstoreUtils:
     """Utility class for loading docstore data.
     Needs to be updated if docstore formats change."""
 
+    DOC_ID = 'doc_id'
     PREDICTION_PREFIX = 'prediction'
     FIRST_PAGE = 'first_page'
     LAST_PAGE = 'last_page'
@@ -227,6 +233,9 @@ class DocstoreUtils:
         df = df.rename(columns={document_column: pages_ref_column})
         pages_df = cls.get_pandas_pages_df(df, feature_group_version, doc_id_column, pages_ref_column,
                                            get_docstore_resource_bytes, max_workers)
+
+        # pages_df will have "doc_id" as column name which can be different from doc_id_column
+        pages_df = pages_df.rename(columns={cls.DOC_ID: doc_id_column})
 
         # Convert column with tokens per page (list of list) to column with Document format:
         # {TOKENS: [list of tokens in document], PAGES: [list of pages in document]}.

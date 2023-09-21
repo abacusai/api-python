@@ -407,7 +407,7 @@ Classes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -427,13 +427,15 @@ Classes
       :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
       :param chat_config: A dictionary specifiying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, chat_config = None, filter_key_values = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -441,12 +443,24 @@ Classes
       :type deployment_id: str
       :param message: A message from the user
       :type message: str
-      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, only a single response will be returned.
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
       :type deployment_conversation_id: str
-      :param chat_config: A dictionary specifiying the query chat config override.
-      :type chat_config: dict
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
       :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
       :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
 
@@ -525,7 +539,7 @@ Classes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None)
 
       Get all positive assignments that match a query.
 
@@ -537,9 +551,11 @@ Classes
       :type query_data: dict
       :param forced_assignments: Set of assignments to force and resolve before returning query results.
       :type forced_assignments: dict
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -551,6 +567,8 @@ Classes
       :type query_data: dict
       :param add_constraints: List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
       :type add_constraints: list
+      :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+      :type solve_time_limit_seconds: float
 
 
    .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
@@ -721,7 +739,7 @@ Classes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -737,6 +755,8 @@ Classes
       :type deployment_conversation_id: str
       :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
       :type external_session_id: str
+      :param regenerate: If True, will regenerate the response from the last query.
+      :type regenerate: bool
 
 
    .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None)
