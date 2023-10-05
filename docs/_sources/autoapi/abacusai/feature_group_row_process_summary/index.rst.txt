@@ -1,0 +1,53 @@
+:py:mod:`abacusai.feature_group_row_process_summary`
+====================================================
+
+.. py:module:: abacusai.feature_group_row_process_summary
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_row_process_summary.FeatureGroupRowProcessSummary
+
+
+
+
+.. py:class:: FeatureGroupRowProcessSummary(client, totalProcesses=None, pendingProcesses=None, processingProcesses=None, completeProcesses=None, failedProcesses=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A summary of the feature group processes for a deployment.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param totalProcesses: The total number of processes
+   :type totalProcesses: int
+   :param pendingProcesses: The number of pending processes
+   :type pendingProcesses: int
+   :param processingProcesses: The number of processes currently processing
+   :type processingProcesses: int
+   :param completeProcesses: The number of complete processes
+   :type completeProcesses: int
+   :param failedProcesses: The number of failed processes
+   :type failedProcesses: int
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AppUserGroup(client, name=None, userGroupId=None, users={})
+.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, users={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -30,6 +30,8 @@ Classes
    :type name: str
    :param userGroupId: The unique identifier of the user group.
    :type userGroupId: str
+   :param externalApplicationIds: The ids of the external applications the group has access to.
+   :type externalApplicationIds: list[str]
    :param users: The users in the user group.
    :type users: User
 

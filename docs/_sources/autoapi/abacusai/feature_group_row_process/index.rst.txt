@@ -1,0 +1,79 @@
+:py:mod:`abacusai.feature_group_row_process`
+============================================
+
+.. py:module:: abacusai.feature_group_row_process
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_group_row_process.FeatureGroupRowProcess
+
+
+
+
+.. py:class:: FeatureGroupRowProcess(client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, status=None, error=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A feature group row process
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureGroupId: The ID of the feature group this row that was processed belongs to.
+   :type featureGroupId: str
+   :param deploymentId: The ID of the deployment that processed this row.
+   :type deploymentId: str
+   :param primaryKeyValue: Value of the primary key for this row.
+   :type primaryKeyValue: str
+   :param featureGroupRowProcessId: The ID of the feature group row process.
+   :type featureGroupRowProcessId: str
+   :param createdAt: The timestamp this feature group row was created in ISO-8601 format.
+   :type createdAt: str
+   :param updatedAt: The timestamp when this feature group row was last updated in ISO-8601 format.
+   :type updatedAt: str
+   :param startedAt: The timestamp when this feature group row process was started in ISO-8601 format.
+   :type startedAt: str
+   :param completedAt: The timestamp when this feature group row was completed.
+   :type completedAt: str
+   :param status: The status of the feature group row process.
+   :type status: str
+   :param error: The error message if the status is FAILED.
+   :type error: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: wait_for_process(timeout=1200)
+
+      A waiting call until model monitor version is ready.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the feature group row process.
+
+      :returns: A string describing the status of the feature group row process
+      :rtype: str
+
+
+

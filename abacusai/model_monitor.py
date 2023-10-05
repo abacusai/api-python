@@ -30,11 +30,14 @@ class ModelMonitor(AbstractApiClass):
             batchPredictionId (str): The batch prediction ID this model monitor monitors
             monitorType (str): The type of the monitor, one of MODEL_MONITOR, or FEATURE_GROUP_MONITOR
             edaConfigs (dict): The configs for EDA
+            trainingForecastConfig (dict): The tarining config for forecast monitors
+            predictionForecastConfig (dict): The prediction config for forecast monitors
+            forecastFrequency (str): The frequency of the forecast
             latestMonitorModelVersion (ModelMonitorVersion): The latest model monitor version.
             refreshSchedules (RefreshSchedule): List of refresh schedules that indicate when the next model version will be trained.
     """
 
-    def __init__(self, client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, refreshSchedules={}, latestMonitorModelVersion={}):
+    def __init__(self, client, modelMonitorId=None, name=None, createdAt=None, projectId=None, trainingFeatureGroupId=None, predictionFeatureGroupId=None, predictionFeatureGroupVersion=None, trainingFeatureGroupVersion=None, alertConfig=None, biasMetricId=None, latestBiasMetricVersionId=None, predictionMetricId=None, latestPredictionMetricVersionId=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelId=None, starred=None, batchPredictionId=None, monitorType=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None, refreshSchedules={}, latestMonitorModelVersion={}):
         super().__init__(client, modelMonitorId)
         self.model_monitor_id = modelMonitorId
         self.name = name
@@ -57,13 +60,16 @@ class ModelMonitor(AbstractApiClass):
         self.batch_prediction_id = batchPredictionId
         self.monitor_type = monitorType
         self.eda_configs = edaConfigs
+        self.training_forecast_config = trainingForecastConfig
+        self.prediction_forecast_config = predictionForecastConfig
+        self.forecast_frequency = forecastFrequency
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
         self.latest_monitor_model_version = client._build_class(
             ModelMonitorVersion, latestMonitorModelVersion)
 
     def __repr__(self):
-        return f"ModelMonitor(model_monitor_id={repr(self.model_monitor_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  training_feature_group_id={repr(self.training_feature_group_id)},\n  prediction_feature_group_id={repr(self.prediction_feature_group_id)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  alert_config={repr(self.alert_config)},\n  bias_metric_id={repr(self.bias_metric_id)},\n  latest_bias_metric_version_id={repr(self.latest_bias_metric_version_id)},\n  prediction_metric_id={repr(self.prediction_metric_id)},\n  latest_prediction_metric_version_id={repr(self.latest_prediction_metric_version_id)},\n  metric_configs={repr(self.metric_configs)},\n  feature_group_monitor_configs={repr(self.feature_group_monitor_configs)},\n  metric_types={repr(self.metric_types)},\n  model_id={repr(self.model_id)},\n  starred={repr(self.starred)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  monitor_type={repr(self.monitor_type)},\n  eda_configs={repr(self.eda_configs)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_monitor_model_version={repr(self.latest_monitor_model_version)})"
+        return f"ModelMonitor(model_monitor_id={repr(self.model_monitor_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  training_feature_group_id={repr(self.training_feature_group_id)},\n  prediction_feature_group_id={repr(self.prediction_feature_group_id)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  alert_config={repr(self.alert_config)},\n  bias_metric_id={repr(self.bias_metric_id)},\n  latest_bias_metric_version_id={repr(self.latest_bias_metric_version_id)},\n  prediction_metric_id={repr(self.prediction_metric_id)},\n  latest_prediction_metric_version_id={repr(self.latest_prediction_metric_version_id)},\n  metric_configs={repr(self.metric_configs)},\n  feature_group_monitor_configs={repr(self.feature_group_monitor_configs)},\n  metric_types={repr(self.metric_types)},\n  model_id={repr(self.model_id)},\n  starred={repr(self.starred)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  monitor_type={repr(self.monitor_type)},\n  eda_configs={repr(self.eda_configs)},\n  training_forecast_config={repr(self.training_forecast_config)},\n  prediction_forecast_config={repr(self.prediction_forecast_config)},\n  forecast_frequency={repr(self.forecast_frequency)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_monitor_model_version={repr(self.latest_monitor_model_version)})"
 
     def to_dict(self):
         """
@@ -72,7 +78,7 @@ class ModelMonitor(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_monitor_id': self.model_monitor_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'training_feature_group_id': self.training_feature_group_id, 'prediction_feature_group_id': self.prediction_feature_group_id, 'prediction_feature_group_version': self.prediction_feature_group_version, 'training_feature_group_version': self.training_feature_group_version, 'alert_config': self.alert_config, 'bias_metric_id': self.bias_metric_id, 'latest_bias_metric_version_id': self.latest_bias_metric_version_id, 'prediction_metric_id': self.prediction_metric_id, 'latest_prediction_metric_version_id': self.latest_prediction_metric_version_id, 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_id': self.model_id, 'starred': self.starred, 'batch_prediction_id': self.batch_prediction_id, 'monitor_type': self.monitor_type, 'eda_configs': self.eda_configs, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_monitor_model_version': self._get_attribute_as_dict(self.latest_monitor_model_version)}
+        return {'model_monitor_id': self.model_monitor_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'training_feature_group_id': self.training_feature_group_id, 'prediction_feature_group_id': self.prediction_feature_group_id, 'prediction_feature_group_version': self.prediction_feature_group_version, 'training_feature_group_version': self.training_feature_group_version, 'alert_config': self.alert_config, 'bias_metric_id': self.bias_metric_id, 'latest_bias_metric_version_id': self.latest_bias_metric_version_id, 'prediction_metric_id': self.prediction_metric_id, 'latest_prediction_metric_version_id': self.latest_prediction_metric_version_id, 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_id': self.model_id, 'starred': self.starred, 'batch_prediction_id': self.batch_prediction_id, 'monitor_type': self.monitor_type, 'eda_configs': self.eda_configs, 'training_forecast_config': self.training_forecast_config, 'prediction_forecast_config': self.prediction_forecast_config, 'forecast_frequency': self.forecast_frequency, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_monitor_model_version': self._get_attribute_as_dict(self.latest_monitor_model_version)}
 
     def rerun(self):
         """

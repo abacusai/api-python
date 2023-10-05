@@ -45,6 +45,14 @@ class ApiClass(ABC):
     def _get_builder(cls):
         return None
 
+    def __str__(self):
+        non_none_fields = {key: value for key, value in self.__dict__.items() if value is not None}
+        field_str = ', '.join([f'{key}={value!r}' for key, value in non_none_fields.items()])
+        return f'{self.__class__.__name__}({field_str})'
+
+    def _repr_html_(self):
+        return self.__str__()
+
     def to_dict(self):
         """
         Standardizes converting an ApiClass to dictionary.

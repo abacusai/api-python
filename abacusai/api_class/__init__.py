@@ -5,6 +5,7 @@ from .document_retriever import *
 from .enums import *
 from .feature_group import *
 from .model import *
+from .monitor import *
 from .monitor_alert import *
 from .project import *
 from .python_functions import *

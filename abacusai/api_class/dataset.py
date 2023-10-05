@@ -14,4 +14,7 @@ class ParsingConfig(ApiClass):
 class DocumentProcessingConfig(ApiClass):
     extract_bounding_boxes: bool = False
     convert_to_markdown: bool = False
-    use_doctr: bool = True
+    remove_header_footer: bool = False
+    use_doctr: bool = False
+    remove_watermarks: bool = None
+    use_full_ocr: bool = None

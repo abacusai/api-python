@@ -407,7 +407,7 @@ Classes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -435,7 +435,7 @@ Classes
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -759,7 +759,7 @@ Classes
       :type regenerate: bool
 
 
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None)
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
 
       Executes a deployed AI agent function with binary data as inputs.
 
@@ -773,6 +773,10 @@ Classes
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
       :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
 
 
 

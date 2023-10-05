@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.77.0'
+      :value: '0.77.5'
 
       
 
@@ -773,8 +773,8 @@ Attributes
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
 
-      :returns: The feature group object.
-      :rtype: FeatureGroup
+      :returns: The project feature group object.
+      :rtype: ProjectFeatureGroup
 
 
    .. py:method:: list_project_feature_groups(project_id, filter_feature_group_use = None)
@@ -787,7 +787,7 @@ Attributes
       :type filter_feature_group_use: str
 
       :returns: All the Feature Groups in a project.
-      :rtype: list[FeatureGroup]
+      :rtype: list[ProjectFeatureGroup]
 
 
    .. py:method:: list_python_function_feature_groups(name, limit = 100)
@@ -1294,9 +1294,12 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: set_model_objective(model_version, metric)
+   .. py:method:: set_model_objective(model_version, metric = None)
 
       Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
+
+      If metric is set to None, then just use the default selection
+
 
       :param model_version: The model version to set as the best model.
       :type model_version: str
@@ -2151,17 +2154,6 @@ Attributes
       :rtype: PipelineStepVersion
 
 
-   .. py:method:: unset_pipeline_refresh_schedule(pipeline_id)
-
-      Deletes the refresh schedule for a given pipeline.
-
-      :param pipeline_id: The id of the pipeline.
-      :type pipeline_id: str
-
-      :returns: Object describing the pipeline.
-      :rtype: Pipeline
-
-
    .. py:method:: pause_pipeline_refresh_schedule(pipeline_id)
 
       Pauses the refresh schedule for a given pipeline.
@@ -2472,6 +2464,17 @@ Attributes
 
       :returns: The App User Group.
       :rtype: AppUserGroup
+
+
+   .. py:method:: describe_external_application(external_application_id)
+
+      Describes an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+      :returns: The External Application.
+      :rtype: ExternalApplication
 
 
    .. py:method:: describe_agent(agent_id)
@@ -3235,7 +3238,30 @@ Attributes
    .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 600)
 
 
-   .. py:method:: _proxy_request(name, body = None, parse_type=None)
+   .. py:method:: _proxy_request(name, method = 'POST', query_params = None, body = None, files=None, parse_type=None, is_sync = False, streamable_response = False)
+
+
+   .. py:method:: execute_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None, preview = False, schema_document_retriever_ids = None, timeout=3600, delay=2)
+
+      Execute a data query using a large language model.
+
+      :param query: The natural language query to execute. The query is converted to a SQL query using the language model.
+      :type query: str
+      :param feature_group_ids: A list of feature group IDs that the query should be executed against.
+      :type feature_group_ids: List[str]
+      :param prompt_context: The context message used to construct the prompt for the language model. If not provide, a default context message is used.
+      :type prompt_context: str
+      :param llm_name: The name of the language model to use. If not provided, the default language model is used.
+      :type llm_name: str
+      :param temperature: The temperature to use for the language model if supported. If not provided, the default temperature is used.
+      :type temperature: float
+      :param preview: If True, a preview of the query execution is returned.
+      :type preview: bool
+      :param schema_document_retriever_ids: A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
+      :type schema_document_retriever_ids: List[str]
+
+      :returns: The result of the query.
+      :rtype: pandas.DataFrame
 
 
    .. py:method:: add_user_to_organization(email)
@@ -3733,6 +3759,19 @@ Attributes
       :type table_name: str
 
       :returns: Feature Group corresponding to the newly created Snapshot.
+      :rtype: FeatureGroup
+
+
+   .. py:method:: create_online_feature_group(table_name, description = None)
+
+      Creates an Online Feature Group.
+
+      :param table_name: Name for the newly created feature group.
+      :type table_name: str
+      :param description: Human-readable description of the Feature Group.
+      :type description: str
+
+      :returns: The created feature group.
       :rtype: FeatureGroup
 
 
@@ -5471,6 +5510,31 @@ Attributes
       :rtype: ModelMonitor
 
 
+   .. py:method:: create_forecasting_monitor(project_id, name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency = None, refresh_schedule = None)
+
+      Runs a forecasting monitor for the specified project.
+
+      :param project_id: Unique string identifier of the project.
+      :type project_id: str
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+      :type name: str
+      :param prediction_feature_group_id: Unique string identifier of the prediction data feature group.
+      :type prediction_feature_group_id: str
+      :param training_feature_group_id: Unique string identifier of the training data feature group.
+      :type training_feature_group_id: str
+      :param training_forecast_config: The configuration for the training data.
+      :type training_forecast_config: ForecastingMonitorConfig
+      :param prediction_forecast_config: The configuration for the prediction data.
+      :type prediction_forecast_config: ForecastingMonitorConfig
+      :param forecast_frequency: The frequency of the forecast. Defaults to the frequency of the prediction data.
+      :type forecast_frequency: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created forecasting monitor.
+      :type refresh_schedule: str
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
+
+
    .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
 
       Run an Exploratory Data Analysis (EDA) for the specified project.
@@ -6384,7 +6448,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -6412,7 +6476,7 @@ Attributes
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = None, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -6736,7 +6800,7 @@ Attributes
       :type regenerate: bool
 
 
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None)
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
 
       Executes a deployed AI agent function with binary data as inputs.
 
@@ -6750,6 +6814,10 @@ Attributes
       :type arguments: list
       :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
       :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
 
 
    .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
@@ -7131,6 +7199,71 @@ Attributes
       :rtype: FeatureGroupDocument
 
 
+   .. py:method:: describe_feature_group_row_process_by_key(deployment_id, primary_key_value)
+
+      Gets the feature group row process.
+
+      :param deployment_id: The deployment id
+      :type deployment_id: str
+      :param primary_key_value: The primary key value
+      :type primary_key_value: str
+
+      :returns: An object representing the feature group row process
+      :rtype: FeatureGroupRowProcess
+
+
+   .. py:method:: list_feature_group_row_processes(deployment_id, limit = None, status = None)
+
+      Gets a list of feature group row processes.
+
+      :param deployment_id: The deployment id for the process
+      :type deployment_id: str
+      :param limit: The maximum number of processes to return. Defaults to None.
+      :type limit: int
+      :param status: The status of the processes to return. Defaults to None.
+      :type status: str
+
+      :returns: A list of object representing the feature group row process
+      :rtype: list[FeatureGroupRowProcess]
+
+
+   .. py:method:: get_feature_group_row_process_summary(deployment_id)
+
+      Gets a summary of the statuses of the individual feature group processes.
+
+      :param deployment_id: The deployment id for the process
+      :type deployment_id: str
+
+      :returns: An object representing the summary of the statuses of the individual feature group processes
+      :rtype: FeatureGroupRowProcessSummary
+
+
+   .. py:method:: reset_feature_group_row_process_by_key(deployment_id, primary_key_value)
+
+      Resets a feature group row process so that it can be reprocessed
+
+      :param deployment_id: The deployment id
+      :type deployment_id: str
+      :param primary_key_value: The primary key value
+      :type primary_key_value: str
+
+      :returns: An object representing the feature group row process.
+      :rtype: FeatureGroupRowProcess
+
+
+   .. py:method:: get_feature_group_row_process_logs_by_key(deployment_id, primary_key_value)
+
+      Gets the logs for a feature group row process
+
+      :param deployment_id: The deployment id
+      :type deployment_id: str
+      :param primary_key_value: The primary key value
+      :type primary_key_value: str
+
+      :returns: An object representing the logs for the feature group row process
+      :rtype: FeatureGroupRowProcessLogs
+
+
    .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
 
       Creates a custom Python function that is reusable.
@@ -7374,6 +7507,17 @@ Attributes
 
       :returns: Object describing the pipeline.
       :rtype: PipelineStep
+
+
+   .. py:method:: unset_pipeline_refresh_schedule(pipeline_id)
+
+      Deletes the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
 
 
    .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)
@@ -7872,6 +8016,76 @@ Attributes
       :type user_emails: list
 
 
+   .. py:method:: add_app_user_group_to_external_application(user_group_id, external_application_id)
+
+      Adds a permission for an App User Group to access an External Application.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
+   .. py:method:: remove_app_user_group_from_external_application(user_group_id, external_application_id)
+
+      Removes a permission for an App User Group to access an External Application.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
+   .. py:method:: create_external_application(deployment_id, name = None, logo = None, theme = None)
+
+      Creates a new External Application from an existing ChatLLM Deployment.
+
+      :param deployment_id: The ID of the deployment to use.
+      :type deployment_id: str
+      :param name: The name of the External Application. If not provided, the name of the deployment will be used.
+      :type name: str
+      :param logo: The logo to be displayed.
+      :type logo: str
+      :param theme: The visual theme of the External Application.
+      :type theme: dict
+
+      :returns: The newly created External Application.
+      :rtype: ExternalApplication
+
+
+   .. py:method:: update_external_application(external_application_id, name = None, logo = None, theme = None)
+
+      Updates an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+      :param name: The name of the External Application.
+      :type name: str
+      :param logo: The logo to be displayed.
+      :type logo: str
+      :param theme: The visual theme of the External Application.
+      :type theme: dict
+
+      :returns: The updated External Application.
+      :rtype: ExternalApplication
+
+
+   .. py:method:: list_external_applications()
+
+      Lists External Applications in an organization.
+
+      :returns: List of External Applications.
+      :rtype: list[ExternalApplication]
+
+
+   .. py:method:: delete_external_application(external_application_id)
+
+      Deletes an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
    .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
 
       Creates a new AI agent.
@@ -7920,7 +8134,7 @@ Attributes
       :rtype: Agent
 
 
-   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = None)
+   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None)
 
       Generate response to the prompt using the specified model.
 
@@ -7932,8 +8146,10 @@ Attributes
       :type llm_name: str
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
-      :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 1.0. A range of 0.0 - 1.0 is allowed.
+      :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
+      :param messages: A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+      :type messages: list
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse
@@ -7969,6 +8185,22 @@ Attributes
 
       :returns: The parameters for LLM using the given inputs.
       :rtype: LlmParameters
+
+
+   .. py:method:: generate_code_for_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None)
+
+      Execute a data query using a large language model in an async fashion.
+
+      :param query: The natural language query to execute. The query is converted to a SQL query using the language model.
+      :type query: str
+      :param feature_group_ids: A list of feature group IDs that the query should be executed against.
+      :type feature_group_ids: list
+      :param prompt_context: The context message used to construct the prompt for the language model. If not provide, a default context message is used.
+      :type prompt_context: str
+      :param llm_name: The name of the language model to use. If not provided, the default language model is used.
+      :type llm_name: str
+      :param temperature: The temperature to use for the language model if supported. If not provided, the default temperature is used.
+      :type temperature: float
 
 
    .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)
@@ -8082,12 +8314,14 @@ Attributes
       :type document_retriever_id: str
 
 
-   .. py:method:: get_relevant_snippets(documents, query, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False)
+   .. py:method:: get_relevant_snippets(doc_ids = None, blobs = None, query = None, document_retriever_config = None, honor_sentence_boundary = True, num_retrieval_margin_words = None, max_words_per_snippet = None, max_snippets_per_document = None, start_word_index = None, end_word_index = None, including_bounding_boxes = False)
 
       Get relevant snippets from documents with respect to the query. Document retrievers may be created on-the-fly to perform lookup.
 
-      :param documents: A list of document store IDs to retrieve the snippets from.
-      :type documents: list
+      :param doc_ids: A list of document store IDs to retrieve the snippets from.
+      :type doc_ids: list
+      :param blobs: A dictionary mapping document names to the blob data.
+      :type blobs: io.TextIOBase
       :param query: The query that the documents are relevant to.
       :type query: str
       :param document_retriever_config: If provided, used to configure the retrieval steps like chunking for embeddings.

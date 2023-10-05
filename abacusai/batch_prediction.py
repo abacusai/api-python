@@ -37,7 +37,6 @@ class BatchPrediction(AbstractApiClass):
             batchInputs (PredictionInput): Inputs to the batch prediction.
             latestBatchPredictionVersion (BatchPredictionVersion): The latest batch prediction version.
             refreshSchedules (RefreshSchedule): List of refresh schedules that dictate the next time the batch prediction will be run.
-            globalPredictionArgs (BatchPredictionArgs): Argument(s) passed to every prediction call.
     """
 
     def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, globalPredictionArgs={}):

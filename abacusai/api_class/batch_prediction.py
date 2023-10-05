@@ -10,7 +10,6 @@ class BatchPredictionArgs(ApiClass):
 
     kwargs: dict = dataclasses.field(default_factory=dict)
     problem_type: enums.ProblemType = dataclasses.field(default=None)
-    name: str = 'batch_prediction_args'
 
     @classmethod
     def _get_builder(cls):

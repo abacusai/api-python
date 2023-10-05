@@ -98,6 +98,8 @@ class PersonalizationTrainingConfig(TrainingConfig):
     add_time_features: bool = dataclasses.field(default=None)
     disable_timestamp_scalar_features: bool = dataclasses.field(default=None)
     compute_session_metrics: bool = dataclasses.field(default=None)
+    query_column: str = dataclasses.field(default=None)
+    item_query_column: str = dataclasses.field(default=None)
 
     # outliers
     max_user_history_len_percentile: int = dataclasses.field(default=None)
@@ -167,6 +169,7 @@ class RegressionTrainingConfig(TrainingConfig):
     test_splitting_timestamp: str = dataclasses.field(default=None)
     sampling_unit_keys: List[str] = dataclasses.field(default=None)
     test_row_indicator: str = dataclasses.field(default=None)
+    full_data_retraining: bool = dataclasses.field(default=None)
 
     # data augmentation
     rebalance_classes: bool = dataclasses.field(default=None)

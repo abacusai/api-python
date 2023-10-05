@@ -1,0 +1,51 @@
+:py:mod:`abacusai.llm_execution_result`
+=======================================
+
+.. py:module:: abacusai.llm_execution_result
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.llm_execution_result.LlmExecutionResult
+
+
+
+
+.. py:class:: LlmExecutionResult(client, status=None, error=None, featureGroupOperation={}, preview={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Results of executing queries using LLM.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param status: The status of the execution.
+   :type status: str
+   :param error: The error message if the execution failed.
+   :type error: str
+   :param featureGroupOperation: Operation for executing queries on feature group.
+   :type featureGroupOperation: ExecuteFeatureGroupOperation
+   :param preview: Preview of executing queries using LLM.
+   :type preview: LlmExecutionPreview
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

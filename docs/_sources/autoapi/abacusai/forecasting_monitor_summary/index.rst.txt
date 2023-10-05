@@ -1,0 +1,69 @@
+:py:mod:`abacusai.forecasting_monitor_summary`
+==============================================
+
+.. py:module:: abacusai.forecasting_monitor_summary
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.forecasting_monitor_summary.ForecastingMonitorSummary
+
+
+
+
+.. py:class:: ForecastingMonitorSummary(client, predictionTimestampCol=None, predictionTargetCol=None, trainingTimestampCol=None, trainingTargetCol=None, predictionItemId=None, trainingItemId=None, forecastFrequency=None, trainingTargetAcrossTime={}, predictionTargetAcrossTime={}, actualsHistogram={}, predictionsHistogram={}, trainHistoryData={}, predictHistoryData={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Forecasting Monitor Summary of the latest version of the data.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param predictionTimestampCol: Feature in the data that represents the timestamp column.
+   :type predictionTimestampCol: str
+   :param predictionTargetCol: Feature in the data that represents the target.
+   :type predictionTargetCol: str
+   :param trainingTimestampCol: Feature in the data that represents the timestamp column.
+   :type trainingTimestampCol: str
+   :param trainingTargetCol: Feature in the data that represents the target.
+   :type trainingTargetCol: str
+   :param predictionItemId: Feature in the data that represents the item id.
+   :type predictionItemId: str
+   :param trainingItemId: Feature in the data that represents the item id.
+   :type trainingItemId: str
+   :param forecastFrequency: Frequency of data, could be hourly, daily, weekly, monthly, quarterly or yearly.
+   :type forecastFrequency: str
+   :param trainingTargetAcrossTime: Data showing average, p10, p90, median sales across time
+   :type trainingTargetAcrossTime: ForecastingAnalysisGraphData
+   :param predictionTargetAcrossTime: Data showing average, p10, p90, median sales across time
+   :type predictionTargetAcrossTime: ForecastingAnalysisGraphData
+   :param actualsHistogram: Data showing actuals histogram
+   :type actualsHistogram: ForecastingAnalysisGraphData
+   :param predictionsHistogram: Data showing predictions histogram
+   :type predictionsHistogram: ForecastingAnalysisGraphData
+   :param trainHistoryData: Data showing length of history distribution
+   :type trainHistoryData: ForecastingAnalysisGraphData
+   :param predictHistoryData: Data showing length of history distribution
+   :type predictHistoryData: ForecastingAnalysisGraphData
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

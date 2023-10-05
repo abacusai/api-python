@@ -1,6 +1,9 @@
 from typing import Union
 
-from .api_class import AlertActionConfig, AlertConditionConfig, DocumentRetrieverConfig, TrainingConfig
+from .api_class import (
+    AlertActionConfig, AlertConditionConfig, DocumentRetrieverConfig,
+    ForecastingMonitorConfig, TrainingConfig
+)
 from .return_class import AbstractApiClass
 
 
@@ -151,7 +154,7 @@ class Project(AbstractApiClass):
             feature_group_id (str): The unique ID associated with the feature group.
 
         Returns:
-            FeatureGroup: The feature group object.
+            ProjectFeatureGroup: The project feature group object.
         """
         return self.client.describe_project_feature_group(self.project_id, feature_group_id)
 
@@ -163,7 +166,7 @@ class Project(AbstractApiClass):
             filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
 
         Returns:
-            list[FeatureGroup]: All the Feature Groups in a project.
+            list[ProjectFeatureGroup]: All the Feature Groups in a project.
         """
         return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
 
@@ -357,6 +360,24 @@ class Project(AbstractApiClass):
             ModelMonitor: The new model monitor that was created.
         """
         return self.client.create_nlp_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
+
+    def create_forecasting_monitor(self, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str = None, refresh_schedule: str = None):
+        """
+        Runs a forecasting monitor for the specified project.
+
+        Args:
+            name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+            prediction_feature_group_id (str): Unique string identifier of the prediction data feature group.
+            training_feature_group_id (str): Unique string identifier of the training data feature group.
+            training_forecast_config (ForecastingMonitorConfig): The configuration for the training data.
+            prediction_forecast_config (ForecastingMonitorConfig): The configuration for the prediction data.
+            forecast_frequency (str): The frequency of the forecast. Defaults to the frequency of the prediction data.
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically rerun the created forecasting monitor.
+
+        Returns:
+            ModelMonitor: The new model monitor that was created.
+        """
+        return self.client.create_forecasting_monitor(self.project_id, name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency, refresh_schedule)
 
     def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None):
         """

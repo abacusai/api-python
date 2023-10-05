@@ -31,7 +31,8 @@ from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     BatchPredictionArgs, DocumentRetrieverConfig, FeatureGroupExportConfig,
-    MergeConfig, ParsingConfig, ProblemType, SamplingConfig, TrainingConfig
+    ForecastingMonitorConfig, MergeConfig, ParsingConfig, ProblemType,
+    SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -71,6 +72,7 @@ from .eda_feature_collinearity import EdaFeatureCollinearity
 from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
+from .external_application import ExternalApplication
 from .feature import Feature
 from .feature_distribution import FeatureDistribution
 from .feature_group import FeatureGroup
@@ -79,6 +81,9 @@ from .feature_group_export import FeatureGroupExport
 from .feature_group_export_config import FeatureGroupExportConfig
 from .feature_group_export_download_url import FeatureGroupExportDownloadUrl
 from .feature_group_row import FeatureGroupRow
+from .feature_group_row_process import FeatureGroupRowProcess
+from .feature_group_row_process_logs import FeatureGroupRowProcessLogs
+from .feature_group_row_process_summary import FeatureGroupRowProcessSummary
 from .feature_group_template import FeatureGroupTemplate
 from .feature_group_version import FeatureGroupVersion
 from .feature_importance import FeatureImportance
@@ -91,6 +96,7 @@ from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
 from .inferred_feature_mappings import InferredFeatureMappings
+from .llm_execution_result import LlmExecutionResult
 from .llm_input import LlmInput
 from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
@@ -125,6 +131,7 @@ from .prediction_operator_version import PredictionOperatorVersion
 from .problem_type import ProblemType
 from .project import Project
 from .project_config import ProjectConfig
+from .project_feature_group import ProjectFeatureGroup
 from .project_validation import ProjectValidation
 from .python_function import PythonFunction
 from .python_plot_function import PythonPlotFunction
@@ -504,7 +511,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.77.0'
+    client_version = '0.77.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -523,11 +530,11 @@ class BaseApiClient:
         # Deprecated
         self.service_discovery_url = None
         # Connection and version check
-        if api_key is not None:
+        if self.api_key is not None:
             try:
                 endpoint_info = self._call_api('getApiEndpoint', 'GET')
                 self.prediction_endpoint = endpoint_info['predictEndpoint']
-                self.proxy_endpoint = endpoint_info['proxyEndpoint']
+                self.proxy_endpoint = endpoint_info.get('proxyEndpoint')
                 if not self.server:
                     self.server = endpoint_info['apiEndpoint']
             except Exception:
@@ -951,7 +958,7 @@ class ReadOnlyClient(BaseApiClient):
             list[FeatureGroup]: All the feature groups in the organization associated with the specified project."""
         return self._call_api('listFeatureGroups', 'GET', query_params={'limit': limit, 'startAfterId': start_after_id, 'featureGroupTemplateId': feature_group_template_id, 'isIncludingDetachedFromTemplate': is_including_detached_from_template}, parse_type=FeatureGroup)
 
-    def describe_project_feature_group(self, project_id: str, feature_group_id: str) -> FeatureGroup:
+    def describe_project_feature_group(self, project_id: str, feature_group_id: str) -> ProjectFeatureGroup:
         """Describe a feature group associated with a project
 
         Args:
@@ -959,10 +966,10 @@ class ReadOnlyClient(BaseApiClient):
             feature_group_id (str): The unique ID associated with the feature group.
 
         Returns:
-            FeatureGroup: The feature group object."""
-        return self._call_api('describeProjectFeatureGroup', 'GET', query_params={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=FeatureGroup)
+            ProjectFeatureGroup: The project feature group object."""
+        return self._call_api('describeProjectFeatureGroup', 'GET', query_params={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=ProjectFeatureGroup)
 
-    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> List[FeatureGroup]:
+    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> List[ProjectFeatureGroup]:
         """List all the feature groups associated with a project
 
         Args:
@@ -970,8 +977,8 @@ class ReadOnlyClient(BaseApiClient):
             filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
 
         Returns:
-            list[FeatureGroup]: All the Feature Groups in a project."""
-        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=FeatureGroup)
+            list[ProjectFeatureGroup]: All the Feature Groups in a project."""
+        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=ProjectFeatureGroup)
 
     def list_python_function_feature_groups(self, name: str, limit: int = 100) -> List[FeatureGroup]:
         """List all the feature groups associated with a python function.
@@ -1346,7 +1353,7 @@ class ReadOnlyClient(BaseApiClient):
             doc_id (str): A unique Docstore string identifier for the image.
             max_width (int): Rescales the returned image so the width is less than or equal to the given maximum width, while preserving the aspect ratio.
             max_height (int): Rescales the returned image so the height is less than or equal to the given maximum height, while preserving the aspect ratio."""
-        return self._call_api('getDocstoreImage', 'GET', query_params={'docId': doc_id, 'maxWidth': max_width, 'maxHeight': max_height}, streamable_response=True)
+        return self._proxy_request('getDocstoreImage', 'GET', query_params={'docId': doc_id, 'maxWidth': max_width, 'maxHeight': max_height}, is_sync=True, streamable_response=True)
 
     def get_docstore_page_data(self, doc_id: str, page: int) -> PageData:
         """Returns the extracted page data for a document page.
@@ -1357,7 +1364,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Returns:
             PageData: The extracted page data."""
-        return self._call_api('getDocstorePageData', 'GET', query_params={'docId': doc_id, 'page': page}, parse_type=PageData)
+        return self._proxy_request('getDocstorePageData', 'GET', query_params={'docId': doc_id, 'page': page}, parse_type=PageData, is_sync=True)
 
     def describe_train_test_data_split_feature_group(self, model_id: str) -> FeatureGroup:
         """Get the train and test data split for a trained model by its unique identifier. This is only supported for models with custom algorithms.
@@ -1399,8 +1406,11 @@ class ReadOnlyClient(BaseApiClient):
             Model: Description of the model."""
         return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
 
-    def set_model_objective(self, model_version: str, metric: str):
+    def set_model_objective(self, model_version: str, metric: str = None):
         """Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
+
+        If metric is set to None, then just use the default selection
+
 
         Args:
             model_version (str): The model version to set as the best model.
@@ -2135,16 +2145,6 @@ class ReadOnlyClient(BaseApiClient):
             PipelineStepVersion: """
         return self._call_api('describePipelineStepVersion', 'GET', query_params={'pipelineStepVersion': pipeline_step_version}, parse_type=PipelineStepVersion)
 
-    def unset_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
-        """Deletes the refresh schedule for a given pipeline.
-
-        Args:
-            pipeline_id (str): The id of the pipeline.
-
-        Returns:
-            Pipeline: Object describing the pipeline."""
-        return self._call_api('unsetPipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
-
     def pause_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
         """Pauses the refresh schedule for a given pipeline.
 
@@ -2396,7 +2396,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._call_api('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token}, parse_type=DeploymentConversation)
+        return self._proxy_request('getDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token}, parse_type=DeploymentConversation, is_sync=True)
 
     def list_deployment_conversations(self, deployment_id: str) -> List[DeploymentConversation]:
         """Lists all conversations for the given deployment and current user.
@@ -2406,7 +2406,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
-        return self._call_api('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id}, parse_type=DeploymentConversation)
+        return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id}, parse_type=DeploymentConversation, is_sync=True)
 
     def get_app_user_group(self, user_group_id: str) -> AppUserGroup:
         """Gets an App User Group.
@@ -2417,6 +2417,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             AppUserGroup: The App User Group."""
         return self._call_api('getAppUserGroup', 'GET', query_params={'userGroupId': user_group_id}, parse_type=AppUserGroup)
+
+    def describe_external_application(self, external_application_id: str) -> ExternalApplication:
+        """Describes an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application.
+
+        Returns:
+            ExternalApplication: The External Application."""
+        return self._call_api('describeExternalApplication', 'GET', query_params={'externalApplicationId': external_application_id}, parse_type=ExternalApplication)
 
     def describe_agent(self, agent_id: str) -> Agent:
         """Retrieves a full description of the specified model.
@@ -3409,7 +3419,7 @@ class ApiClient(ReadOnlyClient):
             time.sleep(delay)
         raise Exception('Maximum timeout Exceeded')
 
-    def _proxy_request(self, name: str, body: dict = None, parse_type=None):
+    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
         headers = {'APIKEY': self.api_key}
         if self.server:
             headers['SERVER'] = self.server
@@ -3417,22 +3427,65 @@ class ApiClient(ReadOnlyClient):
         if endpoint is None:
             raise Exception(
                 'API not supported, Please contact Abacus.ai support')
-        create_request_endpoint = f'{endpoint}/api/create{name}Request'
-        status_request_endpoint = f'{endpoint}/api/get{name}Status'
-        create_request = self._request(
-            url=create_request_endpoint, method='POST', headers=headers, body=body)
-        if create_request.status_code != 200:
-            raise Exception(create_request.text)
-        request_id = create_request.json()['request_id']
-        response = self._status_poll(url=status_request_endpoint, wait_states={
-                                     'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
-        if response['status'] == 'FAILED':
-            raise Exception('Something went wrong')
-        result = response['result']
-        if result['success']:
-            return self._build_class(parse_type, result['result'])
-        error_message = result.get('error_message') or 'Something went wrong'
-        raise Exception(error_message)
+        result = None
+        if is_sync:
+            sync_api_endpoint = f'{endpoint}/api/{name}'
+            response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
+                                     headers=headers, body=body, files=files, stream=streamable_response)
+            if response.status_code != 200:
+                raise Exception(response.text)
+            if streamable_response:
+                return response.raw
+            response = response.json()
+            if response.get('success'):
+                return self._build_class(parse_type, response.get('result'))
+            error_message = response.get('error') or 'Something went wrong'
+            raise Exception(error_message)
+        else:
+            create_request_endpoint = f'{endpoint}/api/create{name}Request'
+            status_request_endpoint = f'{endpoint}/api/get{name}Status'
+            create_request = self._request(url=create_request_endpoint, method='PUT' if files else 'POST',
+                                           query_params=query_params, headers=headers, body=body, files=files)
+            if create_request.status_code != 200:
+                raise Exception(create_request.text)
+            request_id = create_request.json()['request_id']
+            response = self._status_poll(url=status_request_endpoint, wait_states={
+                                         'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
+            if response['status'] == 'FAILED':
+                exception_message = response.get(
+                    'message') or 'Something went wrong'
+                raise Exception(exception_message)
+            result = response['result']
+            if result.get('success'):
+                return self._build_class(parse_type, result.get('result'))
+            error_message = result.get('error') or 'Something went wrong'
+            raise Exception(error_message)
+
+    def execute_data_query_using_llm(self, query: str, feature_group_ids: List[str], prompt_context: str = None, llm_name: str = None,
+                                     temperature: float = None, preview: bool = False, schema_document_retriever_ids: List[str] = None,
+                                     timeout=3600, delay=2):
+        """
+        Execute a data query using a large language model.
+
+        Args:
+            query (str): The natural language query to execute. The query is converted to a SQL query using the language model.
+            feature_group_ids (List[str]): A list of feature group IDs that the query should be executed against.
+            prompt_context (str): The context message used to construct the prompt for the language model. If not provide, a default context message is used.
+            llm_name (str): The name of the language model to use. If not provided, the default language model is used.
+            temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used.
+            preview (bool): If True, a preview of the query execution is returned.
+            schema_document_retriever_ids (List[str]): A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
+
+        Returns:
+            pandas.DataFrame: The result of the query.
+        """
+        sql = self.generate_code_for_data_query_using_llm(
+            query=query, feature_group_ids=feature_group_ids, prompt_context=prompt_context, llm_name=llm_name, temperature=temperature)
+        if preview:
+            return self._build_class(LlmExecutionResult, {'preview': {'sql': sql}})
+        execute_query = self.execute_async_feature_group_operation(sql)
+        execute_query.wait_for_execution(timeout=timeout, delay=delay)
+        return self._build_class(LlmExecutionResult, {'error': execute_query.error}) if execute_query.error else execute_query.load_as_pandas()
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -3821,6 +3874,17 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             FeatureGroup: Feature Group corresponding to the newly created Snapshot."""
         return self._call_api('createSnapshotFeatureGroup', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'tableName': table_name}, parse_type=FeatureGroup)
+
+    def create_online_feature_group(self, table_name: str, description: str = None) -> FeatureGroup:
+        """Creates an Online Feature Group.
+
+        Args:
+            table_name (str): Name for the newly created feature group.
+            description (str): Human-readable description of the Feature Group.
+
+        Returns:
+            FeatureGroup: The created feature group."""
+        return self._call_api('createOnlineFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'description': description}, parse_type=FeatureGroup)
 
     def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: Union[dict, SamplingConfig]) -> FeatureGroup:
         """Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
@@ -5132,6 +5196,23 @@ Creates a new feature group defined as the union of other feature group versions
             ModelMonitor: The new model monitor that was created."""
         return self._call_api('createNlpDriftMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'featureMappings': feature_mappings, 'trainingFeatureMappings': training_feature_mappings, 'targetValuePerformance': target_value_performance, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
 
+    def create_forecasting_monitor(self, project_id: str, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str = None, refresh_schedule: str = None) -> ModelMonitor:
+        """Runs a forecasting monitor for the specified project.
+
+        Args:
+            project_id (str): Unique string identifier of the project.
+            name (str): The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+            prediction_feature_group_id (str): Unique string identifier of the prediction data feature group.
+            training_feature_group_id (str): Unique string identifier of the training data feature group.
+            training_forecast_config (ForecastingMonitorConfig): The configuration for the training data.
+            prediction_forecast_config (ForecastingMonitorConfig): The configuration for the prediction data.
+            forecast_frequency (str): The frequency of the forecast. Defaults to the frequency of the prediction data.
+            refresh_schedule (str): A cron-style string that describes a schedule in UTC to automatically rerun the created forecasting monitor.
+
+        Returns:
+            ModelMonitor: The new model monitor that was created."""
+        return self._call_api('createForecastingMonitor', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'trainingForecastConfig': training_forecast_config, 'predictionForecastConfig': prediction_forecast_config, 'forecastFrequency': forecast_frequency, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
+
     def create_eda(self, project_id: str, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None) -> Eda:
         """Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -5844,7 +5925,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -5863,7 +5944,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = None, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -6138,7 +6219,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate}, server_override=prediction_url)
 
-    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
         """Executes a deployed AI agent function with binary data as inputs.
 
         Args:
@@ -6146,10 +6227,12 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): A unique string identifier for the deployment created under the project.
             blob (io.TextIOBase): The multipart/form-data of the binary data.
             arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments}, files={'blob': blob}, server_override=prediction_url)
+        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files={'blob': blob}, server_override=prediction_url)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
@@ -6448,6 +6531,61 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupDocument: """
         return self._call_api('addFeatureGroupDocument', 'PUT', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupDocument, files={'document': document})
 
+    def describe_feature_group_row_process_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcess:
+        """Gets the feature group row process.
+
+        Args:
+            deployment_id (str): The deployment id
+            primary_key_value (str): The primary key value
+
+        Returns:
+            FeatureGroupRowProcess: An object representing the feature group row process"""
+        return self._call_api('describeFeatureGroupRowProcessByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcess)
+
+    def list_feature_group_row_processes(self, deployment_id: str, limit: int = None, status: str = None) -> List[FeatureGroupRowProcess]:
+        """Gets a list of feature group row processes.
+
+        Args:
+            deployment_id (str):  The deployment id for the process
+            limit (int): The maximum number of processes to return. Defaults to None.
+            status (str): The status of the processes to return. Defaults to None.
+
+        Returns:
+            list[FeatureGroupRowProcess]: A list of object representing the feature group row process"""
+        return self._call_api('listFeatureGroupRowProcesses', 'POST', query_params={'deploymentId': deployment_id}, body={'limit': limit, 'status': status}, parse_type=FeatureGroupRowProcess)
+
+    def get_feature_group_row_process_summary(self, deployment_id: str) -> FeatureGroupRowProcessSummary:
+        """Gets a summary of the statuses of the individual feature group processes.
+
+        Args:
+            deployment_id (str): The deployment id for the process
+
+        Returns:
+            FeatureGroupRowProcessSummary: An object representing the summary of the statuses of the individual feature group processes"""
+        return self._call_api('getFeatureGroupRowProcessSummary', 'POST', query_params={'deploymentId': deployment_id}, body={}, parse_type=FeatureGroupRowProcessSummary)
+
+    def reset_feature_group_row_process_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcess:
+        """Resets a feature group row process so that it can be reprocessed
+
+        Args:
+            deployment_id (str): The deployment id
+            primary_key_value (str): The primary key value
+
+        Returns:
+            FeatureGroupRowProcess: An object representing the feature group row process."""
+        return self._call_api('resetFeatureGroupRowProcessByKey', 'PATCH', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcess)
+
+    def get_feature_group_row_process_logs_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcessLogs:
+        """Gets the logs for a feature group row process
+
+        Args:
+            deployment_id (str): The deployment id
+            primary_key_value (str): The primary key value
+
+        Returns:
+            FeatureGroupRowProcessLogs: An object representing the logs for the feature group row process"""
+        return self._call_api('getFeatureGroupRowProcessLogsByKey', 'POST', query_params={'deploymentId': deployment_id}, body={'primaryKeyValue': primary_key_value}, parse_type=FeatureGroupRowProcessLogs)
+
     def create_python_function(self, name: str, source_code: str = None, function_name: str = None, function_variable_mappings: list = None, package_requirements: list = None, function_type: str = 'FEATURE_GROUP') -> PythonFunction:
         """Creates a custom Python function that is reusable.
 
@@ -6637,6 +6775,16 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             PipelineStep: Object describing the pipeline."""
         return self._call_api('renamePipelineStep', 'PATCH', query_params={}, body={'pipelineStepId': pipeline_step_id, 'stepName': step_name}, parse_type=PipelineStep)
+
+    def unset_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
+        """Deletes the refresh schedule for a given pipeline.
+
+        Args:
+            pipeline_id (str): The id of the pipeline.
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('unsetPipelineRefreshSchedule', 'PATCH', query_params={}, body={'pipelineId': pipeline_id}, parse_type=Pipeline)
 
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
@@ -6946,7 +7094,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             DeploymentConversation: The deployment conversation."""
-        return self._call_api('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'name': name}, parse_type=DeploymentConversation)
+        return self._proxy_request('createDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'name': name}, parse_type=DeploymentConversation, is_sync=True)
 
     def delete_deployment_conversation(self, deployment_conversation_id: str, deployment_id: str = None, deployment_token: str = None):
         """Delete a Deployment Conversation.
@@ -6955,7 +7103,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._call_api('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token})
+        return self._proxy_request('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token}, is_sync=True)
 
     def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, deployment_id: str = None, deployment_token: str = None):
         """Sets a deployment conversation message as useful or not useful
@@ -6968,7 +7116,7 @@ Creates a new feature group defined as the union of other feature group versions
             feedback (str): Optional feedback on why the message is useful or not useful
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
+        return self._proxy_request('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback}, is_sync=True)
 
     def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None, deployment_token: str = None):
         """Rename a Deployment Conversation.
@@ -6978,7 +7126,7 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The new name of the conversation.
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._call_api('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'name': name})
+        return self._proxy_request('renameDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'name': name}, is_sync=True)
 
     def create_app_user_group(self, name: str) -> AppUserGroup:
         """Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
@@ -7024,6 +7172,62 @@ Creates a new feature group defined as the union of other feature group versions
             user_emails (list): The emails of the users to remove from the App User Group."""
         return self._call_api('removeUsersFromAppUserGroup', 'POST', query_params={}, body={'userGroupId': user_group_id, 'userEmails': user_emails})
 
+    def add_app_user_group_to_external_application(self, user_group_id: str, external_application_id: str):
+        """Adds a permission for an App User Group to access an External Application.
+
+        Args:
+            user_group_id (str): The ID of the App User Group.
+            external_application_id (str): The ID of the External Application."""
+        return self._call_api('addAppUserGroupToExternalApplication', 'POST', query_params={}, body={'userGroupId': user_group_id, 'externalApplicationId': external_application_id})
+
+    def remove_app_user_group_from_external_application(self, user_group_id: str, external_application_id: str):
+        """Removes a permission for an App User Group to access an External Application.
+
+        Args:
+            user_group_id (str): The ID of the App User Group.
+            external_application_id (str): The ID of the External Application."""
+        return self._call_api('removeAppUserGroupFromExternalApplication', 'POST', query_params={}, body={'userGroupId': user_group_id, 'externalApplicationId': external_application_id})
+
+    def create_external_application(self, deployment_id: str, name: str = None, logo: str = None, theme: dict = None) -> ExternalApplication:
+        """Creates a new External Application from an existing ChatLLM Deployment.
+
+        Args:
+            deployment_id (str): The ID of the deployment to use.
+            name (str): The name of the External Application. If not provided, the name of the deployment will be used.
+            logo (str): The logo to be displayed.
+            theme (dict): The visual theme of the External Application.
+
+        Returns:
+            ExternalApplication: The newly created External Application."""
+        return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
+
+    def update_external_application(self, external_application_id: str, name: str = None, logo: str = None, theme: dict = None) -> ExternalApplication:
+        """Updates an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application.
+            name (str): The name of the External Application.
+            logo (str): The logo to be displayed.
+            theme (dict): The visual theme of the External Application.
+
+        Returns:
+            ExternalApplication: The updated External Application."""
+        return self._call_api('updateExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id, 'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
+
+    def list_external_applications(self) -> List[ExternalApplication]:
+        """Lists External Applications in an organization.
+
+        Returns:
+            list[ExternalApplication]: List of External Applications."""
+        return self._call_api('listExternalApplications', 'POST', query_params={}, body={}, parse_type=ExternalApplication)
+
+    def delete_external_application(self, external_application_id: str):
+        """Deletes an External Application.
+
+        Args:
+            external_application_id (str): The ID of the External Application."""
+        return self._call_api('deleteExternalApplication', 'DELETE', query_params={'externalApplicationId': external_application_id})
+
     def create_agent(self, project_id: str, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False) -> Agent:
         """Creates a new AI agent.
 
@@ -7057,7 +7261,7 @@ Creates a new feature group defined as the union of other feature group versions
             Agent: The updated agent"""
         return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input}, parse_type=Agent)
 
-    def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None, temperature: float = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
@@ -7065,14 +7269,15 @@ Creates a new feature group defined as the union of other feature group versions
             system_message (str): System message for models that support it.
             llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'CLAUDE_V2', 'ABACUS', 'ABACUS_LONG', 'PALM', or 'LLAMA2_CHAT'. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
-            temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 1.0. A range of 0.0 - 1.0 is allowed.
+            temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
+            messages (list): A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
         try:
-            return self._proxy_request('EvaluatePrompt', body={'prompt': prompt, 'system_message': system_message, 'llm_name': llm_name, 'max_tokens': max_tokens, 'temperature': temperature}, parse_type=LlmResponse)
+            return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages}, parse_type=LlmResponse)
         except Exception:
-            return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'useProxyServiceFlow': False}, parse_type=LlmResponse, timeout=300)
+            return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'useProxyServiceFlow': False}, parse_type=LlmResponse, timeout=300)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.
@@ -7098,6 +7303,20 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             LlmParameters: The parameters for LLM using the given inputs."""
         return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
+
+    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list, prompt_context: str = None, llm_name: str = None, temperature: float = None) -> str:
+        """Execute a data query using a large language model in an async fashion.
+
+        Args:
+            query (str): The natural language query to execute. The query is converted to a SQL query using the language model.
+            feature_group_ids (list): A list of feature group IDs that the query should be executed against.
+            prompt_context (str): The context message used to construct the prompt for the language model. If not provide, a default context message is used.
+            llm_name (str): The name of the language model to use. If not provided, the default language model is used.
+            temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used."""
+        try:
+            return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature})
+        except Exception:
+            return self._call_api('generateCodeForDataQueryUsingLLM', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature, 'useProxyServiceFlow': False})
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.
@@ -7187,11 +7406,12 @@ Creates a new feature group defined as the union of other feature group versions
             document_retriever_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('restartDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id})
 
-    def get_relevant_snippets(self, documents: list, query: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False) -> List[DocumentRetrieverLookupResult]:
+    def get_relevant_snippets(self, doc_ids: list = None, blobs: io.TextIOBase = None, query: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None, honor_sentence_boundary: bool = True, num_retrieval_margin_words: int = None, max_words_per_snippet: int = None, max_snippets_per_document: int = None, start_word_index: int = None, end_word_index: int = None, including_bounding_boxes: bool = False) -> List[DocumentRetrieverLookupResult]:
         """Get relevant snippets from documents with respect to the query. Document retrievers may be created on-the-fly to perform lookup.
 
         Args:
-            documents (list): A list of document store IDs to retrieve the snippets from.
+            doc_ids (list): A list of document store IDs to retrieve the snippets from.
+            blobs (io.TextIOBase): A dictionary mapping document names to the blob data.
             query (str): The query that the documents are relevant to.
             document_retriever_config (DocumentRetrieverConfig): If provided, used to configure the retrieval steps like chunking for embeddings.
             honor_sentence_boundary (bool): If provided, will honor sentence boundary when returning the snippets.
@@ -7205,6 +7425,6 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
         try:
-            return self._proxy_request('GetRelevantSnippets', body={'documents': documents, 'query': query, 'document_retriever_config': document_retriever_config, 'honor_sentence_boundary': honor_sentence_boundary, 'num_retrieval_margin_words': num_retrieval_margin_words, 'max_words_per_snippet': max_words_per_snippet, 'max_snippets_per_document': max_snippets_per_document, 'start_word_index': start_word_index, 'end_word_index': end_word_index, 'including_bounding_boxes': including_bounding_boxes}, parse_type=DocumentRetrieverLookupResult)
+            return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes}, files=blobs, parse_type=DocumentRetrieverLookupResult)
         except Exception:
-            return self._call_api('getRelevantSnippets', 'POST', query_params={}, body={'documents': documents, 'query': query, 'documentRetrieverConfig': document_retriever_config, 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'useProxyServiceFlow': False}, parse_type=DocumentRetrieverLookupResult)
+            return self._call_api('getRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'blobs': blobs, 'query': query, 'documentRetrieverConfig': document_retriever_config, 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'useProxyServiceFlow': False}, parse_type=DocumentRetrieverLookupResult, files=blobs)

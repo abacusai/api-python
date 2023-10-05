@@ -18,6 +18,7 @@ Submodules
    enums/index.rst
    feature_group/index.rst
    model/index.rst
+   monitor/index.rst
    monitor_alert/index.rst
    project/index.rst
    python_functions/index.rst
@@ -131,6 +132,8 @@ Classes
    abacusai.api_class.OptimizationTrainingConfig
    abacusai.api_class._TrainingConfigFactory
    abacusai.api_class.ApiClass
+   abacusai.api_class.ForecastingMonitorConfig
+   abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.AlertConditionConfig
    abacusai.api_class.AccuracyBelowThresholdConditionConfig
@@ -180,6 +183,14 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
 
 
    .. py:method:: to_dict()
@@ -239,12 +250,6 @@ Classes
 
    .. py:attribute:: problem_type
       :type: abacusai.api_class.enums.ProblemType
-
-      
-
-   .. py:attribute:: name
-      :type: str
-      :value: 'batch_prediction_args'
 
       
 
@@ -711,6 +716,14 @@ Classes
       :classmethod:
 
 
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -793,6 +806,14 @@ Classes
       :classmethod:
 
 
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -849,9 +870,25 @@ Classes
 
       
 
+   .. py:attribute:: remove_header_footer
+      :type: bool
+      :value: False
+
+      
+
    .. py:attribute:: use_doctr
       :type: bool
-      :value: True
+      :value: False
+
+      
+
+   .. py:attribute:: remove_watermarks
+      :type: bool
+
+      
+
+   .. py:attribute:: use_full_ocr
+      :type: bool
 
       
 
@@ -879,6 +916,14 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
 
 
    .. py:method:: to_dict()
@@ -2596,6 +2641,14 @@ Classes
       :classmethod:
 
 
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -2835,6 +2888,14 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
 
 
    .. py:method:: to_dict()
@@ -3126,6 +3187,16 @@ Classes
 
       
 
+   .. py:attribute:: query_column
+      :type: str
+
+      
+
+   .. py:attribute:: item_query_column
+      :type: str
+
+      
+
    .. py:attribute:: max_user_history_len_percentile
       :type: int
 
@@ -3283,6 +3354,11 @@ Classes
 
    .. py:attribute:: test_row_indicator
       :type: str
+
+      
+
+   .. py:attribute:: full_data_retraining
+      :type: bool
 
       
 
@@ -4575,6 +4651,93 @@ Classes
       :classmethod:
 
 
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: ForecastingMonitorConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: id_column
+      :type: str
+
+      
+
+   .. py:attribute:: timestamp_column
+      :type: str
+
+      
+
+   .. py:attribute:: target_column
+      :type: str
+
+      
+
+   .. py:attribute:: start_time
+      :type: str
+
+      
+
+   .. py:attribute:: end_time
+      :type: str
+
+      
+
+
+.. py:class:: ApiClass
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -4842,6 +5005,14 @@ Classes
       :classmethod:
 
 
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -4929,6 +5100,14 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
 
 
    .. py:method:: to_dict()
@@ -5033,6 +5212,14 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
 
 
    .. py:method:: to_dict()

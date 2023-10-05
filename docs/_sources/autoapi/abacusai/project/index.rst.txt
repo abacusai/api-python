@@ -156,8 +156,8 @@ Classes
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
 
-      :returns: The feature group object.
-      :rtype: FeatureGroup
+      :returns: The project feature group object.
+      :rtype: ProjectFeatureGroup
 
 
    .. py:method:: list_feature_groups(filter_feature_group_use = None)
@@ -168,7 +168,7 @@ Classes
       :type filter_feature_group_use: str
 
       :returns: All the Feature Groups in a project.
-      :rtype: list[FeatureGroup]
+      :rtype: list[ProjectFeatureGroup]
 
 
    .. py:method:: list_feature_group_templates(limit = 100, start_after_id = None, should_include_all_system_templates = False)
@@ -398,6 +398,29 @@ Classes
       :param target_value_performance: A target positive value for the label to compute precision-recall curve/area under curve for performance page.
       :type target_value_performance: str
       :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created nlp drift monitor.
+      :type refresh_schedule: str
+
+      :returns: The new model monitor that was created.
+      :rtype: ModelMonitor
+
+
+   .. py:method:: create_forecasting_monitor(name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency = None, refresh_schedule = None)
+
+      Runs a forecasting monitor for the specified project.
+
+      :param name: The name you want your model monitor to have. Defaults to "<Project Name> Model Monitor".
+      :type name: str
+      :param prediction_feature_group_id: Unique string identifier of the prediction data feature group.
+      :type prediction_feature_group_id: str
+      :param training_feature_group_id: Unique string identifier of the training data feature group.
+      :type training_feature_group_id: str
+      :param training_forecast_config: The configuration for the training data.
+      :type training_forecast_config: ForecastingMonitorConfig
+      :param prediction_forecast_config: The configuration for the prediction data.
+      :type prediction_forecast_config: ForecastingMonitorConfig
+      :param forecast_frequency: The frequency of the forecast. Defaults to the frequency of the prediction data.
+      :type forecast_frequency: str
+      :param refresh_schedule: A cron-style string that describes a schedule in UTC to automatically rerun the created forecasting monitor.
       :type refresh_schedule: str
 
       :returns: The new model monitor that was created.

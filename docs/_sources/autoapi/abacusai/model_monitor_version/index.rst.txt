@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None)
+.. py:class:: ModelMonitorVersion(client, modelMonitorVersion=None, status=None, modelMonitorId=None, monitoringStartedAt=None, monitoringCompletedAt=None, trainingFeatureGroupVersion=None, predictionFeatureGroupVersion=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, metricConfigs=None, featureGroupMonitorConfigs=None, metricTypes=None, modelVersion=None, batchPredictionVersion=None, edaConfigs=None, trainingForecastConfig=None, predictionForecastConfig=None, forecastFrequency=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -58,6 +58,12 @@ Classes
    :type batchPredictionVersion: str
    :param edaConfigs: The list of eda configs for the version
    :type edaConfigs: list
+   :param trainingForecastConfig: The training forecast config for the monitor version
+   :type trainingForecastConfig: dict
+   :param predictionForecastConfig: The prediction forecast config for the monitor version
+   :type predictionForecastConfig: dict
+   :param forecastFrequency: The forecast frequency for the monitor version
+   :type forecastFrequency: str
 
    .. py:method:: __repr__()
 

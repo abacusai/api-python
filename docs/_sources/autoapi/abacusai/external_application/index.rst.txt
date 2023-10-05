@@ -1,0 +1,97 @@
+:py:mod:`abacusai.external_application`
+=======================================
+
+.. py:module:: abacusai.external_application
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.external_application.ExternalApplication
+
+
+
+
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   An external application.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The name of the external application.
+   :type name: str
+   :param externalApplicationId: The unique identifier of the external application.
+   :type externalApplicationId: str
+   :param deploymentId: The deployment id associated with the external application.
+   :type deploymentId: str
+   :param logo: The logo.
+   :type logo: str
+   :param theme: The theme used for the External Application.
+   :type theme: dict
+   :param userGroupIds: A list of App User Groups with access to this external application
+   :type userGroupIds: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: update(name = None, logo = None, theme = None)
+
+      Updates an External Application.
+
+      :param name: The name of the External Application.
+      :type name: str
+      :param logo: The logo to be displayed.
+      :type logo: str
+      :param theme: The visual theme of the External Application.
+      :type theme: dict
+
+      :returns: The updated External Application.
+      :rtype: ExternalApplication
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: ExternalApplication
+
+
+   .. py:method:: describe()
+
+      Describes an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+      :returns: The External Application.
+      :rtype: ExternalApplication
+
+
+   .. py:method:: delete()
+
+      Deletes an External Application.
+
+      :param external_application_id: The ID of the External Application.
+      :type external_application_id: str
+
+
+

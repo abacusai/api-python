@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelConfig=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, deployableAlgorithms=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={}, modelConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,8 +32,6 @@ Classes
    :type status: str
    :param modelId: A reference to the model this version belongs to.
    :type modelId: str
-   :param modelConfig: The training config options used to train this model.
-   :type modelConfig: dict
    :param modelPredictionConfig: The prediction config options for the model.
    :type modelPredictionConfig: dict
    :param trainingStartedAt: The start time and date of the training process in ISO-8601 format.
@@ -105,9 +103,12 @@ Classes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: set_model_objective(metric)
+   .. py:method:: set_model_objective(metric = None)
 
       Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
+
+      If metric is set to None, then just use the default selection
+
 
       :param metric: The metric to use to determine the best model.
       :type metric: str
