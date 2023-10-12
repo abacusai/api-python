@@ -58,7 +58,9 @@ class MonitorAlertVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'monitor_alert_version': self.monitor_alert_version, 'monitor_alert_id': self.monitor_alert_id, 'status': self.status, 'created_at': self.created_at, 'alerting_started_at': self.alerting_started_at, 'alerting_completed_at': self.alerting_completed_at, 'error': self.error, 'model_monitor_version': self.model_monitor_version, 'condition_config': self.condition_config, 'action_config': self.action_config, 'alert_result': self.alert_result, 'action_status': self.action_status, 'action_error': self.action_error, 'action_started_at': self.action_started_at, 'action_completed_at': self.action_completed_at, 'condition_description': self.condition_description, 'action_description': self.action_description}
+        resp = {'name': self.name, 'monitor_alert_version': self.monitor_alert_version, 'monitor_alert_id': self.monitor_alert_id, 'status': self.status, 'created_at': self.created_at, 'alerting_started_at': self.alerting_started_at, 'alerting_completed_at': self.alerting_completed_at, 'error': self.error, 'model_monitor_version': self.model_monitor_version,
+                'condition_config': self.condition_config, 'action_config': self.action_config, 'alert_result': self.alert_result, 'action_status': self.action_status, 'action_error': self.action_error, 'action_started_at': self.action_started_at, 'action_completed_at': self.action_completed_at, 'condition_description': self.condition_description, 'action_description': self.action_description}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

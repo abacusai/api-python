@@ -28,4 +28,6 @@ class EdaFeatureCollinearity(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'selected_feature': self.selected_feature, 'sorted_column_names': self.sorted_column_names, 'feature_collinearity': self.feature_collinearity}
+        resp = {'selected_feature': self.selected_feature, 'sorted_column_names':
+                self.sorted_column_names, 'feature_collinearity': self.feature_collinearity}
+        return {key: value for key, value in resp.items() if value is not None}

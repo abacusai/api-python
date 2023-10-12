@@ -30,4 +30,6 @@ class ModelBlueprintExport(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_version': self.model_version, 'current_training_config': self.current_training_config, 'model_blueprint_stages': self._get_attribute_as_dict(self.model_blueprint_stages)}
+        resp = {'model_version': self.model_version, 'current_training_config': self.current_training_config,
+                'model_blueprint_stages': self._get_attribute_as_dict(self.model_blueprint_stages)}
+        return {key: value for key, value in resp.items() if value is not None}

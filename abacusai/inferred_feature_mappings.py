@@ -28,4 +28,6 @@ class InferredFeatureMappings(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'error': self.error, 'feature_mappings': self._get_attribute_as_dict(self.feature_mappings)}
+        resp = {'error': self.error, 'feature_mappings': self._get_attribute_as_dict(
+            self.feature_mappings)}
+        return {key: value for key, value in resp.items() if value is not None}

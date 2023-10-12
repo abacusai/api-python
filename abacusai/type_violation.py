@@ -28,4 +28,6 @@ class TypeViolation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'training_data_type': self.training_data_type, 'prediction_data_type': self.prediction_data_type}
+        resp = {'name': self.name, 'training_data_type': self.training_data_type,
+                'prediction_data_type': self.prediction_data_type}
+        return {key: value for key, value in resp.items() if value is not None}

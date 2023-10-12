@@ -40,4 +40,6 @@ class PageData(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'doc_id': self.doc_id, 'page': self.page, 'height': self.height, 'width': self.width, 'page_count': self.page_count, 'page_text': self.page_text, 'page_token_start_offset': self.page_token_start_offset, 'token_count': self.token_count, 'tokens': self.tokens}
+        resp = {'doc_id': self.doc_id, 'page': self.page, 'height': self.height, 'width': self.width, 'page_count': self.page_count,
+                'page_text': self.page_text, 'page_token_start_offset': self.page_token_start_offset, 'token_count': self.token_count, 'tokens': self.tokens}
+        return {key: value for key, value in resp.items() if value is not None}

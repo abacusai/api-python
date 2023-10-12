@@ -32,4 +32,6 @@ class DriftDistribution(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'train_column': self.train_column, 'predicted_column': self.predicted_column, 'metrics': self.metrics, 'distribution': self._get_attribute_as_dict(self.distribution)}
+        resp = {'train_column': self.train_column, 'predicted_column': self.predicted_column,
+                'metrics': self.metrics, 'distribution': self._get_attribute_as_dict(self.distribution)}
+        return {key: value for key, value in resp.items() if value is not None}

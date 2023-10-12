@@ -31,4 +31,6 @@ class Document(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'key': self.key, 'file_size': self.file_size, 'created_at': self.created_at, 'annotations': self._get_attribute_as_dict(self.annotations)}
+        resp = {'key': self.key, 'file_size': self.file_size, 'created_at': self.created_at,
+                'annotations': self._get_attribute_as_dict(self.annotations)}
+        return {key: value for key, value in resp.items() if value is not None}

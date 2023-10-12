@@ -42,4 +42,6 @@ class PointInTimeFeature(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'history_table_name': self.history_table_name, 'aggregation_keys': self.aggregation_keys, 'timestamp_key': self.timestamp_key, 'historical_timestamp_key': self.historical_timestamp_key, 'lookback_window_seconds': self.lookback_window_seconds, 'lookback_window_lag_seconds': self.lookback_window_lag_seconds, 'lookback_count': self.lookback_count, 'lookback_until_position': self.lookback_until_position, 'expression': self.expression, 'group_name': self.group_name}
+        resp = {'history_table_name': self.history_table_name, 'aggregation_keys': self.aggregation_keys, 'timestamp_key': self.timestamp_key, 'historical_timestamp_key': self.historical_timestamp_key, 'lookback_window_seconds': self.lookback_window_seconds,
+                'lookback_window_lag_seconds': self.lookback_window_lag_seconds, 'lookback_count': self.lookback_count, 'lookback_until_position': self.lookback_until_position, 'expression': self.expression, 'group_name': self.group_name}
+        return {key: value for key, value in resp.items() if value is not None}

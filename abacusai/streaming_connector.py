@@ -34,7 +34,9 @@ class StreamingConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'streaming_connector_id': self.streaming_connector_id, 'service': self.service, 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
+        resp = {'streaming_connector_id': self.streaming_connector_id, 'service': self.service,
+                'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def verify(self):
         """

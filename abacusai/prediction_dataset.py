@@ -32,4 +32,6 @@ class PredictionDataset(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'dataset_id': self.dataset_id, 'dataset_type': self.dataset_type, 'dataset_version': self.dataset_version, 'default': self.default, 'required': self.required}
+        resp = {'dataset_id': self.dataset_id, 'dataset_type': self.dataset_type,
+                'dataset_version': self.dataset_version, 'default': self.default, 'required': self.required}
+        return {key: value for key, value in resp.items() if value is not None}

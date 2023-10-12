@@ -47,7 +47,9 @@ class PipelineVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'completed_at': self.completed_at,
+                'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

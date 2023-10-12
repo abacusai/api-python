@@ -28,4 +28,6 @@ class OrganizationSecret(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'secret_key': self.secret_key, 'value': self.value, 'created_at': self.created_at}
+        resp = {'secret_key': self.secret_key,
+                'value': self.value, 'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}

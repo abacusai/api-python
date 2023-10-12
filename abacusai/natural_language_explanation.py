@@ -30,4 +30,6 @@ class NaturalLanguageExplanation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'short_explanation': self.short_explanation, 'long_explanation': self.long_explanation, 'is_outdated': self.is_outdated, 'html_explanation': self.html_explanation}
+        resp = {'short_explanation': self.short_explanation, 'long_explanation': self.long_explanation,
+                'is_outdated': self.is_outdated, 'html_explanation': self.html_explanation}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -32,4 +32,6 @@ class ModelBlueprintStage(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'stage_name': self.stage_name, 'display_name': self.display_name, 'description': self.description, 'params': self.params, 'predecessors': self.predecessors}
+        resp = {'stage_name': self.stage_name, 'display_name': self.display_name,
+                'description': self.description, 'params': self.params, 'predecessors': self.predecessors}
+        return {key: value for key, value in resp.items() if value is not None}

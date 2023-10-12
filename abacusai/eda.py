@@ -46,7 +46,9 @@ class Eda(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'eda_id': self.eda_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'feature_group_id': self.feature_group_id, 'reference_feature_group_version': self.reference_feature_group_version, 'test_feature_group_version': self.test_feature_group_version, 'eda_configs': self.eda_configs, 'latest_eda_version': self._get_attribute_as_dict(self.latest_eda_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
+        resp = {'eda_id': self.eda_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'feature_group_id': self.feature_group_id, 'reference_feature_group_version': self.reference_feature_group_version,
+                'test_feature_group_version': self.test_feature_group_version, 'eda_configs': self.eda_configs, 'latest_eda_version': self._get_attribute_as_dict(self.latest_eda_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def rerun(self):
         """

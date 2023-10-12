@@ -30,4 +30,6 @@ class Annotation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'annotation_type': self.annotation_type, 'annotation_value': self.annotation_value, 'comments': self.comments, 'metadata': self.metadata}
+        resp = {'annotation_type': self.annotation_type, 'annotation_value': self.annotation_value,
+                'comments': self.comments, 'metadata': self.metadata}
+        return {key: value for key, value in resp.items() if value is not None}

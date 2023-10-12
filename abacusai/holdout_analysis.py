@@ -32,7 +32,9 @@ class HoldoutAnalysis(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'holdout_analysis_id': self.holdout_analysis_id, 'name': self.name, 'feature_group_ids': self.feature_group_ids, 'model_id': self.model_id, 'model_name': self.model_name}
+        resp = {'holdout_analysis_id': self.holdout_analysis_id, 'name': self.name,
+                'feature_group_ids': self.feature_group_ids, 'model_id': self.model_id, 'model_name': self.model_name}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def rerun(self, model_version: str = None, algorithm: str = None):
         """

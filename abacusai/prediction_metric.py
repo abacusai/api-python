@@ -42,4 +42,6 @@ class PredictionMetric(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'created_at': self.created_at, 'feature_group_id': self.feature_group_id, 'prediction_metric_config': self.prediction_metric_config, 'prediction_metric_id': self.prediction_metric_id, 'model_monitor_id': self.model_monitor_id, 'project_id': self.project_id, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_prediction_metric_version_description': self._get_attribute_as_dict(self.latest_prediction_metric_version_description)}
+        resp = {'created_at': self.created_at, 'feature_group_id': self.feature_group_id, 'prediction_metric_config': self.prediction_metric_config, 'prediction_metric_id': self.prediction_metric_id, 'model_monitor_id': self.model_monitor_id,
+                'project_id': self.project_id, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_prediction_metric_version_description': self._get_attribute_as_dict(self.latest_prediction_metric_version_description)}
+        return {key: value for key, value in resp.items() if value is not None}

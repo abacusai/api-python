@@ -53,4 +53,6 @@ class Feature(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'select_clause': self.select_clause, 'feature_mapping': self.feature_mapping, 'source_table': self.source_table, 'original_name': self.original_name, 'using_clause': self.using_clause, 'order_clause': self.order_clause, 'where_clause': self.where_clause, 'feature_type': self.feature_type, 'data_type': self.data_type, 'detected_feature_type': self.detected_feature_type, 'detected_data_type': self.detected_data_type, 'columns': self._get_attribute_as_dict(self.columns), 'point_in_time_info': self._get_attribute_as_dict(self.point_in_time_info)}
+        resp = {'name': self.name, 'select_clause': self.select_clause, 'feature_mapping': self.feature_mapping, 'source_table': self.source_table, 'original_name': self.original_name, 'using_clause': self.using_clause, 'order_clause': self.order_clause, 'where_clause': self.where_clause,
+                'feature_type': self.feature_type, 'data_type': self.data_type, 'detected_feature_type': self.detected_feature_type, 'detected_data_type': self.detected_data_type, 'columns': self._get_attribute_as_dict(self.columns), 'point_in_time_info': self._get_attribute_as_dict(self.point_in_time_info)}
+        return {key: value for key, value in resp.items() if value is not None}

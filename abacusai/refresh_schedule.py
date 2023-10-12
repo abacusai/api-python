@@ -32,4 +32,6 @@ class RefreshSchedule(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_policy_id': self.refresh_policy_id, 'next_run_time': self.next_run_time, 'cron': self.cron, 'refresh_type': self.refresh_type, 'lifecycle_msg': self.lifecycle_msg}
+        resp = {'refresh_policy_id': self.refresh_policy_id, 'next_run_time': self.next_run_time,
+                'cron': self.cron, 'refresh_type': self.refresh_type, 'lifecycle_msg': self.lifecycle_msg}
+        return {key: value for key, value in resp.items() if value is not None}

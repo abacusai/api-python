@@ -28,4 +28,6 @@ class FeatureGroupDocument(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_id': self.feature_group_id, 'doc_id': self.doc_id, 'status': self.status}
+        resp = {'feature_group_id': self.feature_group_id,
+                'doc_id': self.doc_id, 'status': self.status}
+        return {key: value for key, value in resp.items() if value is not None}

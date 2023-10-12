@@ -43,7 +43,9 @@ class ChatSession(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'answer': self.answer, 'chat_session_id': self.chat_session_id, 'project_id': self.project_id, 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'ai_building_in_progress': self.ai_building_in_progress, 'chat_history': self._get_attribute_as_dict(self.chat_history), 'next_ai_building_task': self._get_attribute_as_dict(self.next_ai_building_task)}
+        resp = {'answer': self.answer, 'chat_session_id': self.chat_session_id, 'project_id': self.project_id, 'name': self.name, 'created_at': self.created_at, 'status': self.status,
+                'ai_building_in_progress': self.ai_building_in_progress, 'chat_history': self._get_attribute_as_dict(self.chat_history), 'next_ai_building_task': self._get_attribute_as_dict(self.next_ai_building_task)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def get(self):
         """

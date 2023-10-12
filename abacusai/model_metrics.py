@@ -40,4 +40,6 @@ class ModelMetrics(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'algo_metrics': self.algo_metrics, 'selected_algorithm': self.selected_algorithm, 'selected_algorithm_name': self.selected_algorithm_name, 'model_id': self.model_id, 'model_version': self.model_version, 'metric_names': self.metric_names, 'target_column': self.target_column, 'train_val_test_split': self.train_val_test_split, 'training_completed_at': self.training_completed_at}
+        resp = {'algo_metrics': self.algo_metrics, 'selected_algorithm': self.selected_algorithm, 'selected_algorithm_name': self.selected_algorithm_name, 'model_id': self.model_id, 'model_version': self.model_version,
+                'metric_names': self.metric_names, 'target_column': self.target_column, 'train_val_test_split': self.train_val_test_split, 'training_completed_at': self.training_completed_at}
+        return {key: value for key, value in resp.items() if value is not None}

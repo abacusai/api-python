@@ -35,4 +35,6 @@ class FunctionLogs(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'function': self.function, 'stats': self.stats, 'stdout': self.stdout, 'stderr': self.stderr, 'algorithm': self.algorithm, 'exception': self._get_attribute_as_dict(self.exception)}
+        resp = {'function': self.function, 'stats': self.stats, 'stdout': self.stdout, 'stderr': self.stderr,
+                'algorithm': self.algorithm, 'exception': self._get_attribute_as_dict(self.exception)}
+        return {key: value for key, value in resp.items() if value is not None}

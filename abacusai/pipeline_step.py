@@ -49,7 +49,9 @@ class PipelineStep(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id, 'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'python_function': self._get_attribute_as_dict(self.python_function), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id,
+                'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'python_function': self._get_attribute_as_dict(self.python_function), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def delete(self):
         """

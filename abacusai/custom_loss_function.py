@@ -35,4 +35,6 @@ class CustomLossFunction(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'loss_function_name': self.loss_function_name, 'loss_function_type': self.loss_function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'loss_function_name': self.loss_function_name,
+                'loss_function_type': self.loss_function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}

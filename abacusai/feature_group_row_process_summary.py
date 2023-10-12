@@ -32,4 +32,6 @@ class FeatureGroupRowProcessSummary(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'total_processes': self.total_processes, 'pending_processes': self.pending_processes, 'processing_processes': self.processing_processes, 'complete_processes': self.complete_processes, 'failed_processes': self.failed_processes}
+        resp = {'total_processes': self.total_processes, 'pending_processes': self.pending_processes, 'processing_processes':
+                self.processing_processes, 'complete_processes': self.complete_processes, 'failed_processes': self.failed_processes}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -38,4 +38,6 @@ class NestedFeature(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'select_clause': self.select_clause, 'feature_type': self.feature_type, 'feature_mapping': self.feature_mapping, 'data_type': self.data_type, 'data_use': self.data_use, 'source_table': self.source_table, 'original_name': self.original_name}
+        resp = {'name': self.name, 'select_clause': self.select_clause, 'feature_type': self.feature_type, 'feature_mapping': self.feature_mapping,
+                'data_type': self.data_type, 'data_use': self.data_use, 'source_table': self.source_table, 'original_name': self.original_name}
+        return {key: value for key, value in resp.items() if value is not None}

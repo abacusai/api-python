@@ -32,4 +32,6 @@ class ModelMonitorSummary(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_accuracy': self.model_accuracy, 'model_drift': self.model_drift, 'data_integrity': self.data_integrity, 'bias_violations': self.bias_violations, 'alerts': self.alerts}
+        resp = {'model_accuracy': self.model_accuracy, 'model_drift': self.model_drift,
+                'data_integrity': self.data_integrity, 'bias_violations': self.bias_violations, 'alerts': self.alerts}
+        return {key: value for key, value in resp.items() if value is not None}

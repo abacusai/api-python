@@ -32,4 +32,6 @@ class EmbeddingFeatureDriftDistribution(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'distance': self.distance, 'js_distance': self.js_distance, 'ws_distance': self.ws_distance, 'ks_statistic': self.ks_statistic, 'average_drift': self._get_attribute_as_dict(self.average_drift)}
+        resp = {'distance': self.distance, 'js_distance': self.js_distance, 'ws_distance': self.ws_distance,
+                'ks_statistic': self.ks_statistic, 'average_drift': self._get_attribute_as_dict(self.average_drift)}
+        return {key: value for key, value in resp.items() if value is not None}

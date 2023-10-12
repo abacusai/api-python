@@ -161,7 +161,7 @@ Classes
       :type thresholds: list
       :param explain_predictions: If True, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
-      :param fixed_features: A set of input features to treat as constant for explanations.
+      :param fixed_features: A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
       :type fixed_features: list
       :param nested: If specified generates prediction delta for each index of the specified nested feature.
       :type nested: str
@@ -181,7 +181,7 @@ Classes
       :type query_data: dict
       :param explain_predictions: If true, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
-      :param fixed_features: Set of input features to treat as constant for explanations.
+      :param fixed_features: Set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
       :type fixed_features: list
       :param nested: If specified, generates prediction delta for each index of the specified nested feature.
       :type nested: str

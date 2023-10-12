@@ -61,7 +61,9 @@ class PipelineStepVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'step_name': self.step_name, 'pipeline_step_version': self.pipeline_step_version, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'output_errors': self.output_errors, 'python_function_id': self.python_function_id, 'function_variable_mappings': self.function_variable_mappings, 'step_dependencies': self.step_dependencies, 'output_variable_mappings': self.output_variable_mappings, 'cpu_size': self.cpu_size, 'memory': self.memory, 'pipeline_step_version_references': self._get_attribute_as_dict(self.pipeline_step_version_references), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'step_name': self.step_name, 'pipeline_step_version': self.pipeline_step_version, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'output_errors': self.output_errors, 'python_function_id': self.python_function_id,
+                'function_variable_mappings': self.function_variable_mappings, 'step_dependencies': self.step_dependencies, 'output_variable_mappings': self.output_variable_mappings, 'cpu_size': self.cpu_size, 'memory': self.memory, 'pipeline_step_version_references': self._get_attribute_as_dict(self.pipeline_step_version_references), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

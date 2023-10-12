@@ -58,4 +58,6 @@ class FeatureDriftSummary(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_index': self.feature_index, 'name': self.name, 'distance': self.distance, 'js_distance': self.js_distance, 'ws_distance': self.ws_distance, 'ks_statistic': self.ks_statistic, 'prediction_drift': self.prediction_drift, 'target_column': self.target_column, 'data_integrity_timeseries': self.data_integrity_timeseries, 'nested_summary': self.nested_summary, 'null_violations': self._get_attribute_as_dict(self.null_violations), 'type_violations': self._get_attribute_as_dict(self.type_violations), 'range_violations': self._get_attribute_as_dict(self.range_violations), 'cat_violations': self._get_attribute_as_dict(self.cat_violations)}
+        resp = {'feature_index': self.feature_index, 'name': self.name, 'distance': self.distance, 'js_distance': self.js_distance, 'ws_distance': self.ws_distance, 'ks_statistic': self.ks_statistic, 'prediction_drift': self.prediction_drift, 'target_column': self.target_column, 'data_integrity_timeseries': self.data_integrity_timeseries,
+                'nested_summary': self.nested_summary, 'null_violations': self._get_attribute_as_dict(self.null_violations), 'type_violations': self._get_attribute_as_dict(self.type_violations), 'range_violations': self._get_attribute_as_dict(self.range_violations), 'cat_violations': self._get_attribute_as_dict(self.cat_violations)}
+        return {key: value for key, value in resp.items() if value is not None}

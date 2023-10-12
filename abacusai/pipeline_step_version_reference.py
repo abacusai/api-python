@@ -46,4 +46,6 @@ class PipelineStepVersionReference(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_step_version_reference_id': self.pipeline_step_version_reference_id, 'pipeline_step_version': self.pipeline_step_version, 'object_type': self.object_type, 'dataset_version': self.dataset_version, 'model_version': self.model_version, 'deployment_version': self.deployment_version, 'batch_prediction_id': self.batch_prediction_id, 'model_monitor_version': self.model_monitor_version, 'notebook_version': self.notebook_version, 'feature_group_version': self.feature_group_version, 'status': self.status, 'error': self.error}
+        resp = {'pipeline_step_version_reference_id': self.pipeline_step_version_reference_id, 'pipeline_step_version': self.pipeline_step_version, 'object_type': self.object_type, 'dataset_version': self.dataset_version, 'model_version': self.model_version,
+                'deployment_version': self.deployment_version, 'batch_prediction_id': self.batch_prediction_id, 'model_monitor_version': self.model_monitor_version, 'notebook_version': self.notebook_version, 'feature_group_version': self.feature_group_version, 'status': self.status, 'error': self.error}
+        return {key: value for key, value in resp.items() if value is not None}

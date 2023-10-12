@@ -51,7 +51,9 @@ class RefreshPipelineRun(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_pipeline_run_id': self.refresh_pipeline_run_id, 'refresh_policy_id': self.refresh_policy_id, 'created_at': self.created_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'refresh_type': self.refresh_type, 'dataset_versions': self.dataset_versions, 'feature_group_version': self.feature_group_version, 'model_versions': self.model_versions, 'prediction_metric_versions': self.prediction_metric_versions, 'deployment_versions': self.deployment_versions, 'batch_predictions': self.batch_predictions, 'refresh_policy': self._get_attribute_as_dict(self.refresh_policy)}
+        resp = {'refresh_pipeline_run_id': self.refresh_pipeline_run_id, 'refresh_policy_id': self.refresh_policy_id, 'created_at': self.created_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'refresh_type': self.refresh_type, 'dataset_versions': self.dataset_versions,
+                'feature_group_version': self.feature_group_version, 'model_versions': self.model_versions, 'prediction_metric_versions': self.prediction_metric_versions, 'deployment_versions': self.deployment_versions, 'batch_predictions': self.batch_predictions, 'refresh_policy': self._get_attribute_as_dict(self.refresh_policy)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

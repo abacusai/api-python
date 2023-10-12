@@ -30,4 +30,6 @@ class PipelineStepVersionLogs(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'step_name': self.step_name, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_step_version': self.pipeline_step_version, 'logs': self.logs}
+        resp = {'step_name': self.step_name, 'pipeline_step_id': self.pipeline_step_id,
+                'pipeline_step_version': self.pipeline_step_version, 'logs': self.logs}
+        return {key: value for key, value in resp.items() if value is not None}

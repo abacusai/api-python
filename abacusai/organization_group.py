@@ -34,7 +34,9 @@ class OrganizationGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'organization_group_id': self.organization_group_id, 'permissions': self.permissions, 'group_name': self.group_name, 'default_group': self.default_group, 'admin': self.admin, 'created_at': self.created_at}
+        resp = {'organization_group_id': self.organization_group_id, 'permissions': self.permissions,
+                'group_name': self.group_name, 'default_group': self.default_group, 'admin': self.admin, 'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

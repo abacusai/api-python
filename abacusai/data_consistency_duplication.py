@@ -28,4 +28,6 @@ class DataConsistencyDuplication(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'total_count': self.total_count, 'num_duplicates': self.num_duplicates, 'sample': self._get_attribute_as_dict(self.sample)}
+        resp = {'total_count': self.total_count, 'num_duplicates': self.num_duplicates,
+                'sample': self._get_attribute_as_dict(self.sample)}
+        return {key: value for key, value in resp.items() if value is not None}

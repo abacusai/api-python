@@ -26,4 +26,5 @@ class AbacusApi(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'method': self.method, 'docstring': self.docstring}
+        resp = {'method': self.method, 'docstring': self.docstring}
+        return {key: value for key, value in resp.items() if value is not None}

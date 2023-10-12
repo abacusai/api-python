@@ -31,4 +31,6 @@ class OrganizationSearchResult(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'score': self.score, 'feature_group': self._get_attribute_as_dict(self.feature_group), 'feature_group_version': self._get_attribute_as_dict(self.feature_group_version)}
+        resp = {'score': self.score, 'feature_group': self._get_attribute_as_dict(
+            self.feature_group), 'feature_group_version': self._get_attribute_as_dict(self.feature_group_version)}
+        return {key: value for key, value in resp.items() if value is not None}

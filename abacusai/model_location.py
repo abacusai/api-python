@@ -26,4 +26,6 @@ class ModelLocation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'location': self.location, 'artifact_names': self.artifact_names}
+        resp = {'location': self.location,
+                'artifact_names': self.artifact_names}
+        return {key: value for key, value in resp.items() if value is not None}

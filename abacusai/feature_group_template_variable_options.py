@@ -26,4 +26,6 @@ class FeatureGroupTemplateVariableOptions(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'template_variable_options': self.template_variable_options, 'user_feedback': self.user_feedback}
+        resp = {'template_variable_options': self.template_variable_options,
+                'user_feedback': self.user_feedback}
+        return {key: value for key, value in resp.items() if value is not None}

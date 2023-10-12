@@ -34,7 +34,9 @@ class DocumentRetrieverVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version, 'error': self.error}
+        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version,
+                'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version, 'error': self.error}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

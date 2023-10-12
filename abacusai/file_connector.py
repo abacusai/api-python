@@ -30,4 +30,6 @@ class FileConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'bucket': self.bucket, 'verified': self.verified, 'write_permission': self.write_permission, 'auth_expires_at': self.auth_expires_at}
+        resp = {'bucket': self.bucket, 'verified': self.verified,
+                'write_permission': self.write_permission, 'auth_expires_at': self.auth_expires_at}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -30,4 +30,6 @@ class PointInTimeGroupFeature(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'expression': self.expression, 'pit_operation_type': self.pit_operation_type, 'pit_operation_config': self.pit_operation_config}
+        resp = {'name': self.name, 'expression': self.expression, 'pit_operation_type':
+                self.pit_operation_type, 'pit_operation_config': self.pit_operation_config}
+        return {key: value for key, value in resp.items() if value is not None}

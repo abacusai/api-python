@@ -30,4 +30,6 @@ class GeneratedPitFeatureConfigOption(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'display_name': self.display_name, 'default': self.default, 'description': self.description}
+        resp = {'name': self.name, 'display_name': self.display_name,
+                'default': self.default, 'description': self.description}
+        return {key: value for key, value in resp.items() if value is not None}

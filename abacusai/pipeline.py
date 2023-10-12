@@ -56,7 +56,9 @@ class Pipeline(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'created_at': self.created_at, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'notebook_id': self.notebook_id, 'cron': self.cron, 'next_run_time': self.next_run_time, 'is_prod': self.is_prod, 'warning': self.warning, 'created_by': self.created_by, 'steps': self._get_attribute_as_dict(self.steps), 'pipeline_references': self._get_attribute_as_dict(self.pipeline_references), 'latest_pipeline_version': self._get_attribute_as_dict(self.latest_pipeline_version), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'created_at': self.created_at, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'notebook_id': self.notebook_id, 'cron': self.cron, 'next_run_time': self.next_run_time, 'is_prod': self.is_prod, 'warning': self.warning,
+                'created_by': self.created_by, 'steps': self._get_attribute_as_dict(self.steps), 'pipeline_references': self._get_attribute_as_dict(self.pipeline_references), 'latest_pipeline_version': self._get_attribute_as_dict(self.latest_pipeline_version), 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

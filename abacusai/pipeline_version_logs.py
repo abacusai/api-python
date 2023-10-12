@@ -25,4 +25,5 @@ class PipelineVersionLogs(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'step_logs': self._get_attribute_as_dict(self.step_logs)}
+        resp = {'step_logs': self._get_attribute_as_dict(self.step_logs)}
+        return {key: value for key, value in resp.items() if value is not None}

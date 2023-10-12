@@ -32,4 +32,6 @@ class DocumentRetrieverLookupResult(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'document': self.document, 'score': self.score, 'properties': self.properties, 'pages': self.pages, 'bounding_boxes': self.bounding_boxes}
+        resp = {'document': self.document, 'score': self.score, 'properties': self.properties,
+                'pages': self.pages, 'bounding_boxes': self.bounding_boxes}
+        return {key: value for key, value in resp.items() if value is not None}

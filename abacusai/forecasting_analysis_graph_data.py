@@ -42,4 +42,6 @@ class ForecastingAnalysisGraphData(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'data': self.data, 'x_axis': self.x_axis, 'y_axis': self.y_axis, 'data_columns': self.data_columns, 'chart_name': self.chart_name, 'chart_types': self.chart_types, 'item_statistics': self._get_attribute_as_dict(self.item_statistics), 'chart_descriptions': self._get_attribute_as_dict(self.chart_descriptions)}
+        resp = {'data': self.data, 'x_axis': self.x_axis, 'y_axis': self.y_axis, 'data_columns': self.data_columns, 'chart_name': self.chart_name, 'chart_types': self.chart_types,
+                'item_statistics': self._get_attribute_as_dict(self.item_statistics), 'chart_descriptions': self._get_attribute_as_dict(self.chart_descriptions)}
+        return {key: value for key, value in resp.items() if value is not None}

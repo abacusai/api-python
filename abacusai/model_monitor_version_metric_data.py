@@ -44,4 +44,6 @@ class ModelMonitorVersionMetricData(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'algo_name': self.algo_name, 'feature_group_version': self.feature_group_version, 'model_monitor': self.model_monitor, 'model_monitor_version': self.model_monitor_version, 'metric_infos': self.metric_infos, 'metric_names': self.metric_names, 'metrics': self.metrics, 'metric_charts': self.metric_charts, 'other_metrics': self.other_metrics, 'actual_values_supported_for_drilldown': self.actual_values_supported_for_drilldown}
+        resp = {'name': self.name, 'algo_name': self.algo_name, 'feature_group_version': self.feature_group_version, 'model_monitor': self.model_monitor, 'model_monitor_version': self.model_monitor_version, 'metric_infos': self.metric_infos,
+                'metric_names': self.metric_names, 'metrics': self.metrics, 'metric_charts': self.metric_charts, 'other_metrics': self.other_metrics, 'actual_values_supported_for_drilldown': self.actual_values_supported_for_drilldown}
+        return {key: value for key, value in resp.items() if value is not None}

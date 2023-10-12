@@ -511,7 +511,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.77.5'
+    client_version = '0.77.6'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1509,18 +1509,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             FunctionLogs: A function logs object."""
         return self._call_api('getTrainingLogs', 'GET', query_params={'modelVersion': model_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
-    def export_custom_model_version(self, model_version: str, output_location: str, algorithm: str = None) -> ModelArtifactsExport:
-        """Bundle custom model artifacts to a zip file, and export to the specified location.
-
-        Args:
-            model_version (str): A unique string identifier for the model version.
-            output_location (str): Location to export the model artifacts results. For example, s3://a-bucket/
-            algorithm (str): The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
-
-        Returns:
-            ModelArtifactsExport: Object describing the export and its status."""
-        return self._call_api('exportCustomModelVersion', 'GET', query_params={'modelVersion': model_version, 'outputLocation': output_location, 'algorithm': algorithm}, parse_type=ModelArtifactsExport)
 
     def describe_model_artifacts_export(self, model_artifacts_export_id: str) -> ModelArtifactsExport:
         """Get the description and status of the model artifacts export.
@@ -3413,9 +3401,9 @@ class ApiClient(ReadOnlyClient):
         while time.time() - start_time <= timeout:
             response = self._request(
                 url=url, method=method, body=body, headers=headers)
-            response = response.json()
-            if response['status'] not in wait_states:
-                return response
+            response_json = response.json()
+            if response_json['status'] not in wait_states:
+                return response_json, response.status_code
             time.sleep(delay)
         raise Exception('Maximum timeout Exceeded')
 
@@ -3428,38 +3416,48 @@ class ApiClient(ReadOnlyClient):
             raise Exception(
                 'API not supported, Please contact Abacus.ai support')
         result = None
-        if is_sync:
-            sync_api_endpoint = f'{endpoint}/api/{name}'
-            response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
-                                     headers=headers, body=body, files=files, stream=streamable_response)
-            if response.status_code != 200:
-                raise Exception(response.text)
-            if streamable_response:
-                return response.raw
-            response = response.json()
-            if response.get('success'):
-                return self._build_class(parse_type, response.get('result'))
-            error_message = response.get('error') or 'Something went wrong'
-            raise Exception(error_message)
-        else:
-            create_request_endpoint = f'{endpoint}/api/create{name}Request'
-            status_request_endpoint = f'{endpoint}/api/get{name}Status'
-            create_request = self._request(url=create_request_endpoint, method='PUT' if files else 'POST',
-                                           query_params=query_params, headers=headers, body=body, files=files)
-            if create_request.status_code != 200:
-                raise Exception(create_request.text)
-            request_id = create_request.json()['request_id']
-            response = self._status_poll(url=status_request_endpoint, wait_states={
-                                         'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
-            if response['status'] == 'FAILED':
-                exception_message = response.get(
-                    'message') or 'Something went wrong'
-                raise Exception(exception_message)
-            result = response['result']
-            if result.get('success'):
-                return self._build_class(parse_type, result.get('result'))
-            error_message = result.get('error') or 'Something went wrong'
-            raise Exception(error_message)
+        error_json = {}
+        status_code = 200
+        response = None
+        request_id = None
+        try:
+            if is_sync:
+                sync_api_endpoint = f'{endpoint}/api/{name}'
+                response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
+                                         headers=headers, body=body, files=files, stream=streamable_response)
+                status_code = response.status_code
+                if streamable_response and status_code == 200:
+                    return response.raw
+                response = response.json()
+                if response.get('success'):
+                    result = response.get('result')
+                    return self._build_class(parse_type, result) if parse_type else result
+                error_json = response
+            else:
+                create_request_endpoint = f'{endpoint}/api/create{name}Request'
+                status_request_endpoint = f'{endpoint}/api/get{name}Status'
+                create_request = self._request(url=create_request_endpoint, method='PUT' if files else 'POST',
+                                               query_params=query_params, headers=headers, body=body, files=files)
+                status_code = create_request.status_code
+                if status_code == 200:
+                    request_id = create_request.json()['request_id']
+                    response, status_code = self._status_poll(url=status_request_endpoint, wait_states={
+                                                              'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
+                    if response['status'] == 'FAILED':
+                        error_json = response.get('result')
+                    else:
+                        result = response['result']
+                        if result.get('success'):
+                            return self._build_class(parse_type, result.get('result'))
+                else:
+                    error_json = create_request.json()
+        except Exception:
+            pass
+
+        error_message = error_json.get('error') or 'Unknown error'
+        error_type = error_json.get('errorType')
+        raise _ApiExceptionFactory.from_response(
+            error_message, status_code, error_type, request_id)
 
     def execute_data_query_using_llm(self, query: str, feature_group_ids: List[str], prompt_context: str = None, llm_name: str = None,
                                      temperature: float = None, preview: bool = False, schema_document_retriever_ids: List[str] = None,
@@ -3875,16 +3873,17 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: Feature Group corresponding to the newly created Snapshot."""
         return self._call_api('createSnapshotFeatureGroup', 'POST', query_params={}, body={'featureGroupVersion': feature_group_version, 'tableName': table_name}, parse_type=FeatureGroup)
 
-    def create_online_feature_group(self, table_name: str, description: str = None) -> FeatureGroup:
+    def create_online_feature_group(self, table_name: str, primary_key: str, description: str = None) -> FeatureGroup:
         """Creates an Online Feature Group.
 
         Args:
             table_name (str): Name for the newly created feature group.
+            primary_key (str): The primary key for indexing the online feature group.
             description (str): Human-readable description of the Feature Group.
 
         Returns:
-            FeatureGroup: The created feature group."""
-        return self._call_api('createOnlineFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'description': description}, parse_type=FeatureGroup)
+            FeatureGroup: The created online feature group."""
+        return self._call_api('createOnlineFeatureGroup', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'description': description}, parse_type=FeatureGroup)
 
     def set_feature_group_sampling_config(self, feature_group_id: str, sampling_config: Union[dict, SamplingConfig]) -> FeatureGroup:
         """Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
@@ -5108,6 +5107,18 @@ Creates a new feature group defined as the union of other feature group versions
             CustomTrainFunctionInfo: Information about how to call the customer-provided train function."""
         return self._call_api('getCustomTrainFunctionInfo', 'POST', query_params={}, body={'projectId': project_id, 'featureGroupNamesForTraining': feature_group_names_for_training, 'trainingDataParameterNameOverride': training_data_parameter_name_override, 'trainingConfig': training_config, 'customAlgorithmConfig': custom_algorithm_config}, parse_type=CustomTrainFunctionInfo)
 
+    def export_custom_model_version(self, model_version: str, output_location: str, algorithm: str = None) -> ModelArtifactsExport:
+        """Bundle custom model artifacts to a zip file, and export to the specified location.
+
+        Args:
+            model_version (str): A unique string identifier for the model version.
+            output_location (str): Location to export the model artifacts results. For example, s3://a-bucket/
+            algorithm (str): The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
+
+        Returns:
+            ModelArtifactsExport: Object describing the export and its status."""
+        return self._call_api('exportCustomModelVersion', 'POST', query_params={}, body={'modelVersion': model_version, 'outputLocation': output_location, 'algorithm': algorithm}, parse_type=ModelArtifactsExport)
+
     def create_model_monitor(self, project_id: str, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None) -> ModelMonitor:
         """Runs a model monitor for the specified project.
 
@@ -5734,7 +5745,7 @@ Creates a new feature group defined as the union of other feature group versions
             threshold_class (str): The label upon which the threshold is added (binary labels only).
             thresholds (list): Maps labels to thresholds (multi-label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5.
             explain_predictions (bool): If True, returns the SHAP explanations for all input features.
-            fixed_features (list): A set of input features to treat as constant for explanations.
+            fixed_features (list): A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
             nested (str): If specified generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
@@ -5749,7 +5760,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): A dictionary where the 'key' is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' is the unique value of the same entity.
             explain_predictions (bool): If true, returns the SHAP explanations for all input features.
-            fixed_features (list): Set of input features to treat as constant for explanations.
+            fixed_features (list): Set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
             nested (str): If specified, generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
@@ -6512,6 +6523,17 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroupRow: """
         return self._call_api('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow)
 
+    def upsert_online_data(self, feature_group_id: str, data: dict) -> FeatureGroupRow:
+        """Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
+
+        Args:
+            feature_group_id (str): A unique string identifier of the online feature group to record data to.
+            data (dict): The data to record, in JSON format.
+
+        Returns:
+            FeatureGroupRow: """
+        return self._proxy_request('upsertOnlineData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
+
     def delete_data(self, feature_group_id: str, primary_key: str):
         """Deletes a row from the feature group given the primary key
 
@@ -7201,18 +7223,17 @@ Creates a new feature group defined as the union of other feature group versions
             ExternalApplication: The newly created External Application."""
         return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
 
-    def update_external_application(self, external_application_id: str, name: str = None, logo: str = None, theme: dict = None) -> ExternalApplication:
+    def update_external_application(self, external_application_id: str, name: str = None, theme: dict = None) -> ExternalApplication:
         """Updates an External Application.
 
         Args:
             external_application_id (str): The ID of the External Application.
             name (str): The name of the External Application.
-            logo (str): The logo to be displayed.
             theme (dict): The visual theme of the External Application.
 
         Returns:
             ExternalApplication: The updated External Application."""
-        return self._call_api('updateExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id, 'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
+        return self._call_api('updateExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme}, parse_type=ExternalApplication)
 
     def list_external_applications(self) -> List[ExternalApplication]:
         """Lists External Applications in an organization.

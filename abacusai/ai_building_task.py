@@ -26,4 +26,5 @@ class AiBuildingTask(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'task': self.task, 'task_type': self.task_type}
+        resp = {'task': self.task, 'task_type': self.task_type}
+        return {key: value for key, value in resp.items() if value is not None}

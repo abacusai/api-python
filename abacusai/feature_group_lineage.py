@@ -26,4 +26,5 @@ class FeatureGroupLineage(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'nodes': self.nodes, 'connections': self.connections}
+        resp = {'nodes': self.nodes, 'connections': self.connections}
+        return {key: value for key, value in resp.items() if value is not None}

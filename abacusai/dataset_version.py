@@ -44,7 +44,9 @@ class DatasetVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at, 'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
+        resp = {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at,
+                'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):
         """

@@ -41,4 +41,6 @@ class EdaDataConsistency(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'column_names': self.column_names, 'primary_keys': self.primary_keys, 'transformation_column_names': self.transformation_column_names, 'base_duplicates': self._get_attribute_as_dict(self.base_duplicates), 'compare_duplicates': self._get_attribute_as_dict(self.compare_duplicates), 'deletions': self._get_attribute_as_dict(self.deletions), 'transformations': self._get_attribute_as_dict(self.transformations)}
+        resp = {'column_names': self.column_names, 'primary_keys': self.primary_keys, 'transformation_column_names': self.transformation_column_names, 'base_duplicates': self._get_attribute_as_dict(
+            self.base_duplicates), 'compare_duplicates': self._get_attribute_as_dict(self.compare_duplicates), 'deletions': self._get_attribute_as_dict(self.deletions), 'transformations': self._get_attribute_as_dict(self.transformations)}
+        return {key: value for key, value in resp.items() if value is not None}

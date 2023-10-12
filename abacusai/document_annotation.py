@@ -30,4 +30,6 @@ class DocumentAnnotation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'annotation': self.annotation, 'bounding_box': self.bounding_box, 'created_at': self.created_at, 'count': self.count}
+        resp = {'annotation': self.annotation, 'bounding_box': self.bounding_box,
+                'created_at': self.created_at, 'count': self.count}
+        return {key: value for key, value in resp.items() if value is not None}

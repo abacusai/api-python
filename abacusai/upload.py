@@ -45,7 +45,9 @@ class Upload(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'upload_id': self.upload_id, 'dataset_upload_id': self.dataset_upload_id, 'status': self.status, 'dataset_id': self.dataset_id, 'dataset_version': self.dataset_version, 'model_id': self.model_id, 'model_version': self.model_version, 'batch_prediction_id': self.batch_prediction_id, 'parts': self.parts, 'created_at': self.created_at}
+        resp = {'upload_id': self.upload_id, 'dataset_upload_id': self.dataset_upload_id, 'status': self.status, 'dataset_id': self.dataset_id, 'dataset_version': self.dataset_version,
+                'model_id': self.model_id, 'model_version': self.model_version, 'batch_prediction_id': self.batch_prediction_id, 'parts': self.parts, 'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def cancel(self):
         """

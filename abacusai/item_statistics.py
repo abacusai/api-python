@@ -40,4 +40,6 @@ class ItemStatistics(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'missing_percent': self.missing_percent, 'count': self.count, 'median': self.median, 'mean': self.mean, 'p10': self.p10, 'p90': self.p90, 'stddev': self.stddev, 'min': self.min, 'max': self.max}
+        resp = {'missing_percent': self.missing_percent, 'count': self.count, 'median': self.median,
+                'mean': self.mean, 'p10': self.p10, 'p90': self.p90, 'stddev': self.stddev, 'min': self.min, 'max': self.max}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -30,4 +30,6 @@ class DataMetrics(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'metrics': self.metrics, 'schema': self.schema, 'num_rows': self.num_rows, 'num_cols': self.num_cols}
+        resp = {'metrics': self.metrics, 'schema': self.schema,
+                'num_rows': self.num_rows, 'num_cols': self.num_cols}
+        return {key: value for key, value in resp.items() if value is not None}

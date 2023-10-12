@@ -26,4 +26,6 @@ class FeatureGroupExportDownloadUrl(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'download_url': self.download_url, 'expires_at': self.expires_at}
+        resp = {'download_url': self.download_url,
+                'expires_at': self.expires_at}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -33,4 +33,6 @@ class PredictionInput(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_dataset_ids': self.feature_group_dataset_ids, 'dataset_id_remap': self.dataset_id_remap, 'feature_groups': self._get_attribute_as_dict(self.feature_groups), 'datasets': self._get_attribute_as_dict(self.datasets)}
+        resp = {'feature_group_dataset_ids': self.feature_group_dataset_ids, 'dataset_id_remap': self.dataset_id_remap,
+                'feature_groups': self._get_attribute_as_dict(self.feature_groups), 'datasets': self._get_attribute_as_dict(self.datasets)}
+        return {key: value for key, value in resp.items() if value is not None}

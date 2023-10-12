@@ -30,4 +30,6 @@ class UseCase(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'use_case': self.use_case, 'pretty_name': self.pretty_name, 'description': self.description, 'problem_type': self.problem_type}
+        resp = {'use_case': self.use_case, 'pretty_name': self.pretty_name,
+                'description': self.description, 'problem_type': self.problem_type}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -41,4 +41,6 @@ class PythonPlotFunction(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'plot_name': self.plot_name, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'function_name': self.function_name,
+                'python_function_id': self.python_function_id, 'function_type': self.function_type, 'plot_name': self.plot_name, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -28,4 +28,6 @@ class ProjectValidation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'valid': self.valid, 'dataset_errors': self.dataset_errors, 'column_hints': self.column_hints}
+        resp = {'valid': self.valid, 'dataset_errors': self.dataset_errors,
+                'column_hints': self.column_hints}
+        return {key: value for key, value in resp.items() if value is not None}

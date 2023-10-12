@@ -32,4 +32,6 @@ class LlmCodeBlock(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'language': self.language, 'code': self.code, 'start': self.start, 'end': self.end, 'valid': self.valid}
+        resp = {'language': self.language, 'code': self.code,
+                'start': self.start, 'end': self.end, 'valid': self.valid}
+        return {key: value for key, value in resp.items() if value is not None}

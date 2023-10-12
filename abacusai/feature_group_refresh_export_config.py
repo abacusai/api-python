@@ -40,4 +40,6 @@ class FeatureGroupRefreshExportConfig(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'connector_type': self.connector_type, 'location': self.location, 'export_file_format': self.export_file_format, 'additional_id_columns': self.additional_id_columns, 'database_feature_mapping': self.database_feature_mapping, 'external_connection_id': self.external_connection_id, 'id_column': self.id_column, 'object_name': self.object_name, 'write_mode': self.write_mode}
+        resp = {'connector_type': self.connector_type, 'location': self.location, 'export_file_format': self.export_file_format, 'additional_id_columns': self.additional_id_columns,
+                'database_feature_mapping': self.database_feature_mapping, 'external_connection_id': self.external_connection_id, 'id_column': self.id_column, 'object_name': self.object_name, 'write_mode': self.write_mode}
+        return {key: value for key, value in resp.items() if value is not None}

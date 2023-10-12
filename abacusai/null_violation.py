@@ -30,4 +30,6 @@ class NullViolation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'violation': self.violation, 'training_null_freq': self.training_null_freq, 'prediction_null_freq': self.prediction_null_freq}
+        resp = {'name': self.name, 'violation': self.violation, 'training_null_freq':
+                self.training_null_freq, 'prediction_null_freq': self.prediction_null_freq}
+        return {key: value for key, value in resp.items() if value is not None}

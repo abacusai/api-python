@@ -36,4 +36,6 @@ class Schema(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'feature_mapping': self.feature_mapping, 'detected_feature_mapping': self.detected_feature_mapping, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type}
+        resp = {'name': self.name, 'feature_mapping': self.feature_mapping, 'detected_feature_mapping': self.detected_feature_mapping, 'feature_type': self.feature_type,
+                'detected_feature_type': self.detected_feature_type, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type}
+        return {key: value for key, value in resp.items() if value is not None}

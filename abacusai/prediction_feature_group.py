@@ -32,4 +32,6 @@ class PredictionFeatureGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'dataset_type': self.dataset_type, 'default': self.default, 'required': self.required}
+        resp = {'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version,
+                'dataset_type': self.dataset_type, 'default': self.default, 'required': self.required}
+        return {key: value for key, value in resp.items() if value is not None}

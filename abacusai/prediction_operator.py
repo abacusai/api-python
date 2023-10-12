@@ -59,7 +59,9 @@ class PredictionOperator(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'prediction_operator_id': self.prediction_operator_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'project_id': self.project_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'initialize_function_name': self.initialize_function_name, 'notebook_id': self.notebook_id, 'memory': self.memory, 'use_gpu': self.use_gpu, 'feature_group_ids': self.feature_group_ids, 'feature_group_table_names': self.feature_group_table_names, 'code_source': self._get_attribute_as_dict(self.code_source), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_prediction_operator_version': self._get_attribute_as_dict(self.latest_prediction_operator_version)}
+        resp = {'name': self.name, 'prediction_operator_id': self.prediction_operator_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'project_id': self.project_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'initialize_function_name': self.initialize_function_name, 'notebook_id': self.notebook_id, 'memory': self.memory,
+                'use_gpu': self.use_gpu, 'feature_group_ids': self.feature_group_ids, 'feature_group_table_names': self.feature_group_table_names, 'code_source': self._get_attribute_as_dict(self.code_source), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_prediction_operator_version': self._get_attribute_as_dict(self.latest_prediction_operator_version)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

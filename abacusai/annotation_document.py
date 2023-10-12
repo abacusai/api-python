@@ -32,4 +32,6 @@ class AnnotationDocument(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'doc_id': self.doc_id, 'feature_group_row_identifier': self.feature_group_row_identifier, 'feature_group_row_index': self.feature_group_row_index, 'total_rows': self.total_rows, 'is_annotation_present': self.is_annotation_present}
+        resp = {'doc_id': self.doc_id, 'feature_group_row_identifier': self.feature_group_row_identifier,
+                'feature_group_row_index': self.feature_group_row_index, 'total_rows': self.total_rows, 'is_annotation_present': self.is_annotation_present}
+        return {key: value for key, value in resp.items() if value is not None}

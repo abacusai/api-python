@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.77.5'
+      :value: '0.77.6'
 
       
 
@@ -1419,21 +1419,6 @@ Attributes
 
       :returns: A function logs object.
       :rtype: FunctionLogs
-
-
-   .. py:method:: export_custom_model_version(model_version, output_location, algorithm = None)
-
-      Bundle custom model artifacts to a zip file, and export to the specified location.
-
-      :param model_version: A unique string identifier for the model version.
-      :type model_version: str
-      :param output_location: Location to export the model artifacts results. For example, s3://a-bucket/
-      :type output_location: str
-      :param algorithm: The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
-      :type algorithm: str
-
-      :returns: Object describing the export and its status.
-      :rtype: ModelArtifactsExport
 
 
    .. py:method:: describe_model_artifacts_export(model_artifacts_export_id)
@@ -3762,16 +3747,18 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_online_feature_group(table_name, description = None)
+   .. py:method:: create_online_feature_group(table_name, primary_key, description = None)
 
       Creates an Online Feature Group.
 
       :param table_name: Name for the newly created feature group.
       :type table_name: str
+      :param primary_key: The primary key for indexing the online feature group.
+      :type primary_key: str
       :param description: Human-readable description of the Feature Group.
       :type description: str
 
-      :returns: The created feature group.
+      :returns: The created online feature group.
       :rtype: FeatureGroup
 
 
@@ -5388,6 +5375,21 @@ Attributes
       :rtype: CustomTrainFunctionInfo
 
 
+   .. py:method:: export_custom_model_version(model_version, output_location, algorithm = None)
+
+      Bundle custom model artifacts to a zip file, and export to the specified location.
+
+      :param model_version: A unique string identifier for the model version.
+      :type model_version: str
+      :param output_location: Location to export the model artifacts results. For example, s3://a-bucket/
+      :type output_location: str
+      :param algorithm: The algorithm to be exported. Optional if there's only one custom algorithm in the model version.
+      :type algorithm: str
+
+      :returns: Object describing the export and its status.
+      :rtype: ModelArtifactsExport
+
+
    .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
 
       Runs a model monitor for the specified project.
@@ -6202,7 +6204,7 @@ Attributes
       :type thresholds: list
       :param explain_predictions: If True, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
-      :param fixed_features: A set of input features to treat as constant for explanations.
+      :param fixed_features: A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
       :type fixed_features: list
       :param nested: If specified generates prediction delta for each index of the specified nested feature.
       :type nested: str
@@ -6222,7 +6224,7 @@ Attributes
       :type query_data: dict
       :param explain_predictions: If true, returns the SHAP explanations for all input features.
       :type explain_predictions: bool
-      :param fixed_features: Set of input features to treat as constant for explanations.
+      :param fixed_features: Set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
       :type fixed_features: list
       :param nested: If specified, generates prediction delta for each index of the specified nested feature.
       :type nested: str
@@ -7177,6 +7179,18 @@ Attributes
       :rtype: FeatureGroupRow
 
 
+   .. py:method:: upsert_online_data(feature_group_id, data)
+
+      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
+
+      :param feature_group_id: A unique string identifier of the online feature group to record data to.
+      :type feature_group_id: str
+      :param data: The data to record, in JSON format.
+      :type data: dict
+
+      :rtype: FeatureGroupRow
+
+
    .. py:method:: delete_data(feature_group_id, primary_key)
 
       Deletes a row from the feature group given the primary key
@@ -8053,7 +8067,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, logo = None, theme = None)
+   .. py:method:: update_external_application(external_application_id, name = None, theme = None)
 
       Updates an External Application.
 
@@ -8061,8 +8075,6 @@ Attributes
       :type external_application_id: str
       :param name: The name of the External Application.
       :type name: str
-      :param logo: The logo to be displayed.
-      :type logo: str
       :param theme: The visual theme of the External Application.
       :type theme: dict
 

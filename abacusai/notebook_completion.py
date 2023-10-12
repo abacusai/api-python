@@ -32,4 +32,6 @@ class NotebookCompletion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'cell_type': self.cell_type, 'content': self.content, 'mode': self.mode, 'index': self.index, 'prompts': self.prompts}
+        resp = {'cell_type': self.cell_type, 'content': self.content,
+                'mode': self.mode, 'index': self.index, 'prompts': self.prompts}
+        return {key: value for key, value in resp.items() if value is not None}

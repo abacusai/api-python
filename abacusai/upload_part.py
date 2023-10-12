@@ -26,4 +26,5 @@ class UploadPart(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'etag': self.etag, 'md5': self.md5}
+        resp = {'etag': self.etag, 'md5': self.md5}
+        return {key: value for key, value in resp.items() if value is not None}

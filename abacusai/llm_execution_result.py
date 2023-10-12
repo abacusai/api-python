@@ -33,4 +33,6 @@ class LlmExecutionResult(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'status': self.status, 'error': self.error, 'feature_group_operation': self._get_attribute_as_dict(self.feature_group_operation), 'preview': self._get_attribute_as_dict(self.preview)}
+        resp = {'status': self.status, 'error': self.error, 'feature_group_operation': self._get_attribute_as_dict(
+            self.feature_group_operation), 'preview': self._get_attribute_as_dict(self.preview)}
+        return {key: value for key, value in resp.items() if value is not None}

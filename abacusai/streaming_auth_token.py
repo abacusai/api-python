@@ -26,4 +26,6 @@ class StreamingAuthToken(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'streaming_token': self.streaming_token, 'created_at': self.created_at}
+        resp = {'streaming_token': self.streaming_token,
+                'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}

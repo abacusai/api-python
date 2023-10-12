@@ -28,4 +28,6 @@ class CategoricalRangeViolation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'most_common_values': self.most_common_values, 'freq_outside_training_range': self.freq_outside_training_range}
+        resp = {'name': self.name, 'most_common_values': self.most_common_values,
+                'freq_outside_training_range': self.freq_outside_training_range}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -34,4 +34,6 @@ class FeatureImportance(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'shap_feature_importance': self.shap_feature_importance, 'lime_feature_importance': self.lime_feature_importance, 'permutation_feature_importance': self.permutation_feature_importance, 'null_feature_importance': self.null_feature_importance, 'lofo_feature_importance': self.lofo_feature_importance, 'ebm_feature_importance': self.ebm_feature_importance}
+        resp = {'shap_feature_importance': self.shap_feature_importance, 'lime_feature_importance': self.lime_feature_importance, 'permutation_feature_importance': self.permutation_feature_importance,
+                'null_feature_importance': self.null_feature_importance, 'lofo_feature_importance': self.lofo_feature_importance, 'ebm_feature_importance': self.ebm_feature_importance}
+        return {key: value for key, value in resp.items() if value is not None}

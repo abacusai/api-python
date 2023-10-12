@@ -41,7 +41,9 @@ class PythonFunction(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'output_variable_mappings': self.output_variable_mappings, 'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'output_variable_mappings': self.output_variable_mappings,
+                'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None):
         """

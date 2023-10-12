@@ -24,4 +24,5 @@ class FeatureRecord(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'data': self.data}
+        resp = {'data': self.data}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -26,4 +26,6 @@ class FeatureMapping(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_mapping': self.feature_mapping, 'feature_name': self.feature_name}
+        resp = {'feature_mapping': self.feature_mapping,
+                'feature_name': self.feature_name}
+        return {key: value for key, value in resp.items() if value is not None}

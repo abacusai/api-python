@@ -34,7 +34,9 @@ class DatabaseConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'database_connector_id': self.database_connector_id, 'service': self.service, 'name': self.name, 'status': self.status, 'auth': self.auth, 'created_at': self.created_at}
+        resp = {'database_connector_id': self.database_connector_id, 'service': self.service,
+                'name': self.name, 'status': self.status, 'auth': self.auth, 'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def list_objects(self):
         """

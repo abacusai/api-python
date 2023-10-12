@@ -28,4 +28,6 @@ class ModificationLockInfo(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'modification_lock': self.modification_lock, 'user_emails': self.user_emails, 'organization_groups': self.organization_groups}
+        resp = {'modification_lock': self.modification_lock,
+                'user_emails': self.user_emails, 'organization_groups': self.organization_groups}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -28,4 +28,6 @@ class ApiEndpoint(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'api_endpoint': self.api_endpoint, 'predict_endpoint': self.predict_endpoint, 'proxy_endpoint': self.proxy_endpoint}
+        resp = {'api_endpoint': self.api_endpoint, 'predict_endpoint':
+                self.predict_endpoint, 'proxy_endpoint': self.proxy_endpoint}
+        return {key: value for key, value in resp.items() if value is not None}

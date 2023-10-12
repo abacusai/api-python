@@ -215,7 +215,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../resolved_feature_group_template/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.resolved_feature_group_template</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../return_class/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.return_class</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../schema/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.schema</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../slack_connector_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.slack_connector_response</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_auth_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_auth_token</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_client/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_client</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../streaming_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.streaming_connector</span></code></a></li>
@@ -770,7 +769,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.77.5'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.77.6'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2240,27 +2239,6 @@ encounters an unexpected error while processing the request.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../function_logs/index.html#abacusai.function_logs.FunctionLogs" title="abacusai.function_logs.FunctionLogs">FunctionLogs</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.export_custom_model_version">
-<span class="sig-name descname"><span class="pre">export_custom_model_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.export_custom_model_version" title="Permalink to this definition"></a></dt>
-<dd><p>Bundle custom model artifacts to a zip file, and export to the specified location.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier for the model version.</p></li>
-<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Location to export the model artifacts results. For example, s3://a-bucket/</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The algorithm to be exported. Optional if there’s only one custom algorithm in the model version.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Object describing the export and its status.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../model_artifacts_export/index.html#abacusai.model_artifacts_export.ModelArtifactsExport" title="abacusai.model_artifacts_export.ModelArtifactsExport">ModelArtifactsExport</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -5455,17 +5433,18 @@ Creates a new feature group defined as the union of other feature group versions
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_online_feature_group">
-<span class="sig-name descname"><span class="pre">create_online_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_online_feature_group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_online_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_online_feature_group" title="Permalink to this definition"></a></dt>
 <dd><p>Creates an Online Feature Group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name for the newly created feature group.</p></li>
+<li><p><strong>primary_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The primary key for indexing the online feature group.</p></li>
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Human-readable description of the Feature Group.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The created feature group.</p>
+<dd class="field-even"><p>The created online feature group.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
@@ -7447,6 +7426,27 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.export_custom_model_version">
+<span class="sig-name descname"><span class="pre">export_custom_model_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.export_custom_model_version" title="Permalink to this definition"></a></dt>
+<dd><p>Bundle custom model artifacts to a zip file, and export to the specified location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier for the model version.</p></li>
+<li><p><strong>output_location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Location to export the model artifacts results. For example, s3://a-bucket/</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The algorithm to be exported. Optional if there’s only one custom algorithm in the model version.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the export and its status.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../model_artifacts_export/index.html#abacusai.model_artifacts_export.ModelArtifactsExport" title="abacusai.model_artifacts_export.ModelArtifactsExport">ModelArtifactsExport</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_model_monitor">
 <span class="sig-name descname"><span class="pre">create_model_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value_bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_value_performance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_feature_mappings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_base_monitor_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_comparison_monitor_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_model_monitor" title="Permalink to this definition"></a></dt>
 <dd><p>Runs a model monitor for the specified project.</p>
@@ -8413,7 +8413,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>threshold_class</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The label upon which the threshold is added (binary labels only).</p></li>
 <li><p><strong>thresholds</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Maps labels to thresholds (multi-label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5.</p></li>
 <li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, returns the SHAP explanations for all input features.</p></li>
-<li><p><strong>fixed_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A set of input features to treat as constant for explanations.</p></li>
+<li><p><strong>fixed_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER</p></li>
 <li><p><strong>nested</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If specified generates prediction delta for each index of the specified nested feature.</p></li>
 <li><p><strong>explainer_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of explainer to use.</p></li>
 </ul>
@@ -8435,7 +8435,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier of a deployment created under the project.</p></li>
 <li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary where the ‘key’ is the column name (e.g. a column with name ‘user_id’ in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the ‘value’ is the unique value of the same entity.</p></li>
 <li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, returns the SHAP explanations for all input features.</p></li>
-<li><p><strong>fixed_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Set of input features to treat as constant for explanations.</p></li>
+<li><p><strong>fixed_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER</p></li>
 <li><p><strong>nested</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If specified, generates prediction delta for each index of the specified nested feature.</p></li>
 <li><p><strong>explainer_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The type of explainer to use.</p></li>
 </ul>
@@ -9604,6 +9604,23 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.upsert_online_data">
+<span class="sig-name descname"><span class="pre">upsert_online_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.upsert_online_data" title="Permalink to this definition"></a></dt>
+<dd><p>Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier of the online feature group to record data to.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The data to record, in JSON format.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="../feature_group_row/index.html#abacusai.feature_group_row.FeatureGroupRow" title="abacusai.feature_group_row.FeatureGroupRow">FeatureGroupRow</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_data">
 <span class="sig-name descname"><span class="pre">delete_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_data" title="Permalink to this definition"></a></dt>
 <dd><p>Deletes a row from the feature group given the primary key</p>
@@ -10755,14 +10772,13 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_external_application">
-<span class="sig-name descname"><span class="pre">update_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_external_application" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_external_application" title="Permalink to this definition"></a></dt>
 <dd><p>Updates an External Application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>external_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the External Application.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the External Application.</p></li>
-<li><p><strong>logo</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The logo to be displayed.</p></li>
 <li><p><strong>theme</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The visual theme of the External Application.</p></li>
 </ul>
 </dd>

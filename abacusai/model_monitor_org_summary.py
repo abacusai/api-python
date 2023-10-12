@@ -38,4 +38,6 @@ class ModelMonitorOrgSummary(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'summary': self.summary, 'feature_drift': self.feature_drift, 'label_drift': self.label_drift, 'data_integrity': self.data_integrity, 'performance': self.performance, 'alerts': self.alerts, 'monitor_data': self.monitor_data, 'total_starred_monitors': self.total_starred_monitors}
+        resp = {'summary': self.summary, 'feature_drift': self.feature_drift, 'label_drift': self.label_drift, 'data_integrity': self.data_integrity,
+                'performance': self.performance, 'alerts': self.alerts, 'monitor_data': self.monitor_data, 'total_starred_monitors': self.total_starred_monitors}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -34,4 +34,6 @@ class DocumentStore(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'document_store_id': self.document_store_id, 'created_at': self.created_at, 'name': self.name, 'document_type': self.document_type, 'document_count': self.document_count, 'approximate_size': self.approximate_size}
+        resp = {'document_store_id': self.document_store_id, 'created_at': self.created_at, 'name': self.name,
+                'document_type': self.document_type, 'document_count': self.document_count, 'approximate_size': self.approximate_size}
+        return {key: value for key, value in resp.items() if value is not None}

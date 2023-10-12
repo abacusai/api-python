@@ -40,4 +40,6 @@ class DatasetColumn(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type, 'original_name': self.original_name, 'valid_data_types': self.valid_data_types, 'time_format': self.time_format, 'timestamp_frequency': self.timestamp_frequency}
+        resp = {'name': self.name, 'data_type': self.data_type, 'detected_data_type': self.detected_data_type, 'feature_type': self.feature_type, 'detected_feature_type': self.detected_feature_type,
+                'original_name': self.original_name, 'valid_data_types': self.valid_data_types, 'time_format': self.time_format, 'timestamp_frequency': self.timestamp_frequency}
+        return {key: value for key, value in resp.items() if value is not None}

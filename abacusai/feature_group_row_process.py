@@ -42,7 +42,9 @@ class FeatureGroupRowProcess(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id, 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error}
+        resp = {'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id, 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id,
+                'created_at': self.created_at, 'updated_at': self.updated_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def wait_for_process(self, timeout=1200):
         """

@@ -34,7 +34,9 @@ class ApplicationConnector(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'application_connector_id': self.application_connector_id, 'service': self.service, 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
+        resp = {'application_connector_id': self.application_connector_id, 'service': self.service,
+                'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def rename(self, name: str):
         """

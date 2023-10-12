@@ -32,4 +32,6 @@ class AnnotationConfig(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_annotation_configs': self.feature_annotation_configs, 'labels': self.labels, 'status_feature': self.status_feature, 'comments_features': self.comments_features, 'metadata_feature': self.metadata_feature}
+        resp = {'feature_annotation_configs': self.feature_annotation_configs, 'labels': self.labels,
+                'status_feature': self.status_feature, 'comments_features': self.comments_features, 'metadata_feature': self.metadata_feature}
+        return {key: value for key, value in resp.items() if value is not None}

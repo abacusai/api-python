@@ -38,7 +38,9 @@ class DeploymentConversation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at, 'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'history': self._get_attribute_as_dict(self.history)}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at,
+                'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'history': self._get_attribute_as_dict(self.history)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def get(self, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None):
         """

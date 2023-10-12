@@ -39,4 +39,6 @@ class FeatureGroupExportConfig(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name, 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'additional_id_columns': self.additional_id_columns}
+        resp = {'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name,
+                'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'additional_id_columns': self.additional_id_columns}
+        return {key: value for key, value in resp.items() if value is not None}

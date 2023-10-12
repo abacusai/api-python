@@ -26,4 +26,5 @@ class ModelTrainingTypeForDeployment(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'label': self.label, 'value': self.value}
+        resp = {'label': self.label, 'value': self.value}
+        return {key: value for key, value in resp.items() if value is not None}

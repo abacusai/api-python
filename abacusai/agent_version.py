@@ -43,7 +43,9 @@ class AgentVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'agent_version': self.agent_version, 'status': self.status, 'agent_id': self.agent_id, 'agent_config': self.agent_config, 'publishing_started_at': self.publishing_started_at, 'publishing_completed_at': self.publishing_completed_at, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'error': self.error, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'agent_version': self.agent_version, 'status': self.status, 'agent_id': self.agent_id, 'agent_config': self.agent_config, 'publishing_started_at': self.publishing_started_at, 'publishing_completed_at': self.publishing_completed_at,
+                'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'error': self.error, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

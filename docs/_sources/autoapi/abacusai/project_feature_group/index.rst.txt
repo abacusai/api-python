@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ProjectFeatureGroup(client, modificationLock=None, featureGroupId=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, featureGroupType=None, projectFeatureGroupId=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectFeatureGroupSchema={}, projectConfig={}, latestFeatureGroupVersion={})
+.. py:class:: ProjectFeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, featureGroupType=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, projectFeatureGroupSchema={}, projectConfig={}, latestFeatureGroupVersion={})
 
 
    Bases: :py:obj:`abacusai.feature_group.FeatureGroup`
@@ -26,10 +26,10 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param modificationLock: If feature group is locked against a change or not.
-   :type modificationLock: bool
    :param featureGroupId: Unique identifier for this feature group.
    :type featureGroupId: str
+   :param modificationLock: If feature group is locked against a change or not.
+   :type modificationLock: bool
    :param name: [DEPRECATED] User friendly name for the feature group.
    :type name: str
    :param featureGroupSourceType: The source type of the feature group
@@ -98,8 +98,6 @@ Classes
    :type useGpu: bool
    :param featureGroupType: Project type when the feature group is used in the context of a project.
    :type featureGroupType: str
-   :param projectFeatureGroupId: Unique identifier for this project feature group.
-   :type projectFeatureGroupId: str
    :param features: List of resolved features.
    :type features: Feature
    :param duplicateFeatures: List of duplicate features.

@@ -257,7 +257,9 @@ class DocstoreUtils:
 
 def try_abacus_internal_copy(src_suffix, dst_local, raise_exception=True):
     """ Retuns true if the file was copied, false otherwise"""
-    if os.environ.get('ABACUS_GENERATED_ARTIFACTS_DIR') and importlib.util.find_spec('abacus_internal') and importlib.util.find_spec('abacus_internal.cloud_copy'):
+    safe_to_do_internal_copy = os.environ.get(
+        'SAFE_TO_DO_INTERNAL_COPY') or 'true'
+    if safe_to_do_internal_copy == 'true' and os.environ.get('ABACUS_GENERATED_ARTIFACTS_DIR') and importlib.util.find_spec('abacus_internal') and importlib.util.find_spec('abacus_internal.cloud_copy'):
         try:
             from abacus_internal.cloud_copy import copy_cloud_file_to_local
             copy_cloud_file_to_local(src_suffix, dst_local)

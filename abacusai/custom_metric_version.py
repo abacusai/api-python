@@ -33,7 +33,9 @@ class CustomMetricVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'custom_metric_version': self.custom_metric_version, 'name': self.name, 'created_at': self.created_at, 'custom_metric_function_name': self.custom_metric_function_name, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'custom_metric_version': self.custom_metric_version, 'name': self.name, 'created_at': self.created_at,
+                'custom_metric_function_name': self.custom_metric_function_name, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

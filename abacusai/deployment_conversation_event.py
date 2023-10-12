@@ -36,4 +36,6 @@ class DeploymentConversationEvent(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback}
+        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'model_version': self.model_version,
+                'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback}
+        return {key: value for key, value in resp.items() if value is not None}

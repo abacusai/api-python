@@ -34,7 +34,9 @@ class Webhook(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'webhook_id': self.webhook_id, 'deployment_id': self.deployment_id, 'endpoint': self.endpoint, 'webhook_event_type': self.webhook_event_type, 'payload_template': self.payload_template, 'created_at': self.created_at}
+        resp = {'webhook_id': self.webhook_id, 'deployment_id': self.deployment_id, 'endpoint': self.endpoint,
+                'webhook_event_type': self.webhook_event_type, 'payload_template': self.payload_template, 'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

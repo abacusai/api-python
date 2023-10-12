@@ -28,4 +28,6 @@ class IndexingConfig(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys}
+        resp = {'primary_key': self.primary_key, 'update_timestamp_key':
+                self.update_timestamp_key, 'lookup_keys': self.lookup_keys}
+        return {key: value for key, value in resp.items() if value is not None}

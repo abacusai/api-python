@@ -36,4 +36,6 @@ class CustomMetric(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'custom_metric_id': self.custom_metric_id, 'name': self.name, 'created_at': self.created_at, 'problem_type': self.problem_type, 'notebook_id': self.notebook_id, 'latest_custom_metric_version': self._get_attribute_as_dict(self.latest_custom_metric_version)}
+        resp = {'custom_metric_id': self.custom_metric_id, 'name': self.name, 'created_at': self.created_at, 'problem_type': self.problem_type,
+                'notebook_id': self.notebook_id, 'latest_custom_metric_version': self._get_attribute_as_dict(self.latest_custom_metric_version)}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -61,7 +61,9 @@ class RefreshPolicy(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'feature_group_id': self.feature_group_id, 'model_ids': self.model_ids, 'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused, 'prediction_operator_id': self.prediction_operator_id, 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
+        resp = {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'feature_group_id': self.feature_group_id, 'model_ids': self.model_ids,
+                'deployment_ids': self.deployment_ids, 'prediction_metric_ids': self.prediction_metric_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused, 'prediction_operator_id': self.prediction_operator_id, 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def delete(self):
         """

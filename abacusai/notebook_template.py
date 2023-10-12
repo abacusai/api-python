@@ -38,4 +38,6 @@ class NotebookTemplate(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'notebook_template_id': self.notebook_template_id, 'name': self.name, 'description': self.description, 'created_at': self.created_at, 'updated_at': self.updated_at, 'template_type': self.template_type, 'filename': self.filename, 'source_code': self.source_code}
+        resp = {'notebook_template_id': self.notebook_template_id, 'name': self.name, 'description': self.description, 'created_at': self.created_at,
+                'updated_at': self.updated_at, 'template_type': self.template_type, 'filename': self.filename, 'source_code': self.source_code}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -30,4 +30,6 @@ class CustomTrainFunctionInfo(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'training_data_parameter_name_mapping': self.training_data_parameter_name_mapping, 'schema_mappings': self.schema_mappings, 'train_data_parameter_to_feature_group_ids': self.train_data_parameter_to_feature_group_ids, 'training_config': self.training_config}
+        resp = {'training_data_parameter_name_mapping': self.training_data_parameter_name_mapping, 'schema_mappings': self.schema_mappings,
+                'train_data_parameter_to_feature_group_ids': self.train_data_parameter_to_feature_group_ids, 'training_config': self.training_config}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -127,6 +127,7 @@ class RegressionTrainingConfig(TrainingConfig):
         test_splitting_timestamp (str): Rows with timestamp greater than this will be considered to be in the test set.
         sampling_unit_keys (List[str]): Constrain train/test separation to partition a column.
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
+        full_data_retraining (bool): Train models separately with all the data.
         rebalance_classes (bool): Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                                   Re-balancing classes generally boosts recall at the cost of precision on rare classes.
         rare_class_augmentation_threshold (float): Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1 for classification problems with rare classes.
@@ -226,6 +227,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         force_prediction_length (int): Force length of test window to be the same as prediction length.
         filter_items (bool): Filter items with small history and volume.
         enable_feature_selection (bool): Enable feature selection.
+        enable_padding (bool): Pad series to the max_date of the dataset
         enable_cold_start (bool): Enable cold start forecasting by training/predicting for zero history items.
         enable_multiple_backtests (bool): Whether to enable multiple backtesting or not.
         num_backtesting_windows (int): Total backtesting windows to use for the training.
@@ -286,6 +288,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     force_prediction_length: bool = dataclasses.field(default=None)
     filter_items: bool = dataclasses.field(default=None)
     enable_feature_selection: bool = dataclasses.field(default=None)
+    enable_padding: bool = dataclasses.field(default=None)
     enable_cold_start: bool = dataclasses.field(default=None)
     enable_multiple_backtests: bool = dataclasses.field(default=None)
     num_backtesting_windows: int = dataclasses.field(default=None)

@@ -40,4 +40,6 @@ class DocumentStoreImport(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'document_store_import_id': self.document_store_import_id, 'document_store_id': self.document_store_id, 'importing_started_at': self.importing_started_at, 'status': self.status, 'error': self.error, 'documents_imported': self.documents_imported, 'documents_skipped': self.documents_skipped, 'upload_id': self.upload_id, 'replace_existing_files': self.replace_existing_files}
+        resp = {'document_store_import_id': self.document_store_import_id, 'document_store_id': self.document_store_id, 'importing_started_at': self.importing_started_at, 'status': self.status,
+                'error': self.error, 'documents_imported': self.documents_imported, 'documents_skipped': self.documents_skipped, 'upload_id': self.upload_id, 'replace_existing_files': self.replace_existing_files}
+        return {key: value for key, value in resp.items() if value is not None}

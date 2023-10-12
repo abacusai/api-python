@@ -24,4 +24,5 @@ class ProjectFeatureGroupSchemaVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'schema_version': self.schema_version}
+        resp = {'schema_version': self.schema_version}
+        return {key: value for key, value in resp.items() if value is not None}

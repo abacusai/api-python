@@ -30,4 +30,6 @@ class ConcatenationConfig(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'concatenated_table': self.concatenated_table, 'merge_type': self.merge_type, 'replace_until_timestamp': self.replace_until_timestamp, 'skip_materialize': self.skip_materialize}
+        resp = {'concatenated_table': self.concatenated_table, 'merge_type': self.merge_type,
+                'replace_until_timestamp': self.replace_until_timestamp, 'skip_materialize': self.skip_materialize}
+        return {key: value for key, value in resp.items() if value is not None}

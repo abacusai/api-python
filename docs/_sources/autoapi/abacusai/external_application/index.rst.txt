@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None, useCase=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -38,6 +38,8 @@ Classes
    :type theme: dict
    :param userGroupIds: A list of App User Groups with access to this external application
    :type userGroupIds: list
+   :param useCase: Use Case of the project of this deployment
+   :type useCase: str
 
    .. py:method:: __repr__()
 
@@ -52,14 +54,12 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: update(name = None, logo = None, theme = None)
+   .. py:method:: update(name = None, theme = None)
 
       Updates an External Application.
 
       :param name: The name of the External Application.
       :type name: str
-      :param logo: The logo to be displayed.
-      :type logo: str
       :param theme: The visual theme of the External Application.
       :type theme: dict
 

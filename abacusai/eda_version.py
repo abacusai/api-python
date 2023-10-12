@@ -38,7 +38,9 @@ class EdaVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'eda_version': self.eda_version, 'status': self.status, 'eda_id': self.eda_id, 'eda_started_at': self.eda_started_at, 'eda_completed_at': self.eda_completed_at, 'reference_feature_group_version': self.reference_feature_group_version, 'test_feature_group_version': self.test_feature_group_version, 'error': self.error}
+        resp = {'eda_version': self.eda_version, 'status': self.status, 'eda_id': self.eda_id, 'eda_started_at': self.eda_started_at, 'eda_completed_at': self.eda_completed_at,
+                'reference_feature_group_version': self.reference_feature_group_version, 'test_feature_group_version': self.test_feature_group_version, 'error': self.error}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

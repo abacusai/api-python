@@ -43,7 +43,9 @@ class PredictionOperatorVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'source_code': self.source_code, 'memory': self.memory, 'use_gpu': self.use_gpu, 'feature_group_ids': self.feature_group_ids, 'feature_group_versions': self.feature_group_versions, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        resp = {'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'source_code': self.source_code,
+                'memory': self.memory, 'use_gpu': self.use_gpu, 'feature_group_ids': self.feature_group_ids, 'feature_group_versions': self.feature_group_versions, 'code_source': self._get_attribute_as_dict(self.code_source)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def delete(self):
         """

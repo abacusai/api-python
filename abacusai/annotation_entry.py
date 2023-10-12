@@ -43,4 +43,6 @@ class AnnotationEntry(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_id': self.feature_group_id, 'feature_name': self.feature_name, 'doc_id': self.doc_id, 'feature_group_row_identifier': self.feature_group_row_identifier, 'updated_at': self.updated_at, 'annotation_entry_marker': self.annotation_entry_marker, 'status': self.status, 'locked_until': self.locked_until, 'verification_info': self.verification_info, 'annotation': self._get_attribute_as_dict(self.annotation)}
+        resp = {'feature_group_id': self.feature_group_id, 'feature_name': self.feature_name, 'doc_id': self.doc_id, 'feature_group_row_identifier': self.feature_group_row_identifier, 'updated_at': self.updated_at,
+                'annotation_entry_marker': self.annotation_entry_marker, 'status': self.status, 'locked_until': self.locked_until, 'verification_info': self.verification_info, 'annotation': self._get_attribute_as_dict(self.annotation)}
+        return {key: value for key, value in resp.items() if value is not None}

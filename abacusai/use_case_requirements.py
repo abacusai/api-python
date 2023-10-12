@@ -36,4 +36,6 @@ class UseCaseRequirements(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'dataset_type': self.dataset_type, 'name': self.name, 'description': self.description, 'required': self.required, 'multi': self.multi, 'allowed_feature_mappings': self.allowed_feature_mappings, 'allowed_nested_feature_mappings': self.allowed_nested_feature_mappings}
+        resp = {'dataset_type': self.dataset_type, 'name': self.name, 'description': self.description, 'required': self.required, 'multi': self.multi,
+                'allowed_feature_mappings': self.allowed_feature_mappings, 'allowed_nested_feature_mappings': self.allowed_nested_feature_mappings}
+        return {key: value for key, value in resp.items() if value is not None}

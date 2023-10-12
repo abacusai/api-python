@@ -32,4 +32,6 @@ class FeatureGroupRow(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_id': self.feature_group_id, 'primary_key': self.primary_key, 'created_at': self.created_at, 'updated_at': self.updated_at, 'contents': self.contents}
+        resp = {'feature_group_id': self.feature_group_id, 'primary_key': self.primary_key,
+                'created_at': self.created_at, 'updated_at': self.updated_at, 'contents': self.contents}
+        return {key: value for key, value in resp.items() if value is not None}

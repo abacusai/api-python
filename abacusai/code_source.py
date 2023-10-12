@@ -7,7 +7,7 @@ class CodeSource(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            sourceType (str): The type of the source, one of TEXT, FILE_UPLOAD, or APPLICATION_CONNECTOR
+            sourceType (str): The type of the source, one of TEXT, PYTHON, FILE_UPLOAD, or APPLICATION_CONNECTOR
             sourceCode (str): If the type of the source is TEXT, the raw text of the function
             applicationConnectorId (str): The Application Connector to fetch the code from
             applicationConnectorInfo (str): Args passed to the application connector to fetch the code
@@ -40,7 +40,9 @@ class CodeSource(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'source_type': self.source_type, 'source_code': self.source_code, 'application_connector_id': self.application_connector_id, 'application_connector_info': self.application_connector_info, 'package_requirements': self.package_requirements, 'status': self.status, 'error': self.error, 'publishing_msg': self.publishing_msg, 'module_dependencies': self.module_dependencies}
+        resp = {'source_type': self.source_type, 'source_code': self.source_code, 'application_connector_id': self.application_connector_id, 'application_connector_info': self.application_connector_info,
+                'package_requirements': self.package_requirements, 'status': self.status, 'error': self.error, 'publishing_msg': self.publishing_msg, 'module_dependencies': self.module_dependencies}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def import_as_cell(self):
         """

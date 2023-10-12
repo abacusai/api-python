@@ -26,4 +26,5 @@ class EdaChartDescription(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'chart_type': self.chart_type, 'description': self.description}
+        resp = {'chart_type': self.chart_type, 'description': self.description}
+        return {key: value for key, value in resp.items() if value is not None}

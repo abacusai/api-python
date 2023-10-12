@@ -68,7 +68,9 @@ class FeatureGroupVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_version': self.feature_group_version, 'feature_group_id': self.feature_group_id, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'indexing_config_warning_msg': self.indexing_config_warning_msg, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'code_source': self._get_attribute_as_dict(self.code_source), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config)}
+        resp = {'feature_group_version': self.feature_group_version, 'feature_group_id': self.feature_group_id, 'sql': self.sql, 'source_tables': self.source_tables, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'deployable': self.deployable, 'cpu_size': self.cpu_size, 'memory': self.memory, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings,
+                'indexing_config_warning_msg': self.indexing_config_warning_msg, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'code_source': self._get_attribute_as_dict(self.code_source), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def create_snapshot_feature_group(self, table_name: str):
         """

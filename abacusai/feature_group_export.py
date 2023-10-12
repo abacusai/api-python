@@ -61,7 +61,9 @@ class FeatureGroupExport(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_export_id': self.feature_group_export_id, 'failed_writes': self.failed_writes, 'total_writes': self.total_writes, 'feature_group_version': self.feature_group_version, 'connector_type': self.connector_type, 'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name, 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at, 'additional_id_columns': self.additional_id_columns, 'error': self.error, 'database_output_error': self.database_output_error, 'project_config': self._get_attribute_as_dict(self.project_config)}
+        resp = {'feature_group_export_id': self.feature_group_export_id, 'failed_writes': self.failed_writes, 'total_writes': self.total_writes, 'feature_group_version': self.feature_group_version, 'connector_type': self.connector_type, 'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name,
+                'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at, 'additional_id_columns': self.additional_id_columns, 'error': self.error, 'database_output_error': self.database_output_error, 'project_config': self._get_attribute_as_dict(self.project_config)}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def get_feature_group_version_export_download_url(self):
         """

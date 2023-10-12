@@ -13,9 +13,10 @@ class ExternalApplication(AbstractApiClass):
             logo (str): The logo.
             theme (dict): The theme used for the External Application.
             userGroupIds (list): A list of App User Groups with access to this external application
+            useCase (str): Use Case of the project of this deployment
     """
 
-    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None):
+    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None, useCase=None):
         super().__init__(client, externalApplicationId)
         self.name = name
         self.external_application_id = externalApplicationId
@@ -23,9 +24,10 @@ class ExternalApplication(AbstractApiClass):
         self.logo = logo
         self.theme = theme
         self.user_group_ids = userGroupIds
+        self.use_case = useCase
 
     def __repr__(self):
-        return f"ExternalApplication(name={repr(self.name)},\n  external_application_id={repr(self.external_application_id)},\n  deployment_id={repr(self.deployment_id)},\n  logo={repr(self.logo)},\n  theme={repr(self.theme)},\n  user_group_ids={repr(self.user_group_ids)})"
+        return f"ExternalApplication(name={repr(self.name)},\n  external_application_id={repr(self.external_application_id)},\n  deployment_id={repr(self.deployment_id)},\n  logo={repr(self.logo)},\n  theme={repr(self.theme)},\n  user_group_ids={repr(self.user_group_ids)},\n  use_case={repr(self.use_case)})"
 
     def to_dict(self):
         """
@@ -34,21 +36,22 @@ class ExternalApplication(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids}
+        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id,
+                'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case}
+        return {key: value for key, value in resp.items() if value is not None}
 
-    def update(self, name: str = None, logo: str = None, theme: dict = None):
+    def update(self, name: str = None, theme: dict = None):
         """
         Updates an External Application.
 
         Args:
             name (str): The name of the External Application.
-            logo (str): The logo to be displayed.
             theme (dict): The visual theme of the External Application.
 
         Returns:
             ExternalApplication: The updated External Application.
         """
-        return self.client.update_external_application(self.external_application_id, name, logo, theme)
+        return self.client.update_external_application(self.external_application_id, name, theme)
 
     def refresh(self):
         """

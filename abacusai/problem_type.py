@@ -31,4 +31,6 @@ class ProblemType(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'problem_type': self.problem_type, 'required_feature_group_type': self.required_feature_group_type, 'optional_feature_group_types': self.optional_feature_group_types, 'use_cases_support_custom_algorithm': self.use_cases_support_custom_algorithm}
+        resp = {'problem_type': self.problem_type, 'required_feature_group_type': self.required_feature_group_type,
+                'optional_feature_group_types': self.optional_feature_group_types, 'use_cases_support_custom_algorithm': self.use_cases_support_custom_algorithm}
+        return {key: value for key, value in resp.items() if value is not None}

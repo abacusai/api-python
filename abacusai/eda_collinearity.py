@@ -32,4 +32,6 @@ class EdaCollinearity(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'column_names': self.column_names, 'collinearity_matrix': self.collinearity_matrix, 'group_feature_dict': self.group_feature_dict, 'collinearity_groups': self.collinearity_groups, 'column_names_x': self.column_names_x}
+        resp = {'column_names': self.column_names, 'collinearity_matrix': self.collinearity_matrix, 'group_feature_dict':
+                self.group_feature_dict, 'collinearity_groups': self.collinearity_groups, 'column_names_x': self.column_names_x}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -132,7 +132,7 @@ class PredictionClient(BaseApiClient):
             threshold_class (str): The label upon which the threshold is added (binary labels only).
             thresholds (list): Maps labels to thresholds (multi-label classification only). Defaults to F1 optimal threshold if computed for the given class, else uses 0.5.
             explain_predictions (bool): If True, returns the SHAP explanations for all input features.
-            fixed_features (list): A set of input features to treat as constant for explanations.
+            fixed_features (list): A set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
             nested (str): If specified generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
@@ -147,7 +147,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): A dictionary where the 'key' is the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' is the unique value of the same entity.
             explain_predictions (bool): If true, returns the SHAP explanations for all input features.
-            fixed_features (list): Set of input features to treat as constant for explanations.
+            fixed_features (list): Set of input features to treat as constant for explanations - only honored when the explainer type is KERNEL_EXPLAINER
             nested (str): If specified, generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(

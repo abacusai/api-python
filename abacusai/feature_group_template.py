@@ -40,7 +40,9 @@ class FeatureGroupTemplate(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_template_id': self.feature_group_template_id, 'description': self.description, 'feature_group_id': self.feature_group_id, 'is_system_template': self.is_system_template, 'name': self.name, 'template_sql': self.template_sql, 'template_variables': self.template_variables, 'created_at': self.created_at, 'updated_at': self.updated_at}
+        resp = {'feature_group_template_id': self.feature_group_template_id, 'description': self.description, 'feature_group_id': self.feature_group_id, 'is_system_template': self.is_system_template,
+                'name': self.name, 'template_sql': self.template_sql, 'template_variables': self.template_variables, 'created_at': self.created_at, 'updated_at': self.updated_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def delete(self):
         """

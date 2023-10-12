@@ -24,4 +24,5 @@ class LlmParameters(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'parameters': self.parameters}
+        resp = {'parameters': self.parameters}
+        return {key: value for key, value in resp.items() if value is not None}

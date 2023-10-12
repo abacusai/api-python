@@ -33,4 +33,6 @@ class LlmResponse(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'content': self.content, 'tokens': self.tokens, 'stop_reason': self.stop_reason, 'llm_name': self.llm_name, 'code_blocks': self._get_attribute_as_dict(self.code_blocks)}
+        resp = {'content': self.content, 'tokens': self.tokens, 'stop_reason': self.stop_reason,
+                'llm_name': self.llm_name, 'code_blocks': self._get_attribute_as_dict(self.code_blocks)}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -33,4 +33,6 @@ class ProjectFeatureGroupSchema(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'nested_schema': self.nested_schema, 'schema': self._get_attribute_as_dict(self.schema), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'project_config': self._get_attribute_as_dict(self.project_config)}
+        resp = {'nested_schema': self.nested_schema, 'schema': self._get_attribute_as_dict(self.schema), 'duplicate_features': self._get_attribute_as_dict(
+            self.duplicate_features), 'project_config': self._get_attribute_as_dict(self.project_config)}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -34,7 +34,9 @@ class ModelArtifactsExport(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'model_artifacts_export_id': self.model_artifacts_export_id, 'model_version': self.model_version, 'output_location': self.output_location, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at}
+        resp = {'model_artifacts_export_id': self.model_artifacts_export_id, 'model_version': self.model_version, 'output_location':
+                self.output_location, 'status': self.status, 'created_at': self.created_at, 'export_completed_at': self.export_completed_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

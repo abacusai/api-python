@@ -38,4 +38,6 @@ class EdaFeatureAssociation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'data': self.data, 'is_scatter': self.is_scatter, 'is_box_whisker': self.is_box_whisker, 'x_axis': self.x_axis, 'y_axis': self.y_axis, 'x_axis_column_values': self.x_axis_column_values, 'y_axis_column_values': self.y_axis_column_values, 'data_columns': self.data_columns}
+        resp = {'data': self.data, 'is_scatter': self.is_scatter, 'is_box_whisker': self.is_box_whisker, 'x_axis': self.x_axis, 'y_axis': self.y_axis,
+                'x_axis_column_values': self.x_axis_column_values, 'y_axis_column_values': self.y_axis_column_values, 'data_columns': self.data_columns}
+        return {key: value for key, value in resp.items() if value is not None}

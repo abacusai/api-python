@@ -3242,6 +3242,8 @@ Classes
    :type sampling_unit_keys: List[str]
    :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
    :type test_row_indicator: str
+   :param full_data_retraining: Train models separately with all the data.
+   :type full_data_retraining: bool
    :param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as "Yes". It is useful when the classes in the dataset are unbalanced.
                              Re-balancing classes generally boosts recall at the cost of precision on rare classes.
    :type rebalance_classes: bool
@@ -3508,6 +3510,8 @@ Classes
    :type filter_items: bool
    :param enable_feature_selection: Enable feature selection.
    :type enable_feature_selection: bool
+   :param enable_padding: Pad series to the max_date of the dataset
+   :type enable_padding: bool
    :param enable_cold_start: Enable cold start forecasting by training/predicting for zero history items.
    :type enable_cold_start: bool
    :param enable_multiple_backtests: Whether to enable multiple backtesting or not.
@@ -3646,6 +3650,11 @@ Classes
       
 
    .. py:attribute:: enable_feature_selection
+      :type: bool
+
+      
+
+   .. py:attribute:: enable_padding
       :type: bool
 
       

@@ -38,7 +38,9 @@ class GraphDashboard(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'graph_dashboard_id': self.graph_dashboard_id, 'created_at': self.created_at, 'project_id': self.project_id, 'python_function_ids': self.python_function_ids, 'plot_reference_ids': self.plot_reference_ids, 'python_function_names': self.python_function_names, 'project_name': self.project_name}
+        resp = {'name': self.name, 'graph_dashboard_id': self.graph_dashboard_id, 'created_at': self.created_at, 'project_id': self.project_id, 'python_function_ids':
+                self.python_function_ids, 'plot_reference_ids': self.plot_reference_ids, 'python_function_names': self.python_function_names, 'project_name': self.project_name}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

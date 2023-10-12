@@ -30,7 +30,9 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_operation_run_id': self.feature_group_operation_run_id, 'status': self.status, 'error': self.error}
+        resp = {'feature_group_operation_run_id': self.feature_group_operation_run_id,
+                'status': self.status, 'error': self.error}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def wait_for_results(self, timeout=3600, delay=2):
         """

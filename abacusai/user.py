@@ -34,4 +34,6 @@ class User(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'email': self.email, 'created_at': self.created_at, 'status': self.status, 'organization_groups': self._get_attribute_as_dict(self.organization_groups)}
+        resp = {'name': self.name, 'email': self.email, 'created_at': self.created_at, 'status': self.status,
+                'organization_groups': self._get_attribute_as_dict(self.organization_groups)}
+        return {key: value for key, value in resp.items() if value is not None}

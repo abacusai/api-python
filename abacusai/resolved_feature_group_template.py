@@ -32,4 +32,6 @@ class ResolvedFeatureGroupTemplate(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'feature_group_template_id': self.feature_group_template_id, 'resolved_variables': self.resolved_variables, 'resolved_sql': self.resolved_sql, 'template_sql': self.template_sql, 'sql_error': self.sql_error}
+        resp = {'feature_group_template_id': self.feature_group_template_id, 'resolved_variables': self.resolved_variables,
+                'resolved_sql': self.resolved_sql, 'template_sql': self.template_sql, 'sql_error': self.sql_error}
+        return {key: value for key, value in resp.items() if value is not None}

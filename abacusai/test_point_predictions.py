@@ -32,4 +32,6 @@ class TestPointPredictions(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'count': self.count, 'columns': self.columns, 'data': self.data, 'summarized_metrics': self.summarized_metrics, 'error_description': self.error_description}
+        resp = {'count': self.count, 'columns': self.columns, 'data': self.data,
+                'summarized_metrics': self.summarized_metrics, 'error_description': self.error_description}
+        return {key: value for key, value in resp.items() if value is not None}

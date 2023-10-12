@@ -36,4 +36,6 @@ class RangeViolation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'training_min': self.training_min, 'training_max': self.training_max, 'prediction_min': self.prediction_min, 'prediction_max': self.prediction_max, 'freq_above_training_range': self.freq_above_training_range, 'freq_below_training_range': self.freq_below_training_range}
+        resp = {'name': self.name, 'training_min': self.training_min, 'training_max': self.training_max, 'prediction_min': self.prediction_min,
+                'prediction_max': self.prediction_max, 'freq_above_training_range': self.freq_above_training_range, 'freq_below_training_range': self.freq_below_training_range}
+        return {key: value for key, value in resp.items() if value is not None}

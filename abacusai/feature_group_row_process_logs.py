@@ -32,4 +32,6 @@ class FeatureGroupRowProcessLogs(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'logs': self.logs, 'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id, 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id}
+        resp = {'logs': self.logs, 'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id,
+                'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id}
+        return {key: value for key, value in resp.items() if value is not None}

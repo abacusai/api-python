@@ -45,4 +45,6 @@ class PointInTimeGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'group_name': self.group_name, 'window_key': self.window_key, 'aggregation_keys': self.aggregation_keys, 'lookback_window': self.lookback_window, 'lookback_window_lag': self.lookback_window_lag, 'lookback_count': self.lookback_count, 'lookback_until_position': self.lookback_until_position, 'history_table_name': self.history_table_name, 'history_window_key': self.history_window_key, 'history_aggregation_keys': self.history_aggregation_keys, 'features': self._get_attribute_as_dict(self.features)}
+        resp = {'group_name': self.group_name, 'window_key': self.window_key, 'aggregation_keys': self.aggregation_keys, 'lookback_window': self.lookback_window, 'lookback_window_lag': self.lookback_window_lag, 'lookback_count': self.lookback_count,
+                'lookback_until_position': self.lookback_until_position, 'history_table_name': self.history_table_name, 'history_window_key': self.history_window_key, 'history_aggregation_keys': self.history_aggregation_keys, 'features': self._get_attribute_as_dict(self.features)}
+        return {key: value for key, value in resp.items() if value is not None}

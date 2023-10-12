@@ -44,4 +44,6 @@ class TrainingConfigOptions(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'data_type': self.data_type, 'value_type': self.value_type, 'value_options': self.value_options, 'value': self.value, 'default': self.default, 'options': self.options, 'description': self.description, 'required': self.required, 'last_model_value': self.last_model_value, 'needs_refresh': self.needs_refresh}
+        resp = {'name': self.name, 'data_type': self.data_type, 'value_type': self.value_type, 'value_options': self.value_options, 'value': self.value, 'default': self.default,
+                'options': self.options, 'description': self.description, 'required': self.required, 'last_model_value': self.last_model_value, 'needs_refresh': self.needs_refresh}
+        return {key: value for key, value in resp.items() if value is not None}

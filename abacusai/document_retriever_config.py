@@ -29,4 +29,6 @@ class DocumentRetrieverConfig(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'chunk_size': self.chunk_size, 'chunk_overlap_fraction': self.chunk_overlap_fraction, 'text_encoder': self.text_encoder}
+        resp = {'chunk_size': self.chunk_size, 'chunk_overlap_fraction':
+                self.chunk_overlap_fraction, 'text_encoder': self.text_encoder}
+        return {key: value for key, value in resp.items() if value is not None}

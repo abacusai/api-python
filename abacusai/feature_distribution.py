@@ -36,4 +36,6 @@ class FeatureDistribution(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'type': self.type, 'training_distribution': self.training_distribution, 'prediction_distribution': self.prediction_distribution, 'numerical_training_distribution': self.numerical_training_distribution, 'numerical_prediction_distribution': self.numerical_prediction_distribution, 'training_statistics': self.training_statistics, 'prediction_statistics': self.prediction_statistics}
+        resp = {'type': self.type, 'training_distribution': self.training_distribution, 'prediction_distribution': self.prediction_distribution, 'numerical_training_distribution': self.numerical_training_distribution,
+                'numerical_prediction_distribution': self.numerical_prediction_distribution, 'training_statistics': self.training_statistics, 'prediction_statistics': self.prediction_statistics}
+        return {key: value for key, value in resp.items() if value is not None}

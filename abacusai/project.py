@@ -40,7 +40,9 @@ class Project(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case, 'problem_type': self.problem_type, 'created_at': self.created_at, 'tags': self.tags}
+        resp = {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case,
+                'problem_type': self.problem_type, 'created_at': self.created_at, 'tags': self.tags}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

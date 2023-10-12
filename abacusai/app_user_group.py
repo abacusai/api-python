@@ -31,4 +31,6 @@ class AppUserGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'name': self.name, 'user_group_id': self.user_group_id, 'external_application_ids': self.external_application_ids, 'users': self._get_attribute_as_dict(self.users)}
+        resp = {'name': self.name, 'user_group_id': self.user_group_id,
+                'external_application_ids': self.external_application_ids, 'users': self._get_attribute_as_dict(self.users)}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -28,4 +28,6 @@ class UserException(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'type': self.type, 'value': self.value, 'traceback': self.traceback}
+        resp = {'type': self.type, 'value': self.value,
+                'traceback': self.traceback}
+        return {key: value for key, value in resp.items() if value is not None}

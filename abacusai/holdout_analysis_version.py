@@ -44,7 +44,9 @@ class HoldoutAnalysisVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'holdout_analysis_version': self.holdout_analysis_version, 'holdout_analysis_id': self.holdout_analysis_id, 'created_at': self.created_at, 'status': self.status, 'error': self.error, 'model_id': self.model_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'algo_name': self.algo_name, 'metrics': self.metrics, 'metric_infos': self.metric_infos}
+        resp = {'holdout_analysis_version': self.holdout_analysis_version, 'holdout_analysis_id': self.holdout_analysis_id, 'created_at': self.created_at, 'status': self.status, 'error': self.error,
+                'model_id': self.model_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'algo_name': self.algo_name, 'metrics': self.metrics, 'metric_infos': self.metric_infos}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
         """

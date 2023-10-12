@@ -30,7 +30,9 @@ class ApiKey(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'api_key_id': self.api_key_id, 'api_key': self.api_key, 'tag': self.tag, 'created_at': self.created_at}
+        resp = {'api_key_id': self.api_key_id, 'api_key': self.api_key,
+                'tag': self.tag, 'created_at': self.created_at}
+        return {key: value for key, value in resp.items() if value is not None}
 
     def delete(self):
         """

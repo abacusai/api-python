@@ -42,4 +42,6 @@ class PipelineReference(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'pipeline_reference_id': self.pipeline_reference_id, 'pipeline_id': self.pipeline_id, 'object_type': self.object_type, 'dataset_id': self.dataset_id, 'model_id': self.model_id, 'deployment_id': self.deployment_id, 'batch_prediction_description_id': self.batch_prediction_description_id, 'model_monitor_id': self.model_monitor_id, 'notebook_id': self.notebook_id, 'feature_group_id': self.feature_group_id}
+        resp = {'pipeline_reference_id': self.pipeline_reference_id, 'pipeline_id': self.pipeline_id, 'object_type': self.object_type, 'dataset_id': self.dataset_id, 'model_id': self.model_id, 'deployment_id': self.deployment_id,
+                'batch_prediction_description_id': self.batch_prediction_description_id, 'model_monitor_id': self.model_monitor_id, 'notebook_id': self.notebook_id, 'feature_group_id': self.feature_group_id}
+        return {key: value for key, value in resp.items() if value is not None}

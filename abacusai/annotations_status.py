@@ -38,4 +38,6 @@ class AnnotationsStatus(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'total': self.total, 'done': self.done, 'in_progress': self.in_progress, 'todo': self.todo, 'latest_updated_at': self.latest_updated_at, 'is_materialization_needed': self.is_materialization_needed, 'latest_materialized_annotation_config': self._get_attribute_as_dict(self.latest_materialized_annotation_config)}
+        resp = {'total': self.total, 'done': self.done, 'in_progress': self.in_progress, 'todo': self.todo, 'latest_updated_at': self.latest_updated_at,
+                'is_materialization_needed': self.is_materialization_needed, 'latest_materialized_annotation_config': self._get_attribute_as_dict(self.latest_materialized_annotation_config)}
+        return {key: value for key, value in resp.items() if value is not None}

@@ -28,4 +28,6 @@ class FileConnectorInstructions(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        return {'verified': self.verified, 'write_permission': self.write_permission, 'auth_options': self.auth_options}
+        resp = {'verified': self.verified, 'write_permission': self.write_permission,
+                'auth_options': self.auth_options}
+        return {key: value for key, value in resp.items() if value is not None}
