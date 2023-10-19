@@ -19,7 +19,12 @@ class OrganizationSecret(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"OrganizationSecret(secret_key={repr(self.secret_key)},\n  value={repr(self.value)},\n  created_at={repr(self.created_at)})"
+        repr_dict = {f'secret_key': repr(self.secret_key), f'value': repr(
+            self.value), f'created_at': repr(self.created_at)}
+        class_name = "OrganizationSecret"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

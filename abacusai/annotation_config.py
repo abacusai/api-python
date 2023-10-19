@@ -23,7 +23,12 @@ class AnnotationConfig(AbstractApiClass):
         self.metadata_feature = metadataFeature
 
     def __repr__(self):
-        return f"AnnotationConfig(feature_annotation_configs={repr(self.feature_annotation_configs)},\n  labels={repr(self.labels)},\n  status_feature={repr(self.status_feature)},\n  comments_features={repr(self.comments_features)},\n  metadata_feature={repr(self.metadata_feature)})"
+        repr_dict = {f'feature_annotation_configs': repr(self.feature_annotation_configs), f'labels': repr(self.labels), f'status_feature': repr(
+            self.status_feature), f'comments_features': repr(self.comments_features), f'metadata_feature': repr(self.metadata_feature)}
+        class_name = "AnnotationConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

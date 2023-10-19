@@ -15,7 +15,11 @@ class DataQualityResults(AbstractApiClass):
         self.results = results
 
     def __repr__(self):
-        return f"DataQualityResults(results={repr(self.results)})"
+        repr_dict = {f'results': repr(self.results)}
+        class_name = "DataQualityResults"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

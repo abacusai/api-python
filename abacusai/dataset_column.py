@@ -31,7 +31,12 @@ class DatasetColumn(AbstractApiClass):
         self.timestamp_frequency = timestampFrequency
 
     def __repr__(self):
-        return f"DatasetColumn(name={repr(self.name)},\n  data_type={repr(self.data_type)},\n  detected_data_type={repr(self.detected_data_type)},\n  feature_type={repr(self.feature_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  original_name={repr(self.original_name)},\n  valid_data_types={repr(self.valid_data_types)},\n  time_format={repr(self.time_format)},\n  timestamp_frequency={repr(self.timestamp_frequency)})"
+        repr_dict = {f'name': repr(self.name), f'data_type': repr(self.data_type), f'detected_data_type': repr(self.detected_data_type), f'feature_type': repr(self.feature_type), f'detected_feature_type': repr(
+            self.detected_feature_type), f'original_name': repr(self.original_name), f'valid_data_types': repr(self.valid_data_types), f'time_format': repr(self.time_format), f'timestamp_frequency': repr(self.timestamp_frequency)}
+        class_name = "DatasetColumn"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -19,7 +19,12 @@ class ProjectValidation(AbstractApiClass):
         self.column_hints = columnHints
 
     def __repr__(self):
-        return f"ProjectValidation(valid={repr(self.valid)},\n  dataset_errors={repr(self.dataset_errors)},\n  column_hints={repr(self.column_hints)})"
+        repr_dict = {f'valid': repr(self.valid), f'dataset_errors': repr(
+            self.dataset_errors), f'column_hints': repr(self.column_hints)}
+        class_name = "ProjectValidation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

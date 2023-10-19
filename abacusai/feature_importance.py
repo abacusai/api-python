@@ -25,7 +25,12 @@ class FeatureImportance(AbstractApiClass):
         self.ebm_feature_importance = ebmFeatureImportance
 
     def __repr__(self):
-        return f"FeatureImportance(shap_feature_importance={repr(self.shap_feature_importance)},\n  lime_feature_importance={repr(self.lime_feature_importance)},\n  permutation_feature_importance={repr(self.permutation_feature_importance)},\n  null_feature_importance={repr(self.null_feature_importance)},\n  lofo_feature_importance={repr(self.lofo_feature_importance)},\n  ebm_feature_importance={repr(self.ebm_feature_importance)})"
+        repr_dict = {f'shap_feature_importance': repr(self.shap_feature_importance), f'lime_feature_importance': repr(self.lime_feature_importance), f'permutation_feature_importance': repr(
+            self.permutation_feature_importance), f'null_feature_importance': repr(self.null_feature_importance), f'lofo_feature_importance': repr(self.lofo_feature_importance), f'ebm_feature_importance': repr(self.ebm_feature_importance)}
+        class_name = "FeatureImportance"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

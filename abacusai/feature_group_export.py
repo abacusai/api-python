@@ -52,7 +52,12 @@ class FeatureGroupExport(AbstractApiClass):
         self.project_config = client._build_class(ProjectConfig, projectConfig)
 
     def __repr__(self):
-        return f"FeatureGroupExport(feature_group_export_id={repr(self.feature_group_export_id)},\n  failed_writes={repr(self.failed_writes)},\n  total_writes={repr(self.total_writes)},\n  feature_group_version={repr(self.feature_group_version)},\n  connector_type={repr(self.connector_type)},\n  output_location={repr(self.output_location)},\n  file_format={repr(self.file_format)},\n  database_connector_id={repr(self.database_connector_id)},\n  object_name={repr(self.object_name)},\n  write_mode={repr(self.write_mode)},\n  database_feature_mapping={repr(self.database_feature_mapping)},\n  id_column={repr(self.id_column)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  export_completed_at={repr(self.export_completed_at)},\n  additional_id_columns={repr(self.additional_id_columns)},\n  error={repr(self.error)},\n  database_output_error={repr(self.database_output_error)},\n  project_config={repr(self.project_config)})"
+        repr_dict = {f'feature_group_export_id': repr(self.feature_group_export_id), f'failed_writes': repr(self.failed_writes), f'total_writes': repr(self.total_writes), f'feature_group_version': repr(self.feature_group_version), f'connector_type': repr(self.connector_type), f'output_location': repr(self.output_location), f'file_format': repr(self.file_format), f'database_connector_id': repr(self.database_connector_id), f'object_name': repr(self.object_name), f'write_mode': repr(
+            self.write_mode), f'database_feature_mapping': repr(self.database_feature_mapping), f'id_column': repr(self.id_column), f'status': repr(self.status), f'created_at': repr(self.created_at), f'export_completed_at': repr(self.export_completed_at), f'additional_id_columns': repr(self.additional_id_columns), f'error': repr(self.error), f'database_output_error': repr(self.database_output_error), f'project_config': repr(self.project_config)}
+        class_name = "FeatureGroupExport"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

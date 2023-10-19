@@ -27,7 +27,12 @@ class Schema(AbstractApiClass):
         self.detected_data_type = detectedDataType
 
     def __repr__(self):
-        return f"Schema(name={repr(self.name)},\n  feature_mapping={repr(self.feature_mapping)},\n  detected_feature_mapping={repr(self.detected_feature_mapping)},\n  feature_type={repr(self.feature_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  data_type={repr(self.data_type)},\n  detected_data_type={repr(self.detected_data_type)})"
+        repr_dict = {f'name': repr(self.name), f'feature_mapping': repr(self.feature_mapping), f'detected_feature_mapping': repr(self.detected_feature_mapping), f'feature_type': repr(
+            self.feature_type), f'detected_feature_type': repr(self.detected_feature_type), f'data_type': repr(self.data_type), f'detected_data_type': repr(self.detected_data_type)}
+        class_name = "Schema"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

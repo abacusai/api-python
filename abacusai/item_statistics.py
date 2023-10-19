@@ -31,7 +31,12 @@ class ItemStatistics(AbstractApiClass):
         self.max = max
 
     def __repr__(self):
-        return f"ItemStatistics(missing_percent={repr(self.missing_percent)},\n  count={repr(self.count)},\n  median={repr(self.median)},\n  mean={repr(self.mean)},\n  p10={repr(self.p10)},\n  p90={repr(self.p90)},\n  stddev={repr(self.stddev)},\n  min={repr(self.min)},\n  max={repr(self.max)})"
+        repr_dict = {f'missing_percent': repr(self.missing_percent), f'count': repr(self.count), f'median': repr(self.median), f'mean': repr(
+            self.mean), f'p10': repr(self.p10), f'p90': repr(self.p90), f'stddev': repr(self.stddev), f'min': repr(self.min), f'max': repr(self.max)}
+        class_name = "ItemStatistics"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

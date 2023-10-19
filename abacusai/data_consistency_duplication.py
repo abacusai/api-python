@@ -19,7 +19,12 @@ class DataConsistencyDuplication(AbstractApiClass):
         self.sample = client._build_class(FeatureRecord, sample)
 
     def __repr__(self):
-        return f"DataConsistencyDuplication(total_count={repr(self.total_count)},\n  num_duplicates={repr(self.num_duplicates)},\n  sample={repr(self.sample)})"
+        repr_dict = {f'total_count': repr(self.total_count), f'num_duplicates': repr(
+            self.num_duplicates), f'sample': repr(self.sample)}
+        class_name = "DataConsistencyDuplication"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

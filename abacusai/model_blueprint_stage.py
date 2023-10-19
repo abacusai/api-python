@@ -23,7 +23,12 @@ class ModelBlueprintStage(AbstractApiClass):
         self.predecessors = predecessors
 
     def __repr__(self):
-        return f"ModelBlueprintStage(stage_name={repr(self.stage_name)},\n  display_name={repr(self.display_name)},\n  description={repr(self.description)},\n  params={repr(self.params)},\n  predecessors={repr(self.predecessors)})"
+        repr_dict = {f'stage_name': repr(self.stage_name), f'display_name': repr(self.display_name), f'description': repr(
+            self.description), f'params': repr(self.params), f'predecessors': repr(self.predecessors)}
+        class_name = "ModelBlueprintStage"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

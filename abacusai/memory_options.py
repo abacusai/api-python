@@ -18,7 +18,11 @@ class MemoryOptions(AbstractApiClass):
         self.gpu = client._build_class(CpuGpuMemorySpecs, gpu)
 
     def __repr__(self):
-        return f"MemoryOptions(cpu={repr(self.cpu)},\n  gpu={repr(self.gpu)})"
+        repr_dict = {f'cpu': repr(self.cpu), f'gpu': repr(self.gpu)}
+        class_name = "MemoryOptions"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

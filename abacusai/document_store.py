@@ -25,7 +25,12 @@ class DocumentStore(AbstractApiClass):
         self.approximate_size = approximateSize
 
     def __repr__(self):
-        return f"DocumentStore(document_store_id={repr(self.document_store_id)},\n  created_at={repr(self.created_at)},\n  name={repr(self.name)},\n  document_type={repr(self.document_type)},\n  document_count={repr(self.document_count)},\n  approximate_size={repr(self.approximate_size)})"
+        repr_dict = {f'document_store_id': repr(self.document_store_id), f'created_at': repr(self.created_at), f'name': repr(self.name), f'document_type': repr(
+            self.document_type), f'document_count': repr(self.document_count), f'approximate_size': repr(self.approximate_size)}
+        class_name = "DocumentStore"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

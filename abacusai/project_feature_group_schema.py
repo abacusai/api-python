@@ -24,7 +24,12 @@ class ProjectFeatureGroupSchema(AbstractApiClass):
         self.project_config = client._build_class(ProjectConfig, projectConfig)
 
     def __repr__(self):
-        return f"ProjectFeatureGroupSchema(nested_schema={repr(self.nested_schema)},\n  schema={repr(self.schema)},\n  duplicate_features={repr(self.duplicate_features)},\n  project_config={repr(self.project_config)})"
+        repr_dict = {f'nested_schema': repr(self.nested_schema), f'schema': repr(
+            self.schema), f'duplicate_features': repr(self.duplicate_features), f'project_config': repr(self.project_config)}
+        class_name = "ProjectFeatureGroupSchema"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

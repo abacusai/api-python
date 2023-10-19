@@ -38,7 +38,12 @@ class Agent(AbstractApiClass):
             AgentVersion, latestAgentVersion)
 
     def __repr__(self):
-        return f"Agent(name={repr(self.name)},\n  agent_id={repr(self.agent_id)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  notebook_id={repr(self.notebook_id)},\n  predict_function_name={repr(self.predict_function_name)},\n  source_code={repr(self.source_code)},\n  agent_config={repr(self.agent_config)},\n  memory={repr(self.memory)},\n  code_source={repr(self.code_source)},\n  latest_agent_version={repr(self.latest_agent_version)})"
+        repr_dict = {f'name': repr(self.name), f'agent_id': repr(self.agent_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'notebook_id': repr(self.notebook_id), f'predict_function_name': repr(
+            self.predict_function_name), f'source_code': repr(self.source_code), f'agent_config': repr(self.agent_config), f'memory': repr(self.memory), f'code_source': repr(self.code_source), f'latest_agent_version': repr(self.latest_agent_version)}
+        class_name = "Agent"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

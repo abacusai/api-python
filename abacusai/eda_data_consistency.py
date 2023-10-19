@@ -32,7 +32,12 @@ class EdaDataConsistency(AbstractApiClass):
             DataConsistencyTransformation, transformations)
 
     def __repr__(self):
-        return f"EdaDataConsistency(column_names={repr(self.column_names)},\n  primary_keys={repr(self.primary_keys)},\n  transformation_column_names={repr(self.transformation_column_names)},\n  base_duplicates={repr(self.base_duplicates)},\n  compare_duplicates={repr(self.compare_duplicates)},\n  deletions={repr(self.deletions)},\n  transformations={repr(self.transformations)})"
+        repr_dict = {f'column_names': repr(self.column_names), f'primary_keys': repr(self.primary_keys), f'transformation_column_names': repr(self.transformation_column_names), f'base_duplicates': repr(
+            self.base_duplicates), f'compare_duplicates': repr(self.compare_duplicates), f'deletions': repr(self.deletions), f'transformations': repr(self.transformations)}
+        class_name = "EdaDataConsistency"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

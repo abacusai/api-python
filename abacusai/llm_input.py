@@ -15,7 +15,11 @@ class LlmInput(AbstractApiClass):
         self.content = content
 
     def __repr__(self):
-        return f"LlmInput(content={repr(self.content)})"
+        repr_dict = {f'content': repr(self.content)}
+        class_name = "LlmInput"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

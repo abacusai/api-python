@@ -19,7 +19,12 @@ class FileConnectorInstructions(AbstractApiClass):
         self.auth_options = authOptions
 
     def __repr__(self):
-        return f"FileConnectorInstructions(verified={repr(self.verified)},\n  write_permission={repr(self.write_permission)},\n  auth_options={repr(self.auth_options)})"
+        repr_dict = {f'verified': repr(self.verified), f'write_permission': repr(
+            self.write_permission), f'auth_options': repr(self.auth_options)}
+        class_name = "FileConnectorInstructions"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

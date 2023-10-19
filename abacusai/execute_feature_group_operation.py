@@ -21,7 +21,12 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         self.error = error
 
     def __repr__(self):
-        return f"ExecuteFeatureGroupOperation(feature_group_operation_run_id={repr(self.feature_group_operation_run_id)},\n  status={repr(self.status)},\n  error={repr(self.error)})"
+        repr_dict = {f'feature_group_operation_run_id': repr(
+            self.feature_group_operation_run_id), f'status': repr(self.status), f'error': repr(self.error)}
+        class_name = "ExecuteFeatureGroupOperation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

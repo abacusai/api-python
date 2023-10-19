@@ -76,7 +76,12 @@ class Deployment(AbstractApiClass):
             FeatureGroupExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"Deployment(deployment_id={repr(self.deployment_id)},\n  name={repr(self.name)},\n  status={repr(self.status)},\n  description={repr(self.description)},\n  deployed_at={repr(self.deployed_at)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  calls_per_second={repr(self.calls_per_second)},\n  auto_deploy={repr(self.auto_deploy)},\n  skip_metrics_check={repr(self.skip_metrics_check)},\n  algo_name={repr(self.algo_name)},\n  regions={repr(self.regions)},\n  error={repr(self.error)},\n  batch_streaming_updates={repr(self.batch_streaming_updates)},\n  algorithm={repr(self.algorithm)},\n  pending_model_version={repr(self.pending_model_version)},\n  model_deployment_config={repr(self.model_deployment_config)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  prediction_operator_version={repr(self.prediction_operator_version)},\n  pending_prediction_operator_version={repr(self.pending_prediction_operator_version)},\n  online_feature_group_id={repr(self.online_feature_group_id)},\n  output_online_feature_group_id={repr(self.output_online_feature_group_id)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
+        repr_dict = {f'deployment_id': repr(self.deployment_id), f'name': repr(self.name), f'status': repr(self.status), f'description': repr(self.description), f'deployed_at': repr(self.deployed_at), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'feature_group_id': repr(self.feature_group_id), f'feature_group_version': repr(self.feature_group_version), f'calls_per_second': repr(self.calls_per_second), f'auto_deploy': repr(self.auto_deploy), f'skip_metrics_check': repr(self.skip_metrics_check), f'algo_name': repr(self.algo_name), f'regions': repr(self.regions), f'error': repr(
+            self.error), f'batch_streaming_updates': repr(self.batch_streaming_updates), f'algorithm': repr(self.algorithm), f'pending_model_version': repr(self.pending_model_version), f'model_deployment_config': repr(self.model_deployment_config), f'prediction_operator_id': repr(self.prediction_operator_id), f'prediction_operator_version': repr(self.prediction_operator_version), f'pending_prediction_operator_version': repr(self.pending_prediction_operator_version), f'online_feature_group_id': repr(self.online_feature_group_id), f'output_online_feature_group_id': repr(self.output_online_feature_group_id), f'refresh_schedules': repr(self.refresh_schedules), f'feature_group_export_config': repr(self.feature_group_export_config)}
+        class_name = "Deployment"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """
@@ -403,7 +408,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_external_application(self.deployment_id, name, logo, theme)
 
-    def wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=480):
+    def wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=900):
         """
         A waiting call until deployment is completed.
 
@@ -412,7 +417,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client._poll(self, wait_states, timeout=timeout)
 
-    def wait_for_pending_deployment_update(self, timeout=600):
+    def wait_for_pending_deployment_update(self, timeout=900):
         """
         A waiting call until pending model switch is completed.
 

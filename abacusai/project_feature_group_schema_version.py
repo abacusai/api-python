@@ -15,7 +15,11 @@ class ProjectFeatureGroupSchemaVersion(AbstractApiClass):
         self.schema_version = schemaVersion
 
     def __repr__(self):
-        return f"ProjectFeatureGroupSchemaVersion(schema_version={repr(self.schema_version)})"
+        repr_dict = {f'schema_version': repr(self.schema_version)}
+        class_name = "ProjectFeatureGroupSchemaVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

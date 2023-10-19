@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None)
+.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, resolvedConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -38,6 +38,12 @@ Classes
    :type featureGroupVersion: str
    :param error: The error message when it failed to create the document retriever version.
    :type error: str
+   :param numberOfChunks: The number of chunks for the document retriever.
+   :type numberOfChunks: int
+   :param embeddingFileSize: The size of embedding file for the document retriever.
+   :type embeddingFileSize: int
+   :param resolvedConfig: The resolved configurations, such as default settings, for indexing documents.
+   :type resolvedConfig: DocumentRetrieverConfig
 
    .. py:method:: __repr__()
 

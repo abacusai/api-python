@@ -33,7 +33,12 @@ class PredictionMetric(AbstractApiClass):
             PredictionMetricVersion, latestPredictionMetricVersionDescription)
 
     def __repr__(self):
-        return f"PredictionMetric(created_at={repr(self.created_at)},\n  feature_group_id={repr(self.feature_group_id)},\n  prediction_metric_config={repr(self.prediction_metric_config)},\n  prediction_metric_id={repr(self.prediction_metric_id)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  project_id={repr(self.project_id)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_prediction_metric_version_description={repr(self.latest_prediction_metric_version_description)})"
+        repr_dict = {f'created_at': repr(self.created_at), f'feature_group_id': repr(self.feature_group_id), f'prediction_metric_config': repr(self.prediction_metric_config), f'prediction_metric_id': repr(self.prediction_metric_id), f'model_monitor_id': repr(
+            self.model_monitor_id), f'project_id': repr(self.project_id), f'refresh_schedules': repr(self.refresh_schedules), f'latest_prediction_metric_version_description': repr(self.latest_prediction_metric_version_description)}
+        class_name = "PredictionMetric"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

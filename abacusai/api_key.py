@@ -21,7 +21,12 @@ class ApiKey(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"ApiKey(api_key_id={repr(self.api_key_id)},\n  api_key={repr(self.api_key)},\n  tag={repr(self.tag)},\n  created_at={repr(self.created_at)})"
+        repr_dict = {f'api_key_id': repr(self.api_key_id), f'api_key': repr(
+            self.api_key), f'tag': repr(self.tag), f'created_at': repr(self.created_at)}
+        class_name = "ApiKey"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

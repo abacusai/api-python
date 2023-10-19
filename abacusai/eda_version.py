@@ -29,7 +29,12 @@ class EdaVersion(AbstractApiClass):
         self.error = error
 
     def __repr__(self):
-        return f"EdaVersion(eda_version={repr(self.eda_version)},\n  status={repr(self.status)},\n  eda_id={repr(self.eda_id)},\n  eda_started_at={repr(self.eda_started_at)},\n  eda_completed_at={repr(self.eda_completed_at)},\n  reference_feature_group_version={repr(self.reference_feature_group_version)},\n  test_feature_group_version={repr(self.test_feature_group_version)},\n  error={repr(self.error)})"
+        repr_dict = {f'eda_version': repr(self.eda_version), f'status': repr(self.status), f'eda_id': repr(self.eda_id), f'eda_started_at': repr(self.eda_started_at), f'eda_completed_at': repr(
+            self.eda_completed_at), f'reference_feature_group_version': repr(self.reference_feature_group_version), f'test_feature_group_version': repr(self.test_feature_group_version), f'error': repr(self.error)}
+        class_name = "EdaVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

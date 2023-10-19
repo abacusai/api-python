@@ -44,7 +44,12 @@ class Feature(AbstractApiClass):
             PointInTimeFeature, pointInTimeInfo)
 
     def __repr__(self):
-        return f"Feature(name={repr(self.name)},\n  select_clause={repr(self.select_clause)},\n  feature_mapping={repr(self.feature_mapping)},\n  source_table={repr(self.source_table)},\n  original_name={repr(self.original_name)},\n  using_clause={repr(self.using_clause)},\n  order_clause={repr(self.order_clause)},\n  where_clause={repr(self.where_clause)},\n  feature_type={repr(self.feature_type)},\n  data_type={repr(self.data_type)},\n  detected_feature_type={repr(self.detected_feature_type)},\n  detected_data_type={repr(self.detected_data_type)},\n  columns={repr(self.columns)},\n  point_in_time_info={repr(self.point_in_time_info)})"
+        repr_dict = {f'name': repr(self.name), f'select_clause': repr(self.select_clause), f'feature_mapping': repr(self.feature_mapping), f'source_table': repr(self.source_table), f'original_name': repr(self.original_name), f'using_clause': repr(self.using_clause), f'order_clause': repr(self.order_clause), f'where_clause': repr(
+            self.where_clause), f'feature_type': repr(self.feature_type), f'data_type': repr(self.data_type), f'detected_feature_type': repr(self.detected_feature_type), f'detected_data_type': repr(self.detected_data_type), f'columns': repr(self.columns), f'point_in_time_info': repr(self.point_in_time_info)}
+        class_name = "Feature"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

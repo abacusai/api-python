@@ -52,7 +52,12 @@ class PipelineStepVersion(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PipelineStepVersion(step_name={repr(self.step_name)},\n  pipeline_step_version={repr(self.pipeline_step_version)},\n  pipeline_step_id={repr(self.pipeline_step_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  output_errors={repr(self.output_errors)},\n  python_function_id={repr(self.python_function_id)},\n  function_variable_mappings={repr(self.function_variable_mappings)},\n  step_dependencies={repr(self.step_dependencies)},\n  output_variable_mappings={repr(self.output_variable_mappings)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  pipeline_step_version_references={repr(self.pipeline_step_version_references)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'step_name': repr(self.step_name), f'pipeline_step_version': repr(self.pipeline_step_version), f'pipeline_step_id': repr(self.pipeline_step_id), f'pipeline_id': repr(self.pipeline_id), f'pipeline_version': repr(self.pipeline_version), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'status': repr(self.status), f'error': repr(self.error), f'output_errors': repr(
+            self.output_errors), f'python_function_id': repr(self.python_function_id), f'function_variable_mappings': repr(self.function_variable_mappings), f'step_dependencies': repr(self.step_dependencies), f'output_variable_mappings': repr(self.output_variable_mappings), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'pipeline_step_version_references': repr(self.pipeline_step_version_references), f'code_source': repr(self.code_source)}
+        class_name = "PipelineStepVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -37,7 +37,12 @@ class Eda(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
 
     def __repr__(self):
-        return f"Eda(eda_id={repr(self.eda_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  feature_group_id={repr(self.feature_group_id)},\n  reference_feature_group_version={repr(self.reference_feature_group_version)},\n  test_feature_group_version={repr(self.test_feature_group_version)},\n  eda_configs={repr(self.eda_configs)},\n  latest_eda_version={repr(self.latest_eda_version)},\n  refresh_schedules={repr(self.refresh_schedules)})"
+        repr_dict = {f'eda_id': repr(self.eda_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'feature_group_id': repr(self.feature_group_id), f'reference_feature_group_version': repr(
+            self.reference_feature_group_version), f'test_feature_group_version': repr(self.test_feature_group_version), f'eda_configs': repr(self.eda_configs), f'latest_eda_version': repr(self.latest_eda_version), f'refresh_schedules': repr(self.refresh_schedules)}
+        class_name = "Eda"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

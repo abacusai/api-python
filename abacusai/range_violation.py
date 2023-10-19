@@ -27,7 +27,12 @@ class RangeViolation(AbstractApiClass):
         self.freq_below_training_range = freqBelowTrainingRange
 
     def __repr__(self):
-        return f"RangeViolation(name={repr(self.name)},\n  training_min={repr(self.training_min)},\n  training_max={repr(self.training_max)},\n  prediction_min={repr(self.prediction_min)},\n  prediction_max={repr(self.prediction_max)},\n  freq_above_training_range={repr(self.freq_above_training_range)},\n  freq_below_training_range={repr(self.freq_below_training_range)})"
+        repr_dict = {f'name': repr(self.name), f'training_min': repr(self.training_min), f'training_max': repr(self.training_max), f'prediction_min': repr(self.prediction_min), f'prediction_max': repr(
+            self.prediction_max), f'freq_above_training_range': repr(self.freq_above_training_range), f'freq_below_training_range': repr(self.freq_below_training_range)}
+        class_name = "RangeViolation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

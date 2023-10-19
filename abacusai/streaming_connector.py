@@ -25,7 +25,12 @@ class StreamingConnector(AbstractApiClass):
         self.auth = auth
 
     def __repr__(self):
-        return f"StreamingConnector(streaming_connector_id={repr(self.streaming_connector_id)},\n  service={repr(self.service)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  auth={repr(self.auth)})"
+        repr_dict = {f'streaming_connector_id': repr(self.streaming_connector_id), f'service': repr(self.service), f'name': repr(
+            self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth)}
+        class_name = "StreamingConnector"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

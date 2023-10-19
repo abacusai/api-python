@@ -34,7 +34,12 @@ class AgentVersion(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"AgentVersion(agent_version={repr(self.agent_version)},\n  status={repr(self.status)},\n  agent_id={repr(self.agent_id)},\n  agent_config={repr(self.agent_config)},\n  publishing_started_at={repr(self.publishing_started_at)},\n  publishing_completed_at={repr(self.publishing_completed_at)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  error={repr(self.error)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'agent_version': repr(self.agent_version), f'status': repr(self.status), f'agent_id': repr(self.agent_id), f'agent_config': repr(self.agent_config), f'publishing_started_at': repr(self.publishing_started_at), f'publishing_completed_at': repr(
+            self.publishing_completed_at), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(self.failed_deployment_ids), f'error': repr(self.error), f'code_source': repr(self.code_source)}
+        class_name = "AgentVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

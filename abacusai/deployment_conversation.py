@@ -29,7 +29,12 @@ class DeploymentConversation(AbstractApiClass):
             DeploymentConversationEvent, history)
 
     def __repr__(self):
-        return f"DeploymentConversation(deployment_conversation_id={repr(self.deployment_conversation_id)},\n  name={repr(self.name)},\n  deployment_id={repr(self.deployment_id)},\n  created_at={repr(self.created_at)},\n  external_session_id={repr(self.external_session_id)},\n  regenerate_attempt={repr(self.regenerate_attempt)},\n  history={repr(self.history)})"
+        repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'created_at': repr(
+            self.created_at), f'external_session_id': repr(self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'history': repr(self.history)}
+        class_name = "DeploymentConversation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """
@@ -65,6 +70,18 @@ class DeploymentConversation(AbstractApiClass):
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
         """
         return self.client.delete_deployment_conversation(self.deployment_conversation_id, deployment_id, deployment_token)
+
+    def clear(self, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, user_message_indices: list = None):
+        """
+        Clear the message history of a Deployment Conversation.
+
+        Args:
+            external_session_id (str): The external session id associated with the deployment conversation.
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
+            user_message_indices (list): Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
+        """
+        return self.client.clear_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, deployment_token, user_message_indices)
 
     def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, deployment_id: str = None, deployment_token: str = None):
         """

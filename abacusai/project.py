@@ -31,7 +31,12 @@ class Project(AbstractApiClass):
         self.tags = tags
 
     def __repr__(self):
-        return f"Project(project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  use_case={repr(self.use_case)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  tags={repr(self.tags)})"
+        repr_dict = {f'project_id': repr(self.project_id), f'name': repr(self.name), f'use_case': repr(
+            self.use_case), f'problem_type': repr(self.problem_type), f'created_at': repr(self.created_at), f'tags': repr(self.tags)}
+        class_name = "Project"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

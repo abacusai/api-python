@@ -51,7 +51,12 @@ class ModelMonitorVersion(AbstractApiClass):
         self.forecast_frequency = forecastFrequency
 
     def __repr__(self):
-        return f"ModelMonitorVersion(model_monitor_version={repr(self.model_monitor_version)},\n  status={repr(self.status)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  monitoring_started_at={repr(self.monitoring_started_at)},\n  monitoring_completed_at={repr(self.monitoring_completed_at)},\n  training_feature_group_version={repr(self.training_feature_group_version)},\n  prediction_feature_group_version={repr(self.prediction_feature_group_version)},\n  error={repr(self.error)},\n  pending_deployment_ids={repr(self.pending_deployment_ids)},\n  failed_deployment_ids={repr(self.failed_deployment_ids)},\n  metric_configs={repr(self.metric_configs)},\n  feature_group_monitor_configs={repr(self.feature_group_monitor_configs)},\n  metric_types={repr(self.metric_types)},\n  model_version={repr(self.model_version)},\n  batch_prediction_version={repr(self.batch_prediction_version)},\n  eda_configs={repr(self.eda_configs)},\n  training_forecast_config={repr(self.training_forecast_config)},\n  prediction_forecast_config={repr(self.prediction_forecast_config)},\n  forecast_frequency={repr(self.forecast_frequency)})"
+        repr_dict = {f'model_monitor_version': repr(self.model_monitor_version), f'status': repr(self.status), f'model_monitor_id': repr(self.model_monitor_id), f'monitoring_started_at': repr(self.monitoring_started_at), f'monitoring_completed_at': repr(self.monitoring_completed_at), f'training_feature_group_version': repr(self.training_feature_group_version), f'prediction_feature_group_version': repr(self.prediction_feature_group_version), f'error': repr(self.error), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(
+            self.failed_deployment_ids), f'metric_configs': repr(self.metric_configs), f'feature_group_monitor_configs': repr(self.feature_group_monitor_configs), f'metric_types': repr(self.metric_types), f'model_version': repr(self.model_version), f'batch_prediction_version': repr(self.batch_prediction_version), f'eda_configs': repr(self.eda_configs), f'training_forecast_config': repr(self.training_forecast_config), f'prediction_forecast_config': repr(self.prediction_forecast_config), f'forecast_frequency': repr(self.forecast_frequency)}
+        class_name = "ModelMonitorVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

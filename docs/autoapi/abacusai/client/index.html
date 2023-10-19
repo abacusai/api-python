@@ -115,6 +115,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../external_application/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_application</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_drift_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_record</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_document/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_document</span></code></a></li>
@@ -137,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../forecasting_analysis_graph_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_analysis_graph_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_item_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_monitor_item_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_monitor_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
@@ -175,6 +177,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../natural_language_explanation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.natural_language_explanation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_external_application_settings/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_external_application_settings</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_search_result</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_secret</span></code></a></li>
@@ -769,7 +772,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.77.6'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.77.8'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2075,21 +2078,6 @@ encounters an unexpected error while processing the request.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.set_model_objective">
-<span class="sig-name descname"><span class="pre">set_model_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.set_model_objective" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.</p>
-<p>If metric is set to None, then just use the default selection</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The model version to set as the best model.</p></li>
-<li><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The metric to use to determine the best model.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_model_metrics">
 <span class="sig-name descname"><span class="pre">get_model_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_graphs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_model_metrics" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves metrics for all the algorithms trained in this model version.</p>
@@ -2203,21 +2191,6 @@ encounters an unexpected error while processing the request.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../data_prep_logs/index.html#abacusai.data_prep_logs.DataPrepLogs" title="abacusai.data_prep_logs.DataPrepLogs">DataPrepLogs</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.set_default_model_algorithm">
-<span class="sig-name descname"><span class="pre">set_default_model_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_cluster_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.set_default_model_algorithm" title="Permalink to this definition"></a></dt>
-<dd><p>Sets the model’s algorithm to default for all new deployments</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier of the model to set.</p></li>
-<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Algorithm to pin in the model.</p></li>
-<li><p><strong>data_cluster_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Data cluster type to set the lead model for.</p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -3298,40 +3271,6 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="../pipeline_step_version/index.html#abacusai.pipeline_step_version.PipelineStepVersion" title="abacusai.pipeline_step_version.PipelineStepVersion">PipelineStepVersion</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.pause_pipeline_refresh_schedule">
-<span class="sig-name descname"><span class="pre">pause_pipeline_refresh_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.pause_pipeline_refresh_schedule" title="Permalink to this definition"></a></dt>
-<dd><p>Pauses the refresh schedule for a given pipeline.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The id of the pipeline.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Object describing the pipeline.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../pipeline/index.html#abacusai.pipeline.Pipeline" title="abacusai.pipeline.Pipeline">Pipeline</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.resume_pipeline_refresh_schedule">
-<span class="sig-name descname"><span class="pre">resume_pipeline_refresh_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.resume_pipeline_refresh_schedule" title="Permalink to this definition"></a></dt>
-<dd><p>Resumes the refresh schedule for a given pipeline.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The id of the pipeline.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Object describing the pipeline.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../pipeline/index.html#abacusai.pipeline.Pipeline" title="abacusai.pipeline.Pipeline">Pipeline</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -4796,6 +4735,45 @@ If the request is from the abacus.ai app, the response will be streamed to the U
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient._get_doc_retriver_deployment_info">
+<span class="sig-name descname"><span class="pre">_get_doc_retriver_deployment_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient._get_doc_retriver_deployment_info" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_matching_documents">
+<span class="sig-name descname"><span class="pre">get_matching_documents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_matching_documents" title="Permalink to this definition"></a></dt>
+<dd><p>Lookup document retrievers and return the matching documents from the document retriever deployed with given query.</p>
+<p>Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p></li>
+<li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The query to search for.</p></li>
+<li><p><strong>filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrieved search results.</p></li>
+<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the number of results to the value specified.</p></li>
+<li><p><strong>result_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – If provided, will limit the column properties present in each result to those specified in this list.</p></li>
+<li><p><strong>max_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the total number of words in the results to the value specified.</p></li>
+<li><p><strong>num_retrieval_margin_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will add this number of words from left and right of the returned chunks.</p></li>
+<li><p><strong>max_words_per_chunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The relevant documentation results found from the document retriever.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../document_retriever_lookup_result/index.html#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult">DocumentRetrieverLookupResult</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -7312,6 +7290,21 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_model_objective">
+<span class="sig-name descname"><span class="pre">set_model_objective</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_model_objective" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.</p>
+<p>If metric is set to None, then just use the default selection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The model version to set as the best model.</p></li>
+<li><p><strong>metric</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The metric to use to determine the best model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.set_model_prediction_params">
 <span class="sig-name descname"><span class="pre">set_model_prediction_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_model_prediction_params" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the model prediction config for the model</p>
@@ -7398,6 +7391,21 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../feature_group/index.html#abacusai.feature_group.FeatureGroup" title="abacusai.feature_group.FeatureGroup">FeatureGroup</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_default_model_algorithm">
+<span class="sig-name descname"><span class="pre">set_default_model_algorithm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_cluster_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_default_model_algorithm" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the model’s algorithm to default for all new deployments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier of the model to set.</p></li>
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Algorithm to pin in the model.</p></li>
+<li><p><strong>data_cluster_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Data cluster type to set the lead model for.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -9183,6 +9191,36 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.lookup_matches">
+<span class="sig-name descname"><span class="pre">lookup_matches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.lookup_matches" title="Permalink to this definition"></a></dt>
+<dd><p>Lookup document retrievers and return the matching documents from the document retriever deployed with given query.</p>
+<p>Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments within this project, making it safe to embed this model in an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier for the deployment created under the project.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The query to search for.</p></li>
+<li><p><strong>filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrieved search results.</p></li>
+<li><p><strong>num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the number of results to the value specified.</p></li>
+<li><p><strong>result_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – If provided, will limit the column properties present in each result to those specified in this list.</p></li>
+<li><p><strong>max_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the total number of words in the results to the value specified.</p></li>
+<li><p><strong>num_retrieval_margin_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will add this number of words from left and right of the returned chunks.</p></li>
+<li><p><strong>max_words_per_chunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The relevant documentation results found from the document retriever.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../document_retriever_lookup_result/index.html#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult">DocumentRetrieverLookupResult</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_batch_prediction">
 <span class="sig-name descname"><span class="pre">create_batch_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_prediction_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explanations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_output_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_input_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_prediction_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv_explanations_prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_includes_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_input_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_feature_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_batch_prediction" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a batch prediction job description for the given deployment.</p>
@@ -10082,6 +10120,40 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.pause_pipeline_refresh_schedule">
+<span class="sig-name descname"><span class="pre">pause_pipeline_refresh_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.pause_pipeline_refresh_schedule" title="Permalink to this definition"></a></dt>
+<dd><p>Pauses the refresh schedule for a given pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The id of the pipeline.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../pipeline/index.html#abacusai.pipeline.Pipeline" title="abacusai.pipeline.Pipeline">Pipeline</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.resume_pipeline_refresh_schedule">
+<span class="sig-name descname"><span class="pre">resume_pipeline_refresh_schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.resume_pipeline_refresh_schedule" title="Permalink to this definition"></a></dt>
+<dd><p>Resumes the refresh schedule for a given pipeline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pipeline_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The id of the pipeline.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the pipeline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../pipeline/index.html#abacusai.pipeline.Pipeline" title="abacusai.pipeline.Pipeline">Pipeline</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_graph_dashboard">
 <span class="sig-name descname"><span class="pre">create_graph_dashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">python_function_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_graph_dashboard" title="Permalink to this definition"></a></dt>
 <dd><p>Create a plot dashboard given selected python plots</p>
@@ -10615,6 +10687,23 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.clear_deployment_conversation">
+<span class="sig-name descname"><span class="pre">clear_deployment_conversation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_message_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.clear_deployment_conversation" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the message history of a Deployment Conversation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_conversation_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier associated with the deployment conversation.</p></li>
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The external session id associated with the deployment conversation.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token to authenticate access to the deployment. This is required if not logged in.</p></li>
+<li><p><strong>user_message_indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.set_deployment_conversation_feedback">
 <span class="sig-name descname"><span class="pre">set_deployment_conversation_feedback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_conversation_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_useful</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_not_useful</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_deployment_conversation_feedback" title="Permalink to this definition"></a></dt>
 <dd><p>Sets a deployment conversation message as useful or not useful</p>
@@ -11023,35 +11112,6 @@ feature groups for those input feature groups.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>vector_store_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_matching_documents">
-<span class="sig-name descname"><span class="pre">get_matching_documents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document_retriever_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_retrieval_margin_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_words_per_chunk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_matching_documents" title="Permalink to this definition"></a></dt>
-<dd><p>Lookup document retrievers and return the matching documents from the document retriever deployed with given query.</p>
-<p>Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
-from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
-are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>document_retriever_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – A unique string identifier associated with the document retriever.</p></li>
-<li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The query to search for.</p></li>
-<li><p><strong>filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – A dictionary mapping column names to a list of values to restrict the retrieved search results.</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the number of results to the value specified.</p></li>
-<li><p><strong>result_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – If provided, will limit the column properties present in each result to those specified in this list.</p></li>
-<li><p><strong>max_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the total number of words in the results to the value specified.</p></li>
-<li><p><strong>num_retrieval_margin_words</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will add this number of words from left and right of the returned chunks.</p></li>
-<li><p><strong>max_words_per_chunk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The relevant documentation results found from the document retriever.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../document_retriever_lookup_result/index.html#abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult" title="abacusai.document_retriever_lookup_result.DocumentRetrieverLookupResult">DocumentRetrieverLookupResult</a>]</p>
 </dd>
 </dl>
 </dd></dl>

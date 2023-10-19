@@ -31,7 +31,12 @@ class CodeSource(AbstractApiClass):
         self.module_dependencies = moduleDependencies
 
     def __repr__(self):
-        return f"CodeSource(source_type={repr(self.source_type)},\n  source_code={repr(self.source_code)},\n  application_connector_id={repr(self.application_connector_id)},\n  application_connector_info={repr(self.application_connector_info)},\n  package_requirements={repr(self.package_requirements)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  publishing_msg={repr(self.publishing_msg)},\n  module_dependencies={repr(self.module_dependencies)})"
+        repr_dict = {f'source_type': repr(self.source_type), f'source_code': repr(self.source_code), f'application_connector_id': repr(self.application_connector_id), f'application_connector_info': repr(
+            self.application_connector_info), f'package_requirements': repr(self.package_requirements), f'status': repr(self.status), f'error': repr(self.error), f'publishing_msg': repr(self.publishing_msg), f'module_dependencies': repr(self.module_dependencies)}
+        class_name = "CodeSource"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -17,7 +17,12 @@ class FeatureGroupTemplateVariableOptions(AbstractApiClass):
         self.user_feedback = userFeedback
 
     def __repr__(self):
-        return f"FeatureGroupTemplateVariableOptions(template_variable_options={repr(self.template_variable_options)},\n  user_feedback={repr(self.user_feedback)})"
+        repr_dict = {f'template_variable_options': repr(
+            self.template_variable_options), f'user_feedback': repr(self.user_feedback)}
+        class_name = "FeatureGroupTemplateVariableOptions"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

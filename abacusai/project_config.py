@@ -17,7 +17,11 @@ class ProjectConfig(AbstractApiClass):
         self.config = config
 
     def __repr__(self):
-        return f"ProjectConfig(type={repr(self.type)},\n  config={repr(self.config)})"
+        repr_dict = {f'type': repr(self.type), f'config': repr(self.config)}
+        class_name = "ProjectConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

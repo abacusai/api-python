@@ -23,7 +23,12 @@ class ModelMonitorSummary(AbstractApiClass):
         self.alerts = alerts
 
     def __repr__(self):
-        return f"ModelMonitorSummary(model_accuracy={repr(self.model_accuracy)},\n  model_drift={repr(self.model_drift)},\n  data_integrity={repr(self.data_integrity)},\n  bias_violations={repr(self.bias_violations)},\n  alerts={repr(self.alerts)})"
+        repr_dict = {f'model_accuracy': repr(self.model_accuracy), f'model_drift': repr(self.model_drift), f'data_integrity': repr(
+            self.data_integrity), f'bias_violations': repr(self.bias_violations), f'alerts': repr(self.alerts)}
+        class_name = "ModelMonitorSummary"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

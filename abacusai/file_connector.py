@@ -21,7 +21,12 @@ class FileConnector(AbstractApiClass):
         self.auth_expires_at = authExpiresAt
 
     def __repr__(self):
-        return f"FileConnector(bucket={repr(self.bucket)},\n  verified={repr(self.verified)},\n  write_permission={repr(self.write_permission)},\n  auth_expires_at={repr(self.auth_expires_at)})"
+        repr_dict = {f'bucket': repr(self.bucket), f'verified': repr(self.verified), f'write_permission': repr(
+            self.write_permission), f'auth_expires_at': repr(self.auth_expires_at)}
+        class_name = "FileConnector"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

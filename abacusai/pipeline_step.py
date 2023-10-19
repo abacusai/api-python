@@ -40,7 +40,12 @@ class PipelineStep(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PipelineStep(pipeline_step_id={repr(self.pipeline_step_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  step_name={repr(self.step_name)},\n  pipeline_name={repr(self.pipeline_name)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  python_function_id={repr(self.python_function_id)},\n  step_dependencies={repr(self.step_dependencies)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  python_function={repr(self.python_function)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'pipeline_step_id': repr(self.pipeline_step_id), f'pipeline_id': repr(self.pipeline_id), f'step_name': repr(self.step_name), f'pipeline_name': repr(self.pipeline_name), f'created_at': repr(self.created_at), f'updated_at': repr(
+            self.updated_at), f'python_function_id': repr(self.python_function_id), f'step_dependencies': repr(self.step_dependencies), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'python_function': repr(self.python_function), f'code_source': repr(self.code_source)}
+        class_name = "PipelineStep"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

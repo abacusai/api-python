@@ -38,7 +38,12 @@ class PipelineVersion(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PipelineVersion(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  pipeline_version={repr(self.pipeline_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  step_versions={repr(self.step_versions)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'pipeline_name': repr(self.pipeline_name), f'pipeline_id': repr(self.pipeline_id), f'pipeline_version': repr(self.pipeline_version), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'completed_at': repr(
+            self.completed_at), f'status': repr(self.status), f'error': repr(self.error), f'pipeline_variable_mappings': repr(self.pipeline_variable_mappings), f'step_versions': repr(self.step_versions), f'code_source': repr(self.code_source)}
+        class_name = "PipelineVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

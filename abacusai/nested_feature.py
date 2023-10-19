@@ -29,7 +29,12 @@ class NestedFeature(AbstractApiClass):
         self.original_name = originalName
 
     def __repr__(self):
-        return f"NestedFeature(name={repr(self.name)},\n  select_clause={repr(self.select_clause)},\n  feature_type={repr(self.feature_type)},\n  feature_mapping={repr(self.feature_mapping)},\n  data_type={repr(self.data_type)},\n  data_use={repr(self.data_use)},\n  source_table={repr(self.source_table)},\n  original_name={repr(self.original_name)})"
+        repr_dict = {f'name': repr(self.name), f'select_clause': repr(self.select_clause), f'feature_type': repr(self.feature_type), f'feature_mapping': repr(
+            self.feature_mapping), f'data_type': repr(self.data_type), f'data_use': repr(self.data_use), f'source_table': repr(self.source_table), f'original_name': repr(self.original_name)}
+        class_name = "NestedFeature"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

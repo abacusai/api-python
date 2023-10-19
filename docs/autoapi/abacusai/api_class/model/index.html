@@ -500,6 +500,8 @@ inheritance.</p>
 <li><p><strong>loss_parameters</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Loss function params in format &lt;key&gt;=&lt;value&gt;;&lt;key&gt;=&lt;value&gt;;…..</p></li>
 <li><p><strong>target_encode_categoricals</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use this to turn target encoding on categorical features on or off.</p></li>
 <li><p><strong>drop_original_categoricals</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.</p></li>
+<li><p><strong>monotonically_increasing_features</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Constrain the model such that it behaves as if the target feature is monotonically increasing with the selected features</p></li>
+<li><p><strong>monotonically_decreasing_features</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Constrain the model such that it behaves as if the target feature is monotonically decreasing with the selected features</p></li>
 <li><p><strong>data_split_feature_group_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specify the table name of the feature group to export training data with the fold column.</p></li>
 <li><p><strong>custom_loss_functions</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Registered custom losses available for selection.</p></li>
 <li><p><strong>custom_metrics</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Registered custom metrics available for selection.</p></li>
@@ -679,6 +681,16 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.RegressionTrainingConfig.drop_original_categoricals">
 <span class="sig-name descname"><span class="pre">drop_original_categoricals</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.RegressionTrainingConfig.drop_original_categoricals" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.RegressionTrainingConfig.monotonically_increasing_features">
+<span class="sig-name descname"><span class="pre">monotonically_increasing_features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.RegressionTrainingConfig.monotonically_increasing_features" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.RegressionTrainingConfig.monotonically_decreasing_features">
+<span class="sig-name descname"><span class="pre">monotonically_decreasing_features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.RegressionTrainingConfig.monotonically_decreasing_features" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

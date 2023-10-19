@@ -49,7 +49,12 @@ class FeatureDriftSummary(AbstractApiClass):
             CategoricalRangeViolation, catViolations)
 
     def __repr__(self):
-        return f"FeatureDriftSummary(feature_index={repr(self.feature_index)},\n  name={repr(self.name)},\n  distance={repr(self.distance)},\n  js_distance={repr(self.js_distance)},\n  ws_distance={repr(self.ws_distance)},\n  ks_statistic={repr(self.ks_statistic)},\n  prediction_drift={repr(self.prediction_drift)},\n  target_column={repr(self.target_column)},\n  data_integrity_timeseries={repr(self.data_integrity_timeseries)},\n  nested_summary={repr(self.nested_summary)},\n  null_violations={repr(self.null_violations)},\n  type_violations={repr(self.type_violations)},\n  range_violations={repr(self.range_violations)},\n  cat_violations={repr(self.cat_violations)})"
+        repr_dict = {f'feature_index': repr(self.feature_index), f'name': repr(self.name), f'distance': repr(self.distance), f'js_distance': repr(self.js_distance), f'ws_distance': repr(self.ws_distance), f'ks_statistic': repr(self.ks_statistic), f'prediction_drift': repr(self.prediction_drift), f'target_column': repr(
+            self.target_column), f'data_integrity_timeseries': repr(self.data_integrity_timeseries), f'nested_summary': repr(self.nested_summary), f'null_violations': repr(self.null_violations), f'type_violations': repr(self.type_violations), f'range_violations': repr(self.range_violations), f'cat_violations': repr(self.cat_violations)}
+        class_name = "FeatureDriftSummary"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

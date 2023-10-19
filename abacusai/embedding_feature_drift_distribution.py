@@ -23,7 +23,12 @@ class EmbeddingFeatureDriftDistribution(AbstractApiClass):
         self.average_drift = client._build_class(DriftTypesValue, averageDrift)
 
     def __repr__(self):
-        return f"EmbeddingFeatureDriftDistribution(distance={repr(self.distance)},\n  js_distance={repr(self.js_distance)},\n  ws_distance={repr(self.ws_distance)},\n  ks_statistic={repr(self.ks_statistic)},\n  average_drift={repr(self.average_drift)})"
+        repr_dict = {f'distance': repr(self.distance), f'js_distance': repr(self.js_distance), f'ws_distance': repr(
+            self.ws_distance), f'ks_statistic': repr(self.ks_statistic), f'average_drift': repr(self.average_drift)}
+        class_name = "EmbeddingFeatureDriftDistribution"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -19,7 +19,12 @@ class DeploymentAuthToken(AbstractApiClass):
         self.name = name
 
     def __repr__(self):
-        return f"DeploymentAuthToken(deployment_token={repr(self.deployment_token)},\n  created_at={repr(self.created_at)},\n  name={repr(self.name)})"
+        repr_dict = {f'deployment_token': repr(self.deployment_token), f'created_at': repr(
+            self.created_at), f'name': repr(self.name)}
+        class_name = "DeploymentAuthToken"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

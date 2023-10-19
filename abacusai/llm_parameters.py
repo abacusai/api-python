@@ -15,7 +15,11 @@ class LlmParameters(AbstractApiClass):
         self.parameters = parameters
 
     def __repr__(self):
-        return f"LlmParameters(parameters={repr(self.parameters)})"
+        repr_dict = {f'parameters': repr(self.parameters)}
+        class_name = "LlmParameters"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

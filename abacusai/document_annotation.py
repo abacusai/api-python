@@ -21,7 +21,12 @@ class DocumentAnnotation(AbstractApiClass):
         self.count = count
 
     def __repr__(self):
-        return f"DocumentAnnotation(annotation={repr(self.annotation)},\n  bounding_box={repr(self.bounding_box)},\n  created_at={repr(self.created_at)},\n  count={repr(self.count)})"
+        repr_dict = {f'annotation': repr(self.annotation), f'bounding_box': repr(
+            self.bounding_box), f'created_at': repr(self.created_at), f'count': repr(self.count)}
+        class_name = "DocumentAnnotation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

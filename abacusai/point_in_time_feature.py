@@ -33,7 +33,12 @@ class PointInTimeFeature(AbstractApiClass):
         self.group_name = groupName
 
     def __repr__(self):
-        return f"PointInTimeFeature(history_table_name={repr(self.history_table_name)},\n  aggregation_keys={repr(self.aggregation_keys)},\n  timestamp_key={repr(self.timestamp_key)},\n  historical_timestamp_key={repr(self.historical_timestamp_key)},\n  lookback_window_seconds={repr(self.lookback_window_seconds)},\n  lookback_window_lag_seconds={repr(self.lookback_window_lag_seconds)},\n  lookback_count={repr(self.lookback_count)},\n  lookback_until_position={repr(self.lookback_until_position)},\n  expression={repr(self.expression)},\n  group_name={repr(self.group_name)})"
+        repr_dict = {f'history_table_name': repr(self.history_table_name), f'aggregation_keys': repr(self.aggregation_keys), f'timestamp_key': repr(self.timestamp_key), f'historical_timestamp_key': repr(self.historical_timestamp_key), f'lookback_window_seconds': repr(
+            self.lookback_window_seconds), f'lookback_window_lag_seconds': repr(self.lookback_window_lag_seconds), f'lookback_count': repr(self.lookback_count), f'lookback_until_position': repr(self.lookback_until_position), f'expression': repr(self.expression), f'group_name': repr(self.group_name)}
+        class_name = "PointInTimeFeature"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

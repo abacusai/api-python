@@ -19,7 +19,12 @@ class EdaFeatureCollinearity(AbstractApiClass):
         self.feature_collinearity = featureCollinearity
 
     def __repr__(self):
-        return f"EdaFeatureCollinearity(selected_feature={repr(self.selected_feature)},\n  sorted_column_names={repr(self.sorted_column_names)},\n  feature_collinearity={repr(self.feature_collinearity)})"
+        repr_dict = {f'selected_feature': repr(self.selected_feature), f'sorted_column_names': repr(
+            self.sorted_column_names), f'feature_collinearity': repr(self.feature_collinearity)}
+        class_name = "EdaFeatureCollinearity"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

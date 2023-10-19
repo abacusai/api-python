@@ -112,34 +112,6 @@ Classes
       :rtype: list[DocumentRetrieverVersion]
 
 
-   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
-
-      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
-
-      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
-      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
-      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
-
-
-      :param query: The query to search for.
-      :type query: str
-      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
-      :type filters: dict
-      :param limit: If provided, will limit the number of results to the value specified.
-      :type limit: int
-      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
-      :type result_columns: list
-      :param max_words: If provided, will limit the total number of words in the results to the value specified.
-      :type max_words: int
-      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
-      :type num_retrieval_margin_words: int
-      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
-      :type max_words_per_chunk: int
-
-      :returns: The relevant documentation results found from the document retriever.
-      :rtype: list[DocumentRetrieverLookupResult]
-
-
    .. py:method:: get_document_snippet(document_id, start_word_index = None, end_word_index = None)
 
       Get a snippet from documents in the document retriever.
@@ -177,6 +149,34 @@ Classes
 
       :returns: A string describing the status of a document retriever (pending, complete, etc.).
       :rtype: str
+
+
+   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+
+      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+      :param query: The query to search for.
+      :type query: str
+      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filters: dict
+      :param limit: If provided, will limit the number of results to the value specified.
+      :type limit: int
+      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
+      :type result_columns: list
+      :param max_words: If provided, will limit the total number of words in the results to the value specified.
+      :type max_words: int
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
+      :type num_retrieval_margin_words: int
+      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+      :type max_words_per_chunk: int
+
+      :returns: The relevant documentation results found from the document retriever.
+      :rtype: list[DocumentRetrieverLookupResult]
 
 
 

@@ -35,7 +35,12 @@ class TrainingConfigOptions(AbstractApiClass):
         self.needs_refresh = needsRefresh
 
     def __repr__(self):
-        return f"TrainingConfigOptions(name={repr(self.name)},\n  data_type={repr(self.data_type)},\n  value_type={repr(self.value_type)},\n  value_options={repr(self.value_options)},\n  value={repr(self.value)},\n  default={repr(self.default)},\n  options={repr(self.options)},\n  description={repr(self.description)},\n  required={repr(self.required)},\n  last_model_value={repr(self.last_model_value)},\n  needs_refresh={repr(self.needs_refresh)})"
+        repr_dict = {f'name': repr(self.name), f'data_type': repr(self.data_type), f'value_type': repr(self.value_type), f'value_options': repr(self.value_options), f'value': repr(self.value), f'default': repr(
+            self.default), f'options': repr(self.options), f'description': repr(self.description), f'required': repr(self.required), f'last_model_value': repr(self.last_model_value), f'needs_refresh': repr(self.needs_refresh)}
+        class_name = "TrainingConfigOptions"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

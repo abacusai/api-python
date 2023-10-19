@@ -17,7 +17,12 @@ class EdaChartDescription(AbstractApiClass):
         self.description = description
 
     def __repr__(self):
-        return f"EdaChartDescription(chart_type={repr(self.chart_type)},\n  description={repr(self.description)})"
+        repr_dict = {f'chart_type': repr(
+            self.chart_type), f'description': repr(self.description)}
+        class_name = "EdaChartDescription"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

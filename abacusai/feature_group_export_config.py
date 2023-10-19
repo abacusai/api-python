@@ -30,7 +30,12 @@ class FeatureGroupExportConfig(AbstractApiClass):
         self.additional_id_columns = additionalIdColumns
 
     def __repr__(self):
-        return f"FeatureGroupExportConfig(output_location={repr(self.output_location)},\n  file_format={repr(self.file_format)},\n  database_connector_id={repr(self.database_connector_id)},\n  object_name={repr(self.object_name)},\n  write_mode={repr(self.write_mode)},\n  database_feature_mapping={repr(self.database_feature_mapping)},\n  id_column={repr(self.id_column)},\n  additional_id_columns={repr(self.additional_id_columns)})"
+        repr_dict = {f'output_location': repr(self.output_location), f'file_format': repr(self.file_format), f'database_connector_id': repr(self.database_connector_id), f'object_name': repr(
+            self.object_name), f'write_mode': repr(self.write_mode), f'database_feature_mapping': repr(self.database_feature_mapping), f'id_column': repr(self.id_column), f'additional_id_columns': repr(self.additional_id_columns)}
+        class_name = "FeatureGroupExportConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

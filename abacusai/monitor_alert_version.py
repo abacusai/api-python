@@ -49,7 +49,12 @@ class MonitorAlertVersion(AbstractApiClass):
         self.action_description = actionDescription
 
     def __repr__(self):
-        return f"MonitorAlertVersion(name={repr(self.name)},\n  monitor_alert_version={repr(self.monitor_alert_version)},\n  monitor_alert_id={repr(self.monitor_alert_id)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  alerting_started_at={repr(self.alerting_started_at)},\n  alerting_completed_at={repr(self.alerting_completed_at)},\n  error={repr(self.error)},\n  model_monitor_version={repr(self.model_monitor_version)},\n  condition_config={repr(self.condition_config)},\n  action_config={repr(self.action_config)},\n  alert_result={repr(self.alert_result)},\n  action_status={repr(self.action_status)},\n  action_error={repr(self.action_error)},\n  action_started_at={repr(self.action_started_at)},\n  action_completed_at={repr(self.action_completed_at)},\n  condition_description={repr(self.condition_description)},\n  action_description={repr(self.action_description)})"
+        repr_dict = {f'name': repr(self.name), f'monitor_alert_version': repr(self.monitor_alert_version), f'monitor_alert_id': repr(self.monitor_alert_id), f'status': repr(self.status), f'created_at': repr(self.created_at), f'alerting_started_at': repr(self.alerting_started_at), f'alerting_completed_at': repr(self.alerting_completed_at), f'error': repr(self.error), f'model_monitor_version': repr(self.model_monitor_version), f'condition_config': repr(
+            self.condition_config), f'action_config': repr(self.action_config), f'alert_result': repr(self.alert_result), f'action_status': repr(self.action_status), f'action_error': repr(self.action_error), f'action_started_at': repr(self.action_started_at), f'action_completed_at': repr(self.action_completed_at), f'condition_description': repr(self.condition_description), f'action_description': repr(self.action_description)}
+        class_name = "MonitorAlertVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

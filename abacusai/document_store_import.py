@@ -31,7 +31,12 @@ class DocumentStoreImport(AbstractApiClass):
         self.replace_existing_files = replaceExistingFiles
 
     def __repr__(self):
-        return f"DocumentStoreImport(document_store_import_id={repr(self.document_store_import_id)},\n  document_store_id={repr(self.document_store_id)},\n  importing_started_at={repr(self.importing_started_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  documents_imported={repr(self.documents_imported)},\n  documents_skipped={repr(self.documents_skipped)},\n  upload_id={repr(self.upload_id)},\n  replace_existing_files={repr(self.replace_existing_files)})"
+        repr_dict = {f'document_store_import_id': repr(self.document_store_import_id), f'document_store_id': repr(self.document_store_id), f'importing_started_at': repr(self.importing_started_at), f'status': repr(self.status), f'error': repr(
+            self.error), f'documents_imported': repr(self.documents_imported), f'documents_skipped': repr(self.documents_skipped), f'upload_id': repr(self.upload_id), f'replace_existing_files': repr(self.replace_existing_files)}
+        class_name = "DocumentStoreImport"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

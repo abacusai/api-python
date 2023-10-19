@@ -37,7 +37,12 @@ class PipelineStepVersionReference(AbstractApiClass):
         self.error = error
 
     def __repr__(self):
-        return f"PipelineStepVersionReference(pipeline_step_version_reference_id={repr(self.pipeline_step_version_reference_id)},\n  pipeline_step_version={repr(self.pipeline_step_version)},\n  object_type={repr(self.object_type)},\n  dataset_version={repr(self.dataset_version)},\n  model_version={repr(self.model_version)},\n  deployment_version={repr(self.deployment_version)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  model_monitor_version={repr(self.model_monitor_version)},\n  notebook_version={repr(self.notebook_version)},\n  feature_group_version={repr(self.feature_group_version)},\n  status={repr(self.status)},\n  error={repr(self.error)})"
+        repr_dict = {f'pipeline_step_version_reference_id': repr(self.pipeline_step_version_reference_id), f'pipeline_step_version': repr(self.pipeline_step_version), f'object_type': repr(self.object_type), f'dataset_version': repr(self.dataset_version), f'model_version': repr(self.model_version), f'deployment_version': repr(
+            self.deployment_version), f'batch_prediction_id': repr(self.batch_prediction_id), f'model_monitor_version': repr(self.model_monitor_version), f'notebook_version': repr(self.notebook_version), f'feature_group_version': repr(self.feature_group_version), f'status': repr(self.status), f'error': repr(self.error)}
+        class_name = "PipelineStepVersionReference"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

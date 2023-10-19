@@ -16,7 +16,11 @@ class PipelineVersionLogs(AbstractApiClass):
         self.step_logs = client._build_class(PipelineStepVersionLogs, stepLogs)
 
     def __repr__(self):
-        return f"PipelineVersionLogs(step_logs={repr(self.step_logs)})"
+        repr_dict = {f'step_logs': repr(self.step_logs)}
+        class_name = "PipelineVersionLogs"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

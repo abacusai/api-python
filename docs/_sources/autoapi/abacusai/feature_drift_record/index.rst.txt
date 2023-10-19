@@ -1,0 +1,53 @@
+:py:mod:`abacusai.feature_drift_record`
+=======================================
+
+.. py:module:: abacusai.feature_drift_record
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.feature_drift_record.FeatureDriftRecord
+
+
+
+
+.. py:class:: FeatureDriftRecord(client, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Value of each type of drift
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: Name of feature.
+   :type name: str
+   :param distance: Symmetric sum of KL divergences between the training distribution and the range of values in the specified window.
+   :type distance: float
+   :param jsDistance: JS divergence between the training distribution and the range of values in the specified window.
+   :type jsDistance: float
+   :param wsDistance: Wasserstein distance between the training distribution and the range of values in the specified window.
+   :type wsDistance: float
+   :param ksStatistic: Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
+   :type ksStatistic: float
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

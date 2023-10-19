@@ -24,7 +24,12 @@ class LlmExecutionResult(AbstractApiClass):
         self.preview = client._build_class(LlmExecutionPreview, preview)
 
     def __repr__(self):
-        return f"LlmExecutionResult(status={repr(self.status)},\n  error={repr(self.error)},\n  feature_group_operation={repr(self.feature_group_operation)},\n  preview={repr(self.preview)})"
+        repr_dict = {f'status': repr(self.status), f'error': repr(self.error), f'feature_group_operation': repr(
+            self.feature_group_operation), f'preview': repr(self.preview)}
+        class_name = "LlmExecutionResult"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

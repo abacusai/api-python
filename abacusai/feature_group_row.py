@@ -23,7 +23,12 @@ class FeatureGroupRow(AbstractApiClass):
         self.contents = contents
 
     def __repr__(self):
-        return f"FeatureGroupRow(feature_group_id={repr(self.feature_group_id)},\n  primary_key={repr(self.primary_key)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  contents={repr(self.contents)})"
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'primary_key': repr(self.primary_key), f'created_at': repr(
+            self.created_at), f'updated_at': repr(self.updated_at), f'contents': repr(self.contents)}
+        class_name = "FeatureGroupRow"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

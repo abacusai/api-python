@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,6 +32,10 @@ Classes
    :type text: str
    :param timestamp: The timestamp at which the message was sent
    :type timestamp: str
+   :param messageIndex: The index of the message in the conversation
+   :type messageIndex: int
+   :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.
+   :type regenerateAttempt: int
    :param modelVersion: The model instance id associated with the message.
    :type modelVersion: str
    :param searchResults: The search results for the message.

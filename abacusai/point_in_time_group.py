@@ -36,7 +36,12 @@ class PointInTimeGroup(AbstractApiClass):
         self.features = client._build_class(PointInTimeGroupFeature, features)
 
     def __repr__(self):
-        return f"PointInTimeGroup(group_name={repr(self.group_name)},\n  window_key={repr(self.window_key)},\n  aggregation_keys={repr(self.aggregation_keys)},\n  lookback_window={repr(self.lookback_window)},\n  lookback_window_lag={repr(self.lookback_window_lag)},\n  lookback_count={repr(self.lookback_count)},\n  lookback_until_position={repr(self.lookback_until_position)},\n  history_table_name={repr(self.history_table_name)},\n  history_window_key={repr(self.history_window_key)},\n  history_aggregation_keys={repr(self.history_aggregation_keys)},\n  features={repr(self.features)})"
+        repr_dict = {f'group_name': repr(self.group_name), f'window_key': repr(self.window_key), f'aggregation_keys': repr(self.aggregation_keys), f'lookback_window': repr(self.lookback_window), f'lookback_window_lag': repr(self.lookback_window_lag), f'lookback_count': repr(
+            self.lookback_count), f'lookback_until_position': repr(self.lookback_until_position), f'history_table_name': repr(self.history_table_name), f'history_window_key': repr(self.history_window_key), f'history_aggregation_keys': repr(self.history_aggregation_keys), f'features': repr(self.features)}
+        class_name = "PointInTimeGroup"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

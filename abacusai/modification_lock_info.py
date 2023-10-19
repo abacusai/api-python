@@ -19,7 +19,12 @@ class ModificationLockInfo(AbstractApiClass):
         self.organization_groups = organizationGroups
 
     def __repr__(self):
-        return f"ModificationLockInfo(modification_lock={repr(self.modification_lock)},\n  user_emails={repr(self.user_emails)},\n  organization_groups={repr(self.organization_groups)})"
+        repr_dict = {f'modification_lock': repr(self.modification_lock), f'user_emails': repr(
+            self.user_emails), f'organization_groups': repr(self.organization_groups)}
+        class_name = "ModificationLockInfo"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

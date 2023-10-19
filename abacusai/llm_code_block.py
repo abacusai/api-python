@@ -23,7 +23,12 @@ class LlmCodeBlock(AbstractApiClass):
         self.valid = valid
 
     def __repr__(self):
-        return f"LlmCodeBlock(language={repr(self.language)},\n  code={repr(self.code)},\n  start={repr(self.start)},\n  end={repr(self.end)},\n  valid={repr(self.valid)})"
+        repr_dict = {f'language': repr(self.language), f'code': repr(self.code), f'start': repr(
+            self.start), f'end': repr(self.end), f'valid': repr(self.valid)}
+        class_name = "LlmCodeBlock"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

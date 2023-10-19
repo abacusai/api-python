@@ -1,7 +1,8 @@
 import io
-from typing import Dict
+from typing import Dict, List
 
 from .client import BaseApiClient, ClientOptions
+from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 
 
 class PredictionClient(BaseApiClient):
@@ -631,3 +632,28 @@ class PredictionClient(BaseApiClient):
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files={'blob': blob}, server_override=prediction_url)
+
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
+        """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments within this project, making it safe to embed this model in an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            data (str): The query to search for.
+            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            num (int): If provided, will limit the number of results to the value specified.
+            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
+            max_words (int): If provided, will limit the total number of words in the results to the value specified.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
+            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+
+        Returns:
+            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)

@@ -59,7 +59,12 @@ class FeatureGroupVersion(AbstractApiClass):
             IndexingConfig, indexingConfig)
 
     def __repr__(self):
-        return f"FeatureGroupVersion(feature_group_version={repr(self.feature_group_version)},\n  feature_group_id={repr(self.feature_group_id)},\n  sql={repr(self.sql)},\n  source_tables={repr(self.source_tables)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  deployable={repr(self.deployable)},\n  cpu_size={repr(self.cpu_size)},\n  memory={repr(self.memory)},\n  use_original_csv_names={repr(self.use_original_csv_names)},\n  python_function_bindings={repr(self.python_function_bindings)},\n  indexing_config_warning_msg={repr(self.indexing_config_warning_msg)},\n  features={repr(self.features)},\n  point_in_time_groups={repr(self.point_in_time_groups)},\n  code_source={repr(self.code_source)},\n  annotation_config={repr(self.annotation_config)},\n  indexing_config={repr(self.indexing_config)})"
+        repr_dict = {f'feature_group_version': repr(self.feature_group_version), f'feature_group_id': repr(self.feature_group_id), f'sql': repr(self.sql), f'source_tables': repr(self.source_tables), f'created_at': repr(self.created_at), f'status': repr(self.status), f'error': repr(self.error), f'deployable': repr(self.deployable), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'use_original_csv_names': repr(
+            self.use_original_csv_names), f'python_function_bindings': repr(self.python_function_bindings), f'indexing_config_warning_msg': repr(self.indexing_config_warning_msg), f'features': repr(self.features), f'point_in_time_groups': repr(self.point_in_time_groups), f'code_source': repr(self.code_source), f'annotation_config': repr(self.annotation_config), f'indexing_config': repr(self.indexing_config)}
+        class_name = "FeatureGroupVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

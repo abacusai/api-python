@@ -21,7 +21,12 @@ class NaturalLanguageExplanation(AbstractApiClass):
         self.html_explanation = htmlExplanation
 
     def __repr__(self):
-        return f"NaturalLanguageExplanation(short_explanation={repr(self.short_explanation)},\n  long_explanation={repr(self.long_explanation)},\n  is_outdated={repr(self.is_outdated)},\n  html_explanation={repr(self.html_explanation)})"
+        repr_dict = {f'short_explanation': repr(self.short_explanation), f'long_explanation': repr(
+            self.long_explanation), f'is_outdated': repr(self.is_outdated), f'html_explanation': repr(self.html_explanation)}
+        class_name = "NaturalLanguageExplanation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

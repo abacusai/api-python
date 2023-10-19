@@ -17,7 +17,12 @@ class FileConnectorVerification(AbstractApiClass):
         self.write_permission = writePermission
 
     def __repr__(self):
-        return f"FileConnectorVerification(verified={repr(self.verified)},\n  write_permission={repr(self.write_permission)})"
+        repr_dict = {f'verified': repr(
+            self.verified), f'write_permission': repr(self.write_permission)}
+        class_name = "FileConnectorVerification"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

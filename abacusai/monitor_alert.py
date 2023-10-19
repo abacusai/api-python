@@ -38,7 +38,12 @@ class MonitorAlert(AbstractApiClass):
             MonitorAlertVersion, latestMonitorAlertVersion)
 
     def __repr__(self):
-        return f"MonitorAlert(name={repr(self.name)},\n  monitor_alert_id={repr(self.monitor_alert_id)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  condition_config={repr(self.condition_config)},\n  action_config={repr(self.action_config)},\n  condition_description={repr(self.condition_description)},\n  action_description={repr(self.action_description)},\n  latest_monitor_alert_version={repr(self.latest_monitor_alert_version)})"
+        repr_dict = {f'name': repr(self.name), f'monitor_alert_id': repr(self.monitor_alert_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_monitor_id': repr(self.model_monitor_id), f'condition_config': repr(
+            self.condition_config), f'action_config': repr(self.action_config), f'condition_description': repr(self.condition_description), f'action_description': repr(self.action_description), f'latest_monitor_alert_version': repr(self.latest_monitor_alert_version)}
+        class_name = "MonitorAlert"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

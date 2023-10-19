@@ -193,6 +193,21 @@ Classes
    .. py:method:: _repr_html_()
 
 
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -724,6 +739,21 @@ Classes
    .. py:method:: _repr_html_()
 
 
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -812,6 +842,21 @@ Classes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()
@@ -924,6 +969,21 @@ Classes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()
@@ -2649,6 +2709,21 @@ Classes
    .. py:method:: _repr_html_()
 
 
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -2896,6 +2971,21 @@ Classes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()
@@ -3287,6 +3377,10 @@ Classes
    :type target_encode_categoricals: bool
    :param drop_original_categoricals: This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
    :type drop_original_categoricals: bool
+   :param monotonically_increasing_features: Constrain the model such that it behaves as if the target feature is monotonically increasing with the selected features
+   :type monotonically_increasing_features: List[str]
+   :param monotonically_decreasing_features: Constrain the model such that it behaves as if the target feature is monotonically decreasing with the selected features
+   :type monotonically_decreasing_features: List[str]
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
    :param custom_loss_functions: Registered custom losses available for selection.
@@ -3466,6 +3560,16 @@ Classes
 
    .. py:attribute:: drop_original_categoricals
       :type: bool
+
+      
+
+   .. py:attribute:: monotonically_increasing_features
+      :type: List[str]
+
+      
+
+   .. py:attribute:: monotonically_decreasing_features
+      :type: List[str]
 
       
 
@@ -4668,6 +4772,21 @@ Classes
    .. py:method:: _repr_html_()
 
 
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -4713,6 +4832,13 @@ Classes
 
       
 
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: ApiClass
 
@@ -4745,6 +4871,21 @@ Classes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()
@@ -5022,6 +5163,21 @@ Classes
    .. py:method:: _repr_html_()
 
 
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -5117,6 +5273,21 @@ Classes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()
@@ -5229,6 +5400,21 @@ Classes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()

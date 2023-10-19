@@ -24,7 +24,12 @@ class PredictionInput(AbstractApiClass):
         self.datasets = client._build_class(PredictionDataset, datasets)
 
     def __repr__(self):
-        return f"PredictionInput(feature_group_dataset_ids={repr(self.feature_group_dataset_ids)},\n  dataset_id_remap={repr(self.dataset_id_remap)},\n  feature_groups={repr(self.feature_groups)},\n  datasets={repr(self.datasets)})"
+        repr_dict = {f'feature_group_dataset_ids': repr(self.feature_group_dataset_ids), f'dataset_id_remap': repr(
+            self.dataset_id_remap), f'feature_groups': repr(self.feature_groups), f'datasets': repr(self.datasets)}
+        class_name = "PredictionInput"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

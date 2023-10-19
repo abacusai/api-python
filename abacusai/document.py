@@ -22,7 +22,12 @@ class Document(AbstractApiClass):
         self.annotations = client._build_class(DocumentAnnotation, annotations)
 
     def __repr__(self):
-        return f"Document(key={repr(self.key)},\n  file_size={repr(self.file_size)},\n  created_at={repr(self.created_at)},\n  annotations={repr(self.annotations)})"
+        repr_dict = {f'key': repr(self.key), f'file_size': repr(self.file_size), f'created_at': repr(
+            self.created_at), f'annotations': repr(self.annotations)}
+        class_name = "Document"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

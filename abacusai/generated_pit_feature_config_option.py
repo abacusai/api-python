@@ -21,7 +21,12 @@ class GeneratedPitFeatureConfigOption(AbstractApiClass):
         self.description = description
 
     def __repr__(self):
-        return f"GeneratedPitFeatureConfigOption(name={repr(self.name)},\n  display_name={repr(self.display_name)},\n  default={repr(self.default)},\n  description={repr(self.description)})"
+        repr_dict = {f'name': repr(self.name), f'display_name': repr(
+            self.display_name), f'default': repr(self.default), f'description': repr(self.description)}
+        class_name = "GeneratedPitFeatureConfigOption"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

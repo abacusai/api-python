@@ -23,7 +23,12 @@ class DocumentRetrieverLookupResult(AbstractApiClass):
         self.bounding_boxes = boundingBoxes
 
     def __repr__(self):
-        return f"DocumentRetrieverLookupResult(document={repr(self.document)},\n  score={repr(self.score)},\n  properties={repr(self.properties)},\n  pages={repr(self.pages)},\n  bounding_boxes={repr(self.bounding_boxes)})"
+        repr_dict = {f'document': repr(self.document), f'score': repr(self.score), f'properties': repr(
+            self.properties), f'pages': repr(self.pages), f'bounding_boxes': repr(self.bounding_boxes)}
+        class_name = "DocumentRetrieverLookupResult"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

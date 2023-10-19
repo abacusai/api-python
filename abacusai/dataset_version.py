@@ -35,7 +35,12 @@ class DatasetVersion(AbstractApiClass):
         self.invalid_records = invalidRecords
 
     def __repr__(self):
-        return f"DatasetVersion(dataset_version={repr(self.dataset_version)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  size={repr(self.size)},\n  row_count={repr(self.row_count)},\n  created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  incremental_queried_at={repr(self.incremental_queried_at)},\n  upload_id={repr(self.upload_id)},\n  merge_file_schemas={repr(self.merge_file_schemas)},\n  invalid_records={repr(self.invalid_records)})"
+        repr_dict = {f'dataset_version': repr(self.dataset_version), f'status': repr(self.status), f'dataset_id': repr(self.dataset_id), f'size': repr(self.size), f'row_count': repr(self.row_count), f'created_at': repr(self.created_at), f'error': repr(
+            self.error), f'incremental_queried_at': repr(self.incremental_queried_at), f'upload_id': repr(self.upload_id), f'merge_file_schemas': repr(self.merge_file_schemas), f'invalid_records': repr(self.invalid_records)}
+        class_name = "DatasetVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

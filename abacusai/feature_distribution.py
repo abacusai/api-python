@@ -27,7 +27,12 @@ class FeatureDistribution(AbstractApiClass):
         self.prediction_statistics = predictionStatistics
 
     def __repr__(self):
-        return f"FeatureDistribution(type={repr(self.type)},\n  training_distribution={repr(self.training_distribution)},\n  prediction_distribution={repr(self.prediction_distribution)},\n  numerical_training_distribution={repr(self.numerical_training_distribution)},\n  numerical_prediction_distribution={repr(self.numerical_prediction_distribution)},\n  training_statistics={repr(self.training_statistics)},\n  prediction_statistics={repr(self.prediction_statistics)})"
+        repr_dict = {f'type': repr(self.type), f'training_distribution': repr(self.training_distribution), f'prediction_distribution': repr(self.prediction_distribution), f'numerical_training_distribution': repr(
+            self.numerical_training_distribution), f'numerical_prediction_distribution': repr(self.numerical_prediction_distribution), f'training_statistics': repr(self.training_statistics), f'prediction_statistics': repr(self.prediction_statistics)}
+        class_name = "FeatureDistribution"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

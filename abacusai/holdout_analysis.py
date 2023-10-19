@@ -23,7 +23,12 @@ class HoldoutAnalysis(AbstractApiClass):
         self.model_name = modelName
 
     def __repr__(self):
-        return f"HoldoutAnalysis(holdout_analysis_id={repr(self.holdout_analysis_id)},\n  name={repr(self.name)},\n  feature_group_ids={repr(self.feature_group_ids)},\n  model_id={repr(self.model_id)},\n  model_name={repr(self.model_name)})"
+        repr_dict = {f'holdout_analysis_id': repr(self.holdout_analysis_id), f'name': repr(self.name), f'feature_group_ids': repr(
+            self.feature_group_ids), f'model_id': repr(self.model_id), f'model_name': repr(self.model_name)}
+        class_name = "HoldoutAnalysis"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

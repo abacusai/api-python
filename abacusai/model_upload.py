@@ -43,7 +43,12 @@ class ModelUpload(AbstractApiClass):
         self.multi_catalog_embeddings_upload_id = multiCatalogEmbeddingsUploadId
 
     def __repr__(self):
-        return f"ModelUpload(model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  model_upload_id={repr(self.model_upload_id)},\n  embeddings_upload_id={repr(self.embeddings_upload_id)},\n  artifacts_upload_id={repr(self.artifacts_upload_id)},\n  verifications_upload_id={repr(self.verifications_upload_id)},\n  default_items_upload_id={repr(self.default_items_upload_id)},\n  model_file_upload_id={repr(self.model_file_upload_id)},\n  model_state_upload_id={repr(self.model_state_upload_id)},\n  input_preprocessor_upload_id={repr(self.input_preprocessor_upload_id)},\n  requirements_upload_id={repr(self.requirements_upload_id)},\n  resources_upload_id={repr(self.resources_upload_id)},\n  multi_catalog_embeddings_upload_id={repr(self.multi_catalog_embeddings_upload_id)})"
+        repr_dict = {f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'status': repr(self.status), f'created_at': repr(self.created_at), f'model_upload_id': repr(self.model_upload_id), f'embeddings_upload_id': repr(self.embeddings_upload_id), f'artifacts_upload_id': repr(self.artifacts_upload_id), f'verifications_upload_id': repr(self.verifications_upload_id), f'default_items_upload_id': repr(
+            self.default_items_upload_id), f'model_file_upload_id': repr(self.model_file_upload_id), f'model_state_upload_id': repr(self.model_state_upload_id), f'input_preprocessor_upload_id': repr(self.input_preprocessor_upload_id), f'requirements_upload_id': repr(self.requirements_upload_id), f'resources_upload_id': repr(self.resources_upload_id), f'multi_catalog_embeddings_upload_id': repr(self.multi_catalog_embeddings_upload_id)}
+        class_name = "ModelUpload"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

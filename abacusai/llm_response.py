@@ -24,7 +24,12 @@ class LlmResponse(AbstractApiClass):
         self.code_blocks = client._build_class(LlmCodeBlock, codeBlocks)
 
     def __repr__(self):
-        return f"LlmResponse(content={repr(self.content)},\n  tokens={repr(self.tokens)},\n  stop_reason={repr(self.stop_reason)},\n  llm_name={repr(self.llm_name)},\n  code_blocks={repr(self.code_blocks)})"
+        repr_dict = {f'content': repr(self.content), f'tokens': repr(self.tokens), f'stop_reason': repr(
+            self.stop_reason), f'llm_name': repr(self.llm_name), f'code_blocks': repr(self.code_blocks)}
+        class_name = "LlmResponse"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

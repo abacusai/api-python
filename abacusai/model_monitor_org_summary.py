@@ -29,7 +29,12 @@ class ModelMonitorOrgSummary(AbstractApiClass):
         self.total_starred_monitors = totalStarredMonitors
 
     def __repr__(self):
-        return f"ModelMonitorOrgSummary(summary={repr(self.summary)},\n  feature_drift={repr(self.feature_drift)},\n  label_drift={repr(self.label_drift)},\n  data_integrity={repr(self.data_integrity)},\n  performance={repr(self.performance)},\n  alerts={repr(self.alerts)},\n  monitor_data={repr(self.monitor_data)},\n  total_starred_monitors={repr(self.total_starred_monitors)})"
+        repr_dict = {f'summary': repr(self.summary), f'feature_drift': repr(self.feature_drift), f'label_drift': repr(self.label_drift), f'data_integrity': repr(self.data_integrity), f'performance': repr(
+            self.performance), f'alerts': repr(self.alerts), f'monitor_data': repr(self.monitor_data), f'total_starred_monitors': repr(self.total_starred_monitors)}
+        class_name = "ModelMonitorOrgSummary"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

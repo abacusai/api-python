@@ -23,7 +23,12 @@ class EdaCollinearity(AbstractApiClass):
         self.column_names_x = columnNamesX
 
     def __repr__(self):
-        return f"EdaCollinearity(column_names={repr(self.column_names)},\n  collinearity_matrix={repr(self.collinearity_matrix)},\n  group_feature_dict={repr(self.group_feature_dict)},\n  collinearity_groups={repr(self.collinearity_groups)},\n  column_names_x={repr(self.column_names_x)})"
+        repr_dict = {f'column_names': repr(self.column_names), f'collinearity_matrix': repr(self.collinearity_matrix), f'group_feature_dict': repr(
+            self.group_feature_dict), f'collinearity_groups': repr(self.collinearity_groups), f'column_names_x': repr(self.column_names_x)}
+        class_name = "EdaCollinearity"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

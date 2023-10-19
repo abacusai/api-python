@@ -63,7 +63,12 @@ class Dataset(AbstractApiClass):
             DatasetVersion, latestDatasetVersion)
 
     def __repr__(self):
-        return f"Dataset(dataset_id={repr(self.dataset_id)},\n  source_type={repr(self.source_type)},\n  data_source={repr(self.data_source)},\n  created_at={repr(self.created_at)},\n  ignore_before={repr(self.ignore_before)},\n  ephemeral={repr(self.ephemeral)},\n  lookback_days={repr(self.lookback_days)},\n  database_connector_id={repr(self.database_connector_id)},\n  database_connector_config={repr(self.database_connector_config)},\n  connector_type={repr(self.connector_type)},\n  feature_group_table_name={repr(self.feature_group_table_name)},\n  application_connector_id={repr(self.application_connector_id)},\n  application_connector_config={repr(self.application_connector_config)},\n  incremental={repr(self.incremental)},\n  is_documentset={repr(self.is_documentset)},\n  extract_bounding_boxes={repr(self.extract_bounding_boxes)},\n  merge_file_schemas={repr(self.merge_file_schemas)},\n  reference_only_documentset={repr(self.reference_only_documentset)},\n  schema={repr(self.schema)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_dataset_version={repr(self.latest_dataset_version)})"
+        repr_dict = {f'dataset_id': repr(self.dataset_id), f'source_type': repr(self.source_type), f'data_source': repr(self.data_source), f'created_at': repr(self.created_at), f'ignore_before': repr(self.ignore_before), f'ephemeral': repr(self.ephemeral), f'lookback_days': repr(self.lookback_days), f'database_connector_id': repr(self.database_connector_id), f'database_connector_config': repr(self.database_connector_config), f'connector_type': repr(self.connector_type), f'feature_group_table_name': repr(self.feature_group_table_name), f'application_connector_id': repr(
+            self.application_connector_id), f'application_connector_config': repr(self.application_connector_config), f'incremental': repr(self.incremental), f'is_documentset': repr(self.is_documentset), f'extract_bounding_boxes': repr(self.extract_bounding_boxes), f'merge_file_schemas': repr(self.merge_file_schemas), f'reference_only_documentset': repr(self.reference_only_documentset), f'schema': repr(self.schema), f'refresh_schedules': repr(self.refresh_schedules), f'latest_dataset_version': repr(self.latest_dataset_version)}
+        class_name = "Dataset"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

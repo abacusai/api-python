@@ -17,7 +17,12 @@ class FeatureMapping(AbstractApiClass):
         self.feature_name = featureName
 
     def __repr__(self):
-        return f"FeatureMapping(feature_mapping={repr(self.feature_mapping)},\n  feature_name={repr(self.feature_name)})"
+        repr_dict = {f'feature_mapping': repr(
+            self.feature_mapping), f'feature_name': repr(self.feature_name)}
+        class_name = "FeatureMapping"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

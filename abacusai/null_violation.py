@@ -21,7 +21,12 @@ class NullViolation(AbstractApiClass):
         self.prediction_null_freq = predictionNullFreq
 
     def __repr__(self):
-        return f"NullViolation(name={repr(self.name)},\n  violation={repr(self.violation)},\n  training_null_freq={repr(self.training_null_freq)},\n  prediction_null_freq={repr(self.prediction_null_freq)})"
+        repr_dict = {f'name': repr(self.name), f'violation': repr(self.violation), f'training_null_freq': repr(
+            self.training_null_freq), f'prediction_null_freq': repr(self.prediction_null_freq)}
+        class_name = "NullViolation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

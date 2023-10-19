@@ -19,7 +19,12 @@ class DriftDistributions(AbstractApiClass):
             DriftDistribution, predictionDrift)
 
     def __repr__(self):
-        return f"DriftDistributions(label_drift={repr(self.label_drift)},\n  prediction_drift={repr(self.prediction_drift)})"
+        repr_dict = {f'label_drift': repr(
+            self.label_drift), f'prediction_drift': repr(self.prediction_drift)}
+        class_name = "DriftDistributions"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

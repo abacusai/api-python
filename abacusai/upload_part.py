@@ -17,7 +17,11 @@ class UploadPart(AbstractApiClass):
         self.md5 = md5
 
     def __repr__(self):
-        return f"UploadPart(etag={repr(self.etag)},\n  md5={repr(self.md5)})"
+        repr_dict = {f'etag': repr(self.etag), f'md5': repr(self.md5)}
+        class_name = "UploadPart"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

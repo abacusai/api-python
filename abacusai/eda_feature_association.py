@@ -29,7 +29,12 @@ class EdaFeatureAssociation(AbstractApiClass):
         self.data_columns = dataColumns
 
     def __repr__(self):
-        return f"EdaFeatureAssociation(data={repr(self.data)},\n  is_scatter={repr(self.is_scatter)},\n  is_box_whisker={repr(self.is_box_whisker)},\n  x_axis={repr(self.x_axis)},\n  y_axis={repr(self.y_axis)},\n  x_axis_column_values={repr(self.x_axis_column_values)},\n  y_axis_column_values={repr(self.y_axis_column_values)},\n  data_columns={repr(self.data_columns)})"
+        repr_dict = {f'data': repr(self.data), f'is_scatter': repr(self.is_scatter), f'is_box_whisker': repr(self.is_box_whisker), f'x_axis': repr(self.x_axis), f'y_axis': repr(
+            self.y_axis), f'x_axis_column_values': repr(self.x_axis_column_values), f'y_axis_column_values': repr(self.y_axis_column_values), f'data_columns': repr(self.data_columns)}
+        class_name = "EdaFeatureAssociation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

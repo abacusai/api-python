@@ -511,7 +511,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.77.6'
+    client_version = '0.77.8'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1406,17 +1406,6 @@ class ReadOnlyClient(BaseApiClient):
             Model: Description of the model."""
         return self._call_api('describeModel', 'GET', query_params={'modelId': model_id}, parse_type=Model)
 
-    def set_model_objective(self, model_version: str, metric: str = None):
-        """Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
-
-        If metric is set to None, then just use the default selection
-
-
-        Args:
-            model_version (str): The model version to set as the best model.
-            metric (str): The metric to use to determine the best model."""
-        return self._call_api('setModelObjective', 'GET', query_params={'modelVersion': model_version, 'metric': metric})
-
     def get_model_metrics(self, model_id: str, model_version: str = None, return_graphs: bool = False, validation: bool = False) -> ModelMetrics:
         """Retrieves metrics for all the algorithms trained in this model version.
 
@@ -1488,15 +1477,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[DataPrepLogs]: A list of logs."""
         return self._call_api('getTrainingDataLogs', 'GET', query_params={'modelVersion': model_version}, parse_type=DataPrepLogs)
-
-    def set_default_model_algorithm(self, model_id: str = None, algorithm: str = None, data_cluster_type: str = None):
-        """Sets the model's algorithm to default for all new deployments
-
-        Args:
-            model_id (str): Unique identifier of the model to set.
-            algorithm (str): Algorithm to pin in the model.
-            data_cluster_type (str): Data cluster type to set the lead model for."""
-        return self._call_api('setDefaultModelAlgorithm', 'GET', query_params={'modelId': model_id, 'algorithm': algorithm, 'dataClusterType': data_cluster_type})
 
     def get_training_logs(self, model_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
         """Returns training logs for the model.
@@ -2132,26 +2112,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             PipelineStepVersion: """
         return self._call_api('describePipelineStepVersion', 'GET', query_params={'pipelineStepVersion': pipeline_step_version}, parse_type=PipelineStepVersion)
-
-    def pause_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
-        """Pauses the refresh schedule for a given pipeline.
-
-        Args:
-            pipeline_id (str): The id of the pipeline.
-
-        Returns:
-            Pipeline: Object describing the pipeline."""
-        return self._call_api('pausePipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
-
-    def resume_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
-        """Resumes the refresh schedule for a given pipeline.
-
-        Args:
-            pipeline_id (str): The id of the pipeline.
-
-        Returns:
-            Pipeline: Object describing the pipeline."""
-        return self._call_api('resumePipelineRefreshSchedule', 'GET', query_params={'pipelineId': pipeline_id}, parse_type=Pipeline)
 
     def list_pipeline_version_logs(self, pipeline_version: str) -> PipelineVersionLogs:
         """Gets the logs for the steps in a given pipeline version.
@@ -3484,6 +3444,43 @@ class ApiClient(ReadOnlyClient):
         execute_query = self.execute_async_feature_group_operation(sql)
         execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return self._build_class(LlmExecutionResult, {'error': execute_query.error}) if execute_query.error else execute_query.load_as_pandas()
+
+    def _get_doc_retriver_deployment_info(self, document_retriever_id: str):
+        ttl_seconds = 300  # 5 minutes
+
+        @lru_cache()
+        def _cached_doc_retriver_deployment_info(document_retriever_id: str, ttl_hash: int):
+            info = self._call_api('_getDocRetrieverDeploymentInfo', 'GET', query_params={
+                                  'documentRetrieverId': document_retriever_id})
+            deployment_token = info['deploymentToken']
+            deployment_id = info['deploymentId']
+            return deployment_token, deployment_id
+        return _cached_doc_retriver_deployment_info(document_retriever_id, ttl_hash=time.time() // ttl_seconds)
+
+    def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
+        """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+        Args:
+            document_retriever_id (str): A unique string identifier associated with the document retriever.
+            query (str): The query to search for.
+            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            limit (int): If provided, will limit the number of results to the value specified.
+            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
+            max_words (int): If provided, will limit the total number of words in the results to the value specified.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
+            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+
+        Returns:
+            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
+
+        deployment_token, deployment_id = self._get_doc_retriver_deployment_info(
+            document_retriever_id)
+        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk)
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -5037,6 +5034,17 @@ Creates a new feature group defined as the union of other feature group versions
             Model: The model object corresponding to the updated training config."""
         return self._call_api('setModelTrainingConfig', 'PATCH', query_params={}, body={'modelId': model_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=Model)
 
+    def set_model_objective(self, model_version: str, metric: str = None):
+        """Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
+
+        If metric is set to None, then just use the default selection
+
+
+        Args:
+            model_version (str): The model version to set as the best model.
+            metric (str): The metric to use to determine the best model."""
+        return self._call_api('setModelObjective', 'POST', query_params={}, body={'modelVersion': model_version, 'metric': metric})
+
     def set_model_prediction_params(self, model_id: str, prediction_config: dict) -> Model:
         """Sets the model prediction config for the model
 
@@ -5092,6 +5100,15 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             FeatureGroup: The created feature group."""
         return self._call_api('exportModelArtifactAsFeatureGroup', 'POST', query_params={}, body={'modelVersion': model_version, 'tableName': table_name, 'artifactType': artifact_type}, parse_type=FeatureGroup)
+
+    def set_default_model_algorithm(self, model_id: str = None, algorithm: str = None, data_cluster_type: str = None):
+        """Sets the model's algorithm to default for all new deployments
+
+        Args:
+            model_id (str): Unique identifier of the model to set.
+            algorithm (str): Algorithm to pin in the model.
+            data_cluster_type (str): Data cluster type to set the lead model for."""
+        return self._call_api('setDefaultModelAlgorithm', 'POST', query_params={}, body={'modelId': model_id, 'algorithm': algorithm, 'dataClusterType': data_cluster_type})
 
     def get_custom_train_function_info(self, project_id: str, feature_group_names_for_training: list = None, training_data_parameter_name_override: dict = None, training_config: Union[dict, TrainingConfig] = None, custom_algorithm_config: dict = None) -> CustomTrainFunctionInfo:
         """Returns information about how to call the custom train function.
@@ -6245,6 +6262,31 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files={'blob': blob}, server_override=prediction_url)
 
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
+        """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments within this project, making it safe to embed this model in an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            data (str): The query to search for.
+            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            num (int): If provided, will limit the number of results to the value specified.
+            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
+            max_words (int): If provided, will limit the total number of words in the results to the value specified.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
+            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+
+        Returns:
+            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
+
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
 
@@ -6808,6 +6850,26 @@ Creates a new feature group defined as the union of other feature group versions
             Pipeline: Object describing the pipeline."""
         return self._call_api('unsetPipelineRefreshSchedule', 'PATCH', query_params={}, body={'pipelineId': pipeline_id}, parse_type=Pipeline)
 
+    def pause_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
+        """Pauses the refresh schedule for a given pipeline.
+
+        Args:
+            pipeline_id (str): The id of the pipeline.
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('pausePipelineRefreshSchedule', 'POST', query_params={}, body={'pipelineId': pipeline_id}, parse_type=Pipeline)
+
+    def resume_pipeline_refresh_schedule(self, pipeline_id: str) -> Pipeline:
+        """Resumes the refresh schedule for a given pipeline.
+
+        Args:
+            pipeline_id (str): The id of the pipeline.
+
+        Returns:
+            Pipeline: Object describing the pipeline."""
+        return self._call_api('resumePipelineRefreshSchedule', 'POST', query_params={}, body={'pipelineId': pipeline_id}, parse_type=Pipeline)
+
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
 
@@ -7127,6 +7189,17 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
         return self._proxy_request('deleteDeploymentConversation', 'DELETE', query_params={'deploymentConversationId': deployment_conversation_id, 'deploymentId': deployment_id, 'deploymentToken': deployment_token}, is_sync=True)
 
+    def clear_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None, user_message_indices: list = None):
+        """Clear the message history of a Deployment Conversation.
+
+        Args:
+            deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
+            external_session_id (str): The external session id associated with the deployment conversation.
+            deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
+            deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
+            user_message_indices (list): Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared."""
+        return self._proxy_request('clearDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'userMessageIndices': user_message_indices}, is_sync=True)
+
     def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, deployment_id: str = None, deployment_token: str = None):
         """Sets a deployment conversation message as useful or not useful
 
@@ -7138,7 +7211,7 @@ Creates a new feature group defined as the union of other feature group versions
             feedback (str): Optional feedback on why the message is useful or not useful
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._proxy_request('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback}, is_sync=True)
+        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
 
     def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None, deployment_token: str = None):
         """Rename a Deployment Conversation.
@@ -7384,28 +7457,6 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             vector_store_id (str): A unique string identifier associated with the document retriever."""
         return self._call_api('deleteDocumentRetriever', 'DELETE', query_params={'vectorStoreId': vector_store_id})
-
-    def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
-        """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
-
-        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
-        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
-        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
-
-
-        Args:
-            document_retriever_id (str): A unique string identifier associated with the document retriever.
-            query (str): The query to search for.
-            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
-            limit (int): If provided, will limit the number of results to the value specified.
-            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
-            max_words (int): If provided, will limit the total number of words in the results to the value specified.
-            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
-            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
-
-        Returns:
-            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
-        return self._call_api('getMatchingDocuments', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'query': query, 'filters': filters, 'limit': limit, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk}, parse_type=DocumentRetrieverLookupResult)
 
     def get_document_snippet(self, document_retriever_id: str, document_id: str, start_word_index: int = None, end_word_index: int = None) -> DocumentRetrieverLookupResult:
         """Get a snippet from documents in the document retriever.

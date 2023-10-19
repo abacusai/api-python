@@ -23,7 +23,12 @@ class ChatMessage(AbstractApiClass):
         self.feedback = feedback
 
     def __repr__(self):
-        return f"ChatMessage(role={repr(self.role)},\n  text={repr(self.text)},\n  timestamp={repr(self.timestamp)},\n  is_useful={repr(self.is_useful)},\n  feedback={repr(self.feedback)})"
+        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(
+            self.timestamp), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback)}
+        class_name = "ChatMessage"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -35,7 +35,12 @@ class HoldoutAnalysisVersion(AbstractApiClass):
         self.metric_infos = metricInfos
 
     def __repr__(self):
-        return f"HoldoutAnalysisVersion(holdout_analysis_version={repr(self.holdout_analysis_version)},\n  holdout_analysis_id={repr(self.holdout_analysis_id)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  error={repr(self.error)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  algorithm={repr(self.algorithm)},\n  algo_name={repr(self.algo_name)},\n  metrics={repr(self.metrics)},\n  metric_infos={repr(self.metric_infos)})"
+        repr_dict = {f'holdout_analysis_version': repr(self.holdout_analysis_version), f'holdout_analysis_id': repr(self.holdout_analysis_id), f'created_at': repr(self.created_at), f'status': repr(self.status), f'error': repr(
+            self.error), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'algorithm': repr(self.algorithm), f'algo_name': repr(self.algo_name), f'metrics': repr(self.metrics), f'metric_infos': repr(self.metric_infos)}
+        class_name = "HoldoutAnalysisVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

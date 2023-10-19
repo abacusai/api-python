@@ -21,7 +21,12 @@ class ConcatenationConfig(AbstractApiClass):
         self.skip_materialize = skipMaterialize
 
     def __repr__(self):
-        return f"ConcatenationConfig(concatenated_table={repr(self.concatenated_table)},\n  merge_type={repr(self.merge_type)},\n  replace_until_timestamp={repr(self.replace_until_timestamp)},\n  skip_materialize={repr(self.skip_materialize)})"
+        repr_dict = {f'concatenated_table': repr(self.concatenated_table), f'merge_type': repr(
+            self.merge_type), f'replace_until_timestamp': repr(self.replace_until_timestamp), f'skip_materialize': repr(self.skip_materialize)}
+        class_name = "ConcatenationConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -1,3 +1,5 @@
+from .api_class import DocumentRetrieverConfig
+from .document_retriever_config import DocumentRetrieverConfig
 from .return_class import AbstractApiClass
 
 
@@ -13,9 +15,12 @@ class DocumentRetrieverVersion(AbstractApiClass):
             status (str): The status of creating vector store version.
             featureGroupVersion (str): The unique identifier of the feature group version at which the vector store version is created.
             error (str): The error message when it failed to create the document retriever version.
+            numberOfChunks (int): The number of chunks for the document retriever.
+            embeddingFileSize (int): The size of embedding file for the document retriever.
+            resolvedConfig (DocumentRetrieverConfig): The resolved configurations, such as default settings, for indexing documents.
     """
 
-    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None):
+    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, resolvedConfig={}):
         super().__init__(client, documentRetrieverVersion)
         self.document_retriever_id = documentRetrieverId
         self.document_retriever_version = documentRetrieverVersion
@@ -23,9 +28,18 @@ class DocumentRetrieverVersion(AbstractApiClass):
         self.status = status
         self.feature_group_version = featureGroupVersion
         self.error = error
+        self.number_of_chunks = numberOfChunks
+        self.embedding_file_size = embeddingFileSize
+        self.resolved_config = client._build_class(
+            DocumentRetrieverConfig, resolvedConfig)
 
     def __repr__(self):
-        return f"DocumentRetrieverVersion(document_retriever_id={repr(self.document_retriever_id)},\n  document_retriever_version={repr(self.document_retriever_version)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  feature_group_version={repr(self.feature_group_version)},\n  error={repr(self.error)})"
+        repr_dict = {f'document_retriever_id': repr(self.document_retriever_id), f'document_retriever_version': repr(self.document_retriever_version), f'created_at': repr(self.created_at), f'status': repr(self.status), f'feature_group_version': repr(
+            self.feature_group_version), f'error': repr(self.error), f'number_of_chunks': repr(self.number_of_chunks), f'embedding_file_size': repr(self.embedding_file_size), f'resolved_config': repr(self.resolved_config)}
+        class_name = "DocumentRetrieverVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """
@@ -34,8 +48,8 @@ class DocumentRetrieverVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version,
-                'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version, 'error': self.error}
+        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version':
+                self.feature_group_version, 'error': self.error, 'number_of_chunks': self.number_of_chunks, 'embedding_file_size': self.embedding_file_size, 'resolved_config': self._get_attribute_as_dict(self.resolved_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):

@@ -17,7 +17,11 @@ class LlmExecutionPreview(AbstractApiClass):
         self.sql = sql
 
     def __repr__(self):
-        return f"LlmExecutionPreview(error={repr(self.error)},\n  sql={repr(self.sql)})"
+        repr_dict = {f'error': repr(self.error), f'sql': repr(self.sql)}
+        class_name = "LlmExecutionPreview"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

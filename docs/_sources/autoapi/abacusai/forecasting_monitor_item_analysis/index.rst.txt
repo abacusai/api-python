@@ -1,0 +1,47 @@
+:py:mod:`abacusai.forecasting_monitor_item_analysis`
+====================================================
+
+.. py:module:: abacusai.forecasting_monitor_item_analysis
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.forecasting_monitor_item_analysis.ForecastingMonitorItemAnalysis
+
+
+
+
+.. py:class:: ForecastingMonitorItemAnalysis(client, predictionItemAnalysis={}, trainingItemAnalysis={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Forecasting Monitor Item Analysis of the latest version of the data.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param predictionItemAnalysis: Data showing average, p10, p90, median sales across time for prediction data
+   :type predictionItemAnalysis: ForecastingAnalysisGraphData
+   :param trainingItemAnalysis: Data showing average, p10, p90, median sales across time for training data
+   :type trainingItemAnalysis: ForecastingAnalysisGraphData
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

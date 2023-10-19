@@ -22,7 +22,12 @@ class AppUserGroup(AbstractApiClass):
         self.users = client._build_class(User, users)
 
     def __repr__(self):
-        return f"AppUserGroup(name={repr(self.name)},\n  user_group_id={repr(self.user_group_id)},\n  external_application_ids={repr(self.external_application_ids)},\n  users={repr(self.users)})"
+        repr_dict = {f'name': repr(self.name), f'user_group_id': repr(
+            self.user_group_id), f'external_application_ids': repr(self.external_application_ids), f'users': repr(self.users)}
+        class_name = "AppUserGroup"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

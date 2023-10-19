@@ -23,7 +23,12 @@ class FeatureGroupRowProcessSummary(AbstractApiClass):
         self.failed_processes = failedProcesses
 
     def __repr__(self):
-        return f"FeatureGroupRowProcessSummary(total_processes={repr(self.total_processes)},\n  pending_processes={repr(self.pending_processes)},\n  processing_processes={repr(self.processing_processes)},\n  complete_processes={repr(self.complete_processes)},\n  failed_processes={repr(self.failed_processes)})"
+        repr_dict = {f'total_processes': repr(self.total_processes), f'pending_processes': repr(self.pending_processes), f'processing_processes': repr(
+            self.processing_processes), f'complete_processes': repr(self.complete_processes), f'failed_processes': repr(self.failed_processes)}
+        class_name = "FeatureGroupRowProcessSummary"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

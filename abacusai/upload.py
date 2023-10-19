@@ -36,7 +36,12 @@ class Upload(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"Upload(upload_id={repr(self.upload_id)},\n  dataset_upload_id={repr(self.dataset_upload_id)},\n  status={repr(self.status)},\n  dataset_id={repr(self.dataset_id)},\n  dataset_version={repr(self.dataset_version)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  batch_prediction_id={repr(self.batch_prediction_id)},\n  parts={repr(self.parts)},\n  created_at={repr(self.created_at)})"
+        repr_dict = {f'upload_id': repr(self.upload_id), f'dataset_upload_id': repr(self.dataset_upload_id), f'status': repr(self.status), f'dataset_id': repr(self.dataset_id), f'dataset_version': repr(
+            self.dataset_version), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'batch_prediction_id': repr(self.batch_prediction_id), f'parts': repr(self.parts), f'created_at': repr(self.created_at)}
+        class_name = "Upload"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

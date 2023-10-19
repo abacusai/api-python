@@ -50,7 +50,12 @@ class PredictionOperator(AbstractApiClass):
             PredictionOperatorVersion, latestPredictionOperatorVersion)
 
     def __repr__(self):
-        return f"PredictionOperator(name={repr(self.name)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  project_id={repr(self.project_id)},\n  predict_function_name={repr(self.predict_function_name)},\n  source_code={repr(self.source_code)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  notebook_id={repr(self.notebook_id)},\n  memory={repr(self.memory)},\n  use_gpu={repr(self.use_gpu)},\n  feature_group_ids={repr(self.feature_group_ids)},\n  feature_group_table_names={repr(self.feature_group_table_names)},\n  code_source={repr(self.code_source)},\n  refresh_schedules={repr(self.refresh_schedules)},\n  latest_prediction_operator_version={repr(self.latest_prediction_operator_version)})"
+        repr_dict = {f'name': repr(self.name), f'prediction_operator_id': repr(self.prediction_operator_id), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'project_id': repr(self.project_id), f'predict_function_name': repr(self.predict_function_name), f'source_code': repr(self.source_code), f'initialize_function_name': repr(self.initialize_function_name), f'notebook_id': repr(
+            self.notebook_id), f'memory': repr(self.memory), f'use_gpu': repr(self.use_gpu), f'feature_group_ids': repr(self.feature_group_ids), f'feature_group_table_names': repr(self.feature_group_table_names), f'code_source': repr(self.code_source), f'refresh_schedules': repr(self.refresh_schedules), f'latest_prediction_operator_version': repr(self.latest_prediction_operator_version)}
+        class_name = "PredictionOperator"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -31,7 +31,12 @@ class PredictionMetricVersion(AbstractApiClass):
         self.status = status
 
     def __repr__(self):
-        return f"PredictionMetricVersion(created_at={repr(self.created_at)},\n  error={repr(self.error)},\n  feature_group_version={repr(self.feature_group_version)},\n  prediction_metric_completed_at={repr(self.prediction_metric_completed_at)},\n  prediction_metric_config={repr(self.prediction_metric_config)},\n  prediction_metric_id={repr(self.prediction_metric_id)},\n  prediction_metric_started_at={repr(self.prediction_metric_started_at)},\n  prediction_metric_version={repr(self.prediction_metric_version)},\n  status={repr(self.status)})"
+        repr_dict = {f'created_at': repr(self.created_at), f'error': repr(self.error), f'feature_group_version': repr(self.feature_group_version), f'prediction_metric_completed_at': repr(self.prediction_metric_completed_at), f'prediction_metric_config': repr(
+            self.prediction_metric_config), f'prediction_metric_id': repr(self.prediction_metric_id), f'prediction_metric_started_at': repr(self.prediction_metric_started_at), f'prediction_metric_version': repr(self.prediction_metric_version), f'status': repr(self.status)}
+        class_name = "PredictionMetricVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

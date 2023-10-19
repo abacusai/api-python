@@ -17,7 +17,12 @@ class FeatureGroupExportDownloadUrl(AbstractApiClass):
         self.expires_at = expiresAt
 
     def __repr__(self):
-        return f"FeatureGroupExportDownloadUrl(download_url={repr(self.download_url)},\n  expires_at={repr(self.expires_at)})"
+        repr_dict = {f'download_url': repr(
+            self.download_url), f'expires_at': repr(self.expires_at)}
+        class_name = "FeatureGroupExportDownloadUrl"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

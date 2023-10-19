@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ForecastingMonitorSummary(client, predictionTimestampCol=None, predictionTargetCol=None, trainingTimestampCol=None, trainingTargetCol=None, predictionItemId=None, trainingItemId=None, forecastFrequency=None, trainingTargetAcrossTime={}, predictionTargetAcrossTime={}, actualsHistogram={}, predictionsHistogram={}, trainHistoryData={}, predictHistoryData={})
+.. py:class:: ForecastingMonitorSummary(client, predictionTimestampCol=None, predictionTargetCol=None, trainingTimestampCol=None, trainingTargetCol=None, predictionItemId=None, trainingItemId=None, forecastFrequency=None, trainingTargetAcrossTime={}, predictionTargetAcrossTime={}, actualsHistogram={}, predictionsHistogram={}, trainHistoryData={}, predictHistoryData={}, targetDrift={}, historyDrift={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -52,6 +52,10 @@ Classes
    :type trainHistoryData: ForecastingAnalysisGraphData
    :param predictHistoryData: Data showing length of history distribution
    :type predictHistoryData: ForecastingAnalysisGraphData
+   :param targetDrift: Data showing drift of the target for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic
+   :type targetDrift: FeatureDriftRecord
+   :param historyDrift: Data showing drift of the history for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic
+   :type historyDrift: FeatureDriftRecord
 
    .. py:method:: __repr__()
 

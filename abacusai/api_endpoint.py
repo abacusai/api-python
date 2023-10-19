@@ -19,7 +19,12 @@ class ApiEndpoint(AbstractApiClass):
         self.proxy_endpoint = proxyEndpoint
 
     def __repr__(self):
-        return f"ApiEndpoint(api_endpoint={repr(self.api_endpoint)},\n  predict_endpoint={repr(self.predict_endpoint)},\n  proxy_endpoint={repr(self.proxy_endpoint)})"
+        repr_dict = {f'api_endpoint': repr(self.api_endpoint), f'predict_endpoint': repr(
+            self.predict_endpoint), f'proxy_endpoint': repr(self.proxy_endpoint)}
+        class_name = "ApiEndpoint"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

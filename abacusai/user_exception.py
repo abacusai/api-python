@@ -19,7 +19,12 @@ class UserException(AbstractApiClass):
         self.traceback = traceback
 
     def __repr__(self):
-        return f"UserException(type={repr(self.type)},\n  value={repr(self.value)},\n  traceback={'[91m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.traceback, ' ' * 6) + chr(39) * 3) if self.traceback else str(self.traceback)) + '[0;0m'})"
+        repr_dict = {f'type': repr(self.type), f'value': repr(self.value), f'traceback': '[91m' + ((chr(39) * 3 + chr(
+            10) + textwrap.indent(self.traceback, ' ' * 6) + chr(39) * 3) if self.traceback else str(self.traceback)) + '[0;0m'}
+        class_name = "UserException"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

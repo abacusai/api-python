@@ -52,7 +52,12 @@ class RefreshPolicy(AbstractApiClass):
             FeatureGroupRefreshExportConfig, featureGroupExportConfig)
 
     def __repr__(self):
-        return f"RefreshPolicy(refresh_policy_id={repr(self.refresh_policy_id)},\n  name={repr(self.name)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  created_at={repr(self.created_at)},\n  refresh_type={repr(self.refresh_type)},\n  project_id={repr(self.project_id)},\n  dataset_ids={repr(self.dataset_ids)},\n  feature_group_id={repr(self.feature_group_id)},\n  model_ids={repr(self.model_ids)},\n  deployment_ids={repr(self.deployment_ids)},\n  prediction_metric_ids={repr(self.prediction_metric_ids)},\n  model_monitor_ids={repr(self.model_monitor_ids)},\n  notebook_id={repr(self.notebook_id)},\n  paused={repr(self.paused)},\n  prediction_operator_id={repr(self.prediction_operator_id)},\n  feature_group_export_config={repr(self.feature_group_export_config)})"
+        repr_dict = {f'refresh_policy_id': repr(self.refresh_policy_id), f'name': repr(self.name), f'cron': repr(self.cron), f'next_run_time': repr(self.next_run_time), f'created_at': repr(self.created_at), f'refresh_type': repr(self.refresh_type), f'project_id': repr(self.project_id), f'dataset_ids': repr(self.dataset_ids), f'feature_group_id': repr(self.feature_group_id), f'model_ids': repr(
+            self.model_ids), f'deployment_ids': repr(self.deployment_ids), f'prediction_metric_ids': repr(self.prediction_metric_ids), f'model_monitor_ids': repr(self.model_monitor_ids), f'notebook_id': repr(self.notebook_id), f'paused': repr(self.paused), f'prediction_operator_id': repr(self.prediction_operator_id), f'feature_group_export_config': repr(self.feature_group_export_config)}
+        class_name = "RefreshPolicy"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

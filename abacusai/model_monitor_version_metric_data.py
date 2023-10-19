@@ -35,7 +35,12 @@ class ModelMonitorVersionMetricData(AbstractApiClass):
         self.actual_values_supported_for_drilldown = actualValuesSupportedForDrilldown
 
     def __repr__(self):
-        return f"ModelMonitorVersionMetricData(name={repr(self.name)},\n  algo_name={repr(self.algo_name)},\n  feature_group_version={repr(self.feature_group_version)},\n  model_monitor={repr(self.model_monitor)},\n  model_monitor_version={repr(self.model_monitor_version)},\n  metric_infos={repr(self.metric_infos)},\n  metric_names={repr(self.metric_names)},\n  metrics={repr(self.metrics)},\n  metric_charts={repr(self.metric_charts)},\n  other_metrics={repr(self.other_metrics)},\n  actual_values_supported_for_drilldown={repr(self.actual_values_supported_for_drilldown)})"
+        repr_dict = {f'name': repr(self.name), f'algo_name': repr(self.algo_name), f'feature_group_version': repr(self.feature_group_version), f'model_monitor': repr(self.model_monitor), f'model_monitor_version': repr(self.model_monitor_version), f'metric_infos': repr(
+            self.metric_infos), f'metric_names': repr(self.metric_names), f'metrics': repr(self.metrics), f'metric_charts': repr(self.metric_charts), f'other_metrics': repr(self.other_metrics), f'actual_values_supported_for_drilldown': repr(self.actual_values_supported_for_drilldown)}
+        class_name = "ModelMonitorVersionMetricData"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -31,7 +31,12 @@ class FeatureGroupTemplate(AbstractApiClass):
         self.updated_at = updatedAt
 
     def __repr__(self):
-        return f"FeatureGroupTemplate(feature_group_template_id={repr(self.feature_group_template_id)},\n  description={repr(self.description)},\n  feature_group_id={repr(self.feature_group_id)},\n  is_system_template={repr(self.is_system_template)},\n  name={repr(self.name)},\n  template_sql={repr(self.template_sql)},\n  template_variables={repr(self.template_variables)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)})"
+        repr_dict = {f'feature_group_template_id': repr(self.feature_group_template_id), f'description': repr(self.description), f'feature_group_id': repr(self.feature_group_id), f'is_system_template': repr(
+            self.is_system_template), f'name': repr(self.name), f'template_sql': repr(self.template_sql), f'template_variables': repr(self.template_variables), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at)}
+        class_name = "FeatureGroupTemplate"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

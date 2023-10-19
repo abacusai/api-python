@@ -150,6 +150,8 @@ class RegressionTrainingConfig(TrainingConfig):
         loss_parameters (str): Loss function params in format <key>=<value>;<key>=<value>;.....
         target_encode_categoricals (bool): Use this to turn target encoding on categorical features on or off.
         drop_original_categoricals (bool): This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
+        monotonically_increasing_features (List[str]): Constrain the model such that it behaves as if the target feature is monotonically increasing with the selected features
+        monotonically_decreasing_features (List[str]): Constrain the model such that it behaves as if the target feature is monotonically decreasing with the selected features
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
         custom_loss_functions (List[str]): Registered custom losses available for selection.
         custom_metrics (List[str]): Registered custom metrics available for selection.
@@ -204,6 +206,10 @@ class RegressionTrainingConfig(TrainingConfig):
     # target encoding
     target_encode_categoricals: bool = dataclasses.field(default=None)
     drop_original_categoricals: bool = dataclasses.field(default=None)
+
+    # monotonic features
+    monotonically_increasing_features: List[str] = dataclasses.field(default=None)
+    monotonically_decreasing_features: List[str] = dataclasses.field(default=None)
 
     # Others
     data_split_feature_group_table_name: str = dataclasses.field(default=None)

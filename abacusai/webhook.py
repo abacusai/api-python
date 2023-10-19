@@ -25,7 +25,12 @@ class Webhook(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"Webhook(webhook_id={repr(self.webhook_id)},\n  deployment_id={repr(self.deployment_id)},\n  endpoint={repr(self.endpoint)},\n  webhook_event_type={repr(self.webhook_event_type)},\n  payload_template={repr(self.payload_template)},\n  created_at={repr(self.created_at)})"
+        repr_dict = {f'webhook_id': repr(self.webhook_id), f'deployment_id': repr(self.deployment_id), f'endpoint': repr(self.endpoint), f'webhook_event_type': repr(
+            self.webhook_event_type), f'payload_template': repr(self.payload_template), f'created_at': repr(self.created_at)}
+        class_name = "Webhook"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

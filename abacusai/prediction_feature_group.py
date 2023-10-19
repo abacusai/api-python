@@ -23,7 +23,12 @@ class PredictionFeatureGroup(AbstractApiClass):
         self.required = required
 
     def __repr__(self):
-        return f"PredictionFeatureGroup(feature_group_id={repr(self.feature_group_id)},\n  feature_group_version={repr(self.feature_group_version)},\n  dataset_type={repr(self.dataset_type)},\n  default={repr(self.default)},\n  required={repr(self.required)})"
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'feature_group_version': repr(
+            self.feature_group_version), f'dataset_type': repr(self.dataset_type), f'default': repr(self.default), f'required': repr(self.required)}
+        class_name = "PredictionFeatureGroup"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

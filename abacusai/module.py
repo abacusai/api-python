@@ -22,7 +22,12 @@ class Module(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"Module(name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  notebook_id={repr(self.notebook_id)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'name': repr(self.name), f'created_at': repr(self.created_at), f'notebook_id': repr(
+            self.notebook_id), f'code_source': repr(self.code_source)}
+        class_name = "Module"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

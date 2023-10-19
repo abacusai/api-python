@@ -47,7 +47,12 @@ class Pipeline(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"Pipeline(pipeline_name={repr(self.pipeline_name)},\n  pipeline_id={repr(self.pipeline_id)},\n  created_at={repr(self.created_at)},\n  pipeline_variable_mappings={repr(self.pipeline_variable_mappings)},\n  notebook_id={repr(self.notebook_id)},\n  cron={repr(self.cron)},\n  next_run_time={repr(self.next_run_time)},\n  is_prod={repr(self.is_prod)},\n  warning={repr(self.warning)},\n  created_by={repr(self.created_by)},\n  steps={repr(self.steps)},\n  pipeline_references={repr(self.pipeline_references)},\n  latest_pipeline_version={repr(self.latest_pipeline_version)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'pipeline_name': repr(self.pipeline_name), f'pipeline_id': repr(self.pipeline_id), f'created_at': repr(self.created_at), f'pipeline_variable_mappings': repr(self.pipeline_variable_mappings), f'notebook_id': repr(self.notebook_id), f'cron': repr(self.cron), f'next_run_time': repr(
+            self.next_run_time), f'is_prod': repr(self.is_prod), f'warning': repr(self.warning), f'created_by': repr(self.created_by), f'steps': repr(self.steps), f'pipeline_references': repr(self.pipeline_references), f'latest_pipeline_version': repr(self.latest_pipeline_version), f'code_source': repr(self.code_source)}
+        class_name = "Pipeline"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

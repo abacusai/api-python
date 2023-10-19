@@ -3,6 +3,7 @@ import datetime
 import inspect
 import re
 from abc import ABC
+from typing import Any
 
 from .enums import ApiEnum
 
@@ -52,6 +53,52 @@ class ApiClass(ABC):
 
     def _repr_html_(self):
         return self.__str__()
+
+    def __getitem__(self, item: str):
+        if hasattr(self, item):
+            return getattr(self, item)
+        elif hasattr(self, snake_case(item)):
+            return getattr(self, snake_case(item))
+        elif self._support_kwargs and (self.kwargs.get(item) is not None):
+            return self.kwargs.get(item)
+        else:
+            raise KeyError(f'Key: {item} is not a property of {self.__class__.__name__}')
+
+    def __setitem__(self, item: str, value: Any):
+        if hasattr(self, item):
+            setattr(self, item, value)
+        elif hasattr(self, snake_case(item)):
+            setattr(self, snake_case(item), value)
+        elif self._support_kwargs:
+            self.kwargs[item] = value
+        else:
+            raise KeyError(f'Key: {item} is not a property of {self.__class__.__name__}')
+
+    def _unset_item(self, item: str):
+        if hasattr(self, item):
+            setattr(self, item, None)
+        elif hasattr(self, snake_case(item)):
+            setattr(self, snake_case(item), None)
+        elif self._support_kwargs and (self.kwargs.get(item) is not None):
+            self.kwargs.pop(item)
+        else:
+            raise KeyError(f'Key: {item} is not a property of {self.__class__.__name__}')
+
+    def get(self, item: str, default: Any = None):
+        try:
+            return self.__getitem__(item)
+        except KeyError:
+            return default
+
+    def pop(self, item: str, default: Any = NotImplemented):
+        try:
+            value = self.__getitem__(item)
+            self._unset_item(item)
+            return value
+        except KeyError:
+            if default is NotImplemented:
+                raise
+            return default
 
     def to_dict(self):
         """

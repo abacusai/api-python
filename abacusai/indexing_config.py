@@ -19,7 +19,12 @@ class IndexingConfig(AbstractApiClass):
         self.lookup_keys = lookupKeys
 
     def __repr__(self):
-        return f"IndexingConfig(primary_key={repr(self.primary_key)},\n  update_timestamp_key={repr(self.update_timestamp_key)},\n  lookup_keys={repr(self.lookup_keys)})"
+        repr_dict = {f'primary_key': repr(self.primary_key), f'update_timestamp_key': repr(
+            self.update_timestamp_key), f'lookup_keys': repr(self.lookup_keys)}
+        class_name = "IndexingConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

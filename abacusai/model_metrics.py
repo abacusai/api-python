@@ -31,7 +31,12 @@ class ModelMetrics(AbstractApiClass):
         self.training_completed_at = trainingCompletedAt
 
     def __repr__(self):
-        return f"ModelMetrics(algo_metrics={repr(self.algo_metrics)},\n  selected_algorithm={repr(self.selected_algorithm)},\n  selected_algorithm_name={repr(self.selected_algorithm_name)},\n  model_id={repr(self.model_id)},\n  model_version={repr(self.model_version)},\n  metric_names={repr(self.metric_names)},\n  target_column={repr(self.target_column)},\n  train_val_test_split={repr(self.train_val_test_split)},\n  training_completed_at={repr(self.training_completed_at)})"
+        repr_dict = {f'algo_metrics': repr(self.algo_metrics), f'selected_algorithm': repr(self.selected_algorithm), f'selected_algorithm_name': repr(self.selected_algorithm_name), f'model_id': repr(self.model_id), f'model_version': repr(
+            self.model_version), f'metric_names': repr(self.metric_names), f'target_column': repr(self.target_column), f'train_val_test_split': repr(self.train_val_test_split), f'training_completed_at': repr(self.training_completed_at)}
+        class_name = "ModelMetrics"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

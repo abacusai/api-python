@@ -26,7 +26,12 @@ class CustomLossFunction(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"CustomLossFunction(notebook_id={repr(self.notebook_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  loss_function_name={repr(self.loss_function_name)},\n  loss_function_type={repr(self.loss_function_type)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'loss_function_name': repr(
+            self.loss_function_name), f'loss_function_type': repr(self.loss_function_type), f'code_source': repr(self.code_source)}
+        class_name = "CustomLossFunction"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

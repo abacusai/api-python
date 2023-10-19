@@ -27,7 +27,12 @@ class ExternalApplication(AbstractApiClass):
         self.use_case = useCase
 
     def __repr__(self):
-        return f"ExternalApplication(name={repr(self.name)},\n  external_application_id={repr(self.external_application_id)},\n  deployment_id={repr(self.deployment_id)},\n  logo={repr(self.logo)},\n  theme={repr(self.theme)},\n  user_group_ids={repr(self.user_group_ids)},\n  use_case={repr(self.use_case)})"
+        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(
+            self.deployment_id), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case)}
+        class_name = "ExternalApplication"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

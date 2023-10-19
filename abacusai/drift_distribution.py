@@ -23,7 +23,12 @@ class DriftDistribution(AbstractApiClass):
             FeatureDistribution, distribution)
 
     def __repr__(self):
-        return f"DriftDistribution(train_column={repr(self.train_column)},\n  predicted_column={repr(self.predicted_column)},\n  metrics={repr(self.metrics)},\n  distribution={repr(self.distribution)})"
+        repr_dict = {f'train_column': repr(self.train_column), f'predicted_column': repr(
+            self.predicted_column), f'metrics': repr(self.metrics), f'distribution': repr(self.distribution)}
+        class_name = "DriftDistribution"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

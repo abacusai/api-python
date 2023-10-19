@@ -33,7 +33,12 @@ class PipelineReference(AbstractApiClass):
         self.feature_group_id = featureGroupId
 
     def __repr__(self):
-        return f"PipelineReference(pipeline_reference_id={repr(self.pipeline_reference_id)},\n  pipeline_id={repr(self.pipeline_id)},\n  object_type={repr(self.object_type)},\n  dataset_id={repr(self.dataset_id)},\n  model_id={repr(self.model_id)},\n  deployment_id={repr(self.deployment_id)},\n  batch_prediction_description_id={repr(self.batch_prediction_description_id)},\n  model_monitor_id={repr(self.model_monitor_id)},\n  notebook_id={repr(self.notebook_id)},\n  feature_group_id={repr(self.feature_group_id)})"
+        repr_dict = {f'pipeline_reference_id': repr(self.pipeline_reference_id), f'pipeline_id': repr(self.pipeline_id), f'object_type': repr(self.object_type), f'dataset_id': repr(self.dataset_id), f'model_id': repr(self.model_id), f'deployment_id': repr(
+            self.deployment_id), f'batch_prediction_description_id': repr(self.batch_prediction_description_id), f'model_monitor_id': repr(self.model_monitor_id), f'notebook_id': repr(self.notebook_id), f'feature_group_id': repr(self.feature_group_id)}
+        class_name = "PipelineReference"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

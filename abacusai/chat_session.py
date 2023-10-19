@@ -34,7 +34,12 @@ class ChatSession(AbstractApiClass):
             AiBuildingTask, nextAiBuildingTask)
 
     def __repr__(self):
-        return f"ChatSession(answer={repr(self.answer)},\n  chat_session_id={repr(self.chat_session_id)},\n  project_id={repr(self.project_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  ai_building_in_progress={repr(self.ai_building_in_progress)},\n  chat_history={repr(self.chat_history)},\n  next_ai_building_task={repr(self.next_ai_building_task)})"
+        repr_dict = {f'answer': repr(self.answer), f'chat_session_id': repr(self.chat_session_id), f'project_id': repr(self.project_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'status': repr(
+            self.status), f'ai_building_in_progress': repr(self.ai_building_in_progress), f'chat_history': repr(self.chat_history), f'next_ai_building_task': repr(self.next_ai_building_task)}
+        class_name = "ChatSession"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

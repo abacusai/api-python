@@ -31,7 +31,12 @@ class FeatureGroupRefreshExportConfig(AbstractApiClass):
         self.write_mode = writeMode
 
     def __repr__(self):
-        return f"FeatureGroupRefreshExportConfig(connector_type={repr(self.connector_type)},\n  location={repr(self.location)},\n  export_file_format={repr(self.export_file_format)},\n  additional_id_columns={repr(self.additional_id_columns)},\n  database_feature_mapping={repr(self.database_feature_mapping)},\n  external_connection_id={repr(self.external_connection_id)},\n  id_column={repr(self.id_column)},\n  object_name={repr(self.object_name)},\n  write_mode={repr(self.write_mode)})"
+        repr_dict = {f'connector_type': repr(self.connector_type), f'location': repr(self.location), f'export_file_format': repr(self.export_file_format), f'additional_id_columns': repr(self.additional_id_columns), f'database_feature_mapping': repr(
+            self.database_feature_mapping), f'external_connection_id': repr(self.external_connection_id), f'id_column': repr(self.id_column), f'object_name': repr(self.object_name), f'write_mode': repr(self.write_mode)}
+        class_name = "FeatureGroupRefreshExportConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

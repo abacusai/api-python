@@ -29,7 +29,12 @@ class GraphDashboard(AbstractApiClass):
         self.project_name = projectName
 
     def __repr__(self):
-        return f"GraphDashboard(name={repr(self.name)},\n  graph_dashboard_id={repr(self.graph_dashboard_id)},\n  created_at={repr(self.created_at)},\n  project_id={repr(self.project_id)},\n  python_function_ids={repr(self.python_function_ids)},\n  plot_reference_ids={repr(self.plot_reference_ids)},\n  python_function_names={repr(self.python_function_names)},\n  project_name={repr(self.project_name)})"
+        repr_dict = {f'name': repr(self.name), f'graph_dashboard_id': repr(self.graph_dashboard_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'python_function_ids': repr(
+            self.python_function_ids), f'plot_reference_ids': repr(self.plot_reference_ids), f'python_function_names': repr(self.python_function_names), f'project_name': repr(self.project_name)}
+        class_name = "GraphDashboard"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -31,7 +31,12 @@ class PageData(AbstractApiClass):
         self.tokens = tokens
 
     def __repr__(self):
-        return f"PageData(doc_id={repr(self.doc_id)},\n  page={repr(self.page)},\n  height={repr(self.height)},\n  width={repr(self.width)},\n  page_count={repr(self.page_count)},\n  page_text={repr(self.page_text)},\n  page_token_start_offset={repr(self.page_token_start_offset)},\n  token_count={repr(self.token_count)},\n  tokens={repr(self.tokens)})"
+        repr_dict = {f'doc_id': repr(self.doc_id), f'page': repr(self.page), f'height': repr(self.height), f'width': repr(self.width), f'page_count': repr(self.page_count), f'page_text': repr(
+            self.page_text), f'page_token_start_offset': repr(self.page_token_start_offset), f'token_count': repr(self.token_count), f'tokens': repr(self.tokens)}
+        class_name = "PageData"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

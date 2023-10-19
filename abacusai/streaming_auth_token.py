@@ -17,7 +17,12 @@ class StreamingAuthToken(AbstractApiClass):
         self.created_at = createdAt
 
     def __repr__(self):
-        return f"StreamingAuthToken(streaming_token={repr(self.streaming_token)},\n  created_at={repr(self.created_at)})"
+        repr_dict = {f'streaming_token': repr(
+            self.streaming_token), f'created_at': repr(self.created_at)}
+        class_name = "StreamingAuthToken"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

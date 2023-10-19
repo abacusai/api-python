@@ -21,7 +21,12 @@ class UseCase(AbstractApiClass):
         self.problem_type = problemType
 
     def __repr__(self):
-        return f"UseCase(use_case={repr(self.use_case)},\n  pretty_name={repr(self.pretty_name)},\n  description={repr(self.description)},\n  problem_type={repr(self.problem_type)})"
+        repr_dict = {f'use_case': repr(self.use_case), f'pretty_name': repr(
+            self.pretty_name), f'description': repr(self.description), f'problem_type': repr(self.problem_type)}
+        class_name = "UseCase"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

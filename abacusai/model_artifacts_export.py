@@ -25,7 +25,12 @@ class ModelArtifactsExport(AbstractApiClass):
         self.export_completed_at = exportCompletedAt
 
     def __repr__(self):
-        return f"ModelArtifactsExport(model_artifacts_export_id={repr(self.model_artifacts_export_id)},\n  model_version={repr(self.model_version)},\n  output_location={repr(self.output_location)},\n  status={repr(self.status)},\n  created_at={repr(self.created_at)},\n  export_completed_at={repr(self.export_completed_at)})"
+        repr_dict = {f'model_artifacts_export_id': repr(self.model_artifacts_export_id), f'model_version': repr(self.model_version), f'output_location': repr(
+            self.output_location), f'status': repr(self.status), f'created_at': repr(self.created_at), f'export_completed_at': repr(self.export_completed_at)}
+        class_name = "ModelArtifactsExport"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

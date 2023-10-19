@@ -23,7 +23,12 @@ class PredictionDataset(AbstractApiClass):
         self.required = required
 
     def __repr__(self):
-        return f"PredictionDataset(dataset_id={repr(self.dataset_id)},\n  dataset_type={repr(self.dataset_type)},\n  dataset_version={repr(self.dataset_version)},\n  default={repr(self.default)},\n  required={repr(self.required)})"
+        repr_dict = {f'dataset_id': repr(self.dataset_id), f'dataset_type': repr(self.dataset_type), f'dataset_version': repr(
+            self.dataset_version), f'default': repr(self.default), f'required': repr(self.required)}
+        class_name = "PredictionDataset"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

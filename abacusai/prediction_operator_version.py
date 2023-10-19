@@ -34,7 +34,12 @@ class PredictionOperatorVersion(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PredictionOperatorVersion(prediction_operator_id={repr(self.prediction_operator_id)},\n  prediction_operator_version={repr(self.prediction_operator_version)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  source_code={repr(self.source_code)},\n  memory={repr(self.memory)},\n  use_gpu={repr(self.use_gpu)},\n  feature_group_ids={repr(self.feature_group_ids)},\n  feature_group_versions={repr(self.feature_group_versions)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'prediction_operator_id': repr(self.prediction_operator_id), f'prediction_operator_version': repr(self.prediction_operator_version), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'source_code': repr(
+            self.source_code), f'memory': repr(self.memory), f'use_gpu': repr(self.use_gpu), f'feature_group_ids': repr(self.feature_group_ids), f'feature_group_versions': repr(self.feature_group_versions), f'code_source': repr(self.code_source)}
+        class_name = "PredictionOperatorVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

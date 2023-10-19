@@ -32,7 +32,12 @@ class PythonPlotFunction(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"PythonPlotFunction(notebook_id={repr(self.notebook_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  function_variable_mappings={repr(self.function_variable_mappings)},\n  function_name={repr(self.function_name)},\n  python_function_id={repr(self.python_function_id)},\n  function_type={repr(self.function_type)},\n  plot_name={repr(self.plot_name)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'function_variable_mappings': repr(self.function_variable_mappings), f'function_name': repr(
+            self.function_name), f'python_function_id': repr(self.python_function_id), f'function_type': repr(self.function_type), f'plot_name': repr(self.plot_name), f'code_source': repr(self.code_source)}
+        class_name = "PythonPlotFunction"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

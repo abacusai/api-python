@@ -33,7 +33,12 @@ class ForecastingAnalysisGraphData(AbstractApiClass):
             EdaChartDescription, chartDescriptions)
 
     def __repr__(self):
-        return f"ForecastingAnalysisGraphData(data={repr(self.data)},\n  x_axis={repr(self.x_axis)},\n  y_axis={repr(self.y_axis)},\n  data_columns={repr(self.data_columns)},\n  chart_name={repr(self.chart_name)},\n  chart_types={repr(self.chart_types)},\n  item_statistics={repr(self.item_statistics)},\n  chart_descriptions={repr(self.chart_descriptions)})"
+        repr_dict = {f'data': repr(self.data), f'x_axis': repr(self.x_axis), f'y_axis': repr(self.y_axis), f'data_columns': repr(self.data_columns), f'chart_name': repr(
+            self.chart_name), f'chart_types': repr(self.chart_types), f'item_statistics': repr(self.item_statistics), f'chart_descriptions': repr(self.chart_descriptions)}
+        class_name = "ForecastingAnalysisGraphData"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

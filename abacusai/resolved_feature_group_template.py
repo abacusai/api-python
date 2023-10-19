@@ -23,7 +23,12 @@ class ResolvedFeatureGroupTemplate(AbstractApiClass):
         self.sql_error = sqlError
 
     def __repr__(self):
-        return f"ResolvedFeatureGroupTemplate(feature_group_template_id={repr(self.feature_group_template_id)},\n  resolved_variables={repr(self.resolved_variables)},\n  resolved_sql={repr(self.resolved_sql)},\n  template_sql={repr(self.template_sql)},\n  sql_error={repr(self.sql_error)})"
+        repr_dict = {f'feature_group_template_id': repr(self.feature_group_template_id), f'resolved_variables': repr(
+            self.resolved_variables), f'resolved_sql': repr(self.resolved_sql), f'template_sql': repr(self.template_sql), f'sql_error': repr(self.sql_error)}
+        class_name = "ResolvedFeatureGroupTemplate"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

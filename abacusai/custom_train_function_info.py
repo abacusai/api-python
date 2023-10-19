@@ -21,7 +21,12 @@ class CustomTrainFunctionInfo(AbstractApiClass):
         self.training_config = trainingConfig
 
     def __repr__(self):
-        return f"CustomTrainFunctionInfo(training_data_parameter_name_mapping={repr(self.training_data_parameter_name_mapping)},\n  schema_mappings={repr(self.schema_mappings)},\n  train_data_parameter_to_feature_group_ids={repr(self.train_data_parameter_to_feature_group_ids)},\n  training_config={repr(self.training_config)})"
+        repr_dict = {f'training_data_parameter_name_mapping': repr(self.training_data_parameter_name_mapping), f'schema_mappings': repr(
+            self.schema_mappings), f'train_data_parameter_to_feature_group_ids': repr(self.train_data_parameter_to_feature_group_ids), f'training_config': repr(self.training_config)}
+        class_name = "CustomTrainFunctionInfo"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

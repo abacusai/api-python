@@ -22,7 +22,12 @@ class OrganizationSearchResult(AbstractApiClass):
             FeatureGroupVersion, featureGroupVersion)
 
     def __repr__(self):
-        return f"OrganizationSearchResult(score={repr(self.score)},\n  feature_group={repr(self.feature_group)},\n  feature_group_version={repr(self.feature_group_version)})"
+        repr_dict = {f'score': repr(self.score), f'feature_group': repr(
+            self.feature_group), f'feature_group_version': repr(self.feature_group_version)}
+        class_name = "OrganizationSearchResult"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

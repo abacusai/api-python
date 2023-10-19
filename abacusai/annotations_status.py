@@ -29,7 +29,12 @@ class AnnotationsStatus(AbstractApiClass):
             AnnotationConfig, latestMaterializedAnnotationConfig)
 
     def __repr__(self):
-        return f"AnnotationsStatus(total={repr(self.total)},\n  done={repr(self.done)},\n  in_progress={repr(self.in_progress)},\n  todo={repr(self.todo)},\n  latest_updated_at={repr(self.latest_updated_at)},\n  is_materialization_needed={repr(self.is_materialization_needed)},\n  latest_materialized_annotation_config={repr(self.latest_materialized_annotation_config)})"
+        repr_dict = {f'total': repr(self.total), f'done': repr(self.done), f'in_progress': repr(self.in_progress), f'todo': repr(self.todo), f'latest_updated_at': repr(
+            self.latest_updated_at), f'is_materialization_needed': repr(self.is_materialization_needed), f'latest_materialized_annotation_config': repr(self.latest_materialized_annotation_config)}
+        class_name = "AnnotationsStatus"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

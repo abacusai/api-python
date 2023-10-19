@@ -21,7 +21,12 @@ class ModelBlueprintExport(AbstractApiClass):
             ModelBlueprintStage, modelBlueprintStages)
 
     def __repr__(self):
-        return f"ModelBlueprintExport(model_version={repr(self.model_version)},\n  current_training_config={repr(self.current_training_config)},\n  model_blueprint_stages={repr(self.model_blueprint_stages)})"
+        repr_dict = {f'model_version': repr(self.model_version), f'current_training_config': repr(
+            self.current_training_config), f'model_blueprint_stages': repr(self.model_blueprint_stages)}
+        class_name = "ModelBlueprintExport"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

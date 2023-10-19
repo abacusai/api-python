@@ -115,6 +115,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../external_application/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_application</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../feature_drift_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_record</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_group_document/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_group_document</span></code></a></li>
@@ -137,6 +138,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_instructions/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_instructions</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../file_connector_verification/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.file_connector_verification</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../forecasting_analysis_graph_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_analysis_graph_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_item_analysis/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_monitor_item_analysis</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../forecasting_monitor_summary/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.forecasting_monitor_summary</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../function_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.function_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../generated_pit_feature_config_option/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.generated_pit_feature_config_option</span></code></a></li>
@@ -175,6 +177,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../natural_language_explanation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.natural_language_explanation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nested_feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.nested_feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../null_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.null_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../organization_external_application_settings/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_external_application_settings</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_search_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_search_result</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../organization_secret/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.organization_secret</span></code></a></li>
@@ -342,6 +345,22 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
 <li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token to authenticate access to the deployment. This is required if not logged in.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.deployment_conversation.DeploymentConversation.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_session_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_message_indices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.deployment_conversation.DeploymentConversation.clear" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the message history of a Deployment Conversation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>external_session_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The external session id associated with the deployment conversation.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment this conversation belongs to. This is required if not logged in.</p></li>
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token to authenticate access to the deployment. This is required if not logged in.</p></li>
+<li><p><strong>user_message_indices</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.</p></li>
 </ul>
 </dd>
 </dl>

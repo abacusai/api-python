@@ -27,7 +27,12 @@ class CustomMetric(AbstractApiClass):
             CustomMetricVersion, latestCustomMetricVersion)
 
     def __repr__(self):
-        return f"CustomMetric(custom_metric_id={repr(self.custom_metric_id)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  problem_type={repr(self.problem_type)},\n  notebook_id={repr(self.notebook_id)},\n  latest_custom_metric_version={repr(self.latest_custom_metric_version)})"
+        repr_dict = {f'custom_metric_id': repr(self.custom_metric_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'problem_type': repr(
+            self.problem_type), f'notebook_id': repr(self.notebook_id), f'latest_custom_metric_version': repr(self.latest_custom_metric_version)}
+        class_name = "CustomMetric"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

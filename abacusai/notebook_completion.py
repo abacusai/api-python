@@ -23,7 +23,12 @@ class NotebookCompletion(AbstractApiClass):
         self.prompts = prompts
 
     def __repr__(self):
-        return f"NotebookCompletion(cell_type={repr(self.cell_type)},\n  content={repr(self.content)},\n  mode={repr(self.mode)},\n  index={repr(self.index)},\n  prompts={repr(self.prompts)})"
+        repr_dict = {f'cell_type': repr(self.cell_type), f'content': repr(self.content), f'mode': repr(
+            self.mode), f'index': repr(self.index), f'prompts': repr(self.prompts)}
+        class_name = "NotebookCompletion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

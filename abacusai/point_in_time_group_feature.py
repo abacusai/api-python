@@ -21,7 +21,12 @@ class PointInTimeGroupFeature(AbstractApiClass):
         self.pit_operation_config = pitOperationConfig
 
     def __repr__(self):
-        return f"PointInTimeGroupFeature(name={repr(self.name)},\n  expression={repr(self.expression)},\n  pit_operation_type={repr(self.pit_operation_type)},\n  pit_operation_config={repr(self.pit_operation_config)})"
+        repr_dict = {f'name': repr(self.name), f'expression': repr(self.expression), f'pit_operation_type': repr(
+            self.pit_operation_type), f'pit_operation_config': repr(self.pit_operation_config)}
+        class_name = "PointInTimeGroupFeature"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

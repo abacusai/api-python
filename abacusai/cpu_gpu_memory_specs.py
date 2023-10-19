@@ -17,7 +17,11 @@ class CpuGpuMemorySpecs(AbstractApiClass):
         self.data = data
 
     def __repr__(self):
-        return f"CpuGpuMemorySpecs(default={repr(self.default)},\n  data={repr(self.data)})"
+        repr_dict = {f'default': repr(self.default), f'data': repr(self.data)}
+        class_name = "CpuGpuMemorySpecs"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

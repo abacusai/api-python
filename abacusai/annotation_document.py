@@ -23,7 +23,12 @@ class AnnotationDocument(AbstractApiClass):
         self.is_annotation_present = isAnnotationPresent
 
     def __repr__(self):
-        return f"AnnotationDocument(doc_id={repr(self.doc_id)},\n  feature_group_row_identifier={repr(self.feature_group_row_identifier)},\n  feature_group_row_index={repr(self.feature_group_row_index)},\n  total_rows={repr(self.total_rows)},\n  is_annotation_present={repr(self.is_annotation_present)})"
+        repr_dict = {f'doc_id': repr(self.doc_id), f'feature_group_row_identifier': repr(self.feature_group_row_identifier), f'feature_group_row_index': repr(
+            self.feature_group_row_index), f'total_rows': repr(self.total_rows), f'is_annotation_present': repr(self.is_annotation_present)}
+        class_name = "AnnotationDocument"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

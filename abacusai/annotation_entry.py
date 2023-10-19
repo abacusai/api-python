@@ -34,7 +34,12 @@ class AnnotationEntry(AbstractApiClass):
         self.annotation = client._build_class(Annotation, annotation)
 
     def __repr__(self):
-        return f"AnnotationEntry(feature_group_id={repr(self.feature_group_id)},\n  feature_name={repr(self.feature_name)},\n  doc_id={repr(self.doc_id)},\n  feature_group_row_identifier={repr(self.feature_group_row_identifier)},\n  updated_at={repr(self.updated_at)},\n  annotation_entry_marker={repr(self.annotation_entry_marker)},\n  status={repr(self.status)},\n  locked_until={repr(self.locked_until)},\n  verification_info={repr(self.verification_info)},\n  annotation={repr(self.annotation)})"
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'feature_name': repr(self.feature_name), f'doc_id': repr(self.doc_id), f'feature_group_row_identifier': repr(self.feature_group_row_identifier), f'updated_at': repr(
+            self.updated_at), f'annotation_entry_marker': repr(self.annotation_entry_marker), f'status': repr(self.status), f'locked_until': repr(self.locked_until), f'verification_info': repr(self.verification_info), f'annotation': repr(self.annotation)}
+        class_name = "AnnotationEntry"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

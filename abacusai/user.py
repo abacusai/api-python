@@ -25,7 +25,12 @@ class User(AbstractApiClass):
             OrganizationGroup, organizationGroups)
 
     def __repr__(self):
-        return f"User(name={repr(self.name)},\n  email={repr(self.email)},\n  created_at={repr(self.created_at)},\n  status={repr(self.status)},\n  organization_groups={repr(self.organization_groups)})"
+        repr_dict = {f'name': repr(self.name), f'email': repr(self.email), f'created_at': repr(
+            self.created_at), f'status': repr(self.status), f'organization_groups': repr(self.organization_groups)}
+        class_name = "User"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

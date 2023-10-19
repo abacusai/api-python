@@ -84,6 +84,7 @@ Submodules
    external_application/index.rst
    feature/index.rst
    feature_distribution/index.rst
+   feature_drift_record/index.rst
    feature_drift_summary/index.rst
    feature_group/index.rst
    feature_group_document/index.rst
@@ -106,6 +107,7 @@ Submodules
    file_connector_instructions/index.rst
    file_connector_verification/index.rst
    forecasting_analysis_graph_data/index.rst
+   forecasting_monitor_item_analysis/index.rst
    forecasting_monitor_summary/index.rst
    function_logs/index.rst
    generated_pit_feature_config_option/index.rst
@@ -144,6 +146,7 @@ Submodules
    natural_language_explanation/index.rst
    nested_feature/index.rst
    null_violation/index.rst
+   organization_external_application_settings/index.rst
    organization_group/index.rst
    organization_search_result/index.rst
    organization_secret/index.rst
@@ -364,6 +367,21 @@ Attributes
 
 
    .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
 
 
    .. py:method:: to_dict()
@@ -3155,6 +3173,10 @@ Attributes
    :type target_encode_categoricals: bool
    :param drop_original_categoricals: This option helps us choose whether to also feed the original label encoded categorical columns to the mdoels along with their target encoded versions.
    :type drop_original_categoricals: bool
+   :param monotonically_increasing_features: Constrain the model such that it behaves as if the target feature is monotonically increasing with the selected features
+   :type monotonically_increasing_features: List[str]
+   :param monotonically_decreasing_features: Constrain the model such that it behaves as if the target feature is monotonically decreasing with the selected features
+   :type monotonically_decreasing_features: List[str]
    :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
    :type data_split_feature_group_table_name: str
    :param custom_loss_functions: Registered custom losses available for selection.
@@ -3334,6 +3356,16 @@ Attributes
 
    .. py:attribute:: drop_original_categoricals
       :type: bool
+
+      
+
+   .. py:attribute:: monotonically_increasing_features
+      :type: List[str]
+
+      
+
+   .. py:attribute:: monotonically_decreasing_features
+      :type: List[str]
 
       
 
@@ -4536,6 +4568,13 @@ Attributes
 
       
 
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
 
 .. py:class:: AlertConditionConfig
 
@@ -5656,6 +5695,39 @@ Attributes
 
       :returns: The result of the query.
       :rtype: pandas.DataFrame
+
+
+   .. py:method:: _get_doc_retriver_deployment_info(document_retriever_id)
+
+
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+
+      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+      :param document_retriever_id: A unique string identifier associated with the document retriever.
+      :type document_retriever_id: str
+      :param query: The query to search for.
+      :type query: str
+      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filters: dict
+      :param limit: If provided, will limit the number of results to the value specified.
+      :type limit: int
+      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
+      :type result_columns: list
+      :param max_words: If provided, will limit the total number of words in the results to the value specified.
+      :type max_words: int
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
+      :type num_retrieval_margin_words: int
+      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+      :type max_words_per_chunk: int
+
+      :returns: The relevant documentation results found from the document retriever.
+      :rtype: list[DocumentRetrieverLookupResult]
 
 
    .. py:method:: add_user_to_organization(email)
@@ -7692,6 +7764,19 @@ Attributes
       :rtype: Model
 
 
+   .. py:method:: set_model_objective(model_version, metric = None)
+
+      Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
+
+      If metric is set to None, then just use the default selection
+
+
+      :param model_version: The model version to set as the best model.
+      :type model_version: str
+      :param metric: The metric to use to determine the best model.
+      :type metric: str
+
+
    .. py:method:: set_model_prediction_params(model_id, prediction_config)
 
       Sets the model prediction config for the model
@@ -7763,6 +7848,18 @@ Attributes
 
       :returns: The created feature group.
       :rtype: FeatureGroup
+
+
+   .. py:method:: set_default_model_algorithm(model_id = None, algorithm = None, data_cluster_type = None)
+
+      Sets the model's algorithm to default for all new deployments
+
+      :param model_id: Unique identifier of the model to set.
+      :type model_id: str
+      :param algorithm: Algorithm to pin in the model.
+      :type algorithm: str
+      :param data_cluster_type: Data cluster type to set the lead model for.
+      :type data_cluster_type: str
 
 
    .. py:method:: get_custom_train_function_info(project_id, feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
@@ -9231,6 +9328,38 @@ Attributes
       :type external_session_id: str
 
 
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+
+      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments within this project, making it safe to embed this model in an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param data: The query to search for.
+      :type data: str
+      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filters: dict
+      :param num: If provided, will limit the number of results to the value specified.
+      :type num: int
+      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
+      :type result_columns: list
+      :param max_words: If provided, will limit the total number of words in the results to the value specified.
+      :type max_words: int
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
+      :type num_retrieval_margin_words: int
+      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+      :type max_words_per_chunk: int
+
+      :returns: The relevant documentation results found from the document retriever.
+      :rtype: list[DocumentRetrieverLookupResult]
+
+
    .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
@@ -9943,6 +10072,28 @@ Attributes
       :rtype: Pipeline
 
 
+   .. py:method:: pause_pipeline_refresh_schedule(pipeline_id)
+
+      Pauses the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
+   .. py:method:: resume_pipeline_refresh_schedule(pipeline_id)
+
+      Resumes the refresh schedule for a given pipeline.
+
+      :param pipeline_id: The id of the pipeline.
+      :type pipeline_id: str
+
+      :returns: Object describing the pipeline.
+      :rtype: Pipeline
+
+
    .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)
 
       Create a plot dashboard given selected python plots
@@ -10353,6 +10504,22 @@ Attributes
       :type deployment_token: str
 
 
+   .. py:method:: clear_deployment_conversation(deployment_conversation_id = None, external_session_id = None, deployment_id = None, deployment_token = None, user_message_indices = None)
+
+      Clear the message history of a Deployment Conversation.
+
+      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: The external session id associated with the deployment conversation.
+      :type external_session_id: str
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
+      :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
+      :param user_message_indices: Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
+      :type user_message_indices: list
+
+
    .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful
@@ -10678,36 +10845,6 @@ Attributes
 
       :param vector_store_id: A unique string identifier associated with the document retriever.
       :type vector_store_id: str
-
-
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
-
-      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
-
-      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
-      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
-      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
-
-
-      :param document_retriever_id: A unique string identifier associated with the document retriever.
-      :type document_retriever_id: str
-      :param query: The query to search for.
-      :type query: str
-      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
-      :type filters: dict
-      :param limit: If provided, will limit the number of results to the value specified.
-      :type limit: int
-      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
-      :type result_columns: list
-      :param max_words: If provided, will limit the total number of words in the results to the value specified.
-      :type max_words: int
-      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
-      :type num_retrieval_margin_words: int
-      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
-      :type max_words_per_chunk: int
-
-      :returns: The relevant documentation results found from the document retriever.
-      :rtype: list[DocumentRetrieverLookupResult]
 
 
    .. py:method:: get_document_snippet(document_retriever_id, document_id, start_word_index = None, end_word_index = None)
@@ -11596,19 +11733,6 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: set_model_objective(model_version, metric = None)
-
-      Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
-
-      If metric is set to None, then just use the default selection
-
-
-      :param model_version: The model version to set as the best model.
-      :type model_version: str
-      :param metric: The metric to use to determine the best model.
-      :type metric: str
-
-
    .. py:method:: get_model_metrics(model_id, model_version = None, return_graphs = False, validation = False)
 
       Retrieves metrics for all the algorithms trained in this model version.
@@ -11694,18 +11818,6 @@ Attributes
 
       :returns: A list of logs.
       :rtype: list[DataPrepLogs]
-
-
-   .. py:method:: set_default_model_algorithm(model_id = None, algorithm = None, data_cluster_type = None)
-
-      Sets the model's algorithm to default for all new deployments
-
-      :param model_id: Unique identifier of the model to set.
-      :type model_id: str
-      :param algorithm: Algorithm to pin in the model.
-      :type algorithm: str
-      :param data_cluster_type: Data cluster type to set the lead model for.
-      :type data_cluster_type: str
 
 
    .. py:method:: get_training_logs(model_version, stdout = False, stderr = False)
@@ -12439,28 +12551,6 @@ Attributes
       :type pipeline_step_version: str
 
       :rtype: PipelineStepVersion
-
-
-   .. py:method:: pause_pipeline_refresh_schedule(pipeline_id)
-
-      Pauses the refresh schedule for a given pipeline.
-
-      :param pipeline_id: The id of the pipeline.
-      :type pipeline_id: str
-
-      :returns: Object describing the pipeline.
-      :rtype: Pipeline
-
-
-   .. py:method:: resume_pipeline_refresh_schedule(pipeline_id)
-
-      Resumes the refresh schedule for a given pipeline.
-
-      :param pipeline_id: The id of the pipeline.
-      :type pipeline_id: str
-
-      :returns: Object describing the pipeline.
-      :rtype: Pipeline
 
 
    .. py:method:: list_pipeline_version_logs(pipeline_version)
@@ -13633,6 +13723,38 @@ Attributes
       :type external_session_id: str
 
 
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+
+      Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+      Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+      from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+      are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments within this project, making it safe to embed this model in an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param data: The query to search for.
+      :type data: str
+      :param filters: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filters: dict
+      :param num: If provided, will limit the number of results to the value specified.
+      :type num: int
+      :param result_columns: If provided, will limit the column properties present in each result to those specified in this list.
+      :type result_columns: list
+      :param max_words: If provided, will limit the total number of words in the results to the value specified.
+      :type max_words: int
+      :param num_retrieval_margin_words: If provided, will add this number of words from left and right of the returned chunks.
+      :type num_retrieval_margin_words: int
+      :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+      :type max_words_per_chunk: int
+
+      :returns: The relevant documentation results found from the document retriever.
+      :rtype: list[DocumentRetrieverLookupResult]
+
+
 
 .. py:class:: StreamingClient(client_options = None)
 
@@ -13726,7 +13848,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.77.6'
+   :value: '0.77.8'
 
    
 

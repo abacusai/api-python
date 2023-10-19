@@ -17,7 +17,11 @@ class ModelTrainingTypeForDeployment(AbstractApiClass):
         self.value = value
 
     def __repr__(self):
-        return f"ModelTrainingTypeForDeployment(label={repr(self.label)},\n  value={repr(self.value)})"
+        repr_dict = {f'label': repr(self.label), f'value': repr(self.value)}
+        class_name = "ModelTrainingTypeForDeployment"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

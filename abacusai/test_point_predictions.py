@@ -23,7 +23,12 @@ class TestPointPredictions(AbstractApiClass):
         self.error_description = errorDescription
 
     def __repr__(self):
-        return f"TestPointPredictions(count={repr(self.count)},\n  columns={repr(self.columns)},\n  data={repr(self.data)},\n  summarized_metrics={repr(self.summarized_metrics)},\n  error_description={repr(self.error_description)})"
+        repr_dict = {f'count': repr(self.count), f'columns': repr(self.columns), f'data': repr(
+            self.data), f'summarized_metrics': repr(self.summarized_metrics), f'error_description': repr(self.error_description)}
+        class_name = "TestPointPredictions"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

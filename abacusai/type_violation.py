@@ -19,7 +19,12 @@ class TypeViolation(AbstractApiClass):
         self.prediction_data_type = predictionDataType
 
     def __repr__(self):
-        return f"TypeViolation(name={repr(self.name)},\n  training_data_type={repr(self.training_data_type)},\n  prediction_data_type={repr(self.prediction_data_type)})"
+        repr_dict = {f'name': repr(self.name), f'training_data_type': repr(
+            self.training_data_type), f'prediction_data_type': repr(self.prediction_data_type)}
+        class_name = "TypeViolation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

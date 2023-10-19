@@ -22,7 +22,12 @@ class ProblemType(AbstractApiClass):
         self.use_cases_support_custom_algorithm = useCasesSupportCustomAlgorithm
 
     def __repr__(self):
-        return f"ProblemType(problem_type={repr(self.problem_type)},\n  required_feature_group_type={repr(self.required_feature_group_type)},\n  optional_feature_group_types={repr(self.optional_feature_group_types)},\n  use_cases_support_custom_algorithm={repr(self.use_cases_support_custom_algorithm)})"
+        repr_dict = {f'problem_type': repr(self.problem_type), f'required_feature_group_type': repr(self.required_feature_group_type), f'optional_feature_group_types': repr(
+            self.optional_feature_group_types), f'use_cases_support_custom_algorithm': repr(self.use_cases_support_custom_algorithm)}
+        class_name = "ProblemType"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

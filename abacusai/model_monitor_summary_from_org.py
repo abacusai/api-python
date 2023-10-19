@@ -17,7 +17,11 @@ class ModelMonitorSummaryFromOrg(AbstractApiClass):
         self.infos = infos
 
     def __repr__(self):
-        return f"ModelMonitorSummaryFromOrg(data={repr(self.data)},\n  infos={repr(self.infos)})"
+        repr_dict = {f'data': repr(self.data), f'infos': repr(self.infos)}
+        class_name = "ModelMonitorSummaryFromOrg"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

@@ -21,7 +21,12 @@ class DataMetrics(AbstractApiClass):
         self.num_cols = numCols
 
     def __repr__(self):
-        return f"DataMetrics(metrics={repr(self.metrics)},\n  schema={repr(self.schema)},\n  num_rows={repr(self.num_rows)},\n  num_cols={repr(self.num_cols)})"
+        repr_dict = {f'metrics': repr(self.metrics), f'schema': repr(
+            self.schema), f'num_rows': repr(self.num_rows), f'num_cols': repr(self.num_cols)}
+        class_name = "DataMetrics"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

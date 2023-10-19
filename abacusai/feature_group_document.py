@@ -19,7 +19,12 @@ class FeatureGroupDocument(AbstractApiClass):
         self.status = status
 
     def __repr__(self):
-        return f"FeatureGroupDocument(feature_group_id={repr(self.feature_group_id)},\n  doc_id={repr(self.doc_id)},\n  status={repr(self.status)})"
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'doc_id': repr(
+            self.doc_id), f'status': repr(self.status)}
+        class_name = "FeatureGroupDocument"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

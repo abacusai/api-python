@@ -33,7 +33,12 @@ class FeatureGroupRowProcess(AbstractApiClass):
         self.error = error
 
     def __repr__(self):
-        return f"FeatureGroupRowProcess(feature_group_id={repr(self.feature_group_id)},\n  deployment_id={repr(self.deployment_id)},\n  primary_key_value={repr(self.primary_key_value)},\n  feature_group_row_process_id={repr(self.feature_group_row_process_id)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  started_at={repr(self.started_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  error={repr(self.error)})"
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'deployment_id': repr(self.deployment_id), f'primary_key_value': repr(self.primary_key_value), f'feature_group_row_process_id': repr(
+            self.feature_group_row_process_id), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'started_at': repr(self.started_at), f'completed_at': repr(self.completed_at), f'status': repr(self.status), f'error': repr(self.error)}
+        class_name = "FeatureGroupRowProcess"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

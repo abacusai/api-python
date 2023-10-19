@@ -46,7 +46,12 @@ class Algorithm(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"Algorithm(name={repr(self.name)},\n  problem_type={repr(self.problem_type)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  is_default_enabled={repr(self.is_default_enabled)},\n  training_input_mappings={repr(self.training_input_mappings)},\n  train_function_name={repr(self.train_function_name)},\n  predict_function_name={repr(self.predict_function_name)},\n  predict_many_function_name={repr(self.predict_many_function_name)},\n  initialize_function_name={repr(self.initialize_function_name)},\n  config_options={repr(self.config_options)},\n  algorithm_id={repr(self.algorithm_id)},\n  use_gpu={repr(self.use_gpu)},\n  algorithm_training_config={repr(self.algorithm_training_config)},\n  only_offline_deployable={repr(self.only_offline_deployable)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'name': repr(self.name), f'problem_type': repr(self.problem_type), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'is_default_enabled': repr(self.is_default_enabled), f'training_input_mappings': repr(self.training_input_mappings), f'train_function_name': repr(self.train_function_name), f'predict_function_name': repr(self.predict_function_name), f'predict_many_function_name': repr(
+            self.predict_many_function_name), f'initialize_function_name': repr(self.initialize_function_name), f'config_options': repr(self.config_options), f'algorithm_id': repr(self.algorithm_id), f'use_gpu': repr(self.use_gpu), f'algorithm_training_config': repr(self.algorithm_training_config), f'only_offline_deployable': repr(self.only_offline_deployable), f'code_source': repr(self.code_source)}
+        class_name = "Algorithm"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

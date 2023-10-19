@@ -34,7 +34,12 @@ class DocumentRetriever(AbstractApiClass):
             DocumentRetrieverConfig, documentRetrieverConfig)
 
     def __repr__(self):
-        return f"DocumentRetriever(name={repr(self.name)},\n  document_retriever_id={repr(self.document_retriever_id)},\n  created_at={repr(self.created_at)},\n  feature_group_id={repr(self.feature_group_id)},\n  feature_group_name={repr(self.feature_group_name)},\n  latest_document_retriever_version={repr(self.latest_document_retriever_version)},\n  document_retriever_config={repr(self.document_retriever_config)})"
+        repr_dict = {f'name': repr(self.name), f'document_retriever_id': repr(self.document_retriever_id), f'created_at': repr(self.created_at), f'feature_group_id': repr(self.feature_group_id), f'feature_group_name': repr(
+            self.feature_group_name), f'latest_document_retriever_version': repr(self.latest_document_retriever_version), f'document_retriever_config': repr(self.document_retriever_config)}
+        class_name = "DocumentRetriever"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """
@@ -108,29 +113,6 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.client.list_document_retriever_versions(self.document_retriever_id, limit, start_after_version)
 
-    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None):
-        """
-        Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
-
-        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
-        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
-        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
-
-
-        Args:
-            query (str): The query to search for.
-            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
-            limit (int): If provided, will limit the number of results to the value specified.
-            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
-            max_words (int): If provided, will limit the total number of words in the results to the value specified.
-            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
-            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
-
-        Returns:
-            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
-        """
-        return self.client.get_matching_documents(self.document_retriever_id, query, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk)
-
     def get_document_snippet(self, document_id: str, start_word_index: int = None, end_word_index: int = None):
         """
         Get a snippet from documents in the document retriever.
@@ -177,3 +159,26 @@ class DocumentRetriever(AbstractApiClass):
             str: A string describing the status of a document retriever (pending, complete, etc.).
         """
         return self.describe().latest_document_retriever_version.status
+
+    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None):
+        """
+        Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
+
+        Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
+        from the document retriever. The returned chunks could be expanded to include more words from the original documents and merged if they
+        are overlapping, and permitted by the settings provided. The returned chunks are sorted by relevance.
+
+
+        Args:
+            query (str): The query to search for.
+            filters (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
+            limit (int): If provided, will limit the number of results to the value specified.
+            result_columns (list): If provided, will limit the column properties present in each result to those specified in this list.
+            max_words (int): If provided, will limit the total number of words in the results to the value specified.
+            num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
+            max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+
+        Returns:
+            list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
+        """
+        return self.client.get_matching_documents(self.document_retriever_id, query, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk)

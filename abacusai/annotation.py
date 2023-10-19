@@ -21,7 +21,12 @@ class Annotation(AbstractApiClass):
         self.metadata = metadata
 
     def __repr__(self):
-        return f"Annotation(annotation_type={repr(self.annotation_type)},\n  annotation_value={repr(self.annotation_value)},\n  comments={repr(self.comments)},\n  metadata={repr(self.metadata)})"
+        repr_dict = {f'annotation_type': repr(self.annotation_type), f'annotation_value': repr(
+            self.annotation_value), f'comments': repr(self.comments), f'metadata': repr(self.metadata)}
+        class_name = "Annotation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

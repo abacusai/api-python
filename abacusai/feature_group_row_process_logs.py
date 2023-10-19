@@ -23,7 +23,12 @@ class FeatureGroupRowProcessLogs(AbstractApiClass):
         self.feature_group_row_process_id = featureGroupRowProcessId
 
     def __repr__(self):
-        return f"FeatureGroupRowProcessLogs(logs={repr(self.logs)},\n  feature_group_id={repr(self.feature_group_id)},\n  deployment_id={repr(self.deployment_id)},\n  primary_key_value={repr(self.primary_key_value)},\n  feature_group_row_process_id={repr(self.feature_group_row_process_id)})"
+        repr_dict = {f'logs': repr(self.logs), f'feature_group_id': repr(self.feature_group_id), f'deployment_id': repr(
+            self.deployment_id), f'primary_key_value': repr(self.primary_key_value), f'feature_group_row_process_id': repr(self.feature_group_row_process_id)}
+        class_name = "FeatureGroupRowProcessLogs"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

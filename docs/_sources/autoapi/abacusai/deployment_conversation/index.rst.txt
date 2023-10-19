@@ -79,6 +79,20 @@ Classes
       :type deployment_token: str
 
 
+   .. py:method:: clear(external_session_id = None, deployment_id = None, deployment_token = None, user_message_indices = None)
+
+      Clear the message history of a Deployment Conversation.
+
+      :param external_session_id: The external session id associated with the deployment conversation.
+      :type external_session_id: str
+      :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
+      :type deployment_id: str
+      :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
+      :type deployment_token: str
+      :param user_message_indices: Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared.
+      :type user_message_indices: list
+
+
    .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful

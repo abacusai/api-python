@@ -19,7 +19,12 @@ class CategoricalRangeViolation(AbstractApiClass):
         self.freq_outside_training_range = freqOutsideTrainingRange
 
     def __repr__(self):
-        return f"CategoricalRangeViolation(name={repr(self.name)},\n  most_common_values={repr(self.most_common_values)},\n  freq_outside_training_range={repr(self.freq_outside_training_range)})"
+        repr_dict = {f'name': repr(self.name), f'most_common_values': repr(
+            self.most_common_values), f'freq_outside_training_range': repr(self.freq_outside_training_range)}
+        class_name = "CategoricalRangeViolation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

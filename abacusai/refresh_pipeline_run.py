@@ -42,7 +42,12 @@ class RefreshPipelineRun(AbstractApiClass):
         self.refresh_policy = client._build_class(RefreshPolicy, refreshPolicy)
 
     def __repr__(self):
-        return f"RefreshPipelineRun(refresh_pipeline_run_id={repr(self.refresh_pipeline_run_id)},\n  refresh_policy_id={repr(self.refresh_policy_id)},\n  created_at={repr(self.created_at)},\n  started_at={repr(self.started_at)},\n  completed_at={repr(self.completed_at)},\n  status={repr(self.status)},\n  refresh_type={repr(self.refresh_type)},\n  dataset_versions={repr(self.dataset_versions)},\n  feature_group_version={repr(self.feature_group_version)},\n  model_versions={repr(self.model_versions)},\n  prediction_metric_versions={repr(self.prediction_metric_versions)},\n  deployment_versions={repr(self.deployment_versions)},\n  batch_predictions={repr(self.batch_predictions)},\n  refresh_policy={repr(self.refresh_policy)})"
+        repr_dict = {f'refresh_pipeline_run_id': repr(self.refresh_pipeline_run_id), f'refresh_policy_id': repr(self.refresh_policy_id), f'created_at': repr(self.created_at), f'started_at': repr(self.started_at), f'completed_at': repr(self.completed_at), f'status': repr(self.status), f'refresh_type': repr(self.refresh_type), f'dataset_versions': repr(
+            self.dataset_versions), f'feature_group_version': repr(self.feature_group_version), f'model_versions': repr(self.model_versions), f'prediction_metric_versions': repr(self.prediction_metric_versions), f'deployment_versions': repr(self.deployment_versions), f'batch_predictions': repr(self.batch_predictions), f'refresh_policy': repr(self.refresh_policy)}
+        class_name = "RefreshPipelineRun"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

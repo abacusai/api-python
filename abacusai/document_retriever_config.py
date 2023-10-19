@@ -20,7 +20,12 @@ class DocumentRetrieverConfig(AbstractApiClass):
         self.text_encoder = textEncoder
 
     def __repr__(self):
-        return f"DocumentRetrieverConfig(chunk_size={repr(self.chunk_size)},\n  chunk_overlap_fraction={repr(self.chunk_overlap_fraction)},\n  text_encoder={repr(self.text_encoder)})"
+        repr_dict = {f'chunk_size': repr(self.chunk_size), f'chunk_overlap_fraction': repr(
+            self.chunk_overlap_fraction), f'text_encoder': repr(self.text_encoder)}
+        class_name = "DocumentRetrieverConfig"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

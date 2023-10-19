@@ -24,7 +24,12 @@ class CustomMetricVersion(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        return f"CustomMetricVersion(custom_metric_version={repr(self.custom_metric_version)},\n  name={repr(self.name)},\n  created_at={repr(self.created_at)},\n  custom_metric_function_name={repr(self.custom_metric_function_name)},\n  code_source={repr(self.code_source)})"
+        repr_dict = {f'custom_metric_version': repr(self.custom_metric_version), f'name': repr(self.name), f'created_at': repr(
+            self.created_at), f'custom_metric_function_name': repr(self.custom_metric_function_name), f'code_source': repr(self.code_source)}
+        class_name = "CustomMetricVersion"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

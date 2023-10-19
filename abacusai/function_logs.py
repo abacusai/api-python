@@ -26,7 +26,12 @@ class FunctionLogs(AbstractApiClass):
         self.exception = client._build_class(UserException, exception)
 
     def __repr__(self):
-        return f"FunctionLogs(function={repr(self.function)},\n  stats={repr(self.stats)},\n  stdout={'[92m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stdout, ' ' * 6) + chr(39) * 3) if self.stdout else str(self.stdout)) + '[0;0m'},\n  stderr={'[91m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stderr, ' ' * 6) + chr(39) * 3) if self.stderr else str(self.stderr)) + '[0;0m'},\n  algorithm={repr(self.algorithm)},\n  exception={repr(self.exception)})"
+        repr_dict = {f'function': repr(self.function), f'stats': repr(self.stats), f'stdout': '[92m' + ((chr(39) * 3 + chr(10) + textwrap.indent(self.stdout, ' ' * 6) + chr(39) * 3) if self.stdout else str(self.stdout)) + '[0;0m', f'stderr': '[91m' + (
+            (chr(39) * 3 + chr(10) + textwrap.indent(self.stderr, ' ' * 6) + chr(39) * 3) if self.stderr else str(self.stderr)) + '[0;0m', f'algorithm': repr(self.algorithm), f'exception': repr(self.exception)}
+        class_name = "FunctionLogs"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

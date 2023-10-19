@@ -17,7 +17,12 @@ class ModelLocation(AbstractApiClass):
         self.artifact_names = artifactNames
 
     def __repr__(self):
-        return f"ModelLocation(location={repr(self.location)},\n  artifact_names={repr(self.artifact_names)})"
+        repr_dict = {f'location': repr(
+            self.location), f'artifact_names': repr(self.artifact_names)}
+        class_name = "ModelLocation"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

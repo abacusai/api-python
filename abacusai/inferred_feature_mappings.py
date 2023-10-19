@@ -19,7 +19,12 @@ class InferredFeatureMappings(AbstractApiClass):
             FeatureMapping, featureMappings)
 
     def __repr__(self):
-        return f"InferredFeatureMappings(error={repr(self.error)},\n  feature_mappings={repr(self.feature_mappings)})"
+        repr_dict = {f'error': repr(
+            self.error), f'feature_mappings': repr(self.feature_mappings)}
+        class_name = "InferredFeatureMappings"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

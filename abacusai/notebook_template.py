@@ -29,7 +29,12 @@ class NotebookTemplate(AbstractApiClass):
         self.source_code = sourceCode
 
     def __repr__(self):
-        return f"NotebookTemplate(notebook_template_id={repr(self.notebook_template_id)},\n  name={repr(self.name)},\n  description={repr(self.description)},\n  created_at={repr(self.created_at)},\n  updated_at={repr(self.updated_at)},\n  template_type={repr(self.template_type)},\n  filename={repr(self.filename)},\n  source_code={repr(self.source_code)})"
+        repr_dict = {f'notebook_template_id': repr(self.notebook_template_id), f'name': repr(self.name), f'description': repr(self.description), f'created_at': repr(
+            self.created_at), f'updated_at': repr(self.updated_at), f'template_type': repr(self.template_type), f'filename': repr(self.filename), f'source_code': repr(self.source_code)}
+        class_name = "NotebookTemplate"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """

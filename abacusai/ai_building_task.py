@@ -17,7 +17,12 @@ class AiBuildingTask(AbstractApiClass):
         self.task_type = taskType
 
     def __repr__(self):
-        return f"AiBuildingTask(task={repr(self.task)},\n  task_type={repr(self.task_type)})"
+        repr_dict = {f'task': repr(
+            self.task), f'task_type': repr(self.task_type)}
+        class_name = "AiBuildingTask"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
 
     def to_dict(self):
         """
