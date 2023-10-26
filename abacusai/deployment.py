@@ -31,11 +31,11 @@ class Deployment(AbstractApiClass):
             error (str): The relevant error, if the status is FAILED.
             batchStreamingUpdates (bool): A flag marking the feature group deployment as having enabled a background process which caches streamed-in rows for quicker lookup.
             algorithm (str): The algorithm that is currently deployed.
-            pendingModelVersion (dict): The model that the deployment is switching to.
+            pendingModelVersion (dict): The model that the deployment is switching to, or being stopped.
             modelDeploymentConfig (dict): The config for which model to be deployed.
             predictionOperatorId (str): The prediction operator ID that is currently deployed.
             predictionOperatorVersion (str): The prediction operator version ID that is currently deployed.
-            pendingPredictionOperatorVersion (str): The prediction operator version ID that the deployment is switching to.
+            pendingPredictionOperatorVersion (str): The prediction operator version ID that the deployment is switching to, or being stopped.
             onlineFeatureGroupId (id): The online feature group ID that the deployment is running on
             outputOnlineFeatureGroupId (id): The online feature group ID that the deployment is outputting results to
             refreshSchedules (RefreshSchedule): A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
@@ -419,7 +419,7 @@ class Deployment(AbstractApiClass):
 
     def wait_for_pending_deployment_update(self, timeout=900):
         """
-        A waiting call until pending model switch is completed.
+        A waiting call until deployment is in a stable state, that pending model switch is completed and previous model is stopped.
 
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.

@@ -17,10 +17,11 @@ class DocumentRetrieverVersion(AbstractApiClass):
             error (str): The error message when it failed to create the document retriever version.
             numberOfChunks (int): The number of chunks for the document retriever.
             embeddingFileSize (int): The size of embedding file for the document retriever.
+            warnings (list): (list): The warning messages when creating the document retriever.
             resolvedConfig (DocumentRetrieverConfig): The resolved configurations, such as default settings, for indexing documents.
     """
 
-    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, resolvedConfig={}):
+    def __init__(self, client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={}):
         super().__init__(client, documentRetrieverVersion)
         self.document_retriever_id = documentRetrieverId
         self.document_retriever_version = documentRetrieverVersion
@@ -30,12 +31,13 @@ class DocumentRetrieverVersion(AbstractApiClass):
         self.error = error
         self.number_of_chunks = numberOfChunks
         self.embedding_file_size = embeddingFileSize
+        self.warnings = warnings
         self.resolved_config = client._build_class(
             DocumentRetrieverConfig, resolvedConfig)
 
     def __repr__(self):
         repr_dict = {f'document_retriever_id': repr(self.document_retriever_id), f'document_retriever_version': repr(self.document_retriever_version), f'created_at': repr(self.created_at), f'status': repr(self.status), f'feature_group_version': repr(
-            self.feature_group_version), f'error': repr(self.error), f'number_of_chunks': repr(self.number_of_chunks), f'embedding_file_size': repr(self.embedding_file_size), f'resolved_config': repr(self.resolved_config)}
+            self.feature_group_version), f'error': repr(self.error), f'number_of_chunks': repr(self.number_of_chunks), f'embedding_file_size': repr(self.embedding_file_size), f'warnings': repr(self.warnings), f'resolved_config': repr(self.resolved_config)}
         class_name = "DocumentRetrieverVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -48,8 +50,8 @@ class DocumentRetrieverVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version':
-                self.feature_group_version, 'error': self.error, 'number_of_chunks': self.number_of_chunks, 'embedding_file_size': self.embedding_file_size, 'resolved_config': self._get_attribute_as_dict(self.resolved_config)}
+        resp = {'document_retriever_id': self.document_retriever_id, 'document_retriever_version': self.document_retriever_version, 'created_at': self.created_at, 'status': self.status, 'feature_group_version': self.feature_group_version,
+                'error': self.error, 'number_of_chunks': self.number_of_chunks, 'embedding_file_size': self.embedding_file_size, 'warnings': self.warnings, 'resolved_config': self._get_attribute_as_dict(self.resolved_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):
@@ -81,7 +83,7 @@ class DocumentRetrieverVersion(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
         """
-        return self.client._poll(self, {'PENDING', 'INDEXING'}, timeout=timeout)
+        return self.client._poll(self, {'PENDING', 'INDEXING', 'DEPLOYING'}, timeout=timeout)
 
     def wait_until_ready(self, timeout=3600):
         """

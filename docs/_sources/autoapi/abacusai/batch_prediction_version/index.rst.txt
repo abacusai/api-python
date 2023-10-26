@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchInputs={}, globalPredictionArgs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, batchInputs={}, globalPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -96,6 +96,8 @@ Classes
    :type outputFeatureGroupVersion: str
    :param outputFeatureGroupTableName: The BP output feature group name if applicable
    :type outputFeatureGroupTableName: str
+   :param batchPredictionWarnings: Relevant warnings if any issues are found
+   :type batchPredictionWarnings: str
    :param batchInputs: Inputs to the batch prediction
    :type batchInputs: PredictionInput
 
@@ -147,6 +149,17 @@ Classes
 
       :returns: The Batch Prediction Version.
       :rtype: BatchPredictionVersion
+
+
+   .. py:method:: get_logs()
+
+      Retrieves the batch prediction logs.
+
+      :param batch_prediction_version: The unique version ID of the batch prediction version.
+      :type batch_prediction_version: str
+
+      :returns: The logs for the specified batch prediction version.
+      :rtype: BatchPredictionVersionLogs
 
 
    .. py:method:: download_result_to_file(file)

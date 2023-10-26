@@ -64,7 +64,7 @@ Classes
    :type batchStreamingUpdates: bool
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
-   :param pendingModelVersion: The model that the deployment is switching to.
+   :param pendingModelVersion: The model that the deployment is switching to, or being stopped.
    :type pendingModelVersion: dict
    :param modelDeploymentConfig: The config for which model to be deployed.
    :type modelDeploymentConfig: dict
@@ -72,7 +72,7 @@ Classes
    :type predictionOperatorId: str
    :param predictionOperatorVersion: The prediction operator version ID that is currently deployed.
    :type predictionOperatorVersion: str
-   :param pendingPredictionOperatorVersion: The prediction operator version ID that the deployment is switching to.
+   :param pendingPredictionOperatorVersion: The prediction operator version ID that the deployment is switching to, or being stopped.
    :type pendingPredictionOperatorVersion: str
    :param onlineFeatureGroupId: The online feature group ID that the deployment is running on
    :type onlineFeatureGroupId: id
@@ -433,7 +433,7 @@ Classes
 
    .. py:method:: wait_for_pending_deployment_update(timeout=900)
 
-      A waiting call until pending model switch is completed.
+      A waiting call until deployment is in a stable state, that pending model switch is completed and previous model is stopped.
 
       :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
       :type timeout: int, optional

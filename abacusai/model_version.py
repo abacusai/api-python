@@ -127,6 +127,18 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.query_test_point_predictions(self.model_version, algorithm, to_row, from_row, sql_where_clause)
 
+    def get_feature_group_schemas_for(self):
+        """
+        Gets the schema for all feature groups used in the model version.
+
+        Args:
+            model_version (str): Unique string identifier for the version of the model.
+
+        Returns:
+            list[ModelVersionFeatureGroupSchema]: List of schema for all feature groups used in the model version.
+        """
+        return self.client.get_feature_group_schemas_for_model_version(self.model_version)
+
     def delete(self):
         """
         Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.

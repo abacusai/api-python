@@ -1,0 +1,57 @@
+:py:mod:`abacusai.nested_feature_schema`
+========================================
+
+.. py:module:: abacusai.nested_feature_schema
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.nested_feature_schema.NestedFeatureSchema
+
+
+
+
+.. py:class:: NestedFeatureSchema(client, name=None, featureType=None, featureMapping=None, dataType=None, detectedFeatureType=None, sourceTable=None, pointInTimeInfo={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A schema description for a nested feature
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The unique name of the column
+   :type name: str
+   :param featureType: Feature Type of the Feature
+   :type featureType: str
+   :param featureMapping: The Feature Mapping of the feature
+   :type featureMapping: str
+   :param dataType: Data Type of the Feature
+   :type dataType: str
+   :param detectedFeatureType: The detected feature type for this feature
+   :type detectedFeatureType: str
+   :param sourceTable: The source table of the column
+   :type sourceTable: str
+   :param pointInTimeInfo: Point in time information for this feature
+   :type pointInTimeInfo: PointInTimeFeatureInfo
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

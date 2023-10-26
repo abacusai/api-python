@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, docId=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,6 +44,8 @@ Classes
    :type isUseful: bool
    :param feedback: The feedback provided for the message
    :type feedback: str
+   :param docId: The document id associated with the message
+   :type docId: str
 
    .. py:method:: __repr__()
 

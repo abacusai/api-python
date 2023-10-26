@@ -145,6 +145,8 @@ Classes
    :type max_user_history_len_percentile: int
    :param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
    :type downsample_item_popularity_percentile: float
+   :param allow_duplicate_action_types: event types which will not be deduplicated.
+   :type allow_duplicate_action_types: List[str]
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -172,6 +174,11 @@ Classes
       
 
    .. py:attribute:: session_event_types
+      :type: List[str]
+
+      
+
+   .. py:attribute:: allow_duplicate_action_types
       :type: List[str]
 
       
@@ -701,6 +708,8 @@ Classes
    :type smooth_history: float
    :param local_scale_target: Using per training/prediction window target scaling.
    :type local_scale_target: bool
+   :param use_clipping: Apply clipping to input data to stabilize the training.
+   :type use_clipping: bool
    :param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
    :type timeseries_weight_column: str
    :param item_attributes_weight_column: If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
@@ -953,6 +962,11 @@ Classes
       
 
    .. py:attribute:: local_scale_target
+      :type: bool
+
+      
+
+   .. py:attribute:: use_clipping
       :type: bool
 
       

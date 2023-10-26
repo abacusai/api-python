@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Schema(client, name=None, featureMapping=None, detectedFeatureMapping=None, featureType=None, detectedFeatureType=None, dataType=None, detectedDataType=None)
+.. py:class:: Schema(client, name=None, featureMapping=None, detectedFeatureMapping=None, featureType=None, detectedFeatureType=None, dataType=None, detectedDataType=None, nestedFeatures={}, pointInTimeInfo={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -40,6 +40,10 @@ Classes
    :type dataType: str
    :param detectedDataType: The detected data type for this feature
    :type detectedDataType: str
+   :param nestedFeatures: List of features of nested feature
+   :type nestedFeatures: NestedFeatureSchema
+   :param pointInTimeInfo: Point in time information for this feature
+   :type pointInTimeInfo: PointInTimeFeatureInfo
 
    .. py:method:: __repr__()
 

@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.77.8'
+      :value: '0.78.0'
 
       
 
@@ -1333,6 +1333,17 @@ Attributes
       :rtype: TestPointPredictions
 
 
+   .. py:method:: get_feature_group_schemas_for_model_version(model_version)
+
+      Gets the schema for all feature groups used in the model version.
+
+      :param model_version: Unique string identifier for the version of the model.
+      :type model_version: str
+
+      :returns: List of schema for all feature groups used in the model version.
+      :rtype: list[ModelVersionFeatureGroupSchema]
+
+
    .. py:method:: list_model_versions(model_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions for a given model.
@@ -2008,9 +2019,20 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
+   .. py:method:: get_batch_prediction_version_logs(batch_prediction_version)
+
+      Retrieves the batch prediction logs.
+
+      :param batch_prediction_version: The unique version ID of the batch prediction version.
+      :type batch_prediction_version: str
+
+      :returns: The logs for the specified batch prediction version.
+      :rtype: BatchPredictionVersionLogs
+
+
    .. py:method:: get_data(feature_group_id, primary_key = None, num_rows = None)
 
-      Gets the feature group rows.
+      Gets the feature group rows for online updatable feature groups.
 
       If primary key is set, row corresponding to primary_key is returned.
       If num_rows is set, we return maximum of num_rows latest updated rows.

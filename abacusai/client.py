@@ -44,6 +44,7 @@ from .app_user_group import AppUserGroup
 from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
+from .batch_prediction_version_logs import BatchPredictionVersionLogs
 from .chat_session import ChatSession
 from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
@@ -111,6 +112,7 @@ from .model_monitor_version import ModelMonitorVersion
 from .model_monitor_version_metric_data import ModelMonitorVersionMetricData
 from .model_training_type_for_deployment import ModelTrainingTypeForDeployment
 from .model_version import ModelVersion
+from .model_version_feature_group_schema import ModelVersionFeatureGroupSchema
 from .modification_lock_info import ModificationLockInfo
 from .module import Module
 from .monitor_alert import MonitorAlert
@@ -511,7 +513,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.77.8'
+    client_version = '0.78.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1436,6 +1438,16 @@ class ReadOnlyClient(BaseApiClient):
             TestPointPredictions: TestPointPrediction"""
         return self._call_api('queryTestPointPredictions', 'GET', query_params={'modelVersion': model_version, 'algorithm': algorithm, 'toRow': to_row, 'fromRow': from_row, 'sqlWhereClause': sql_where_clause}, parse_type=TestPointPredictions)
 
+    def get_feature_group_schemas_for_model_version(self, model_version: str) -> List[ModelVersionFeatureGroupSchema]:
+        """Gets the schema for all feature groups used in the model version.
+
+        Args:
+            model_version (str): Unique string identifier for the version of the model.
+
+        Returns:
+            list[ModelVersionFeatureGroupSchema]: List of schema for all feature groups used in the model version."""
+        return self._call_api('getFeatureGroupSchemasForModelVersion', 'GET', query_params={'modelVersion': model_version}, parse_type=ModelVersionFeatureGroupSchema)
+
     def list_model_versions(self, model_id: str, limit: int = 100, start_after_version: str = None) -> List[ModelVersion]:
         """Retrieves a list of versions for a given model.
 
@@ -2016,8 +2028,18 @@ class ReadOnlyClient(BaseApiClient):
             BatchPredictionVersion: The Batch Prediction Version."""
         return self._call_api('describeBatchPredictionVersion', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersion)
 
+    def get_batch_prediction_version_logs(self, batch_prediction_version: str) -> BatchPredictionVersionLogs:
+        """Retrieves the batch prediction logs.
+
+        Args:
+            batch_prediction_version (str): The unique version ID of the batch prediction version.
+
+        Returns:
+            BatchPredictionVersionLogs: The logs for the specified batch prediction version."""
+        return self._call_api('getBatchPredictionVersionLogs', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersionLogs)
+
     def get_data(self, feature_group_id: str, primary_key: str = None, num_rows: int = None) -> FeatureGroupRow:
-        """Gets the feature group rows.
+        """Gets the feature group rows for online updatable feature groups.
 
         If primary key is set, row corresponding to primary_key is returned.
         If num_rows is set, we return maximum of num_rows latest updated rows.

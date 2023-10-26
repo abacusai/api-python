@@ -131,6 +131,17 @@ Classes
       :rtype: TestPointPredictions
 
 
+   .. py:method:: get_feature_group_schemas_for()
+
+      Gets the schema for all feature groups used in the model version.
+
+      :param model_version: Unique string identifier for the version of the model.
+      :type model_version: str
+
+      :returns: List of schema for all feature groups used in the model version.
+      :rtype: list[ModelVersionFeatureGroupSchema]
+
+
    .. py:method:: delete()
 
       Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.

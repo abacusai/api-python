@@ -1,0 +1,47 @@
+:py:mod:`abacusai.point_in_time_feature_info`
+=============================================
+
+.. py:module:: abacusai.point_in_time_feature_info
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.point_in_time_feature_info.PointInTimeFeatureInfo
+
+
+
+
+.. py:class:: PointInTimeFeatureInfo(client, expression=None, groupName=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A point-in-time infos for a feature
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param expression: SQL aggregate expression which can convert a sequence of rows into a scalar value.
+   :type expression: str
+   :param groupName: The group name this point-in-time feature belongs to.
+   :type groupName: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

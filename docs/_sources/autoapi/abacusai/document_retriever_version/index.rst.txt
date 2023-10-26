@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, resolvedConfig={})
+.. py:class:: DocumentRetrieverVersion(client, documentRetrieverId=None, documentRetrieverVersion=None, createdAt=None, status=None, featureGroupVersion=None, error=None, numberOfChunks=None, embeddingFileSize=None, warnings=None, resolvedConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -42,6 +42,8 @@ Classes
    :type numberOfChunks: int
    :param embeddingFileSize: The size of embedding file for the document retriever.
    :type embeddingFileSize: int
+   :param warnings: (list): The warning messages when creating the document retriever.
+   :type warnings: list
    :param resolvedConfig: The resolved configurations, such as default settings, for indexing documents.
    :type resolvedConfig: DocumentRetrieverConfig
 

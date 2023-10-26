@@ -1084,7 +1084,7 @@ class FeatureGroup(AbstractApiClass):
 
     def get_data(self, primary_key: str = None, num_rows: int = None):
         """
-        Gets the feature group rows.
+        Gets the feature group rows for online updatable feature groups.
 
         If primary key is set, row corresponding to primary_key is returned.
         If num_rows is set, we return maximum of num_rows latest updated rows.

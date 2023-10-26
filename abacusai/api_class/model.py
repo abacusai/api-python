@@ -55,7 +55,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
         compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
         max_user_history_len_percentile (int): Filter out users with history length above this percentile.
         downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
-
+        allow_duplicate_action_types (List[str]): event types which will not be deduplicated.
     """
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
@@ -67,6 +67,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     target_action_types: List[str] = dataclasses.field(default=None)
     target_action_weights: Dict[str, float] = dataclasses.field(default=None)
     session_event_types: List[str] = dataclasses.field(default=None)
+    allow_duplicate_action_types: List[str] = dataclasses.field(default=None)
 
     # data split
     test_split: int = dataclasses.field(default=None)
@@ -270,6 +271,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         use_log_transforms (bool): Apply logarithmic transformations to input data.
         smooth_history (float): Smooth (low pass filter) the timeseries.
         local_scale_target (bool): Using per training/prediction window target scaling.
+        use_clipping (bool): Apply clipping to input data to stabilize the training.
         timeseries_weight_column (str): If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
         item_attributes_weight_column (str): If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
         use_timeseries_weights_in_objective (bool): If True, we include weights from column set as "TIMESERIES WEIGHT COLUMN" in objective functions.
@@ -334,6 +336,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     use_log_transforms: bool = dataclasses.field(default=None)
     smooth_history: float = dataclasses.field(default=None)
     local_scale_target: bool = dataclasses.field(default=None)
+    use_clipping: bool = dataclasses.field(default=None)
     # Item weights
     timeseries_weight_column: str = dataclasses.field(default=None)
     item_attributes_weight_column: str = dataclasses.field(default=None)
