@@ -1,6 +1,7 @@
 from .batch_prediction import *
 from .blob_input import *
 from .dataset import *
+from .dataset_application_connector import *
 from .document_retriever import *
 from .enums import *
 from .feature_group import *

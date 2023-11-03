@@ -154,7 +154,10 @@ class _ApiClassFactory(ABC):
         support_kwargs = cls.config_abstract_class and cls.config_abstract_class._support_kwargs
         config_class_key = cls.config_class_key if (cls.config_abstract_class and not cls.config_abstract_class._upper_snake_case_keys) else camel_case(cls.config_class_key)
         if not support_kwargs and config_class_key not in (config or {}):
-            raise KeyError(f'Could not find {config_class_key} in {config}')
+            if camel_case(config_class_key) in (config or {}):
+                config_class_key = camel_case(config_class_key)
+            else:
+                raise KeyError(f'Could not find {config_class_key} in {config}')
         config_class_type = config.get(config_class_key, None)
         if isinstance(config_class_type, str):
             config_class_type = config_class_type.upper()

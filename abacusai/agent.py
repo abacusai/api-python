@@ -18,11 +18,12 @@ class Agent(AbstractApiClass):
             sourceCode (str): Python code used to make the agent.
             agentConfig (dict): The config options used to create this agent.
             memory (int): Memory in GB specified for the deployment resources for the agent.
+            trainingRequired (bool): Whether training is required to deploy the latest agent code.
             latestAgentVersion (AgentVersion): The latest agent version.
             codeSource (CodeSource): If a python model, information on the source code
     """
 
-    def __init__(self, client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, codeSource={}, latestAgentVersion={}):
+    def __init__(self, client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, codeSource={}, latestAgentVersion={}):
         super().__init__(client, agentId)
         self.name = name
         self.agent_id = agentId
@@ -33,13 +34,14 @@ class Agent(AbstractApiClass):
         self.source_code = sourceCode
         self.agent_config = agentConfig
         self.memory = memory
+        self.training_required = trainingRequired
         self.code_source = client._build_class(CodeSource, codeSource)
         self.latest_agent_version = client._build_class(
             AgentVersion, latestAgentVersion)
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'agent_id': repr(self.agent_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'notebook_id': repr(self.notebook_id), f'predict_function_name': repr(
-            self.predict_function_name), f'source_code': repr(self.source_code), f'agent_config': repr(self.agent_config), f'memory': repr(self.memory), f'code_source': repr(self.code_source), f'latest_agent_version': repr(self.latest_agent_version)}
+        repr_dict = {f'name': repr(self.name), f'agent_id': repr(self.agent_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'notebook_id': repr(self.notebook_id), f'predict_function_name': repr(self.predict_function_name), f'source_code': repr(
+            self.source_code), f'agent_config': repr(self.agent_config), f'memory': repr(self.memory), f'training_required': repr(self.training_required), f'code_source': repr(self.code_source), f'latest_agent_version': repr(self.latest_agent_version)}
         class_name = "Agent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -52,8 +54,8 @@ class Agent(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'agent_id': self.agent_id, 'created_at': self.created_at, 'project_id': self.project_id, 'notebook_id': self.notebook_id, 'predict_function_name': self.predict_function_name,
-                'source_code': self.source_code, 'agent_config': self.agent_config, 'memory': self.memory, 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_agent_version': self._get_attribute_as_dict(self.latest_agent_version)}
+        resp = {'name': self.name, 'agent_id': self.agent_id, 'created_at': self.created_at, 'project_id': self.project_id, 'notebook_id': self.notebook_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code,
+                'agent_config': self.agent_config, 'memory': self.memory, 'training_required': self.training_required, 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_agent_version': self._get_attribute_as_dict(self.latest_agent_version)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def refresh(self):

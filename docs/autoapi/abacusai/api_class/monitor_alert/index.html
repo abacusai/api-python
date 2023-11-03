@@ -152,6 +152,11 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig.threshold" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -160,7 +165,7 @@ inheritance.</p>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertConditionConfig" title="abacusai.api_class.monitor_alert.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p>
 <p>Feature Drift Condition Config for Monitor Alerts
 :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
-:type feature_drift_type: str
+:type feature_drift_type: FeatureDriftType
 :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
 :type threshold: float
 :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -180,6 +185,11 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">minimum_violations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.minimum_violations" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.FeatureDriftConditionConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -188,7 +198,7 @@ inheritance.</p>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertConditionConfig" title="abacusai.api_class.monitor_alert.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p>
 <p>Data Integrity Violation Condition Config for Monitor Alerts
 :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
-:type data_integrity_type: enums.DataIntegrityViolationType
+:type data_integrity_type: DataIntegrityViolationType
 :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
 :type minimum_violations: int</p>
 <dl class="py attribute">
@@ -201,6 +211,11 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">minimum_violations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig.minimum_violations" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -209,7 +224,7 @@ inheritance.</p>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertConditionConfig" title="abacusai.api_class.monitor_alert.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p>
 <p>Bias Violation Condition Config for Monitor Alerts
 :param bias_type: This option selects the bias metric to monitor for this alert.
-:type bias_type: enums.BiasType
+:type bias_type: BiasType
 :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
 :type threshold: float
 :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -227,6 +242,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.BiasViolationConditionConfig.minimum_violations">
 <span class="sig-name descname"><span class="pre">minimum_violations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.minimum_violations" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.BiasViolationConditionConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.__post_init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

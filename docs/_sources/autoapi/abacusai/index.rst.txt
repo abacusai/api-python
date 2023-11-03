@@ -62,6 +62,7 @@ Submodules
    deployment_auth_token/index.rst
    deployment_conversation/index.rst
    deployment_conversation_event/index.rst
+   deployment_conversation_export/index.rst
    document/index.rst
    document_annotation/index.rst
    document_retriever/index.rst
@@ -107,6 +108,7 @@ Submodules
    file_connector/index.rst
    file_connector_instructions/index.rst
    file_connector_verification/index.rst
+   finetuned_pretrained_model/index.rst
    forecasting_analysis_graph_data/index.rst
    forecasting_monitor_item_analysis/index.rst
    forecasting_monitor_summary/index.rst
@@ -115,6 +117,7 @@ Submodules
    graph_dashboard/index.rst
    holdout_analysis/index.rst
    holdout_analysis_version/index.rst
+   hosted_model_token/index.rst
    indexing_config/index.rst
    inferred_feature_mappings/index.rst
    item_statistics/index.rst
@@ -194,6 +197,8 @@ Submodules
    streaming_auth_token/index.rst
    streaming_client/index.rst
    streaming_connector/index.rst
+   streaming_row_count/index.rst
+   streaming_sample_code/index.rst
    test_point_predictions/index.rst
    training_config_options/index.rst
    type_violation/index.rst
@@ -231,6 +236,12 @@ Classes
    abacusai.BlobInput
    abacusai.ParsingConfig
    abacusai.DocumentProcessingConfig
+   abacusai.DatasetConfig
+   abacusai.ConfluenceDatasetConfig
+   abacusai.GoogleAnalyticsDatasetConfig
+   abacusai.SharepointDatasetConfig
+   abacusai.ZendeskDatasetConfig
+   abacusai._DatasetConfigFactory
    abacusai.VectorStoreTextEncoder
    abacusai.VectorStoreConfig
    abacusai.DocumentRetrieverConfig
@@ -249,6 +260,7 @@ Classes
    abacusai.FillLogic
    abacusai.BatchSize
    abacusai.HolidayCalendars
+   abacusai.FileFormat
    abacusai.ExperimentationMode
    abacusai.PersonalizationTrainingMode
    abacusai.PersonalizationObjective
@@ -265,6 +277,7 @@ Classes
    abacusai.SentimentType
    abacusai.ClusteringImputationMethod
    abacusai.ConnectorType
+   abacusai.ApplicationConnectorType
    abacusai.PythonFunctionArgumentType
    abacusai.PythonFunctionOutputArgumentType
    abacusai.LLMName
@@ -304,6 +317,7 @@ Classes
    abacusai.CustomAlgorithmTrainingConfig
    abacusai.OptimizationTrainingConfig
    abacusai._TrainingConfigFactory
+   abacusai.DeployableAlgorithm
    abacusai.ForecastingMonitorConfig
    abacusai.AlertConditionConfig
    abacusai.AccuracyBelowThresholdConditionConfig
@@ -847,15 +861,8 @@ Attributes
    Batch Prediction Config for the ChatLLM problem type
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param product: Generate a response for every question and chunk combination
-   :type product: bool
 
    .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: product
       :type: bool
 
       
@@ -994,6 +1001,146 @@ Attributes
 
    .. py:attribute:: use_full_ocr
       :type: bool
+
+      
+
+
+.. py:class:: DatasetConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: application_connector_type
+      :type: abacusai.api_class.enums.ApplicationConnectorType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: ConfluenceDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Confluence Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: GoogleAnalyticsDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Google Analytics Application Connector
+   :param location: The view id of the report in the connector to fetch
+   :type location: str
+   :param start_timestamp: Unix timestamp of the start of the period that will be queried
+   :type start_timestamp: int, optional
+   :param end_timestamp: Unix timestamp of the end of the period that will be queried
+   :type end_timestamp: int, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: start_timestamp
+      :type: int
+
+      
+
+   .. py:attribute:: end_timestamp
+      :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: SharepointDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Sharepoint Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str, optional
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+   :type extract_bounding_boxes: bool, optional
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default
+   :type merge_file_schemas: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
+
+      
+
+   .. py:attribute:: csv_delimiter
+      :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+
+      
+
+   .. py:attribute:: merge_file_schemas
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ZendeskDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Zendesk Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _DatasetConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'applicationConnectorType'
+
+      
+
+   .. py:attribute:: config_class_map
 
       
 
@@ -1691,6 +1838,121 @@ Attributes
       
 
 
+.. py:class:: FileFormat
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AVRO
+      :value: 'AVRO'
+
+      
+
+   .. py:attribute:: PARQUET
+      :value: 'PARQUET'
+
+      
+
+   .. py:attribute:: TFRECORD
+      :value: 'TFRECORD'
+
+      
+
+   .. py:attribute:: TSV
+      :value: 'TSV'
+
+      
+
+   .. py:attribute:: CSV
+      :value: 'CSV'
+
+      
+
+   .. py:attribute:: ORC
+      :value: 'ORC'
+
+      
+
+   .. py:attribute:: JSON
+      :value: 'JSON'
+
+      
+
+   .. py:attribute:: ODS
+      :value: 'ODS'
+
+      
+
+   .. py:attribute:: XLS
+      :value: 'XLS'
+
+      
+
+   .. py:attribute:: GZ
+      :value: 'GZ'
+
+      
+
+   .. py:attribute:: ZIP
+      :value: 'ZIP'
+
+      
+
+   .. py:attribute:: TAR
+      :value: 'TAR'
+
+      
+
+   .. py:attribute:: DOCX
+      :value: 'DOCX'
+
+      
+
+   .. py:attribute:: PDF
+      :value: 'PDF'
+
+      
+
+   .. py:attribute:: RAR
+      :value: 'RAR'
+
+      
+
+   .. py:attribute:: JPEG
+      :value: 'JPG'
+
+      
+
+   .. py:attribute:: PNG
+      :value: 'PNG'
+
+      
+
+   .. py:attribute:: TIF
+      :value: 'TIFF'
+
+      
+
+   .. py:attribute:: NUMBERS
+      :value: 'NUMBERS'
+
+      
+
+   .. py:attribute:: PPTX
+      :value: 'PPTX'
+
+      
+
+   .. py:attribute:: PPT
+      :value: 'PPT'
+
+      
+
+
 .. py:class:: ExperimentationMode
 
 
@@ -2292,6 +2554,51 @@ Attributes
 
    .. py:attribute:: APPLICATION
       :value: 'APPLICATION'
+
+      
+
+
+.. py:class:: ApplicationConnectorType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: GOOGLEANALYTICS
+      :value: 'GOOGLEANALYTICS'
+
+      
+
+   .. py:attribute:: GIT
+      :value: 'GIT'
+
+      
+
+   .. py:attribute:: CONFLUENCE
+      :value: 'CONFLUENCE'
+
+      
+
+   .. py:attribute:: ZENDESK
+      :value: 'ZENDESK'
+
+      
+
+   .. py:attribute:: SLACK
+      :value: 'SLACK'
+
+      
+
+   .. py:attribute:: SHAREPOINT
+      :value: 'SHAREPOINT'
+
+      
+
+   .. py:attribute:: TEAMS
+      :value: 'TEAMS'
 
       
 
@@ -4553,6 +4860,42 @@ Attributes
       
 
 
+.. py:class:: DeployableAlgorithm
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Algorithm that can be deployed to a model.
+   :param algorithm: ID of the algorithm.
+   :type algorithm: str
+   :param name: Name of the algorithm.
+   :type name: str
+   :param only_offline_deployable: Whether the algorithm can only be deployed offline.
+   :type only_offline_deployable: bool
+   :param trained_model_types: List of trained model types.
+   :type trained_model_types: List[dict]
+
+   .. py:attribute:: algorithm
+      :type: str
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: only_offline_deployable
+      :type: bool
+
+      
+
+   .. py:attribute:: trained_model_types
+      :type: List[dict]
+
+      
+
+
 .. py:class:: ForecastingMonitorConfig
 
 
@@ -4626,6 +4969,9 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: FeatureDriftConditionConfig
 
@@ -4634,7 +4980,7 @@ Attributes
 
    Feature Drift Condition Config for Monitor Alerts
    :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
-   :type feature_drift_type: str
+   :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -4655,6 +5001,9 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DataIntegrityViolationConditionConfig
 
@@ -4663,7 +5012,7 @@ Attributes
 
    Data Integrity Violation Condition Config for Monitor Alerts
    :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
-   :type data_integrity_type: enums.DataIntegrityViolationType
+   :type data_integrity_type: DataIntegrityViolationType
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
@@ -4677,6 +5026,9 @@ Attributes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: BiasViolationConditionConfig
 
@@ -4685,7 +5037,7 @@ Attributes
 
    Bias Violation Condition Config for Monitor Alerts
    :param bias_type: This option selects the bias metric to monitor for this alert.
-   :type bias_type: enums.BiasType
+   :type bias_type: BiasType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -4705,6 +5057,9 @@ Attributes
       :type: int
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: _AlertConditionConfigFactory
@@ -5203,7 +5558,7 @@ Attributes
       :type use_gpu: bool
 
 
-   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, package_requirements = None, name = None, use_gpu = False)
+   .. py:method:: create_model_from_functions(project_id, train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, included_modules = None, package_requirements = None, name = None, use_gpu = False, is_thread_safe = None)
 
       Creates a model from a python function
 
@@ -5231,9 +5586,11 @@ Attributes
       :type name: str
       :param use_gpu: Whether this model needs gpu
       :type use_gpu: bool
+      :param is_thread_safe: Whether the model is thread safe
+      :type is_thread_safe: bool
 
 
-   .. py:method:: update_model_from_functions(model_id, train_function, predict_function = None, predict_many_function = None, initialize_function = None, training_input_tables = None, cpu_size = None, memory = None, included_modules = None, package_requirements = None, use_gpu = False)
+   .. py:method:: update_model_from_functions(model_id, train_function, predict_function = None, predict_many_function = None, initialize_function = None, training_input_tables = None, cpu_size = None, memory = None, included_modules = None, package_requirements = None, use_gpu = False, is_thread_safe = None)
 
       Creates a model from a python function. Please pass in all the functions, even if you don't update it.
 
@@ -5259,6 +5616,8 @@ Attributes
       :type included_modules: list
       :param use_gpu: Whether this model needs gpu
       :type use_gpu: bool
+      :param is_thread_safe: Whether the model is thread safe
+      :type is_thread_safe: bool
 
 
    .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
@@ -5718,7 +6077,7 @@ Attributes
    .. py:method:: _get_doc_retriver_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -5743,6 +6102,8 @@ Attributes
       :type num_retrieval_margin_words: int
       :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
       :type max_words_per_chunk: int
+      :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
+      :type score_multiplier_column: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -7248,20 +7609,16 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, object_id = None, start_timestamp = None, end_timestamp = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None)
 
       Creates a dataset from an Application Connector.
 
-      :param table_name: Organization-unique table name
+      :param table_name: Organization-unique table name.
       :type table_name: str
-      :param application_connector_id: Unique string identifier of the application connector to download data from
+      :param application_connector_id: Unique string identifier of the application connector to download data from.
       :type application_connector_id: str
-      :param object_id: If applicable, the ID of the object in the service to query.
-      :type object_id: str
-      :param start_timestamp: Unix timestamp of the start of the period that will be queried.
-      :type start_timestamp: int
-      :param end_timestamp: Unix timestamp of the end of the period that will be queried.
-      :type end_timestamp: int
+      :param dataset_config: Dataset config for the application connector.
+      :type dataset_config: DatasetConfig
       :param refresh_schedule: Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
       :type refresh_schedule: str
 
@@ -7288,18 +7645,14 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_version_from_application_connector(dataset_id, object_id = None, start_timestamp = None, end_timestamp = None)
+   .. py:method:: create_dataset_version_from_application_connector(dataset_id, dataset_config = None)
 
       Creates a new version of the specified dataset.
 
       :param dataset_id: The unique ID associated with the dataset.
       :type dataset_id: str
-      :param object_id: The ID of the object in the service to query. If not specified, the last name will be used.
-      :type object_id: str
-      :param start_timestamp: The Unix timestamp of the start of the period that will be queried.
-      :type start_timestamp: int
-      :param end_timestamp: The Unix timestamp of the end of the period that will be queried.
-      :type end_timestamp: int
+      :param dataset_config: Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
+      :type dataset_config: DatasetConfig
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion
@@ -7341,12 +7694,18 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_streaming_dataset(table_name)
+   .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
       :param table_name: The feature group table name to create for this dataset.
       :type table_name: str
+      :param primary_key: The optional primary key column name for the dataset.
+      :type primary_key: str
+      :param update_timestamp_key: Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication. Only relevant if lookup keys are set.
+      :type update_timestamp_key: str
+      :param lookup_keys: List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
+      :type lookup_keys: list
 
       :returns: The streaming dataset created.
       :rtype: Dataset
@@ -7611,7 +7970,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(project_id, function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False)
+   .. py:method:: create_model_from_python(project_id, function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
 
       Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -7646,6 +8005,8 @@ Attributes
       :type package_requirements: list
       :param use_gpu: Whether this model needs gpu
       :type use_gpu: bool
+      :param is_thread_safe: Whether this model is thread safe
+      :type is_thread_safe: bool
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -7661,7 +8022,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
+   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None)
 
       Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -7690,6 +8051,8 @@ Attributes
       :type package_requirements: list
       :param use_gpu: Whether this model needs gpu
       :type use_gpu: bool
+      :param is_thread_safe: Whether this model is thread safe
+      :type is_thread_safe: bool
 
       :returns: The updated model.
       :rtype: Model
@@ -8242,9 +8605,10 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
-      :param use_gpu: Whether this prediction operator needs gpu. Returns
+      :param use_gpu: Whether this prediction operator needs gpu.
       :type use_gpu: bool
 
+      :returns: The created prediction operator object.
       :rtype: PredictionOperator
 
 
@@ -8270,9 +8634,10 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: list
-      :param use_gpu: Whether this prediction operator needs gpu. Returns
+      :param use_gpu: Whether this prediction operator needs gpu.
       :type use_gpu: bool
 
+      :returns: The updated prediction operator object.
       :rtype: PredictionOperator
 
 
@@ -8314,8 +8679,6 @@ Attributes
 
       :param prediction_operator_version: The unique ID of the prediction operator version.
       :type prediction_operator_version: str
-
-      :rtype: PredictionOperatorVersion
 
 
    .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, skip_metrics_check = False, model_deployment_config = None, deployment_config = None)
@@ -9106,7 +9469,7 @@ Attributes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
 
       Get all positive assignments that match a query.
 
@@ -9120,6 +9483,8 @@ Attributes
       :type forced_assignments: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
+      :type include_all_assignments: bool
 
 
    .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
@@ -9346,7 +9711,7 @@ Attributes
       :type external_session_id: str
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -9373,6 +9738,8 @@ Attributes
       :type num_retrieval_margin_words: int
       :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
       :type max_words_per_chunk: int
+      :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
+      :type score_multiplier_column: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -9732,6 +10099,7 @@ Attributes
       :param data: The data to record, in JSON format.
       :type data: dict
 
+      :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
 
 
@@ -9744,6 +10112,7 @@ Attributes
       :param data: The data to record, in JSON format.
       :type data: dict
 
+      :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
 
 
@@ -9766,6 +10135,7 @@ Attributes
       :param document: The multipart/form-data of the document to add to the feature group.
       :type document: io.TextIOBase
 
+      :returns: The feature group document that was added.
       :rtype: FeatureGroupDocument
 
 
@@ -9848,7 +10218,7 @@ Attributes
       :type function_variable_mappings: list
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
       :type package_requirements: list
-      :param function_type: Type of Python function to create.
+      :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
       :type function_type: str
 
       :returns: The Python function that can be used (e.g. for feature group transform).
@@ -10441,14 +10811,14 @@ Attributes
 
    .. py:method:: create_chat_session(project_id = None, name = None)
 
-      Creates a chat session with Abacus AI Chat.
+      Creates a chat session with Data Science Co-pilot.
 
       :param project_id: The unique project identifier this chat session belongs to
       :type project_id: str
       :param name: The name of the chat session. Defaults to the project name.
       :type name: str
 
-      :returns: The chat session with Abacus AI Chat
+      :returns: The chat session with Data Science Co-pilot
       :rtype: ChatSession
 
 
@@ -10472,7 +10842,7 @@ Attributes
 
    .. py:method:: rename_chat_session(chat_session_id, name)
 
-      Renames a chat session with Abacus AI Chat.
+      Renames a chat session with Data Science Co-pilot.
 
       :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
@@ -12254,9 +12624,10 @@ Attributes
 
       Describe an existing prediction operator.
 
-      :param prediction_operator_id: The unique ID of the prediction operator. Returns
+      :param prediction_operator_id: The unique ID of the prediction operator.
       :type prediction_operator_id: str
 
+      :returns: The requested prediction operator object.
       :rtype: PredictionOperator
 
 
@@ -12264,10 +12635,11 @@ Attributes
 
       List all the prediction operators inside a project.
 
-      :param project_id: The unique ID of the project. Returns
+      :param project_id: The unique ID of the project.
       :type project_id: str
 
-      :rtype: PredictionOperator
+      :returns: A list of prediction operator objects.
+      :rtype: list[PredictionOperator]
 
 
    .. py:method:: list_prediction_operator_versions(prediction_operator_id)
@@ -12502,7 +12874,8 @@ Attributes
       :param num_rows: Maximum number of rows to return from the feature group
       :type num_rows: int
 
-      :rtype: FeatureGroupRow
+      :returns: A list of feature group rows.
+      :rtype: list[FeatureGroupRow]
 
 
    .. py:method:: list_pending_feature_group_documents(feature_group_id)
@@ -12512,7 +12885,8 @@ Attributes
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
 
-      :rtype: FeatureGroupDocument
+      :returns: A list of pending feature group documents.
+      :rtype: list[FeatureGroupDocument]
 
 
    .. py:method:: describe_python_function(name)
@@ -12530,7 +12904,7 @@ Attributes
 
       List all python functions within the organization.
 
-      :param function_type: Optional argument to specify the type of function to list Python functions for; defaults to FEATURE_GROUP.
+      :param function_type: Optional argument to specify the type of function to list Python functions for. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
       :type function_type: str
 
       :returns: A list of PythonFunction objects.
@@ -12590,6 +12964,7 @@ Attributes
       :param pipeline_step_version: The ID of the pipeline step version.
       :type pipeline_step_version: str
 
+      :returns: An object describing the pipeline step version.
       :rtype: PipelineStepVersion
 
 
@@ -12824,12 +13199,12 @@ Attributes
 
    .. py:method:: get_chat_session(chat_session_id)
 
-      Gets a chat session from Abacus AI Chat.
+      Gets a chat session from Data Science Co-pilot.
 
       :param chat_session_id: Unique ID of the chat session.
       :type chat_session_id: str
 
-      :returns: The chat session with Abacus AI Chat
+      :returns: The chat session with Data Science Co-pilot
       :rtype: ChatSession
 
 
@@ -12840,7 +13215,7 @@ Attributes
       :param most_recent_per_project: An optional parameter whether to only return the most recent chat session per project. Default False.
       :type most_recent_per_project: bool
 
-      :returns: The chat sessions with Abacus AI Chat
+      :returns: The chat sessions with Data Science Co-pilot
       :rtype: ChatSession
 
 
@@ -12870,6 +13245,19 @@ Attributes
 
       :returns: The deployment conversations.
       :rtype: list[DeploymentConversation]
+
+
+   .. py:method:: export_deployment_conversation(deployment_conversation_id = None, external_session_id = None)
+
+      Export a Deployment Conversation.
+
+      :param deployment_conversation_id: A unique string identifier associated with the deployment conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: The external session id associated with the deployment conversation. One of deployment_conversation_id or external_session_id must be provided.
+      :type external_session_id: str
+
+      :returns: The deployment conversation html export.
+      :rtype: DeploymentConversationExport
 
 
    .. py:method:: get_app_user_group(user_group_id)
@@ -13523,7 +13911,7 @@ Attributes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
 
       Get all positive assignments that match a query.
 
@@ -13537,6 +13925,8 @@ Attributes
       :type forced_assignments: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
+      :type include_all_assignments: bool
 
 
    .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
@@ -13763,7 +14153,7 @@ Attributes
       :type external_session_id: str
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -13790,6 +14180,8 @@ Attributes
       :type num_retrieval_margin_words: int
       :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
       :type max_words_per_chunk: int
+      :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
+      :type score_multiplier_column: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -13888,7 +14280,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.78.0'
+   :value: '0.78.5'
 
    
 

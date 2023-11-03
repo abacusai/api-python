@@ -143,6 +143,8 @@ class DocumentRetriever(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
         """
+        if self.get_status() == 'STOPPED':
+            self.client.restart_document_retriever(self.document_retriever_id)
         version = self.describe().latest_document_retriever_version
         if not version:
             from .client import ApiException

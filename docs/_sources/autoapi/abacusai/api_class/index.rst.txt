@@ -14,6 +14,7 @@ Submodules
    batch_prediction/index.rst
    blob_input/index.rst
    dataset/index.rst
+   dataset_application_connector/index.rst
    document_retriever/index.rst
    enums/index.rst
    feature_group/index.rst
@@ -53,6 +54,14 @@ Classes
    abacusai.api_class.ParsingConfig
    abacusai.api_class.DocumentProcessingConfig
    abacusai.api_class.ApiClass
+   abacusai.api_class._ApiClassFactory
+   abacusai.api_class.DatasetConfig
+   abacusai.api_class.ConfluenceDatasetConfig
+   abacusai.api_class.GoogleAnalyticsDatasetConfig
+   abacusai.api_class.SharepointDatasetConfig
+   abacusai.api_class.ZendeskDatasetConfig
+   abacusai.api_class._DatasetConfigFactory
+   abacusai.api_class.ApiClass
    abacusai.api_class.VectorStoreTextEncoder
    abacusai.api_class.VectorStoreConfig
    abacusai.api_class.DocumentRetrieverConfig
@@ -71,6 +80,7 @@ Classes
    abacusai.api_class.FillLogic
    abacusai.api_class.BatchSize
    abacusai.api_class.HolidayCalendars
+   abacusai.api_class.FileFormat
    abacusai.api_class.ExperimentationMode
    abacusai.api_class.PersonalizationTrainingMode
    abacusai.api_class.PersonalizationObjective
@@ -87,6 +97,7 @@ Classes
    abacusai.api_class.SentimentType
    abacusai.api_class.ClusteringImputationMethod
    abacusai.api_class.ConnectorType
+   abacusai.api_class.ApplicationConnectorType
    abacusai.api_class.PythonFunctionArgumentType
    abacusai.api_class.PythonFunctionOutputArgumentType
    abacusai.api_class.VectorStoreTextEncoder
@@ -131,6 +142,7 @@ Classes
    abacusai.api_class.CustomAlgorithmTrainingConfig
    abacusai.api_class.OptimizationTrainingConfig
    abacusai.api_class._TrainingConfigFactory
+   abacusai.api_class.DeployableAlgorithm
    abacusai.api_class.ApiClass
    abacusai.api_class.ForecastingMonitorConfig
    abacusai.api_class.ApiClass
@@ -667,15 +679,8 @@ Classes
    Batch Prediction Config for the ChatLLM problem type
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
-   :param product: Generate a response for every question and chunk combination
-   :type product: bool
 
    .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: product
       :type: bool
 
       
@@ -934,6 +939,231 @@ Classes
 
    .. py:attribute:: use_full_ocr
       :type: bool
+
+      
+
+
+.. py:class:: ApiClass
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: _ApiClassFactory
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+   .. py:method:: from_dict(config)
+      :classmethod:
+
+
+
+.. py:class:: DatasetConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: application_connector_type
+      :type: abacusai.api_class.enums.ApplicationConnectorType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: ConfluenceDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Confluence Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: GoogleAnalyticsDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Google Analytics Application Connector
+   :param location: The view id of the report in the connector to fetch
+   :type location: str
+   :param start_timestamp: Unix timestamp of the start of the period that will be queried
+   :type start_timestamp: int, optional
+   :param end_timestamp: Unix timestamp of the end of the period that will be queried
+   :type end_timestamp: int, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: start_timestamp
+      :type: int
+
+      
+
+   .. py:attribute:: end_timestamp
+      :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: SharepointDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Sharepoint Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str, optional
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+   :type extract_bounding_boxes: bool, optional
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default
+   :type merge_file_schemas: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
+
+      
+
+   .. py:attribute:: csv_delimiter
+      :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+
+      
+
+   .. py:attribute:: merge_file_schemas
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ZendeskDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Zendesk Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _DatasetConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'applicationConnectorType'
+
+      
+
+   .. py:attribute:: config_class_map
 
       
 
@@ -1691,6 +1921,121 @@ Classes
       
 
 
+.. py:class:: FileFormat
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AVRO
+      :value: 'AVRO'
+
+      
+
+   .. py:attribute:: PARQUET
+      :value: 'PARQUET'
+
+      
+
+   .. py:attribute:: TFRECORD
+      :value: 'TFRECORD'
+
+      
+
+   .. py:attribute:: TSV
+      :value: 'TSV'
+
+      
+
+   .. py:attribute:: CSV
+      :value: 'CSV'
+
+      
+
+   .. py:attribute:: ORC
+      :value: 'ORC'
+
+      
+
+   .. py:attribute:: JSON
+      :value: 'JSON'
+
+      
+
+   .. py:attribute:: ODS
+      :value: 'ODS'
+
+      
+
+   .. py:attribute:: XLS
+      :value: 'XLS'
+
+      
+
+   .. py:attribute:: GZ
+      :value: 'GZ'
+
+      
+
+   .. py:attribute:: ZIP
+      :value: 'ZIP'
+
+      
+
+   .. py:attribute:: TAR
+      :value: 'TAR'
+
+      
+
+   .. py:attribute:: DOCX
+      :value: 'DOCX'
+
+      
+
+   .. py:attribute:: PDF
+      :value: 'PDF'
+
+      
+
+   .. py:attribute:: RAR
+      :value: 'RAR'
+
+      
+
+   .. py:attribute:: JPEG
+      :value: 'JPG'
+
+      
+
+   .. py:attribute:: PNG
+      :value: 'PNG'
+
+      
+
+   .. py:attribute:: TIF
+      :value: 'TIFF'
+
+      
+
+   .. py:attribute:: NUMBERS
+      :value: 'NUMBERS'
+
+      
+
+   .. py:attribute:: PPTX
+      :value: 'PPTX'
+
+      
+
+   .. py:attribute:: PPT
+      :value: 'PPT'
+
+      
+
+
 .. py:class:: ExperimentationMode
 
 
@@ -2292,6 +2637,51 @@ Classes
 
    .. py:attribute:: APPLICATION
       :value: 'APPLICATION'
+
+      
+
+
+.. py:class:: ApplicationConnectorType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: GOOGLEANALYTICS
+      :value: 'GOOGLEANALYTICS'
+
+      
+
+   .. py:attribute:: GIT
+      :value: 'GIT'
+
+      
+
+   .. py:attribute:: CONFLUENCE
+      :value: 'CONFLUENCE'
+
+      
+
+   .. py:attribute:: ZENDESK
+      :value: 'ZENDESK'
+
+      
+
+   .. py:attribute:: SLACK
+      :value: 'SLACK'
+
+      
+
+   .. py:attribute:: SHAREPOINT
+      :value: 'SHAREPOINT'
+
+      
+
+   .. py:attribute:: TEAMS
+      :value: 'TEAMS'
 
       
 
@@ -4753,6 +5143,42 @@ Classes
       
 
 
+.. py:class:: DeployableAlgorithm
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Algorithm that can be deployed to a model.
+   :param algorithm: ID of the algorithm.
+   :type algorithm: str
+   :param name: Name of the algorithm.
+   :type name: str
+   :param only_offline_deployable: Whether the algorithm can only be deployed offline.
+   :type only_offline_deployable: bool
+   :param trained_model_types: List of trained model types.
+   :type trained_model_types: List[dict]
+
+   .. py:attribute:: algorithm
+      :type: str
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: only_offline_deployable
+      :type: bool
+
+      
+
+   .. py:attribute:: trained_model_types
+      :type: List[dict]
+
+      
+
+
 .. py:class:: ApiClass
 
 
@@ -4971,6 +5397,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: FeatureDriftConditionConfig
 
@@ -4979,7 +5408,7 @@ Classes
 
    Feature Drift Condition Config for Monitor Alerts
    :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
-   :type feature_drift_type: str
+   :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -5000,6 +5429,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DataIntegrityViolationConditionConfig
 
@@ -5008,7 +5440,7 @@ Classes
 
    Data Integrity Violation Condition Config for Monitor Alerts
    :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
-   :type data_integrity_type: enums.DataIntegrityViolationType
+   :type data_integrity_type: DataIntegrityViolationType
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
@@ -5022,6 +5454,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: BiasViolationConditionConfig
 
@@ -5030,7 +5465,7 @@ Classes
 
    Bias Violation Condition Config for Monitor Alerts
    :param bias_type: This option selects the bias metric to monitor for this alert.
-   :type bias_type: enums.BiasType
+   :type bias_type: BiasType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -5050,6 +5485,9 @@ Classes
       :type: int
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: _AlertConditionConfigFactory

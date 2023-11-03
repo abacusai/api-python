@@ -248,7 +248,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False)
+   .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
 
       Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -281,6 +281,8 @@ Classes
       :type package_requirements: list
       :param use_gpu: Whether this model needs gpu
       :type use_gpu: bool
+      :param is_thread_safe: Whether this model is thread safe
+      :type is_thread_safe: bool
 
       :returns: The new model, which has not been trained.
       :rtype: Model
@@ -501,10 +503,11 @@ Classes
 
       List all the prediction operators inside a project.
 
-      :param project_id: The unique ID of the project. Returns
+      :param project_id: The unique ID of the project.
       :type project_id: str
 
-      :rtype: PredictionOperator
+      :returns: A list of prediction operator objects.
+      :rtype: list[PredictionOperator]
 
 
    .. py:method:: create_deployment_token(name = None)
@@ -629,12 +632,12 @@ Classes
 
    .. py:method:: create_chat_session(name = None)
 
-      Creates a chat session with Abacus AI Chat.
+      Creates a chat session with Data Science Co-pilot.
 
       :param name: The name of the chat session. Defaults to the project name.
       :type name: str
 
-      :returns: The chat session with Abacus AI Chat
+      :returns: The chat session with Data Science Co-pilot
       :rtype: ChatSession
 
 

@@ -1,0 +1,164 @@
+:py:mod:`abacusai.api_class.dataset_application_connector`
+==========================================================
+
+.. py:module:: abacusai.api_class.dataset_application_connector
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.dataset_application_connector.DatasetConfig
+   abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig
+   abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig
+   abacusai.api_class.dataset_application_connector.SharepointDatasetConfig
+   abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig
+   abacusai.api_class.dataset_application_connector._DatasetConfigFactory
+
+
+
+
+.. py:class:: DatasetConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: application_connector_type
+      :type: abacusai.api_class.enums.ApplicationConnectorType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: ConfluenceDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Confluence Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: GoogleAnalyticsDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Google Analytics Application Connector
+   :param location: The view id of the report in the connector to fetch
+   :type location: str
+   :param start_timestamp: Unix timestamp of the start of the period that will be queried
+   :type start_timestamp: int, optional
+   :param end_timestamp: Unix timestamp of the end of the period that will be queried
+   :type end_timestamp: int, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: start_timestamp
+      :type: int
+
+      
+
+   .. py:attribute:: end_timestamp
+      :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: SharepointDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Sharepoint Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str, optional
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+   :type extract_bounding_boxes: bool, optional
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default
+   :type merge_file_schemas: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
+
+      
+
+   .. py:attribute:: csv_delimiter
+      :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+
+      
+
+   .. py:attribute:: merge_file_schemas
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ZendeskDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Zendesk Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _DatasetConfigFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'applicationConnectorType'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+

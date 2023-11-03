@@ -23,13 +23,16 @@ class AccuracyBelowThresholdConditionConfig(AlertConditionConfig):
     """
     threshold: float = dataclasses.field(default=None)
 
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.ACCURACY_BELOW_THRESHOLD
+
 
 @dataclasses.dataclass
 class FeatureDriftConditionConfig(AlertConditionConfig):
     """
     Feature Drift Condition Config for Monitor Alerts
     Args:
-        feature_drift_type (str): Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+        feature_drift_type (FeatureDriftType): Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
         threshold (float): Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
         minimum_violations (int): Number of columns that must exceed the specified threshold to trigger an alert.
     """
@@ -37,17 +40,23 @@ class FeatureDriftConditionConfig(AlertConditionConfig):
     threshold: float = dataclasses.field(default=None)
     minimum_violations: int = dataclasses.field(default=None)
 
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.FEATURE_DRIFT
+
 
 @dataclasses.dataclass
 class DataIntegrityViolationConditionConfig(AlertConditionConfig):
     """
     Data Integrity Violation Condition Config for Monitor Alerts
     Args:
-        data_integrity_type (enums.DataIntegrityViolationType): This option selects the data integrity violations to monitor for this alert.
+        data_integrity_type (DataIntegrityViolationType): This option selects the data integrity violations to monitor for this alert.
         minimum_violations (int): Number of columns that must exceed the specified threshold to trigger an alert.
     """
     data_integrity_type: enums.DataIntegrityViolationType = dataclasses.field(default=None)
     minimum_violations: int = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.DATA_INTEGRITY_VIOLATIONS
 
 
 @dataclasses.dataclass
@@ -55,13 +64,16 @@ class BiasViolationConditionConfig(AlertConditionConfig):
     """
     Bias Violation Condition Config for Monitor Alerts
     Args:
-        bias_type (enums.BiasType): This option selects the bias metric to monitor for this alert.
+        bias_type (BiasType): This option selects the bias metric to monitor for this alert.
         threshold (float): Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
         minimum_violations (int): Number of columns that must exceed the specified threshold to trigger an alert.
     """
     bias_type: enums.BiasType = dataclasses.field(default=None)
     threshold: float = dataclasses.field(default=None)
     minimum_violations: int = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.BIAS_VIOLATIONS
 
 
 @dataclasses.dataclass

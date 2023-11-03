@@ -3,7 +3,7 @@ from .return_class import AbstractApiClass
 
 class AiBuildingTask(AbstractApiClass):
     """
-        A task for AI Chat to help build AI.
+        A task for Data Science Co-pilot to help build AI.
 
         Args:
             client (ApiClient): An authenticated API Client instance

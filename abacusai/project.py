@@ -243,7 +243,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory, algorithm_training_configs)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False):
+    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False, is_thread_safe: bool = None):
         """
         Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -264,11 +264,12 @@ class Project(AbstractApiClass):
             exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_gpu (bool): Whether this model needs gpu
+            is_thread_safe (bool): Whether this model is thread safe
 
         Returns:
             Model: The new model, which has not been trained.
         """
-        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, training_input_tables, predict_function_name, predict_many_function_name, initialize_function_name, name, cpu_size, memory, training_config, exclusive_run, package_requirements, use_gpu)
+        return self.client.create_model_from_python(self.project_id, function_source_code, train_function_name, training_input_tables, predict_function_name, predict_many_function_name, initialize_function_name, name, cpu_size, memory, training_config, exclusive_run, package_requirements, use_gpu, is_thread_safe)
 
     def list_models(self):
         """
@@ -452,10 +453,10 @@ class Project(AbstractApiClass):
         List all the prediction operators inside a project.
 
         Args:
-            project_id (str): The unique ID of the project. Returns
+            project_id (str): The unique ID of the project.
 
         Returns:
-            PredictionOperator: 
+            list[PredictionOperator]: A list of prediction operator objects.
         """
         return self.client.list_prediction_operators(self.project_id)
 
@@ -581,13 +582,13 @@ class Project(AbstractApiClass):
 
     def create_chat_session(self, name: str = None):
         """
-        Creates a chat session with Abacus AI Chat.
+        Creates a chat session with Data Science Co-pilot.
 
         Args:
             name (str): The name of the chat session. Defaults to the project name.
 
         Returns:
-            ChatSession: The chat session with Abacus AI Chat
+            ChatSession: The chat session with Data Science Co-pilot
         """
         return self.client.create_chat_session(self.project_id, name)
 

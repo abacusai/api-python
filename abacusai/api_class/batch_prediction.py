@@ -203,10 +203,8 @@ class ChatLLMBatchPredictionArgs(BatchPredictionArgs):
     Batch Prediction Config for the ChatLLM problem type
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-        product (bool): Generate a response for every question and chunk combination
     """
     for_eval: bool = dataclasses.field(default=None)
-    product: bool = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

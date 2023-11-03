@@ -57,6 +57,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: FeatureDriftConditionConfig
 
@@ -65,7 +68,7 @@ Classes
 
    Feature Drift Condition Config for Monitor Alerts
    :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
-   :type feature_drift_type: str
+   :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -86,6 +89,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: DataIntegrityViolationConditionConfig
 
@@ -94,7 +100,7 @@ Classes
 
    Data Integrity Violation Condition Config for Monitor Alerts
    :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
-   :type data_integrity_type: enums.DataIntegrityViolationType
+   :type data_integrity_type: DataIntegrityViolationType
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
 
@@ -108,6 +114,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
 
 .. py:class:: BiasViolationConditionConfig
 
@@ -116,7 +125,7 @@ Classes
 
    Bias Violation Condition Config for Monitor Alerts
    :param bias_type: This option selects the bias metric to monitor for this alert.
-   :type bias_type: enums.BiasType
+   :type bias_type: BiasType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -136,6 +145,9 @@ Classes
       :type: int
 
       
+
+   .. py:method:: __post_init__()
+
 
 
 .. py:class:: _AlertConditionConfigFactory

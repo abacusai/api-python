@@ -155,6 +155,30 @@ class HolidayCalendars(ApiEnum):
     US = 'US'
 
 
+class FileFormat(ApiEnum):
+    AVRO = 'AVRO'
+    PARQUET = 'PARQUET'
+    TFRECORD = 'TFRECORD'
+    TSV = 'TSV'
+    CSV = 'CSV'
+    ORC = 'ORC'
+    JSON = 'JSON'
+    ODS = 'ODS'
+    XLS = 'XLS'
+    GZ = 'GZ'
+    ZIP = 'ZIP'
+    TAR = 'TAR'
+    DOCX = 'DOCX'
+    PDF = 'PDF'
+    RAR = 'RAR'
+    JPEG = 'JPG'
+    PNG = 'PNG'
+    TIF = 'TIFF'
+    NUMBERS = 'NUMBERS'
+    PPTX = 'PPTX'
+    PPT = 'PPT'
+
+
 class ExperimentationMode(ApiEnum):
     RAPID = 'rapid'
     THOROUGH = 'thorough'
@@ -294,6 +318,16 @@ class ConnectorType(ApiEnum):
     DATABASE = 'DATABASE'
     STREAMING = 'STREAMING'
     APPLICATION = 'APPLICATION'
+
+
+class ApplicationConnectorType(ApiEnum):
+    GOOGLEANALYTICS = 'GOOGLEANALYTICS'
+    GIT = 'GIT'
+    CONFLUENCE = 'CONFLUENCE'
+    ZENDESK = 'ZENDESK'
+    SLACK = 'SLACK'
+    SHAREPOINT = 'SHAREPOINT'
+    TEAMS = 'TEAMS'
 
 
 class PythonFunctionArgumentType(ApiEnum):

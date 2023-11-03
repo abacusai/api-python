@@ -741,3 +741,19 @@ class _TrainingConfigFactory(_ApiClassFactory):
         enums.ProblemType.CUSTOM_ALGORITHM: CustomAlgorithmTrainingConfig,
         enums.ProblemType.OPTIMIZATION: OptimizationTrainingConfig
     }
+
+
+@dataclasses.dataclass
+class DeployableAlgorithm(ApiClass):
+    """
+    Algorithm that can be deployed to a model.
+    Args:
+        algorithm (str): ID of the algorithm.
+        name (str): Name of the algorithm.
+        only_offline_deployable (bool): Whether the algorithm can only be deployed offline.
+        trained_model_types (List[dict]): List of trained model types.
+    """
+    algorithm: str = dataclasses.field(default=None)
+    name: str = dataclasses.field(default=None)
+    only_offline_deployable: bool = dataclasses.field(default=None)
+    trained_model_types: List[dict] = dataclasses.field(default=None)

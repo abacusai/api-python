@@ -1057,7 +1057,7 @@ class FeatureGroup(AbstractApiClass):
             data (dict): The data to record, in JSON format.
 
         Returns:
-            FeatureGroupRow: 
+            FeatureGroupRow: The feature group row that was upserted.
         """
         return self.client.upsert_data(self.feature_group_id, streaming_token, data)
 
@@ -1069,7 +1069,7 @@ class FeatureGroup(AbstractApiClass):
             data (dict): The data to record, in JSON format.
 
         Returns:
-            FeatureGroupRow: 
+            FeatureGroupRow: The feature group row that was upserted.
         """
         return self.client.upsert_online_data(self.feature_group_id, data)
 
@@ -1095,7 +1095,7 @@ class FeatureGroup(AbstractApiClass):
             num_rows (int): Maximum number of rows to return from the feature group
 
         Returns:
-            FeatureGroupRow: 
+            list[FeatureGroupRow]: A list of feature group rows.
         """
         return self.client.get_data(self.feature_group_id, primary_key, num_rows)
 
@@ -1107,7 +1107,7 @@ class FeatureGroup(AbstractApiClass):
             document (io.TextIOBase): The multipart/form-data of the document to add to the feature group.
 
         Returns:
-            FeatureGroupDocument: 
+            FeatureGroupDocument: The feature group document that was added.
         """
         return self.client.add_feature_group_document(self.feature_group_id, document)
 
@@ -1119,7 +1119,7 @@ class FeatureGroup(AbstractApiClass):
             feature_group_id (str): The unique ID associated with the feature group.
 
         Returns:
-            FeatureGroupDocument: 
+            list[FeatureGroupDocument]: A list of pending feature group documents.
         """
         return self.client.list_pending_feature_group_documents(self.feature_group_id)
 

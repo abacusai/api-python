@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={})
+.. py:class:: Dataset(client, datasetId=None, sourceType=None, dataSource=None, createdAt=None, ignoreBefore=None, ephemeral=None, lookbackDays=None, databaseConnectorId=None, databaseConnectorConfig=None, connectorType=None, featureGroupTableName=None, applicationConnectorId=None, applicationConnectorConfig=None, incremental=None, isDocumentset=None, extractBoundingBoxes=None, mergeFileSchemas=None, referenceOnlyDocumentset=None, schema={}, refreshSchedules={}, latestDatasetVersion={}, parsingConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -118,16 +118,12 @@ Classes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_version_from_application_connector(object_id = None, start_timestamp = None, end_timestamp = None)
+   .. py:method:: create_version_from_application_connector(dataset_config = None)
 
       Creates a new version of the specified dataset.
 
-      :param object_id: The ID of the object in the service to query. If not specified, the last name will be used.
-      :type object_id: str
-      :param start_timestamp: The Unix timestamp of the start of the period that will be queried.
-      :type start_timestamp: int
-      :param end_timestamp: The Unix timestamp of the end of the period that will be queried.
-      :type end_timestamp: int
+      :param dataset_config: Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
+      :type dataset_config: DatasetConfig
 
       :returns: The new Dataset Version created.
       :rtype: DatasetVersion

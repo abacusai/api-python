@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, codeSource={}, latestAgentVersion={})
+.. py:class:: Agent(client, name=None, agentId=None, createdAt=None, projectId=None, notebookId=None, predictFunctionName=None, sourceCode=None, agentConfig=None, memory=None, trainingRequired=None, codeSource={}, latestAgentVersion={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,6 +44,8 @@ Classes
    :type agentConfig: dict
    :param memory: Memory in GB specified for the deployment resources for the agent.
    :type memory: int
+   :param trainingRequired: Whether training is required to deploy the latest agent code.
+   :type trainingRequired: bool
    :param latestAgentVersion: The latest agent version.
    :type latestAgentVersion: AgentVersion
    :param codeSource: If a python model, information on the source code

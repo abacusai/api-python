@@ -428,7 +428,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None) -> Dict:
+    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None, include_all_assignments: bool = False) -> Dict:
         """Get all positive assignments that match a query.
 
         Args:
@@ -436,10 +436,11 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
             forced_assignments (dict): Set of assignments to force and resolve before returning query results.
-            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
+            include_all_assignments (bool): If True, will return all assignments, including assignments with value 0. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
+        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'includeAllAssignments': include_all_assignments}, server_override=prediction_url)
 
     def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None, solve_time_limit_seconds: float = None) -> Dict:
         """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
@@ -633,7 +634,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files={'blob': blob}, server_override=prediction_url)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -651,9 +652,10 @@ class PredictionClient(BaseApiClient):
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
             max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+            score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
+        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)

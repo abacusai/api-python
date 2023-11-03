@@ -162,6 +162,9 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.model._TrainingConfigFactory" title="abacusai.api_class.model._TrainingConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.model.DeployableAlgorithm" title="abacusai.api_class.model.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
+<td><p>Algorithm that can be deployed to a model.</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -1892,6 +1895,41 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model._TrainingConfigFactory.config_class_map">
 <span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.model._TrainingConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DeployableAlgorithm</span></span><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Algorithm that can be deployed to a model.
+:param algorithm: ID of the algorithm.
+:type algorithm: str
+:param name: Name of the algorithm.
+:type name: str
+:param only_offline_deployable: Whether the algorithm can only be deployed offline.
+:type only_offline_deployable: bool
+:param trained_model_types: List of trained model types.
+:type trained_model_types: List[dict]</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm.algorithm">
+<span class="sig-name descname"><span class="pre">algorithm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm.algorithm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm.only_offline_deployable">
+<span class="sig-name descname"><span class="pre">only_offline_deployable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm.only_offline_deployable" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm.trained_model_types">
+<span class="sig-name descname"><span class="pre">trained_model_types</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm.trained_model_types" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

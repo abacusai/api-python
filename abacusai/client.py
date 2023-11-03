@@ -30,9 +30,9 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    BatchPredictionArgs, DocumentRetrieverConfig, FeatureGroupExportConfig,
-    ForecastingMonitorConfig, MergeConfig, ParsingConfig, ProblemType,
-    SamplingConfig, TrainingConfig
+    BatchPredictionArgs, DatasetConfig, DocumentRetrieverConfig,
+    FeatureGroupExportConfig, ForecastingMonitorConfig, MergeConfig,
+    ParsingConfig, ProblemType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -60,6 +60,7 @@ from .dataset_version_logs import DatasetVersionLogs
 from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
+from .deployment_conversation_export import DeploymentConversationExport
 from .document_retriever import DocumentRetriever
 from .document_retriever_config import DocumentRetrieverConfig
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
@@ -513,7 +514,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.78.0'
+    client_version = '0.78.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1840,20 +1841,20 @@ class ReadOnlyClient(BaseApiClient):
         """Describe an existing prediction operator.
 
         Args:
-            prediction_operator_id (str): The unique ID of the prediction operator. Returns
+            prediction_operator_id (str): The unique ID of the prediction operator.
 
         Returns:
-            PredictionOperator: """
+            PredictionOperator: The requested prediction operator object."""
         return self._call_api('describePredictionOperator', 'GET', query_params={'predictionOperatorId': prediction_operator_id}, parse_type=PredictionOperator)
 
-    def list_prediction_operators(self, project_id: str) -> PredictionOperator:
+    def list_prediction_operators(self, project_id: str) -> List[PredictionOperator]:
         """List all the prediction operators inside a project.
 
         Args:
-            project_id (str): The unique ID of the project. Returns
+            project_id (str): The unique ID of the project.
 
         Returns:
-            PredictionOperator: """
+            list[PredictionOperator]: A list of prediction operator objects."""
         return self._call_api('listPredictionOperators', 'GET', query_params={'projectId': project_id}, parse_type=PredictionOperator)
 
     def list_prediction_operator_versions(self, prediction_operator_id: str) -> List[PredictionOperatorVersion]:
@@ -2038,7 +2039,7 @@ class ReadOnlyClient(BaseApiClient):
             BatchPredictionVersionLogs: The logs for the specified batch prediction version."""
         return self._call_api('getBatchPredictionVersionLogs', 'GET', query_params={'batchPredictionVersion': batch_prediction_version}, parse_type=BatchPredictionVersionLogs)
 
-    def get_data(self, feature_group_id: str, primary_key: str = None, num_rows: int = None) -> FeatureGroupRow:
+    def get_data(self, feature_group_id: str, primary_key: str = None, num_rows: int = None) -> List[FeatureGroupRow]:
         """Gets the feature group rows for online updatable feature groups.
 
         If primary key is set, row corresponding to primary_key is returned.
@@ -2051,17 +2052,17 @@ class ReadOnlyClient(BaseApiClient):
             num_rows (int): Maximum number of rows to return from the feature group
 
         Returns:
-            FeatureGroupRow: """
+            list[FeatureGroupRow]: A list of feature group rows."""
         return self._call_api('getData', 'GET', query_params={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'numRows': num_rows}, parse_type=FeatureGroupRow)
 
-    def list_pending_feature_group_documents(self, feature_group_id: str) -> FeatureGroupDocument:
+    def list_pending_feature_group_documents(self, feature_group_id: str) -> List[FeatureGroupDocument]:
         """Lists all pending documents added to feature group.
 
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
 
         Returns:
-            FeatureGroupDocument: """
+            list[FeatureGroupDocument]: A list of pending feature group documents."""
         return self._call_api('listPendingFeatureGroupDocuments', 'GET', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupDocument)
 
     def describe_python_function(self, name: str) -> PythonFunction:
@@ -2078,7 +2079,7 @@ class ReadOnlyClient(BaseApiClient):
         """List all python functions within the organization.
 
         Args:
-            function_type (str): Optional argument to specify the type of function to list Python functions for; defaults to FEATURE_GROUP.
+            function_type (str): Optional argument to specify the type of function to list Python functions for. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
 
         Returns:
             list[PythonFunction]: A list of PythonFunction objects."""
@@ -2132,7 +2133,7 @@ class ReadOnlyClient(BaseApiClient):
             pipeline_step_version (str): The ID of the pipeline step version.
 
         Returns:
-            PipelineStepVersion: """
+            PipelineStepVersion: An object describing the pipeline step version."""
         return self._call_api('describePipelineStepVersion', 'GET', query_params={'pipelineStepVersion': pipeline_step_version}, parse_type=PipelineStepVersion)
 
     def list_pipeline_version_logs(self, pipeline_version: str) -> PipelineVersionLogs:
@@ -2336,13 +2337,13 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('generateNaturalLanguageExplanation', 'GET', query_params={'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, parse_type=NaturalLanguageExplanation)
 
     def get_chat_session(self, chat_session_id: str) -> ChatSession:
-        """Gets a chat session from Abacus AI Chat.
+        """Gets a chat session from Data Science Co-pilot.
 
         Args:
             chat_session_id (str): Unique ID of the chat session.
 
         Returns:
-            ChatSession: The chat session with Abacus AI Chat"""
+            ChatSession: The chat session with Data Science Co-pilot"""
         return self._call_api('getChatSession', 'GET', query_params={'chatSessionId': chat_session_id}, parse_type=ChatSession)
 
     def list_chat_sessions(self, most_recent_per_project: bool = False) -> ChatSession:
@@ -2352,7 +2353,7 @@ class ReadOnlyClient(BaseApiClient):
             most_recent_per_project (bool): An optional parameter whether to only return the most recent chat session per project. Default False.
 
         Returns:
-            ChatSession: The chat sessions with Abacus AI Chat"""
+            ChatSession: The chat sessions with Data Science Co-pilot"""
         return self._call_api('listChatSessions', 'GET', query_params={'mostRecentPerProject': most_recent_per_project}, parse_type=ChatSession)
 
     def get_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None) -> DeploymentConversation:
@@ -2377,6 +2378,17 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[DeploymentConversation]: The deployment conversations."""
         return self._proxy_request('listDeploymentConversations', 'GET', query_params={'deploymentId': deployment_id}, parse_type=DeploymentConversation, is_sync=True)
+
+    def export_deployment_conversation(self, deployment_conversation_id: str = None, external_session_id: str = None) -> DeploymentConversationExport:
+        """Export a Deployment Conversation.
+
+        Args:
+            deployment_conversation_id (str): A unique string identifier associated with the deployment conversation.
+            external_session_id (str): The external session id associated with the deployment conversation. One of deployment_conversation_id or external_session_id must be provided.
+
+        Returns:
+            DeploymentConversationExport: The deployment conversation html export."""
+        return self._proxy_request('exportDeploymentConversation', 'GET', query_params={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, parse_type=DeploymentConversationExport, is_sync=True)
 
     def get_app_user_group(self, user_group_id: str) -> AppUserGroup:
         """Gets an App User Group.
@@ -2741,7 +2753,7 @@ class ApiClient(ReadOnlyClient):
                 function_source_code, included_modules)
         return self.update_prediction_operator(prediction_operator_id=prediction_operator_id, name=name, source_code=function_source_code, predict_function_name=predict_function_name, initialize_function_name=initialize_function_name, feature_group_ids=feature_group_ids, cpu_size=cpu_size, memory=memory, package_requirements=package_requirements, use_gpu=use_gpu)
 
-    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None, use_gpu: bool = False):
+    def create_model_from_functions(self, project_id: str, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False, included_modules: list = None, package_requirements: list = None, name: str = None, use_gpu: bool = False, is_thread_safe: bool = None):
         """
         Creates a model from a python function
 
@@ -2758,14 +2770,15 @@ class ApiClient(ReadOnlyClient):
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
             name (str): The name of the model
             use_gpu (bool): Whether this model needs gpu
+            is_thread_safe (bool): Whether the model is thread safe
         """
         function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
         function_source_code = include_modules(
             function_source_code, included_modules)
-        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name, use_gpu=use_gpu)
+        return self.create_model_from_python(project_id=project_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, training_config=training_config, cpu_size=cpu_size, memory=memory, exclusive_run=exclusive_run, package_requirements=package_requirements, name=name, use_gpu=use_gpu, is_thread_safe=is_thread_safe)
 
-    def update_model_from_functions(self, model_id: str, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, included_modules: list = None, package_requirements: list = None, use_gpu: bool = False):
+    def update_model_from_functions(self, model_id: str, train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, included_modules: list = None, package_requirements: list = None, use_gpu: bool = False, is_thread_safe: bool = None):
         """
         Creates a model from a python function. Please pass in all the functions, even if you don't update it.
 
@@ -2781,12 +2794,13 @@ class ApiClient(ReadOnlyClient):
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
             use_gpu (bool): Whether this model needs gpu
+            is_thread_safe (bool): Whether the model is thread safe
         """
         function_source_code, train_function_name, predict_function_name, predict_many_function_name, initialize_function_name = get_source_code_info(
             train_function, predict_function, predict_many_function, initialize_function)
         function_source_code = include_modules(
             function_source_code, included_modules)
-        return self.update_python_model(model_id=model_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, cpu_size=cpu_size, memory=memory, package_requirements=package_requirements, use_gpu=use_gpu)
+        return self.update_python_model(model_id=model_id, function_source_code=function_source_code, train_function_name=train_function_name, predict_function_name=predict_function_name, predict_many_function_name=predict_many_function_name, initialize_function_name=initialize_function_name, training_input_tables=training_input_tables, cpu_size=cpu_size, memory=memory, package_requirements=package_requirements, use_gpu=use_gpu, is_thread_safe=is_thread_safe)
 
     def create_pipeline_step_from_function(self,
                                            pipeline_id: str,
@@ -3479,7 +3493,8 @@ class ApiClient(ReadOnlyClient):
             return deployment_token, deployment_id
         return _cached_doc_retriver_deployment_info(document_retriever_id, ttl_hash=time.time() // ttl_seconds)
 
-    def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
+    def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None,
+                               max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -3496,13 +3511,14 @@ class ApiClient(ReadOnlyClient):
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
             max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+            score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.            
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
 
         deployment_token, deployment_id = self._get_doc_retriver_deployment_info(
             document_retriever_id)
-        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk)
+        return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column)
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -4651,20 +4667,18 @@ Creates a new feature group defined as the union of other feature group versions
             Dataset: The created dataset."""
         return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'timestampColumn': timestamp_column}, parse_type=Dataset)
 
-    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None, refresh_schedule: str = None) -> Dataset:
+    def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, DatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from an Application Connector.
 
         Args:
-            table_name (str): Organization-unique table name
-            application_connector_id (str): Unique string identifier of the application connector to download data from
-            object_id (str): If applicable, the ID of the object in the service to query.
-            start_timestamp (int): Unix timestamp of the start of the period that will be queried.
-            end_timestamp (int): Unix timestamp of the end of the period that will be queried.
+            table_name (str): Organization-unique table name.
+            application_connector_id (str): Unique string identifier of the application connector to download data from.
+            dataset_config (DatasetConfig): Dataset config for the application connector.
             refresh_schedule (str): Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
+        return self._call_api('createDatasetFromApplicationConnector', 'POST', query_params={}, body={'tableName': table_name, 'applicationConnectorId': application_connector_id, 'datasetConfig': dataset_config, 'refreshSchedule': refresh_schedule}, parse_type=Dataset)
 
     def create_dataset_version_from_database_connector(self, dataset_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -4680,18 +4694,16 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromDatabaseConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'sqlQuery': sql_query}, parse_type=DatasetVersion)
 
-    def create_dataset_version_from_application_connector(self, dataset_id: str, object_id: str = None, start_timestamp: int = None, end_timestamp: int = None) -> DatasetVersion:
+    def create_dataset_version_from_application_connector(self, dataset_id: str, dataset_config: Union[dict, DatasetConfig] = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
 
         Args:
             dataset_id (str): The unique ID associated with the dataset.
-            object_id (str): The ID of the object in the service to query. If not specified, the last name will be used.
-            start_timestamp (int): The Unix timestamp of the start of the period that will be queried.
-            end_timestamp (int): The Unix timestamp of the end of the period that will be queried.
+            dataset_config (DatasetConfig): Dataset config for the application connector. If any of the fields are not specified, the last values will be used.
 
         Returns:
             DatasetVersion: The new Dataset Version created."""
-        return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'objectId': object_id, 'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp}, parse_type=DatasetVersion)
+        return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'datasetConfig': dataset_config}, parse_type=DatasetVersion)
 
     def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False) -> Upload:
         """Creates a dataset and returns an upload ID that can be used to upload a file.
@@ -4720,15 +4732,18 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: Token to be used when uploading file parts."""
         return self._call_api('createDatasetVersionFromUpload', 'POST', query_params={'datasetId': dataset_id}, body={'fileFormat': file_format}, parse_type=Upload)
 
-    def create_streaming_dataset(self, table_name: str) -> Dataset:
+    def create_streaming_dataset(self, table_name: str, primary_key: str = None, update_timestamp_key: str = None, lookup_keys: list = None) -> Dataset:
         """Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
         Args:
             table_name (str): The feature group table name to create for this dataset.
+            primary_key (str): The optional primary key column name for the dataset.
+            update_timestamp_key (str): Name of the feature which defines the update timestamp of the feature group. Used in concatenation and primary key deduplication. Only relevant if lookup keys are set.
+            lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns.
 
         Returns:
             Dataset: The streaming dataset created."""
-        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name}, parse_type=Dataset)
+        return self._call_api('createStreamingDataset', 'POST', query_params={}, body={'tableName': table_name, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys}, parse_type=Dataset)
 
     def snapshot_streaming_data(self, dataset_id: str) -> DatasetVersion:
         """Snapshots the current data in the streaming dataset.
@@ -4939,7 +4954,7 @@ Creates a new feature group defined as the union of other feature group versions
             Model: The new model which is being trained."""
         return self._call_api('trainModel', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids, 'refreshSchedule': refresh_schedule, 'customAlgorithms': custom_algorithms, 'customAlgorithmsOnly': custom_algorithms_only, 'customAlgorithmConfigs': custom_algorithm_configs, 'builtinAlgorithms': builtin_algorithms, 'cpuSize': cpu_size, 'memory': memory, 'algorithmTrainingConfigs': algorithm_training_configs}, parse_type=Model)
 
-    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False) -> Model:
+    def create_model_from_python(self, project_id: str, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False, is_thread_safe: bool = None) -> Model:
         """Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
         This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName` and `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -4960,10 +4975,11 @@ Creates a new feature group defined as the union of other feature group versions
             exclusive_run (bool): Decides if this model will be run exclusively or along with other Abacus.ai algorithms
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             use_gpu (bool): Whether this model needs gpu
+            is_thread_safe (bool): Whether this model is thread safe
 
         Returns:
             Model: The new model, which has not been trained."""
-        return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'exclusiveRun': exclusive_run, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=Model)
+        return self._call_api('createModelFromPython', 'POST', query_params={}, body={'projectId': project_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'trainingInputTables': training_input_tables, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'name': name, 'cpuSize': cpu_size, 'memory': memory, 'trainingConfig': training_config, 'exclusiveRun': exclusive_run, 'packageRequirements': package_requirements, 'useGpu': use_gpu, 'isThreadSafe': is_thread_safe}, parse_type=Model)
 
     def rename_model(self, model_id: str, name: str):
         """Renames a model
@@ -4973,7 +4989,7 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The new name to assign to the model."""
         return self._call_api('renameModel', 'PATCH', query_params={}, body={'modelId': model_id, 'name': name})
 
-    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> Model:
+    def update_python_model(self, model_id: str, function_source_code: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None, is_thread_safe: bool = None) -> Model:
         """Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
         This method expects `functionSourceCode` to be a valid language source file which contains the functions named `trainFunctionName` and `predictFunctionName`. `trainFunctionName` returns the ModelVersion that is the result of training the model using `trainFunctionName`. `predictFunctionName` has no well-defined return type, as it returns the prediction made by the `predictFunctionName`, which can be anything.
@@ -4991,10 +5007,11 @@ Creates a new feature group defined as the union of other feature group versions
             memory (int): Memory (in GB) for the model training function.
             package_requirements (list): List of package requirement strings. For example: `['numpy==1.2.3', 'pandas>=1.4.0']`.
             use_gpu (bool): Whether this model needs gpu
+            is_thread_safe (bool): Whether this model is thread safe
 
         Returns:
             Model: The updated model."""
-        return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=Model)
+        return self._call_api('updatePythonModel', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'trainingInputTables': training_input_tables, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu, 'isThreadSafe': is_thread_safe}, parse_type=Model)
 
     def update_python_model_zip(self, model_id: str, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, train_module_name: str = None, predict_module_name: str = None, training_input_tables: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> Upload:
         """Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
@@ -5399,10 +5416,10 @@ Creates a new feature group defined as the union of other feature group versions
             cpu_size (str): Size of the CPU for the prediction operator.
             memory (int): Memory (in GB) for the  prediction operator.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
-            use_gpu (bool): Whether this prediction operator needs gpu. Returns
+            use_gpu (bool): Whether this prediction operator needs gpu.
 
         Returns:
-            PredictionOperator: """
+            PredictionOperator: The created prediction operator object."""
         return self._call_api('createPredictionOperator', 'POST', query_params={}, body={'name': name, 'projectId': project_id, 'sourceCode': source_code, 'predictFunctionName': predict_function_name, 'initializeFunctionName': initialize_function_name, 'featureGroupIds': feature_group_ids, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=PredictionOperator)
 
     def update_prediction_operator(self, prediction_operator_id: str, name: str = None, feature_group_ids: list = None, source_code: str = None, initialize_function_name: str = None, predict_function_name: str = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, use_gpu: bool = None) -> PredictionOperator:
@@ -5418,10 +5435,10 @@ Creates a new feature group defined as the union of other feature group versions
             cpu_size (str): Size of the CPU for the prediction operator.
             memory (int): Memory (in GB) for the  prediction operator.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
-            use_gpu (bool): Whether this prediction operator needs gpu. Returns
+            use_gpu (bool): Whether this prediction operator needs gpu.
 
         Returns:
-            PredictionOperator: """
+            PredictionOperator: The updated prediction operator object."""
         return self._call_api('updatePredictionOperator', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id, 'name': name, 'featureGroupIds': feature_group_ids, 'sourceCode': source_code, 'initializeFunctionName': initialize_function_name, 'predictFunctionName': predict_function_name, 'cpuSize': cpu_size, 'memory': memory, 'packageRequirements': package_requirements, 'useGpu': use_gpu}, parse_type=PredictionOperator)
 
     def delete_prediction_operator(self, prediction_operator_id: str):
@@ -5429,7 +5446,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             prediction_operator_id (str): The unique ID of the prediction operator."""
-        return self._call_api('deletePredictionOperator', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id})
+        return self._call_api('deletePredictionOperator', 'DELETE', query_params={'predictionOperatorId': prediction_operator_id})
 
     def deploy_prediction_operator(self, prediction_operator_id: str, auto_deploy: bool = True) -> Deployment:
         """Deploy the prediction operator.
@@ -5452,15 +5469,12 @@ Creates a new feature group defined as the union of other feature group versions
             PredictionOperatorVersion: The created prediction operator version object."""
         return self._call_api('createPredictionOperatorVersion', 'POST', query_params={}, body={'predictionOperatorId': prediction_operator_id}, parse_type=PredictionOperatorVersion)
 
-    def delete_prediction_operator_version(self, prediction_operator_version: str) -> PredictionOperatorVersion:
+    def delete_prediction_operator_version(self, prediction_operator_version: str):
         """Delete a prediction operator version.
 
         Args:
-            prediction_operator_version (str): The unique ID of the prediction operator version.
-
-        Returns:
-            PredictionOperatorVersion: """
-        return self._call_api('deletePredictionOperatorVersion', 'POST', query_params={}, body={'predictionOperatorVersion': prediction_operator_version}, parse_type=PredictionOperatorVersion)
+            prediction_operator_version (str): The unique ID of the prediction operator version."""
+        return self._call_api('deletePredictionOperatorVersion', 'DELETE', query_params={'predictionOperatorVersion': prediction_operator_version})
 
     def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, skip_metrics_check: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
@@ -6079,7 +6093,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None) -> Dict:
+    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None, include_all_assignments: bool = False) -> Dict:
         """Get all positive assignments that match a query.
 
         Args:
@@ -6087,10 +6101,11 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The unique identifier of a deployment created under the project.
             query_data (dict): Specifies the set of assignments being requested. The value for the key can be: 1. A simple scalar value, which is matched exactly 2. A list of values, which matches any element in the list 3. A dictionary with keys lower_in/lower_ex and upper_in/upper_ex, which matches values in an inclusive/exclusive range
             forced_assignments (dict): Set of assignments to force and resolve before returning query results.
-            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
+            solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
+            include_all_assignments (bool): If True, will return all assignments, including assignments with value 0. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
+        return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'includeAllAssignments': include_all_assignments}, server_override=prediction_url)
 
     def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None, solve_time_limit_seconds: float = None) -> Dict:
         """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
@@ -6284,7 +6299,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files={'blob': blob}, server_override=prediction_url)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks
@@ -6302,12 +6317,13 @@ Creates a new feature group defined as the union of other feature group versions
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
             max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+            score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
+        return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
 
     def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
@@ -6584,7 +6600,7 @@ Creates a new feature group defined as the union of other feature group versions
             data (dict): The data to record, in JSON format.
 
         Returns:
-            FeatureGroupRow: """
+            FeatureGroupRow: The feature group row that was upserted."""
         return self._call_api('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow)
 
     def upsert_online_data(self, feature_group_id: str, data: dict) -> FeatureGroupRow:
@@ -6595,7 +6611,7 @@ Creates a new feature group defined as the union of other feature group versions
             data (dict): The data to record, in JSON format.
 
         Returns:
-            FeatureGroupRow: """
+            FeatureGroupRow: The feature group row that was upserted."""
         return self._proxy_request('upsertOnlineData', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
 
     def delete_data(self, feature_group_id: str, primary_key: str):
@@ -6614,7 +6630,7 @@ Creates a new feature group defined as the union of other feature group versions
             document (io.TextIOBase): The multipart/form-data of the document to add to the feature group.
 
         Returns:
-            FeatureGroupDocument: """
+            FeatureGroupDocument: The feature group document that was added."""
         return self._call_api('addFeatureGroupDocument', 'PUT', query_params={'featureGroupId': feature_group_id}, parse_type=FeatureGroupDocument, files={'document': document})
 
     def describe_feature_group_row_process_by_key(self, deployment_id: str, primary_key_value: str) -> FeatureGroupRowProcess:
@@ -6681,7 +6697,7 @@ Creates a new feature group defined as the union of other feature group versions
             function_name (str): The name of the Python function.
             function_variable_mappings (list): List of Python function arguments.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
-            function_type (str): Type of Python function to create.
+            function_type (str): Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
 
         Returns:
             PythonFunction: The Python function that can be used (e.g. for feature group transform)."""
@@ -7145,14 +7161,14 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, timeout=300)
 
     def create_chat_session(self, project_id: str = None, name: str = None) -> ChatSession:
-        """Creates a chat session with Abacus AI Chat.
+        """Creates a chat session with Data Science Co-pilot.
 
         Args:
             project_id (str): The unique project identifier this chat session belongs to
             name (str): The name of the chat session. Defaults to the project name.
 
         Returns:
-            ChatSession: The chat session with Abacus AI Chat"""
+            ChatSession: The chat session with Data Science Co-pilot"""
         return self._call_api('createChatSession', 'POST', query_params={}, body={'projectId': project_id, 'name': name}, parse_type=ChatSession)
 
     def delete_chat_message(self, chat_session_id: str, message_index: int):
@@ -7171,7 +7187,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('exportChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id})
 
     def rename_chat_session(self, chat_session_id: str, name: str):
-        """Renames a chat session with Abacus AI Chat.
+        """Renames a chat session with Data Science Co-pilot.
 
         Args:
             chat_session_id (str): Unique ID of the chat session.
@@ -7390,10 +7406,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        try:
-            return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages}, parse_type=LlmResponse)
-        except Exception:
-            return self._call_api('evaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'useProxyServiceFlow': False}, parse_type=LlmResponse, timeout=300)
+        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages}, parse_type=LlmResponse)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.
@@ -7429,10 +7442,7 @@ Creates a new feature group defined as the union of other feature group versions
             prompt_context (str): The context message used to construct the prompt for the language model. If not provide, a default context message is used.
             llm_name (str): The name of the language model to use. If not provided, the default language model is used.
             temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used."""
-        try:
-            return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature})
-        except Exception:
-            return self._call_api('generateCodeForDataQueryUsingLLM', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature, 'useProxyServiceFlow': False})
+        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature})
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.
@@ -7518,7 +7528,4 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             list[DocumentRetrieverLookupResult]: The snippets found from the documents."""
-        try:
-            return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes}, files=blobs, parse_type=DocumentRetrieverLookupResult)
-        except Exception:
-            return self._call_api('getRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'blobs': blobs, 'query': query, 'documentRetrieverConfig': document_retriever_config, 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes, 'useProxyServiceFlow': False}, parse_type=DocumentRetrieverLookupResult, files=blobs)
+        return self._proxy_request('GetRelevantSnippets', 'POST', query_params={}, body={'docIds': doc_ids, 'query': query, 'documentRetrieverConfig': json.dumps(document_retriever_config), 'honorSentenceBoundary': honor_sentence_boundary, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerSnippet': max_words_per_snippet, 'maxSnippetsPerDocument': max_snippets_per_document, 'startWordIndex': start_word_index, 'endWordIndex': end_word_index, 'includingBoundingBoxes': including_bounding_boxes}, files=blobs, parse_type=DocumentRetrieverLookupResult)

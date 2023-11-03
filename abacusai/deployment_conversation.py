@@ -107,3 +107,15 @@ class DeploymentConversation(AbstractApiClass):
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
         """
         return self.client.rename_deployment_conversation(self.deployment_conversation_id, name, deployment_id, deployment_token)
+
+    def export(self, external_session_id: str = None):
+        """
+        Export a Deployment Conversation.
+
+        Args:
+            external_session_id (str): The external session id associated with the deployment conversation. One of deployment_conversation_id or external_session_id must be provided.
+
+        Returns:
+            DeploymentConversationExport: The deployment conversation html export.
+        """
+        return self.client.export_deployment_conversation(self.deployment_conversation_id, external_session_id)

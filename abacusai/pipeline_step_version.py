@@ -88,7 +88,7 @@ class PipelineStepVersion(AbstractApiClass):
             pipeline_step_version (str): The ID of the pipeline step version.
 
         Returns:
-            PipelineStepVersion: 
+            PipelineStepVersion: An object describing the pipeline step version.
         """
         return self.client.describe_pipeline_step_version(self.pipeline_step_version)
 

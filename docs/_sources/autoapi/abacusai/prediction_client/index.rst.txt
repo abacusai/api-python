@@ -539,7 +539,7 @@ Classes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
 
       Get all positive assignments that match a query.
 
@@ -553,6 +553,8 @@ Classes
       :type forced_assignments: dict
       :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
       :type solve_time_limit_seconds: float
+      :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
+      :type include_all_assignments: bool
 
 
    .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
@@ -779,7 +781,7 @@ Classes
       :type external_session_id: str
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -806,6 +808,8 @@ Classes
       :type num_retrieval_margin_words: int
       :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
       :type max_words_per_chunk: int
+      :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
+      :type score_multiplier_column: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

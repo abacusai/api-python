@@ -35,6 +35,7 @@ Classes
    abacusai.api_class.model.CustomAlgorithmTrainingConfig
    abacusai.api_class.model.OptimizationTrainingConfig
    abacusai.api_class.model._TrainingConfigFactory
+   abacusai.api_class.model.DeployableAlgorithm
 
 
 
@@ -1763,6 +1764,42 @@ Classes
       
 
    .. py:attribute:: config_class_map
+
+      
+
+
+.. py:class:: DeployableAlgorithm
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Algorithm that can be deployed to a model.
+   :param algorithm: ID of the algorithm.
+   :type algorithm: str
+   :param name: Name of the algorithm.
+   :type name: str
+   :param only_offline_deployable: Whether the algorithm can only be deployed offline.
+   :type only_offline_deployable: bool
+   :param trained_model_types: List of trained model types.
+   :type trained_model_types: List[dict]
+
+   .. py:attribute:: algorithm
+      :type: str
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: only_offline_deployable
+      :type: bool
+
+      
+
+   .. py:attribute:: trained_model_types
+      :type: List[dict]
 
       
 

@@ -5,7 +5,7 @@ from .return_class import AbstractApiClass
 
 class ChatSession(AbstractApiClass):
     """
-        A chat session with Abacus AI Chat.
+        A chat session with Abacus Data Science Co-pilot.
 
         Args:
             client (ApiClient): An authenticated API Client instance
@@ -54,13 +54,13 @@ class ChatSession(AbstractApiClass):
 
     def get(self):
         """
-        Gets a chat session from Abacus AI Chat.
+        Gets a chat session from Data Science Co-pilot.
 
         Args:
             chat_session_id (str): Unique ID of the chat session.
 
         Returns:
-            ChatSession: The chat session with Abacus AI Chat
+            ChatSession: The chat session with Data Science Co-pilot
         """
         return self.client.get_chat_session(self.chat_session_id)
 
@@ -84,7 +84,7 @@ class ChatSession(AbstractApiClass):
 
     def rename(self, name: str):
         """
-        Renames a chat session with Abacus AI Chat.
+        Renames a chat session with Data Science Co-pilot.
 
         Args:
             name (str): The new name of the chat session.

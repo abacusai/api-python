@@ -1076,6 +1076,7 @@ Classes
       :param data: The data to record, in JSON format.
       :type data: dict
 
+      :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
 
 
@@ -1086,6 +1087,7 @@ Classes
       :param data: The data to record, in JSON format.
       :type data: dict
 
+      :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
 
 
@@ -1110,7 +1112,8 @@ Classes
       :param num_rows: Maximum number of rows to return from the feature group
       :type num_rows: int
 
-      :rtype: FeatureGroupRow
+      :returns: A list of feature group rows.
+      :rtype: list[FeatureGroupRow]
 
 
    .. py:method:: add_document(document)
@@ -1120,6 +1123,7 @@ Classes
       :param document: The multipart/form-data of the document to add to the feature group.
       :type document: io.TextIOBase
 
+      :returns: The feature group document that was added.
       :rtype: FeatureGroupDocument
 
 
@@ -1130,7 +1134,8 @@ Classes
       :param feature_group_id: The unique ID associated with the feature group.
       :type feature_group_id: str
 
-      :rtype: FeatureGroupDocument
+      :returns: A list of pending feature group documents.
+      :rtype: list[FeatureGroupDocument]
 
 
    .. py:method:: get_natural_language_explanation(feature_group_version = None, model_id = None)

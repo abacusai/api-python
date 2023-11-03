@@ -83,10 +83,10 @@ class PredictionOperator(AbstractApiClass):
         Describe an existing prediction operator.
 
         Args:
-            prediction_operator_id (str): The unique ID of the prediction operator. Returns
+            prediction_operator_id (str): The unique ID of the prediction operator.
 
         Returns:
-            PredictionOperator: 
+            PredictionOperator: The requested prediction operator object.
         """
         return self.client.describe_prediction_operator(self.prediction_operator_id)
 
@@ -103,10 +103,10 @@ class PredictionOperator(AbstractApiClass):
             cpu_size (str): Size of the CPU for the prediction operator.
             memory (int): Memory (in GB) for the  prediction operator.
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
-            use_gpu (bool): Whether this prediction operator needs gpu. Returns
+            use_gpu (bool): Whether this prediction operator needs gpu.
 
         Returns:
-            PredictionOperator: 
+            PredictionOperator: The updated prediction operator object.
         """
         return self.client.update_prediction_operator(self.prediction_operator_id, name, feature_group_ids, source_code, initialize_function_name, predict_function_name, cpu_size, memory, package_requirements, use_gpu)
 

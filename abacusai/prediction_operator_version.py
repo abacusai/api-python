@@ -58,8 +58,5 @@ class PredictionOperatorVersion(AbstractApiClass):
 
         Args:
             prediction_operator_version (str): The unique ID of the prediction operator version.
-
-        Returns:
-            PredictionOperatorVersion: 
         """
         return self.client.delete_prediction_operator_version(self.prediction_operator_version)

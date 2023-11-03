@@ -1,0 +1,57 @@
+:py:mod:`abacusai.finetuned_pretrained_model`
+=============================================
+
+.. py:module:: abacusai.finetuned_pretrained_model
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.finetuned_pretrained_model.FinetunedPretrainedModel
+
+
+
+
+.. py:class:: FinetunedPretrainedModel(client, name=None, modelId=None, createdAt=None, updatedAt=None, config=None, baseModel=None, finetuningDatasetId=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A finetuned pretrained model
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The user-friendly name for the model.
+   :type name: str
+   :param modelId: The unique identifier of the model.
+   :type modelId: str
+   :param createdAt: When the finetuned pretrained model was created.
+   :type createdAt: str
+   :param updatedAt: When the finetuned pretrained model was last updated.
+   :type updatedAt: str
+   :param config: The finetuned pretrained model configuration
+   :type config: dict
+   :param baseModel: The pretrained base model for fine tuning
+   :type baseModel: str
+   :param finetuningDatasetId: The finetuned dataset ids of the model.
+   :type finetuningDatasetId: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
