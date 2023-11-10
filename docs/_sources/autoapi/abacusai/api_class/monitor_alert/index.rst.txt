@@ -15,6 +15,8 @@ Classes
    abacusai.api_class.monitor_alert.AlertConditionConfig
    abacusai.api_class.monitor_alert.AccuracyBelowThresholdConditionConfig
    abacusai.api_class.monitor_alert.FeatureDriftConditionConfig
+   abacusai.api_class.monitor_alert.TargetDriftConditionConfig
+   abacusai.api_class.monitor_alert.HistoryLengthDriftConditionConfig
    abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig
    abacusai.api_class.monitor_alert.BiasViolationConditionConfig
    abacusai.api_class.monitor_alert._AlertConditionConfigFactory
@@ -73,6 +75,8 @@ Classes
    :type threshold: float
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
    :type minimum_violations: int
+   :param feature_names: List of feature names to monitor for this alert.
+   :type feature_names: List[str]
 
    .. py:attribute:: feature_drift_type
       :type: abacusai.api_class.enums.FeatureDriftType
@@ -86,6 +90,61 @@ Classes
 
    .. py:attribute:: minimum_violations
       :type: int
+
+      
+
+   .. py:attribute:: feature_names
+      :type: List[str]
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TargetDriftConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Target Drift Condition Config for Monitor Alerts
+   :param feature_drift_type: Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+   :type feature_drift_type: FeatureDriftType
+   :param threshold: Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold: float
+
+   .. py:attribute:: feature_drift_type
+      :type: abacusai.api_class.enums.FeatureDriftType
+
+      
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: HistoryLengthDriftConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   History Length Drift Condition Config for Monitor Alerts
+   :param feature_drift_type: History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.
+   :type feature_drift_type: FeatureDriftType
+   :param threshold: Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold: float
+
+   .. py:attribute:: feature_drift_type
+      :type: abacusai.api_class.enums.FeatureDriftType
+
+      
+
+   .. py:attribute:: threshold
+      :type: float
 
       
 

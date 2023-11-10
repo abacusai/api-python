@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureGroupRowProcess(client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, status=None, error=None)
+.. py:class:: FeatureGroupRowProcess(client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, timeoutAt=None, retriesRemaining=None, totalAttemptsAllowed=None, status=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -42,6 +42,12 @@ Classes
    :type startedAt: str
    :param completedAt: The timestamp when this feature group row was completed.
    :type completedAt: str
+   :param timeoutAt: The time the feature group row process will timeout.
+   :type timeoutAt: str
+   :param retriesRemaining: The number of retries remaining for this feature group row process.
+   :type retriesRemaining: int
+   :param totalAttemptsAllowed: The total number of attempts allowed for this feature group row process.
+   :type totalAttemptsAllowed: int
    :param status: The status of the feature group row process.
    :type status: str
    :param error: The error message if the status is FAILED.

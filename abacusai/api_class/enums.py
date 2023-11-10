@@ -35,6 +35,7 @@ class ProblemType(ApiEnum):
     DOCUMENT_VISUALIZATION = 'nlp_document_visualization'
     PERSONALIZATION = 'personalization'
     PREDICTIVE_MODELING = 'regression'
+    FINETUNED_LLM = 'finetuned_llm'
     FORECASTING = 'forecasting'
     CUSTOM_TRAINED_MODEL = 'plug_and_play'
     CUSTOM_ALGORITHM = 'trainable_plug_and_play'
@@ -387,6 +388,8 @@ class MonitorAlertType(ApiEnum):
     FEATURE_DRIFT = 'FeatureDrift'
     DATA_INTEGRITY_VIOLATIONS = 'DataIntegrityViolations'
     BIAS_VIOLATIONS = 'BiasViolations'
+    HISTORY_LENGTH_DRIFT = 'HistoryLengthDrift'
+    TARGET_DRIFT = 'TargetDrift'
 
 
 class FeatureDriftType(ApiEnum):
@@ -413,3 +416,9 @@ class BiasType(ApiEnum):
 
 class AlertActionType(ApiEnum):
     EMAIL = 'Email'
+
+
+class PythonFunctionType(ApiEnum):
+    FEATURE_GROUP = 'FEATURE_GROUP'
+    PLOTLY_FIG = 'PLOTLY_FIG'
+    STEP_FUNCTION = 'STEP_FUNCTION'

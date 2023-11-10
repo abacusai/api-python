@@ -103,6 +103,18 @@ class PipelineVersion(AbstractApiClass):
         """
         return self.client.list_pipeline_version_logs(self.pipeline_version)
 
+    def skip_pending_steps(self):
+        """
+        Skips pending steps in a pipeline version.
+
+        Args:
+            pipeline_version (str): The id of the pipeline version.
+
+        Returns:
+            PipelineVersion: Object describing the pipeline version
+        """
+        return self.client.skip_pending_pipeline_version_steps(self.pipeline_version)
+
     def wait_for_pipeline(self, timeout=1200):
         """
         A waiting call until all the stages in a pipeline version have completed.

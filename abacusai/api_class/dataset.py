@@ -18,3 +18,4 @@ class DocumentProcessingConfig(ApiClass):
     use_doctr: bool = False
     remove_watermarks: bool = None
     use_full_ocr: bool = None
+    layout_analysis: bool = False

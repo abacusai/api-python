@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FinetunedPretrainedModel(client, name=None, modelId=None, createdAt=None, updatedAt=None, config=None, baseModel=None, finetuningDatasetId=None)
+.. py:class:: FinetunedPretrainedModel(client, name=None, finetunedPretrainedModelId=None, finetunedPretrainedModelVersion=None, createdAt=None, updatedAt=None, config=None, baseModel=None, finetuningDatasetVersion=None, status=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -28,8 +28,10 @@ Classes
    :type client: ApiClient
    :param name: The user-friendly name for the model.
    :type name: str
-   :param modelId: The unique identifier of the model.
-   :type modelId: str
+   :param finetunedPretrainedModelId: The unique identifier of the model.
+   :type finetunedPretrainedModelId: str
+   :param finetunedPretrainedModelVersion: The unique identifier of the model version.
+   :type finetunedPretrainedModelVersion: str
    :param createdAt: When the finetuned pretrained model was created.
    :type createdAt: str
    :param updatedAt: When the finetuned pretrained model was last updated.
@@ -38,8 +40,12 @@ Classes
    :type config: dict
    :param baseModel: The pretrained base model for fine tuning
    :type baseModel: str
-   :param finetuningDatasetId: The finetuned dataset ids of the model.
-   :type finetuningDatasetId: str
+   :param finetuningDatasetVersion: The finetuned dataset instance id of the model.
+   :type finetuningDatasetVersion: str
+   :param status: The current status of the finetuned pretrained model.
+   :type status: str
+   :param error: Relevant error if the status is FAILED.
+   :type error: str
 
    .. py:method:: __repr__()
 

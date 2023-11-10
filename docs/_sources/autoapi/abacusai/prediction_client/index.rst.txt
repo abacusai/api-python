@@ -227,7 +227,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None)
+   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None, get_item_data = False)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -247,6 +247,8 @@ Classes
       :type explain_predictions: bool
       :param explainer_type: Type of explainer to use for explanations
       :type explainer_type: str
+      :param get_item_data: Will return the data corresponding to items in query
+      :type get_item_data: bool
 
 
    .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False, catalog_id = None)

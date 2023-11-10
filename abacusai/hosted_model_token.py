@@ -10,17 +10,19 @@ class HostedModelToken(AbstractApiClass):
             createdAt (str): When the token was created
             tag (str): A user-friendly tag for the API key.
             trailingAuthToken (str): The last four characters of the un-encrypted auth token
+            hostedModelTokenId (str): The unique identifier attached to this authenticaion token
     """
 
-    def __init__(self, client, createdAt=None, tag=None, trailingAuthToken=None):
-        super().__init__(client, None)
+    def __init__(self, client, createdAt=None, tag=None, trailingAuthToken=None, hostedModelTokenId=None):
+        super().__init__(client, hostedModelTokenId)
         self.created_at = createdAt
         self.tag = tag
         self.trailing_auth_token = trailingAuthToken
+        self.hosted_model_token_id = hostedModelTokenId
 
     def __repr__(self):
-        repr_dict = {f'created_at': repr(self.created_at), f'tag': repr(
-            self.tag), f'trailing_auth_token': repr(self.trailing_auth_token)}
+        repr_dict = {f'created_at': repr(self.created_at), f'tag': repr(self.tag), f'trailing_auth_token': repr(
+            self.trailing_auth_token), f'hosted_model_token_id': repr(self.hosted_model_token_id)}
         class_name = "HostedModelToken"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -33,6 +35,6 @@ class HostedModelToken(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'created_at': self.created_at, 'tag': self.tag,
-                'trailing_auth_token': self.trailing_auth_token}
+        resp = {'created_at': self.created_at, 'tag': self.tag, 'trailing_auth_token':
+                self.trailing_auth_token, 'hosted_model_token_id': self.hosted_model_token_id}
         return {key: value for key, value in resp.items() if value is not None}

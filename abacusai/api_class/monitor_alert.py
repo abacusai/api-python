@@ -35,13 +35,45 @@ class FeatureDriftConditionConfig(AlertConditionConfig):
         feature_drift_type (FeatureDriftType): Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
         threshold (float): Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
         minimum_violations (int): Number of columns that must exceed the specified threshold to trigger an alert.
+        feature_names (List[str]): List of feature names to monitor for this alert.
     """
     feature_drift_type: enums.FeatureDriftType = dataclasses.field(default=None)
     threshold: float = dataclasses.field(default=None)
     minimum_violations: int = dataclasses.field(default=None)
+    feature_names: List[str] = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.alert_type = enums.MonitorAlertType.FEATURE_DRIFT
+
+
+@dataclasses.dataclass
+class TargetDriftConditionConfig(AlertConditionConfig):
+    """
+    Target Drift Condition Config for Monitor Alerts
+    Args:
+        feature_drift_type (FeatureDriftType): Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+        threshold (float): Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+    """
+    feature_drift_type: enums.FeatureDriftType = dataclasses.field(default=None)
+    threshold: float = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.TARGET_DRIFT
+
+
+@dataclasses.dataclass
+class HistoryLengthDriftConditionConfig(AlertConditionConfig):
+    """
+    History Length Drift Condition Config for Monitor Alerts
+    Args:
+        feature_drift_type (FeatureDriftType): History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.
+        threshold (float): Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+    """
+    feature_drift_type: enums.FeatureDriftType = dataclasses.field(default=None)
+    threshold: float = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.HISTORY_LENGTH_DRIFT
 
 
 @dataclasses.dataclass
@@ -86,6 +118,8 @@ class _AlertConditionConfigFactory(_ApiClassFactory):
         enums.MonitorAlertType.FEATURE_DRIFT: FeatureDriftConditionConfig,
         enums.MonitorAlertType.DATA_INTEGRITY_VIOLATIONS: DataIntegrityViolationConditionConfig,
         enums.MonitorAlertType.BIAS_VIOLATIONS: BiasViolationConditionConfig,
+        enums.MonitorAlertType.TARGET_DRIFT: TargetDriftConditionConfig,
+        enums.MonitorAlertType.HISTORY_LENGTH_DRIFT: HistoryLengthDriftConditionConfig,
     }
 
 

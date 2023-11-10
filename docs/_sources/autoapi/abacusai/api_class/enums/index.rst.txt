@@ -54,6 +54,7 @@ Classes
    abacusai.api_class.enums.DataIntegrityViolationType
    abacusai.api_class.enums.BiasType
    abacusai.api_class.enums.AlertActionType
+   abacusai.api_class.enums.PythonFunctionType
 
 
 
@@ -169,6 +170,11 @@ Classes
 
    .. py:attribute:: PREDICTIVE_MODELING
       :value: 'regression'
+
+      
+
+   .. py:attribute:: FINETUNED_LLM
+      :value: 'finetuned_llm'
 
       
 
@@ -1717,6 +1723,16 @@ Classes
 
       
 
+   .. py:attribute:: HISTORY_LENGTH_DRIFT
+      :value: 'HistoryLengthDrift'
+
+      
+
+   .. py:attribute:: TARGET_DRIFT
+      :value: 'TargetDrift'
+
+      
+
 
 .. py:class:: FeatureDriftType
 
@@ -1824,6 +1840,31 @@ Classes
 
    .. py:attribute:: EMAIL
       :value: 'Email'
+
+      
+
+
+.. py:class:: PythonFunctionType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: FEATURE_GROUP
+      :value: 'FEATURE_GROUP'
+
+      
+
+   .. py:attribute:: PLOTLY_FIG
+      :value: 'PLOTLY_FIG'
+
+      
+
+   .. py:attribute:: STEP_FUNCTION
+      :value: 'STEP_FUNCTION'
 
       
 

@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.78.5'
+      :value: '0.79.0'
 
       
 
@@ -2792,7 +2792,7 @@ Attributes
       :type is_thread_safe: bool
 
 
-   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, included_modules = None)
 
       Creates a step in a given pipeline from a python function.
 
@@ -2814,9 +2814,11 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the step function.
       :type memory: int
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
 
 
-   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, included_modules = None)
 
       Updates a pipeline step from a python function.
 
@@ -2836,6 +2838,24 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the step function.
       :type memory: int
+      :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
+      :type included_modules: list
+
+
+   .. py:method:: create_python_function_from_function(name, function, function_variable_mappings = None, package_requirements = None, function_type = PythonFunctionType.FEATURE_GROUP.value)
+
+      Creates a custom Python function
+
+      :param name: The name to identify the Python function.
+      :type name: str
+      :param function: The function callable to serialize and upload.
+      :type function: callable
+      :param function_variable_mappings: List of Python function arguments.
+      :type function_variable_mappings: List<PythonFunctionArguments>
+      :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+      :type package_requirements: List
+      :param function_type: Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
+      :type function_type: PythonFunctionType
 
 
    .. py:method:: create_feature_group_from_python_function(function, table_name, input_tables = None, python_function_name = None, python_function_bindings = None, cpu_size = None, memory = None, package_requirements = None, included_modules = None)
@@ -3421,7 +3441,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -6329,7 +6349,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None)
+   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None, get_item_data = False)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -6349,6 +6369,8 @@ Attributes
       :type explain_predictions: bool
       :param explainer_type: Type of explainer to use for explanations
       :type explainer_type: str
+      :param get_item_data: Will return the data corresponding to items in query
+      :type get_item_data: bool
 
 
    .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False, catalog_id = None)
@@ -7654,6 +7676,17 @@ Attributes
       :rtype: Pipeline
 
 
+   .. py:method:: skip_pending_pipeline_version_steps(pipeline_version)
+
+      Skips pending steps in a pipeline version.
+
+      :param pipeline_version: The id of the pipeline version.
+      :type pipeline_version: str
+
+      :returns: Object describing the pipeline version
+      :rtype: PipelineVersion
+
+
    .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)
 
       Create a plot dashboard given selected python plots
@@ -8288,15 +8321,15 @@ Attributes
 
       :param prompt: Prompt to use for generation.
       :type prompt: str
-      :param system_message: System message for models that support it.
+      :param system_message: System message for models that support it. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set.
       :type system_message: str
-      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'CLAUDE_V2', 'ABACUS', 'ABACUS_LONG', 'PALM', or 'LLAMA2_CHAT'. Default is auto selection.
+      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'CLAUDE_V2', 'PALM', 'PALM_TEXT', ABACUS_GIRAFFE', 'ABACUS_LLAMA2_QA' or 'LLAMA2_CHAT'. Default is auto selection.
       :type llm_name: str
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
       :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
-      :param messages: A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
       :type messages: list
 
       :returns: The response from the model, raw text and parsed components.

@@ -32,7 +32,8 @@ from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     BatchPredictionArgs, DatasetConfig, DocumentRetrieverConfig,
     FeatureGroupExportConfig, ForecastingMonitorConfig, MergeConfig,
-    ParsingConfig, ProblemType, SamplingConfig, TrainingConfig
+    ParsingConfig, ProblemType, PythonFunctionType, SamplingConfig,
+    TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -514,7 +515,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.78.5'
+    client_version = '0.79.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2811,7 +2812,8 @@ class ApiClient(ReadOnlyClient):
                                            step_dependencies: list = None,
                                            package_requirements: list = None,
                                            cpu_size: str = None,
-                                           memory: int = None):
+                                           memory: int = None,
+                                           included_modules: list = None):
         """
         Creates a step in a given pipeline from a python function.
 
@@ -2825,9 +2827,12 @@ class ApiClient(ReadOnlyClient):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
             memory (int): Memory (in GB) for the step function.
-
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
         source_code = inspect.getsource(function)
+
+        source_code = include_modules(source_code, included_modules)
+
         return self.create_pipeline_step(pipeline_id=pipeline_id,
                                          step_name=step_name,
                                          function_name=function.__name__,
@@ -2847,7 +2852,8 @@ class ApiClient(ReadOnlyClient):
                                            step_dependencies: list = None,
                                            package_requirements: list = None,
                                            cpu_size: str = None,
-                                           memory: int = None):
+                                           memory: int = None,
+                                           included_modules: list = None):
         """
         Updates a pipeline step from a python function.
 
@@ -2860,9 +2866,11 @@ class ApiClient(ReadOnlyClient):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
             memory (int): Memory (in GB) for the step function.
-
+            included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
         source_code = inspect.getsource(function)
+
+        source_code = include_modules(source_code, included_modules)
 
         return self.update_pipeline_step(pipeline_step_id=pipeline_step_id,
                                          function_name=function.__name__,
@@ -2873,6 +2881,37 @@ class ApiClient(ReadOnlyClient):
                                          package_requirements=package_requirements,
                                          cpu_size=cpu_size,
                                          memory=memory)
+
+    def create_python_function_from_function(self,
+                                             name: str,
+                                             function: callable,
+                                             function_variable_mappings: list = None,
+                                             package_requirements: list = None,
+                                             function_type: str = PythonFunctionType.FEATURE_GROUP.value):
+        """
+        Creates a custom Python function
+
+        Args:
+            name (str): The name to identify the Python function.
+            function (callable): The function callable to serialize and upload.
+            function_variable_mappings (List<PythonFunctionArguments>): List of Python function arguments.
+            package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
+            function_type (PythonFunctionType): Type of Python function to create. Default is FEATURE_GROUP, but can also be PLOTLY_FIG.
+        """
+        function_source = None
+        python_function_name = None
+        if function:
+            function_source = get_clean_function_source_code(function)
+            python_function_name = function.__name__
+        else:
+            raise MissingParameterError(
+                'Please provide a function to create a python function', http_status=400)
+        return self.create_python_function(name=name,
+                                           source_code=function_source,
+                                           function_name=python_function_name,
+                                           function_variable_mappings=function_variable_mappings,
+                                           package_requirements=package_requirements,
+                                           function_type=function_type)
 
     def create_feature_group_from_python_function(self, function: callable, table_name: str, input_tables: list = None, python_function_name: str = None, python_function_bindings: list = None, cpu_size: str = None, memory: int = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -3634,7 +3673,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project."""
@@ -5854,7 +5893,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getEventAnomalyScore', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
+    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None, get_item_data: bool = False) -> Dict:
         """Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
         Args:
@@ -5865,10 +5904,11 @@ Creates a new feature group defined as the union of other feature group versions
             num_predictions (int): The number of timestamps to predict in the future.
             prediction_start (str): The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
             explain_predictions (bool): Will explain predictions for forecasting
-            explainer_type (str): Type of explainer to use for explanations"""
+            explainer_type (str): Type of explainer to use for explanations
+            get_item_data (bool): Will return the data corresponding to items in query"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
+        return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type, 'getItemData': get_item_data}, server_override=prediction_url)
 
     def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
         """Returns the k nearest neighbors for the provided embedding vector.
@@ -6908,6 +6948,16 @@ Creates a new feature group defined as the union of other feature group versions
             Pipeline: Object describing the pipeline."""
         return self._call_api('resumePipelineRefreshSchedule', 'POST', query_params={}, body={'pipelineId': pipeline_id}, parse_type=Pipeline)
 
+    def skip_pending_pipeline_version_steps(self, pipeline_version: str) -> PipelineVersion:
+        """Skips pending steps in a pipeline version.
+
+        Args:
+            pipeline_version (str): The id of the pipeline version.
+
+        Returns:
+            PipelineVersion: Object describing the pipeline version"""
+        return self._call_api('skipPendingPipelineVersionSteps', 'POST', query_params={}, body={'pipelineVersion': pipeline_version}, parse_type=PipelineVersion)
+
     def create_graph_dashboard(self, project_id: str, name: str, python_function_ids: list = None) -> GraphDashboard:
         """Create a plot dashboard given selected python plots
 
@@ -7398,11 +7448,11 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             prompt (str): Prompt to use for generation.
-            system_message (str): System message for models that support it.
-            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'CLAUDE_V2', 'ABACUS', 'ABACUS_LONG', 'PALM', or 'LLAMA2_CHAT'. Default is auto selection.
+            system_message (str): System message for models that support it. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set.
+            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'CLAUDE_V2', 'PALM', 'PALM_TEXT', ABACUS_GIRAFFE', 'ABACUS_LLAMA2_QA' or 'LLAMA2_CHAT'. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
             temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
-            messages (list): A list of messages to use as conversation history. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""

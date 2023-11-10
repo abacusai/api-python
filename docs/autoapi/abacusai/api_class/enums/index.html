@@ -219,6 +219,9 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.enums.AlertActionType" title="abacusai.api_class.enums.AlertActionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionType</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.enums.PythonFunctionType" title="abacusai.api_class.enums.PythonFunctionType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionType</span></code></a></p></td>
+<td><p>Generic enumeration.</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -330,6 +333,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.ProblemType.PREDICTIVE_MODELING">
 <span class="sig-name descname"><span class="pre">PREDICTIVE_MODELING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'regression'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ProblemType.PREDICTIVE_MODELING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.ProblemType.FINETUNED_LLM">
+<span class="sig-name descname"><span class="pre">FINETUNED_LLM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'finetuned_llm'</span></em><a class="headerlink" href="#abacusai.api_class.enums.ProblemType.FINETUNED_LLM" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1805,6 +1813,16 @@
 <span class="sig-name descname"><span class="pre">BIAS_VIOLATIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'BiasViolations'</span></em><a class="headerlink" href="#abacusai.api_class.enums.MonitorAlertType.BIAS_VIOLATIONS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MonitorAlertType.HISTORY_LENGTH_DRIFT">
+<span class="sig-name descname"><span class="pre">HISTORY_LENGTH_DRIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'HistoryLengthDrift'</span></em><a class="headerlink" href="#abacusai.api_class.enums.MonitorAlertType.HISTORY_LENGTH_DRIFT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.MonitorAlertType.TARGET_DRIFT">
+<span class="sig-name descname"><span class="pre">TARGET_DRIFT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'TargetDrift'</span></em><a class="headerlink" href="#abacusai.api_class.enums.MonitorAlertType.TARGET_DRIFT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1905,6 +1923,29 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.enums.AlertActionType.EMAIL">
 <span class="sig-name descname"><span class="pre">EMAIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Email'</span></em><a class="headerlink" href="#abacusai.api_class.enums.AlertActionType.EMAIL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.PythonFunctionType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.enums.</span></span><span class="sig-name descname"><span class="pre">PythonFunctionType</span></span><a class="headerlink" href="#abacusai.api_class.enums.PythonFunctionType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.enums.ApiEnum" title="abacusai.api_class.enums.ApiEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiEnum</span></code></a></p>
+<p>Generic enumeration.</p>
+<p>Derive from this class to define new enumerations.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.PythonFunctionType.FEATURE_GROUP">
+<span class="sig-name descname"><span class="pre">FEATURE_GROUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FEATURE_GROUP'</span></em><a class="headerlink" href="#abacusai.api_class.enums.PythonFunctionType.FEATURE_GROUP" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.PythonFunctionType.PLOTLY_FIG">
+<span class="sig-name descname"><span class="pre">PLOTLY_FIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PLOTLY_FIG'</span></em><a class="headerlink" href="#abacusai.api_class.enums.PythonFunctionType.PLOTLY_FIG" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.enums.PythonFunctionType.STEP_FUNCTION">
+<span class="sig-name descname"><span class="pre">STEP_FUNCTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'STEP_FUNCTION'</span></em><a class="headerlink" href="#abacusai.api_class.enums.PythonFunctionType.STEP_FUNCTION" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

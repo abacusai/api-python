@@ -83,71 +83,47 @@ Classes
 
    Bases: :py:obj:`TrainingConfig`
 
-   Training config for the PERSONALIZATION problem type
-   :param objective: Ranking scheme used to select final best model.
-   :type objective: PersonalizationObjective
-   :param sort_objective: Ranking scheme used to sort models on the metrics page.
-   :type sort_objective: PersonalizationObjective
-   :param training_mode: whether to train in production or experimental mode. Defaults to EXP.
-   :type training_mode: PersonalizationTrainingMode
-   :param target_action_types: List of action types to use as targets for training.
-   :type target_action_types: List[str]
-   :param target_action_weights: Dictionary of action types to weights for training.
-   :type target_action_weights: Dict[str, float]
-   :param session_event_types: List of event types to treat as occurrences of sessions.
-   :type session_event_types: List[str]
-   :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
-   :type test_split: int
-   :param recent_days_for_training: Limit training data to a certain latest number of days.
-   :type recent_days_for_training: int
-   :param training_start_date: Only consider training interaction data after this date. Specified in the timezone of the dataset.
-   :type training_start_date: str
-   :param test_on_user_split: Use user splits instead of using time splits, when validating and testing the model.
-   :type test_on_user_split: bool
-   :param test_split_on_last_k_items: Use last k items instead of global timestamp splits, when validating and testing the model.
-   :type test_split_on_last_k_items: bool
-   :param test_last_items_length: Number of items to leave out for each user when using leave k out folds.
-   :type test_last_items_length: int
-   :param test_window_length_hours: Duration (in hours) of most recent time window to use when validating and testing the model.
-   :type test_window_length_hours: int
-   :param explicit_time_split: Sets an explicit time-based test boundary.
-   :type explicit_time_split: bool
-   :param test_row_indicator: Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
-   :type test_row_indicator: str
-   :param full_data_retraining: Train models separately with all the data.
-   :type full_data_retraining: bool
-   :param sequential_training: Train a mode sequentially through time.
-   :type sequential_training: bool
-   :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
-   :type data_split_feature_group_table_name: str
-   :param optimized_event_type: The final event type to optimize for and compute metrics on.
-   :type optimized_event_type: str
-   :param dropout_rate: Dropout rate for neural network.
-   :type dropout_rate: int
-   :param batch_size: Batch size for neural network.
-   :type batch_size: BatchSize
-   :param disable_transformer: Disable training the transformer algorithm.
-   :type disable_transformer: bool
-   :param disable_gpu: Disable training on GPU.
-   :type disable_gpu: boo
-   :param filter_history: Do not recommend items the user has already interacted with.
-   :type filter_history: bool
-   :param max_history_length: Maximum length of user-item history to include user in training examples.
-   :type max_history_length: int
-   :param compute_rerank_metrics: Compute metrics based on rerank results.
-   :type compute_rerank_metrics: bool
-   :param add_time_features: Include interaction time as a feature.
-   :type add_time_features: bool
-   :param disable_timestamp_scalar_features: Exclude timestamp scalar features.
-   :type disable_timestamp_scalar_features: bool
-   :param compute_session_metrics: Evaluate models based on how well they are able to predict the next session of interactions.
-   :type compute_session_metrics: bool
-   :param max_user_history_len_percentile: Filter out users with history length above this percentile.
-   :type max_user_history_len_percentile: int
-   :param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
-   :type downsample_item_popularity_percentile: float
-   :param allow_duplicate_action_types: event types which will not be deduplicated.
-   :type allow_duplicate_action_types: List[str]
+       Training config for the PERSONALIZATION problem type
+       Args:
+           objective (PersonalizationObjective): Ranking scheme used to select final best model.
+           sort_objective (PersonalizationObjective): Ranking scheme used to sort models on the metrics page.
+           training_mode (PersonalizationTrainingMode): whether to train in production or experimental mode. Defaults to EXP.
+           target_action_types (List[str]): List of action types to use as targets for training.
+           target_action_weights (Dict[str, float]): Dictionary of action types to weights for training.
+           session_event_types (List[str]): List of event types to treat as occurrences of sessions.
+           test_split (int): Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+           recent_days_for_training (int): Limit training data to a certain latest number of days.
+           training_start_date (str): Only consider training interaction data after this date. Specified in the timezone of the dataset.
+           test_on_user_split (bool): Use user splits instead of using time splits, when validating and testing the model.
+           test_split_on_last_k_items (bool): Use last k items instead of global timestamp splits, when validating and testing the model.
+           test_last_items_length (int): Number of items to leave out for each user when using leave k out folds.
+           test_window_length_hours (int): Duration (in hours) of most recent time window to use when validating and testing the model.
+           explicit_time_split (bool): Sets an explicit time-based test boundary.
+           test_row_indicator (str): Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
+           full_data_retraining (bool): Train models separately with all the data.
+           sequential_training (bool): Train a mode sequentially through time.
+           data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
+           optimized_event_type (str): The final event type to optimize for and compute metrics on.
+           dropout_rate (int): Dropout rate for neural network.
+           batch_size (BatchSize): Batch size for neural network.
+           disable_transformer (bool): Disable training the transformer algorithm.
+           disable_gpu (boo): Disable training on GPU.
+           filter_history (bool): Do not recommend items the user has already interacted with.
+           action_types_exclusion_days (Dict[str, float]): Mapping from action type to number of days for which we exclude previously interacted items from prediction
+           session_dedupe_mins (float): Minimum number of minutes between two sessions for a user.
+           max_history_length (int): Maximum length of user-item history to include user in training examples.
+           compute_rerank_metrics (bool): Compute metrics based on rerank results.
+           add_time_features (bool): Include interaction time as a feature.
+           disable_timestamp_scalar_features (bool): Exclude timestamp scalar features.
+           compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
+           max_user_history_len_percentile (int): Filter out users with history length above this percentile.
+           downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
+   <<<<<<< HEAD
+           allow_duplicate_action_types (List[str]): event types which will not be deduplicated.
+           use_user_id_feature (bool): Use user id as a feature in CTR models.
+   =======
+   >>>>>>> e5f12c159c (add config options for session dedupe and recommendation exclusion)
+
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -175,11 +151,6 @@ Classes
       
 
    .. py:attribute:: session_event_types
-      :type: List[str]
-
-      
-
-   .. py:attribute:: allow_duplicate_action_types
       :type: List[str]
 
       
@@ -274,6 +245,11 @@ Classes
 
       
 
+   .. py:attribute:: action_types_exclusion_days
+      :type: Dict[str, float]
+
+      
+
    .. py:attribute:: max_history_length
       :type: int
 
@@ -306,6 +282,16 @@ Classes
 
    .. py:attribute:: item_query_column
       :type: str
+
+      
+
+   .. py:attribute:: use_user_id_feature
+      :type: bool
+
+      
+
+   .. py:attribute:: session_dedupe_mins
+      :type: float
 
       
 

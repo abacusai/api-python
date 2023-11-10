@@ -15,11 +15,14 @@ class FeatureGroupRowProcess(AbstractApiClass):
             updatedAt (str): The timestamp when this feature group row was last updated in ISO-8601 format.
             startedAt (str): The timestamp when this feature group row process was started in ISO-8601 format.
             completedAt (str): The timestamp when this feature group row was completed.
+            timeoutAt (str): The time the feature group row process will timeout.
+            retriesRemaining (int): The number of retries remaining for this feature group row process.
+            totalAttemptsAllowed (int): The total number of attempts allowed for this feature group row process.
             status (str): The status of the feature group row process.
             error (str): The error message if the status is FAILED.
     """
 
-    def __init__(self, client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, status=None, error=None):
+    def __init__(self, client, featureGroupId=None, deploymentId=None, primaryKeyValue=None, featureGroupRowProcessId=None, createdAt=None, updatedAt=None, startedAt=None, completedAt=None, timeoutAt=None, retriesRemaining=None, totalAttemptsAllowed=None, status=None, error=None):
         super().__init__(client, featureGroupRowProcessId)
         self.feature_group_id = featureGroupId
         self.deployment_id = deploymentId
@@ -29,12 +32,15 @@ class FeatureGroupRowProcess(AbstractApiClass):
         self.updated_at = updatedAt
         self.started_at = startedAt
         self.completed_at = completedAt
+        self.timeout_at = timeoutAt
+        self.retries_remaining = retriesRemaining
+        self.total_attempts_allowed = totalAttemptsAllowed
         self.status = status
         self.error = error
 
     def __repr__(self):
-        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'deployment_id': repr(self.deployment_id), f'primary_key_value': repr(self.primary_key_value), f'feature_group_row_process_id': repr(
-            self.feature_group_row_process_id), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'started_at': repr(self.started_at), f'completed_at': repr(self.completed_at), f'status': repr(self.status), f'error': repr(self.error)}
+        repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'deployment_id': repr(self.deployment_id), f'primary_key_value': repr(self.primary_key_value), f'feature_group_row_process_id': repr(self.feature_group_row_process_id), f'created_at': repr(self.created_at), f'updated_at': repr(
+            self.updated_at), f'started_at': repr(self.started_at), f'completed_at': repr(self.completed_at), f'timeout_at': repr(self.timeout_at), f'retries_remaining': repr(self.retries_remaining), f'total_attempts_allowed': repr(self.total_attempts_allowed), f'status': repr(self.status), f'error': repr(self.error)}
         class_name = "FeatureGroupRowProcess"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -47,8 +53,8 @@ class FeatureGroupRowProcess(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id, 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id,
-                'created_at': self.created_at, 'updated_at': self.updated_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'error': self.error}
+        resp = {'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id, 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id, 'created_at': self.created_at, 'updated_at': self.updated_at,
+                'started_at': self.started_at, 'completed_at': self.completed_at, 'timeout_at': self.timeout_at, 'retries_remaining': self.retries_remaining, 'total_attempts_allowed': self.total_attempts_allowed, 'status': self.status, 'error': self.error}
         return {key: value for key, value in resp.items() if value is not None}
 
     def wait_for_process(self, timeout=1200):

@@ -48,6 +48,8 @@ class PersonalizationTrainingConfig(TrainingConfig):
         disable_transformer (bool): Disable training the transformer algorithm.
         disable_gpu (boo): Disable training on GPU.
         filter_history (bool): Do not recommend items the user has already interacted with.
+        action_types_exclusion_days (Dict[str, float]): Mapping from action type to number of days for which we exclude previously interacted items from prediction
+        session_dedupe_mins (float): Minimum number of minutes between two sessions for a user.
         max_history_length (int): Maximum length of user-item history to include user in training examples.
         compute_rerank_metrics (bool): Compute metrics based on rerank results.
         add_time_features (bool): Include interaction time as a feature.
@@ -55,7 +57,11 @@ class PersonalizationTrainingConfig(TrainingConfig):
         compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
         max_user_history_len_percentile (int): Filter out users with history length above this percentile.
         downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
+<<<<<<< HEAD
         allow_duplicate_action_types (List[str]): event types which will not be deduplicated.
+        use_user_id_feature (bool): Use user id as a feature in CTR models.
+=======
+>>>>>>> e5f12c159c (add config options for session dedupe and recommendation exclusion)
     """
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
@@ -67,7 +73,6 @@ class PersonalizationTrainingConfig(TrainingConfig):
     target_action_types: List[str] = dataclasses.field(default=None)
     target_action_weights: Dict[str, float] = dataclasses.field(default=None)
     session_event_types: List[str] = dataclasses.field(default=None)
-    allow_duplicate_action_types: List[str] = dataclasses.field(default=None)
 
     # data split
     test_split: int = dataclasses.field(default=None)
@@ -92,6 +97,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
 
     # prediction
     filter_history: bool = dataclasses.field(default=None)
+    action_types_exclusion_days: Dict[str, float] = dataclasses.field(default=None)
 
     # data distribution
     max_history_length: int = dataclasses.field(default=None)
@@ -101,6 +107,8 @@ class PersonalizationTrainingConfig(TrainingConfig):
     compute_session_metrics: bool = dataclasses.field(default=None)
     query_column: str = dataclasses.field(default=None)
     item_query_column: str = dataclasses.field(default=None)
+    use_user_id_feature: bool = dataclasses.field(default=None)
+    session_dedupe_mins: float = dataclasses.field(default=None)
 
     # outliers
     max_user_history_len_percentile: int = dataclasses.field(default=None)
@@ -156,7 +164,6 @@ class RegressionTrainingConfig(TrainingConfig):
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
         custom_loss_functions (List[str]): Registered custom losses available for selection.
         custom_metrics (List[str]): Registered custom metrics available for selection.
-
     """
     objective: enums.RegressionObjective = dataclasses.field(default=None)
     sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
