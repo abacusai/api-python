@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: TestPointPredictions(client, count=None, columns=None, data=None, summarizedMetrics=None, errorDescription=None)
+.. py:class:: TestPointPredictions(client, count=None, columns=None, data=None, metricsColumns=None, summarizedMetrics=None, errorDescription=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,6 +32,8 @@ Classes
    :type columns: list
    :param data: A list of data rows, each represented as a list.
    :type data: list
+   :param metricsColumns: The columns that are the metrics.
+   :type metricsColumns: list
    :param summarizedMetrics: A map between the problem type metrics and the mean of the results matching the query
    :type summarizedMetrics: dict
    :param errorDescription: Description of an error in case of failure.

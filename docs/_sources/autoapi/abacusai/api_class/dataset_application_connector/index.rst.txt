@@ -15,6 +15,7 @@ Classes
    abacusai.api_class.dataset_application_connector.DatasetConfig
    abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig
+   abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig
    abacusai.api_class.dataset_application_connector.SharepointDatasetConfig
    abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig
    abacusai.api_class.dataset_application_connector._DatasetConfigFactory
@@ -83,6 +84,52 @@ Classes
 
 
 
+.. py:class:: GoogleDriveDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Google Drive Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str, optional
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+   :type extract_bounding_boxes: bool, optional
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
+
+      
+
+   .. py:attribute:: csv_delimiter
+      :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+
+      
+
+   .. py:attribute:: merge_file_schemas
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: SharepointDatasetConfig
 
 
@@ -97,7 +144,7 @@ Classes
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
    :type extract_bounding_boxes: bool, optional
-   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool, optional
 
    .. py:attribute:: location

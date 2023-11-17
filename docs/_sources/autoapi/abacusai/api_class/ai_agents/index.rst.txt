@@ -1,0 +1,56 @@
+:py:mod:`abacusai.api_class.ai_agents`
+======================================
+
+.. py:module:: abacusai.api_class.ai_agents
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.api_class.ai_agents.FieldDescriptor
+
+
+
+
+.. py:class:: FieldDescriptor
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Configs for vector store indexing.
+
+   :param field: The field to be extracted. This will be used as the key in the response.
+   :type field: str
+   :param description: The description of this field. If not included, the response_field will be used.
+   :type description: str
+   :param example_extraction: An example of this extracted field.
+   :type example_extraction: Union[str, int, bool, float]
+   :param type: The type of this field. If not provided, the default type is STRING.
+   :type type: enums.FieldDescriptorType
+
+   .. py:attribute:: field
+      :type: str
+
+      
+
+   .. py:attribute:: description
+      :type: str
+
+      
+
+   .. py:attribute:: example_extraction
+      :type: Union[str, int, bool, float, list, dict]
+
+      
+
+   .. py:attribute:: type
+      :type: abacusai.api_class.enums.FieldDescriptorType
+
+      
+
+

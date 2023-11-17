@@ -40,6 +40,27 @@ class GoogleAnalyticsDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
+class GoogleDriveDatasetConfig(DatasetConfig):
+    """
+    Dataset config for Google Drive Application Connector
+    Args:
+        location (str): The regex location of the files to fetch
+        is_documentset (bool): Whether the dataset is a document set
+        csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+    """
+    location: str = dataclasses.field(default=None)
+    is_documentset: bool = dataclasses.field(default=None)
+    csv_delimiter: str = dataclasses.field(default=None)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    merge_file_schemas: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.GOOGLEDRIVE
+
+
+@dataclasses.dataclass
 class SharepointDatasetConfig(DatasetConfig):
     """
     Dataset config for Sharepoint Application Connector
@@ -48,7 +69,7 @@ class SharepointDatasetConfig(DatasetConfig):
         is_documentset (bool): Whether the dataset is a document set
         csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
         extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default
+        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
     """
     location: str = dataclasses.field(default=None)
     is_documentset: bool = dataclasses.field(default=None)
@@ -76,6 +97,7 @@ class _DatasetConfigFactory(_ApiClassFactory):
     config_class_map = {
         enums.ApplicationConnectorType.CONFLUENCE: ConfluenceDatasetConfig,
         enums.ApplicationConnectorType.GOOGLEANALYTICS: GoogleAnalyticsDatasetConfig,
+        enums.ApplicationConnectorType.GOOGLEDRIVE: GoogleDriveDatasetConfig,
         enums.ApplicationConnectorType.SHAREPOINT: SharepointDatasetConfig,
         enums.ApplicationConnectorType.ZENDESK: ZendeskDatasetConfig,
     }

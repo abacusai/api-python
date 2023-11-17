@@ -1,6 +1,7 @@
 import time
+from typing import Union
 
-from .api_class import DeployableAlgorithm, TrainingConfig
+from .api_class import DeployableAlgorithm, EvalArtifactType, TrainingConfig
 from .code_source import CodeSource
 from .return_class import AbstractApiClass
 
@@ -148,13 +149,13 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.delete_model_version(self.model_version)
 
-    def export_model_artifact_as_feature_group(self, table_name: str, artifact_type: str):
+    def export_model_artifact_as_feature_group(self, table_name: str, artifact_type: Union[dict, EvalArtifactType] = None):
         """
         Exports metric artifact data for a model as a feature group.
 
         Args:
             table_name (str): Name of the feature group table to create.
-            artifact_type (str): EvalArtifact enum specifying which artifact to export.
+            artifact_type (EvalArtifactType): eval artifact type to export.
 
         Returns:
             FeatureGroup: The created feature group.

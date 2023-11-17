@@ -282,7 +282,7 @@ class Model(AbstractApiClass):
             deployment_ids (list): List of unique string identifiers of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
             custom_algorithms (list): List of user-defined algorithms to train. If not set, will honor the runs from the last time and applicable new custom algorithms.
-            builtin_algorithms (list): List of the built-in algorithms provided by Abacus.AI to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
+            builtin_algorithms (list): List of algorithm names or algorithm IDs of Abacus.AI built-in algorithms to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
             custom_algorithm_configs (dict): User-defined training configs for each custom algorithm.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.

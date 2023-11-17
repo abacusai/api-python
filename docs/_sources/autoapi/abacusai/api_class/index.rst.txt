@@ -11,6 +11,7 @@ Submodules
    :maxdepth: 1
 
    abstract/index.rst
+   ai_agents/index.rst
    batch_prediction/index.rst
    blob_input/index.rst
    dataset/index.rst
@@ -35,6 +36,8 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.ApiClass
+   abacusai.api_class.FieldDescriptor
+   abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.BatchPredictionArgs
    abacusai.api_class.AnomalyDetectionBatchPredictionArgs
@@ -58,6 +61,7 @@ Classes
    abacusai.api_class.DatasetConfig
    abacusai.api_class.ConfluenceDatasetConfig
    abacusai.api_class.GoogleAnalyticsDatasetConfig
+   abacusai.api_class.GoogleDriveDatasetConfig
    abacusai.api_class.SharepointDatasetConfig
    abacusai.api_class.ZendeskDatasetConfig
    abacusai.api_class._DatasetConfigFactory
@@ -108,6 +112,8 @@ Classes
    abacusai.api_class.BiasType
    abacusai.api_class.AlertActionType
    abacusai.api_class.PythonFunctionType
+   abacusai.api_class.EvalArtifactType
+   abacusai.api_class.FieldDescriptorType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.SamplingConfig
@@ -173,6 +179,103 @@ Classes
    abacusai.api_class._FeatureGroupExportConfigFactory
 
 
+
+
+.. py:class:: ApiClass
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: FieldDescriptor
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Configs for vector store indexing.
+
+   :param field: The field to be extracted. This will be used as the key in the response.
+   :type field: str
+   :param description: The description of this field. If not included, the response_field will be used.
+   :type description: str
+   :param example_extraction: An example of this extracted field.
+   :type example_extraction: Union[str, int, bool, float]
+   :param type: The type of this field. If not provided, the default type is STRING.
+   :type type: enums.FieldDescriptorType
+
+   .. py:attribute:: field
+      :type: str
+
+      
+
+   .. py:attribute:: description
+      :type: str
+
+      
+
+   .. py:attribute:: example_extraction
+      :type: Union[str, int, bool, float, list, dict]
+
+      
+
+   .. py:attribute:: type
+      :type: abacusai.api_class.enums.FieldDescriptorType
+
+      
 
 
 .. py:class:: ApiClass
@@ -951,6 +1054,12 @@ Classes
 
       
 
+   .. py:attribute:: enhanced_layout_detection
+      :type: bool
+      :value: False
+
+      
+
 
 .. py:class:: ApiClass
 
@@ -1098,6 +1207,52 @@ Classes
 
 
 
+.. py:class:: GoogleDriveDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Google Drive Application Connector
+   :param location: The regex location of the files to fetch
+   :type location: str
+   :param is_documentset: Whether the dataset is a document set
+   :type is_documentset: bool
+   :param csv_delimiter: If the file format is CSV, use a specific csv delimiter
+   :type csv_delimiter: str, optional
+   :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+   :type extract_bounding_boxes: bool, optional
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+   :type merge_file_schemas: bool, optional
+
+   .. py:attribute:: location
+      :type: str
+
+      
+
+   .. py:attribute:: is_documentset
+      :type: bool
+
+      
+
+   .. py:attribute:: csv_delimiter
+      :type: str
+
+      
+
+   .. py:attribute:: extract_bounding_boxes
+      :type: bool
+
+      
+
+   .. py:attribute:: merge_file_schemas
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: SharepointDatasetConfig
 
 
@@ -1112,7 +1267,7 @@ Classes
    :type csv_delimiter: str, optional
    :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
    :type extract_bounding_boxes: bool, optional
-   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default
+   :param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
    :type merge_file_schemas: bool, optional
 
    .. py:attribute:: location
@@ -2669,6 +2824,11 @@ Classes
 
       
 
+   .. py:attribute:: GOOGLEDRIVE
+      :value: 'GOOGLEDRIVE'
+
+      
+
    .. py:attribute:: GIT
       :value: 'GIT'
 
@@ -3115,6 +3275,71 @@ Classes
       
 
 
+.. py:class:: EvalArtifactType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: FORECASTING_ACCURACY
+      :value: 'bar_chart'
+
+      
+
+   .. py:attribute:: FORECASTING_VOLUME
+      :value: 'bar_chart_volume'
+
+      
+
+   .. py:attribute:: FORECASTING_HISTORY_LENGTH_ACCURACY
+      :value: 'bar_chart_accuracy_by_history'
+
+      
+
+
+.. py:class:: FieldDescriptorType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: STRING
+      :value: 'STRING'
+
+      
+
+   .. py:attribute:: INTEGER
+      :value: 'INTEGER'
+
+      
+
+   .. py:attribute:: FLOAT
+      :value: 'FLOAT'
+
+      
+
+   .. py:attribute:: BOOLEAN
+      :value: 'BOOLEAN'
+
+      
+
+   .. py:attribute:: DATETIME
+      :value: 'DATETIME'
+
+      
+
+   .. py:attribute:: DATE
+      :value: 'DATE'
+
+      
+
+
 .. py:class:: ApiClass
 
 
@@ -3507,47 +3732,75 @@ Classes
 
    Bases: :py:obj:`TrainingConfig`
 
-       Training config for the PERSONALIZATION problem type
-       Args:
-           objective (PersonalizationObjective): Ranking scheme used to select final best model.
-           sort_objective (PersonalizationObjective): Ranking scheme used to sort models on the metrics page.
-           training_mode (PersonalizationTrainingMode): whether to train in production or experimental mode. Defaults to EXP.
-           target_action_types (List[str]): List of action types to use as targets for training.
-           target_action_weights (Dict[str, float]): Dictionary of action types to weights for training.
-           session_event_types (List[str]): List of event types to treat as occurrences of sessions.
-           test_split (int): Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
-           recent_days_for_training (int): Limit training data to a certain latest number of days.
-           training_start_date (str): Only consider training interaction data after this date. Specified in the timezone of the dataset.
-           test_on_user_split (bool): Use user splits instead of using time splits, when validating and testing the model.
-           test_split_on_last_k_items (bool): Use last k items instead of global timestamp splits, when validating and testing the model.
-           test_last_items_length (int): Number of items to leave out for each user when using leave k out folds.
-           test_window_length_hours (int): Duration (in hours) of most recent time window to use when validating and testing the model.
-           explicit_time_split (bool): Sets an explicit time-based test boundary.
-           test_row_indicator (str): Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
-           full_data_retraining (bool): Train models separately with all the data.
-           sequential_training (bool): Train a mode sequentially through time.
-           data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
-           optimized_event_type (str): The final event type to optimize for and compute metrics on.
-           dropout_rate (int): Dropout rate for neural network.
-           batch_size (BatchSize): Batch size for neural network.
-           disable_transformer (bool): Disable training the transformer algorithm.
-           disable_gpu (boo): Disable training on GPU.
-           filter_history (bool): Do not recommend items the user has already interacted with.
-           action_types_exclusion_days (Dict[str, float]): Mapping from action type to number of days for which we exclude previously interacted items from prediction
-           session_dedupe_mins (float): Minimum number of minutes between two sessions for a user.
-           max_history_length (int): Maximum length of user-item history to include user in training examples.
-           compute_rerank_metrics (bool): Compute metrics based on rerank results.
-           add_time_features (bool): Include interaction time as a feature.
-           disable_timestamp_scalar_features (bool): Exclude timestamp scalar features.
-           compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
-           max_user_history_len_percentile (int): Filter out users with history length above this percentile.
-           downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
-   <<<<<<< HEAD
-           allow_duplicate_action_types (List[str]): event types which will not be deduplicated.
-           use_user_id_feature (bool): Use user id as a feature in CTR models.
-   =======
-   >>>>>>> e5f12c159c (add config options for session dedupe and recommendation exclusion)
-
+   Training config for the PERSONALIZATION problem type
+   :param objective: Ranking scheme used to select final best model.
+   :type objective: PersonalizationObjective
+   :param sort_objective: Ranking scheme used to sort models on the metrics page.
+   :type sort_objective: PersonalizationObjective
+   :param training_mode: whether to train in production or experimental mode. Defaults to EXP.
+   :type training_mode: PersonalizationTrainingMode
+   :param target_action_types: List of action types to use as targets for training.
+   :type target_action_types: List[str]
+   :param target_action_weights: Dictionary of action types to weights for training.
+   :type target_action_weights: Dict[str, float]
+   :param session_event_types: List of event types to treat as occurrences of sessions.
+   :type session_event_types: List[str]
+   :param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
+   :type test_split: int
+   :param recent_days_for_training: Limit training data to a certain latest number of days.
+   :type recent_days_for_training: int
+   :param training_start_date: Only consider training interaction data after this date. Specified in the timezone of the dataset.
+   :type training_start_date: str
+   :param test_on_user_split: Use user splits instead of using time splits, when validating and testing the model.
+   :type test_on_user_split: bool
+   :param test_split_on_last_k_items: Use last k items instead of global timestamp splits, when validating and testing the model.
+   :type test_split_on_last_k_items: bool
+   :param test_last_items_length: Number of items to leave out for each user when using leave k out folds.
+   :type test_last_items_length: int
+   :param test_window_length_hours: Duration (in hours) of most recent time window to use when validating and testing the model.
+   :type test_window_length_hours: int
+   :param explicit_time_split: Sets an explicit time-based test boundary.
+   :type explicit_time_split: bool
+   :param test_row_indicator: Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
+   :type test_row_indicator: str
+   :param full_data_retraining: Train models separately with all the data.
+   :type full_data_retraining: bool
+   :param sequential_training: Train a mode sequentially through time.
+   :type sequential_training: bool
+   :param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
+   :type data_split_feature_group_table_name: str
+   :param optimized_event_type: The final event type to optimize for and compute metrics on.
+   :type optimized_event_type: str
+   :param dropout_rate: Dropout rate for neural network.
+   :type dropout_rate: int
+   :param batch_size: Batch size for neural network.
+   :type batch_size: BatchSize
+   :param disable_transformer: Disable training the transformer algorithm.
+   :type disable_transformer: bool
+   :param disable_gpu: Disable training on GPU.
+   :type disable_gpu: boo
+   :param filter_history: Do not recommend items the user has already interacted with.
+   :type filter_history: bool
+   :param action_types_exclusion_days: Mapping from action type to number of days for which we exclude previously interacted items from prediction
+   :type action_types_exclusion_days: Dict[str, float]
+   :param session_dedupe_mins: Minimum number of minutes between two sessions for a user.
+   :type session_dedupe_mins: float
+   :param max_history_length: Maximum length of user-item history to include user in training examples.
+   :type max_history_length: int
+   :param compute_rerank_metrics: Compute metrics based on rerank results.
+   :type compute_rerank_metrics: bool
+   :param add_time_features: Include interaction time as a feature.
+   :type add_time_features: bool
+   :param disable_timestamp_scalar_features: Exclude timestamp scalar features.
+   :type disable_timestamp_scalar_features: bool
+   :param compute_session_metrics: Evaluate models based on how well they are able to predict the next session of interactions.
+   :type compute_session_metrics: bool
+   :param max_user_history_len_percentile: Filter out users with history length above this percentile.
+   :type max_user_history_len_percentile: int
+   :param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
+   :type downsample_item_popularity_percentile: float
+   :param use_user_id_feature: Use user id as a feature in CTR models.
+   :type use_user_id_feature: bool
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -4487,6 +4740,10 @@ Classes
    :type document_format: NLPDocumentFormat
    :param include_longformer: Whether to include the longformer model.
    :type include_longformer: bool
+   :param save_predicted_pdf: Whether to save predicted PDF documents
+   :type save_predicted_pdf: bool
+   :param enhanced_ocr: Enhanced text extraction from predicted digital documents
+   :type enhanced_ocr: bool
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.NERObjective
@@ -4535,6 +4792,18 @@ Classes
 
    .. py:attribute:: include_longformer
       :type: bool
+
+      
+
+   .. py:attribute:: save_predicted_pdf
+      :type: bool
+      :value: True
+
+      
+
+   .. py:attribute:: enhanced_ocr
+      :type: bool
+      :value: False
 
       
 

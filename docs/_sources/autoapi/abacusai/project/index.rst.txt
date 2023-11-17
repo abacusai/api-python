@@ -216,10 +216,7 @@ Classes
 
    .. py:method:: train_model(name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
 
-      Train a model for the specified project.
-
-      This method trains a model in the given project, using user-specified training configurations defined in the `getTrainingConfigOptions` method.
-
+      Create a new model and start its training in the given project.
 
       :param name: The name of the model. Defaults to "<Project Name> Model".
       :type name: str
@@ -235,7 +232,7 @@ Classes
       :type custom_algorithms_only: bool
       :param custom_algorithm_configs: Configs for each user-defined algorithm; key is the algorithm name, value is the config serialized to JSON.
       :type custom_algorithm_configs: dict
-      :param builtin_algorithms: List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
+      :param builtin_algorithms: List of algorithm names or algorithm IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
       :type builtin_algorithms: list
       :param cpu_size: Size of the CPU for the user-defined algorithms during training.
       :type cpu_size: str
@@ -619,12 +616,12 @@ Classes
 
    .. py:method:: list_builtin_algorithms(feature_group_ids, training_config = None)
 
-      Return list of built-in algorithms based on given input.
+      Return list of built-in algorithms based on given input data and training config.
 
-      :param feature_group_ids: List of feature group identifiers applied to the algorithms.
+      :param feature_group_ids: List of feature group IDs specifying input data.
       :type feature_group_ids: list
-      :param training_config: The training configuration key/value pairs used to train with the algorithm.
-      :type training_config: dict
+      :param training_config: The training config to be used for model training.
+      :type training_config: TrainingConfig
 
       :returns: List of applicable builtin algorithms.
       :rtype: list[Algorithm]

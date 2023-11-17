@@ -115,6 +115,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../external_application/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extracted_fields/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.extracted_fields</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_record</span></code></a></li>
@@ -155,6 +156,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_execution_preview</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_execution_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_generated_code/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_generated_code</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_input</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_parameters</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_response</span></code></a></li>
@@ -781,7 +783,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.79.0'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'0.79.2'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3810,6 +3812,20 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_external_applications">
+<span class="sig-name descname"><span class="pre">list_external_applications</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_external_applications" title="Permalink to this definition"></a></dt>
+<dd><p>Lists External Applications in an organization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of External Applications.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../external_application/index.html#abacusai.external_application.ExternalApplication" title="abacusai.external_application.ExternalApplication">ExternalApplication</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_agent">
 <span class="sig-name descname"><span class="pre">describe_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves a full description of the specified model.</p>
@@ -4670,6 +4686,51 @@ execute function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>chat_history</strong> (<em>List</em><em>[</em><a class="reference internal" href="../chat_message/index.html#abacusai.chat_message.ChatMessage" title="abacusai.chat_message.ChatMessage"><em>ChatMessage</em></a><em>]</em>) – The chat history associated with the current request context.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_agent_context_conversation_id">
+<span class="sig-name descname"><span class="pre">get_agent_context_conversation_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_agent_context_conversation_id" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the deployment conversation ID from the current request context. Applicable within a AIAgent
+execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The deployment conversation ID for the current request being processed by the Agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_agent_context_external_session_id">
+<span class="sig-name descname"><span class="pre">get_agent_context_external_session_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_agent_context_external_session_id" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the external session ID from the current request context if it has been set with the request.
+Applicable within a AIAgent execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The external session ID for the current request being processed by the Agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_agent_context_doc_ids">
+<span class="sig-name descname"><span class="pre">get_agent_context_doc_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_agent_context_doc_ids" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the document ID from the current request context if a document has been uploaded with the request.
+Applicable within a AIAgent execute function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The document IDs the current request being processed by the Agent.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -7202,8 +7263,7 @@ feature groups for those input feature groups.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.train_model">
 <span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithms_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_algorithm_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builtin_algorithms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm_training_configs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.train_model" title="Permalink to this definition"></a></dt>
-<dd><p>Train a model for the specified project.</p>
-<p>This method trains a model in the given project, using user-specified training configurations defined in the <cite>getTrainingConfigOptions</cite> method.</p>
+<dd><p>Create a new model and start its training in the given project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -7215,7 +7275,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.</p></li>
 <li><p><strong>custom_algorithms_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to only run custom algorithms.</p></li>
 <li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Configs for each user-defined algorithm; key is the algorithm name, value is the config serialized to JSON.</p></li>
-<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.</p></li>
+<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of algorithm names or algorithm IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the user-defined algorithms during training.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during training.</p></li>
 <li><p><strong>algorithm_training_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of algorithm specifc training configs that will be part of the model training AutoML run.</p></li>
@@ -7438,7 +7498,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of unique string identifiers of deployments to automatically deploy to.</p></li>
 <li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of feature group IDs provided by the user to train the model on.</p></li>
 <li><p><strong>custom_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of user-defined algorithms to train. If not set, will honor the runs from the last time and applicable new custom algorithms.</p></li>
-<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of the built-in algorithms provided by Abacus.AI to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.</p></li>
+<li><p><strong>builtin_algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of algorithm names or algorithm IDs of Abacus.AI built-in algorithms to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.</p></li>
 <li><p><strong>custom_algorithm_configs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – User-defined training configs for each custom algorithm.</p></li>
 <li><p><strong>cpu_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Size of the CPU for the user-defined algorithms during training.</p></li>
 <li><p><strong>memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Memory (in GB) for the user-defined algorithms during training.</p></li>
@@ -7479,14 +7539,14 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.export_model_artifact_as_feature_group">
-<span class="sig-name descname"><span class="pre">export_model_artifact_as_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.export_model_artifact_as_feature_group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export_model_artifact_as_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.export_model_artifact_as_feature_group" title="Permalink to this definition"></a></dt>
 <dd><p>Exports metric artifact data for a model as a feature group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the version of the model.</p></li>
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the feature group table to create.</p></li>
-<li><p><strong>artifact_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – EvalArtifact enum specifying which artifact to export.</p></li>
+<li><p><strong>artifact_type</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.EvalArtifactType" title="abacusai.api_class.enums.EvalArtifactType"><em>EvalArtifactType</em></a>) – eval artifact type to export.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -10460,13 +10520,13 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.list_builtin_algorithms">
 <span class="sig-name descname"><span class="pre">list_builtin_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.list_builtin_algorithms" title="Permalink to this definition"></a></dt>
-<dd><p>Return list of built-in algorithms based on given input.</p>
+<dd><p>Return list of built-in algorithms based on given input data and training config.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier associated with the project.</p></li>
-<li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of feature group identifiers applied to the algorithms.</p></li>
-<li><p><strong>training_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The training configuration key/value pairs used to train with the algorithm.</p></li>
+<li><p><strong>feature_group_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of feature group IDs specifying input data.</p></li>
+<li><p><strong>training_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.TrainingConfig" title="abacusai.api_class.TrainingConfig"><em>TrainingConfig</em></a>) – The training config to be used for model training.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -11016,20 +11076,6 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.list_external_applications">
-<span class="sig-name descname"><span class="pre">list_external_applications</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.list_external_applications" title="Permalink to this definition"></a></dt>
-<dd><p>Lists External Applications in an organization.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of External Applications.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../external_application/index.html#abacusai.external_application.ExternalApplication" title="abacusai.external_application.ExternalApplication">ExternalApplication</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_external_application">
 <span class="sig-name descname"><span class="pre">delete_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_external_application" title="Permalink to this definition"></a></dt>
 <dd><p>Deletes an External Application.</p>
@@ -11172,8 +11218,33 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The temperature to use for the language model if supported. If not provided, the default temperature is used.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated SQL code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../llm_generated_code/index.html#abacusai.llm_generated_code.LlmGeneratedCode" title="abacusai.llm_generated_code.LlmGeneratedCode">LlmGeneratedCode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.extract_data_using_llm">
+<span class="sig-name descname"><span class="pre">extract_data_using_llm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_descriptors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.extract_data_using_llm" title="Permalink to this definition"></a></dt>
+<dd><p>Extract fields from a document using a large language model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field_descriptors</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of fields to extract from the document.</p></li>
+<li><p><strong>document_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the document to query.</p></li>
+<li><p><strong>document_text</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The text of the document to query. Only used if document_id is not provided.</p></li>
+<li><p><strong>llm_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the language model to use. If not provided, the default language model is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response from the document query.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../extracted_fields/index.html#abacusai.extracted_fields.ExtractedFields" title="abacusai.extracted_fields.ExtractedFields">ExtractedFields</a></p>
 </dd>
 </dl>
 </dd></dl>

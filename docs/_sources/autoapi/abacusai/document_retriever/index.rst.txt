@@ -151,7 +151,7 @@ Classes
       :rtype: str
 
 
-   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None)
+   .. py:method:: get_matching_documents(query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -174,6 +174,8 @@ Classes
       :type num_retrieval_margin_words: int
       :param max_words_per_chunk: If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
       :type max_words_per_chunk: int
+      :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
+      :type score_multiplier_column: str
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

@@ -162,7 +162,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.describe().latest_document_retriever_version.status
 
-    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None):
+    def get_matching_documents(self, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None):
         """
         Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -179,8 +179,9 @@ class DocumentRetriever(AbstractApiClass):
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
             max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
+            score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever.
         """
-        return self.client.get_matching_documents(self.document_retriever_id, query, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk)
+        return self.client.get_matching_documents(self.document_retriever_id, query, filters, limit, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column)

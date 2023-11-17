@@ -112,6 +112,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../external_application/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../extracted_fields/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.extracted_fields</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_drift_record/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_drift_record</span></code></a></li>
@@ -152,6 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_preview/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_execution_preview</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_execution_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_execution_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../llm_generated_code/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_generated_code</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_input</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_parameters/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_parameters</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_response/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_response</span></code></a></li>
@@ -423,13 +425,13 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.model_version.ModelVersion.export_model_artifact_as_feature_group">
-<span class="sig-name descname"><span class="pre">export_model_artifact_as_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_version.ModelVersion.export_model_artifact_as_feature_group" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export_model_artifact_as_feature_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">artifact_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.model_version.ModelVersion.export_model_artifact_as_feature_group" title="Permalink to this definition"></a></dt>
 <dd><p>Exports metric artifact data for a model as a feature group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the feature group table to create.</p></li>
-<li><p><strong>artifact_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – EvalArtifact enum specifying which artifact to export.</p></li>
+<li><p><strong>artifact_type</strong> (<a class="reference internal" href="../api_class/enums/index.html#abacusai.api_class.enums.EvalArtifactType" title="abacusai.api_class.enums.EvalArtifactType"><em>EvalArtifactType</em></a>) – eval artifact type to export.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

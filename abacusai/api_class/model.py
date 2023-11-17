@@ -57,11 +57,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
         compute_session_metrics (bool): Evaluate models based on how well they are able to predict the next session of interactions.
         max_user_history_len_percentile (int): Filter out users with history length above this percentile.
         downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
-<<<<<<< HEAD
-        allow_duplicate_action_types (List[str]): event types which will not be deduplicated.
         use_user_id_feature (bool): Use user id as a feature in CTR models.
-=======
->>>>>>> e5f12c159c (add config options for session dedupe and recommendation exclusion)
     """
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
@@ -382,6 +378,8 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         active_labels_column (str): Entities that have been marked in a particular text
         document_format (NLPDocumentFormat): Format of the input documents.
         include_longformer (bool): Whether to include the longformer model.
+        save_predicted_pdf (bool): Whether to save predicted PDF documents
+        enhanced_ocr (bool): Enhanced text extraction from predicted digital documents
     """
     objective: enums.NERObjective = dataclasses.field(default=None)
     sort_objective: enums.NERObjective = dataclasses.field(default=None)
@@ -396,6 +394,9 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     active_labels_column: str = dataclasses.field(default=None)
     document_format: enums.NLPDocumentFormat = dataclasses.field(default=None)
     include_longformer: bool = dataclasses.field(default=None)
+    # OCR
+    save_predicted_pdf: bool = True
+    enhanced_ocr: bool = False
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.NAMED_ENTITY_EXTRACTION

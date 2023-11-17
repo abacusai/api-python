@@ -148,14 +148,14 @@ Classes
       :type model_version: str
 
 
-   .. py:method:: export_model_artifact_as_feature_group(table_name, artifact_type)
+   .. py:method:: export_model_artifact_as_feature_group(table_name, artifact_type = None)
 
       Exports metric artifact data for a model as a feature group.
 
       :param table_name: Name of the feature group table to create.
       :type table_name: str
-      :param artifact_type: EvalArtifact enum specifying which artifact to export.
-      :type artifact_type: str
+      :param artifact_type: eval artifact type to export.
+      :type artifact_type: EvalArtifactType
 
       :returns: The created feature group.
       :rtype: FeatureGroup

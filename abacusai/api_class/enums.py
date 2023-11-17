@@ -323,6 +323,7 @@ class ConnectorType(ApiEnum):
 
 class ApplicationConnectorType(ApiEnum):
     GOOGLEANALYTICS = 'GOOGLEANALYTICS'
+    GOOGLEDRIVE = 'GOOGLEDRIVE'
     GIT = 'GIT'
     CONFLUENCE = 'CONFLUENCE'
     ZENDESK = 'ZENDESK'
@@ -422,3 +423,18 @@ class PythonFunctionType(ApiEnum):
     FEATURE_GROUP = 'FEATURE_GROUP'
     PLOTLY_FIG = 'PLOTLY_FIG'
     STEP_FUNCTION = 'STEP_FUNCTION'
+
+
+class EvalArtifactType(ApiEnum):
+    FORECASTING_ACCURACY = 'bar_chart'
+    FORECASTING_VOLUME = 'bar_chart_volume'
+    FORECASTING_HISTORY_LENGTH_ACCURACY = 'bar_chart_accuracy_by_history'
+
+
+class FieldDescriptorType(ApiEnum):
+    STRING = 'STRING'
+    INTEGER = 'INTEGER'
+    FLOAT = 'FLOAT'
+    BOOLEAN = 'BOOLEAN'
+    DATETIME = 'DATETIME'
+    DATE = 'DATE'

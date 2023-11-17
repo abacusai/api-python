@@ -220,10 +220,7 @@ class Project(AbstractApiClass):
 
     def train_model(self, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None, algorithm_training_configs: list = None):
         """
-        Train a model for the specified project.
-
-        This method trains a model in the given project, using user-specified training configurations defined in the `getTrainingConfigOptions` method.
-
+        Create a new model and start its training in the given project.
 
         Args:
             name (str): The name of the model. Defaults to "<Project Name> Model".
@@ -233,7 +230,7 @@ class Project(AbstractApiClass):
             custom_algorithms (list): List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
             custom_algorithms_only (bool): Whether to only run custom algorithms.
             custom_algorithm_configs (dict): Configs for each user-defined algorithm; key is the algorithm name, value is the config serialized to JSON.
-            builtin_algorithms (list): List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
+            builtin_algorithms (list): List of algorithm names or algorithm IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
             algorithm_training_configs (list): List of algorithm specifc training configs that will be part of the model training AutoML run.
@@ -567,13 +564,13 @@ class Project(AbstractApiClass):
         """
         return self.client.list_graph_dashboards(self.project_id)
 
-    def list_builtin_algorithms(self, feature_group_ids: list, training_config: dict = None):
+    def list_builtin_algorithms(self, feature_group_ids: list, training_config: Union[dict, TrainingConfig] = None):
         """
-        Return list of built-in algorithms based on given input.
+        Return list of built-in algorithms based on given input data and training config.
 
         Args:
-            feature_group_ids (list): List of feature group identifiers applied to the algorithms.
-            training_config (dict): The training configuration key/value pairs used to train with the algorithm.
+            feature_group_ids (list): List of feature group IDs specifying input data.
+            training_config (TrainingConfig): The training config to be used for model training.
 
         Returns:
             list[Algorithm]: List of applicable builtin algorithms.

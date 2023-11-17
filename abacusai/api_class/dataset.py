@@ -19,3 +19,4 @@ class DocumentProcessingConfig(ApiClass):
     remove_watermarks: bool = None
     use_full_ocr: bool = None
     layout_analysis: bool = False
+    enhanced_layout_detection: bool = False

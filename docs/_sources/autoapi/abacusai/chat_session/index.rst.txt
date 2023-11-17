@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, aiBuildingInProgress=None, chatHistory={}, nextAiBuildingTask={})
+.. py:class:: ChatSession(client, answer=None, chatSessionId=None, projectId=None, name=None, createdAt=None, status=None, aiBuildingInProgress=None, notification=None, chatHistory={}, nextAiBuildingTask={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -40,6 +40,8 @@ Classes
    :type status: str
    :param aiBuildingInProgress: Whether the AI building is in progress or not
    :type aiBuildingInProgress: bool
+   :param notification: A warn/info message about the chat session. For example, a suggestion to create a new session if the current one is too old
+   :type notification: str
    :param chatHistory: The chat history for the conversation
    :type chatHistory: ChatMessage
    :param nextAiBuildingTask: The next AI building task for the chat session

@@ -31,9 +31,9 @@ from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     BatchPredictionArgs, DatasetConfig, DocumentRetrieverConfig,
-    FeatureGroupExportConfig, ForecastingMonitorConfig, MergeConfig,
-    ParsingConfig, ProblemType, PythonFunctionType, SamplingConfig,
-    TrainingConfig
+    EvalArtifactType, FeatureGroupExportConfig, ForecastingMonitorConfig,
+    MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
+    SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
@@ -76,6 +76,7 @@ from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .external_application import ExternalApplication
+from .extracted_fields import ExtractedFields
 from .feature import Feature
 from .feature_distribution import FeatureDistribution
 from .feature_group import FeatureGroup
@@ -100,6 +101,7 @@ from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
 from .inferred_feature_mappings import InferredFeatureMappings
 from .llm_execution_result import LlmExecutionResult
+from .llm_generated_code import LlmGeneratedCode
 from .llm_input import LlmInput
 from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
@@ -515,7 +517,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.79.0'
+    client_version = '0.79.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2054,7 +2056,7 @@ class ReadOnlyClient(BaseApiClient):
 
         Returns:
             list[FeatureGroupRow]: A list of feature group rows."""
-        return self._call_api('getData', 'GET', query_params={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'numRows': num_rows}, parse_type=FeatureGroupRow)
+        return self._proxy_request('getData', 'GET', query_params={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'numRows': num_rows}, parse_type=FeatureGroupRow, is_sync=True)
 
     def list_pending_feature_group_documents(self, feature_group_id: str) -> List[FeatureGroupDocument]:
         """Lists all pending documents added to feature group.
@@ -2410,6 +2412,13 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ExternalApplication: The External Application."""
         return self._call_api('describeExternalApplication', 'GET', query_params={'externalApplicationId': external_application_id}, parse_type=ExternalApplication)
+
+    def list_external_applications(self) -> List[ExternalApplication]:
+        """Lists External Applications in an organization.
+
+        Returns:
+            list[ExternalApplication]: List of External Applications."""
+        return self._call_api('listExternalApplications', 'GET', query_params={}, parse_type=ExternalApplication)
 
     def describe_agent(self, agent_id: str) -> Agent:
         """Retrieves a full description of the specified model.
@@ -3330,6 +3339,36 @@ class ApiClient(ReadOnlyClient):
         """
         _request_context.chat_history = chat_history
 
+    def get_agent_context_conversation_id(self):
+        """
+        Gets the deployment conversation ID from the current request context. Applicable within a AIAgent
+        execute function.
+
+        Returns:
+            str: The deployment conversation ID for the current request being processed by the Agent.
+        """
+        return get_object_from_context(self, _request_context, 'deployment_conversation_id', str)
+
+    def get_agent_context_external_session_id(self):
+        """
+        Gets the external session ID from the current request context if it has been set with the request.
+        Applicable within a AIAgent execute function.
+
+        Returns:
+            str: The external session ID for the current request being processed by the Agent.
+        """
+        return get_object_from_context(self, _request_context, 'external_session_id', str)
+
+    def get_agent_context_doc_ids(self):
+        """
+        Gets the document ID from the current request context if a document has been uploaded with the request. 
+        Applicable within a AIAgent execute function.
+
+        Returns:
+            List[str]: The document IDs the current request being processed by the Agent.
+        """
+        return get_object_from_context(self, _request_context, 'doc_ids', List[str])
+
     def clear_agent_context(self):
         """
         Clears the current request context.
@@ -3512,11 +3551,11 @@ class ApiClient(ReadOnlyClient):
         Returns:
             pandas.DataFrame: The result of the query.
         """
-        sql = self.generate_code_for_data_query_using_llm(
+        code = self.generate_code_for_data_query_using_llm(
             query=query, feature_group_ids=feature_group_ids, prompt_context=prompt_context, llm_name=llm_name, temperature=temperature)
         if preview:
-            return self._build_class(LlmExecutionResult, {'preview': {'sql': sql}})
-        execute_query = self.execute_async_feature_group_operation(sql)
+            return self._build_class(LlmExecutionResult, {'preview': {'sql': code.sql}})
+        execute_query = self.execute_async_feature_group_operation(code.sql)
         execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return self._build_class(LlmExecutionResult, {'error': execute_query.error}) if execute_query.error else execute_query.load_as_pandas()
 
@@ -4970,10 +5009,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('createTrainTestDataSplitFeatureGroup', 'POST', query_params={}, body={'projectId': project_id, 'trainingConfig': training_config, 'featureGroupIds': feature_group_ids}, parse_type=FeatureGroup)
 
     def train_model(self, project_id: str, name: str = None, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None, refresh_schedule: str = None, custom_algorithms: list = None, custom_algorithms_only: bool = False, custom_algorithm_configs: dict = None, builtin_algorithms: list = None, cpu_size: str = None, memory: int = None, algorithm_training_configs: list = None) -> Model:
-        """Train a model for the specified project.
-
-        This method trains a model in the given project, using user-specified training configurations defined in the `getTrainingConfigOptions` method.
-
+        """Create a new model and start its training in the given project.
 
         Args:
             project_id (str): The unique ID associated with the project.
@@ -4984,7 +5020,7 @@ Creates a new feature group defined as the union of other feature group versions
             custom_algorithms (list): List of user-defined algorithms to train. If not set, the default enabled custom algorithms will be used.
             custom_algorithms_only (bool): Whether to only run custom algorithms.
             custom_algorithm_configs (dict): Configs for each user-defined algorithm; key is the algorithm name, value is the config serialized to JSON.
-            builtin_algorithms (list): List of IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
+            builtin_algorithms (list): List of algorithm names or algorithm IDs of the builtin algorithms provided by Abacus.AI to train. If not set, all applicable builtin algorithms will be used.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
             algorithm_training_configs (list): List of algorithm specifc training configs that will be part of the model training AutoML run.
@@ -5142,7 +5178,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_ids (list): List of unique string identifiers of deployments to automatically deploy to.
             feature_group_ids (list): List of feature group IDs provided by the user to train the model on.
             custom_algorithms (list): List of user-defined algorithms to train. If not set, will honor the runs from the last time and applicable new custom algorithms.
-            builtin_algorithms (list): List of the built-in algorithms provided by Abacus.AI to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
+            builtin_algorithms (list): List of algorithm names or algorithm IDs of Abacus.AI built-in algorithms to train. If not set, will honor the runs from the last time and applicable new built-in algorithms.
             custom_algorithm_configs (dict): User-defined training configs for each custom algorithm.
             cpu_size (str): Size of the CPU for the user-defined algorithms during training.
             memory (int): Memory (in GB) for the user-defined algorithms during training.
@@ -5167,13 +5203,13 @@ Creates a new feature group defined as the union of other feature group versions
             model_version (str): The unique identifier of the model version to delete."""
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
-    def export_model_artifact_as_feature_group(self, model_version: str, table_name: str, artifact_type: str) -> FeatureGroup:
+    def export_model_artifact_as_feature_group(self, model_version: str, table_name: str, artifact_type: Union[dict, EvalArtifactType] = None) -> FeatureGroup:
         """Exports metric artifact data for a model as a feature group.
 
         Args:
             model_version (str): Unique string identifier for the version of the model.
             table_name (str): Name of the feature group table to create.
-            artifact_type (str): EvalArtifact enum specifying which artifact to export.
+            artifact_type (EvalArtifactType): eval artifact type to export.
 
         Returns:
             FeatureGroup: The created feature group."""
@@ -6641,7 +6677,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             FeatureGroupRow: The feature group row that was upserted."""
-        return self._call_api('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow)
+        return self._proxy_request('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
 
     def upsert_online_data(self, feature_group_id: str, data: dict) -> FeatureGroupRow:
         """Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
@@ -7065,13 +7101,13 @@ Creates a new feature group defined as the union of other feature group versions
             Algorithm: The new custom model can be used for training."""
         return self._call_api('updateAlgorithm', 'PATCH', query_params={}, body={'algorithm': algorithm, 'sourceCode': source_code, 'trainingDataParameterNamesMapping': training_data_parameter_names_mapping, 'trainingConfigParameterName': training_config_parameter_name, 'trainFunctionName': train_function_name, 'predictFunctionName': predict_function_name, 'predictManyFunctionName': predict_many_function_name, 'initializeFunctionName': initialize_function_name, 'configOptions': config_options, 'isDefaultEnabled': is_default_enabled, 'useGpu': use_gpu, 'packageRequirements': package_requirements}, parse_type=Algorithm)
 
-    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list, training_config: dict = None) -> List[Algorithm]:
-        """Return list of built-in algorithms based on given input.
+    def list_builtin_algorithms(self, project_id: str, feature_group_ids: list, training_config: Union[dict, TrainingConfig] = None) -> List[Algorithm]:
+        """Return list of built-in algorithms based on given input data and training config.
 
         Args:
             project_id (str): Unique string identifier associated with the project.
-            feature_group_ids (list): List of feature group identifiers applied to the algorithms.
-            training_config (dict): The training configuration key/value pairs used to train with the algorithm.
+            feature_group_ids (list): List of feature group IDs specifying input data.
+            training_config (TrainingConfig): The training config to be used for model training.
 
         Returns:
             list[Algorithm]: List of applicable builtin algorithms."""
@@ -7396,13 +7432,6 @@ Creates a new feature group defined as the union of other feature group versions
             ExternalApplication: The updated External Application."""
         return self._call_api('updateExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme}, parse_type=ExternalApplication)
 
-    def list_external_applications(self) -> List[ExternalApplication]:
-        """Lists External Applications in an organization.
-
-        Returns:
-            list[ExternalApplication]: List of External Applications."""
-        return self._call_api('listExternalApplications', 'POST', query_params={}, body={}, parse_type=ExternalApplication)
-
     def delete_external_application(self, external_application_id: str):
         """Deletes an External Application.
 
@@ -7483,7 +7512,7 @@ Creates a new feature group defined as the union of other feature group versions
             LlmParameters: The parameters for LLM using the given inputs."""
         return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
 
-    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list, prompt_context: str = None, llm_name: str = None, temperature: float = None) -> str:
+    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list, prompt_context: str = None, llm_name: str = None, temperature: float = None) -> LlmGeneratedCode:
         """Execute a data query using a large language model in an async fashion.
 
         Args:
@@ -7491,8 +7520,24 @@ Creates a new feature group defined as the union of other feature group versions
             feature_group_ids (list): A list of feature group IDs that the query should be executed against.
             prompt_context (str): The context message used to construct the prompt for the language model. If not provide, a default context message is used.
             llm_name (str): The name of the language model to use. If not provided, the default language model is used.
-            temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used."""
-        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature})
+            temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used.
+
+        Returns:
+            LlmGeneratedCode: The generated SQL code."""
+        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature}, parse_type=LlmGeneratedCode)
+
+    def extract_data_using_llm(self, field_descriptors: list, document_id: str = None, document_text: str = None, llm_name: str = None) -> ExtractedFields:
+        """Extract fields from a document using a large language model.
+
+        Args:
+            field_descriptors (list): A list of fields to extract from the document.
+            document_id (str): The ID of the document to query.
+            document_text (str): The text of the document to query. Only used if document_id is not provided.
+            llm_name (str): The name of the language model to use. If not provided, the default language model is used.
+
+        Returns:
+            ExtractedFields: The response from the document query."""
+        return self._call_api('extractDataUsingLLM', 'POST', query_params={}, body={'fieldDescriptors': field_descriptors, 'documentId': document_id, 'documentText': document_text, 'llmName': llm_name}, parse_type=ExtractedFields)
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.
