@@ -43,23 +43,24 @@ class DatabaseConnector(AbstractApiClass):
                 'name': self.name, 'status': self.status, 'auth': self.auth, 'created_at': self.created_at}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def list_objects(self):
+    def list_objects(self, fetch_raw_data: bool = False):
         """
         Lists querable objects in the database connector.
 
         Args:
-            database_connector_id (str): Unique string identifier for the database connector.
+            fetch_raw_data (bool): If true, return unfiltered objects.
         """
-        return self.client.list_database_connector_objects(self.database_connector_id)
+        return self.client.list_database_connector_objects(self.database_connector_id, fetch_raw_data)
 
-    def get_object_schema(self, object_name: str = None):
+    def get_object_schema(self, object_name: str = None, fetch_raw_data: bool = False):
         """
         Get the schema of an object in an database connector.
 
         Args:
             object_name (str): Unique identifier for the object in the external system.
+            fetch_raw_data (bool): If true, return unfiltered list of column names.
         """
-        return self.client.get_database_connector_object_schema(self.database_connector_id, object_name)
+        return self.client.get_database_connector_object_schema(self.database_connector_id, object_name, fetch_raw_data)
 
     def rename(self, name: str):
         """
@@ -87,3 +88,12 @@ class DatabaseConnector(AbstractApiClass):
             database_connector_id (str): The unique identifier for the database connector.
         """
         return self.client.delete_database_connector(self.database_connector_id)
+
+    def query(self, query: str):
+        """
+        Runs a query in the specified database connector.
+
+        Args:
+            query (str): The query to be run in the database connector.
+        """
+        return self.client.query_database_connector(self.database_connector_id, query)

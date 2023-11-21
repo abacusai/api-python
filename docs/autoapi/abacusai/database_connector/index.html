@@ -327,22 +327,25 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.database_connector.DatabaseConnector.list_objects">
-<span class="sig-name descname"><span class="pre">list_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.list_objects" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fetch_raw_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.list_objects" title="Permalink to this definition"></a></dt>
 <dd><p>Lists querable objects in the database connector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the database connector.</p>
+<dd class="field-odd"><p><strong>fetch_raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, return unfiltered objects.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.database_connector.DatabaseConnector.get_object_schema">
-<span class="sig-name descname"><span class="pre">get_object_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.get_object_schema" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_object_schema</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fetch_raw_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.get_object_schema" title="Permalink to this definition"></a></dt>
 <dd><p>Get the schema of an object in an database connector.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier for the object in the external system.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>object_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique identifier for the object in the external system.</p></li>
+<li><p><strong>fetch_raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, return unfiltered list of column names.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -376,6 +379,17 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the database connector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.database_connector.DatabaseConnector.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.database_connector.DatabaseConnector.query" title="Permalink to this definition"></a></dt>
+<dd><p>Runs a query in the specified database connector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The query to be run in the database connector.</p>
 </dd>
 </dl>
 </dd></dl>

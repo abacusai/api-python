@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
+.. py:class:: DocumentRetriever(client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, indexingRequired=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36,6 +36,8 @@ Classes
    :type featureGroupId: str
    :param featureGroupName: The feature group name associated with the document retriever.
    :type featureGroupName: str
+   :param indexingRequired: Whether the document retriever is required to be indexed due to changes in underlying data.
+   :type indexingRequired: bool
    :param latestDocumentRetrieverVersion: The latest version of vector store.
    :type latestDocumentRetrieverVersion: DocumentRetrieverVersion
    :param documentRetrieverConfig: The config for vector store creation.

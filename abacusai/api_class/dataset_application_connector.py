@@ -61,6 +61,27 @@ class GoogleDriveDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
+class OneDriveDatasetConfig(DatasetConfig):
+    """
+    Dataset config for OneDrive Application Connector
+    Args:
+        location (str): The regex location of the files to fetch
+        is_documentset (bool): Whether the dataset is a document set
+        csv_delimiter (str, optional): If the file format is CSV, use a specific csv delimiter
+        extract_bounding_boxes (bool, optional): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
+        merge_file_schemas (bool, optional): Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
+    """
+    location: str = dataclasses.field(default=None)
+    is_documentset: bool = dataclasses.field(default=None)
+    csv_delimiter: str = dataclasses.field(default=None)
+    extract_bounding_boxes: bool = dataclasses.field(default=False)
+    merge_file_schemas: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.ONEDRIVE
+
+
+@dataclasses.dataclass
 class SharepointDatasetConfig(DatasetConfig):
     """
     Dataset config for Sharepoint Application Connector
@@ -98,6 +119,7 @@ class _DatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.CONFLUENCE: ConfluenceDatasetConfig,
         enums.ApplicationConnectorType.GOOGLEANALYTICS: GoogleAnalyticsDatasetConfig,
         enums.ApplicationConnectorType.GOOGLEDRIVE: GoogleDriveDatasetConfig,
+        enums.ApplicationConnectorType.ONEDRIVE: OneDriveDatasetConfig,
         enums.ApplicationConnectorType.SHAREPOINT: SharepointDatasetConfig,
         enums.ApplicationConnectorType.ZENDESK: ZendeskDatasetConfig,
     }

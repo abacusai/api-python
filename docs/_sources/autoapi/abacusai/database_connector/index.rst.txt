@@ -52,20 +52,22 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: list_objects()
+   .. py:method:: list_objects(fetch_raw_data = False)
 
       Lists querable objects in the database connector.
 
-      :param database_connector_id: Unique string identifier for the database connector.
-      :type database_connector_id: str
+      :param fetch_raw_data: If true, return unfiltered objects.
+      :type fetch_raw_data: bool
 
 
-   .. py:method:: get_object_schema(object_name = None)
+   .. py:method:: get_object_schema(object_name = None, fetch_raw_data = False)
 
       Get the schema of an object in an database connector.
 
       :param object_name: Unique identifier for the object in the external system.
       :type object_name: str
+      :param fetch_raw_data: If true, return unfiltered list of column names.
+      :type fetch_raw_data: bool
 
 
    .. py:method:: rename(name)
@@ -90,6 +92,14 @@ Classes
 
       :param database_connector_id: The unique identifier for the database connector.
       :type database_connector_id: str
+
+
+   .. py:method:: query(query)
+
+      Runs a query in the specified database connector.
+
+      :param query: The query to be run in the database connector.
+      :type query: str
 
 
 

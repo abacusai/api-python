@@ -17,17 +17,19 @@ class DocumentRetriever(AbstractApiClass):
             createdAt (str): When the vector store was created.
             featureGroupId (str): The feature group id associated with the document retriever.
             featureGroupName (str): The feature group name associated with the document retriever.
+            indexingRequired (bool): Whether the document retriever is required to be indexed due to changes in underlying data.
             latestDocumentRetrieverVersion (DocumentRetrieverVersion): The latest version of vector store.
             documentRetrieverConfig (DocumentRetrieverConfig): The config for vector store creation.
     """
 
-    def __init__(self, client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={}):
+    def __init__(self, client, name=None, documentRetrieverId=None, createdAt=None, featureGroupId=None, featureGroupName=None, indexingRequired=None, latestDocumentRetrieverVersion={}, documentRetrieverConfig={}):
         super().__init__(client, documentRetrieverId)
         self.name = name
         self.document_retriever_id = documentRetrieverId
         self.created_at = createdAt
         self.feature_group_id = featureGroupId
         self.feature_group_name = featureGroupName
+        self.indexing_required = indexingRequired
         self.latest_document_retriever_version = client._build_class(
             DocumentRetrieverVersion, latestDocumentRetrieverVersion)
         self.document_retriever_config = client._build_class(
@@ -35,7 +37,7 @@ class DocumentRetriever(AbstractApiClass):
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'document_retriever_id': repr(self.document_retriever_id), f'created_at': repr(self.created_at), f'feature_group_id': repr(self.feature_group_id), f'feature_group_name': repr(
-            self.feature_group_name), f'latest_document_retriever_version': repr(self.latest_document_retriever_version), f'document_retriever_config': repr(self.document_retriever_config)}
+            self.feature_group_name), f'indexing_required': repr(self.indexing_required), f'latest_document_retriever_version': repr(self.latest_document_retriever_version), f'document_retriever_config': repr(self.document_retriever_config)}
         class_name = "DocumentRetriever"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -48,8 +50,8 @@ class DocumentRetriever(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'document_retriever_id': self.document_retriever_id, 'created_at': self.created_at, 'feature_group_id': self.feature_group_id, 'feature_group_name': self.feature_group_name,
-                'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
+        resp = {'name': self.name, 'document_retriever_id': self.document_retriever_id, 'created_at': self.created_at, 'feature_group_id': self.feature_group_id, 'feature_group_name': self.feature_group_name, 'indexing_required':
+                self.indexing_required, 'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def update(self, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):

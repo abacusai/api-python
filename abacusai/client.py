@@ -517,7 +517,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.79.2'
+    client_version = '0.79.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1224,20 +1224,30 @@ class ReadOnlyClient(BaseApiClient):
             list[FileConnector]: A list of cloud storage buckets connected to the organization."""
         return self._call_api('listFileConnectors', 'GET', query_params={}, parse_type=FileConnector)
 
-    def list_database_connector_objects(self, database_connector_id: str) -> list:
+    def list_database_connector_objects(self, database_connector_id: str, fetch_raw_data: bool = False) -> list:
         """Lists querable objects in the database connector.
 
         Args:
-            database_connector_id (str): Unique string identifier for the database connector."""
-        return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id})
+            database_connector_id (str): Unique string identifier for the database connector.
+            fetch_raw_data (bool): If true, return unfiltered objects."""
+        return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id, 'fetchRawData': fetch_raw_data})
 
-    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None) -> list:
+    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None, fetch_raw_data: bool = False) -> list:
         """Get the schema of an object in an database connector.
 
         Args:
             database_connector_id (str): Unique string identifier for the database connector.
-            object_name (str): Unique identifier for the object in the external system."""
-        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name})
+            object_name (str): Unique identifier for the object in the external system.
+            fetch_raw_data (bool): If true, return unfiltered list of column names."""
+        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'fetchRawData': fetch_raw_data})
+
+    def query_database_connector(self, database_connector_id: str, query: str) -> list:
+        """Runs a query in the specified database connector.
+
+        Args:
+            database_connector_id (str): A unique string identifier for the database connector.
+            query (str): The query to be run in the database connector."""
+        return self._call_api('queryDatabaseConnector', 'GET', query_params={'databaseConnectorId': database_connector_id, 'query': query})
 
     def list_application_connectors(self) -> List[ApplicationConnector]:
         """Retrieves a list of all application connectors along with their associated attributes.
@@ -1443,7 +1453,7 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('queryTestPointPredictions', 'GET', query_params={'modelVersion': model_version, 'algorithm': algorithm, 'toRow': to_row, 'fromRow': from_row, 'sqlWhereClause': sql_where_clause}, parse_type=TestPointPredictions)
 
     def get_feature_group_schemas_for_model_version(self, model_version: str) -> List[ModelVersionFeatureGroupSchema]:
-        """Gets the schema for all feature groups used in the model version.
+        """Gets the schema (including feature mappings) for all feature groups used in the model version.
 
         Args:
             model_version (str): Unique string identifier for the version of the model.
@@ -2937,20 +2947,15 @@ class ApiClient(ReadOnlyClient):
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
+        function_source = None
+        function_name = None
         if function:
             function_source = get_clean_function_source_code(function)
             function_source = include_modules(
                 function_source, included_modules)
+            function_name = function.__name__
             python_function_name = python_function_name or function.__name__
-            python_function = self.create_python_function(name=python_function_name, source_code=function_source, function_name=function.__name__,
-                                                          package_requirements=package_requirements, function_variable_mappings=python_function_bindings)
-            if not python_function_bindings and input_tables:
-                python_function_bindings = []
-                for index, feature_group_table_name in enumerate(input_tables):
-                    variable = python_function.function_variable_mappings[index]
-                    python_function_bindings.append(
-                        {'name': variable['name'], 'variable_type': variable['variable_type'], 'value': feature_group_table_name})
-        return self.create_feature_group_from_function(table_name=table_name, python_function_name=python_function_name, python_function_bindings=python_function_bindings, cpu_size=cpu_size, memory=memory)
+        return self.create_feature_group_from_function(table_name=table_name, function_source_code=function_source, input_feature_groups=input_tables, python_function_name=python_function_name, function_name=function_name, package_requirements=package_requirements, python_function_bindings=python_function_bindings, cpu_size=cpu_size, memory=memory)
 
     def update_python_function_code(self, name: str, function: callable = None, function_variable_mappings: list = None, package_requirements: list = None, included_modules: list = None):
         """
@@ -3361,7 +3366,7 @@ class ApiClient(ReadOnlyClient):
 
     def get_agent_context_doc_ids(self):
         """
-        Gets the document ID from the current request context if a document has been uploaded with the request. 
+        Gets the document ID from the current request context if a document has been uploaded with the request.
         Applicable within a AIAgent execute function.
 
         Returns:
@@ -3473,8 +3478,12 @@ class ApiClient(ReadOnlyClient):
     def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 600):
         start_time = time.time()
         while time.time() - start_time <= timeout:
-            response = self._request(
-                url=url, method=method, body=body, headers=headers)
+            for _ in range(3):
+                response = self._request(
+                    url=url, method=method, body=body, headers=headers)
+                if response.status_code < 500:
+                    break
+                sleep(0.5)
             response_json = response.json()
             if response_json['status'] not in wait_states:
                 return response_json, response.status_code
@@ -3589,7 +3598,7 @@ class ApiClient(ReadOnlyClient):
             max_words (int): If provided, will limit the total number of words in the results to the value specified.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned chunks.
             max_words_per_chunk (int): If provided, will limit the number of words in each chunk to the value specified. If the value provided is smaller than the actual size of chunk on disk, which is determined during document retriever creation, the actual size of chunk will be used. I.e, chunks looked up from document retrievers will not be split into smaller chunks during lookup due to this setting.
-            score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.            
+            score_multiplier_column (str): If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
 
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
@@ -6345,7 +6354,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
-    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False) -> Dict:
+    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_ids: list = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
@@ -6355,10 +6364,11 @@ Creates a new feature group defined as the union of other feature group versions
             keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-            regenerate (bool): If True, will regenerate the response from the last query."""
+            regenerate (bool): If True, will regenerate the response from the last query.
+            doc_ids (list): An optional list of document IDs to use for the conversation."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate}, server_override=prediction_url)
+        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docIds': doc_ids}, server_override=prediction_url)
 
     def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
         """Executes a deployed AI agent function with binary data as inputs.

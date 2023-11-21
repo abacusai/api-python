@@ -130,7 +130,7 @@ class ModelVersion(AbstractApiClass):
 
     def get_feature_group_schemas_for(self):
         """
-        Gets the schema for all feature groups used in the model version.
+        Gets the schema (including feature mappings) for all feature groups used in the model version.
 
         Args:
             model_version (str): Unique string identifier for the version of the model.

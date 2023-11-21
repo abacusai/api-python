@@ -326,6 +326,7 @@ class ApplicationConnectorType(ApiEnum):
     GOOGLEDRIVE = 'GOOGLEDRIVE'
     GIT = 'GIT'
     CONFLUENCE = 'CONFLUENCE'
+    ONEDRIVE = 'ONEDRIVE'
     ZENDESK = 'ZENDESK'
     SLACK = 'SLACK'
     SHAREPOINT = 'SHAREPOINT'

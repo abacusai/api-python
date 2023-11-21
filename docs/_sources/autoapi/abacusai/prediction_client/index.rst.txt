@@ -743,7 +743,7 @@ Classes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_ids = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -761,6 +761,8 @@ Classes
       :type external_session_id: str
       :param regenerate: If True, will regenerate the response from the last query.
       :type regenerate: bool
+      :param doc_ids: An optional list of document IDs to use for the conversation.
+      :type doc_ids: list
 
 
    .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)

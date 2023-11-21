@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.79.2'
+      :value: '0.79.5'
 
       
 
@@ -1077,15 +1077,17 @@ Attributes
       :rtype: list[FileConnector]
 
 
-   .. py:method:: list_database_connector_objects(database_connector_id)
+   .. py:method:: list_database_connector_objects(database_connector_id, fetch_raw_data = False)
 
       Lists querable objects in the database connector.
 
       :param database_connector_id: Unique string identifier for the database connector.
       :type database_connector_id: str
+      :param fetch_raw_data: If true, return unfiltered objects.
+      :type fetch_raw_data: bool
 
 
-   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name = None)
+   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name = None, fetch_raw_data = False)
 
       Get the schema of an object in an database connector.
 
@@ -1093,6 +1095,18 @@ Attributes
       :type database_connector_id: str
       :param object_name: Unique identifier for the object in the external system.
       :type object_name: str
+      :param fetch_raw_data: If true, return unfiltered list of column names.
+      :type fetch_raw_data: bool
+
+
+   .. py:method:: query_database_connector(database_connector_id, query)
+
+      Runs a query in the specified database connector.
+
+      :param database_connector_id: A unique string identifier for the database connector.
+      :type database_connector_id: str
+      :param query: The query to be run in the database connector.
+      :type query: str
 
 
    .. py:method:: list_application_connectors()
@@ -1335,7 +1349,7 @@ Attributes
 
    .. py:method:: get_feature_group_schemas_for_model_version(model_version)
 
-      Gets the schema for all feature groups used in the model version.
+      Gets the schema (including feature mappings) for all feature groups used in the model version.
 
       :param model_version: Unique string identifier for the version of the model.
       :type model_version: str
@@ -6897,7 +6911,7 @@ Attributes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_ids = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -6915,6 +6929,8 @@ Attributes
       :type external_session_id: str
       :param regenerate: If True, will regenerate the response from the last query.
       :type regenerate: bool
+      :param doc_ids: An optional list of document IDs to use for the conversation.
+      :type doc_ids: list
 
 
    .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
