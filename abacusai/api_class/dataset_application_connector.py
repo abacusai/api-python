@@ -26,6 +26,7 @@ class ConfluenceDatasetConfig(DatasetConfig):
 class GoogleAnalyticsDatasetConfig(DatasetConfig):
     """
     Dataset config for Google Analytics Application Connector
+
     Args:
         location (str): The view id of the report in the connector to fetch
         start_timestamp (int, optional): Unix timestamp of the start of the period that will be queried
@@ -43,6 +44,7 @@ class GoogleAnalyticsDatasetConfig(DatasetConfig):
 class GoogleDriveDatasetConfig(DatasetConfig):
     """
     Dataset config for Google Drive Application Connector
+
     Args:
         location (str): The regex location of the files to fetch
         is_documentset (bool): Whether the dataset is a document set
@@ -61,9 +63,30 @@ class GoogleDriveDatasetConfig(DatasetConfig):
 
 
 @dataclasses.dataclass
+class JiraDatasetConfig(DatasetConfig):
+    """
+    Dataset config for Jira Application Connector
+
+    Args:
+        jql (str): The JQL query for fetching issues
+        custom_fields (list, optional): A list of custom fields to include in the dataset
+        include_comments (bool, optional): Fetch comments for each issue
+        include_watchers (bool, optional): Fetch watchers for each issue
+    """
+    jql: str = dataclasses.field(default=None)
+    custom_fields: list = dataclasses.field(default=None)
+    include_comments: bool = dataclasses.field(default=False)
+    include_watchers: bool = dataclasses.field(default=False)
+
+    def __post_init__(self):
+        self.application_connector_type = enums.ApplicationConnectorType.JIRA
+
+
+@dataclasses.dataclass
 class OneDriveDatasetConfig(DatasetConfig):
     """
     Dataset config for OneDrive Application Connector
+
     Args:
         location (str): The regex location of the files to fetch
         is_documentset (bool): Whether the dataset is a document set
@@ -85,6 +108,7 @@ class OneDriveDatasetConfig(DatasetConfig):
 class SharepointDatasetConfig(DatasetConfig):
     """
     Dataset config for Sharepoint Application Connector
+
     Args:
         location (str): The regex location of the files to fetch
         is_documentset (bool): Whether the dataset is a document set
@@ -119,6 +143,7 @@ class _DatasetConfigFactory(_ApiClassFactory):
         enums.ApplicationConnectorType.CONFLUENCE: ConfluenceDatasetConfig,
         enums.ApplicationConnectorType.GOOGLEANALYTICS: GoogleAnalyticsDatasetConfig,
         enums.ApplicationConnectorType.GOOGLEDRIVE: GoogleDriveDatasetConfig,
+        enums.ApplicationConnectorType.JIRA: JiraDatasetConfig,
         enums.ApplicationConnectorType.ONEDRIVE: OneDriveDatasetConfig,
         enums.ApplicationConnectorType.SHAREPOINT: SharepointDatasetConfig,
         enums.ApplicationConnectorType.ZENDESK: ZendeskDatasetConfig,

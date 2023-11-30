@@ -66,7 +66,7 @@ class RegressionObjective(ApiEnum):
 
 
 class RegressionTreeHPOMode(ApiEnum):
-    RAPID = 'rapid',
+    RAPID = 'rapid'
     THOROUGH = 'thorough'
 
 
@@ -106,7 +106,7 @@ class RegressionLossFunction(ApiEnum):
     CUSTOM = 'Custom'
 
 
-class ExplainerType(Enum):
+class ExplainerType(ApiEnum):
     KERNEL_EXPLAINER = 'KERNEL_EXPLAINER'
     LIME_EXPLAINER = 'LIME_EXPLAINER'
     TREE_EXPLAINER = 'TREE_EXPLAINER'
@@ -326,6 +326,7 @@ class ApplicationConnectorType(ApiEnum):
     GOOGLEDRIVE = 'GOOGLEDRIVE'
     GIT = 'GIT'
     CONFLUENCE = 'CONFLUENCE'
+    JIRA = 'JIRA'
     ONEDRIVE = 'ONEDRIVE'
     ZENDESK = 'ZENDESK'
     SLACK = 'SLACK'

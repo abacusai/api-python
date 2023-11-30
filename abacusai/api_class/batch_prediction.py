@@ -20,6 +20,7 @@ class BatchPredictionArgs(ApiClass):
 class AnomalyDetectionBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the ANOMALY_DETECTION problem type
+
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         prediction_time_endpoint (str): The end point for predictions.
@@ -45,6 +46,7 @@ class AnomalyDetectionBatchPredictionArgs(BatchPredictionArgs):
 class AnomalyOutliersBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the ANOMALY_OUTLIERS problem type
+
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         threshold (float): The threshold for detecting an anomaly. Range: [0.8, 0.99]
@@ -60,6 +62,7 @@ class AnomalyOutliersBatchPredictionArgs(BatchPredictionArgs):
 class ForecastingBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the FORECASTING problem type
+
     Args:
        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
        predictions_start_date (str): The start date for predictions.
@@ -85,6 +88,7 @@ class ForecastingBatchPredictionArgs(BatchPredictionArgs):
 class NamedEntityExtractionBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
+
     Args:
        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
        verbose_predictions (bool): Return prediction inputs, predicted annotations and token label probabilities.
@@ -100,6 +104,7 @@ class NamedEntityExtractionBatchPredictionArgs(BatchPredictionArgs):
 class PersonalizationBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the PERSONALIZATION problem type
+
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         number_of_items (int): Number of items to recommend.
@@ -119,6 +124,7 @@ class PersonalizationBatchPredictionArgs(BatchPredictionArgs):
 class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the PREDICTIVE_MODELING problem type
+
     Args:
        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
        explainer_type (enums.ExplainerType): The type of explainer to use to generate explanations on the batch prediction.
@@ -150,6 +156,7 @@ class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
 class PretrainedModelsBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the PRETRAINED_MODELS problem type
+
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         files_output_location_prefix (str): The output location prefix for the files.
@@ -167,6 +174,7 @@ class PretrainedModelsBatchPredictionArgs(BatchPredictionArgs):
 class SentenceBoundaryDetectionBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
+
     Args:
        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
        explode_output (bool): Explode data so there is one sentence per row.
@@ -182,6 +190,7 @@ class SentenceBoundaryDetectionBatchPredictionArgs(BatchPredictionArgs):
 class ThemeAnalysisBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the THEME_ANALYSIS problem type
+
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         analysis_frequency (str): The length of each analysis interval.
@@ -201,6 +210,7 @@ class ThemeAnalysisBatchPredictionArgs(BatchPredictionArgs):
 class ChatLLMBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the ChatLLM problem type
+
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
     """

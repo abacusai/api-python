@@ -84,6 +84,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PERSONALIZATION problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -343,6 +344,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PREDICTIVE_MODELING problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: RegressionObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -634,6 +636,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the FORECASTING problem type
+
    :param prediction_length: How many timesteps in the future to predict.
    :type prediction_length: int
    :param objective: Ranking scheme used to select final best model.
@@ -755,6 +758,7 @@ Classes
    :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: List[str]
+   :param return_fractional_forecasts: Use this to return fractional forecast values while prediction
 
    .. py:attribute:: prediction_length
       :type: int
@@ -1061,6 +1065,11 @@ Classes
 
       
 
+   .. py:attribute:: return_fractional_forecasts
+      :type: bool
+
+      
+
    .. py:method:: __post_init__()
 
 
@@ -1071,6 +1080,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -1168,6 +1178,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
+
    :param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
    :type abacus_internal_model: bool
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -1221,6 +1232,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
+
    :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -1267,6 +1279,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -1299,6 +1312,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTIMENT_DETECTION problem type
+
    :param sentiment_type: Type of sentiment to detect.
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -1345,6 +1359,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
+
    :param zero_shot_hypotheses: Zero shot hypotheses. Example text: 'This text is about pricing'.
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -1384,6 +1399,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -1416,6 +1432,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_VISUALIZATION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -1448,6 +1465,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
+
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
 
@@ -1466,6 +1484,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING_TIMESERIES problem type
+
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
    :param imputation: Imputation method for missing values.
@@ -1491,6 +1510,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
+
    :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
    :type anomaly_fraction: float
 
@@ -1509,6 +1529,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUMULATIVE_FORECASTING problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param historical_frequency: Forecast frequency
@@ -1562,6 +1583,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the ANOMALY_DETECTION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
    :type test_split: int
    :param value_high: Detect unusually high values.
@@ -1633,6 +1655,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the AI_AGENT problem type
+
    :param description: Description of the agent function.
    :type description: str
    :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
@@ -1658,6 +1681,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
+
    :param max_catalog_size: Maximum expected catalog size.
    :type max_catalog_size: int
    :param max_dimension: Maximum expected dimension of the catalog.
@@ -1704,6 +1728,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_ALGORITHM problem type
+
    :param train_function_name: The name of the train function.
    :type train_function_name: str
    :param predict_many_function_name: The name of the predict many function.
@@ -1764,6 +1789,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
+
    :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
 
@@ -1804,6 +1830,7 @@ Classes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Algorithm that can be deployed to a model.
+
    :param algorithm: ID of the algorithm.
    :type algorithm: str
    :param name: Name of the algorithm.

@@ -23,6 +23,7 @@ class TrainingConfig(ApiClass):
 class PersonalizationTrainingConfig(TrainingConfig):
     """
     Training config for the PERSONALIZATION problem type
+
     Args:
         objective (PersonalizationObjective): Ranking scheme used to select final best model.
         sort_objective (PersonalizationObjective): Ranking scheme used to sort models on the metrics page.
@@ -118,6 +119,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
 class RegressionTrainingConfig(TrainingConfig):
     """
     Training config for the PREDICTIVE_MODELING problem type
+
     Args:
         objective (RegressionObjective): Ranking scheme used to select final best model.
         sort_objective (RegressionObjective): Ranking scheme used to sort models on the metrics page.
@@ -228,6 +230,7 @@ class RegressionTrainingConfig(TrainingConfig):
 class ForecastingTrainingConfig(TrainingConfig):
     """
     Training config for the FORECASTING problem type
+
     Args:
         prediction_length (int): How many timesteps in the future to predict.
         objective (ForecastingObjective): Ranking scheme used to select final best model.
@@ -290,6 +293,7 @@ class ForecastingTrainingConfig(TrainingConfig):
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
         custom_loss_functions (List[str]): Registered custom losses available for selection.
         custom_metrics (List[str]): Registered custom metrics available for selection.
+        return_fractional_forecasts: Use this to return fractional forecast values while prediction
     """
     prediction_length: int = dataclasses.field(default=None)
     objective: enums.ForecastingObjective = dataclasses.field(default=None)
@@ -358,6 +362,7 @@ class ForecastingTrainingConfig(TrainingConfig):
     data_split_feature_group_table_name: str = dataclasses.field(default=None)
     custom_loss_functions: List[str] = dataclasses.field(default=None)
     custom_metrics: List[str] = dataclasses.field(default=None)
+    return_fractional_forecasts: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.FORECASTING
@@ -367,6 +372,7 @@ class ForecastingTrainingConfig(TrainingConfig):
 class NamedEntityExtractionTrainingConfig(TrainingConfig):
     """
     Training config for the NAMED_ENTITY_EXTRACTION problem type
+
     Args:
         objective (NERObjective): Ranking scheme used to select final best model.
         sort_objective (NERObjective): Ranking scheme used to sort models on the metrics page.
@@ -406,6 +412,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
 class NaturalLanguageSearchTrainingConfig(TrainingConfig):
     """
     Training config for the NATURAL_LANGUAGE_SEARCH problem type
+
     Args:
         abacus_internal_model (bool): Use a Abacus.AI LLM to answer questions about your data without using any external APIs
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -429,6 +436,7 @@ class NaturalLanguageSearchTrainingConfig(TrainingConfig):
 class ChatLLMTrainingConfig(TrainingConfig):
     """
     Training config for the CHAT_LLM problem type
+
     Args:
         document_retrievers (List[str]): List of document retriever names to use for the feature stores this model was trained with.
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -450,6 +458,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
 class SentenceBoundaryDetectionTrainingConfig(TrainingConfig):
     """
     Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+
     Args:
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         dropout_rate (float): Dropout rate for neural network.
@@ -469,6 +478,7 @@ class SentenceBoundaryDetectionTrainingConfig(TrainingConfig):
 class SentimentDetectionTrainingConfig(TrainingConfig):
     """
     Training config for the SENTIMENT_DETECTION problem type
+
     Args:
         sentiment_type (SentimentType): Type of sentiment to detect.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -493,6 +503,7 @@ class SentimentDetectionTrainingConfig(TrainingConfig):
 class DocumentClassificationTrainingConfig(TrainingConfig):
     """
     Training config for the DOCUMENT_CLASSIFICATION problem type
+
     Args:
         zero_shot_hypotheses (List[str]): Zero shot hypotheses. Example text: 'This text is about pricing'.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -514,6 +525,7 @@ class DocumentClassificationTrainingConfig(TrainingConfig):
 class DocumentSummarizationTrainingConfig(TrainingConfig):
     """
     Training config for the DOCUMENT_SUMMARIZATION problem type
+
     Args:
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         dropout_rate (float): Dropout rate for neural network.
@@ -533,6 +545,7 @@ class DocumentSummarizationTrainingConfig(TrainingConfig):
 class DocumentVisualizationTrainingConfig(TrainingConfig):
     """
     Training config for the DOCUMENT_VISUALIZATION problem type
+
     Args:
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         dropout_rate (float): Dropout rate for neural network.
@@ -552,6 +565,7 @@ class DocumentVisualizationTrainingConfig(TrainingConfig):
 class ClusteringTrainingConfig(TrainingConfig):
     """
     Training config for the CLUSTERING problem type
+
     Args:
         num_clusters_selection (int): Number of clusters. If None, will be selected automatically.
     """
@@ -565,6 +579,7 @@ class ClusteringTrainingConfig(TrainingConfig):
 class ClusteringTimeseriesTrainingConfig(TrainingConfig):
     """
     Training config for the CLUSTERING_TIMESERIES problem type
+
     Args:
         num_clusters_selection (int): Number of clusters. If None, will be selected automatically.
         imputation (ClusteringImputationMethod): Imputation method for missing values.
@@ -580,6 +595,7 @@ class ClusteringTimeseriesTrainingConfig(TrainingConfig):
 class EventAnomalyTrainingConfig(TrainingConfig):
     """
     Training config for the EVENT_ANOMALY problem type
+
     Args:
         anomaly_fraction (float): The fraction of the dataset to classify as anomalous, between 0 and 0.5
     """
@@ -593,6 +609,7 @@ class EventAnomalyTrainingConfig(TrainingConfig):
 class CumulativeForecastingTrainingConfig(TrainingConfig):
     """
     Training config for the CUMULATIVE_FORECASTING problem type
+
     Args:
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         historical_frequency (str): Forecast frequency
@@ -616,6 +633,7 @@ class CumulativeForecastingTrainingConfig(TrainingConfig):
 class AnomalyDetectionTrainingConfig(TrainingConfig):
     """
     Training config for the ANOMALY_DETECTION problem type
+
     Args:
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
         value_high (bool): Detect unusually high values.
@@ -651,6 +669,7 @@ class ThemeAnalysisTrainingConfig(TrainingConfig):
 class AIAgentTrainingConfig(TrainingConfig):
     """
     Training config for the AI_AGENT problem type
+
     Args:
         description (str): Description of the agent function.
         enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
@@ -666,6 +685,7 @@ class AIAgentTrainingConfig(TrainingConfig):
 class CustomTrainedModelTrainingConfig(TrainingConfig):
     """
     Training config for the CUSTOM_TRAINED_MODEL problem type
+
     Args:
         max_catalog_size (int): Maximum expected catalog size.
         max_dimension (int): Maximum expected dimension of the catalog.
@@ -687,6 +707,7 @@ class CustomTrainedModelTrainingConfig(TrainingConfig):
 class CustomAlgorithmTrainingConfig(TrainingConfig):
     """
     Training config for the CUSTOM_ALGORITHM problem type
+
     Args:
         train_function_name (str): The name of the train function.
         predict_many_function_name (str): The name of the predict many function.
@@ -712,6 +733,7 @@ class CustomAlgorithmTrainingConfig(TrainingConfig):
 class OptimizationTrainingConfig(TrainingConfig):
     """
     Training config for the OPTIMIZATION problem type
+
     Args:
         solve_time_limit (float): The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
 
@@ -755,6 +777,7 @@ class _TrainingConfigFactory(_ApiClassFactory):
 class DeployableAlgorithm(ApiClass):
     """
     Algorithm that can be deployed to a model.
+
     Args:
         algorithm (str): ID of the algorithm.
         name (str): Name of the algorithm.

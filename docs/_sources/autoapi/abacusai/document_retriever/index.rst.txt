@@ -56,27 +56,25 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: update(name = None, feature_group_id = None, document_retriever_config = None)
+   .. py:method:: rename(name)
 
       Updates an existing document retriever.
 
-      :param name: The name group to update the document retriever with.
+      :param name: The name to update the document retriever with.
       :type name: str
-      :param feature_group_id: The ID of the feature group to update the document retriever with.
-      :type feature_group_id: str
-      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
-      :type document_retriever_config: DocumentRetrieverConfig
 
       :returns: The updated document retriever.
       :rtype: DocumentRetriever
 
 
-   .. py:method:: create_version()
+   .. py:method:: create_version(feature_group_id = None, document_retriever_config = None)
 
       Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
-      :param document_retriever_id: The unique ID associated with the document retriever to create version with.
-      :type document_retriever_id: str
+      :param feature_group_id: The ID of the feature group to update the document retriever with.
+      :type feature_group_id: str
+      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+      :type document_retriever_config: DocumentRetrieverConfig
 
       :returns: The newly created document retriever version.
       :rtype: DocumentRetrieverVersion

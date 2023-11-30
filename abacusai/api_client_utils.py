@@ -20,6 +20,9 @@ def clean_column_name(column):
 
 
 def get_clean_function_source_code(func: Callable):
+    sample_lambda = (lambda: 0)
+    if isinstance(func, type(sample_lambda)) and func.__name__ == sample_lambda.__name__:
+        raise ValueError('Lambda function not allowed.')
     source_code = inspect.getsource(func)
     # If function source code has some initial indentation, remove it (Ex - can happen if the functor was defined inside a function)
     source_code = dedent(source_code)

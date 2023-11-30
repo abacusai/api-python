@@ -26,7 +26,8 @@ class ModelVersion(AbstractApiClass):
             memory (int): Memory in GB specified for the python model training.
             automlComplete (bool): If true, all algorithms have completed training.
             trainingFeatureGroupIds (list): The unique identifiers of the feature groups used as inputs during training to create this ModelVersion.
-            trainingVectorStoreVersions (list): The vector store version IDs used as inputs during training to create this ModelVersion.
+            trainingDocumentRetrieverVersions (list): The document retriever version IDs used as inputs during training to create this ModelVersion.
+            documentRetrieverMappings (dict): mapping of document retriever version to their respective information.
             bestAlgorithm (dict): Best performing algorithm.
             defaultAlgorithm (dict): Default algorithm that the user has selected.
             featureAnalysisStatus (str): Lifecycle of the feature analysis stage.
@@ -39,7 +40,7 @@ class ModelVersion(AbstractApiClass):
             codeSource (CodeSource): If a python model, information on where the source code is located.
     """
 
-    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={}, modelConfig={}, deployableAlgorithms={}):
+    def __init__(self, client, modelVersion=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={}, modelConfig={}, deployableAlgorithms={}):
         super().__init__(client, modelVersion)
         self.model_version = modelVersion
         self.status = status
@@ -55,7 +56,8 @@ class ModelVersion(AbstractApiClass):
         self.memory = memory
         self.automl_complete = automlComplete
         self.training_feature_group_ids = trainingFeatureGroupIds
-        self.training_vector_store_versions = trainingVectorStoreVersions
+        self.training_document_retriever_versions = trainingDocumentRetrieverVersions
+        self.document_retriever_mappings = documentRetrieverMappings
         self.best_algorithm = bestAlgorithm
         self.default_algorithm = defaultAlgorithm
         self.feature_analysis_status = featureAnalysisStatus
@@ -71,8 +73,8 @@ class ModelVersion(AbstractApiClass):
             DeployableAlgorithm, deployableAlgorithms)
 
     def __repr__(self):
-        repr_dict = {f'model_version': repr(self.model_version), f'status': repr(self.status), f'model_id': repr(self.model_id), f'model_prediction_config': repr(self.model_prediction_config), f'training_started_at': repr(self.training_started_at), f'training_completed_at': repr(self.training_completed_at), f'feature_group_versions': repr(self.feature_group_versions), f'error': repr(self.error), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(self.failed_deployment_ids), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'automl_complete': repr(self.automl_complete), f'training_feature_group_ids': repr(self.training_feature_group_ids), f'training_vector_store_versions': repr(
-            self.training_vector_store_versions), f'best_algorithm': repr(self.best_algorithm), f'default_algorithm': repr(self.default_algorithm), f'feature_analysis_status': repr(self.feature_analysis_status), f'data_cluster_info': repr(self.data_cluster_info), f'custom_algorithm_configs': repr(self.custom_algorithm_configs), f'trained_model_types': repr(self.trained_model_types), f'use_gpu': repr(self.use_gpu), f'partial_complete': repr(self.partial_complete), f'model_feature_group_schema_mappings': repr(self.model_feature_group_schema_mappings), f'code_source': repr(self.code_source), f'model_config': repr(self.model_config), f'deployable_algorithms': repr(self.deployable_algorithms)}
+        repr_dict = {f'model_version': repr(self.model_version), f'status': repr(self.status), f'model_id': repr(self.model_id), f'model_prediction_config': repr(self.model_prediction_config), f'training_started_at': repr(self.training_started_at), f'training_completed_at': repr(self.training_completed_at), f'feature_group_versions': repr(self.feature_group_versions), f'error': repr(self.error), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(self.failed_deployment_ids), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'automl_complete': repr(self.automl_complete), f'training_feature_group_ids': repr(self.training_feature_group_ids), f'training_document_retriever_versions': repr(
+            self.training_document_retriever_versions), f'document_retriever_mappings': repr(self.document_retriever_mappings), f'best_algorithm': repr(self.best_algorithm), f'default_algorithm': repr(self.default_algorithm), f'feature_analysis_status': repr(self.feature_analysis_status), f'data_cluster_info': repr(self.data_cluster_info), f'custom_algorithm_configs': repr(self.custom_algorithm_configs), f'trained_model_types': repr(self.trained_model_types), f'use_gpu': repr(self.use_gpu), f'partial_complete': repr(self.partial_complete), f'model_feature_group_schema_mappings': repr(self.model_feature_group_schema_mappings), f'code_source': repr(self.code_source), f'model_config': repr(self.model_config), f'deployable_algorithms': repr(self.deployable_algorithms)}
         class_name = "ModelVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -85,8 +87,8 @@ class ModelVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'training_vector_store_versions': self.training_vector_store_versions,
-                'best_algorithm': self.best_algorithm, 'default_algorithm': self.default_algorithm, 'feature_analysis_status': self.feature_analysis_status, 'data_cluster_info': self.data_cluster_info, 'custom_algorithm_configs': self.custom_algorithm_configs, 'trained_model_types': self.trained_model_types, 'use_gpu': self.use_gpu, 'partial_complete': self.partial_complete, 'model_feature_group_schema_mappings': self.model_feature_group_schema_mappings, 'code_source': self._get_attribute_as_dict(self.code_source), 'model_config': self._get_attribute_as_dict(self.model_config), 'deployable_algorithms': self._get_attribute_as_dict(self.deployable_algorithms)}
+        resp = {'model_version': self.model_version, 'status': self.status, 'model_id': self.model_id, 'model_prediction_config': self.model_prediction_config, 'training_started_at': self.training_started_at, 'training_completed_at': self.training_completed_at, 'feature_group_versions': self.feature_group_versions, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids, 'failed_deployment_ids': self.failed_deployment_ids, 'cpu_size': self.cpu_size, 'memory': self.memory, 'automl_complete': self.automl_complete, 'training_feature_group_ids': self.training_feature_group_ids, 'training_document_retriever_versions': self.training_document_retriever_versions,
+                'document_retriever_mappings': self.document_retriever_mappings, 'best_algorithm': self.best_algorithm, 'default_algorithm': self.default_algorithm, 'feature_analysis_status': self.feature_analysis_status, 'data_cluster_info': self.data_cluster_info, 'custom_algorithm_configs': self.custom_algorithm_configs, 'trained_model_types': self.trained_model_types, 'use_gpu': self.use_gpu, 'partial_complete': self.partial_complete, 'model_feature_group_schema_mappings': self.model_feature_group_schema_mappings, 'code_source': self._get_attribute_as_dict(self.code_source), 'model_config': self._get_attribute_as_dict(self.model_config), 'deployable_algorithms': self._get_attribute_as_dict(self.deployable_algorithms)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def describe_train_test_data_split_feature_group_version(self):

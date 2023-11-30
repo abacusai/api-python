@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingVectorStoreVersions=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
+.. py:class:: ModelVersion(client, modelVersion=None, status=None, modelId=None, modelPredictionConfig=None, trainingStartedAt=None, trainingCompletedAt=None, featureGroupVersions=None, error=None, pendingDeploymentIds=None, failedDeploymentIds=None, cpuSize=None, memory=None, automlComplete=None, trainingFeatureGroupIds=None, trainingDocumentRetrieverVersions=None, documentRetrieverMappings=None, bestAlgorithm=None, defaultAlgorithm=None, featureAnalysisStatus=None, dataClusterInfo=None, customAlgorithmConfigs=None, trainedModelTypes=None, useGpu=None, partialComplete=None, modelFeatureGroupSchemaMappings=None, codeSource={}, modelConfig={}, deployableAlgorithms={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54,8 +54,10 @@ Classes
    :type automlComplete: bool
    :param trainingFeatureGroupIds: The unique identifiers of the feature groups used as inputs during training to create this ModelVersion.
    :type trainingFeatureGroupIds: list
-   :param trainingVectorStoreVersions: The vector store version IDs used as inputs during training to create this ModelVersion.
-   :type trainingVectorStoreVersions: list
+   :param trainingDocumentRetrieverVersions: The document retriever version IDs used as inputs during training to create this ModelVersion.
+   :type trainingDocumentRetrieverVersions: list
+   :param documentRetrieverMappings: mapping of document retriever version to their respective information.
+   :type documentRetrieverMappings: dict
    :param bestAlgorithm: Best performing algorithm.
    :type bestAlgorithm: dict
    :param defaultAlgorithm: Default algorithm that the user has selected.

@@ -246,3 +246,22 @@ class Pipeline(AbstractApiClass):
                                                               package_requirements,
                                                               cpu_size,
                                                               memory)
+
+    def wait_for_pipeline(self, timeout=1200):
+        """
+        A waiting call until all the stages of the latest pipeline version is completed.
+
+        Args:
+            timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+        """
+        return self.client._poll(self, {'PENDING', 'RUNNING'}, timeout=timeout)
+
+    def get_status(self):
+        """
+        Gets the status of the pipeline version.
+
+        Returns:
+            str: A string describing the status of a pipeline version (pending, running, complete, etc.).
+        """
+        pipeline = self.describe()
+        return pipeline.latest_pipeline_version.status if pipeline.latest_pipeline_version else None

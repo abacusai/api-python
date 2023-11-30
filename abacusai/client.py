@@ -22,6 +22,7 @@ from requests.packages.urllib3.util.retry import Retry
 
 from .abacus_api import AbacusApi
 from .agent import Agent
+from .agent_data_execution_result import AgentDataExecutionResult
 from .agent_version import AgentVersion
 from .algorithm import Algorithm
 from .annotation_config import AnnotationConfig
@@ -30,7 +31,7 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    BatchPredictionArgs, DatasetConfig, DocumentRetrieverConfig,
+    BatchPredictionArgs, BlobInput, DatasetConfig, DocumentRetrieverConfig,
     EvalArtifactType, FeatureGroupExportConfig, ForecastingMonitorConfig,
     MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
     SamplingConfig, TrainingConfig
@@ -517,7 +518,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.79.5'
+    client_version = '0.79.8'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -997,15 +998,16 @@ class ReadOnlyClient(BaseApiClient):
             list[FeatureGroup]: All the feature groups associated with the specified Python function ID."""
         return self._call_api('listPythonFunctionFeatureGroups', 'GET', query_params={'name': name, 'limit': limit}, parse_type=FeatureGroup)
 
-    def execute_async_feature_group_operation(self, query: str = None) -> ExecuteFeatureGroupOperation:
+    def execute_async_feature_group_operation(self, query: str = None, fix_query_on_error: bool = False) -> ExecuteFeatureGroupOperation:
         """Starts the execution of fg operation
 
         Args:
             query (str): The SQL to be executed.
+            fix_query_on_error (bool): If enabled, SQL query is auto fixed if parsing fails.
 
         Returns:
             ExecuteFeatureGroupOperation: A dict that contains the execution status"""
-        return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query}, parse_type=ExecuteFeatureGroupOperation)
+        return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query, 'fixQueryOnError': fix_query_on_error}, parse_type=ExecuteFeatureGroupOperation)
 
     def get_execute_feature_group_operation_result_part_count(self, feature_group_operation_run_id: str) -> int:
         """Gets the number of parts in the result of the execution of fg operation
@@ -3310,17 +3312,19 @@ class ApiClient(ReadOnlyClient):
         agent_function_name = agent_function.__name__
         return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements)
 
-    def execute_feature_group_sql(self, sql, timeout=3600, delay=2):
+    def execute_feature_group_sql(self, sql, fix_query_on_error: bool = False, timeout=3600, delay=2):
         """
         Execute a SQL query on the feature groups
 
         Args:
             sql (str): The SQL query to execute.
+            fix_query_on_error (bool): If enabled, SQL query is auto fixed if parsing fails.
 
         Returns:
             pandas.DataFrame: The result of the query.
         """
-        execute_query = self.execute_async_feature_group_operation(sql)
+        execute_query = self.execute_async_feature_group_operation(
+            sql, fix_query_on_error=fix_query_on_error)
         execute_query.wait_for_execution(timeout=timeout, delay=delay)
         return execute_query.load_as_pandas()
 
@@ -3373,6 +3377,16 @@ class ApiClient(ReadOnlyClient):
             List[str]: The document IDs the current request being processed by the Agent.
         """
         return get_object_from_context(self, _request_context, 'doc_ids', List[str])
+
+    def get_agent_context_blob_inputs(self):
+        """
+        Gets the BlobInputs from the current request context if a document has been uploaded with the request.
+        Applicable within a AIAgent execute function.
+
+        Returns:
+            List[BlobInput]: The BlobInput the current request being processed by the Agent.
+        """
+        return get_object_from_context(self, _request_context, 'blob_inputs', List[BlobInput])
 
     def clear_agent_context(self):
         """
@@ -3558,15 +3572,21 @@ class ApiClient(ReadOnlyClient):
             schema_document_retriever_ids (List[str]): A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
 
         Returns:
-            pandas.DataFrame: The result of the query.
+            LlmExecutionResult: The result of the query execution.
         """
         code = self.generate_code_for_data_query_using_llm(
             query=query, feature_group_ids=feature_group_ids, prompt_context=prompt_context, llm_name=llm_name, temperature=temperature)
-        if preview:
-            return self._build_class(LlmExecutionResult, {'preview': {'sql': code.sql}})
-        execute_query = self.execute_async_feature_group_operation(code.sql)
-        execute_query.wait_for_execution(timeout=timeout, delay=delay)
-        return self._build_class(LlmExecutionResult, {'error': execute_query.error}) if execute_query.error else execute_query.load_as_pandas()
+        result_dict = {'preview': {'sql': code.sql}}
+        if not preview:
+            execute_query = self.execute_async_feature_group_operation(
+                code.sql)
+            execute_query.wait_for_execution(timeout=timeout, delay=delay)
+            execute_query_dict = {'error': execute_query.error} if execute_query.error else {
+                'featureGroupOperationRunId': execute_query.feature_group_operation_run_id,
+                'status': execute_query.status,
+            }
+            result_dict.update({'execution': execute_query_dict})
+        return self._build_class(LlmExecutionResult, result_dict)
 
     def _get_doc_retriver_deployment_info(self, document_retriever_id: str):
         ttl_seconds = 300  # 5 minutes
@@ -5992,7 +6012,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False) -> Dict:
+    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False, save_extracted_features: bool = None) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
         Args:
@@ -6001,10 +6021,11 @@ Creates a new feature group defined as the union of other feature group versions
             pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             doc_id (str): (Optional) The pdf to predict on. One of pdf or docId must be specified.
             return_extracted_features (bool): (Optional) If True, will return all extracted features (e.g. all tokens in a page) from the PDF. Default is False.
-            verbose (bool): (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False."""
+            verbose (bool): (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
+            save_extracted_features (bool): (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features, 'verbose': verbose}, files={'pdf': pdf}, server_override=prediction_url)
+        return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features, 'verbose': verbose, 'saveExtractedFeatures': save_extracted_features}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
@@ -6369,21 +6390,6 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docIds': doc_ids}, server_override=prediction_url)
-
-    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None) -> Dict:
-        """Executes a deployed AI agent function with binary data as inputs.
-
-        Args:
-            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-            deployment_id (str): A unique string identifier for the deployment created under the project.
-            blob (io.TextIOBase): The multipart/form-data of the binary data.
-            arguments (list): Positional arguments to the agent execute function.
-            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
-            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created."""
-        prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
-        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, files={'blob': blob}, server_override=prediction_url)
 
     def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
@@ -7487,8 +7493,8 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             prompt (str): Prompt to use for generation.
-            system_message (str): System message for models that support it. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set.
-            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'CLAUDE_V2', 'PALM', 'PALM_TEXT', ABACUS_GIRAFFE', 'ABACUS_LLAMA2_QA' or 'LLAMA2_CHAT'. Default is auto selection.
+            system_message (str): System prompt for models that support it.
+            llm_name (str): Name of the underlying LLM to be used for generation. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
             temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
             messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
@@ -7549,6 +7555,22 @@ Creates a new feature group defined as the union of other feature group versions
             ExtractedFields: The response from the document query."""
         return self._call_api('extractDataUsingLLM', 'POST', query_params={}, body={'fieldDescriptors': field_descriptors, 'documentId': document_id, 'documentText': document_text, 'llmName': llm_name}, parse_type=ExtractedFields)
 
+    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> AgentDataExecutionResult:
+        """Executes a deployed AI agent function with binary data as inputs.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+            blobs (None): A dictionary of binary data to use as inputs to the agent execute function.
+
+        Returns:
+            AgentDataExecutionResult: The result of the agent execution"""
+        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, parse_type=AgentDataExecutionResult, files=blobs)
+
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -7565,28 +7587,28 @@ Creates a new feature group defined as the union of other feature group versions
             DocumentRetriever: The newly created document retriever."""
         return self._call_api('createDocumentRetriever', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'featureGroupId': feature_group_id, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetriever)
 
-    def update_document_retriever(self, document_retriever_id: str, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
+    def rename_document_retriever(self, document_retriever_id: str, name: str) -> DocumentRetriever:
         """Updates an existing document retriever.
 
         Args:
             document_retriever_id (str): The unique ID associated with the document retriever.
-            name (str): The name group to update the document retriever with.
-            feature_group_id (str): The ID of the feature group to update the document retriever with.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            name (str): The name to update the document retriever with.
 
         Returns:
             DocumentRetriever: The updated document retriever."""
-        return self._call_api('updateDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'name': name, 'featureGroupId': feature_group_id, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetriever)
+        return self._call_api('renameDocumentRetriever', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'name': name}, parse_type=DocumentRetriever)
 
-    def create_document_retriever_version(self, document_retriever_id: str) -> DocumentRetrieverVersion:
+    def create_document_retriever_version(self, document_retriever_id: str, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetrieverVersion:
         """Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
         Args:
             document_retriever_id (str): The unique ID associated with the document retriever to create version with.
+            feature_group_id (str): The ID of the feature group to update the document retriever with.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetrieverVersion: The newly created document retriever version."""
-        return self._call_api('createDocumentRetrieverVersion', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id}, parse_type=DocumentRetrieverVersion)
+        return self._call_api('createDocumentRetrieverVersion', 'POST', query_params={}, body={'documentRetrieverId': document_retriever_id, 'featureGroupId': feature_group_id, 'documentRetrieverConfig': document_retriever_config}, parse_type=DocumentRetrieverVersion)
 
     def delete_document_retriever(self, vector_store_id: str):
         """Delete a Document Retriever.

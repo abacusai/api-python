@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.dataset_application_connector &mdash; AbacusAI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -105,16 +107,19 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig" title="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GoogleDriveDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Google Drive Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig" title="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneDriveDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig" title="abacusai.api_class.dataset_application_connector.JiraDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JiraDatasetConfig</span></code></a></p></td>
+<td><p>Dataset config for Jira Application Connector</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig" title="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneDriveDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for OneDrive Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig" title="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SharepointDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig" title="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SharepointDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Sharepoint Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig" title="abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ZendeskDatasetConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig" title="abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ZendeskDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Zendesk Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._DatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._DatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_DatasetConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.dataset_application_connector._DatasetConfigFactory" title="abacusai.api_class.dataset_application_connector._DatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_DatasetConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
@@ -153,13 +158,16 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">GoogleAnalyticsDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DatasetConfig" title="abacusai.api_class.dataset_application_connector.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p>
-<p>Dataset config for Google Analytics Application Connector
-:param location: The view id of the report in the connector to fetch
-:type location: str
-:param start_timestamp: Unix timestamp of the start of the period that will be queried
-:type start_timestamp: int, optional
-:param end_timestamp: Unix timestamp of the end of the period that will be queried
-:type end_timestamp: int, optional</p>
+<p>Dataset config for Google Analytics Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The view id of the report in the connector to fetch</p></li>
+<li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Unix timestamp of the start of the period that will be queried</p></li>
+<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>, </em><em>optional</em>) – Unix timestamp of the end of the period that will be queried</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig.location" title="Permalink to this definition"></a></dt>
@@ -186,17 +194,18 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">GoogleDriveDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DatasetConfig" title="abacusai.api_class.dataset_application_connector.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p>
-<p>Dataset config for Google Drive Application Connector
-:param location: The regex location of the files to fetch
-:type location: str
-:param is_documentset: Whether the dataset is a document set
-:type is_documentset: bool
-:param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-:type csv_delimiter: str, optional
-:param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-:type extract_bounding_boxes: bool, optional
-:param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-:type merge_file_schemas: bool, optional</p>
+<p>Dataset config for Google Drive Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>is_documentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the dataset is a document set</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig.location" title="Permalink to this definition"></a></dt>
@@ -230,20 +239,63 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">JiraDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DatasetConfig" title="abacusai.api_class.dataset_application_connector.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p>
+<p>Dataset config for Jira Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>jql</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The JQL query for fetching issues</p></li>
+<li><p><strong>custom_fields</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>, </em><em>optional</em>) – A list of custom fields to include in the dataset</p></li>
+<li><p><strong>include_comments</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Fetch comments for each issue</p></li>
+<li><p><strong>include_watchers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Fetch watchers for each issue</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql">
+<span class="sig-name descname"><span class="pre">jql</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.jql" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields">
+<span class="sig-name descname"><span class="pre">custom_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.custom_fields" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments">
+<span class="sig-name descname"><span class="pre">include_comments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_comments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers">
+<span class="sig-name descname"><span class="pre">include_watchers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.include_watchers" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.JiraDatasetConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.JiraDatasetConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">OneDriveDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DatasetConfig" title="abacusai.api_class.dataset_application_connector.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p>
-<p>Dataset config for OneDrive Application Connector
-:param location: The regex location of the files to fetch
-:type location: str
-:param is_documentset: Whether the dataset is a document set
-:type is_documentset: bool
-:param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-:type csv_delimiter: str, optional
-:param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-:type extract_bounding_boxes: bool, optional
-:param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-:type merge_file_schemas: bool, optional</p>
+<p>Dataset config for OneDrive Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>is_documentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the dataset is a document set</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig.location" title="Permalink to this definition"></a></dt>
@@ -280,17 +332,18 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.dataset_application_connector.</span></span><span class="sig-name descname"><span class="pre">SharepointDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.dataset_application_connector.DatasetConfig" title="abacusai.api_class.dataset_application_connector.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p>
-<p>Dataset config for Sharepoint Application Connector
-:param location: The regex location of the files to fetch
-:type location: str
-:param is_documentset: Whether the dataset is a document set
-:type is_documentset: bool
-:param csv_delimiter: If the file format is CSV, use a specific csv delimiter
-:type csv_delimiter: str, optional
-:param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True
-:type extract_bounding_boxes: bool, optional
-:param merge_file_schemas: Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True
-:type merge_file_schemas: bool, optional</p>
+<p>Dataset config for Sharepoint Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The regex location of the files to fetch</p></li>
+<li><p><strong>is_documentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the dataset is a document set</p></li>
+<li><p><strong>csv_delimiter</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><em>optional</em>) – If the file format is CSV, use a specific csv delimiter</p></li>
+<li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True</p></li>
+<li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a><em>, </em><em>optional</em>) – Signifies if the merge file schema policy is enabled. Not applicable if is_documentset is True</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.dataset_application_connector.SharepointDatasetConfig.location" title="Permalink to this definition"></a></dt>

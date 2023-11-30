@@ -51,6 +51,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Accuracy Below Threshold Condition Config for Monitor Alerts
+
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
@@ -69,6 +70,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Feature Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -108,6 +110,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Target Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -133,6 +136,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    History Length Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -158,6 +162,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Data Integrity Violation Condition Config for Monitor Alerts
+
    :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
    :type data_integrity_type: DataIntegrityViolationType
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -183,6 +188,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Bias Violation Condition Config for Monitor Alerts
+
    :param bias_type: This option selects the bias metric to monitor for this alert.
    :type bias_type: BiasType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -260,6 +266,7 @@ Classes
    Bases: :py:obj:`AlertActionConfig`
 
    Email Action Config for Monitor Alerts
+
    :param email_recipients: List of email addresses to send the alert to.
    :type email_recipients: List[str]
    :param email_body: Body of the email to send.

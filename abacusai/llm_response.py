@@ -8,7 +8,7 @@ class LlmResponse(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            content (str): Content of the response.
+            content (str): Full response from LLM.
             tokens (int): The number of tokens in the response.
             stopReason (str): The reason due to which the response generation stopped.
             llmName (str): The name of the LLM model used to generate the response.

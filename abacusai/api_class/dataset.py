@@ -20,3 +20,4 @@ class DocumentProcessingConfig(ApiClass):
     use_full_ocr: bool = None
     layout_analysis: bool = False
     enhanced_layout_detection: bool = False
+    enhanced_layout_detection_v2: bool = False

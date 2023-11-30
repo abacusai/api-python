@@ -62,6 +62,7 @@ Classes
    abacusai.api_class.ConfluenceDatasetConfig
    abacusai.api_class.GoogleAnalyticsDatasetConfig
    abacusai.api_class.GoogleDriveDatasetConfig
+   abacusai.api_class.JiraDatasetConfig
    abacusai.api_class.OneDriveDatasetConfig
    abacusai.api_class.SharepointDatasetConfig
    abacusai.api_class.ZendeskDatasetConfig
@@ -398,6 +399,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_DETECTION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param prediction_time_endpoint: The end point for predictions.
@@ -458,6 +460,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_OUTLIERS problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
@@ -483,6 +486,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the FORECASTING problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
    :type for_eval: bool
    :param predictions_start_date: The start date for predictions.
@@ -543,6 +547,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param verbose_predictions: Return prediction inputs, predicted annotations and token label probabilities.
@@ -568,6 +573,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PERSONALIZATION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param number_of_items: Number of items to recommend.
@@ -607,6 +613,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PREDICTIVE_MODELING problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param explainer_type: The type of explainer to use to generate explanations on the batch prediction.
@@ -688,6 +695,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param files_output_location_prefix: The output location prefix for the files.
@@ -720,6 +728,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
    :type for_eval: bool
    :param explode_output: Explode data so there is one sentence per row.
@@ -745,6 +754,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the THEME_ANALYSIS problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param analysis_frequency: The length of each analysis interval.
@@ -784,6 +794,7 @@ Classes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ChatLLM problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
 
@@ -1061,6 +1072,12 @@ Classes
 
       
 
+   .. py:attribute:: enhanced_layout_detection_v2
+      :type: bool
+      :value: False
+
+      
+
 
 .. py:class:: ApiClass
 
@@ -1182,6 +1199,7 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Analytics Application Connector
+
    :param location: The view id of the report in the connector to fetch
    :type location: str
    :param start_timestamp: Unix timestamp of the start of the period that will be queried
@@ -1214,6 +1232,7 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Drive Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -1254,12 +1273,53 @@ Classes
 
 
 
+.. py:class:: JiraDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Jira Application Connector
+
+   :param jql: The JQL query for fetching issues
+   :type jql: str
+   :param custom_fields: A list of custom fields to include in the dataset
+   :type custom_fields: list, optional
+   :param include_comments: Fetch comments for each issue
+   :type include_comments: bool, optional
+   :param include_watchers: Fetch watchers for each issue
+   :type include_watchers: bool, optional
+
+   .. py:attribute:: jql
+      :type: str
+
+      
+
+   .. py:attribute:: custom_fields
+      :type: list
+
+      
+
+   .. py:attribute:: include_comments
+      :type: bool
+
+      
+
+   .. py:attribute:: include_watchers
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: OneDriveDatasetConfig
 
 
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for OneDrive Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -1306,6 +1366,7 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -1762,7 +1823,7 @@ Classes
    Derive from this class to define new enumerations.
 
    .. py:attribute:: RAPID
-      :value: ('rapid',)
+      :value: 'rapid'
 
       
 
@@ -1930,7 +1991,7 @@ Classes
 .. py:class:: ExplainerType
 
 
-   Bases: :py:obj:`enum.Enum`
+   Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
 
@@ -2886,6 +2947,11 @@ Classes
 
       
 
+   .. py:attribute:: JIRA
+      :value: 'JIRA'
+
+      
+
    .. py:attribute:: ONEDRIVE
       :value: 'ONEDRIVE'
 
@@ -3785,6 +3851,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PERSONALIZATION problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -4044,6 +4111,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PREDICTIVE_MODELING problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: RegressionObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -4335,6 +4403,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the FORECASTING problem type
+
    :param prediction_length: How many timesteps in the future to predict.
    :type prediction_length: int
    :param objective: Ranking scheme used to select final best model.
@@ -4456,6 +4525,7 @@ Classes
    :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: List[str]
+   :param return_fractional_forecasts: Use this to return fractional forecast values while prediction
 
    .. py:attribute:: prediction_length
       :type: int
@@ -4762,6 +4832,11 @@ Classes
 
       
 
+   .. py:attribute:: return_fractional_forecasts
+      :type: bool
+
+      
+
    .. py:method:: __post_init__()
 
 
@@ -4772,6 +4847,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -4869,6 +4945,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
+
    :param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
    :type abacus_internal_model: bool
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -4922,6 +4999,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
+
    :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -4968,6 +5046,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -5000,6 +5079,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTIMENT_DETECTION problem type
+
    :param sentiment_type: Type of sentiment to detect.
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -5046,6 +5126,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
+
    :param zero_shot_hypotheses: Zero shot hypotheses. Example text: 'This text is about pricing'.
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -5085,6 +5166,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -5117,6 +5199,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_VISUALIZATION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -5149,6 +5232,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
+
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
 
@@ -5167,6 +5251,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING_TIMESERIES problem type
+
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
    :param imputation: Imputation method for missing values.
@@ -5192,6 +5277,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
+
    :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
    :type anomaly_fraction: float
 
@@ -5210,6 +5296,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUMULATIVE_FORECASTING problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param historical_frequency: Forecast frequency
@@ -5263,6 +5350,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the ANOMALY_DETECTION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
    :type test_split: int
    :param value_high: Detect unusually high values.
@@ -5334,6 +5422,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the AI_AGENT problem type
+
    :param description: Description of the agent function.
    :type description: str
    :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
@@ -5359,6 +5448,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
+
    :param max_catalog_size: Maximum expected catalog size.
    :type max_catalog_size: int
    :param max_dimension: Maximum expected dimension of the catalog.
@@ -5405,6 +5495,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_ALGORITHM problem type
+
    :param train_function_name: The name of the train function.
    :type train_function_name: str
    :param predict_many_function_name: The name of the predict many function.
@@ -5465,6 +5556,7 @@ Classes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
+
    :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
 
@@ -5505,6 +5597,7 @@ Classes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Algorithm that can be deployed to a model.
+
    :param algorithm: ID of the algorithm.
    :type algorithm: str
    :param name: Name of the algorithm.
@@ -5745,6 +5838,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Accuracy Below Threshold Condition Config for Monitor Alerts
+
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
@@ -5763,6 +5857,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Feature Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5802,6 +5897,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Target Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5827,6 +5923,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    History Length Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5852,6 +5949,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Data Integrity Violation Condition Config for Monitor Alerts
+
    :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
    :type data_integrity_type: DataIntegrityViolationType
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -5877,6 +5975,7 @@ Classes
    Bases: :py:obj:`AlertConditionConfig`
 
    Bias Violation Condition Config for Monitor Alerts
+
    :param bias_type: This option selects the bias metric to monitor for this alert.
    :type bias_type: BiasType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5954,6 +6053,7 @@ Classes
    Bases: :py:obj:`AlertActionConfig`
 
    Email Action Config for Monitor Alerts
+
    :param email_recipients: List of email addresses to send the alert to.
    :type email_recipients: List[str]
    :param email_body: Body of the email to send.

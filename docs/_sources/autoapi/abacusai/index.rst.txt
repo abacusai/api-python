@@ -21,6 +21,8 @@ Submodules
 
    abacus_api/index.rst
    agent/index.rst
+   agent_data_execution_result/index.rst
+   agent_data_upload_result/index.rst
    agent_version/index.rst
    ai_building_task/index.rst
    algorithm/index.rst
@@ -243,6 +245,7 @@ Classes
    abacusai.ConfluenceDatasetConfig
    abacusai.GoogleAnalyticsDatasetConfig
    abacusai.GoogleDriveDatasetConfig
+   abacusai.JiraDatasetConfig
    abacusai.OneDriveDatasetConfig
    abacusai.SharepointDatasetConfig
    abacusai.ZendeskDatasetConfig
@@ -520,6 +523,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_DETECTION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param prediction_time_endpoint: The end point for predictions.
@@ -580,6 +584,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_OUTLIERS problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
@@ -605,6 +610,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the FORECASTING problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
    :type for_eval: bool
    :param predictions_start_date: The start date for predictions.
@@ -665,6 +671,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param verbose_predictions: Return prediction inputs, predicted annotations and token label probabilities.
@@ -690,6 +697,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PERSONALIZATION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param number_of_items: Number of items to recommend.
@@ -729,6 +737,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PREDICTIVE_MODELING problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param explainer_type: The type of explainer to use to generate explanations on the batch prediction.
@@ -810,6 +819,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param files_output_location_prefix: The output location prefix for the files.
@@ -842,6 +852,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation
    :type for_eval: bool
    :param explode_output: Explode data so there is one sentence per row.
@@ -867,6 +878,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the THEME_ANALYSIS problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
    :param analysis_frequency: The length of each analysis interval.
@@ -906,6 +918,7 @@ Attributes
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ChatLLM problem type
+
    :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
    :type for_eval: bool
 
@@ -1063,6 +1076,12 @@ Attributes
 
       
 
+   .. py:attribute:: enhanced_layout_detection_v2
+      :type: bool
+      :value: False
+
+      
+
 
 .. py:class:: DatasetConfig
 
@@ -1099,6 +1118,7 @@ Attributes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Analytics Application Connector
+
    :param location: The view id of the report in the connector to fetch
    :type location: str
    :param start_timestamp: Unix timestamp of the start of the period that will be queried
@@ -1131,6 +1151,7 @@ Attributes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Drive Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -1171,12 +1192,53 @@ Attributes
 
 
 
+.. py:class:: JiraDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Jira Application Connector
+
+   :param jql: The JQL query for fetching issues
+   :type jql: str
+   :param custom_fields: A list of custom fields to include in the dataset
+   :type custom_fields: list, optional
+   :param include_comments: Fetch comments for each issue
+   :type include_comments: bool, optional
+   :param include_watchers: Fetch watchers for each issue
+   :type include_watchers: bool, optional
+
+   .. py:attribute:: jql
+      :type: str
+
+      
+
+   .. py:attribute:: custom_fields
+      :type: list
+
+      
+
+   .. py:attribute:: include_comments
+      :type: bool
+
+      
+
+   .. py:attribute:: include_watchers
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: OneDriveDatasetConfig
 
 
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for OneDrive Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -1223,6 +1285,7 @@ Attributes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -1619,7 +1682,7 @@ Attributes
    Derive from this class to define new enumerations.
 
    .. py:attribute:: RAPID
-      :value: ('rapid',)
+      :value: 'rapid'
 
       
 
@@ -1787,7 +1850,7 @@ Attributes
 .. py:class:: ExplainerType
 
 
-   Bases: :py:obj:`enum.Enum`
+   Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
 
@@ -2743,6 +2806,11 @@ Attributes
 
       
 
+   .. py:attribute:: JIRA
+      :value: 'JIRA'
+
+      
+
    .. py:attribute:: ONEDRIVE
       :value: 'ONEDRIVE'
 
@@ -3442,6 +3510,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PERSONALIZATION problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: PersonalizationObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -3701,6 +3770,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the PREDICTIVE_MODELING problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: RegressionObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -3992,6 +4062,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the FORECASTING problem type
+
    :param prediction_length: How many timesteps in the future to predict.
    :type prediction_length: int
    :param objective: Ranking scheme used to select final best model.
@@ -4113,6 +4184,7 @@ Attributes
    :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: List[str]
+   :param return_fractional_forecasts: Use this to return fractional forecast values while prediction
 
    .. py:attribute:: prediction_length
       :type: int
@@ -4419,6 +4491,11 @@ Attributes
 
       
 
+   .. py:attribute:: return_fractional_forecasts
+      :type: bool
+
+      
+
    .. py:method:: __post_init__()
 
 
@@ -4429,6 +4506,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
+
    :param objective: Ranking scheme used to select final best model.
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
@@ -4526,6 +4604,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
+
    :param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
    :type abacus_internal_model: bool
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -4579,6 +4658,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
+
    :param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
@@ -4625,6 +4705,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -4657,6 +4738,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTIMENT_DETECTION problem type
+
    :param sentiment_type: Type of sentiment to detect.
    :type sentiment_type: SentimentType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -4703,6 +4785,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
+
    :param zero_shot_hypotheses: Zero shot hypotheses. Example text: 'This text is about pricing'.
    :type zero_shot_hypotheses: List[str]
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
@@ -4742,6 +4825,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -4774,6 +4858,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_VISUALIZATION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param dropout_rate: Dropout rate for neural network.
@@ -4806,6 +4891,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
+
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
 
@@ -4824,6 +4910,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING_TIMESERIES problem type
+
    :param num_clusters_selection: Number of clusters. If None, will be selected automatically.
    :type num_clusters_selection: int
    :param imputation: Imputation method for missing values.
@@ -4849,6 +4936,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
+
    :param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
    :type anomaly_fraction: float
 
@@ -4867,6 +4955,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUMULATIVE_FORECASTING problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param historical_frequency: Forecast frequency
@@ -4920,6 +5009,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the ANOMALY_DETECTION problem type
+
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
    :type test_split: int
    :param value_high: Detect unusually high values.
@@ -4991,6 +5081,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the AI_AGENT problem type
+
    :param description: Description of the agent function.
    :type description: str
    :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
@@ -5016,6 +5107,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_TRAINED_MODEL problem type
+
    :param max_catalog_size: Maximum expected catalog size.
    :type max_catalog_size: int
    :param max_dimension: Maximum expected dimension of the catalog.
@@ -5062,6 +5154,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CUSTOM_ALGORITHM problem type
+
    :param train_function_name: The name of the train function.
    :type train_function_name: str
    :param predict_many_function_name: The name of the predict many function.
@@ -5122,6 +5215,7 @@ Attributes
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
+
    :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
 
@@ -5162,6 +5256,7 @@ Attributes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Algorithm that can be deployed to a model.
+
    :param algorithm: ID of the algorithm.
    :type algorithm: str
    :param name: Name of the algorithm.
@@ -5257,6 +5352,7 @@ Attributes
    Bases: :py:obj:`AlertConditionConfig`
 
    Accuracy Below Threshold Condition Config for Monitor Alerts
+
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
    :type threshold: float
 
@@ -5275,6 +5371,7 @@ Attributes
    Bases: :py:obj:`AlertConditionConfig`
 
    Feature Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5314,6 +5411,7 @@ Attributes
    Bases: :py:obj:`AlertConditionConfig`
 
    Target Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5339,6 +5437,7 @@ Attributes
    Bases: :py:obj:`AlertConditionConfig`
 
    History Length Drift Condition Config for Monitor Alerts
+
    :param feature_drift_type: History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.
    :type feature_drift_type: FeatureDriftType
    :param threshold: Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5364,6 +5463,7 @@ Attributes
    Bases: :py:obj:`AlertConditionConfig`
 
    Data Integrity Violation Condition Config for Monitor Alerts
+
    :param data_integrity_type: This option selects the data integrity violations to monitor for this alert.
    :type data_integrity_type: DataIntegrityViolationType
    :param minimum_violations: Number of columns that must exceed the specified threshold to trigger an alert.
@@ -5389,6 +5489,7 @@ Attributes
    Bases: :py:obj:`AlertConditionConfig`
 
    Bias Violation Condition Config for Monitor Alerts
+
    :param bias_type: This option selects the bias metric to monitor for this alert.
    :type bias_type: BiasType
    :param threshold: Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -5466,6 +5567,7 @@ Attributes
    Bases: :py:obj:`AlertActionConfig`
 
    Email Action Config for Monitor Alerts
+
    :param email_recipients: List of email addresses to send the alert to.
    :type email_recipients: List[str]
    :param email_body: Body of the email to send.
@@ -6323,12 +6425,14 @@ Attributes
       :type package_requirements: List
 
 
-   .. py:method:: execute_feature_group_sql(sql, timeout=3600, delay=2)
+   .. py:method:: execute_feature_group_sql(sql, fix_query_on_error = False, timeout=3600, delay=2)
 
       Execute a SQL query on the feature groups
 
       :param sql: The SQL query to execute.
       :type sql: str
+      :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
+      :type fix_query_on_error: bool
 
       :returns: The result of the query.
       :rtype: pandas.DataFrame
@@ -6375,6 +6479,15 @@ Attributes
 
       :returns: The document IDs the current request being processed by the Agent.
       :rtype: List[str]
+
+
+   .. py:method:: get_agent_context_blob_inputs()
+
+      Gets the BlobInputs from the current request context if a document has been uploaded with the request.
+      Applicable within a AIAgent execute function.
+
+      :returns: The BlobInput the current request being processed by the Agent.
+      :rtype: List[BlobInput]
 
 
    .. py:method:: clear_agent_context()
@@ -6470,8 +6583,8 @@ Attributes
       :param schema_document_retriever_ids: A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
       :type schema_document_retriever_ids: List[str]
 
-      :returns: The result of the query.
-      :rtype: pandas.DataFrame
+      :returns: The result of the query execution.
+      :rtype: LlmExecutionResult
 
 
    .. py:method:: _get_doc_retriver_deployment_info(document_retriever_id)
@@ -9622,7 +9735,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -9638,6 +9751,8 @@ Attributes
       :type return_extracted_features: bool
       :param verbose: (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
       :type verbose: bool
+      :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
+      :type save_extracted_features: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
@@ -10090,26 +10205,6 @@ Attributes
       :type regenerate: bool
       :param doc_ids: An optional list of document IDs to use for the conversation.
       :type doc_ids: list
-
-
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
-
-      Executes a deployed AI agent function with binary data as inputs.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param blob: The multipart/form-data of the binary data.
-      :type blob: io.TextIOBase
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
-      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-      :type external_session_id: str
 
 
    .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
@@ -11520,9 +11615,9 @@ Attributes
 
       :param prompt: Prompt to use for generation.
       :type prompt: str
-      :param system_message: System message for models that support it. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set.
+      :param system_message: System prompt for models that support it.
       :type system_message: str
-      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'OPENAI_GPT4', 'OPENAI_GPT3_5', 'OPENAI_GPT3_5_TEXT', 'CLAUDE_V2', 'PALM', 'PALM_TEXT', ABACUS_GIRAFFE', 'ABACUS_LLAMA2_QA' or 'LLAMA2_CHAT'. Default is auto selection.
+      :param llm_name: Name of the underlying LLM to be used for generation. Default is auto selection.
       :type llm_name: str
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
@@ -11603,6 +11698,29 @@ Attributes
       :rtype: ExtractedFields
 
 
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
+
+      Executes a deployed AI agent function with binary data as inputs.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
+      :type blobs: None
+
+      :returns: The result of the agent execution
+      :rtype: AgentDataExecutionResult
+
+
    .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)
 
       Returns a document retriever that stores embeddings for document chunks in a feature group.
@@ -11623,29 +11741,29 @@ Attributes
       :rtype: DocumentRetriever
 
 
-   .. py:method:: update_document_retriever(document_retriever_id, name = None, feature_group_id = None, document_retriever_config = None)
+   .. py:method:: rename_document_retriever(document_retriever_id, name)
 
       Updates an existing document retriever.
 
       :param document_retriever_id: The unique ID associated with the document retriever.
       :type document_retriever_id: str
-      :param name: The name group to update the document retriever with.
+      :param name: The name to update the document retriever with.
       :type name: str
-      :param feature_group_id: The ID of the feature group to update the document retriever with.
-      :type feature_group_id: str
-      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
-      :type document_retriever_config: DocumentRetrieverConfig
 
       :returns: The updated document retriever.
       :rtype: DocumentRetriever
 
 
-   .. py:method:: create_document_retriever_version(document_retriever_id)
+   .. py:method:: create_document_retriever_version(document_retriever_id, feature_group_id = None, document_retriever_config = None)
 
       Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
       :param document_retriever_id: The unique ID associated with the document retriever to create version with.
       :type document_retriever_id: str
+      :param feature_group_id: The ID of the feature group to update the document retriever with.
+      :type feature_group_id: str
+      :param document_retriever_config: The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+      :type document_retriever_config: DocumentRetrieverConfig
 
       :returns: The newly created document retriever version.
       :rtype: DocumentRetrieverVersion
@@ -12054,12 +12172,14 @@ Attributes
       :rtype: list[FeatureGroup]
 
 
-   .. py:method:: execute_async_feature_group_operation(query = None)
+   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False)
 
       Starts the execution of fg operation
 
       :param query: The SQL to be executed.
       :type query: str
+      :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
+      :type fix_query_on_error: bool
 
       :returns: A dict that contains the execution status
       :rtype: ExecuteFeatureGroupOperation
@@ -14113,7 +14233,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -14129,6 +14249,8 @@ Attributes
       :type return_extracted_features: bool
       :param verbose: (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
       :type verbose: bool
+      :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
+      :type save_extracted_features: bool
 
 
    .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
@@ -14583,26 +14705,6 @@ Attributes
       :type doc_ids: list
 
 
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, blob, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None)
-
-      Executes a deployed AI agent function with binary data as inputs.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param blob: The multipart/form-data of the binary data.
-      :type blob: io.TextIOBase
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
-      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-      :type external_session_id: str
-
-
    .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
@@ -14730,7 +14832,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.79.5'
+   :value: '0.79.8'
 
    
 

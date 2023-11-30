@@ -16,6 +16,7 @@ Classes
    abacusai.api_class.dataset_application_connector.ConfluenceDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleAnalyticsDatasetConfig
    abacusai.api_class.dataset_application_connector.GoogleDriveDatasetConfig
+   abacusai.api_class.dataset_application_connector.JiraDatasetConfig
    abacusai.api_class.dataset_application_connector.OneDriveDatasetConfig
    abacusai.api_class.dataset_application_connector.SharepointDatasetConfig
    abacusai.api_class.dataset_application_connector.ZendeskDatasetConfig
@@ -59,6 +60,7 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Analytics Application Connector
+
    :param location: The view id of the report in the connector to fetch
    :type location: str
    :param start_timestamp: Unix timestamp of the start of the period that will be queried
@@ -91,6 +93,7 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Google Drive Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -131,12 +134,53 @@ Classes
 
 
 
+.. py:class:: JiraDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Jira Application Connector
+
+   :param jql: The JQL query for fetching issues
+   :type jql: str
+   :param custom_fields: A list of custom fields to include in the dataset
+   :type custom_fields: list, optional
+   :param include_comments: Fetch comments for each issue
+   :type include_comments: bool, optional
+   :param include_watchers: Fetch watchers for each issue
+   :type include_watchers: bool, optional
+
+   .. py:attribute:: jql
+      :type: str
+
+      
+
+   .. py:attribute:: custom_fields
+      :type: list
+
+      
+
+   .. py:attribute:: include_comments
+      :type: bool
+
+      
+
+   .. py:attribute:: include_watchers
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: OneDriveDatasetConfig
 
 
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for OneDrive Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set
@@ -183,6 +227,7 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
+
    :param location: The regex location of the files to fetch
    :type location: str
    :param is_documentset: Whether the dataset is a document set

@@ -7,10 +7,10 @@ class LlmCodeBlock(AbstractApiClass):
 
         Args:
             client (ApiClient): An authenticated API Client instance
-            language (str): The language of the code block. Eg - python/SQL/etc.
+            language (str): The language of the code block. Eg - python/sql/etc.
             code (str): source code string
-            start (number(integer)): index of the starting character of the code block in the original response
-            end (number(integer)): index of the last character of the code block in the original response
+            start (int): index of the starting character of the code block in the original response
+            end (int): index of the last character of the code block in the original response
             valid (bool): flag denoting whether the soruce code string is syntactically valid
     """
 

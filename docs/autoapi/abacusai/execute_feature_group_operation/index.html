@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.execute_feature_group_operation &mdash; AbacusAI  documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -49,6 +51,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.abacus_api</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_data_execution_result</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_data_upload_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_data_upload_result</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ai_building_task/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.ai_building_task</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../algorithm/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.algorithm</span></code></a></li>
@@ -289,7 +293,7 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.execute_feature_group_operation.</span></span><span class="sig-name descname"><span class="pre">ExecuteFeatureGroupOperation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupOperationRunId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.execute_feature_group_operation.</span></span><span class="sig-name descname"><span class="pre">ExecuteFeatureGroupOperation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">featureGroupOperationRunId</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.execute_feature_group_operation.ExecuteFeatureGroupOperation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../return_class/index.html#abacusai.return_class.AbstractApiClass" title="abacusai.return_class.AbstractApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.return_class.AbstractApiClass</span></code></a></p>
 <p>The result of executing a SQL query</p>
 <dl class="field-list simple">
@@ -299,6 +303,7 @@
 <li><p><strong>featureGroupOperationRunId</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The run id of the operation</p></li>
 <li><p><strong>status</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The status of the operation</p></li>
 <li><p><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The error message if the operation failed</p></li>
+<li><p><strong>query</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The SQL query of the operation</p></li>
 </ul>
 </dd>
 </dl>

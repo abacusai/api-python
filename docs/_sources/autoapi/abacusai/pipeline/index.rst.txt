@@ -238,4 +238,20 @@ Classes
       :type memory: int
 
 
+   .. py:method:: wait_for_pipeline(timeout=1200)
+
+      A waiting call until all the stages of the latest pipeline version is completed.
+
+      :param timeout: The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out.
+      :type timeout: int, optional
+
+
+   .. py:method:: get_status()
+
+      Gets the status of the pipeline version.
+
+      :returns: A string describing the status of a pipeline version (pending, running, complete, etc.).
+      :rtype: str
+
+
 

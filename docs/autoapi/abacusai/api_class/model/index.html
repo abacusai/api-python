@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class.model &mdash; AbacusAI  documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -209,75 +211,47 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">PersonalizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the PERSONALIZATION problem type
-:param objective: Ranking scheme used to select final best model.
-:type objective: PersonalizationObjective
-:param sort_objective: Ranking scheme used to sort models on the metrics page.
-:type sort_objective: PersonalizationObjective
-:param training_mode: whether to train in production or experimental mode. Defaults to EXP.
-:type training_mode: PersonalizationTrainingMode
-:param target_action_types: List of action types to use as targets for training.
-:type target_action_types: List[str]
-:param target_action_weights: Dictionary of action types to weights for training.
-:type target_action_weights: Dict[str, float]
-:param session_event_types: List of event types to treat as occurrences of sessions.
-:type session_event_types: List[str]
-:param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
-:type test_split: int
-:param recent_days_for_training: Limit training data to a certain latest number of days.
-:type recent_days_for_training: int
-:param training_start_date: Only consider training interaction data after this date. Specified in the timezone of the dataset.
-:type training_start_date: str
-:param test_on_user_split: Use user splits instead of using time splits, when validating and testing the model.
-:type test_on_user_split: bool
-:param test_split_on_last_k_items: Use last k items instead of global timestamp splits, when validating and testing the model.
-:type test_split_on_last_k_items: bool
-:param test_last_items_length: Number of items to leave out for each user when using leave k out folds.
-:type test_last_items_length: int
-:param test_window_length_hours: Duration (in hours) of most recent time window to use when validating and testing the model.
-:type test_window_length_hours: int
-:param explicit_time_split: Sets an explicit time-based test boundary.
-:type explicit_time_split: bool
-:param test_row_indicator: Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).
-:type test_row_indicator: str
-:param full_data_retraining: Train models separately with all the data.
-:type full_data_retraining: bool
-:param sequential_training: Train a mode sequentially through time.
-:type sequential_training: bool
-:param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
-:type data_split_feature_group_table_name: str
-:param optimized_event_type: The final event type to optimize for and compute metrics on.
-:type optimized_event_type: str
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: int
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize
-:param disable_transformer: Disable training the transformer algorithm.
-:type disable_transformer: bool
-:param disable_gpu: Disable training on GPU.
-:type disable_gpu: boo
-:param filter_history: Do not recommend items the user has already interacted with.
-:type filter_history: bool
-:param action_types_exclusion_days: Mapping from action type to number of days for which we exclude previously interacted items from prediction
-:type action_types_exclusion_days: Dict[str, float]
-:param session_dedupe_mins: Minimum number of minutes between two sessions for a user.
-:type session_dedupe_mins: float
-:param max_history_length: Maximum length of user-item history to include user in training examples.
-:type max_history_length: int
-:param compute_rerank_metrics: Compute metrics based on rerank results.
-:type compute_rerank_metrics: bool
-:param add_time_features: Include interaction time as a feature.
-:type add_time_features: bool
-:param disable_timestamp_scalar_features: Exclude timestamp scalar features.
-:type disable_timestamp_scalar_features: bool
-:param compute_session_metrics: Evaluate models based on how well they are able to predict the next session of interactions.
-:type compute_session_metrics: bool
-:param max_user_history_len_percentile: Filter out users with history length above this percentile.
-:type max_user_history_len_percentile: int
-:param downsample_item_popularity_percentile: Downsample items more popular than this percentile.
-:type downsample_item_popularity_percentile: float
-:param use_user_id_feature: Use user id as a feature in CTR models.
-:type use_user_id_feature: bool</p>
+<p>Training config for the PERSONALIZATION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationObjective" title="abacusai.api_class.enums.PersonalizationObjective"><em>PersonalizationObjective</em></a>) – Ranking scheme used to select final best model.</p></li>
+<li><p><strong>sort_objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationObjective" title="abacusai.api_class.enums.PersonalizationObjective"><em>PersonalizationObjective</em></a>) – Ranking scheme used to sort models on the metrics page.</p></li>
+<li><p><strong>training_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationTrainingMode" title="abacusai.api_class.enums.PersonalizationTrainingMode"><em>PersonalizationTrainingMode</em></a>) – whether to train in production or experimental mode. Defaults to EXP.</p></li>
+<li><p><strong>target_action_types</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of action types to use as targets for training.</p></li>
+<li><p><strong>target_action_weights</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – Dictionary of action types to weights for training.</p></li>
+<li><p><strong>session_event_types</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of event types to treat as occurrences of sessions.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.</p></li>
+<li><p><strong>recent_days_for_training</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Limit training data to a certain latest number of days.</p></li>
+<li><p><strong>training_start_date</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Only consider training interaction data after this date. Specified in the timezone of the dataset.</p></li>
+<li><p><strong>test_on_user_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use user splits instead of using time splits, when validating and testing the model.</p></li>
+<li><p><strong>test_split_on_last_k_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use last k items instead of global timestamp splits, when validating and testing the model.</p></li>
+<li><p><strong>test_last_items_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of items to leave out for each user when using leave k out folds.</p></li>
+<li><p><strong>test_window_length_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Duration (in hours) of most recent time window to use when validating and testing the model.</p></li>
+<li><p><strong>explicit_time_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Sets an explicit time-based test boundary.</p></li>
+<li><p><strong>test_row_indicator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Column indicating which rows to use for training (TRAIN), validation (VAL) and testing (TEST).</p></li>
+<li><p><strong>full_data_retraining</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Train models separately with all the data.</p></li>
+<li><p><strong>sequential_training</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Train a mode sequentially through time.</p></li>
+<li><p><strong>data_split_feature_group_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specify the table name of the feature group to export training data with the fold column.</p></li>
+<li><p><strong>optimized_event_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The final event type to optimize for and compute metrics on.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+<li><p><strong>disable_transformer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Disable training the transformer algorithm.</p></li>
+<li><p><strong>disable_gpu</strong> (<em>boo</em>) – Disable training on GPU.</p></li>
+<li><p><strong>filter_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Do not recommend items the user has already interacted with.</p></li>
+<li><p><strong>action_types_exclusion_days</strong> (<em>Dict</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – Mapping from action type to number of days for which we exclude previously interacted items from prediction</p></li>
+<li><p><strong>session_dedupe_mins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum number of minutes between two sessions for a user.</p></li>
+<li><p><strong>max_history_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum length of user-item history to include user in training examples.</p></li>
+<li><p><strong>compute_rerank_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Compute metrics based on rerank results.</p></li>
+<li><p><strong>add_time_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Include interaction time as a feature.</p></li>
+<li><p><strong>disable_timestamp_scalar_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Exclude timestamp scalar features.</p></li>
+<li><p><strong>compute_session_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Evaluate models based on how well they are able to predict the next session of interactions.</p></li>
+<li><p><strong>max_user_history_len_percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Filter out users with history length above this percentile.</p></li>
+<li><p><strong>downsample_item_popularity_percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Downsample items more popular than this percentile.</p></li>
+<li><p><strong>use_user_id_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use user id as a feature in CTR models.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.objective">
 <span class="sig-name descname"><span class="pre">objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PersonalizationObjective" title="abacusai.api_class.enums.PersonalizationObjective"><span class="pre">abacusai.api_class.enums.PersonalizationObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.objective" title="Permalink to this definition"></a></dt>
@@ -469,41 +443,26 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.RegressionTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">RegressionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.RegressionTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the PREDICTIVE_MODELING problem type
-:param objective: Ranking scheme used to select final best model.
-:type objective: RegressionObjective
-:param sort_objective: Ranking scheme used to sort models on the metrics page.
-:type sort_objective: RegressionObjective
-:param tree_hpo_mode: (RegressionTreeHPOMode): Turning off Rapid Experimentation will take longer to train.
-:param type_of_split: Type of data splitting into train/test (validation also).
-:type type_of_split: RegressionTypeOfSplit
-:param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
-:type test_split: int
-:param disable_test_val_fold: Do not create a TEST_VAL set. All records which would be part of the TEST_VAL fold otherwise, remain in the TEST fold.
-:type disable_test_val_fold: bool
-:param k_fold_cross_validation: Use this to force k-fold cross validation bagging on or off.
-:type k_fold_cross_validation: bool
-:param num_cv_folds: Specify the value of k in k-fold cross validation.
-:type num_cv_folds: int
-:param timestamp_based_splitting_column: Timestamp column selected for splitting into test and train.
-:type timestamp_based_splitting_column: str
-:param timestamp_based_splitting_method: Method of selecting TEST set, top percentile wise or after a given timestamp.
-:type timestamp_based_splitting_method: RegressionTimeSplitMethod
-:param test_splitting_timestamp: Rows with timestamp greater than this will be considered to be in the test set.
-:type test_splitting_timestamp: str
-:param sampling_unit_keys: Constrain train/test separation to partition a column.
-:type sampling_unit_keys: List[str]
-:param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.
-:type test_row_indicator: str
-:param full_data_retraining: Train models separately with all the data.
-:type full_data_retraining: bool
-:param rebalance_classes: Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as “Yes”. It is useful when the classes in the dataset are unbalanced.</p>
-<blockquote>
-<div><p>Re-balancing classes generally boosts recall at the cost of precision on rare classes.</p>
-</div></blockquote>
+<p>Training config for the PREDICTIVE_MODELING problem type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.RegressionObjective" title="abacusai.api_class.enums.RegressionObjective"><em>RegressionObjective</em></a>) – Ranking scheme used to select final best model.</p></li>
+<li><p><strong>sort_objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.RegressionObjective" title="abacusai.api_class.enums.RegressionObjective"><em>RegressionObjective</em></a>) – Ranking scheme used to sort models on the metrics page.</p></li>
+<li><p><strong>tree_hpo_mode</strong> – (RegressionTreeHPOMode): Turning off Rapid Experimentation will take longer to train.</p></li>
+<li><p><strong>type_of_split</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.RegressionTypeOfSplit" title="abacusai.api_class.enums.RegressionTypeOfSplit"><em>RegressionTypeOfSplit</em></a>) – Type of data splitting into train/test (validation also).</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.</p></li>
+<li><p><strong>disable_test_val_fold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Do not create a TEST_VAL set. All records which would be part of the TEST_VAL fold otherwise, remain in the TEST fold.</p></li>
+<li><p><strong>k_fold_cross_validation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use this to force k-fold cross validation bagging on or off.</p></li>
+<li><p><strong>num_cv_folds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Specify the value of k in k-fold cross validation.</p></li>
+<li><p><strong>timestamp_based_splitting_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Timestamp column selected for splitting into test and train.</p></li>
+<li><p><strong>timestamp_based_splitting_method</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.RegressionTimeSplitMethod" title="abacusai.api_class.enums.RegressionTimeSplitMethod"><em>RegressionTimeSplitMethod</em></a>) – Method of selecting TEST set, top percentile wise or after a given timestamp.</p></li>
+<li><p><strong>test_splitting_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Rows with timestamp greater than this will be considered to be in the test set.</p></li>
+<li><p><strong>sampling_unit_keys</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Constrain train/test separation to partition a column.</p></li>
+<li><p><strong>test_row_indicator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Column indicating which rows to use for training (TRAIN) and testing (TEST). Validation (VAL) can also be specified.</p></li>
+<li><p><strong>full_data_retraining</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Train models separately with all the data.</p></li>
+<li><p><strong>rebalance_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Class weights are computed as the inverse of the class frequency from the training dataset when this option is selected as “Yes”. It is useful when the classes in the dataset are unbalanced.
+Re-balancing classes generally boosts recall at the cost of precision on rare classes.</p></li>
 <li><p><strong>rare_class_augmentation_threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Augments any rare class whose relative frequency with respect to the most frequent class is less than this threshold. Default = 0.1 for classification problems with rare classes.</p></li>
 <li><p><strong>augmentation_strategy</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.RegressionAugmentationStrategy" title="abacusai.api_class.enums.RegressionAugmentationStrategy"><em>RegressionAugmentationStrategy</em></a>) – Strategy to deal with class imbalance and data augmentation.</p></li>
 <li><p><strong>training_rows_downsample_ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Uses this ratio to train on a sample of the dataset provided.</p></li>
@@ -743,128 +702,75 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ForecastingTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the FORECASTING problem type
-:param prediction_length: How many timesteps in the future to predict.
-:type prediction_length: int
-:param objective: Ranking scheme used to select final best model.
-:type objective: ForecastingObjective
-:param sort_objective: Ranking scheme used to sort models on the metrics page.
-:type sort_objective: ForecastingObjective
-:param forecast_frequency: Forecast frequency.
-:type forecast_frequency: ForecastingFrequency
-:param probability_quantiles: Prediction quantiles.
-:type probability_quantiles: List[float]
-:param force_prediction_length: Force length of test window to be the same as prediction length.
-:type force_prediction_length: int
-:param filter_items: Filter items with small history and volume.
-:type filter_items: bool
-:param enable_feature_selection: Enable feature selection.
-:type enable_feature_selection: bool
-:param enable_padding: Pad series to the max_date of the dataset
-:type enable_padding: bool
-:param enable_cold_start: Enable cold start forecasting by training/predicting for zero history items.
-:type enable_cold_start: bool
-:param enable_multiple_backtests: Whether to enable multiple backtesting or not.
-:type enable_multiple_backtests: bool
-:param num_backtesting_windows: Total backtesting windows to use for the training.
-:type num_backtesting_windows: int
-:param backtesting_window_step_size: Use this step size to shift backtesting windows for model training.
-:type backtesting_window_step_size: int
-:param full_data_retraining: Train models separately with all the data.
-:type full_data_retraining: bool
-:param additional_forecast_keys: List[str]: List of categoricals in timeseries that can act as multi-identifier.
-:param experimentation_mode: Selecting Thorough Experimentation will take longer to train.
-:type experimentation_mode: ExperimentationMode
-:param type_of_split: Type of data splitting into train/test.
-:type type_of_split: ForecastingDataSplitType
-:param test_by_item: Partition train/test data by item rather than time if true.
-:type test_by_item: bool
-:param test_start: Limit training data to dates before the given test start.
-:type test_start: str
-:param test_split: Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.
-:type test_split: int
-:param loss_function: Loss function for training neural network.
-:type loss_function: ForecastingLossFunction
-:param underprediction_weight: Weight for underpredictions
-:type underprediction_weight: float
-:param disable_networks_without_analytic_quantiles: Disable neural networks, which quantile functions do not have analytic expressions (e.g, mixture models)
-:type disable_networks_without_analytic_quantiles: bool
-:param initial_learning_rate: Initial learning rate.
-:type initial_learning_rate: float
-:param l2_regularization_factor: L2 regularization factor.
-:type l2_regularization_factor: float
-:param dropout_rate: Dropout percentage rate.
-:type dropout_rate: int
-:param recurrent_layers: Number of recurrent layers to stack in network.
-:type recurrent_layers: int
-:param recurrent_units: Number of units in each recurrent layer.
-:type recurrent_units: int
-:param convolutional_layers: Number of convolutional layers to stack on top of recurrent layers in network.
-:type convolutional_layers: int
-:param convolution_filters: Number of filters in each convolution.
-:type convolution_filters: int
-:param local_scaling_mode: Options to make NN inputs stationary in high dynamic range datasets.
-:type local_scaling_mode: ForecastingLocalScaling
-:param zero_predictor: Include subnetwork to classify points where target equals zero.
-:type zero_predictor: bool
-:param skip_missing: Make the RNN ignore missing entries rather instead of processing them.
-:type skip_missing: bool
-:param batch_size: Batch size.
-:type batch_size: ForecastingBatchSize
-:param batch_renormalization: Enable batch renormalization between layers.
-:type batch_renormalization: bool
-:param history_length: While training, how much history to consider.
-:type history_length: int
-:param prediction_step_size: Number of future periods to include in objective for each training sample.
-:type prediction_step_size: int
-:param training_point_overlap: Amount of overlap to allow between training samples.
-:type training_point_overlap: float
-:param max_scale_context: Maximum context to use for local scaling.
-:type max_scale_context: int
-:param quantiles_extension_method: Quantile extension method
-:type quantiles_extension_method: ForecastingQuanitlesExtensionMethod
-:param number_of_samples: Number of samples for ancestral simulation
-:type number_of_samples: int
-:param symmetrize_quantiles: Force symmetric quantiles (like in Gaussian distribution)
-:type symmetrize_quantiles: bool
-:param use_log_transforms: Apply logarithmic transformations to input data.
-:type use_log_transforms: bool
-:param smooth_history: Smooth (low pass filter) the timeseries.
-:type smooth_history: float
-:param local_scale_target: Using per training/prediction window target scaling.
-:type local_scale_target: bool
-:param use_clipping: Apply clipping to input data to stabilize the training.
-:type use_clipping: bool
-:param timeseries_weight_column: If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.
-:type timeseries_weight_column: str
-:param item_attributes_weight_column: If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.
-:type item_attributes_weight_column: str
-:param use_timeseries_weights_in_objective: If True, we include weights from column set as “TIMESERIES WEIGHT COLUMN” in objective functions.
-:type use_timeseries_weights_in_objective: bool
-:param use_item_weights_in_objective: If True, we include weights from column set as “ITEM ATTRIBUTES WEIGHT COLUMN” in objective functions.
-:type use_item_weights_in_objective: bool
-:param skip_timeseries_weight_scaling: If True, we will avoid normalizing the weights.
-:type skip_timeseries_weight_scaling: bool
-:param timeseries_loss_weight_column: Use value in this column to weight the loss while training.
-:type timeseries_loss_weight_column: str
-:param use_item_id: Include a feature to indicate the item being forecast.
-:type use_item_id: bool
-:param use_all_item_totals: Include as input total target across items.
-:type use_all_item_totals: bool
-:param handle_zeros_as_missing_values: If True, handle zero values in demand as missing data.
-:type handle_zeros_as_missing_values: bool
-:param datetime_holiday_calendars: Holiday calendars to augment training with.
-:type datetime_holiday_calendars: List[HolidayCalendars]
-:param fill_missing_values: Strategy for filling in missing values.
-:type fill_missing_values: List[dict]
-:param enable_clustering: Enable clustering in forecasting.
-:type enable_clustering: bool
-:param data_split_feature_group_table_name: Specify the table name of the feature group to export training data with the fold column.
-:type data_split_feature_group_table_name: str
-:param custom_loss_functions: Registered custom losses available for selection.
-:type custom_loss_functions: List[str]
-:param custom_metrics: Registered custom metrics available for selection.
-:type custom_metrics: List[str]</p>
+<p>Training config for the FORECASTING problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prediction_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – How many timesteps in the future to predict.</p></li>
+<li><p><strong>objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingObjective" title="abacusai.api_class.enums.ForecastingObjective"><em>ForecastingObjective</em></a>) – Ranking scheme used to select final best model.</p></li>
+<li><p><strong>sort_objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingObjective" title="abacusai.api_class.enums.ForecastingObjective"><em>ForecastingObjective</em></a>) – Ranking scheme used to sort models on the metrics page.</p></li>
+<li><p><strong>forecast_frequency</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingFrequency" title="abacusai.api_class.enums.ForecastingFrequency"><em>ForecastingFrequency</em></a>) – Forecast frequency.</p></li>
+<li><p><strong>probability_quantiles</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a><em>]</em>) – Prediction quantiles.</p></li>
+<li><p><strong>force_prediction_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Force length of test window to be the same as prediction length.</p></li>
+<li><p><strong>filter_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Filter items with small history and volume.</p></li>
+<li><p><strong>enable_feature_selection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable feature selection.</p></li>
+<li><p><strong>enable_padding</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Pad series to the max_date of the dataset</p></li>
+<li><p><strong>enable_cold_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable cold start forecasting by training/predicting for zero history items.</p></li>
+<li><p><strong>enable_multiple_backtests</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to enable multiple backtesting or not.</p></li>
+<li><p><strong>num_backtesting_windows</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Total backtesting windows to use for the training.</p></li>
+<li><p><strong>backtesting_window_step_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Use this step size to shift backtesting windows for model training.</p></li>
+<li><p><strong>full_data_retraining</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Train models separately with all the data.</p></li>
+<li><p><strong>additional_forecast_keys</strong> – List[str]: List of categoricals in timeseries that can act as multi-identifier.</p></li>
+<li><p><strong>experimentation_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ExperimentationMode" title="abacusai.api_class.enums.ExperimentationMode"><em>ExperimentationMode</em></a>) – Selecting Thorough Experimentation will take longer to train.</p></li>
+<li><p><strong>type_of_split</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingDataSplitType" title="abacusai.api_class.enums.ForecastingDataSplitType"><em>ForecastingDataSplitType</em></a>) – Type of data splitting into train/test.</p></li>
+<li><p><strong>test_by_item</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Partition train/test data by item rather than time if true.</p></li>
+<li><p><strong>test_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Limit training data to dates before the given test start.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5% to 20% of your dataset to use as test data.</p></li>
+<li><p><strong>loss_function</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingLossFunction" title="abacusai.api_class.enums.ForecastingLossFunction"><em>ForecastingLossFunction</em></a>) – Loss function for training neural network.</p></li>
+<li><p><strong>underprediction_weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Weight for underpredictions</p></li>
+<li><p><strong>disable_networks_without_analytic_quantiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Disable neural networks, which quantile functions do not have analytic expressions (e.g, mixture models)</p></li>
+<li><p><strong>initial_learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Initial learning rate.</p></li>
+<li><p><strong>l2_regularization_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – L2 regularization factor.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Dropout percentage rate.</p></li>
+<li><p><strong>recurrent_layers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of recurrent layers to stack in network.</p></li>
+<li><p><strong>recurrent_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of units in each recurrent layer.</p></li>
+<li><p><strong>convolutional_layers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of convolutional layers to stack on top of recurrent layers in network.</p></li>
+<li><p><strong>convolution_filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of filters in each convolution.</p></li>
+<li><p><strong>local_scaling_mode</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingLocalScaling" title="abacusai.api_class.enums.ForecastingLocalScaling"><em>ForecastingLocalScaling</em></a>) – Options to make NN inputs stationary in high dynamic range datasets.</p></li>
+<li><p><strong>zero_predictor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Include subnetwork to classify points where target equals zero.</p></li>
+<li><p><strong>skip_missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Make the RNN ignore missing entries rather instead of processing them.</p></li>
+<li><p><strong>batch_size</strong> (<em>ForecastingBatchSize</em>) – Batch size.</p></li>
+<li><p><strong>batch_renormalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable batch renormalization between layers.</p></li>
+<li><p><strong>history_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – While training, how much history to consider.</p></li>
+<li><p><strong>prediction_step_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of future periods to include in objective for each training sample.</p></li>
+<li><p><strong>training_point_overlap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Amount of overlap to allow between training samples.</p></li>
+<li><p><strong>max_scale_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum context to use for local scaling.</p></li>
+<li><p><strong>quantiles_extension_method</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod" title="abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod"><em>ForecastingQuanitlesExtensionMethod</em></a>) – Quantile extension method</p></li>
+<li><p><strong>number_of_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of samples for ancestral simulation</p></li>
+<li><p><strong>symmetrize_quantiles</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Force symmetric quantiles (like in Gaussian distribution)</p></li>
+<li><p><strong>use_log_transforms</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Apply logarithmic transformations to input data.</p></li>
+<li><p><strong>smooth_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Smooth (low pass filter) the timeseries.</p></li>
+<li><p><strong>local_scale_target</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Using per training/prediction window target scaling.</p></li>
+<li><p><strong>use_clipping</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Apply clipping to input data to stabilize the training.</p></li>
+<li><p><strong>timeseries_weight_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If set, we use the values in this column from timeseries data to assign time dependent item weights during training and evaluation.</p></li>
+<li><p><strong>item_attributes_weight_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If set, we use the values in this column from item attributes data to assign weights to items during training and evaluation.</p></li>
+<li><p><strong>use_timeseries_weights_in_objective</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, we include weights from column set as “TIMESERIES WEIGHT COLUMN” in objective functions.</p></li>
+<li><p><strong>use_item_weights_in_objective</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, we include weights from column set as “ITEM ATTRIBUTES WEIGHT COLUMN” in objective functions.</p></li>
+<li><p><strong>skip_timeseries_weight_scaling</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, we will avoid normalizing the weights.</p></li>
+<li><p><strong>timeseries_loss_weight_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Use value in this column to weight the loss while training.</p></li>
+<li><p><strong>use_item_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Include a feature to indicate the item being forecast.</p></li>
+<li><p><strong>use_all_item_totals</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Include as input total target across items.</p></li>
+<li><p><strong>handle_zeros_as_missing_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, handle zero values in demand as missing data.</p></li>
+<li><p><strong>datetime_holiday_calendars</strong> (<em>List</em><em>[</em><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.HolidayCalendars" title="abacusai.api_class.enums.HolidayCalendars"><em>HolidayCalendars</em></a><em>]</em>) – Holiday calendars to augment training with.</p></li>
+<li><p><strong>fill_missing_values</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em>]</em>) – Strategy for filling in missing values.</p></li>
+<li><p><strong>enable_clustering</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable clustering in forecasting.</p></li>
+<li><p><strong>data_split_feature_group_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specify the table name of the feature group to export training data with the fold column.</p></li>
+<li><p><strong>custom_loss_functions</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Registered custom losses available for selection.</p></li>
+<li><p><strong>custom_metrics</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Registered custom metrics available for selection.</p></li>
+<li><p><strong>return_fractional_forecasts</strong> – Use this to return fractional forecast values while prediction</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.prediction_length">
 <span class="sig-name descname"><span class="pre">prediction_length</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.prediction_length" title="Permalink to this definition"></a></dt>
@@ -1170,6 +1076,11 @@ inheritance.</p>
 <span class="sig-name descname"><span class="pre">custom_metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.custom_metrics" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.return_fractional_forecasts">
+<span class="sig-name descname"><span class="pre">return_fractional_forecasts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.return_fractional_forecasts" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ForecastingTrainingConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.model.ForecastingTrainingConfig.__post_init__" title="Permalink to this definition"></a></dt>
@@ -1181,31 +1092,25 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">NamedEntityExtractionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the NAMED_ENTITY_EXTRACTION problem type
-:param objective: Ranking scheme used to select final best model.
-:type objective: NERObjective
-:param sort_objective: Ranking scheme used to sort models on the metrics page.
-:type sort_objective: NERObjective
-:param ner_model_type: Type of NER model to use.
-:type ner_model_type: NERModelType
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
-:type test_row_indicator: str
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: float
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize
-:param active_labels_column: Entities that have been marked in a particular text
-:type active_labels_column: str
-:param document_format: Format of the input documents.
-:type document_format: NLPDocumentFormat
-:param include_longformer: Whether to include the longformer model.
-:type include_longformer: bool
-:param save_predicted_pdf: Whether to save predicted PDF documents
-:type save_predicted_pdf: bool
-:param enhanced_ocr: Enhanced text extraction from predicted digital documents
-:type enhanced_ocr: bool</p>
+<p>Training config for the NAMED_ENTITY_EXTRACTION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><em>NERObjective</em></a>) – Ranking scheme used to select final best model.</p></li>
+<li><p><strong>sort_objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><em>NERObjective</em></a>) – Ranking scheme used to sort models on the metrics page.</p></li>
+<li><p><strong>ner_model_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERModelType" title="abacusai.api_class.enums.NERModelType"><em>NERModelType</em></a>) – Type of NER model to use.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>test_row_indicator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Column indicating which rows to use for training (TRAIN) and testing (TEST).</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+<li><p><strong>active_labels_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Entities that have been marked in a particular text</p></li>
+<li><p><strong>document_format</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NLPDocumentFormat" title="abacusai.api_class.enums.NLPDocumentFormat"><em>NLPDocumentFormat</em></a>) – Format of the input documents.</p></li>
+<li><p><strong>include_longformer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include the longformer model.</p></li>
+<li><p><strong>save_predicted_pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to save predicted PDF documents</p></li>
+<li><p><strong>enhanced_ocr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enhanced text extraction from predicted digital documents</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.objective">
 <span class="sig-name descname"><span class="pre">objective</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><span class="pre">abacusai.api_class.enums.NERObjective</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.objective" title="Permalink to this definition"></a></dt>
@@ -1277,19 +1182,19 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">NaturalLanguageSearchTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the NATURAL_LANGUAGE_SEARCH problem type
-:param abacus_internal_model: Use a Abacus.AI LLM to answer questions about your data without using any external APIs
-:type abacus_internal_model: bool
-:param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
-:type num_completion_tokens: int
-:param larger_embeddings: Use a higher dimension embedding model.
-:type larger_embeddings: bool
-:param search_chunk_size: Chunk size for indexing the documents.
-:type search_chunk_size: int
-:param chunk_overlap_fraction: Overlap in chunks while indexing the documents.
-:type chunk_overlap_fraction: float
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int</p>
+<p>Training config for the NATURAL_LANGUAGE_SEARCH problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>abacus_internal_model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use a Abacus.AI LLM to answer questions about your data without using any external APIs</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct</p></li>
+<li><p><strong>larger_embeddings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use a higher dimension embedding model.</p></li>
+<li><p><strong>search_chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Chunk size for indexing the documents.</p></li>
+<li><p><strong>chunk_overlap_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Overlap in chunks while indexing the documents.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.abacus_internal_model">
 <span class="sig-name descname"><span class="pre">abacus_internal_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NaturalLanguageSearchTrainingConfig.abacus_internal_model" title="Permalink to this definition"></a></dt>
@@ -1331,17 +1236,18 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ChatLLMTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CHAT_LLM problem type
-:param document_retrievers: List of document retriever names to use for the feature stores this model was trained with.
-:type document_retrievers: List[str]
-:param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
-:type num_completion_tokens: int
-:param system_message: The generative LLM system message
-:type system_message: str
-:param temperature: The generative LLM temperature
-:type temperature: float
-:param metadata_columns: Include the metadata column values in the retrieved search results.
-:type metadata_columns: list</p>
+<p>Training config for the CHAT_LLM problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>document_retrievers</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of document retriever names to use for the feature stores this model was trained with.</p></li>
+<li><p><strong>num_completion_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct</p></li>
+<li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The generative LLM system message</p></li>
+<li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
+<li><p><strong>metadata_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Include the metadata column values in the retrieved search results.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.document_retrievers">
 <span class="sig-name descname"><span class="pre">document_retrievers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.document_retrievers" title="Permalink to this definition"></a></dt>
@@ -1378,13 +1284,16 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">SentenceBoundaryDetectionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the SENTENCE_BOUNDARY_DETECTION problem type
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: float
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize</p>
+<p>Training config for the SENTENCE_BOUNDARY_DETECTION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.test_split">
 <span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentenceBoundaryDetectionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
@@ -1411,17 +1320,18 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">SentimentDetectionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the SENTIMENT_DETECTION problem type
-:param sentiment_type: Type of sentiment to detect.
-:type sentiment_type: SentimentType
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: float
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize
-:param compute_metrics: Whether to compute metrics.
-:type compute_metrics: bool</p>
+<p>Training config for the SENTIMENT_DETECTION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sentiment_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.SentimentType" title="abacusai.api_class.enums.SentimentType"><em>SentimentType</em></a>) – Type of sentiment to detect.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+<li><p><strong>compute_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to compute metrics.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.SentimentDetectionTrainingConfig.sentiment_type">
 <span class="sig-name descname"><span class="pre">sentiment_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.SentimentType" title="abacusai.api_class.enums.SentimentType"><span class="pre">abacusai.api_class.enums.SentimentType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.SentimentDetectionTrainingConfig.sentiment_type" title="Permalink to this definition"></a></dt>
@@ -1458,15 +1368,17 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DocumentClassificationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the DOCUMENT_CLASSIFICATION problem type
-:param zero_shot_hypotheses: Zero shot hypotheses. Example text: ‘This text is about pricing’.
-:type zero_shot_hypotheses: List[str]
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: float
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize</p>
+<p>Training config for the DOCUMENT_CLASSIFICATION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zero_shot_hypotheses</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Zero shot hypotheses. Example text: ‘This text is about pricing’.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.DocumentClassificationTrainingConfig.zero_shot_hypotheses">
 <span class="sig-name descname"><span class="pre">zero_shot_hypotheses</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.DocumentClassificationTrainingConfig.zero_shot_hypotheses" title="Permalink to this definition"></a></dt>
@@ -1498,13 +1410,16 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DocumentSummarizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the DOCUMENT_SUMMARIZATION problem type
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: float
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize</p>
+<p>Training config for the DOCUMENT_SUMMARIZATION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.DocumentSummarizationTrainingConfig.test_split">
 <span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentSummarizationTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
@@ -1531,13 +1446,16 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DocumentVisualizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the DOCUMENT_VISUALIZATION problem type
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param dropout_rate: Dropout rate for neural network.
-:type dropout_rate: float
-:param batch_size: Batch size for neural network.
-:type batch_size: BatchSize</p>
+<p>Training config for the DOCUMENT_VISUALIZATION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>dropout_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Dropout rate for neural network.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.BatchSize" title="abacusai.api_class.enums.BatchSize"><em>BatchSize</em></a>) – Batch size for neural network.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.DocumentVisualizationTrainingConfig.test_split">
 <span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DocumentVisualizationTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
@@ -1564,9 +1482,12 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ClusteringTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ClusteringTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CLUSTERING problem type
-:param num_clusters_selection: Number of clusters. If None, will be selected automatically.
-:type num_clusters_selection: int</p>
+<p>Training config for the CLUSTERING problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_clusters_selection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of clusters. If None, will be selected automatically.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTrainingConfig.num_clusters_selection">
 <span class="sig-name descname"><span class="pre">num_clusters_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTrainingConfig.num_clusters_selection" title="Permalink to this definition"></a></dt>
@@ -1583,11 +1504,15 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">ClusteringTimeseriesTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CLUSTERING_TIMESERIES problem type
-:param num_clusters_selection: Number of clusters. If None, will be selected automatically.
-:type num_clusters_selection: int
-:param imputation: Imputation method for missing values.
-:type imputation: ClusteringImputationMethod</p>
+<p>Training config for the CLUSTERING_TIMESERIES problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_clusters_selection</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of clusters. If None, will be selected automatically.</p></li>
+<li><p><strong>imputation</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.ClusteringImputationMethod" title="abacusai.api_class.enums.ClusteringImputationMethod"><em>ClusteringImputationMethod</em></a>) – Imputation method for missing values.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.num_clusters_selection">
 <span class="sig-name descname"><span class="pre">num_clusters_selection</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ClusteringTimeseriesTrainingConfig.num_clusters_selection" title="Permalink to this definition"></a></dt>
@@ -1609,9 +1534,12 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.EventAnomalyTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">EventAnomalyTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.EventAnomalyTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the EVENT_ANOMALY problem type
-:param anomaly_fraction: The fraction of the dataset to classify as anomalous, between 0 and 0.5
-:type anomaly_fraction: float</p>
+<p>Training config for the EVENT_ANOMALY problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>anomaly_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The fraction of the dataset to classify as anomalous, between 0 and 0.5</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.EventAnomalyTrainingConfig.anomaly_fraction">
 <span class="sig-name descname"><span class="pre">anomaly_fraction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.EventAnomalyTrainingConfig.anomaly_fraction" title="Permalink to this definition"></a></dt>
@@ -1628,19 +1556,19 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">CumulativeForecastingTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CUMULATIVE_FORECASTING problem type
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-:type test_split: int
-:param historical_frequency: Forecast frequency
-:type historical_frequency: str
-:param cumulative_prediction_lengths: List of Cumulative Prediction Frequencies. Each prediction length must be between 1 and 365.
-:type cumulative_prediction_lengths: List[int]
-:param skip_input_transform: Avoid doing numeric scaling transformations on the input.
-:type skip_input_transform: bool
-:param skip_target_transform: Avoid doing numeric scaling transformations on the target.
-:type skip_target_transform: bool
-:param predict_residuals: Predict residuals instead of totals at each prediction step.
-:type predict_residuals: bool</p>
+<p>Training config for the CUMULATIVE_FORECASTING problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
+<li><p><strong>historical_frequency</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Forecast frequency</p></li>
+<li><p><strong>cumulative_prediction_lengths</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>]</em>) – List of Cumulative Prediction Frequencies. Each prediction length must be between 1 and 365.</p></li>
+<li><p><strong>skip_input_transform</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Avoid doing numeric scaling transformations on the input.</p></li>
+<li><p><strong>skip_target_transform</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Avoid doing numeric scaling transformations on the target.</p></li>
+<li><p><strong>predict_residuals</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Predict residuals instead of totals at each prediction step.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.CumulativeForecastingTrainingConfig.test_split">
 <span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CumulativeForecastingTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
@@ -1682,21 +1610,20 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">AnomalyDetectionTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the ANOMALY_DETECTION problem type
-:param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
-:type test_split: int
-:param value_high: Detect unusually high values.
-:type value_high: bool
-:param mixture_of_gaussians: Detect unusual combinations of values using mixture of Gaussians.
-:type mixture_of_gaussians: bool
-:param variational_autoencoder: Use variational autoencoder for anomaly detection.
-:type variational_autoencoder: bool
-:param spike_up: Detect outliers with a high value.
-:type spike_up: bool
-:param spike_down: Detect outliers with a low value.
-:type spike_down: bool
-:param trend_change: Detect changes to the trend.
-:type trend_change: bool</p>
+<p>Training config for the ANOMALY_DETECTION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.</p></li>
+<li><p><strong>value_high</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Detect unusually high values.</p></li>
+<li><p><strong>mixture_of_gaussians</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Detect unusual combinations of values using mixture of Gaussians.</p></li>
+<li><p><strong>variational_autoencoder</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use variational autoencoder for anomaly detection.</p></li>
+<li><p><strong>spike_up</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Detect outliers with a high value.</p></li>
+<li><p><strong>spike_down</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Detect outliers with a low value.</p></li>
+<li><p><strong>trend_change</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Detect changes to the trend.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.AnomalyDetectionTrainingConfig.test_split">
 <span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AnomalyDetectionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
@@ -1755,11 +1682,15 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">AIAgentTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the AI_AGENT problem type
-:param description: Description of the agent function.
-:type description: str
-:param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
-:type enable_binary_input: bool</p>
+<p>Training config for the AI_AGENT problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Description of the agent function.</p></li>
+<li><p><strong>enable_binary_input</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the agent will be able to accept binary data as inputs.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.description">
 <span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.description" title="Permalink to this definition"></a></dt>
@@ -1781,17 +1712,18 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">CustomTrainedModelTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CUSTOM_TRAINED_MODEL problem type
-:param max_catalog_size: Maximum expected catalog size.
-:type max_catalog_size: int
-:param max_dimension: Maximum expected dimension of the catalog.
-:type max_dimension: int
-:param index_output_path: Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.
-:type index_output_path: str
-:param docker_image_uri: Docker image URI.
-:type docker_image_uri: str
-:param service_port: Service port.
-:type service_port: int</p>
+<p>Training config for the CUSTOM_TRAINED_MODEL problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_catalog_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum expected catalog size.</p></li>
+<li><p><strong>max_dimension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum expected dimension of the catalog.</p></li>
+<li><p><strong>index_output_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Fully qualified cloud location (GCS, S3, etc) to export snapshots of the embedding to.</p></li>
+<li><p><strong>docker_image_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Docker image URI.</p></li>
+<li><p><strong>service_port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Service port.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_catalog_size">
 <span class="sig-name descname"><span class="pre">max_catalog_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomTrainedModelTrainingConfig.max_catalog_size" title="Permalink to this definition"></a></dt>
@@ -1828,21 +1760,20 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">CustomAlgorithmTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the CUSTOM_ALGORITHM problem type
-:param train_function_name: The name of the train function.
-:type train_function_name: str
-:param predict_many_function_name: The name of the predict many function.
-:type predict_many_function_name: str
-:param training_input_tables: List of tables to use for training.
-:type training_input_tables: List[str]
-:param predict_function_name: Optional name of the predict function if the predict many function is not given.
-:type predict_function_name: str
-:param train_module_name: The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.
-:type train_module_name: str
-:param predict_module_name: The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.
-:type predict_module_name: str
-:param test_split: Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.
-:type test_split: int</p>
+<p>Training config for the CUSTOM_ALGORITHM problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the train function.</p></li>
+<li><p><strong>predict_many_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the predict many function.</p></li>
+<li><p><strong>training_input_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use for training.</p></li>
+<li><p><strong>predict_function_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Optional name of the predict function if the predict many function is not given.</p></li>
+<li><p><strong>train_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the train module - only relevant if model is being uploaded from a zip file or github repositoty.</p></li>
+<li><p><strong>predict_module_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the predict module - only relevant if model is being uploaded from a zip file or github repositoty.</p></li>
+<li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 6% to 20% of your dataset to use as test data.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.CustomAlgorithmTrainingConfig.train_function_name">
 <span class="sig-name descname"><span class="pre">train_function_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.CustomAlgorithmTrainingConfig.train_function_name" title="Permalink to this definition"></a></dt>
@@ -1889,9 +1820,12 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.OptimizationTrainingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">OptimizationTrainingConfig</span></span><a class="headerlink" href="#abacusai.api_class.model.OptimizationTrainingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.model.TrainingConfig" title="abacusai.api_class.model.TrainingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingConfig</span></code></a></p>
-<p>Training config for the OPTIMIZATION problem type
-:param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
-:type solve_time_limit: float</p>
+<p>Training config for the OPTIMIZATION problem type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>solve_time_limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.OptimizationTrainingConfig.solve_time_limit">
 <span class="sig-name descname"><span class="pre">solve_time_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.OptimizationTrainingConfig.solve_time_limit" title="Permalink to this definition"></a></dt>
@@ -1931,15 +1865,17 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.model.</span></span><span class="sig-name descname"><span class="pre">DeployableAlgorithm</span></span><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Algorithm that can be deployed to a model.
-:param algorithm: ID of the algorithm.
-:type algorithm: str
-:param name: Name of the algorithm.
-:type name: str
-:param only_offline_deployable: Whether the algorithm can only be deployed offline.
-:type only_offline_deployable: bool
-:param trained_model_types: List of trained model types.
-:type trained_model_types: List[dict]</p>
+<p>Algorithm that can be deployed to a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – ID of the algorithm.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the algorithm.</p></li>
+<li><p><strong>only_offline_deployable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the algorithm can only be deployed offline.</p></li>
+<li><p><strong>trained_model_types</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em>]</em>) – List of trained model types.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.DeployableAlgorithm.algorithm">
 <span class="sig-name descname"><span class="pre">algorithm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.DeployableAlgorithm.algorithm" title="Permalink to this definition"></a></dt>

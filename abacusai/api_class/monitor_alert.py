@@ -18,6 +18,7 @@ class AlertConditionConfig(ApiClass):
 class AccuracyBelowThresholdConditionConfig(AlertConditionConfig):
     """
     Accuracy Below Threshold Condition Config for Monitor Alerts
+
     Args:
         threshold (float): Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
     """
@@ -31,6 +32,7 @@ class AccuracyBelowThresholdConditionConfig(AlertConditionConfig):
 class FeatureDriftConditionConfig(AlertConditionConfig):
     """
     Feature Drift Condition Config for Monitor Alerts
+
     Args:
         feature_drift_type (FeatureDriftType): Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
         threshold (float): Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -50,6 +52,7 @@ class FeatureDriftConditionConfig(AlertConditionConfig):
 class TargetDriftConditionConfig(AlertConditionConfig):
     """
     Target Drift Condition Config for Monitor Alerts
+
     Args:
         feature_drift_type (FeatureDriftType): Target drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
         threshold (float): Threshold for when to consider the target column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -65,6 +68,7 @@ class TargetDriftConditionConfig(AlertConditionConfig):
 class HistoryLengthDriftConditionConfig(AlertConditionConfig):
     """
     History Length Drift Condition Config for Monitor Alerts
+
     Args:
         feature_drift_type (FeatureDriftType): History length drift type to apply the threshold on to determine whether the history length has drifted significantly enough to be a violation.
         threshold (float): Threshold for when to consider the history length  to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -80,6 +84,7 @@ class HistoryLengthDriftConditionConfig(AlertConditionConfig):
 class DataIntegrityViolationConditionConfig(AlertConditionConfig):
     """
     Data Integrity Violation Condition Config for Monitor Alerts
+
     Args:
         data_integrity_type (DataIntegrityViolationType): This option selects the data integrity violations to monitor for this alert.
         minimum_violations (int): Number of columns that must exceed the specified threshold to trigger an alert.
@@ -95,6 +100,7 @@ class DataIntegrityViolationConditionConfig(AlertConditionConfig):
 class BiasViolationConditionConfig(AlertConditionConfig):
     """
     Bias Violation Condition Config for Monitor Alerts
+
     Args:
         bias_type (BiasType): This option selects the bias metric to monitor for this alert.
         threshold (float): Threshold for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
@@ -136,6 +142,7 @@ class AlertActionConfig(ApiClass):
 class EmailActionConfig(AlertActionConfig):
     """
     Email Action Config for Monitor Alerts
+
     Args:
         email_recipients (List[str]): List of email addresses to send the alert to.
         email_body (str): Body of the email to send.

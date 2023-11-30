@@ -54,31 +54,30 @@ class DocumentRetriever(AbstractApiClass):
                 self.indexing_required, 'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def update(self, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
+    def rename(self, name: str):
         """
         Updates an existing document retriever.
 
         Args:
-            name (str): The name group to update the document retriever with.
-            feature_group_id (str): The ID of the feature group to update the document retriever with.
-            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
+            name (str): The name to update the document retriever with.
 
         Returns:
             DocumentRetriever: The updated document retriever.
         """
-        return self.client.update_document_retriever(self.document_retriever_id, name, feature_group_id, document_retriever_config)
+        return self.client.rename_document_retriever(self.document_retriever_id, name)
 
-    def create_version(self):
+    def create_version(self, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """
         Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
         Args:
-            document_retriever_id (str): The unique ID associated with the document retriever to create version with.
+            feature_group_id (str): The ID of the feature group to update the document retriever with.
+            document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
         Returns:
             DocumentRetrieverVersion: The newly created document retriever version.
         """
-        return self.client.create_document_retriever_version(self.document_retriever_id)
+        return self.client.create_document_retriever_version(self.document_retriever_id, feature_group_id, document_retriever_config)
 
     def refresh(self):
         """

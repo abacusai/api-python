@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: LlmExecutionResult(client, status=None, error=None, featureGroupOperation={}, preview={})
+.. py:class:: LlmExecutionResult(client, status=None, error=None, execution={}, preview={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -30,8 +30,8 @@ Classes
    :type status: str
    :param error: The error message if the execution failed.
    :type error: str
-   :param featureGroupOperation: Operation for executing queries on feature group.
-   :type featureGroupOperation: ExecuteFeatureGroupOperation
+   :param execution: Information on execution of the query.
+   :type execution: ExecuteFeatureGroupOperation
    :param preview: Preview of executing queries using LLM.
    :type preview: LlmExecutionPreview
 

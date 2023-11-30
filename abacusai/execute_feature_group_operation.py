@@ -12,17 +12,19 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
             featureGroupOperationRunId (str): The run id of the operation
             status (str): The status of the operation
             error (str): The error message if the operation failed
+            query (str): The SQL query of the operation
     """
 
-    def __init__(self, client, featureGroupOperationRunId=None, status=None, error=None):
+    def __init__(self, client, featureGroupOperationRunId=None, status=None, error=None, query=None):
         super().__init__(client, None)
         self.feature_group_operation_run_id = featureGroupOperationRunId
         self.status = status
         self.error = error
+        self.query = query
 
     def __repr__(self):
-        repr_dict = {f'feature_group_operation_run_id': repr(
-            self.feature_group_operation_run_id), f'status': repr(self.status), f'error': repr(self.error)}
+        repr_dict = {f'feature_group_operation_run_id': repr(self.feature_group_operation_run_id), f'status': repr(
+            self.status), f'error': repr(self.error), f'query': repr(self.query)}
         class_name = "ExecuteFeatureGroupOperation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -36,7 +38,7 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'feature_group_operation_run_id': self.feature_group_operation_run_id,
-                'status': self.status, 'error': self.error}
+                'status': self.status, 'error': self.error, 'query': self.query}
         return {key: value for key, value in resp.items() if value is not None}
 
     def wait_for_results(self, timeout=3600, delay=2):
