@@ -678,7 +678,7 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             feature (str): The name of the feature.
-            feature_type (str): The machine learning type of the data in the feature. Refer to the [guide on feature types](https://api.abacus.ai/app/help/class/FeatureType) for more information.
+            feature_type (str): The machine learning type of the data in the feature.
 
         Returns:
             Schema: The feature group after the data_type is applied.

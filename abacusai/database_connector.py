@@ -58,7 +58,10 @@ class DatabaseConnector(AbstractApiClass):
 
         Args:
             object_name (str): Unique identifier for the object in the external system.
-            fetch_raw_data (bool): If true, return unfiltered list of column names.
+            fetch_raw_data (bool): If true, return unfiltered list of columns.
+
+        Returns:
+            DatabaseConnectorSchema: The schema of the object.
         """
         return self.client.get_database_connector_object_schema(self.database_connector_id, object_name, fetch_raw_data)
 

@@ -115,6 +115,23 @@ class BiasViolationConditionConfig(AlertConditionConfig):
 
 
 @dataclasses.dataclass
+class PredictionCountConditionConfig(AlertConditionConfig):
+    """
+    Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
+    Args:
+        threshold (float): Threshold for when to consider to be a violation. Negative means alert on reduction, positive means alert on increase.
+        aggregation_window (str): Time window to aggregate the predictions over, e.g. 1h, 10m. Only h(hour), m(minute) and s(second) are supported.
+        aggregation_type (str): Aggregation type to use for the aggregation window, e.g. sum, avg.
+    """
+    threshold: float = dataclasses.field(default=None)
+    aggregation_window: str = dataclasses.field(default=None)
+    aggregation_type: str = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.alert_type = enums.MonitorAlertType.PREDICTION_COUNT
+
+
+@dataclasses.dataclass
 class _AlertConditionConfigFactory(_ApiClassFactory):
     config_abstract_class = AlertConditionConfig
     config_class_key = 'alert_type'
@@ -126,6 +143,7 @@ class _AlertConditionConfigFactory(_ApiClassFactory):
         enums.MonitorAlertType.BIAS_VIOLATIONS: BiasViolationConditionConfig,
         enums.MonitorAlertType.TARGET_DRIFT: TargetDriftConditionConfig,
         enums.MonitorAlertType.HISTORY_LENGTH_DRIFT: HistoryLengthDriftConditionConfig,
+        enums.MonitorAlertType.PREDICTION_COUNT: PredictionCountConditionConfig,
     }
 
 

@@ -16,6 +16,7 @@ Classes
    abacusai.api_class.enums.ProblemType
    abacusai.api_class.enums.RegressionObjective
    abacusai.api_class.enums.RegressionTreeHPOMode
+   abacusai.api_class.enums.PartialDependenceAnalysis
    abacusai.api_class.enums.RegressionAugmentationStrategy
    abacusai.api_class.enums.RegressionTargetTransform
    abacusai.api_class.enums.RegressionTypeOfSplit
@@ -307,6 +308,26 @@ Classes
 
 
 .. py:class:: RegressionTreeHPOMode
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: RAPID
+      :value: 'rapid'
+
+      
+
+   .. py:attribute:: THOROUGH
+      :value: 'thorough'
+
+      
+
+
+.. py:class:: PartialDependenceAnalysis
 
 
    Bases: :py:obj:`ApiEnum`
@@ -1665,18 +1686,28 @@ Classes
 
       
 
+   .. py:attribute:: OPENAI_GPT4_32K
+      :value: 'OPENAI_GPT4_32K'
+
+      
+
+   .. py:attribute:: OPENAI_GPT4_128K
+      :value: 'OPENAI_GPT4_128K'
+
+      
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
       
 
-   .. py:attribute:: OPENAI_GPT3_5_SHORT
-      :value: 'OPENAI_GPT3_5_SHORT'
+   .. py:attribute:: OPENAI_GPT3_5_TEXT
+      :value: 'OPENAI_GPT3_5_TEXT'
 
       
 
-   .. py:attribute:: CLAUDE_V2
-      :value: 'CLAUDE_V2'
+   .. py:attribute:: CLAUDE_V2_1
+      :value: 'CLAUDE_V2_1'
 
       
 
@@ -1685,13 +1716,13 @@ Classes
 
       
 
-   .. py:attribute:: ABACUS_LLAMA2_QA
-      :value: 'ABACUS_LLAMA2_QA'
+   .. py:attribute:: ABACUS_GIRAFFE_LARGE
+      :value: 'ABACUS_GIRAFFE_LARGE'
 
       
 
-   .. py:attribute:: ABACUS_LLAMA2_CODE
-      :value: 'ABACUS_LLAMA2_CODE'
+   .. py:attribute:: ABACUS_LLAMA2_QA
+      :value: 'ABACUS_LLAMA2_QA'
 
       
 
@@ -1747,6 +1778,11 @@ Classes
 
    .. py:attribute:: TARGET_DRIFT
       :value: 'TargetDrift'
+
+      
+
+   .. py:attribute:: PREDICTION_COUNT
+      :value: 'PredictionCount'
 
       
 

@@ -488,6 +488,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>data_split_feature_group_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Specify the table name of the feature group to export training data with the fold column.</p></li>
 <li><p><strong>custom_loss_functions</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Registered custom losses available for selection.</p></li>
 <li><p><strong>custom_metrics</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – Registered custom metrics available for selection.</p></li>
+<li><p><strong>partial_dependence_analysis</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PartialDependenceAnalysis" title="abacusai.api_class.enums.PartialDependenceAnalysis"><em>PartialDependenceAnalysis</em></a>) – Specify whether to run partial dependence plots for all features or only some features.</p></li>
 </ul>
 </dd>
 </dl>
@@ -504,6 +505,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.RegressionTrainingConfig.tree_hpo_mode">
 <span class="sig-name descname"><span class="pre">tree_hpo_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.RegressionTreeHPOMode" title="abacusai.api_class.enums.RegressionTreeHPOMode"><span class="pre">abacusai.api_class.enums.RegressionTreeHPOMode</span></a></em><a class="headerlink" href="#abacusai.api_class.model.RegressionTrainingConfig.tree_hpo_mode" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.RegressionTrainingConfig.partial_dependence_analysis">
+<span class="sig-name descname"><span class="pre">partial_dependence_analysis</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.PartialDependenceAnalysis" title="abacusai.api_class.enums.PartialDependenceAnalysis"><span class="pre">abacusai.api_class.enums.PartialDependenceAnalysis</span></a></em><a class="headerlink" href="#abacusai.api_class.model.RegressionTrainingConfig.partial_dependence_analysis" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1245,6 +1251,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>system_message</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The generative LLM system message</p></li>
 <li><p><strong>temperature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The generative LLM temperature</p></li>
 <li><p><strong>metadata_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Include the metadata column values in the retrieved search results.</p></li>
+<li><p><strong>include_general_knowledge</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Allow the LLM to rely not just on search results, but to fall back on general knowledge.</p></li>
+<li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize instructions for what the LLM responses should look like.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1271,6 +1279,16 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.metadata_columns">
 <span class="sig-name descname"><span class="pre">metadata_columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.metadata_columns" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.include_general_knowledge">
+<span class="sig-name descname"><span class="pre">include_general_knowledge</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.include_general_knowledge" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.response_instructions">
+<span class="sig-name descname"><span class="pre">response_instructions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.response_instructions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

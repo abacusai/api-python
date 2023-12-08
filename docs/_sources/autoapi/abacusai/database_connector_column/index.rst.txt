@@ -1,0 +1,47 @@
+:py:mod:`abacusai.database_connector_column`
+============================================
+
+.. py:module:: abacusai.database_connector_column
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.database_connector_column.DatabaseConnectorColumn
+
+
+
+
+.. py:class:: DatabaseConnectorColumn(client, name=None, externalDataType=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A schema description for a column from a database connector
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param name: The unique name of the column.
+   :type name: str
+   :param externalDataType: The data type of column in the external database system.
+   :type externalDataType: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

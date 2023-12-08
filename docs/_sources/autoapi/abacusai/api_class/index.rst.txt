@@ -75,6 +75,7 @@ Classes
    abacusai.api_class.ProblemType
    abacusai.api_class.RegressionObjective
    abacusai.api_class.RegressionTreeHPOMode
+   abacusai.api_class.PartialDependenceAnalysis
    abacusai.api_class.RegressionAugmentationStrategy
    abacusai.api_class.RegressionTargetTransform
    abacusai.api_class.RegressionTypeOfSplit
@@ -163,6 +164,7 @@ Classes
    abacusai.api_class.HistoryLengthDriftConditionConfig
    abacusai.api_class.DataIntegrityViolationConditionConfig
    abacusai.api_class.BiasViolationConditionConfig
+   abacusai.api_class.PredictionCountConditionConfig
    abacusai.api_class._AlertConditionConfigFactory
    abacusai.api_class.AlertActionConfig
    abacusai.api_class.EmailActionConfig
@@ -1078,6 +1080,12 @@ Classes
 
       
 
+   .. py:attribute:: extract_tables_to_markdown
+      :type: bool
+      :value: False
+
+      
+
 
 .. py:class:: ApiClass
 
@@ -1188,6 +1196,20 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Confluence Application Connector
+   :param pull_attachments: Whether to pull attachments for each page
+   :type pull_attachments: bool, optional
+   :param space_key: The space key to fetch pages from
+   :type space_key: str, optional
+
+   .. py:attribute:: pull_attachments
+      :type: bool
+
+      
+
+   .. py:attribute:: space_key
+      :type: str
+
+      
 
    .. py:method:: __post_init__()
 
@@ -1814,6 +1836,26 @@ Classes
 
 
 .. py:class:: RegressionTreeHPOMode
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: RAPID
+      :value: 'rapid'
+
+      
+
+   .. py:attribute:: THOROUGH
+      :value: 'thorough'
+
+      
+
+
+.. py:class:: PartialDependenceAnalysis
 
 
    Bases: :py:obj:`ApiEnum`
@@ -3172,18 +3214,28 @@ Classes
 
       
 
+   .. py:attribute:: OPENAI_GPT4_32K
+      :value: 'OPENAI_GPT4_32K'
+
+      
+
+   .. py:attribute:: OPENAI_GPT4_128K
+      :value: 'OPENAI_GPT4_128K'
+
+      
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
       
 
-   .. py:attribute:: OPENAI_GPT3_5_SHORT
-      :value: 'OPENAI_GPT3_5_SHORT'
+   .. py:attribute:: OPENAI_GPT3_5_TEXT
+      :value: 'OPENAI_GPT3_5_TEXT'
 
       
 
-   .. py:attribute:: CLAUDE_V2
-      :value: 'CLAUDE_V2'
+   .. py:attribute:: CLAUDE_V2_1
+      :value: 'CLAUDE_V2_1'
 
       
 
@@ -3192,13 +3244,13 @@ Classes
 
       
 
-   .. py:attribute:: ABACUS_LLAMA2_QA
-      :value: 'ABACUS_LLAMA2_QA'
+   .. py:attribute:: ABACUS_GIRAFFE_LARGE
+      :value: 'ABACUS_GIRAFFE_LARGE'
 
       
 
-   .. py:attribute:: ABACUS_LLAMA2_CODE
-      :value: 'ABACUS_LLAMA2_CODE'
+   .. py:attribute:: ABACUS_LLAMA2_QA
+      :value: 'ABACUS_LLAMA2_QA'
 
       
 
@@ -3254,6 +3306,11 @@ Classes
 
    .. py:attribute:: TARGET_DRIFT
       :value: 'TargetDrift'
+
+      
+
+   .. py:attribute:: PREDICTION_COUNT
+      :value: 'PredictionCount'
 
       
 
@@ -4192,6 +4249,8 @@ Classes
    :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: List[str]
+   :param partial_dependence_analysis: Specify whether to run partial dependence plots for all features or only some features.
+   :type partial_dependence_analysis: PartialDependenceAnalysis
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.RegressionObjective
@@ -4205,6 +4264,11 @@ Classes
 
    .. py:attribute:: tree_hpo_mode
       :type: abacusai.api_class.enums.RegressionTreeHPOMode
+
+      
+
+   .. py:attribute:: partial_dependence_analysis
+      :type: abacusai.api_class.enums.PartialDependenceAnalysis
 
       
 
@@ -5010,6 +5074,10 @@ Classes
    :type temperature: float
    :param metadata_columns: Include the metadata column values in the retrieved search results.
    :type metadata_columns: list
+   :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
+   :type include_general_knowledge: bool
+   :param response_instructions: Customize instructions for what the LLM responses should look like.
+   :type response_instructions: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5033,6 +5101,16 @@ Classes
 
    .. py:attribute:: metadata_columns
       :type: list
+
+      
+
+   .. py:attribute:: include_general_knowledge
+      :type: bool
+
+      
+
+   .. py:attribute:: response_instructions
+      :type: str
 
       
 
@@ -5995,6 +6073,38 @@ Classes
 
    .. py:attribute:: minimum_violations
       :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: PredictionCountConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
+   :param threshold: Threshold for when to consider to be a violation. Negative means alert on reduction, positive means alert on increase.
+   :type threshold: float
+   :param aggregation_window: Time window to aggregate the predictions over, e.g. 1h, 10m. Only h(hour), m(minute) and s(second) are supported.
+   :type aggregation_window: str
+   :param aggregation_type: Aggregation type to use for the aggregation window, e.g. sum, avg.
+   :type aggregation_type: str
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+   .. py:attribute:: aggregation_window
+      :type: str
+
+      
+
+   .. py:attribute:: aggregation_type
+      :type: str
 
       
 

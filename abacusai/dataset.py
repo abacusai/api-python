@@ -155,7 +155,7 @@ class Dataset(AbstractApiClass):
 
         Args:
             column (str): The name of the column.
-            data_type (str): The type of the data in the column. Refer to the [guide on data types](https://api.abacus.ai/app/help/class/DataType) for more information. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
+            data_type (str): The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
 
         Returns:
             Dataset: The dataset and schema after the data type has been set.

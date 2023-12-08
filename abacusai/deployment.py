@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import BatchPredictionArgs, FeatureGroupExportConfig
+from .api_class import AlertActionConfig, AlertConditionConfig, BatchPredictionArgs, FeatureGroupExportConfig
 from .feature_group_export_config import FeatureGroupExportConfig
 from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass
@@ -262,6 +262,35 @@ class Deployment(AbstractApiClass):
             deployment_id (str): The ID of the deployment for which the export type is set.
         """
         return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
+
+    def create_alert(self, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
+        """
+        Create a deployment alert for the given conditions.
+
+        Only support batch prediction usage now.
+
+
+        Args:
+            alert_name (str): Name of the alert.
+            condition_config (AlertConditionConfig): Condition to run the actions for the alert.
+            action_config (AlertActionConfig): Configuration for the action of the alert.
+
+        Returns:
+            MonitorAlert: Object describing the deployment alert.
+        """
+        return self.client.create_deployment_alert(self.deployment_id, alert_name, condition_config, action_config)
+
+    def list_alerts(self):
+        """
+        List the monitor alerts associated with the deployment id.
+
+        Args:
+            deployment_id (str): Unique string identifier for the deployment.
+
+        Returns:
+            list[MonitorAlert]: An array of deployment alerts.
+        """
+        return self.client.list_deployment_alerts(self.deployment_id)
 
     def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False):
         """

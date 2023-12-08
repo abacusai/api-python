@@ -19,6 +19,7 @@ Classes
    abacusai.api_class.monitor_alert.HistoryLengthDriftConditionConfig
    abacusai.api_class.monitor_alert.DataIntegrityViolationConditionConfig
    abacusai.api_class.monitor_alert.BiasViolationConditionConfig
+   abacusai.api_class.monitor_alert.PredictionCountConditionConfig
    abacusai.api_class.monitor_alert._AlertConditionConfigFactory
    abacusai.api_class.monitor_alert.AlertActionConfig
    abacusai.api_class.monitor_alert.EmailActionConfig
@@ -208,6 +209,38 @@ Classes
 
    .. py:attribute:: minimum_violations
       :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: PredictionCountConditionConfig
+
+
+   Bases: :py:obj:`AlertConditionConfig`
+
+   Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
+   :param threshold: Threshold for when to consider to be a violation. Negative means alert on reduction, positive means alert on increase.
+   :type threshold: float
+   :param aggregation_window: Time window to aggregate the predictions over, e.g. 1h, 10m. Only h(hour), m(minute) and s(second) are supported.
+   :type aggregation_window: str
+   :param aggregation_type: Aggregation type to use for the aggregation window, e.g. sum, avg.
+   :type aggregation_type: str
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+   .. py:attribute:: aggregation_window
+      :type: str
+
+      
+
+   .. py:attribute:: aggregation_type
+      :type: str
 
       
 

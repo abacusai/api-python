@@ -116,16 +116,19 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig" title="abacusai.api_class.monitor_alert.BiasViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasViolationConditionConfig</span></code></a></p></td>
 <td><p>Bias Violation Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertConditionConfigFactory" title="abacusai.api_class.monitor_alert._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig" title="abacusai.api_class.monitor_alert.PredictionCountConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionCountConditionConfig</span></code></a></p></td>
+<td><p>Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertConditionConfigFactory" title="abacusai.api_class.monitor_alert._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertActionConfig" title="abacusai.api_class.monitor_alert.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertActionConfig" title="abacusai.api_class.monitor_alert.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.EmailActionConfig" title="abacusai.api_class.monitor_alert.EmailActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmailActionConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.EmailActionConfig" title="abacusai.api_class.monitor_alert.EmailActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmailActionConfig</span></code></a></p></td>
 <td><p>Email Action Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory" title="abacusai.api_class.monitor_alert._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory" title="abacusai.api_class.monitor_alert._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
 </tbody>
@@ -334,6 +337,39 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.BiasViolationConditionConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.BiasViolationConditionConfig.__post_init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor_alert.</span></span><span class="sig-name descname"><span class="pre">PredictionCountConditionConfig</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.monitor_alert.AlertConditionConfig" title="abacusai.api_class.monitor_alert.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p>
+<p>Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
+:param threshold: Threshold for when to consider to be a violation. Negative means alert on reduction, positive means alert on increase.
+:type threshold: float
+:param aggregation_window: Time window to aggregate the predictions over, e.g. 1h, 10m. Only h(hour), m(minute) and s(second) are supported.
+:type aggregation_window: str
+:param aggregation_type: Aggregation type to use for the aggregation window, e.g. sum, avg.
+:type aggregation_type: str</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.threshold">
+<span class="sig-name descname"><span class="pre">threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.threshold" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_window">
+<span class="sig-name descname"><span class="pre">aggregation_window</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_window" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_type">
+<span class="sig-name descname"><span class="pre">aggregation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.aggregation_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.PredictionCountConditionConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.PredictionCountConditionConfig.__post_init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

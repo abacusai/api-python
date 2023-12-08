@@ -21,3 +21,4 @@ class DocumentProcessingConfig(ApiClass):
     layout_analysis: bool = False
     enhanced_layout_detection: bool = False
     enhanced_layout_detection_v2: bool = False
+    extract_tables_to_markdown: bool = False

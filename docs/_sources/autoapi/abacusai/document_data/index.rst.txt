@@ -1,0 +1,53 @@
+:py:mod:`abacusai.document_data`
+================================
+
+.. py:module:: abacusai.document_data
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.document_data.DocumentData
+
+
+
+
+.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Data extracted from a docstore document.
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param docId: Unique Docstore string identifier for the document.
+   :type docId: str
+   :param mimeType: The mime type of the document.
+   :type mimeType: str
+   :param pageCount: The total number of pages in document.
+   :type pageCount: int
+   :param extractedText: The extracted OCR text extracted from the document.
+   :type extractedText: str
+   :param embeddedText: The embedded text extracted from the document. Only available for digital documents.
+   :type embeddedText: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

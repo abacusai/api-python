@@ -162,10 +162,12 @@ class RegressionTrainingConfig(TrainingConfig):
         data_split_feature_group_table_name (str): Specify the table name of the feature group to export training data with the fold column.
         custom_loss_functions (List[str]): Registered custom losses available for selection.
         custom_metrics (List[str]): Registered custom metrics available for selection.
+        partial_dependence_analysis (PartialDependenceAnalysis): Specify whether to run partial dependence plots for all features or only some features.
     """
     objective: enums.RegressionObjective = dataclasses.field(default=None)
     sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
     tree_hpo_mode: enums.RegressionTreeHPOMode = dataclasses.field(default=enums.RegressionTreeHPOMode.THOROUGH)
+    partial_dependence_analysis: enums.PartialDependenceAnalysis = dataclasses.field(default=enums.PartialDependenceAnalysis.RAPID)
 
     # data split related
     type_of_split: enums.RegressionTypeOfSplit = dataclasses.field(default=None)
@@ -443,12 +445,16 @@ class ChatLLMTrainingConfig(TrainingConfig):
         system_message (str): The generative LLM system message
         temperature (float): The generative LLM temperature
         metadata_columns (list): Include the metadata column values in the retrieved search results.
+        include_general_knowledge (bool): Allow the LLM to rely not just on search results, but to fall back on general knowledge.
+        response_instructions (str): Customize instructions for what the LLM responses should look like.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
     system_message: str = None
     temperature: float = None
     metadata_columns: list = None
+    include_general_knowledge: bool = None
+    response_instructions: str = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

@@ -260,6 +260,35 @@ Classes
       :type deployment_id: str
 
 
+   .. py:method:: create_alert(alert_name, condition_config, action_config)
+
+      Create a deployment alert for the given conditions.
+
+      Only support batch prediction usage now.
+
+
+      :param alert_name: Name of the alert.
+      :type alert_name: str
+      :param condition_config: Condition to run the actions for the alert.
+      :type condition_config: AlertConditionConfig
+      :param action_config: Configuration for the action of the alert.
+      :type action_config: AlertActionConfig
+
+      :returns: Object describing the deployment alert.
+      :rtype: MonitorAlert
+
+
+   .. py:method:: list_alerts()
+
+      List the monitor alerts associated with the deployment id.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+
+      :returns: An array of deployment alerts.
+      :rtype: list[MonitorAlert]
+
+
    .. py:method:: get_conversation_response(message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).

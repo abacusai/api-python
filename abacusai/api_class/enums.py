@@ -70,6 +70,11 @@ class RegressionTreeHPOMode(ApiEnum):
     THOROUGH = 'thorough'
 
 
+class PartialDependenceAnalysis(ApiEnum):
+    RAPID = 'rapid'
+    THOROUGH = 'thorough'
+
+
 class RegressionAugmentationStrategy(ApiEnum):
     SMOTE = 'smote'
     RESAMPLE = 'resample'
@@ -375,12 +380,14 @@ class VectorStoreTextEncoder(ApiEnum):
 
 class LLMName(ApiEnum):
     OPENAI_GPT4 = 'OPENAI_GPT4'
+    OPENAI_GPT4_32K = 'OPENAI_GPT4_32K'
+    OPENAI_GPT4_128K = 'OPENAI_GPT4_128K'
     OPENAI_GPT3_5 = 'OPENAI_GPT3_5'
-    OPENAI_GPT3_5_SHORT = 'OPENAI_GPT3_5_SHORT'
-    CLAUDE_V2 = 'CLAUDE_V2'
+    OPENAI_GPT3_5_TEXT = 'OPENAI_GPT3_5_TEXT'
+    CLAUDE_V2_1 = 'CLAUDE_V2_1'
     ABACUS_GIRAFFE = 'ABACUS_GIRAFFE'
+    ABACUS_GIRAFFE_LARGE = 'ABACUS_GIRAFFE_LARGE'
     ABACUS_LLAMA2_QA = 'ABACUS_LLAMA2_QA'
-    ABACUS_LLAMA2_CODE = 'ABACUS_LLAMA2_CODE'
     LLAMA2_CHAT = 'LLAMA2_CHAT'
     PALM = 'PALM'
     PALM_TEXT = 'PALM_TEXT'
@@ -393,6 +400,7 @@ class MonitorAlertType(ApiEnum):
     BIAS_VIOLATIONS = 'BiasViolations'
     HISTORY_LENGTH_DRIFT = 'HistoryLengthDrift'
     TARGET_DRIFT = 'TargetDrift'
+    PREDICTION_COUNT = 'PredictionCount'
 
 
 class FeatureDriftType(ApiEnum):

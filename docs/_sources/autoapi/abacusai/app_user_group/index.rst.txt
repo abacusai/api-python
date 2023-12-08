@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, users={})
+.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, users={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,6 +34,8 @@ Classes
    :type externalApplicationIds: list[str]
    :param invitedUserEmails: The emails of the users invited to the user group who have not yet accepted the invite.
    :type invitedUserEmails: list[str]
+   :param publicUserGroup: Boolean flag whether the app user group is the public user group of the org or not
+   :type publicUserGroup: bool
    :param users: The users in the user group.
    :type users: User
 

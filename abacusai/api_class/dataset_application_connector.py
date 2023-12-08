@@ -17,7 +17,14 @@ class DatasetConfig(ApiClass):
 class ConfluenceDatasetConfig(DatasetConfig):
     """
     Dataset config for Confluence Application Connector
+    Args:
+        pull_attachments (bool, optional): Whether to pull attachments for each page
+        space_key (str, optional): The space key to fetch pages from
+
     """
+    pull_attachments: bool = dataclasses.field(default=False)
+    space_key: str = dataclasses.field(default=None)
+
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.CONFLUENCE
 

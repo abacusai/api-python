@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AgentDataExecutionResult(client, docIds=None, response=None, deploymentConversationId=None)
+.. py:class:: AgentDataExecutionResult(client, response=None, deploymentConversationId=None, docInfos={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -26,12 +26,12 @@ Classes
 
    :param client: An authenticated API Client instance
    :type client: ApiClient
-   :param docIds: A list of document IDs uploaded to agent.
-   :type docIds: list[str]
    :param response: The result of agent conversation execution.
    :type response: str
    :param deploymentConversationId: The unique identifier of the deployment conversation.
    :type deploymentConversationId: id
+   :param docInfos: A list of dict containing information on documents uploaded to agent.
+   :type docInfos: AgentDataDocumentInfo
 
    .. py:method:: __repr__()
 

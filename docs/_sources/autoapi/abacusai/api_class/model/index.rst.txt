@@ -425,6 +425,8 @@ Classes
    :type custom_loss_functions: List[str]
    :param custom_metrics: Registered custom metrics available for selection.
    :type custom_metrics: List[str]
+   :param partial_dependence_analysis: Specify whether to run partial dependence plots for all features or only some features.
+   :type partial_dependence_analysis: PartialDependenceAnalysis
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.RegressionObjective
@@ -438,6 +440,11 @@ Classes
 
    .. py:attribute:: tree_hpo_mode
       :type: abacusai.api_class.enums.RegressionTreeHPOMode
+
+      
+
+   .. py:attribute:: partial_dependence_analysis
+      :type: abacusai.api_class.enums.PartialDependenceAnalysis
 
       
 
@@ -1243,6 +1250,10 @@ Classes
    :type temperature: float
    :param metadata_columns: Include the metadata column values in the retrieved search results.
    :type metadata_columns: list
+   :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
+   :type include_general_knowledge: bool
+   :param response_instructions: Customize instructions for what the LLM responses should look like.
+   :type response_instructions: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -1266,6 +1277,16 @@ Classes
 
    .. py:attribute:: metadata_columns
       :type: list
+
+      
+
+   .. py:attribute:: include_general_knowledge
+      :type: bool
+
+      
+
+   .. py:attribute:: response_instructions
+      :type: str
 
       
 

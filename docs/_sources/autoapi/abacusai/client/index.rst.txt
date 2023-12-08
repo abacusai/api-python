@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.79.8'
+      :value: '0.80.0'
 
       
 
@@ -1097,8 +1097,11 @@ Attributes
       :type database_connector_id: str
       :param object_name: Unique identifier for the object in the external system.
       :type object_name: str
-      :param fetch_raw_data: If true, return unfiltered list of column names.
+      :param fetch_raw_data: If true, return unfiltered list of columns.
       :type fetch_raw_data: bool
+
+      :returns: The schema of the object.
+      :rtype: DatabaseConnectorSchema
 
 
    .. py:method:: query_database_connector(database_connector_id, query)
@@ -1264,6 +1267,17 @@ Attributes
 
       :returns: The extracted page data.
       :rtype: PageData
+
+
+   .. py:method:: get_docstore_document_data(doc_id)
+
+      Returns the extracted data for a document.
+
+      :param doc_id: A unique Docstore string identifier for the document.
+      :type doc_id: str
+
+      :returns: The extracted document data.
+      :rtype: DocumentData
 
 
    .. py:method:: describe_train_test_data_split_feature_group(model_id)
@@ -1907,6 +1921,17 @@ Attributes
 
       :returns: Model training types for deployment.
       :rtype: ModelTrainingTypeForDeployment
+
+
+   .. py:method:: list_deployment_alerts(deployment_id)
+
+      List the monitor alerts associated with the deployment id.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+
+      :returns: An array of deployment alerts.
+      :rtype: list[MonitorAlert]
 
 
    .. py:method:: describe_refresh_policy(refresh_policy_id)
@@ -3254,7 +3279,7 @@ Attributes
       :rtype: LLMResponse
 
 
-   .. py:method:: _get_agent_async_app_request_id()
+   .. py:method:: _get_agent_app_request_id()
 
       Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
 
@@ -3270,6 +3295,14 @@ Attributes
       :rtype: str
 
 
+   .. py:method:: _is_proxy_app_caller()
+
+      Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+
+      :returns: True if the caller is proxy app.
+      :rtype: bool
+
+
    .. py:method:: stream_message(message)
 
       Streams a message to the current request context. Applicable within a AIAgent execute function.
@@ -3282,9 +3315,9 @@ Attributes
    .. py:method:: _stream_llm_call(llm_args)
 
 
-   .. py:method:: _call_aiagent_asyncapp_sync_message(request_id, caller, message=None, llm_args=None)
+   .. py:method:: _call_aiagent_app_send_message(request_id, caller, message=None, llm_args=None, proxy_caller=False)
 
-      Calls the AI Agent AsyncApp sync message endpoint.
+      Calls the AI Agent app send message endpoint.
 
       :param request_id: The request ID for the current request being processed by the Agent.
       :type request_id: str
@@ -3324,7 +3357,7 @@ Attributes
       :param schema_document_retriever_ids: A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
       :type schema_document_retriever_ids: List[str]
 
-      :returns: The result of the query execution.
+      :returns: The result of the query execution. Execution results could be loaded as pandas using 'load_as_pandas', i.e., result.execution.load_as_pandas().
       :rtype: LlmExecutionResult
 
 
@@ -4333,7 +4366,7 @@ Attributes
       :type feature_group_id: str
       :param feature: The name of the feature.
       :type feature: str
-      :param feature_type: The machine learning type of the data in the feature. Refer to the [guide on feature types](https://api.abacus.ai/app/help/class/FeatureType) for more information.
+      :param feature_type: The machine learning type of the data in the feature.
       :type feature_type: str
 
       :returns: The feature group after the data_type is applied.
@@ -4984,7 +5017,7 @@ Attributes
       :type dataset_id: str
       :param column: The name of the column.
       :type column: str
-      :param data_type: The type of the data in the column. Refer to the [guide on data types](https://api.abacus.ai/app/help/class/DataType) for more information. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
+      :param data_type: The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
       :type data_type: str
 
       :returns: The dataset and schema after the data type has been set.
@@ -6131,6 +6164,26 @@ Attributes
       :type deployment_id: str
 
 
+   .. py:method:: create_deployment_alert(deployment_id, alert_name, condition_config, action_config)
+
+      Create a deployment alert for the given conditions.
+
+      Only support batch prediction usage now.
+
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+      :param alert_name: Name of the alert.
+      :type alert_name: str
+      :param condition_config: Condition to run the actions for the alert.
+      :type condition_config: AlertConditionConfig
+      :param action_config: Configuration for the action of the alert.
+      :type action_config: AlertActionConfig
+
+      :returns: Object describing the deployment alert.
+      :rtype: MonitorAlert
+
+
    .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
 
       Creates a refresh policy with a particular cron pattern and refresh type.
@@ -6926,7 +6979,7 @@ Attributes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_ids = None)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -6944,8 +6997,8 @@ Attributes
       :type external_session_id: str
       :param regenerate: If True, will regenerate the response from the last query.
       :type regenerate: bool
-      :param doc_ids: An optional list of document IDs to use for the conversation.
-      :type doc_ids: list
+      :param doc_infos: An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore.
+      :type doc_infos: list
 
 
    .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
@@ -8350,7 +8403,7 @@ Attributes
       :rtype: Agent
 
 
-   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None)
+   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
 
       Generate response to the prompt using the specified model.
 
@@ -8359,13 +8412,17 @@ Attributes
       :param system_message: System prompt for models that support it.
       :type system_message: str
       :param llm_name: Name of the underlying LLM to be used for generation. Default is auto selection.
-      :type llm_name: str
+      :type llm_name: LLMName
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
       :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
       :type temperature: float
       :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
       :type messages: list
+      :param response_type: Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
+      :type response_type: str
+      :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
+      :type json_response_schema: dict
 
       :returns: The response from the model, raw text and parsed components.
       :rtype: LlmResponse
@@ -8395,7 +8452,7 @@ Attributes
       :param system_message: System message for models that support it.
       :type system_message: str
       :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
-      :type llm_name: str
+      :type llm_name: LLMName
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
 
@@ -8403,7 +8460,7 @@ Attributes
       :rtype: LlmParameters
 
 
-   .. py:method:: generate_code_for_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None)
+   .. py:method:: generate_code_for_data_query_using_llm(query, feature_group_ids = None, external_database_schemas = None, prompt_context = None, llm_name = None, temperature = None)
 
       Execute a data query using a large language model in an async fashion.
 
@@ -8411,10 +8468,12 @@ Attributes
       :type query: str
       :param feature_group_ids: A list of feature group IDs that the query should be executed against.
       :type feature_group_ids: list
+      :param external_database_schemas: A list of schmeas from external database that the query should be executed against.
+      :type external_database_schemas: list
       :param prompt_context: The context message used to construct the prompt for the language model. If not provide, a default context message is used.
       :type prompt_context: str
       :param llm_name: The name of the language model to use. If not provided, the default language model is used.
-      :type llm_name: str
+      :type llm_name: LLMName
       :param temperature: The temperature to use for the language model if supported. If not provided, the default temperature is used.
       :type temperature: float
 
@@ -8433,7 +8492,7 @@ Attributes
       :param document_text: The text of the document to query. Only used if document_id is not provided.
       :type document_text: str
       :param llm_name: The name of the language model to use. If not provided, the default language model is used.
-      :type llm_name: str
+      :type llm_name: LLMName
 
       :returns: The response from the document query.
       :rtype: ExtractedFields

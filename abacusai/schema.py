@@ -12,9 +12,9 @@ class Schema(AbstractApiClass):
             name (str): The unique name of the feature.
             featureMapping (str): The mapping of the feature. The possible values will be based on the project's use-case. See the (Use Case Documentation)[https://api.abacus.ai/app/help/useCases] for more details.
             detectedFeatureMapping (str): Detected feature mapping for this feature
-            featureType (str): The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL,  PAGE_INFOS.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/FeatureType] for more information.
+            featureType (str): The underlying data type of each feature:  CATEGORICAL,  CATEGORICAL_LIST,  NUMERICAL,  TIMESTAMP,  TEXT,  EMAIL,  LABEL_LIST,  JSON,  OBJECT_REFERENCE,  MULTICATEGORICAL_LIST,  COORDINATE_LIST,  NUMERICAL_LIST,  TIMESTAMP_LIST,  ZIPCODE,  URL,  PAGE_INFOS.
             detectedFeatureType (str): The detected feature type for this feature
-            dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL.  Refer to the (guide on data types)[https://api.abacus.ai/app/help/class/DataType] for more information.
+            dataType (str): The underlying data type of each feature:  INTEGER,  FLOAT,  STRING,  DATE,  DATETIME,  BOOLEAN,  LIST,  STRUCT,  NULL.
             detectedDataType (str): The detected data type for this feature
             nestedFeatures (NestedFeatureSchema): List of features of nested feature
             pointInTimeInfo (PointInTimeFeatureInfo): Point in time information for this feature

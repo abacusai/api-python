@@ -1,0 +1,42 @@
+from .return_class import AbstractApiClass
+
+
+class DocumentData(AbstractApiClass):
+    """
+        Data extracted from a docstore document.
+
+        Args:
+            client (ApiClient): An authenticated API Client instance
+            docId (str): Unique Docstore string identifier for the document.
+            mimeType (str): The mime type of the document.
+            pageCount (int): The total number of pages in document.
+            extractedText (str): The extracted OCR text extracted from the document.
+            embeddedText (str): The embedded text extracted from the document. Only available for digital documents.
+    """
+
+    def __init__(self, client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None):
+        super().__init__(client, None)
+        self.doc_id = docId
+        self.mime_type = mimeType
+        self.page_count = pageCount
+        self.extracted_text = extractedText
+        self.embedded_text = embeddedText
+
+    def __repr__(self):
+        repr_dict = {f'doc_id': repr(self.doc_id), f'mime_type': repr(self.mime_type), f'page_count': repr(
+            self.page_count), f'extracted_text': repr(self.extracted_text), f'embedded_text': repr(self.embedded_text)}
+        class_name = "DocumentData"
+        repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
+        ) if getattr(self, key, None) is not None])
+        return f"{class_name}({repr_str})"
+
+    def to_dict(self):
+        """
+        Get a dict representation of the parameters in this class
+
+        Returns:
+            dict: The dict value representation of the class parameters
+        """
+        resp = {'doc_id': self.doc_id, 'mime_type': self.mime_type, 'page_count': self.page_count,
+                'extracted_text': self.extracted_text, 'embedded_text': self.embedded_text}
+        return {key: value for key, value in resp.items() if value is not None}

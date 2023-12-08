@@ -16,10 +16,10 @@ class DeploymentConversationEvent(AbstractApiClass):
             searchResults (dict): The search results for the message.
             isUseful (bool): Whether this message was marked as useful or not
             feedback (str): The feedback provided for the message
-            docIds (list): A list of document IDs associated with the message
+            docInfos (list): A list of information on the documents associated with the message
     """
 
-    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, docIds=None):
+    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, docInfos=None):
         super().__init__(client, None)
         self.role = role
         self.text = text
@@ -30,11 +30,11 @@ class DeploymentConversationEvent(AbstractApiClass):
         self.search_results = searchResults
         self.is_useful = isUseful
         self.feedback = feedback
-        self.doc_ids = docIds
+        self.doc_infos = docInfos
 
     def __repr__(self):
-        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(
-            self.regenerate_attempt), f'model_version': repr(self.model_version), f'search_results': repr(self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'doc_ids': repr(self.doc_ids)}
+        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(self.regenerate_attempt), f'model_version': repr(
+            self.model_version), f'search_results': repr(self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'doc_infos': repr(self.doc_infos)}
         class_name = "DeploymentConversationEvent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -48,5 +48,5 @@ class DeploymentConversationEvent(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'message_index': self.message_index, 'regenerate_attempt': self.regenerate_attempt,
-                'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback, 'doc_ids': self.doc_ids}
+                'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback, 'doc_infos': self.doc_infos}
         return {key: value for key, value in resp.items() if value is not None}

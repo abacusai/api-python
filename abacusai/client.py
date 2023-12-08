@@ -33,7 +33,7 @@ from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     BatchPredictionArgs, BlobInput, DatasetConfig, DocumentRetrieverConfig,
     EvalArtifactType, FeatureGroupExportConfig, ForecastingMonitorConfig,
-    MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
+    LLMName, MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
     SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
@@ -55,6 +55,7 @@ from .custom_train_function_info import CustomTrainFunctionInfo
 from .data_metrics import DataMetrics
 from .data_prep_logs import DataPrepLogs
 from .database_connector import DatabaseConnector
+from .database_connector_schema import DatabaseConnectorSchema
 from .dataset import Dataset
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
@@ -63,6 +64,7 @@ from .deployment import Deployment
 from .deployment_auth_token import DeploymentAuthToken
 from .deployment_conversation import DeploymentConversation
 from .deployment_conversation_export import DeploymentConversationExport
+from .document_data import DocumentData
 from .document_retriever import DocumentRetriever
 from .document_retriever_config import DocumentRetrieverConfig
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
@@ -518,13 +520,14 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.79.8'
+    client_version = '0.80.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
         if self.api_key is None:
             self.api_key = os.getenv('ABACUS_API_KEY')
         self.notebook_id = os.getenv('ABACUS_NOTEBOOK_ID')
+        self.pipeline_id = os.getenv('ABACUS_PIPELINE_ID')
         self.web_version = None
         self.api_endpoint = None
         self.prediction_endpoint = None
@@ -618,7 +621,7 @@ class BaseApiClient:
             self, action, method, query_params=None,
             body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None, retry_500: bool = False):
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
-                   'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id}
+                   'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id, 'pipelineId': self.pipeline_id}
         url = (server_override or self.server) + '/api/v0/' + action
         self._clean_api_objects(query_params)
         self._clean_api_objects(body)
@@ -676,8 +679,8 @@ class BaseApiClient:
                  body=None, files=None, stream=False, timeout=None, retry_500: bool = False):
         _session = _requests_retry_session(retry_500=retry_500)
         if method == 'GET':
-            cleaned_params = {key: ','.join([str(item) for item in val]) if isinstance(
-                val, list) else val for key, val in query_params.items()} if query_params else query_params
+            cleaned_params = {key: json.dumps(val) if (isinstance(val, list) or isinstance(
+                val, dict)) else val for key, val in query_params.items()} if query_params else query_params
             return _session.get(url, params=cleaned_params, headers=headers, stream=stream)
         elif method == 'POST':
             return _session.post(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
@@ -1234,14 +1237,17 @@ class ReadOnlyClient(BaseApiClient):
             fetch_raw_data (bool): If true, return unfiltered objects."""
         return self._call_api('listDatabaseConnectorObjects', 'GET', query_params={'databaseConnectorId': database_connector_id, 'fetchRawData': fetch_raw_data})
 
-    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None, fetch_raw_data: bool = False) -> list:
+    def get_database_connector_object_schema(self, database_connector_id: str, object_name: str = None, fetch_raw_data: bool = False) -> DatabaseConnectorSchema:
         """Get the schema of an object in an database connector.
 
         Args:
             database_connector_id (str): Unique string identifier for the database connector.
             object_name (str): Unique identifier for the object in the external system.
-            fetch_raw_data (bool): If true, return unfiltered list of column names."""
-        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'fetchRawData': fetch_raw_data})
+            fetch_raw_data (bool): If true, return unfiltered list of columns.
+
+        Returns:
+            DatabaseConnectorSchema: The schema of the object."""
+        return self._call_api('getDatabaseConnectorObjectSchema', 'GET', query_params={'databaseConnectorId': database_connector_id, 'objectName': object_name, 'fetchRawData': fetch_raw_data}, parse_type=DatabaseConnectorSchema)
 
     def query_database_connector(self, database_connector_id: str, query: str) -> list:
         """Runs a query in the specified database connector.
@@ -1383,6 +1389,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             PageData: The extracted page data."""
         return self._proxy_request('getDocstorePageData', 'GET', query_params={'docId': doc_id, 'page': page}, parse_type=PageData, is_sync=True)
+
+    def get_docstore_document_data(self, doc_id: str) -> DocumentData:
+        """Returns the extracted data for a document.
+
+        Args:
+            doc_id (str): A unique Docstore string identifier for the document.
+
+        Returns:
+            DocumentData: The extracted document data."""
+        return self._call_api('getDocstoreDocumentData', 'GET', query_params={'docId': doc_id}, parse_type=DocumentData)
 
     def describe_train_test_data_split_feature_group(self, model_id: str) -> FeatureGroup:
         """Get the train and test data split for a trained model by its unique identifier. This is only supported for models with custom algorithms.
@@ -1937,6 +1953,16 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ModelTrainingTypeForDeployment: Model training types for deployment."""
         return self._call_api('getModelTrainingTypesForDeployment', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=ModelTrainingTypeForDeployment)
+
+    def list_deployment_alerts(self, deployment_id: str) -> List[MonitorAlert]:
+        """List the monitor alerts associated with the deployment id.
+
+        Args:
+            deployment_id (str): Unique string identifier for the deployment.
+
+        Returns:
+            list[MonitorAlert]: An array of deployment alerts."""
+        return self._call_api('listDeploymentAlerts', 'GET', query_params={'deploymentId': deployment_id}, parse_type=MonitorAlert)
 
     def describe_refresh_policy(self, refresh_policy_id: str) -> RefreshPolicy:
         """Retrieve a single refresh policy
@@ -3409,13 +3435,17 @@ class ApiClient(ReadOnlyClient):
         Returns:
             LLMResponse: The response from the model, raw text and parsed components.
         """
+        caller = self._get_agent_async_app_caller()
+        request_id = self._get_agent_app_request_id()
+        if not caller or not request_id:
+            return self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
         llm_parameters = self.get_llm_parameters(
             prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
         result = self._stream_llm_call(llm_parameters.parameters)
         result = self._build_class(LlmResponse, result)
         return result
 
-    def _get_agent_async_app_request_id(self):
+    def _get_agent_app_request_id(self):
         """
         Gets the current request ID for the current request context of async app. Applicable within a AIAgent execute function.
 
@@ -3431,7 +3461,16 @@ class ApiClient(ReadOnlyClient):
         Returns:
             str: The caller for the current request being processed by the Agent.
         """
-        return get_object_from_context(self, _request_context, 'async_app_caller', str)
+        return get_object_from_context(self, _request_context, 'async_app_caller', str) or get_object_from_context(self, _request_context, 'proxy_app_caller', str)
+
+    def _is_proxy_app_caller(self):
+        """
+        Gets the caller for the current request context of async app. Applicable within a AIAgent execute function.
+
+        Returns:
+            bool: True if the caller is proxy app.
+        """
+        return get_object_from_context(self, _request_context, 'proxy_app_caller', str) is not None
 
     def stream_message(self, message: str) -> None:
         """
@@ -3441,25 +3480,27 @@ class ApiClient(ReadOnlyClient):
         Args:
             message (str): The message to be streamed.
         """
-        request_id = self._get_agent_async_app_request_id()
+        request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
+        proxy_caller = self._is_proxy_app_caller()
         if not request_id or not caller:
             logging.info(message)
             return
-        self._call_aiagent_asyncapp_sync_message(
-            request_id, caller, message=message)
+        self._call_aiagent_app_send_message(
+            request_id, caller, message=message, proxy_caller=proxy_caller)
 
     def _stream_llm_call(self, llm_args: dict):
-        request_id = self._get_agent_async_app_request_id()
+        request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
+        proxy_caller = self._is_proxy_app_caller()
         if not request_id or not caller:
-            raise Exception(
-                'Unable to stream LLM call to UI. No request ID or caller found.')
-        return self._call_aiagent_asyncapp_sync_message(request_id, caller, llm_args=llm_args)
+            logging.info('Please use evaluate_prompt for local testing.')
+            return
+        return self._call_aiagent_app_send_message(request_id, caller, llm_args=llm_args, proxy_caller=proxy_caller)
 
-    def _call_aiagent_asyncapp_sync_message(self, request_id, caller, message=None, llm_args=None):
+    def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, proxy_caller=False):
         """
-        Calls the AI Agent AsyncApp sync message endpoint.
+        Calls the AI Agent app send message endpoint.
 
         Args:
             request_id (str): The request ID for the current request being processed by the Agent.
@@ -3472,7 +3513,10 @@ class ApiClient(ReadOnlyClient):
         """
         if not caller.endswith('/'):
             caller = caller + '/'
-        api_endpont = f'{caller}sendSyncMessageExecuteAgentRequest'
+        if proxy_caller:
+            api_endpont = f'{caller}_agentConversationStreamMessage'
+        else:
+            api_endpont = f'{caller}sendSyncMessageExecuteAgentRequest'
         body = {'requestId': request_id}
         if message:
             body['message'] = message
@@ -3487,7 +3531,7 @@ class ApiClient(ReadOnlyClient):
             return response.json()
         else:
             raise Exception(
-                f'Error calling AI Agent AsyncApp sync message endpoint. Status code: {response.status_code}. Response: {response.text}')
+                f'Error calling AI Agent app message endpoint. Status code: {response.status_code}. Response: {response.text}')
 
     def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 600):
         start_time = time.time()
@@ -3497,7 +3541,7 @@ class ApiClient(ReadOnlyClient):
                     url=url, method=method, body=body, headers=headers)
                 if response.status_code < 500:
                     break
-                sleep(0.5)
+                time.sleep(0.5)
             response_json = response.json()
             if response_json['status'] not in wait_states:
                 return response_json, response.status_code
@@ -3572,7 +3616,7 @@ class ApiClient(ReadOnlyClient):
             schema_document_retriever_ids (List[str]): A list of document retrievers to retrieve schema information for the data query. Otherwise, they are retrieved from the feature group metadata.
 
         Returns:
-            LlmExecutionResult: The result of the query execution.
+            LlmExecutionResult: The result of the query execution. Execution results could be loaded as pandas using 'load_as_pandas', i.e., result.execution.load_as_pandas().
         """
         code = self.generate_code_for_data_query_using_llm(
             query=query, feature_group_ids=feature_group_ids, prompt_context=prompt_context, llm_name=llm_name, temperature=temperature)
@@ -4368,7 +4412,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
             feature (str): The name of the feature.
-            feature_type (str): The machine learning type of the data in the feature. Refer to the [guide on feature types](https://api.abacus.ai/app/help/class/FeatureType) for more information.
+            feature_type (str): The machine learning type of the data in the feature.
 
         Returns:
             Schema: The feature group after the data_type is applied."""
@@ -4868,7 +4912,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of the data in the column. Refer to the [guide on data types](https://api.abacus.ai/app/help/class/DataType) for more information. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
+            data_type (str): The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
 
         Returns:
             Dataset: The dataset and schema after the data type has been set."""
@@ -5232,7 +5276,7 @@ Creates a new feature group defined as the union of other feature group versions
             model_version (str): The unique identifier of the model version to delete."""
         return self._call_api('deleteModelVersion', 'DELETE', query_params={'modelVersion': model_version})
 
-    def export_model_artifact_as_feature_group(self, model_version: str, table_name: str, artifact_type: Union[dict, EvalArtifactType] = None) -> FeatureGroup:
+    def export_model_artifact_as_feature_group(self, model_version: str, table_name: str, artifact_type: Union[EvalArtifactType, str] = None) -> FeatureGroup:
         """Exports metric artifact data for a model as a feature group.
 
         Args:
@@ -5731,6 +5775,22 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             deployment_id (str): The ID of the deployment for which the export type is set."""
         return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
+
+    def create_deployment_alert(self, deployment_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]) -> MonitorAlert:
+        """Create a deployment alert for the given conditions.
+
+        Only support batch prediction usage now.
+
+
+        Args:
+            deployment_id (str): Unique string identifier for the deployment.
+            alert_name (str): Name of the alert.
+            condition_config (AlertConditionConfig): Condition to run the actions for the alert.
+            action_config (AlertActionConfig): Configuration for the action of the alert.
+
+        Returns:
+            MonitorAlert: Object describing the deployment alert."""
+        return self._call_api('createDeploymentAlert', 'POST', query_params={'deploymentId': deployment_id}, body={'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config}, parse_type=MonitorAlert)
 
     def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, prediction_operator_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type.
@@ -6375,7 +6435,7 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
-    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_ids: list = None) -> Dict:
+    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
@@ -6386,10 +6446,10 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
             external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
             regenerate (bool): If True, will regenerate the response from the last query.
-            doc_ids (list): An optional list of document IDs to use for the conversation."""
+            doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docIds': doc_ids}, server_override=prediction_url)
+        return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos}, server_override=prediction_url)
 
     def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
@@ -7488,20 +7548,22 @@ Creates a new feature group defined as the union of other feature group versions
             Agent: The updated agent"""
         return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input}, parse_type=Agent)
 
-    def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
             prompt (str): Prompt to use for generation.
             system_message (str): System prompt for models that support it.
-            llm_name (str): Name of the underlying LLM to be used for generation. Default is auto selection.
+            llm_name (LLMName): Name of the underlying LLM to be used for generation. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
             temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
             messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+            response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
+            json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
 
         Returns:
             LlmResponse: The response from the model, raw text and parsed components."""
-        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages}, parse_type=LlmResponse)
+        return self._proxy_request('EvaluatePrompt', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens, 'temperature': temperature, 'messages': messages, 'responseType': response_type, 'jsonResponseSchema': json_response_schema}, parse_type=LlmResponse)
 
     def render_feature_groups_for_llm(self, feature_group_ids: list, token_budget: int = None, include_definition: bool = True) -> LlmInput:
         """Encode feature groups as language model inputs.
@@ -7515,41 +7577,42 @@ Creates a new feature group defined as the union of other feature group versions
             LlmInput: LLM input object comprising of information about the feature groups with given IDs."""
         return self._call_api('renderFeatureGroupsForLLM', 'POST', query_params={}, body={'featureGroupIds': feature_group_ids, 'tokenBudget': token_budget, 'includeDefinition': include_definition}, parse_type=LlmInput)
 
-    def get_llm_parameters(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None) -> LlmParameters:
+    def get_llm_parameters(self, prompt: str, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None) -> LlmParameters:
         """Generate parameteres to the prompt using the given inputs
 
         Args:
             prompt (str): Prompt to use for generation.
             system_message (str): System message for models that support it.
-            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            llm_name (LLMName): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
 
         Returns:
             LlmParameters: The parameters for LLM using the given inputs."""
         return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
 
-    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list, prompt_context: str = None, llm_name: str = None, temperature: float = None) -> LlmGeneratedCode:
+    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list = None, external_database_schemas: list = None, prompt_context: str = None, llm_name: Union[LLMName, str] = None, temperature: float = None) -> LlmGeneratedCode:
         """Execute a data query using a large language model in an async fashion.
 
         Args:
             query (str): The natural language query to execute. The query is converted to a SQL query using the language model.
             feature_group_ids (list): A list of feature group IDs that the query should be executed against.
+            external_database_schemas (list): A list of schmeas from external database that the query should be executed against.
             prompt_context (str): The context message used to construct the prompt for the language model. If not provide, a default context message is used.
-            llm_name (str): The name of the language model to use. If not provided, the default language model is used.
+            llm_name (LLMName): The name of the language model to use. If not provided, the default language model is used.
             temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used.
 
         Returns:
             LlmGeneratedCode: The generated SQL code."""
-        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature}, parse_type=LlmGeneratedCode)
+        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'externalDatabaseSchemas': external_database_schemas, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature}, parse_type=LlmGeneratedCode)
 
-    def extract_data_using_llm(self, field_descriptors: list, document_id: str = None, document_text: str = None, llm_name: str = None) -> ExtractedFields:
+    def extract_data_using_llm(self, field_descriptors: list, document_id: str = None, document_text: str = None, llm_name: Union[LLMName, str] = None) -> ExtractedFields:
         """Extract fields from a document using a large language model.
 
         Args:
             field_descriptors (list): A list of fields to extract from the document.
             document_id (str): The ID of the document to query.
             document_text (str): The text of the document to query. Only used if document_id is not provided.
-            llm_name (str): The name of the language model to use. If not provided, the default language model is used.
+            llm_name (LLMName): The name of the language model to use. If not provided, the default language model is used.
 
         Returns:
             ExtractedFields: The response from the document query."""

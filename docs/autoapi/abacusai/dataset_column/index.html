@@ -51,6 +51,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../abacus_api/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.abacus_api</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../agent_data_document_info/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_data_document_info</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_execution_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_data_execution_result</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_data_upload_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_data_upload_result</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../agent_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.agent_version</span></code></a></li>
@@ -86,6 +87,8 @@
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_quality_results/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_quality_results</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../database_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_connector_column/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector_column</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_connector_schema/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector_schema</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset</span></code></a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.dataset_column</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#module-contents">Module Contents</a></li>
@@ -100,6 +103,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../deployment_conversation_export/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.deployment_conversation_export</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_annotation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_annotation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../document_data/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_data</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_config</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../document_retriever_lookup_result/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.document_retriever_lookup_result</span></code></a></li>
@@ -301,7 +305,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>client</strong> (<a class="reference internal" href="../client/index.html#abacusai.client.ApiClient" title="abacusai.client.ApiClient"><em>ApiClient</em></a>) – An authenticated API Client instance</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique name of the column.</p></li>
-<li><p><strong>dataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The underlying data type of each column. Refer to the [guide on data types](DATA_TYPES_URL) for more information.</p></li>
+<li><p><strong>dataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The underlying data type of each column.</p></li>
 <li><p><strong>detectedDataType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The detected data type of the column.</p></li>
 <li><p><strong>featureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Feature type of the column.</p></li>
 <li><p><strong>detectedFeatureType</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The detected feature type of the column.</p></li>

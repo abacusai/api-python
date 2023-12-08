@@ -8,7 +8,7 @@ class DatasetColumn(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             name (str): The unique name of the column.
-            dataType (str): The underlying data type of each column. Refer to the [guide on data types](DATA_TYPES_URL) for more information.
+            dataType (str): The underlying data type of each column.
             detectedDataType (str): The detected data type of the column.
             featureType (str): Feature type of the column.
             detectedFeatureType (str): The detected feature type of the column.
