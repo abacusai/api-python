@@ -195,6 +195,7 @@ class DocstoreUtils:
                             get_docstore_resource_bytes: Callable[..., bytes], max_workers: int = 10):
         from concurrent.futures import ThreadPoolExecutor
 
+        import numpy as np
         import pandas as pd
 
         group_by_archive = df.groupby(
@@ -224,6 +225,7 @@ class DocstoreUtils:
                 lambda args: load_page(*args), load_pages_args)
 
         pages_df = pd.DataFrame([json.loads(page) for page in pages_list])
+        pages_df = pages_df.replace({np.nan: None})
         return pages_df
 
     @classmethod
@@ -247,7 +249,7 @@ class DocstoreUtils:
             pages = list(group[cls.PAGE_TEXT])
             if cls.TOKENS in group:
                 tokens = [tok for page_tokens in group[cls.TOKENS]
-                          for tok in page_tokens]
+                          if page_tokens for tok in page_tokens]
                 return {cls.PAGES: pages, cls.TOKENS: tokens}
             return {cls.PAGES: pages}
 

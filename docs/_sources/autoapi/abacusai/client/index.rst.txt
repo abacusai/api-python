@@ -64,7 +64,6 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
-
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -74,7 +73,6 @@ Attributes
 
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`Exception`
 
@@ -97,7 +95,6 @@ Attributes
 
 .. py:exception:: MissingParameterError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Missing parameter error raised by APIs. This is usually raised when a required parameter is missing in the request.
@@ -113,7 +110,6 @@ Attributes
 
 
 .. py:exception:: InvalidParameterError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -131,7 +127,6 @@ Attributes
 
 .. py:exception:: InvalidEnumParameterError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Raised when an invalid enumeration parameter is provided.
@@ -147,7 +142,6 @@ Attributes
 
 
 .. py:exception:: PaymentMethodRequired(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -165,7 +159,6 @@ Attributes
 
 .. py:exception:: InvalidRequest(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Invalid request error raised by APIs. This is usually raised when the request is invalid or malformed.
@@ -181,7 +174,6 @@ Attributes
 
 
 .. py:exception:: GenericPermissionDeniedError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -199,7 +191,6 @@ Attributes
 
 .. py:exception:: PermissionDeniedError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Permission denied error raised by APIs. This is usually raised when a specific operation is not permitted.
@@ -215,7 +206,6 @@ Attributes
 
 
 .. py:exception:: PaidPlanRequired(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -233,7 +223,6 @@ Attributes
 
 .. py:exception:: Generic404Error(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Generic 404 error raised by APIs. This is usually raised when a resource is not found.
@@ -249,7 +238,6 @@ Attributes
 
 
 .. py:exception:: DataNotFoundError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -267,7 +255,6 @@ Attributes
 
 .. py:exception:: MethodNotAllowed(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Method not allowed error raised by APIs. This is usually raised when a specific http method is not allowed for a resource.
@@ -283,7 +270,6 @@ Attributes
 
 
 .. py:exception:: RequestTimeoutError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -301,7 +287,6 @@ Attributes
 
 .. py:exception:: ConflictError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Exception raised when a conflict occurs during API request.
@@ -317,7 +302,6 @@ Attributes
 
 
 .. py:exception:: AlreadyExistsError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -335,7 +319,6 @@ Attributes
 
 .. py:exception:: NotReadyError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Not ready exception raised by APIs. This is usually raised when the operation requested is not ready.
@@ -351,7 +334,6 @@ Attributes
 
 
 .. py:exception:: FailedDependencyError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -369,7 +351,6 @@ Attributes
 
 .. py:exception:: TooManyRequestsError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Too many requests exception raised by APIs. This is usually raised when the rate limit for requests has been exceeded.
@@ -386,7 +367,6 @@ Attributes
 
 .. py:exception:: InstanceNotModifiedError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    InstanceNotModifiedError exception raised by APIs. This is usually raised when an instance is not modified.
@@ -402,7 +382,6 @@ Attributes
 
 
 .. py:exception:: GatewayTimeoutError(message, http_status, exception = None, request_id = None)
-
 
    Bases: :py:obj:`ApiException`
 
@@ -421,7 +400,6 @@ Attributes
 
 .. py:exception:: InternalServerError(message, http_status, exception = None, request_id = None)
 
-
    Bases: :py:obj:`ApiException`
 
    Internal server error raised by APIs. This is usually raised when the server
@@ -439,7 +417,6 @@ Attributes
 
 .. py:class:: _ApiExceptionFactory
 
-
    Factory class to build exceptions raised by APIs
 
 
@@ -449,7 +426,6 @@ Attributes
 
 
 .. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
-
 
    Abstract Base API Client
 
@@ -463,7 +439,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.80.0'
+      :value: '0.80.1'
 
       
 
@@ -499,7 +475,6 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
-
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -2617,7 +2592,6 @@ Attributes
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
-
 
    Bases: :py:obj:`ReadOnlyClient`
 
