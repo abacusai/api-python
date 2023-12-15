@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None)
+.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -31,10 +32,14 @@ Classes
    :type mimeType: str
    :param pageCount: The total number of pages in document.
    :type pageCount: int
-   :param extractedText: The extracted OCR text extracted from the document.
+   :param extractedText: The extracted text in the document obtained from OCR.
    :type extractedText: str
-   :param embeddedText: The embedded text extracted from the document. Only available for digital documents.
+   :param embeddedText: The embedded text in the document. Only available for digital documents.
    :type embeddedText: str
+   :param pages: List of embedded text for each page in the document. Only available for digital documents.
+   :type pages: list
+   :param tokens: List of extracted tokens in the document obtained from OCR.
+   :type tokens: list
 
    .. py:method:: __repr__()
 

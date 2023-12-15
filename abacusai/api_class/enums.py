@@ -391,6 +391,7 @@ class LLMName(ApiEnum):
     LLAMA2_CHAT = 'LLAMA2_CHAT'
     PALM = 'PALM'
     PALM_TEXT = 'PALM_TEXT'
+    MIXTRAL_CHAT = 'MIXTRAL_CHAT'
 
 
 class MonitorAlertType(ApiEnum):
@@ -448,3 +449,12 @@ class FieldDescriptorType(ApiEnum):
     BOOLEAN = 'BOOLEAN'
     DATETIME = 'DATETIME'
     DATE = 'DATE'
+
+
+class OcrMode(ApiEnum):
+    DEFAULT = 'DEFAULT'
+    LAYOUT = 'LAYOUT'
+    SCANNED = 'SCANNED'
+    COMPREHENSIVE = 'COMPREHENSIVE'
+    COMPREHENSIVE_V2 = 'COMPREHENSIVE_V2'
+    COMPREHENSIVE_TABLE_MD = 'COMPREHENSIVE_TABLE_MD'

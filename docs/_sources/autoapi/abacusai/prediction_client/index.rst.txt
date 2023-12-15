@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: PredictionClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Prediction API Client. Does not utilize authentication and only contains public prediction methods
@@ -428,11 +429,11 @@ Classes
       :type system_message: str
       :param temperature: The generative LLM temperature
       :type temperature: float
-      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
       :type filter_key_values: dict
       :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
       :type search_score_cutoff: float
-      :param chat_config: A dictionary specifiying the query chat config override.
+      :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool

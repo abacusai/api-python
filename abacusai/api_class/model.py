@@ -442,19 +442,21 @@ class ChatLLMTrainingConfig(TrainingConfig):
     Args:
         document_retrievers (List[str]): List of document retriever names to use for the feature stores this model was trained with.
         num_completion_tokens (int): Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
-        system_message (str): The generative LLM system message
         temperature (float): The generative LLM temperature
         metadata_columns (list): Include the metadata column values in the retrieved search results.
         include_general_knowledge (bool): Allow the LLM to rely not just on search results, but to fall back on general knowledge.
+        behavior_instructions (str): Customize the overall role instructions for the LLM.
         response_instructions (str): Customize instructions for what the LLM responses should look like.
+        max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
-    system_message: str = None
     temperature: float = None
     metadata_columns: list = None
     include_general_knowledge: bool = None
+    behavior_instructions: str = None
     response_instructions: str = None
+    max_search_results: int = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

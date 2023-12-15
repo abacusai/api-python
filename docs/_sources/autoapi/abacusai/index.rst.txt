@@ -243,6 +243,7 @@ Classes
    abacusai.ChatLLMBatchPredictionArgs
    abacusai._BatchPredictionArgsFactory
    abacusai.BlobInput
+   abacusai.OcrMode
    abacusai.ParsingConfig
    abacusai.DocumentProcessingConfig
    abacusai.DatasetConfig
@@ -375,6 +376,7 @@ Attributes
 
 .. py:class:: ApiClass
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -434,6 +436,7 @@ Attributes
 
 .. py:class:: FieldDescriptor
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Configs for vector store indexing.
@@ -470,6 +473,7 @@ Attributes
 
 .. py:class:: _ApiClassFactory
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -493,6 +497,7 @@ Attributes
 
 
 .. py:class:: BatchPredictionArgs
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -520,6 +525,7 @@ Attributes
 
 
 .. py:class:: AnomalyDetectionBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -581,6 +587,7 @@ Attributes
 
 .. py:class:: AnomalyOutliersBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_OUTLIERS problem type
@@ -605,6 +612,7 @@ Attributes
 
 
 .. py:class:: ForecastingBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -666,6 +674,7 @@ Attributes
 
 .. py:class:: NamedEntityExtractionBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
@@ -690,6 +699,7 @@ Attributes
 
 
 .. py:class:: PersonalizationBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -729,6 +739,7 @@ Attributes
 
 
 .. py:class:: PredictiveModelingBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -811,6 +822,7 @@ Attributes
 
 .. py:class:: PretrainedModelsBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
@@ -843,6 +855,7 @@ Attributes
 
 .. py:class:: SentenceBoundaryDetectionBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
@@ -867,6 +880,7 @@ Attributes
 
 
 .. py:class:: ThemeAnalysisBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -907,6 +921,7 @@ Attributes
 
 .. py:class:: ChatLLMBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ChatLLM problem type
@@ -924,6 +939,7 @@ Attributes
 
 
 .. py:class:: _BatchPredictionArgsFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -945,6 +961,7 @@ Attributes
 
 
 .. py:class:: BlobInput
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -988,7 +1005,48 @@ Attributes
 
 
 
+.. py:class:: OcrMode
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: DEFAULT
+      :value: 'DEFAULT'
+
+      
+
+   .. py:attribute:: LAYOUT
+      :value: 'LAYOUT'
+
+      
+
+   .. py:attribute:: SCANNED
+      :value: 'SCANNED'
+
+      
+
+   .. py:attribute:: COMPREHENSIVE
+      :value: 'COMPREHENSIVE'
+
+      
+
+   .. py:attribute:: COMPREHENSIVE_V2
+      :value: 'COMPREHENSIVE_V2'
+
+      
+
+   .. py:attribute:: COMPREHENSIVE_TABLE_MD
+      :value: 'COMPREHENSIVE_TABLE_MD'
+
+      
+
+
 .. py:class:: ParsingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -1013,10 +1071,23 @@ Attributes
 
 .. py:class:: DocumentProcessingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Document processing configuration.
+
+   :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
+   :type extract_bounding_boxes: bool
+   :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
+   :type ocr_mode: OcrMode
+   :param use_full_ocr: Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type use_full_ocr: bool
+   :param remove_header_footer: Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_header_footer: bool
+   :param remove_watermarks: Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_watermarks: bool
+   :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type convert_to_markdown: bool
 
    .. py:attribute:: extract_bounding_boxes
       :type: bool
@@ -1024,19 +1095,17 @@ Attributes
 
       
 
-   .. py:attribute:: convert_to_markdown
+   .. py:attribute:: ocr_mode
+      :type: abacusai.api_class.enums.OcrMode
+
+      
+
+   .. py:attribute:: use_full_ocr
       :type: bool
-      :value: False
 
       
 
    .. py:attribute:: remove_header_footer
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: use_doctr
       :type: bool
       :value: False
 
@@ -1047,30 +1116,7 @@ Attributes
 
       
 
-   .. py:attribute:: use_full_ocr
-      :type: bool
-
-      
-
-   .. py:attribute:: layout_analysis
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: enhanced_layout_detection
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: enhanced_layout_detection_v2
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: extract_tables_to_markdown
+   .. py:attribute:: convert_to_markdown
       :type: bool
       :value: False
 
@@ -1078,6 +1124,7 @@ Attributes
 
 
 .. py:class:: DatasetConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -1095,6 +1142,7 @@ Attributes
 
 
 .. py:class:: ConfluenceDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1119,6 +1167,7 @@ Attributes
 
 
 .. py:class:: GoogleAnalyticsDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1151,6 +1200,7 @@ Attributes
 
 
 .. py:class:: GoogleDriveDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1198,6 +1248,7 @@ Attributes
 
 .. py:class:: JiraDatasetConfig
 
+
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Jira Application Connector
@@ -1236,6 +1287,7 @@ Attributes
 
 
 .. py:class:: OneDriveDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1283,6 +1335,7 @@ Attributes
 
 .. py:class:: SharepointDatasetConfig
 
+
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
@@ -1329,6 +1382,7 @@ Attributes
 
 .. py:class:: ZendeskDatasetConfig
 
+
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Zendesk Application Connector
@@ -1338,6 +1392,7 @@ Attributes
 
 
 .. py:class:: _DatasetConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -1359,6 +1414,7 @@ Attributes
 
 
 .. py:class:: VectorStoreTextEncoder
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1389,6 +1445,7 @@ Attributes
 
 .. py:class:: VectorStoreConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Configs for vector store indexing.
@@ -1418,12 +1475,14 @@ Attributes
 
 .. py:class:: DocumentRetrieverConfig
 
+
    Bases: :py:obj:`VectorStoreConfig`
 
    Configs for document retriever.
 
 
 .. py:class:: ApiEnum
+
 
    Bases: :py:obj:`enum.Enum`
 
@@ -1443,6 +1502,7 @@ Attributes
 
 
 .. py:class:: ProblemType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1603,6 +1663,7 @@ Attributes
 
 .. py:class:: RegressionObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1667,6 +1728,7 @@ Attributes
 
 .. py:class:: RegressionTreeHPOMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1685,6 +1747,7 @@ Attributes
 
 
 .. py:class:: PartialDependenceAnalysis
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1705,6 +1768,7 @@ Attributes
 
 .. py:class:: RegressionAugmentationStrategy
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1723,6 +1787,7 @@ Attributes
 
 
 .. py:class:: RegressionTargetTransform
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1753,6 +1818,7 @@ Attributes
 
 .. py:class:: RegressionTypeOfSplit
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1777,6 +1843,7 @@ Attributes
 
 .. py:class:: RegressionTimeSplitMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1795,6 +1862,7 @@ Attributes
 
 
 .. py:class:: RegressionLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1855,6 +1923,7 @@ Attributes
 
 .. py:class:: ExplainerType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1884,6 +1953,7 @@ Attributes
 
 .. py:class:: SamplingMethodType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1903,6 +1973,7 @@ Attributes
 
 .. py:class:: MergeMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1921,6 +1992,7 @@ Attributes
 
 
 .. py:class:: FillLogic
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1975,6 +2047,7 @@ Attributes
 
 
 .. py:class:: BatchSize
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2035,6 +2108,7 @@ Attributes
 
 .. py:class:: HolidayCalendars
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2058,6 +2132,7 @@ Attributes
 
 
 .. py:class:: FileFormat
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2173,6 +2248,7 @@ Attributes
 
 .. py:class:: ExperimentationMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2192,6 +2268,7 @@ Attributes
 
 .. py:class:: PersonalizationTrainingMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2210,6 +2287,7 @@ Attributes
 
 
 .. py:class:: PersonalizationObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2265,6 +2343,7 @@ Attributes
 
 .. py:class:: ForecastingObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2313,6 +2392,7 @@ Attributes
 
 
 .. py:class:: ForecastingFrequency
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2373,6 +2453,7 @@ Attributes
 
 .. py:class:: ForecastingDataSplitType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2401,6 +2482,7 @@ Attributes
 
 
 .. py:class:: ForecastingLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2496,6 +2578,7 @@ Attributes
 
 .. py:class:: ForecastingLocalScaling
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2540,6 +2623,7 @@ Attributes
 
 .. py:class:: ForecastingFillMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2564,6 +2648,7 @@ Attributes
 
 .. py:class:: ForecastingQuanitlesExtensionMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2587,6 +2672,7 @@ Attributes
 
 
 .. py:class:: NERObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2627,6 +2713,7 @@ Attributes
 
 .. py:class:: NERModelType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2661,6 +2748,7 @@ Attributes
 
 .. py:class:: NLPDocumentFormat
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2690,6 +2778,7 @@ Attributes
 
 .. py:class:: SentimentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2708,6 +2797,7 @@ Attributes
 
 
 .. py:class:: ClusteringImputationMethod
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2732,6 +2822,7 @@ Attributes
 
 
 .. py:class:: ConnectorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2761,6 +2852,7 @@ Attributes
 
 
 .. py:class:: ApplicationConnectorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2820,6 +2912,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionArgumentType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2895,6 +2988,7 @@ Attributes
 
 .. py:class:: PythonFunctionOutputArgumentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2969,6 +3063,7 @@ Attributes
 
 .. py:class:: LLMName
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3035,8 +3130,14 @@ Attributes
 
       
 
+   .. py:attribute:: MIXTRAL_CHAT
+      :value: 'MIXTRAL_CHAT'
+
+      
+
 
 .. py:class:: MonitorAlertType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3082,6 +3183,7 @@ Attributes
 
 .. py:class:: FeatureDriftType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3110,6 +3212,7 @@ Attributes
 
 
 .. py:class:: DataIntegrityViolationType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3145,6 +3248,7 @@ Attributes
 
 .. py:class:: BiasType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3174,6 +3278,7 @@ Attributes
 
 .. py:class:: AlertActionType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3187,6 +3292,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3212,6 +3318,7 @@ Attributes
 
 .. py:class:: EvalArtifactType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3235,6 +3342,7 @@ Attributes
 
 
 .. py:class:: FieldDescriptorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3275,6 +3383,7 @@ Attributes
 
 .. py:class:: SamplingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the sampling config of a feature group
@@ -3288,6 +3397,7 @@ Attributes
 
 
 .. py:class:: NSamplingConfig
+
 
    Bases: :py:obj:`SamplingConfig`
 
@@ -3318,6 +3428,7 @@ Attributes
 
 .. py:class:: PercentSamplingConfig
 
+
    Bases: :py:obj:`SamplingConfig`
 
    The fraction of distinct values of the feature group to include in the sample.
@@ -3347,6 +3458,7 @@ Attributes
 
 .. py:class:: _SamplingConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -3364,6 +3476,7 @@ Attributes
 
 .. py:class:: MergeConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
@@ -3377,6 +3490,7 @@ Attributes
 
 
 .. py:class:: LastNMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -3399,6 +3513,7 @@ Attributes
 
 
 .. py:class:: TimeWindowMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -3429,6 +3544,7 @@ Attributes
 
 .. py:class:: _MergeConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -3445,6 +3561,7 @@ Attributes
 
 
 .. py:class:: TrainingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -3482,6 +3599,7 @@ Attributes
 
 
 .. py:class:: PersonalizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3741,6 +3859,7 @@ Attributes
 
 
 .. py:class:: RegressionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4039,6 +4158,7 @@ Attributes
 
 
 .. py:class:: ForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4483,6 +4603,7 @@ Attributes
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
@@ -4580,6 +4701,7 @@ Attributes
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
@@ -4633,6 +4755,7 @@ Attributes
 
 .. py:class:: ChatLLMTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
@@ -4641,16 +4764,18 @@ Attributes
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
    :type num_completion_tokens: int
-   :param system_message: The generative LLM system message
-   :type system_message: str
    :param temperature: The generative LLM temperature
    :type temperature: float
    :param metadata_columns: Include the metadata column values in the retrieved search results.
    :type metadata_columns: list
    :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
    :type include_general_knowledge: bool
+   :param behavior_instructions: Customize the overall role instructions for the LLM.
+   :type behavior_instructions: str
    :param response_instructions: Customize instructions for what the LLM responses should look like.
    :type response_instructions: str
+   :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
+   :type max_search_results: int
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -4659,11 +4784,6 @@ Attributes
 
    .. py:attribute:: num_completion_tokens
       :type: int
-
-      
-
-   .. py:attribute:: system_message
-      :type: str
 
       
 
@@ -4682,8 +4802,18 @@ Attributes
 
       
 
+   .. py:attribute:: behavior_instructions
+      :type: str
+
+      
+
    .. py:attribute:: response_instructions
       :type: str
+
+      
+
+   .. py:attribute:: max_search_results
+      :type: int
 
       
 
@@ -4692,6 +4822,7 @@ Attributes
 
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4724,6 +4855,7 @@ Attributes
 
 
 .. py:class:: SentimentDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4771,6 +4903,7 @@ Attributes
 
 .. py:class:: DocumentClassificationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
@@ -4810,6 +4943,7 @@ Attributes
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
@@ -4841,6 +4975,7 @@ Attributes
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4874,6 +5009,7 @@ Attributes
 
 .. py:class:: ClusteringTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
@@ -4891,6 +5027,7 @@ Attributes
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4917,6 +5054,7 @@ Attributes
 
 .. py:class:: EventAnomalyTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
@@ -4934,6 +5072,7 @@ Attributes
 
 
 .. py:class:: CumulativeForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4987,6 +5126,7 @@ Attributes
 
 
 .. py:class:: AnomalyDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5048,6 +5188,7 @@ Attributes
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
@@ -5057,6 +5198,7 @@ Attributes
 
 
 .. py:class:: AIAgentTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5082,6 +5224,7 @@ Attributes
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5128,6 +5271,7 @@ Attributes
 
 
 .. py:class:: CustomAlgorithmTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5189,6 +5333,7 @@ Attributes
 
 .. py:class:: OptimizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
@@ -5206,6 +5351,7 @@ Attributes
 
 
 .. py:class:: _TrainingConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -5227,6 +5373,7 @@ Attributes
 
 
 .. py:class:: DeployableAlgorithm
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5263,6 +5410,7 @@ Attributes
 
 
 .. py:class:: ForecastingMonitorConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5304,6 +5452,7 @@ Attributes
 
 .. py:class:: AlertConditionConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -5320,6 +5469,7 @@ Attributes
 
 
 .. py:class:: AccuracyBelowThresholdConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5338,6 +5488,7 @@ Attributes
 
 
 .. py:class:: FeatureDriftConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5378,6 +5529,7 @@ Attributes
 
 .. py:class:: TargetDriftConditionConfig
 
+
    Bases: :py:obj:`AlertConditionConfig`
 
    Target Drift Condition Config for Monitor Alerts
@@ -5402,6 +5554,7 @@ Attributes
 
 
 .. py:class:: HistoryLengthDriftConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5428,6 +5581,7 @@ Attributes
 
 .. py:class:: DataIntegrityViolationConditionConfig
 
+
    Bases: :py:obj:`AlertConditionConfig`
 
    Data Integrity Violation Condition Config for Monitor Alerts
@@ -5452,6 +5606,7 @@ Attributes
 
 
 .. py:class:: BiasViolationConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5485,6 +5640,7 @@ Attributes
 
 .. py:class:: PredictionCountConditionConfig
 
+
    Bases: :py:obj:`AlertConditionConfig`
 
    Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
@@ -5516,6 +5672,7 @@ Attributes
 
 .. py:class:: _AlertConditionConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -5542,6 +5699,7 @@ Attributes
 
 .. py:class:: AlertActionConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -5558,6 +5716,7 @@ Attributes
 
 
 .. py:class:: EmailActionConfig
+
 
    Bases: :py:obj:`AlertActionConfig`
 
@@ -5584,6 +5743,7 @@ Attributes
 
 .. py:class:: _AlertActionConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -5604,6 +5764,7 @@ Attributes
 
 
 .. py:class:: FeatureMappingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5627,6 +5788,7 @@ Attributes
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5654,6 +5816,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionArgument
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5698,6 +5861,7 @@ Attributes
 
 .. py:class:: OutputVariableMapping
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    A config class for python function arguments
@@ -5720,6 +5884,7 @@ Attributes
 
 .. py:class:: FeatureGroupExportConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -5736,6 +5901,7 @@ Attributes
 
 
 .. py:class:: FileConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -5766,6 +5932,7 @@ Attributes
 
 
 .. py:class:: DatabaseConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -5817,6 +5984,7 @@ Attributes
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -5837,6 +6005,7 @@ Attributes
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`ReadOnlyClient`
 
@@ -6494,8 +6663,8 @@ Attributes
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
 
-      :returns: The response from the model, raw text and parsed components.
-      :rtype: LLMResponse
+      :returns: The response from the model.
+      :rtype: text
 
 
    .. py:method:: _get_agent_app_request_id()
@@ -6552,9 +6721,6 @@ Attributes
 
 
    .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 600)
-
-
-   .. py:method:: _proxy_request(name, method = 'POST', query_params = None, body = None, files=None, parse_type=None, is_sync = False, streamable_response = False)
 
 
    .. py:method:: execute_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None, preview = False, schema_document_retriever_ids = None, timeout=3600, delay=2)
@@ -6708,6 +6874,18 @@ Attributes
 
       :param email: The email address of the user to remove from the organization.
       :type email: str
+
+
+   .. py:method:: send_email(email, subject, body)
+
+      Send an email to the specified email address with provided subject and body.
+
+      :param email: The email address to send the email to.
+      :type email: str
+      :param subject: The subject of the email.
+      :type subject: str
+      :param body: The body of the email.
+      :type body: str
 
 
    .. py:method:: create_deployment_webhook(deployment_id, endpoint, webhook_event_type, payload_template = None)
@@ -7083,16 +7261,16 @@ Attributes
       Creates a new feature group defined as the union of other feature group versions.
 
 
-   .. py:method:: create_transform_feature_group(source_feature_group_id, table_name, transform_config, description = None)
+   .. py:method:: create_operator_feature_group(source_feature_group_id, table_name, operator_config, description = None)
 
-      Creates a new Feature Group defined by a pre-defined transform applied to another Feature Group.
+      Creates a new Feature Group defined by a pre-defined operator applied to another Feature Group.
 
-      :param source_feature_group_id: Unique string identifier corresponding to the Feature Group to which the transformation will be applied.
+      :param source_feature_group_id: Unique string identifier corresponding to the Feature Group to which the operator will be applied.
       :type source_feature_group_id: str
-      :param table_name: Unique string identifier for the transform Feature Group.
+      :param table_name: Unique string identifier for the operator Feature Group.
       :type table_name: str
-      :param transform_config: JSON object (aka map) defining the transform and its parameters.
-      :type transform_config: dict
+      :param operator_config: JSON object (aka map) defining the operator and its parameters.
+      :type operator_config: dict
       :param description: Human-readable description of the Feature Group.
       :type description: str
 
@@ -7154,14 +7332,14 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_group_transform_config(feature_group_id, transform_config)
+   .. py:method:: set_feature_group_operator_config(feature_group_id, operator_config)
 
-      Set a TransformFeatureGroup’s transform config to the values provided.
+      Set a OperatorFeatureGroup’s operator config to the values provided.
 
       :param feature_group_id: A unique string identifier associated with the feature group.
       :type feature_group_id: str
-      :param transform_config: A dictionary object specifying the pre-defined transformation.
-      :type transform_config: dict
+      :param operator_config: A dictionary object specifying the pre-defined operations.
+      :type operator_config: dict
 
 
    .. py:method:: set_feature_group_schema(feature_group_id, schema)
@@ -7640,6 +7818,19 @@ Attributes
       :type lookup_keys: list
 
 
+   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False)
+
+      Starts the execution of fg operation
+
+      :param query: The SQL to be executed.
+      :type query: str
+      :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
+      :type fix_query_on_error: bool
+
+      :returns: A dict that contains the execution status
+      :rtype: ExecuteFeatureGroupOperation
+
+
    .. py:method:: describe_async_feature_group_operation(feature_group_operation_run_id)
 
       Gets the status of the execution of fg operation
@@ -8026,7 +8217,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -8056,6 +8247,8 @@ Attributes
       :type is_documentset: bool
       :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
       :type extract_bounding_boxes: bool
+      :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
+      :type document_processing_config: DocumentProcessingConfig
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
       :param reference_only_documentset: Signifies if the data reference only policy is enabled.
@@ -8164,7 +8357,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -8182,6 +8375,8 @@ Attributes
       :type parsing_config: ParsingConfig
       :param merge_file_schemas: Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
+      :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
+      :type document_processing_config: DocumentProcessingConfig
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -8406,6 +8601,21 @@ Attributes
 
       :param dataset_id: Unique string identifier of the dataset to delete.
       :type dataset_id: str
+
+
+   .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None)
+
+      Extracts data from a document.
+
+      :param document: The document to extract data from. One of document or doc_id must be provided.
+      :type document: io.TextIOBase
+      :param doc_id: A unique Docstore string identifier for the document. One of document or doc_id must be provided.
+      :type doc_id: str
+      :param document_processing_config: The document processing configuration.
+      :type document_processing_config: DocumentProcessingConfig
+
+      :returns: The extracted document data.
+      :rtype: DocumentData
 
 
    .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None)
@@ -9882,11 +10092,11 @@ Attributes
       :type system_message: str
       :param temperature: The generative LLM temperature
       :type temperature: float
-      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
       :type filter_key_values: dict
       :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
       :type search_score_cutoff: float
-      :param chat_config: A dictionary specifiying the query chat config override.
+      :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
@@ -11622,7 +11832,7 @@ Attributes
       :rtype: Agent
 
 
-   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
+   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
 
       Generate response to the prompt using the specified model.
 
@@ -11740,6 +11950,29 @@ Attributes
       :rtype: AgentDataExecutionResult
 
 
+   .. py:method:: construct_agent_conversation_messages_for_llm(current_message = None, current_doc_ids = None, include_history = True, include_document_contents = True, deployment_conversation_id = None, external_session_id = None, max_document_words = None)
+
+      Returns conversation history in a format for LLM calls.
+
+      :param current_message: Current turn message from user.
+      :type current_message: str
+      :param current_doc_ids: Document IDs associated with the current turn message from user.
+      :type current_doc_ids: list
+      :param include_history: If true, include the conversation history in the generated messages.
+      :type include_history: bool
+      :param include_document_contents: If true, include contents from uploaded documents in the generated messages.
+      :type include_document_contents: bool
+      :param deployment_conversation_id: Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
+      :type deployment_conversation_id: str
+      :param external_session_id: External session ID of the conversation.
+      :type external_session_id: str
+      :param max_document_words: Maximum number of words to include in the generated message from each uploaded document.
+      :type max_document_words: int
+
+      :returns: A list of ChatMessage that represents the conversation.
+      :rtype: ChatMessage
+
+
    .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)
 
       Returns a document retriever that stores embeddings for document chunks in a feature group.
@@ -11855,6 +12088,7 @@ Attributes
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`Exception`
 
    Default ApiException raised by APIs
@@ -11876,6 +12110,7 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
+
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -11885,6 +12120,7 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -12186,19 +12422,6 @@ Attributes
 
       :returns: All the feature groups associated with the specified Python function ID.
       :rtype: list[FeatureGroup]
-
-
-   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False)
-
-      Starts the execution of fg operation
-
-      :param query: The SQL to be executed.
-      :type query: str
-      :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
-      :type fix_query_on_error: bool
-
-      :returns: A dict that contains the execution status
-      :rtype: ExecuteFeatureGroupOperation
 
 
    .. py:method:: get_execute_feature_group_operation_result_part_count(feature_group_operation_run_id)
@@ -13998,6 +14221,7 @@ Attributes
 
 .. py:class:: PredictionClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Prediction API Client. Does not utilize authentication and only contains public prediction methods
@@ -14407,11 +14631,11 @@ Attributes
       :type system_message: str
       :param temperature: The generative LLM temperature
       :type temperature: float
-      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
       :type filter_key_values: dict
       :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
       :type search_score_cutoff: float
-      :param chat_config: A dictionary specifiying the query chat config override.
+      :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
@@ -14782,6 +15006,7 @@ Attributes
 
 .. py:class:: StreamingClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
@@ -14871,7 +15096,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '0.80.1'
+   :value: '1.00.0'
 
    
 

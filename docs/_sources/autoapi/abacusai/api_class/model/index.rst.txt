@@ -42,6 +42,7 @@ Classes
 
 .. py:class:: TrainingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -78,6 +79,7 @@ Classes
 
 
 .. py:class:: PersonalizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -337,6 +339,7 @@ Classes
 
 
 .. py:class:: RegressionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -635,6 +638,7 @@ Classes
 
 
 .. py:class:: ForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1079,6 +1083,7 @@ Classes
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
@@ -1176,6 +1181,7 @@ Classes
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NATURAL_LANGUAGE_SEARCH problem type
@@ -1229,6 +1235,7 @@ Classes
 
 .. py:class:: ChatLLMTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CHAT_LLM problem type
@@ -1237,16 +1244,18 @@ Classes
    :type document_retrievers: List[str]
    :param num_completion_tokens: Default for maximum number of tokens for chat answers. Reducing this will get faster responses which are more succinct
    :type num_completion_tokens: int
-   :param system_message: The generative LLM system message
-   :type system_message: str
    :param temperature: The generative LLM temperature
    :type temperature: float
    :param metadata_columns: Include the metadata column values in the retrieved search results.
    :type metadata_columns: list
    :param include_general_knowledge: Allow the LLM to rely not just on search results, but to fall back on general knowledge.
    :type include_general_knowledge: bool
+   :param behavior_instructions: Customize the overall role instructions for the LLM.
+   :type behavior_instructions: str
    :param response_instructions: Customize instructions for what the LLM responses should look like.
    :type response_instructions: str
+   :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
+   :type max_search_results: int
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -1255,11 +1264,6 @@ Classes
 
    .. py:attribute:: num_completion_tokens
       :type: int
-
-      
-
-   .. py:attribute:: system_message
-      :type: str
 
       
 
@@ -1278,8 +1282,18 @@ Classes
 
       
 
+   .. py:attribute:: behavior_instructions
+      :type: str
+
+      
+
    .. py:attribute:: response_instructions
       :type: str
+
+      
+
+   .. py:attribute:: max_search_results
+      :type: int
 
       
 
@@ -1288,6 +1302,7 @@ Classes
 
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1320,6 +1335,7 @@ Classes
 
 
 .. py:class:: SentimentDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1367,6 +1383,7 @@ Classes
 
 .. py:class:: DocumentClassificationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
@@ -1406,6 +1423,7 @@ Classes
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
@@ -1437,6 +1455,7 @@ Classes
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1470,6 +1489,7 @@ Classes
 
 .. py:class:: ClusteringTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
@@ -1487,6 +1507,7 @@ Classes
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1513,6 +1534,7 @@ Classes
 
 .. py:class:: EventAnomalyTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
@@ -1530,6 +1552,7 @@ Classes
 
 
 .. py:class:: CumulativeForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1583,6 +1606,7 @@ Classes
 
 
 .. py:class:: AnomalyDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1644,6 +1668,7 @@ Classes
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
@@ -1653,6 +1678,7 @@ Classes
 
 
 .. py:class:: AIAgentTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1678,6 +1704,7 @@ Classes
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1724,6 +1751,7 @@ Classes
 
 
 .. py:class:: CustomAlgorithmTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -1785,6 +1813,7 @@ Classes
 
 .. py:class:: OptimizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
@@ -1802,6 +1831,7 @@ Classes
 
 
 .. py:class:: _TrainingConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -1823,6 +1853,7 @@ Classes
 
 
 .. py:class:: DeployableAlgorithm
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 

@@ -60,6 +60,14 @@ def get_non_nullable_type(types):
     return non_nullable_types[0] if non_nullable_types else None
 
 
+class StreamingHandler(str):
+    def __new__(cls, value, context):
+        obj = str.__new__(cls, value)
+        if context and hasattr(context, 'streamed_response') and isinstance(context.streamed_response, list):
+            context.streamed_response.append(obj)
+        return obj
+
+
 def get_object_from_context(client, context, variable_name, return_type):
     raw_value = getattr(context, variable_name, None)
     if raw_value is None:

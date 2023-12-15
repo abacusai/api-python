@@ -20,6 +20,7 @@ Classes
 
 .. py:class:: ParsingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -43,10 +44,23 @@ Classes
 
 .. py:class:: DocumentProcessingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Document processing configuration.
+
+   :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
+   :type extract_bounding_boxes: bool
+   :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
+   :type ocr_mode: OcrMode
+   :param use_full_ocr: Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type use_full_ocr: bool
+   :param remove_header_footer: Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_header_footer: bool
+   :param remove_watermarks: Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_watermarks: bool
+   :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type convert_to_markdown: bool
 
    .. py:attribute:: extract_bounding_boxes
       :type: bool
@@ -54,19 +68,17 @@ Classes
 
       
 
-   .. py:attribute:: convert_to_markdown
+   .. py:attribute:: ocr_mode
+      :type: abacusai.api_class.enums.OcrMode
+
+      
+
+   .. py:attribute:: use_full_ocr
       :type: bool
-      :value: False
 
       
 
    .. py:attribute:: remove_header_footer
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: use_doctr
       :type: bool
       :value: False
 
@@ -77,30 +89,7 @@ Classes
 
       
 
-   .. py:attribute:: use_full_ocr
-      :type: bool
-
-      
-
-   .. py:attribute:: layout_analysis
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: enhanced_layout_detection
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: enhanced_layout_detection_v2
-      :type: bool
-      :value: False
-
-      
-
-   .. py:attribute:: extract_tables_to_markdown
+   .. py:attribute:: convert_to_markdown
       :type: bool
       :value: False
 

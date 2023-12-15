@@ -31,13 +31,13 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    BatchPredictionArgs, BlobInput, DatasetConfig, DocumentRetrieverConfig,
-    EvalArtifactType, FeatureGroupExportConfig, ForecastingMonitorConfig,
-    LLMName, MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
-    SamplingConfig, TrainingConfig
+    BatchPredictionArgs, BlobInput, DatasetConfig, DocumentProcessingConfig,
+    DocumentRetrieverConfig, EvalArtifactType, FeatureGroupExportConfig,
+    ForecastingMonitorConfig, LLMName, MergeConfig, ParsingConfig, ProblemType,
+    PythonFunctionType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
-    INVALID_PANDAS_COLUMN_NAME_CHARACTERS, clean_column_name,
+    INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, clean_column_name,
     get_clean_function_source_code, get_object_from_context
 )
 from .api_endpoint import ApiEndpoint
@@ -47,6 +47,7 @@ from .application_connector import ApplicationConnector
 from .batch_prediction import BatchPrediction
 from .batch_prediction_version import BatchPredictionVersion
 from .batch_prediction_version_logs import BatchPredictionVersionLogs
+from .chat_message import ChatMessage
 from .chat_session import ChatSession
 from .custom_loss_function import CustomLossFunction
 from .custom_metric import CustomMetric
@@ -520,7 +521,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '0.80.1'
+    client_version = '1.00.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -664,6 +665,58 @@ class BaseApiClient:
             raise _ApiExceptionFactory.from_response(
                 error_message, response.status_code, error_type, request_id)
         return result
+
+    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
+        headers = {'APIKEY': self.api_key}
+        if self.server:
+            headers['SERVER'] = self.server
+        endpoint = self.proxy_endpoint
+        if endpoint is None:
+            raise Exception(
+                'API not supported, Please contact Abacus.ai support')
+        result = None
+        error_json = {}
+        status_code = 200
+        response = None
+        request_id = None
+        try:
+            if is_sync:
+                sync_api_endpoint = f'{endpoint}/api/{name}'
+                response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
+                                         headers=headers, body=body, files=files, stream=streamable_response)
+                status_code = response.status_code
+                if streamable_response and status_code == 200:
+                    return response.raw
+                response = response.json()
+                if response.get('success'):
+                    result = response.get('result')
+                    return self._build_class(parse_type, result) if parse_type else result
+                error_json = response
+            else:
+                create_request_endpoint = f'{endpoint}/api/create{name}Request'
+                status_request_endpoint = f'{endpoint}/api/get{name}Status'
+                create_request = self._request(url=create_request_endpoint, method='PUT' if files else 'POST',
+                                               query_params=query_params, headers=headers, body=body, files=files)
+                status_code = create_request.status_code
+                if status_code == 200:
+                    request_id = create_request.json()['request_id']
+                    response, status_code = self._status_poll(url=status_request_endpoint, wait_states={
+                                                              'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
+                    if response['status'] == 'FAILED':
+                        error_json = response.get('result')
+                    else:
+                        result = response['result']
+                        if result.get('success'):
+                            return self._build_class(parse_type, result.get('result'))
+                else:
+                    error_json = create_request.json()
+        except Exception:
+            pass
+
+        error_message = error_json.get('error') or 'Unknown error'
+        error_type = error_json.get('errorType')
+        raise _ApiExceptionFactory.from_response(
+            error_message, status_code, error_type, request_id)
 
     def _build_class(self, return_class, values):
         if values is None or values == {}:
@@ -1000,17 +1053,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[FeatureGroup]: All the feature groups associated with the specified Python function ID."""
         return self._call_api('listPythonFunctionFeatureGroups', 'GET', query_params={'name': name, 'limit': limit}, parse_type=FeatureGroup)
-
-    def execute_async_feature_group_operation(self, query: str = None, fix_query_on_error: bool = False) -> ExecuteFeatureGroupOperation:
-        """Starts the execution of fg operation
-
-        Args:
-            query (str): The SQL to be executed.
-            fix_query_on_error (bool): If enabled, SQL query is auto fixed if parsing fails.
-
-        Returns:
-            ExecuteFeatureGroupOperation: A dict that contains the execution status"""
-        return self._call_api('executeAsyncFeatureGroupOperation', 'GET', query_params={'query': query, 'fixQueryOnError': fix_query_on_error}, parse_type=ExecuteFeatureGroupOperation)
 
     def get_execute_feature_group_operation_result_part_count(self, feature_group_operation_run_id: str) -> int:
         """Gets the number of parts in the result of the execution of fg operation
@@ -3433,17 +3475,18 @@ class ApiClient(ReadOnlyClient):
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
 
         Returns:
-            LLMResponse: The response from the model, raw text and parsed components.
+            text: The response from the model.
         """
         caller = self._get_agent_async_app_caller()
         request_id = self._get_agent_app_request_id()
-        if not caller or not request_id:
-            return self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
-        llm_parameters = self.get_llm_parameters(
-            prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
-        result = self._stream_llm_call(llm_parameters.parameters)
-        result = self._build_class(LlmResponse, result)
-        return result
+        if caller and request_id:
+            llm_parameters = self.get_llm_parameters(
+                prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
+            result = self._stream_llm_call(llm_parameters.parameters)
+        else:
+            result = self.evaluate_prompt(
+                prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens).content
+        return StreamingHandler(result, _request_context)
 
     def _get_agent_app_request_id(self):
         """
@@ -3483,11 +3526,10 @@ class ApiClient(ReadOnlyClient):
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
-        if not request_id or not caller:
-            logging.info(message)
-            return
-        self._call_aiagent_app_send_message(
-            request_id, caller, message=message, proxy_caller=proxy_caller)
+        if request_id and caller:
+            self._call_aiagent_app_send_message(
+                request_id, caller, message=message, proxy_caller=proxy_caller)
+        return StreamingHandler(message, _request_context)
 
     def _stream_llm_call(self, llm_args: dict):
         request_id = self._get_agent_app_request_id()
@@ -3547,58 +3589,6 @@ class ApiClient(ReadOnlyClient):
                 return response_json, response.status_code
             time.sleep(delay)
         raise Exception('Maximum timeout Exceeded')
-
-    def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
-        headers = {'APIKEY': self.api_key}
-        if self.server:
-            headers['SERVER'] = self.server
-        endpoint = self.proxy_endpoint
-        if endpoint is None:
-            raise Exception(
-                'API not supported, Please contact Abacus.ai support')
-        result = None
-        error_json = {}
-        status_code = 200
-        response = None
-        request_id = None
-        try:
-            if is_sync:
-                sync_api_endpoint = f'{endpoint}/api/{name}'
-                response = self._request(url=sync_api_endpoint, method=method, query_params=query_params,
-                                         headers=headers, body=body, files=files, stream=streamable_response)
-                status_code = response.status_code
-                if streamable_response and status_code == 200:
-                    return response.raw
-                response = response.json()
-                if response.get('success'):
-                    result = response.get('result')
-                    return self._build_class(parse_type, result) if parse_type else result
-                error_json = response
-            else:
-                create_request_endpoint = f'{endpoint}/api/create{name}Request'
-                status_request_endpoint = f'{endpoint}/api/get{name}Status'
-                create_request = self._request(url=create_request_endpoint, method='PUT' if files else 'POST',
-                                               query_params=query_params, headers=headers, body=body, files=files)
-                status_code = create_request.status_code
-                if status_code == 200:
-                    request_id = create_request.json()['request_id']
-                    response, status_code = self._status_poll(url=status_request_endpoint, wait_states={
-                                                              'PENDING'}, method='POST', body={'request_id': request_id}, headers=headers)
-                    if response['status'] == 'FAILED':
-                        error_json = response.get('result')
-                    else:
-                        result = response['result']
-                        if result.get('success'):
-                            return self._build_class(parse_type, result.get('result'))
-                else:
-                    error_json = create_request.json()
-        except Exception:
-            pass
-
-        error_message = error_json.get('error') or 'Unknown error'
-        error_type = error_json.get('errorType')
-        raise _ApiExceptionFactory.from_response(
-            error_message, status_code, error_type, request_id)
 
     def execute_data_query_using_llm(self, query: str, feature_group_ids: List[str], prompt_context: str = None, llm_name: str = None,
                                      temperature: float = None, preview: bool = False, schema_document_retriever_ids: List[str] = None,
@@ -3749,6 +3739,15 @@ class ApiClient(ReadOnlyClient):
         Args:
             email (str): The email address of the user to remove from the organization."""
         return self._call_api('removeUserFromOrganization', 'DELETE', query_params={'email': email})
+
+    def send_email(self, email: str, subject: str, body: str):
+        """Send an email to the specified email address with provided subject and body.
+
+        Args:
+            email (str): The email address to send the email to.
+            subject (str): The subject of the email.
+            body (str): The body of the email."""
+        return self._call_api('sendEmail', 'POST', query_params={}, body={'email': email, 'subject': subject, 'body': body})
 
     def create_deployment_webhook(self, deployment_id: str, endpoint: str, webhook_event_type: str, payload_template: dict = None) -> Webhook:
         """Create a webhook attached to a given deployment ID.
@@ -4035,18 +4034,18 @@ Description:
 Creates a new feature group defined as the union of other feature group versions."""
         return self._call_api('createMergeFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'mergeConfig': merge_config, 'description': description}, parse_type=FeatureGroup)
 
-    def create_transform_feature_group(self, source_feature_group_id: str, table_name: str, transform_config: dict, description: str = None) -> FeatureGroup:
-        """Creates a new Feature Group defined by a pre-defined transform applied to another Feature Group.
+    def create_operator_feature_group(self, source_feature_group_id: str, table_name: str, operator_config: dict, description: str = None) -> FeatureGroup:
+        """Creates a new Feature Group defined by a pre-defined operator applied to another Feature Group.
 
         Args:
-            source_feature_group_id (str): Unique string identifier corresponding to the Feature Group to which the transformation will be applied.
-            table_name (str): Unique string identifier for the transform Feature Group.
-            transform_config (dict): JSON object (aka map) defining the transform and its parameters.
+            source_feature_group_id (str): Unique string identifier corresponding to the Feature Group to which the operator will be applied.
+            table_name (str): Unique string identifier for the operator Feature Group.
+            operator_config (dict): JSON object (aka map) defining the operator and its parameters.
             description (str): Human-readable description of the Feature Group.
 
         Returns:
             FeatureGroup: The created Feature Group."""
-        return self._call_api('createTransformFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'transformConfig': transform_config, 'description': description}, parse_type=FeatureGroup)
+        return self._call_api('createOperatorFeatureGroup', 'POST', query_params={}, body={'sourceFeatureGroupId': source_feature_group_id, 'tableName': table_name, 'operatorConfig': operator_config, 'description': description}, parse_type=FeatureGroup)
 
     def create_snapshot_feature_group(self, feature_group_version: str, table_name: str) -> FeatureGroup:
         """Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
@@ -4093,13 +4092,13 @@ Creates a new feature group defined as the union of other feature group versions
             FeatureGroup: The updated FeatureGroup."""
         return self._call_api('setFeatureGroupMergeConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'mergeConfig': merge_config}, parse_type=FeatureGroup)
 
-    def set_feature_group_transform_config(self, feature_group_id: str, transform_config: dict):
-        """Set a TransformFeatureGroup’s transform config to the values provided.
+    def set_feature_group_operator_config(self, feature_group_id: str, operator_config: dict):
+        """Set a OperatorFeatureGroup’s operator config to the values provided.
 
         Args:
             feature_group_id (str): A unique string identifier associated with the feature group.
-            transform_config (dict): A dictionary object specifying the pre-defined transformation."""
-        return self._call_api('setFeatureGroupTransformConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'transformConfig': transform_config})
+            operator_config (dict): A dictionary object specifying the pre-defined operations."""
+        return self._call_api('setFeatureGroupOperatorConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'operatorConfig': operator_config})
 
     def set_feature_group_schema(self, feature_group_id: str, schema: list):
         """Creates a new schema and points the feature group to the new feature group schema ID.
@@ -4454,6 +4453,17 @@ Creates a new feature group defined as the union of other feature group versions
             lookup_keys (list): List of feature names which can be used in the lookup API to restrict the computation to a set of dataset rows. These feature names have to correspond to underlying dataset columns."""
         return self._call_api('setFeatureGroupIndexingConfig', 'POST', query_params={}, body={'featureGroupId': feature_group_id, 'primaryKey': primary_key, 'updateTimestampKey': update_timestamp_key, 'lookupKeys': lookup_keys})
 
+    def execute_async_feature_group_operation(self, query: str = None, fix_query_on_error: bool = False) -> ExecuteFeatureGroupOperation:
+        """Starts the execution of fg operation
+
+        Args:
+            query (str): The SQL to be executed.
+            fix_query_on_error (bool): If enabled, SQL query is auto fixed if parsing fails.
+
+        Returns:
+            ExecuteFeatureGroupOperation: A dict that contains the execution status"""
+        return self._call_api('executeAsyncFeatureGroupOperation', 'POST', query_params={}, body={'query': query, 'fixQueryOnError': fix_query_on_error}, parse_type=ExecuteFeatureGroupOperation)
+
     def describe_async_feature_group_operation(self, feature_group_operation_run_id: str) -> ExecuteFeatureGroupOperation:
         """Gets the status of the execution of fg operation
 
@@ -4760,7 +4770,7 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: The upload object associated with the process, containing details of the file."""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -4777,13 +4787,14 @@ Creates a new feature group defined as the union of other feature group versions
             incremental (bool): Signifies if the dataset is an incremental dataset.
             is_documentset (bool): Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
+            document_processing_config (DocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
             reference_only_documentset (bool): Signifies if the data reference only policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
 
         Returns:
             Dataset: The dataset created."""
-        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config}, parse_type=Dataset)
+        return self._call_api('createDatasetFromFileConnector', 'POST', query_params={}, body={'tableName': table_name, 'location': location, 'fileFormat': file_format, 'refreshSchedule': refresh_schedule, 'csvDelimiter': csv_delimiter, 'filenameColumn': filename_column, 'startPrefix': start_prefix, 'untilPrefix': until_prefix, 'locationDateFormat': location_date_format, 'dateFormatLookbackDays': date_format_lookback_days, 'incremental': incremental, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'documentProcessingConfig': document_processing_config, 'mergeFileSchemas': merge_file_schemas, 'referenceOnlyDocumentset': reference_only_documentset, 'parsingConfig': parsing_config}, parse_type=Dataset)
 
     def create_dataset_version_from_file_connector(self, dataset_id: str, location: str = None, file_format: str = None, csv_delimiter: str = None, merge_file_schemas: bool = None, parsing_config: Union[dict, ParsingConfig] = None) -> DatasetVersion:
         """Creates a new version of the specified dataset.
@@ -4856,7 +4867,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'datasetConfig': dataset_config}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False) -> Upload:
+    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False, document_processing_config: Union[dict, DocumentProcessingConfig] = None) -> Upload:
         """Creates a dataset and returns an upload ID that can be used to upload a file.
 
         Args:
@@ -4867,10 +4878,11 @@ Creates a new feature group defined as the union of other feature group versions
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
             merge_file_schemas (bool): Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
+            document_processing_config (DocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
-        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config, 'mergeFileSchemas': merge_file_schemas}, parse_type=Upload)
+        return self._call_api('createDatasetFromUpload', 'POST', query_params={}, body={'tableName': table_name, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'isDocumentset': is_documentset, 'extractBoundingBoxes': extract_bounding_boxes, 'parsingConfig': parsing_config, 'mergeFileSchemas': merge_file_schemas, 'documentProcessingConfig': document_processing_config}, parse_type=Upload)
 
     def create_dataset_version_from_upload(self, dataset_id: str, file_format: str = None) -> Upload:
         """Creates a new version of the specified dataset using a local file upload.
@@ -5055,6 +5067,18 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             dataset_id (str): Unique string identifier of the dataset to delete."""
         return self._call_api('deleteDataset', 'DELETE', query_params={'datasetId': dataset_id})
+
+    def extract_document_data(self, document: io.TextIOBase = None, doc_id: str = None, document_processing_config: Union[dict, DocumentProcessingConfig] = None) -> DocumentData:
+        """Extracts data from a document.
+
+        Args:
+            document (io.TextIOBase): The document to extract data from. One of document or doc_id must be provided.
+            doc_id (str): A unique Docstore string identifier for the document. One of document or doc_id must be provided.
+            document_processing_config (DocumentProcessingConfig): The document processing configuration.
+
+        Returns:
+            DocumentData: The extracted document data."""
+        return self._proxy_request('ExtractDocumentData', 'POST', query_params={}, body={'docId': doc_id, 'documentProcessingConfig': json.dumps(document_processing_config)}, files={'document': document}, parse_type=DocumentData)
 
     def get_training_config_options(self, project_id: str, feature_group_ids: list = None, for_retrain: bool = False, current_training_config: Union[dict, TrainingConfig] = None) -> List[TrainingConfigOptions]:
         """Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
@@ -6166,9 +6190,9 @@ Creates a new feature group defined as the union of other feature group versions
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
             system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
-            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
-            chat_config (dict): A dictionary specifiying the query chat config override.
+            chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
@@ -7548,7 +7572,7 @@ Creates a new feature group defined as the union of other feature group versions
             Agent: The updated agent"""
         return self._call_api('updateAgent', 'POST', query_params={}, body={'modelId': model_id, 'functionSourceCode': function_source_code, 'agentFunctionName': agent_function_name, 'memory': memory, 'packageRequirements': package_requirements, 'description': description, 'enableBinaryInput': enable_binary_input}, parse_type=Agent)
 
-    def evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None) -> LlmResponse:
+    def evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None) -> LlmResponse:
         """Generate response to the prompt using the specified model.
 
         Args:
@@ -7633,6 +7657,22 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             AgentDataExecutionResult: The result of the agent execution"""
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id}, parse_type=AgentDataExecutionResult, files=blobs)
+
+    def construct_agent_conversation_messages_for_llm(self, current_message: str = None, current_doc_ids: list = None, include_history: bool = True, include_document_contents: bool = True, deployment_conversation_id: str = None, external_session_id: str = None, max_document_words: int = None) -> ChatMessage:
+        """Returns conversation history in a format for LLM calls.
+
+        Args:
+            current_message (str): Current turn message from user.
+            current_doc_ids (list): Document IDs associated with the current turn message from user.
+            include_history (bool): If true, include the conversation history in the generated messages.
+            include_document_contents (bool): If true, include contents from uploaded documents in the generated messages.
+            deployment_conversation_id (str): Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
+            external_session_id (str): External session ID of the conversation.
+            max_document_words (int): Maximum number of words to include in the generated message from each uploaded document.
+
+        Returns:
+            ChatMessage: A list of ChatMessage that represents the conversation."""
+        return self._proxy_request('constructAgentConversationMessagesForLLM', 'POST', query_params={}, body={'currentMessage': current_message, 'currentDocIds': current_doc_ids, 'includeHistory': include_history, 'includeDocumentContents': include_document_contents, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'maxDocumentWords': max_document_words}, parse_type=ChatMessage, is_sync=True)
 
     def create_document_retriever(self, project_id: str, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None) -> DocumentRetriever:
         """Returns a document retriever that stores embeddings for document chunks in a feature group.

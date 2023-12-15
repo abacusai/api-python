@@ -337,9 +337,9 @@ class PredictionClient(BaseApiClient):
             num_completion_tokens (int): Default for maximum number of tokens for chat answers
             system_message (str): The generative LLM system message
             temperature (float): The generative LLM temperature
-            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrieved search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
-            chat_config (dict): A dictionary specifiying the query chat config override.
+            chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)

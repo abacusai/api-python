@@ -64,6 +64,7 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
+
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -73,6 +74,7 @@ Attributes
 
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`Exception`
 
@@ -95,6 +97,7 @@ Attributes
 
 .. py:exception:: MissingParameterError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Missing parameter error raised by APIs. This is usually raised when a required parameter is missing in the request.
@@ -110,6 +113,7 @@ Attributes
 
 
 .. py:exception:: InvalidParameterError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -127,6 +131,7 @@ Attributes
 
 .. py:exception:: InvalidEnumParameterError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Raised when an invalid enumeration parameter is provided.
@@ -142,6 +147,7 @@ Attributes
 
 
 .. py:exception:: PaymentMethodRequired(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -159,6 +165,7 @@ Attributes
 
 .. py:exception:: InvalidRequest(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Invalid request error raised by APIs. This is usually raised when the request is invalid or malformed.
@@ -174,6 +181,7 @@ Attributes
 
 
 .. py:exception:: GenericPermissionDeniedError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -191,6 +199,7 @@ Attributes
 
 .. py:exception:: PermissionDeniedError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Permission denied error raised by APIs. This is usually raised when a specific operation is not permitted.
@@ -206,6 +215,7 @@ Attributes
 
 
 .. py:exception:: PaidPlanRequired(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -223,6 +233,7 @@ Attributes
 
 .. py:exception:: Generic404Error(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Generic 404 error raised by APIs. This is usually raised when a resource is not found.
@@ -238,6 +249,7 @@ Attributes
 
 
 .. py:exception:: DataNotFoundError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -255,6 +267,7 @@ Attributes
 
 .. py:exception:: MethodNotAllowed(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Method not allowed error raised by APIs. This is usually raised when a specific http method is not allowed for a resource.
@@ -270,6 +283,7 @@ Attributes
 
 
 .. py:exception:: RequestTimeoutError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -287,6 +301,7 @@ Attributes
 
 .. py:exception:: ConflictError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Exception raised when a conflict occurs during API request.
@@ -302,6 +317,7 @@ Attributes
 
 
 .. py:exception:: AlreadyExistsError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -319,6 +335,7 @@ Attributes
 
 .. py:exception:: NotReadyError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Not ready exception raised by APIs. This is usually raised when the operation requested is not ready.
@@ -334,6 +351,7 @@ Attributes
 
 
 .. py:exception:: FailedDependencyError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -351,6 +369,7 @@ Attributes
 
 .. py:exception:: TooManyRequestsError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Too many requests exception raised by APIs. This is usually raised when the rate limit for requests has been exceeded.
@@ -367,6 +386,7 @@ Attributes
 
 .. py:exception:: InstanceNotModifiedError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    InstanceNotModifiedError exception raised by APIs. This is usually raised when an instance is not modified.
@@ -382,6 +402,7 @@ Attributes
 
 
 .. py:exception:: GatewayTimeoutError(message, http_status, exception = None, request_id = None)
+
 
    Bases: :py:obj:`ApiException`
 
@@ -400,6 +421,7 @@ Attributes
 
 .. py:exception:: InternalServerError(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`ApiException`
 
    Internal server error raised by APIs. This is usually raised when the server
@@ -417,6 +439,7 @@ Attributes
 
 .. py:class:: _ApiExceptionFactory
 
+
    Factory class to build exceptions raised by APIs
 
 
@@ -426,6 +449,7 @@ Attributes
 
 
 .. py:class:: BaseApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Abstract Base API Client
 
@@ -439,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '0.80.1'
+      :value: '1.00.0'
 
       
 
@@ -453,6 +477,9 @@ Attributes
 
 
    .. py:method:: _call_api(action, method, query_params=None, body=None, files=None, parse_type=None, streamable_response=False, server_override=None, timeout=None, retry_500 = False)
+
+
+   .. py:method:: _proxy_request(name, method = 'POST', query_params = None, body = None, files=None, parse_type=None, is_sync = False, streamable_response = False)
 
 
    .. py:method:: _build_class(return_class, values)
@@ -475,6 +502,7 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -776,19 +804,6 @@ Attributes
 
       :returns: All the feature groups associated with the specified Python function ID.
       :rtype: list[FeatureGroup]
-
-
-   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False)
-
-      Starts the execution of fg operation
-
-      :param query: The SQL to be executed.
-      :type query: str
-      :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
-      :type fix_query_on_error: bool
-
-      :returns: A dict that contains the execution status
-      :rtype: ExecuteFeatureGroupOperation
 
 
    .. py:method:: get_execute_feature_group_operation_result_part_count(feature_group_operation_run_id)
@@ -2593,6 +2608,7 @@ Attributes
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
 
+
    Bases: :py:obj:`ReadOnlyClient`
 
    Abacus.AI API Client
@@ -3249,8 +3265,8 @@ Attributes
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
 
-      :returns: The response from the model, raw text and parsed components.
-      :rtype: LLMResponse
+      :returns: The response from the model.
+      :rtype: text
 
 
    .. py:method:: _get_agent_app_request_id()
@@ -3307,9 +3323,6 @@ Attributes
 
 
    .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 600)
-
-
-   .. py:method:: _proxy_request(name, method = 'POST', query_params = None, body = None, files=None, parse_type=None, is_sync = False, streamable_response = False)
 
 
    .. py:method:: execute_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None, preview = False, schema_document_retriever_ids = None, timeout=3600, delay=2)
@@ -3463,6 +3476,18 @@ Attributes
 
       :param email: The email address of the user to remove from the organization.
       :type email: str
+
+
+   .. py:method:: send_email(email, subject, body)
+
+      Send an email to the specified email address with provided subject and body.
+
+      :param email: The email address to send the email to.
+      :type email: str
+      :param subject: The subject of the email.
+      :type subject: str
+      :param body: The body of the email.
+      :type body: str
 
 
    .. py:method:: create_deployment_webhook(deployment_id, endpoint, webhook_event_type, payload_template = None)
@@ -3838,16 +3863,16 @@ Attributes
       Creates a new feature group defined as the union of other feature group versions.
 
 
-   .. py:method:: create_transform_feature_group(source_feature_group_id, table_name, transform_config, description = None)
+   .. py:method:: create_operator_feature_group(source_feature_group_id, table_name, operator_config, description = None)
 
-      Creates a new Feature Group defined by a pre-defined transform applied to another Feature Group.
+      Creates a new Feature Group defined by a pre-defined operator applied to another Feature Group.
 
-      :param source_feature_group_id: Unique string identifier corresponding to the Feature Group to which the transformation will be applied.
+      :param source_feature_group_id: Unique string identifier corresponding to the Feature Group to which the operator will be applied.
       :type source_feature_group_id: str
-      :param table_name: Unique string identifier for the transform Feature Group.
+      :param table_name: Unique string identifier for the operator Feature Group.
       :type table_name: str
-      :param transform_config: JSON object (aka map) defining the transform and its parameters.
-      :type transform_config: dict
+      :param operator_config: JSON object (aka map) defining the operator and its parameters.
+      :type operator_config: dict
       :param description: Human-readable description of the Feature Group.
       :type description: str
 
@@ -3909,14 +3934,14 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_group_transform_config(feature_group_id, transform_config)
+   .. py:method:: set_feature_group_operator_config(feature_group_id, operator_config)
 
-      Set a TransformFeatureGroup’s transform config to the values provided.
+      Set a OperatorFeatureGroup’s operator config to the values provided.
 
       :param feature_group_id: A unique string identifier associated with the feature group.
       :type feature_group_id: str
-      :param transform_config: A dictionary object specifying the pre-defined transformation.
-      :type transform_config: dict
+      :param operator_config: A dictionary object specifying the pre-defined operations.
+      :type operator_config: dict
 
 
    .. py:method:: set_feature_group_schema(feature_group_id, schema)
@@ -4395,6 +4420,19 @@ Attributes
       :type lookup_keys: list
 
 
+   .. py:method:: execute_async_feature_group_operation(query = None, fix_query_on_error = False)
+
+      Starts the execution of fg operation
+
+      :param query: The SQL to be executed.
+      :type query: str
+      :param fix_query_on_error: If enabled, SQL query is auto fixed if parsing fails.
+      :type fix_query_on_error: bool
+
+      :returns: A dict that contains the execution status
+      :rtype: ExecuteFeatureGroupOperation
+
+
    .. py:method:: describe_async_feature_group_operation(feature_group_operation_run_id)
 
       Gets the status of the execution of fg operation
@@ -4781,7 +4819,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -4811,6 +4849,8 @@ Attributes
       :type is_documentset: bool
       :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
       :type extract_bounding_boxes: bool
+      :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
+      :type document_processing_config: DocumentProcessingConfig
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
       :param reference_only_documentset: Signifies if the data reference only policy is enabled.
@@ -4919,7 +4959,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -4937,6 +4977,8 @@ Attributes
       :type parsing_config: ParsingConfig
       :param merge_file_schemas: Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
+      :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
+      :type document_processing_config: DocumentProcessingConfig
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -5161,6 +5203,21 @@ Attributes
 
       :param dataset_id: Unique string identifier of the dataset to delete.
       :type dataset_id: str
+
+
+   .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None)
+
+      Extracts data from a document.
+
+      :param document: The document to extract data from. One of document or doc_id must be provided.
+      :type document: io.TextIOBase
+      :param doc_id: A unique Docstore string identifier for the document. One of document or doc_id must be provided.
+      :type doc_id: str
+      :param document_processing_config: The document processing configuration.
+      :type document_processing_config: DocumentProcessingConfig
+
+      :returns: The extracted document data.
+      :rtype: DocumentData
 
 
    .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None)
@@ -6637,11 +6694,11 @@ Attributes
       :type system_message: str
       :param temperature: The generative LLM temperature
       :type temperature: float
-      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
       :type filter_key_values: dict
       :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
       :type search_score_cutoff: float
-      :param chat_config: A dictionary specifiying the query chat config override.
+      :param chat_config: A dictionary specifying the query chat config override.
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
       :type ignore_documents: bool
@@ -8377,7 +8434,7 @@ Attributes
       :rtype: Agent
 
 
-   .. py:method:: evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
+   .. py:method:: evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
 
       Generate response to the prompt using the specified model.
 
@@ -8493,6 +8550,29 @@ Attributes
 
       :returns: The result of the agent execution
       :rtype: AgentDataExecutionResult
+
+
+   .. py:method:: construct_agent_conversation_messages_for_llm(current_message = None, current_doc_ids = None, include_history = True, include_document_contents = True, deployment_conversation_id = None, external_session_id = None, max_document_words = None)
+
+      Returns conversation history in a format for LLM calls.
+
+      :param current_message: Current turn message from user.
+      :type current_message: str
+      :param current_doc_ids: Document IDs associated with the current turn message from user.
+      :type current_doc_ids: list
+      :param include_history: If true, include the conversation history in the generated messages.
+      :type include_history: bool
+      :param include_document_contents: If true, include contents from uploaded documents in the generated messages.
+      :type include_document_contents: bool
+      :param deployment_conversation_id: Unique ID of the conversation. One of deployment_conversation_id or external_session_id must be provided.
+      :type deployment_conversation_id: str
+      :param external_session_id: External session ID of the conversation.
+      :type external_session_id: str
+      :param max_document_words: Maximum number of words to include in the generated message from each uploaded document.
+      :type max_document_words: int
+
+      :returns: A list of ChatMessage that represents the conversation.
+      :rtype: ChatMessage
 
 
    .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)

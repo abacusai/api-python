@@ -10,21 +10,25 @@ class DocumentData(AbstractApiClass):
             docId (str): Unique Docstore string identifier for the document.
             mimeType (str): The mime type of the document.
             pageCount (int): The total number of pages in document.
-            extractedText (str): The extracted OCR text extracted from the document.
-            embeddedText (str): The embedded text extracted from the document. Only available for digital documents.
+            extractedText (str): The extracted text in the document obtained from OCR.
+            embeddedText (str): The embedded text in the document. Only available for digital documents.
+            pages (list): List of embedded text for each page in the document. Only available for digital documents.
+            tokens (list): List of extracted tokens in the document obtained from OCR.
     """
 
-    def __init__(self, client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None):
+    def __init__(self, client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None):
         super().__init__(client, None)
         self.doc_id = docId
         self.mime_type = mimeType
         self.page_count = pageCount
         self.extracted_text = extractedText
         self.embedded_text = embeddedText
+        self.pages = pages
+        self.tokens = tokens
 
     def __repr__(self):
-        repr_dict = {f'doc_id': repr(self.doc_id), f'mime_type': repr(self.mime_type), f'page_count': repr(
-            self.page_count), f'extracted_text': repr(self.extracted_text), f'embedded_text': repr(self.embedded_text)}
+        repr_dict = {f'doc_id': repr(self.doc_id), f'mime_type': repr(self.mime_type), f'page_count': repr(self.page_count), f'extracted_text': repr(
+            self.extracted_text), f'embedded_text': repr(self.embedded_text), f'pages': repr(self.pages), f'tokens': repr(self.tokens)}
         class_name = "DocumentData"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -38,5 +42,5 @@ class DocumentData(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'doc_id': self.doc_id, 'mime_type': self.mime_type, 'page_count': self.page_count,
-                'extracted_text': self.extracted_text, 'embedded_text': self.embedded_text}
+                'extracted_text': self.extracted_text, 'embedded_text': self.embedded_text, 'pages': self.pages, 'tokens': self.tokens}
         return {key: value for key, value in resp.items() if value is not None}

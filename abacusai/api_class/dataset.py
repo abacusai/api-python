@@ -1,6 +1,7 @@
 import dataclasses
 
 from .abstract import ApiClass
+from .enums import OcrMode
 
 
 @dataclasses.dataclass
@@ -12,13 +13,20 @@ class ParsingConfig(ApiClass):
 
 @dataclasses.dataclass
 class DocumentProcessingConfig(ApiClass):
+    """
+    Document processing configuration.
+
+    Args:
+        extract_bounding_boxes (bool): Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
+        ocr_mode (OcrMode): OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
+        use_full_ocr (bool): Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+        remove_header_footer (bool): Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+        remove_watermarks (bool): Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+        convert_to_markdown (bool): Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+    """
     extract_bounding_boxes: bool = False
-    convert_to_markdown: bool = False
-    remove_header_footer: bool = False
-    use_doctr: bool = False
-    remove_watermarks: bool = None
+    ocr_mode: OcrMode = OcrMode.DEFAULT
     use_full_ocr: bool = None
-    layout_analysis: bool = False
-    enhanced_layout_detection: bool = False
-    enhanced_layout_detection_v2: bool = False
-    extract_tables_to_markdown: bool = False
+    remove_header_footer: bool = False
+    remove_watermarks: bool = None
+    convert_to_markdown: bool = False

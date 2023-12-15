@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, transformConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={})
+.. py:class:: FeatureGroup(client, featureGroupId=None, modificationLock=None, name=None, featureGroupSourceType=None, tableName=None, sql=None, datasetId=None, functionSourceCode=None, functionName=None, sourceTables=None, createdAt=None, description=None, sqlError=None, latestVersionOutdated=None, referencedFeatureGroups=None, tags=None, primaryKey=None, updateTimestampKey=None, lookupKeys=None, streamingEnabled=None, incremental=None, mergeConfig=None, operatorConfig=None, samplingConfig=None, cpuSize=None, memory=None, streamingReady=None, featureTags=None, moduleName=None, templateBindings=None, featureExpression=None, useOriginalCsvNames=None, pythonFunctionBindings=None, pythonFunctionName=None, useGpu=None, features={}, duplicateFeatures={}, pointInTimeGroups={}, annotationConfig={}, concatenationConfig={}, indexingConfig={}, codeSource={}, featureGroupTemplate={}, explanation={}, refreshSchedules={}, latestFeatureGroupVersion={})
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -69,8 +70,8 @@ Classes
    :type incremental: bool
    :param mergeConfig: Merge configuration settings for the feature group.
    :type mergeConfig: dict
-   :param transformConfig: Transform configuration settings for the feature group.
-   :type transformConfig: dict
+   :param operatorConfig: Operator configuration settings for the feature group.
+   :type operatorConfig: dict
    :param samplingConfig: Sampling configuration for the feature group.
    :type samplingConfig: dict
    :param cpuSize: CPU size specified for the Python feature group.
@@ -312,12 +313,12 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_transform_config(transform_config)
+   .. py:method:: set_operator_config(operator_config)
 
-      Set a TransformFeatureGroup’s transform config to the values provided.
+      Set a OperatorFeatureGroup’s operator config to the values provided.
 
-      :param transform_config: A dictionary object specifying the pre-defined transformation.
-      :type transform_config: dict
+      :param operator_config: A dictionary object specifying the pre-defined operations.
+      :type operator_config: dict
 
 
    .. py:method:: set_schema(schema)
