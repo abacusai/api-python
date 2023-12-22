@@ -381,8 +381,6 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         ner_model_type (NERModelType): Type of NER model to use.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
-        dropout_rate (float): Dropout rate for neural network.
-        batch_size (BatchSize): Batch size for neural network.
         active_labels_column (str): Entities that have been marked in a particular text
         document_format (NLPDocumentFormat): Format of the input documents.
         include_longformer (bool): Whether to include the longformer model.
@@ -395,9 +393,6 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     # Data Split Params
     test_split: int = dataclasses.field(default=None)
     test_row_indicator: str = dataclasses.field(default=None)
-    # Neural Network
-    dropout_rate: float = dataclasses.field(default=None)
-    batch_size: enums.BatchSize = dataclasses.field(default=None)
     # Named Entity Recognition
     active_labels_column: str = dataclasses.field(default=None)
     document_format: enums.NLPDocumentFormat = dataclasses.field(default=None)

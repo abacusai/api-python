@@ -181,6 +181,10 @@ class DocstoreUtils:
     TOKENS = 'tokens'
     PAGES_ZIP_METADATA = 'pages_zip_metadata'
     PAGE_DATA = 'page_data'
+    HEIGHT = 'height'
+    WIDTH = 'width'
+    METADATA = 'metadata'
+    EXTRACTED_TEXT = 'extracted_text'
 
     @staticmethod
     def get_archive_id(doc_id: str):
@@ -206,11 +210,24 @@ class DocstoreUtils:
         import numpy as np
         import pandas as pd
 
+        chunk_size = 10 * 1024 * 1024
+
         group_by_archive = df.groupby(
             df[doc_id_column].apply(lambda x: cls.get_archive_id(x)))
-        load_pages_args = []
+
+        def load_page(archive_bytes: bytes, offset: int, size: int):
+            page_bytes = archive_bytes[offset:offset + size]
+            return json.loads(page_bytes.decode('utf-8'))
+
+        def download_archive_chunk(offset: int, size: int, archive_id: str):
+            return get_docstore_resource_bytes(feature_group_version, cls.PAGE_DATA, archive_id, offset=offset, size=size)
+
+        pages_list = []
 
         for archive_id, archive_group_df in group_by_archive:
+            load_pages_args = []
+            min_offset = None
+            max_offset = None
             pages_metadata_bytes = get_docstore_resource_bytes(
                 feature_group_version, cls.PAGES_ZIP_METADATA, archive_id)
             pages_metadata = json.loads(pages_metadata_bytes.decode('utf-8'))
@@ -221,18 +238,28 @@ class DocstoreUtils:
                 for page in range(pages_ref[cls.FIRST_PAGE], pages_ref[cls.LAST_PAGE] + 1):
                     page_id = cls.get_page_id(doc_id, page)
                     offset, size = pages_metadata[page_id]
-                    load_pages_args.append((archive_id, offset, size))
+                    load_pages_args.append((offset, size))
+                    if min_offset is None:
+                        min_offset = offset
+                    if max_offset is None:
+                        max_offset = offset + size
+                    min_offset = min(min_offset, offset)
+                    max_offset = max(max_offset, offset + size)
 
-        def load_page(archive_id: str, offset: int, size: int):
-            page_bytes = get_docstore_resource_bytes(
-                feature_group_version, cls.PAGE_DATA, archive_id, offset=offset, size=size)
-            return page_bytes.decode('utf-8')
+            chunk_args = [(offset, chunk_size, archive_id)
+                          for offset in range(min_offset, max_offset, chunk_size)]
 
-        with ThreadPoolExecutor(max_workers) as executor:
-            pages_list = executor.map(
-                lambda args: load_page(*args), load_pages_args)
+            with ThreadPoolExecutor(max_workers) as executor:
+                archive_chunks = executor.map(
+                    lambda args: download_archive_chunk(*args), chunk_args)
 
-        pages_df = pd.DataFrame([json.loads(page) for page in pages_list])
+            archive_bytes = b''.join(archive_chunks)
+
+            for offset, size in load_pages_args:
+                pages_list.append(
+                    load_page(archive_bytes, offset - min_offset, size))
+
+        pages_df = pd.DataFrame(pages_list)
         pages_df = pages_df.replace({np.nan: None})
         return pages_df
 
@@ -255,11 +282,20 @@ class DocstoreUtils:
         # No need to sort as page_df is already sorted.
         def combine_doc_info(group):
             pages = list(group[cls.PAGE_TEXT])
+            result = {cls.PAGES: pages}
             if cls.TOKENS in group:
                 tokens = [tok for page_tokens in group[cls.TOKENS]
                           if page_tokens for tok in page_tokens]
-                return {cls.PAGES: pages, cls.TOKENS: tokens}
-            return {cls.PAGES: pages}
+                height_list = list(group[cls.HEIGHT])
+                width_list = list(group[cls.WIDTH])
+                metadata_list = [{'height': h, 'width': w, 'page': page_no}
+                                 for page_no, (h, w) in enumerate(zip(height_list, width_list))]
+                result.update(
+                    {cls.TOKENS: tokens, cls.METADATA: metadata_list})
+            if cls.EXTRACTED_TEXT in group:
+                extracted_text = list(group[cls.EXTRACTED_TEXT])
+                result.update({cls.EXTRACTED_TEXT: extracted_text})
+            return result
 
         doc_infos = pages_df.groupby(doc_id_column).apply(
             combine_doc_info).reset_index(name=document_column)

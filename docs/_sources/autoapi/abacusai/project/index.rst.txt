@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: Project(client, projectId=None, name=None, useCase=None, problemType=None, createdAt=None, tags=None)
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A project is a container which holds datasets, models and deployments
@@ -159,12 +160,16 @@ Classes
       :rtype: ProjectFeatureGroup
 
 
-   .. py:method:: list_feature_groups(filter_feature_group_use = None)
+   .. py:method:: list_feature_groups(filter_feature_group_use = None, limit = 100, start_after_id = None)
 
       List all the feature groups associated with a project
 
       :param filter_feature_group_use: The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
       :type filter_feature_group_use: str
+      :param limit: The maximum number of feature groups to be retrieved.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all feature groups up to a specified ID.
+      :type start_after_id: str
 
       :returns: All the Feature Groups in a project.
       :rtype: list[ProjectFeatureGroup]
@@ -544,7 +549,7 @@ Classes
 
    .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
-      List the refresh policies for the organization
+      List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
       :param dataset_ids: Comma-separated list of Dataset IDs.
       :type dataset_ids: list

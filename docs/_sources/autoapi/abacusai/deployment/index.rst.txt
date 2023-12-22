@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, refreshSchedules={}, featureGroupExportConfig={})
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A model deployment
@@ -348,7 +349,7 @@ Classes
       :type output_includes_metadata: bool
       :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list.
       :type result_input_columns: list
-      :param input_feature_groups: A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
+      :param input_feature_groups: A dict of {'<feature_group_type>': '<feature_group_id>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
       :type input_feature_groups: dict
 
       :returns: The batch prediction description.

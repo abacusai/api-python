@@ -16,9 +16,10 @@ class PageData(AbstractApiClass):
             pageTokenStartOffset (int): The offset of the first token in the page.
             tokenCount (int): The number of tokens in the page.
             tokens (list): The tokens in the page.
+            extractedText (str): The extracted text in the page obtained from OCR.
     """
 
-    def __init__(self, client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None):
+    def __init__(self, client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None):
         super().__init__(client, None)
         self.doc_id = docId
         self.page = page
@@ -29,10 +30,11 @@ class PageData(AbstractApiClass):
         self.page_token_start_offset = pageTokenStartOffset
         self.token_count = tokenCount
         self.tokens = tokens
+        self.extracted_text = extractedText
 
     def __repr__(self):
         repr_dict = {f'doc_id': repr(self.doc_id), f'page': repr(self.page), f'height': repr(self.height), f'width': repr(self.width), f'page_count': repr(self.page_count), f'page_text': repr(
-            self.page_text), f'page_token_start_offset': repr(self.page_token_start_offset), f'token_count': repr(self.token_count), f'tokens': repr(self.tokens)}
+            self.page_text), f'page_token_start_offset': repr(self.page_token_start_offset), f'token_count': repr(self.token_count), f'tokens': repr(self.tokens), f'extracted_text': repr(self.extracted_text)}
         class_name = "PageData"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -45,6 +47,6 @@ class PageData(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'doc_id': self.doc_id, 'page': self.page, 'height': self.height, 'width': self.width, 'page_count': self.page_count,
-                'page_text': self.page_text, 'page_token_start_offset': self.page_token_start_offset, 'token_count': self.token_count, 'tokens': self.tokens}
+        resp = {'doc_id': self.doc_id, 'page': self.page, 'height': self.height, 'width': self.width, 'page_count': self.page_count, 'page_text': self.page_text,
+                'page_token_start_offset': self.page_token_start_offset, 'token_count': self.token_count, 'tokens': self.tokens, 'extracted_text': self.extracted_text}
         return {key: value for key, value in resp.items() if value is not None}

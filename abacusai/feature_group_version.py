@@ -82,7 +82,7 @@ class FeatureGroupVersion(AbstractApiClass):
         Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
         Args:
-            table_name (str): Name for the newly created Snapshot Feature Group table.
+            table_name (str): Name for the newly created Snapshot Feature Group table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
 
         Returns:
             FeatureGroup: Feature Group corresponding to the newly created Snapshot.

@@ -165,17 +165,19 @@ class Project(AbstractApiClass):
         """
         return self.client.describe_project_feature_group(self.project_id, feature_group_id)
 
-    def list_feature_groups(self, filter_feature_group_use: str = None):
+    def list_feature_groups(self, filter_feature_group_use: str = None, limit: int = 100, start_after_id: str = None):
         """
         List all the feature groups associated with a project
 
         Args:
             filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
+            limit (int): The maximum number of feature groups to be retrieved.
+            start_after_id (str): An offset parameter to exclude all feature groups up to a specified ID.
 
         Returns:
             list[ProjectFeatureGroup]: All the Feature Groups in a project.
         """
-        return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use)
+        return self.client.list_project_feature_groups(self.project_id, filter_feature_group_use, limit, start_after_id)
 
     def list_feature_group_templates(self, limit: int = 100, start_after_id: str = None, should_include_all_system_templates: bool = False):
         """
@@ -498,7 +500,7 @@ class Project(AbstractApiClass):
 
     def list_refresh_policies(self, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []):
         """
-        List the refresh policies for the organization
+        List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
         Args:
             dataset_ids (list): Comma-separated list of Dataset IDs.

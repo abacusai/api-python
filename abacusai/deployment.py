@@ -330,7 +330,7 @@ class Deployment(AbstractApiClass):
             csv_explanations_prefix (str): Prefix to prepend to the explanation columns, only applies when output format is CSV.
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version.
             result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list.
-            input_feature_groups (dict): A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
+            input_feature_groups (dict): A dict of {'<feature_group_type>': '<feature_group_id>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
 
         Returns:
             BatchPrediction: The batch prediction description.

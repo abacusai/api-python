@@ -290,7 +290,7 @@ class FeatureGroup(AbstractApiClass):
 
 
         Args:
-            table_name (str): The unique name to be given to this sampling Feature Group.
+            table_name (str): The unique name to be given to this sampling Feature Group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             sampling_config (SamplingConfig): Dictionary defining the sampling method and its parameters.
             description (str): A human-readable description of this Feature Group.
 
@@ -488,7 +488,7 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             nested_feature_name (str): The name of the feature.
-            table_name (str): The table name of the feature group to nest.
+            table_name (str): The table name of the feature group to nest. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             using_clause (str): The SQL join column or logic to join the nested table with the parent.
             where_clause (str): A SQL WHERE statement to filter the nested rows.
             order_clause (str): A SQL clause to order the nested rows.
@@ -504,7 +504,7 @@ class FeatureGroup(AbstractApiClass):
 
         Args:
             nested_feature_name (str): The name of the feature to be updated.
-            table_name (str): The name of the table.
+            table_name (str): The name of the table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             using_clause (str): The SQL join column or logic to join the nested table with the parent.
             where_clause (str): An SQL WHERE statement to filter the nested rows.
             order_clause (str): An SQL clause to order the nested rows.

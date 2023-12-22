@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: FeatureGroupVersion(client, featureGroupVersion=None, featureGroupId=None, sql=None, sourceTables=None, createdAt=None, status=None, error=None, deployable=None, cpuSize=None, memory=None, useOriginalCsvNames=None, pythonFunctionBindings=None, indexingConfigWarningMsg=None, features={}, pointInTimeGroups={}, codeSource={}, annotationConfig={}, indexingConfig={})
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    A materialized version of a feature group
@@ -79,7 +80,7 @@ Classes
 
       Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
-      :param table_name: Name for the newly created Snapshot Feature Group table.
+      :param table_name: Name for the newly created Snapshot Feature Group table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
 
       :returns: Feature Group corresponding to the newly created Snapshot.

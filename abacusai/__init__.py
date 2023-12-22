@@ -4,4 +4,4 @@ from .prediction_client import PredictionClient
 from .streaming_client import StreamingClient
 
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"

@@ -14,9 +14,10 @@ class DocumentData(AbstractApiClass):
             embeddedText (str): The embedded text in the document. Only available for digital documents.
             pages (list): List of embedded text for each page in the document. Only available for digital documents.
             tokens (list): List of extracted tokens in the document obtained from OCR.
+            metadata (list): List of metadata for each page in the document.
     """
 
-    def __init__(self, client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None):
+    def __init__(self, client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None, metadata=None):
         super().__init__(client, None)
         self.doc_id = docId
         self.mime_type = mimeType
@@ -25,10 +26,11 @@ class DocumentData(AbstractApiClass):
         self.embedded_text = embeddedText
         self.pages = pages
         self.tokens = tokens
+        self.metadata = metadata
 
     def __repr__(self):
         repr_dict = {f'doc_id': repr(self.doc_id), f'mime_type': repr(self.mime_type), f'page_count': repr(self.page_count), f'extracted_text': repr(
-            self.extracted_text), f'embedded_text': repr(self.embedded_text), f'pages': repr(self.pages), f'tokens': repr(self.tokens)}
+            self.extracted_text), f'embedded_text': repr(self.embedded_text), f'pages': repr(self.pages), f'tokens': repr(self.tokens), f'metadata': repr(self.metadata)}
         class_name = "DocumentData"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -41,6 +43,6 @@ class DocumentData(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'doc_id': self.doc_id, 'mime_type': self.mime_type, 'page_count': self.page_count,
-                'extracted_text': self.extracted_text, 'embedded_text': self.embedded_text, 'pages': self.pages, 'tokens': self.tokens}
+        resp = {'doc_id': self.doc_id, 'mime_type': self.mime_type, 'page_count': self.page_count, 'extracted_text': self.extracted_text,
+                'embedded_text': self.embedded_text, 'pages': self.pages, 'tokens': self.tokens, 'metadata': self.metadata}
         return {key: value for key, value in resp.items() if value is not None}

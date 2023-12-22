@@ -107,7 +107,6 @@ from .inferred_feature_mappings import InferredFeatureMappings
 from .llm_execution_result import LlmExecutionResult
 from .llm_generated_code import LlmGeneratedCode
 from .llm_input import LlmInput
-from .llm_parameters import LlmParameters
 from .llm_response import LlmResponse
 from .model import Model
 from .model_artifacts_export import ModelArtifactsExport
@@ -521,7 +520,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.0.0'
+    client_version = '1.0.1'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -1032,16 +1031,18 @@ class ReadOnlyClient(BaseApiClient):
             ProjectFeatureGroup: The project feature group object."""
         return self._call_api('describeProjectFeatureGroup', 'GET', query_params={'projectId': project_id, 'featureGroupId': feature_group_id}, parse_type=ProjectFeatureGroup)
 
-    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None) -> List[ProjectFeatureGroup]:
+    def list_project_feature_groups(self, project_id: str, filter_feature_group_use: str = None, limit: int = 100, start_after_id: str = None) -> List[ProjectFeatureGroup]:
         """List all the feature groups associated with a project
 
         Args:
             project_id (str): The unique ID associated with the project.
             filter_feature_group_use (str): The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
+            limit (int): The maximum number of feature groups to be retrieved.
+            start_after_id (str): An offset parameter to exclude all feature groups up to a specified ID.
 
         Returns:
             list[ProjectFeatureGroup]: All the Feature Groups in a project."""
-        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use}, parse_type=ProjectFeatureGroup)
+        return self._call_api('listProjectFeatureGroups', 'GET', query_params={'projectId': project_id, 'filterFeatureGroupUse': filter_feature_group_use, 'limit': limit, 'startAfterId': start_after_id}, parse_type=ProjectFeatureGroup)
 
     def list_python_function_feature_groups(self, name: str, limit: int = 100) -> List[FeatureGroup]:
         """List all the feature groups associated with a python function.
@@ -2027,10 +2028,10 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
 
     def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []) -> List[RefreshPolicy]:
-        """List the refresh policies for the organization
+        """List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
         Args:
-            project_id (str): Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitors, and notebooks are captured at the instant this policy was created.
+            project_id (str): Project ID for which we wish to see the refresh policies attached.
             dataset_ids (list): Comma-separated list of Dataset IDs.
             feature_group_id (str): Feature Group ID for which we wish to see the refresh policies attached.
             model_ids (list): Comma-separated list of Model IDs.
@@ -2152,7 +2153,7 @@ class ReadOnlyClient(BaseApiClient):
         """Describe a Python Function.
 
         Args:
-            name (str): The name to identify the Python function.
+            name (str): The name to identify the Python function. Must be a valid Python identifier.
 
         Returns:
             PythonFunction: The Python function object."""
@@ -2258,13 +2259,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[GraphDashboard]: A list of graph dashboards."""
         return self._call_api('listGraphDashboards', 'GET', query_params={'projectId': project_id}, parse_type=GraphDashboard)
-
-    def delete_graph_from_dashboard(self, graph_reference_id: str):
-        """Deletes a python plot function from a dashboard
-
-        Args:
-            graph_reference_id (str): Unique String Identifier for the graph"""
-        return self._call_api('deleteGraphFromDashboard', 'GET', query_params={'graphReferenceId': graph_reference_id})
 
     def describe_graph_for_dashboard(self, graph_reference_id: str) -> PythonPlotFunction:
         """Describes a python plot to a graph dashboard
@@ -3366,7 +3360,7 @@ class ApiClient(ReadOnlyClient):
         agent_function_name = agent_function.__name__
         return self.create_agent(project_id=project_id, function_source_code=function_source_code, agent_function_name=agent_function_name, name=name, memory=memory, package_requirements=package_requirements)
 
-    def update_agent_with_function(self, model_id: str, agent_function: callable, memory: int = None, package_requirements: list = None):
+    def update_agent_with_function(self, model_id: str, agent_function: callable, memory: int = None, package_requirements: list = None, enable_binary_input: bool = None):
         """
         Updates the agent with a new agent function.
 
@@ -3375,10 +3369,11 @@ class ApiClient(ReadOnlyClient):
             agent_function (callable): The new agent function callable to serialize and upload
             memory (int): Memory (in GB) for hosting the agent
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
+            enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
         """
         function_source_code = inspect.getsource(agent_function)
         agent_function_name = agent_function.__name__
-        return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements)
+        return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements, enable_binary_input=enable_binary_input)
 
     def execute_feature_group_sql(self, sql, fix_query_on_error: bool = False, timeout=3600, delay=2):
         """
@@ -3405,7 +3400,7 @@ class ApiClient(ReadOnlyClient):
             List[ChatMessage]:: The chat history for the current request being processed by the Agent.
         """
         from .chat_message import ChatMessage
-        return get_object_from_context(self, _request_context, 'chat_history', List[ChatMessage])
+        return get_object_from_context(self, _request_context, 'chat_history', List[ChatMessage]) or []
 
     def set_agent_context_chat_history(self, chat_history):
         """
@@ -3426,6 +3421,15 @@ class ApiClient(ReadOnlyClient):
         """
         return get_object_from_context(self, _request_context, 'deployment_conversation_id', str)
 
+    def set_agent_context_conversation_id(self, conversation_id):
+        """
+        Sets the deployment conversation ID from the current request context.
+
+        Args:
+            conversation_id (str): The deployment conversation ID for the current request being processed by the Agent.
+        """
+        _request_context.deployment_conversation_id = conversation_id
+
     def get_agent_context_external_session_id(self):
         """
         Gets the external session ID from the current request context if it has been set with the request.
@@ -3436,6 +3440,15 @@ class ApiClient(ReadOnlyClient):
         """
         return get_object_from_context(self, _request_context, 'external_session_id', str)
 
+    def set_agent_context_external_session_id(self, external_session_id):
+        """
+        Sets the external session ID from the current request context if it has been set with the request.
+
+        Args:
+            external_session_id (str): The external session ID for the current request being processed by the Agent.
+        """
+        _request_context.external_session_id = external_session_id
+
     def get_agent_context_doc_ids(self):
         """
         Gets the document ID from the current request context if a document has been uploaded with the request.
@@ -3445,6 +3458,15 @@ class ApiClient(ReadOnlyClient):
             List[str]: The document IDs the current request being processed by the Agent.
         """
         return get_object_from_context(self, _request_context, 'doc_ids', List[str])
+
+    def set_agent_context_doc_ids(self, doc_ids):
+        """
+        Sets the doc_ids from the current request context.
+
+        Args:
+            doc_ids (List[str]): The doc_ids associated with the current request context.
+        """
+        _request_context.doc_ids = doc_ids
 
     def get_agent_context_blob_inputs(self):
         """
@@ -3463,16 +3485,20 @@ class ApiClient(ReadOnlyClient):
         if hasattr(_request_context):
             _request_context.clear()
 
-    def streaming_evaluate_prompt(self, prompt: str, system_message: str = None, llm_name: str = None, max_tokens: int = None):
+    def streaming_evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None):
         """
         Generate response to the prompt using the specified model.
         This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
 
         Args:
             prompt (str): Prompt to use for generation.
-            system_message (str): System message for models that support it.
-            llm_name (str): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
+            system_message (str): System prompt for models that support it.
+            llm_name (LLMName): Name of the underlying LLM to be used for generation. Default is auto selection.
             max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
+            temperature (float): Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
+            messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+            response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
+            json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
 
         Returns:
             text: The response from the model.
@@ -3480,12 +3506,11 @@ class ApiClient(ReadOnlyClient):
         caller = self._get_agent_async_app_caller()
         request_id = self._get_agent_app_request_id()
         if caller and request_id:
-            llm_parameters = self.get_llm_parameters(
-                prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens)
-            result = self._stream_llm_call(llm_parameters.parameters)
+            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
+                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema)
         else:
-            result = self.evaluate_prompt(
-                prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens).content
+            result = self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
+                                          temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema).content
         return StreamingHandler(result, _request_context)
 
     def _get_agent_app_request_id(self):
@@ -3531,14 +3556,14 @@ class ApiClient(ReadOnlyClient):
                 request_id, caller, message=message, proxy_caller=proxy_caller)
         return StreamingHandler(message, _request_context)
 
-    def _stream_llm_call(self, llm_args: dict):
+    def _stream_llm_call(self, **kwargs):
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
         if not request_id or not caller:
             logging.info('Please use evaluate_prompt for local testing.')
             return
-        return self._call_aiagent_app_send_message(request_id, caller, llm_args=llm_args, proxy_caller=proxy_caller)
+        return self._call_aiagent_app_send_message(request_id, caller, llm_args=kwargs, proxy_caller=proxy_caller)
 
     def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, proxy_caller=False):
         """
@@ -3609,7 +3634,11 @@ class ApiClient(ReadOnlyClient):
             LlmExecutionResult: The result of the query execution. Execution results could be loaded as pandas using 'load_as_pandas', i.e., result.execution.load_as_pandas().
         """
         code = self.generate_code_for_data_query_using_llm(
-            query=query, feature_group_ids=feature_group_ids, prompt_context=prompt_context, llm_name=llm_name, temperature=temperature)
+            query=query, feature_group_ids=feature_group_ids, prompt_context=prompt_context, llm_name=llm_name, temperature=temperature, sql_dialect='Spark')
+        if 'SELECT' not in (code.sql or ''):
+            result_dict = {
+                'error': 'Unable to generate SQL given current context and tables. Please clarify your prompt to generate a query'}
+
         result_dict = {'preview': {'sql': code.sql}}
         if not preview:
             execute_query = self.execute_async_feature_group_operation(
@@ -3620,19 +3649,20 @@ class ApiClient(ReadOnlyClient):
                 'status': execute_query.status,
             }
             result_dict.update({'execution': execute_query_dict})
+
         return self._build_class(LlmExecutionResult, result_dict)
 
-    def _get_doc_retriver_deployment_info(self, document_retriever_id: str):
+    def _get_doc_retriever_deployment_info(self, document_retriever_id: str):
         ttl_seconds = 300  # 5 minutes
 
         @lru_cache()
-        def _cached_doc_retriver_deployment_info(document_retriever_id: str, ttl_hash: int):
+        def _cached_doc_retriever_deployment_info(document_retriever_id: str, ttl_hash: int):
             info = self._call_api('_getDocRetrieverDeploymentInfo', 'GET', query_params={
                                   'documentRetrieverId': document_retriever_id})
             deployment_token = info['deploymentToken']
             deployment_id = info['deploymentId']
             return deployment_token, deployment_id
-        return _cached_doc_retriver_deployment_info(document_retriever_id, ttl_hash=time.time() // ttl_seconds)
+        return _cached_doc_retriever_deployment_info(document_retriever_id, ttl_hash=time.time() // ttl_seconds)
 
     def get_matching_documents(self, document_retriever_id: str, query: str, filters: dict = None, limit: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None,
                                max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
@@ -3657,7 +3687,7 @@ class ApiClient(ReadOnlyClient):
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
 
-        deployment_token, deployment_id = self._get_doc_retriver_deployment_info(
+        deployment_token, deployment_id = self._get_doc_retriever_deployment_info(
             document_retriever_id)
         return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column)
 
@@ -3955,7 +3985,7 @@ class ApiClient(ReadOnlyClient):
         """Creates a new FeatureGroup from a SQL statement.
 
         Args:
-            table_name (str): The unique name to be given to the FeatureGroup.
+            table_name (str): The unique name to be given to the FeatureGroup. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             sql (str): Input SQL statement for forming the FeatureGroup.
             description (str): The description about the FeatureGroup.
 
@@ -3967,7 +3997,7 @@ class ApiClient(ReadOnlyClient):
         """Creates a new feature group from a SQL statement.
 
         Args:
-            table_name (str): The unique name to be given to the feature group.
+            table_name (str): The unique name to be given to the feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             feature_group_template_id (str): The unique ID associated with the template that will be used to create this feature group.
             template_bindings (list): Variable bindings that override the template's variable values.
             should_attach_feature_group_to_template (bool): Set to `False` to create a feature group but not leave it attached to the template that created it.
@@ -3986,7 +4016,7 @@ class ApiClient(ReadOnlyClient):
 
 
         Args:
-            table_name (str): The unique name to be given to the feature group.
+            table_name (str): The unique name to be given to the feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             function_source_code (str): Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called function_name. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
             input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
@@ -4011,7 +4041,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             feature_group_id (str): The unique ID associated with the pre-existing Feature Group that will be sampled by this new Feature Group. i.e. the input for sampling.
-            table_name (str): The unique name to be given to this sampling Feature Group.
+            table_name (str): The unique name to be given to this sampling Feature Group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             sampling_config (SamplingConfig): Dictionary defining the sampling method and its parameters.
             description (str): A human-readable description of this Feature Group.
 
@@ -4024,7 +4054,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             source_feature_group_id (str): Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
-            table_name (str): Unique string identifier to be given to this merge feature group.
+            table_name (str): Unique string identifier to be given to this merge feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             merge_config (MergeConfig): JSON object defining the merging method and its parameters.
             description (str): Human-readable description of this feature group.
 
@@ -4039,7 +4069,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             source_feature_group_id (str): Unique string identifier corresponding to the Feature Group to which the operator will be applied.
-            table_name (str): Unique string identifier for the operator Feature Group.
+            table_name (str): Unique string identifier for the operator Feature Group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             operator_config (dict): JSON object (aka map) defining the operator and its parameters.
             description (str): Human-readable description of the Feature Group.
 
@@ -4052,7 +4082,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Args:
             feature_group_version (str): Unique string identifier associated with the Feature Group version being snapshotted.
-            table_name (str): Name for the newly created Snapshot Feature Group table.
+            table_name (str): Name for the newly created Snapshot Feature Group table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
 
         Returns:
             FeatureGroup: Feature Group corresponding to the newly created Snapshot."""
@@ -4062,7 +4092,7 @@ Creates a new feature group defined as the union of other feature group versions
         """Creates an Online Feature Group.
 
         Args:
-            table_name (str): Name for the newly created feature group.
+            table_name (str): Name for the newly created feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             primary_key (str): The primary key for indexing the online feature group.
             description (str): Human-readable description of the Feature Group.
 
@@ -4232,7 +4262,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
             nested_feature_name (str): The name of the feature.
-            table_name (str): The table name of the feature group to nest.
+            table_name (str): The table name of the feature group to nest. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             using_clause (str): The SQL join column or logic to join the nested table with the parent.
             where_clause (str): A SQL WHERE statement to filter the nested rows.
             order_clause (str): A SQL clause to order the nested rows.
@@ -4247,7 +4277,7 @@ Creates a new feature group defined as the union of other feature group versions
         Args:
             feature_group_id (str): The unique ID associated with the feature group.
             nested_feature_name (str): The name of the feature to be updated.
-            table_name (str): The name of the table.
+            table_name (str): The name of the table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             using_clause (str): The SQL join column or logic to join the nested table with the parent.
             where_clause (str): An SQL WHERE statement to filter the nested rows.
             order_clause (str): An SQL clause to order the nested rows.
@@ -5817,14 +5847,14 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('createDeploymentAlert', 'POST', query_params={'deploymentId': deployment_id}, body={'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config}, parse_type=MonitorAlert)
 
     def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, prediction_operator_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
-        """Creates a refresh policy with a particular cron pattern and refresh type.
+        """Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.
 
         A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.
 
 
         Args:
             name (str): The name of the refresh policy.
-            cron (str): A cron-like string specifying the frequency of the refresh policy.
+            cron (str): A cron-like string specifying the frequency of the refresh policy in UTC time.
             refresh_type (str): The refresh type used to determine what is being refreshed, such as a single dataset, dataset and model, or more.
             project_id (str): Optionally, a project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitrs, and notebooks are captured at the instant the policy was created.
             dataset_ids (list): Comma-separated list of dataset IDs.
@@ -6520,7 +6550,7 @@ Creates a new feature group defined as the union of other feature group versions
             csv_explanations_prefix (str): Prefix to prepend to the explanation columns, only applies when output format is CSV.
             output_includes_metadata (bool): If true, output will contain columns including prediction start time, batch prediction version, and model version.
             result_input_columns (list): If present, will limit result files or feature groups to only include columns present in this list.
-            input_feature_groups (dict): A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
+            input_feature_groups (dict): A dict of {'<feature_group_type>': '<feature_group_id>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
 
         Returns:
             BatchPrediction: The batch prediction description."""
@@ -6868,7 +6898,7 @@ Creates a new feature group defined as the union of other feature group versions
         """Creates a custom Python function that is reusable.
 
         Args:
-            name (str): The name to identify the Python function.
+            name (str): The name to identify the Python function. Must be a valid Python identifier.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the Python function.
             function_variable_mappings (list): List of Python function arguments.
@@ -6883,7 +6913,7 @@ Creates a new feature group defined as the union of other feature group versions
         """Update custom python function with user inputs for the given python function.
 
         Args:
-            name (str): The name to identify the Python function.
+            name (str): The name to identify the Python function. Must be a valid Python identifier.
             source_code (str): Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
             function_name (str): The name of the Python function within `source_code`.
             function_variable_mappings (list): List of arguments required by `function_name`.
@@ -6897,7 +6927,7 @@ Creates a new feature group defined as the union of other feature group versions
         """Removes an existing Python function.
 
         Args:
-            name (str): The name to identify the Python function."""
+            name (str): The name to identify the Python function. Must be a valid Python identifier."""
         return self._call_api('deletePythonFunction', 'DELETE', query_params={'name': name})
 
     def create_pipeline(self, pipeline_name: str, project_id: str = None, cron: str = None, is_prod: bool = None) -> Pipeline:
@@ -7149,6 +7179,13 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             GraphDashboard: An object describing the graph dashboard."""
         return self._call_api('updateGraphToDashboard', 'PATCH', query_params={}, body={'graphReferenceId': graph_reference_id, 'functionVariableMappings': function_variable_mappings, 'name': name}, parse_type=GraphDashboard)
+
+    def delete_graph_from_dashboard(self, graph_reference_id: str):
+        """Deletes a python plot function from a dashboard
+
+        Args:
+            graph_reference_id (str): Unique String Identifier for the graph"""
+        return self._call_api('deleteGraphFromDashboard', 'DELETE', query_params={'graphReferenceId': graph_reference_id})
 
     def create_algorithm(self, name: str, problem_type: str, source_code: str = None, training_data_parameter_names_mapping: dict = None, training_config_parameter_name: str = None, train_function_name: str = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, config_options: dict = None, is_default_enabled: bool = False, project_id: str = None, use_gpu: bool = False, package_requirements: list = None) -> Algorithm:
         """Creates a custom algorithm that is re-usable for model training.
@@ -7601,20 +7638,7 @@ Creates a new feature group defined as the union of other feature group versions
             LlmInput: LLM input object comprising of information about the feature groups with given IDs."""
         return self._call_api('renderFeatureGroupsForLLM', 'POST', query_params={}, body={'featureGroupIds': feature_group_ids, 'tokenBudget': token_budget, 'includeDefinition': include_definition}, parse_type=LlmInput)
 
-    def get_llm_parameters(self, prompt: str, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None) -> LlmParameters:
-        """Generate parameteres to the prompt using the given inputs
-
-        Args:
-            prompt (str): Prompt to use for generation.
-            system_message (str): System message for models that support it.
-            llm_name (LLMName): Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
-            max_tokens (int): Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
-
-        Returns:
-            LlmParameters: The parameters for LLM using the given inputs."""
-        return self._call_api('getLLMParameters', 'POST', query_params={}, body={'prompt': prompt, 'systemMessage': system_message, 'llmName': llm_name, 'maxTokens': max_tokens}, parse_type=LlmParameters, timeout=300)
-
-    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list = None, external_database_schemas: list = None, prompt_context: str = None, llm_name: Union[LLMName, str] = None, temperature: float = None) -> LlmGeneratedCode:
+    def generate_code_for_data_query_using_llm(self, query: str, feature_group_ids: list = None, external_database_schemas: list = None, prompt_context: str = None, llm_name: Union[LLMName, str] = None, temperature: float = None, sql_dialect: str = 'Spark') -> LlmGeneratedCode:
         """Execute a data query using a large language model in an async fashion.
 
         Args:
@@ -7624,10 +7648,11 @@ Creates a new feature group defined as the union of other feature group versions
             prompt_context (str): The context message used to construct the prompt for the language model. If not provide, a default context message is used.
             llm_name (LLMName): The name of the language model to use. If not provided, the default language model is used.
             temperature (float): The temperature to use for the language model if supported. If not provided, the default temperature is used.
+            sql_dialect (str): The dialect of sql to generate sql for. The default is Spark.
 
         Returns:
             LlmGeneratedCode: The generated SQL code."""
-        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'externalDatabaseSchemas': external_database_schemas, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature}, parse_type=LlmGeneratedCode)
+        return self._proxy_request('GenerateCodeForDataQueryUsingLlm', 'POST', query_params={}, body={'query': query, 'featureGroupIds': feature_group_ids, 'externalDatabaseSchemas': external_database_schemas, 'promptContext': prompt_context, 'llmName': llm_name, 'temperature': temperature, 'sqlDialect': sql_dialect}, parse_type=LlmGeneratedCode)
 
     def extract_data_using_llm(self, field_descriptors: list, document_id: str = None, document_text: str = None, llm_name: Union[LLMName, str] = None) -> ExtractedFields:
         """Extract fields from a document using a large language model.

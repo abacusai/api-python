@@ -19,6 +19,7 @@ Classes
 
 .. py:class:: PythonFunction(client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, codeSource={})
 
+
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
    Customer created python function
@@ -27,7 +28,7 @@ Classes
    :type client: ApiClient
    :param notebookId: The unique identifier of the notebook used to spin up the notebook upon creation.
    :type notebookId: str
-   :param name: The name to identify the algorithm, only uppercase letters, numbers, and underscores allowed.
+   :param name: The name to identify the algorithm, only uppercase letters, numbers, and underscores allowed (i.e. it must be a valid Python identifier)
    :type name: str
    :param createdAt: The ISO-8601 string representing when the Python function was created.
    :type createdAt: str

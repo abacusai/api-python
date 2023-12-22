@@ -9,7 +9,7 @@ class PythonFunction(AbstractApiClass):
         Args:
             client (ApiClient): An authenticated API Client instance
             notebookId (str): The unique identifier of the notebook used to spin up the notebook upon creation.
-            name (str): The name to identify the algorithm, only uppercase letters, numbers, and underscores allowed.
+            name (str): The name to identify the algorithm, only uppercase letters, numbers, and underscores allowed (i.e. it must be a valid Python identifier)
             createdAt (str): The ISO-8601 string representing when the Python function was created.
             functionVariableMappings (dict): A description of the function variables.
             outputVariableMappings (dict): A description of the variables returned by the function

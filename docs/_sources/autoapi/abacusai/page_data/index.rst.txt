@@ -17,7 +17,8 @@ Classes
 
 
 
-.. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None)
+.. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None)
+
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
 
@@ -43,6 +44,8 @@ Classes
    :type tokenCount: int
    :param tokens: The tokens in the page.
    :type tokens: list
+   :param extractedText: The extracted text in the page obtained from OCR.
+   :type extractedText: str
 
    .. py:method:: __repr__()
 

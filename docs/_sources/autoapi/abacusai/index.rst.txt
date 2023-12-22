@@ -376,6 +376,7 @@ Attributes
 
 .. py:class:: ApiClass
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -435,6 +436,7 @@ Attributes
 
 .. py:class:: FieldDescriptor
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Configs for vector store indexing.
@@ -471,6 +473,7 @@ Attributes
 
 .. py:class:: _ApiClassFactory
 
+
    Bases: :py:obj:`abc.ABC`
 
    Helper class that provides a standard way to create an ABC using
@@ -494,6 +497,7 @@ Attributes
 
 
 .. py:class:: BatchPredictionArgs
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -521,6 +525,7 @@ Attributes
 
 
 .. py:class:: AnomalyDetectionBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -582,6 +587,7 @@ Attributes
 
 .. py:class:: AnomalyOutliersBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ANOMALY_OUTLIERS problem type
@@ -606,6 +612,7 @@ Attributes
 
 
 .. py:class:: ForecastingBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -667,6 +674,7 @@ Attributes
 
 .. py:class:: NamedEntityExtractionBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type
@@ -691,6 +699,7 @@ Attributes
 
 
 .. py:class:: PersonalizationBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -730,6 +739,7 @@ Attributes
 
 
 .. py:class:: PredictiveModelingBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -812,6 +822,7 @@ Attributes
 
 .. py:class:: PretrainedModelsBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the PRETRAINED_MODELS problem type
@@ -844,6 +855,7 @@ Attributes
 
 .. py:class:: SentenceBoundaryDetectionBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type
@@ -868,6 +880,7 @@ Attributes
 
 
 .. py:class:: ThemeAnalysisBatchPredictionArgs
+
 
    Bases: :py:obj:`BatchPredictionArgs`
 
@@ -908,6 +921,7 @@ Attributes
 
 .. py:class:: ChatLLMBatchPredictionArgs
 
+
    Bases: :py:obj:`BatchPredictionArgs`
 
    Batch Prediction Config for the ChatLLM problem type
@@ -925,6 +939,7 @@ Attributes
 
 
 .. py:class:: _BatchPredictionArgsFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -946,6 +961,7 @@ Attributes
 
 
 .. py:class:: BlobInput
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -991,6 +1007,7 @@ Attributes
 
 .. py:class:: OcrMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1030,6 +1047,7 @@ Attributes
 
 .. py:class:: ParsingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -1052,6 +1070,7 @@ Attributes
 
 
 .. py:class:: DocumentProcessingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -1106,6 +1125,7 @@ Attributes
 
 .. py:class:: DatasetConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -1122,6 +1142,7 @@ Attributes
 
 
 .. py:class:: ConfluenceDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1146,6 +1167,7 @@ Attributes
 
 
 .. py:class:: GoogleAnalyticsDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1178,6 +1200,7 @@ Attributes
 
 
 .. py:class:: GoogleDriveDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1225,6 +1248,7 @@ Attributes
 
 .. py:class:: JiraDatasetConfig
 
+
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Jira Application Connector
@@ -1263,6 +1287,7 @@ Attributes
 
 
 .. py:class:: OneDriveDatasetConfig
+
 
    Bases: :py:obj:`DatasetConfig`
 
@@ -1310,6 +1335,7 @@ Attributes
 
 .. py:class:: SharepointDatasetConfig
 
+
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Sharepoint Application Connector
@@ -1356,6 +1382,7 @@ Attributes
 
 .. py:class:: ZendeskDatasetConfig
 
+
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Zendesk Application Connector
@@ -1365,6 +1392,7 @@ Attributes
 
 
 .. py:class:: _DatasetConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -1386,6 +1414,7 @@ Attributes
 
 
 .. py:class:: VectorStoreTextEncoder
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1416,6 +1445,7 @@ Attributes
 
 .. py:class:: VectorStoreConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Configs for vector store indexing.
@@ -1445,12 +1475,14 @@ Attributes
 
 .. py:class:: DocumentRetrieverConfig
 
+
    Bases: :py:obj:`VectorStoreConfig`
 
    Configs for document retriever.
 
 
 .. py:class:: ApiEnum
+
 
    Bases: :py:obj:`enum.Enum`
 
@@ -1470,6 +1502,7 @@ Attributes
 
 
 .. py:class:: ProblemType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1630,6 +1663,7 @@ Attributes
 
 .. py:class:: RegressionObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1694,6 +1728,7 @@ Attributes
 
 .. py:class:: RegressionTreeHPOMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1712,6 +1747,7 @@ Attributes
 
 
 .. py:class:: PartialDependenceAnalysis
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1732,6 +1768,7 @@ Attributes
 
 .. py:class:: RegressionAugmentationStrategy
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1750,6 +1787,7 @@ Attributes
 
 
 .. py:class:: RegressionTargetTransform
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1780,6 +1818,7 @@ Attributes
 
 .. py:class:: RegressionTypeOfSplit
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1804,6 +1843,7 @@ Attributes
 
 .. py:class:: RegressionTimeSplitMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1822,6 +1862,7 @@ Attributes
 
 
 .. py:class:: RegressionLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -1882,6 +1923,7 @@ Attributes
 
 .. py:class:: ExplainerType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1911,6 +1953,7 @@ Attributes
 
 .. py:class:: SamplingMethodType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1930,6 +1973,7 @@ Attributes
 
 .. py:class:: MergeMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -1948,6 +1992,7 @@ Attributes
 
 
 .. py:class:: FillLogic
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2002,6 +2047,7 @@ Attributes
 
 
 .. py:class:: BatchSize
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2062,6 +2108,7 @@ Attributes
 
 .. py:class:: HolidayCalendars
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2085,6 +2132,7 @@ Attributes
 
 
 .. py:class:: FileFormat
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2200,6 +2248,7 @@ Attributes
 
 .. py:class:: ExperimentationMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2219,6 +2268,7 @@ Attributes
 
 .. py:class:: PersonalizationTrainingMode
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2237,6 +2287,7 @@ Attributes
 
 
 .. py:class:: PersonalizationObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2292,6 +2343,7 @@ Attributes
 
 .. py:class:: ForecastingObjective
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2340,6 +2392,7 @@ Attributes
 
 
 .. py:class:: ForecastingFrequency
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2400,6 +2453,7 @@ Attributes
 
 .. py:class:: ForecastingDataSplitType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2428,6 +2482,7 @@ Attributes
 
 
 .. py:class:: ForecastingLossFunction
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2523,6 +2578,7 @@ Attributes
 
 .. py:class:: ForecastingLocalScaling
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2567,6 +2623,7 @@ Attributes
 
 .. py:class:: ForecastingFillMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2591,6 +2648,7 @@ Attributes
 
 .. py:class:: ForecastingQuanitlesExtensionMethod
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2614,6 +2672,7 @@ Attributes
 
 
 .. py:class:: NERObjective
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2654,6 +2713,7 @@ Attributes
 
 .. py:class:: NERModelType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2688,6 +2748,7 @@ Attributes
 
 .. py:class:: NLPDocumentFormat
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2717,6 +2778,7 @@ Attributes
 
 .. py:class:: SentimentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2735,6 +2797,7 @@ Attributes
 
 
 .. py:class:: ClusteringImputationMethod
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2759,6 +2822,7 @@ Attributes
 
 
 .. py:class:: ConnectorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2788,6 +2852,7 @@ Attributes
 
 
 .. py:class:: ApplicationConnectorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2847,6 +2912,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionArgumentType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -2922,6 +2988,7 @@ Attributes
 
 .. py:class:: PythonFunctionOutputArgumentType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -2995,6 +3062,7 @@ Attributes
 
 
 .. py:class:: LLMName
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3070,6 +3138,7 @@ Attributes
 
 .. py:class:: MonitorAlertType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3114,6 +3183,7 @@ Attributes
 
 .. py:class:: FeatureDriftType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3142,6 +3212,7 @@ Attributes
 
 
 .. py:class:: DataIntegrityViolationType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3177,6 +3248,7 @@ Attributes
 
 .. py:class:: BiasType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3206,6 +3278,7 @@ Attributes
 
 .. py:class:: AlertActionType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3219,6 +3292,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3244,6 +3318,7 @@ Attributes
 
 .. py:class:: EvalArtifactType
 
+
    Bases: :py:obj:`ApiEnum`
 
    Generic enumeration.
@@ -3267,6 +3342,7 @@ Attributes
 
 
 .. py:class:: FieldDescriptorType
+
 
    Bases: :py:obj:`ApiEnum`
 
@@ -3307,6 +3383,7 @@ Attributes
 
 .. py:class:: SamplingConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the sampling config of a feature group
@@ -3320,6 +3397,7 @@ Attributes
 
 
 .. py:class:: NSamplingConfig
+
 
    Bases: :py:obj:`SamplingConfig`
 
@@ -3350,6 +3428,7 @@ Attributes
 
 .. py:class:: PercentSamplingConfig
 
+
    Bases: :py:obj:`SamplingConfig`
 
    The fraction of distinct values of the feature group to include in the sample.
@@ -3379,6 +3458,7 @@ Attributes
 
 .. py:class:: _SamplingConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -3396,6 +3476,7 @@ Attributes
 
 .. py:class:: MergeConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
@@ -3409,6 +3490,7 @@ Attributes
 
 
 .. py:class:: LastNMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -3431,6 +3513,7 @@ Attributes
 
 
 .. py:class:: TimeWindowMergeConfig
+
 
    Bases: :py:obj:`MergeConfig`
 
@@ -3461,6 +3544,7 @@ Attributes
 
 .. py:class:: _MergeConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -3477,6 +3561,7 @@ Attributes
 
 
 .. py:class:: TrainingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -3514,6 +3599,7 @@ Attributes
 
 
 .. py:class:: PersonalizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -3773,6 +3859,7 @@ Attributes
 
 
 .. py:class:: RegressionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4071,6 +4158,7 @@ Attributes
 
 
 .. py:class:: ForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4515,6 +4603,7 @@ Attributes
 
 .. py:class:: NamedEntityExtractionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the NAMED_ENTITY_EXTRACTION problem type
@@ -4529,10 +4618,6 @@ Attributes
    :type test_split: int
    :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
    :type test_row_indicator: str
-   :param dropout_rate: Dropout rate for neural network.
-   :type dropout_rate: float
-   :param batch_size: Batch size for neural network.
-   :type batch_size: BatchSize
    :param active_labels_column: Entities that have been marked in a particular text
    :type active_labels_column: str
    :param document_format: Format of the input documents.
@@ -4569,16 +4654,6 @@ Attributes
 
       
 
-   .. py:attribute:: dropout_rate
-      :type: float
-
-      
-
-   .. py:attribute:: batch_size
-      :type: abacusai.api_class.enums.BatchSize
-
-      
-
    .. py:attribute:: active_labels_column
       :type: str
 
@@ -4611,6 +4686,7 @@ Attributes
 
 
 .. py:class:: NaturalLanguageSearchTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4664,6 +4740,7 @@ Attributes
 
 
 .. py:class:: ChatLLMTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4732,6 +4809,7 @@ Attributes
 
 .. py:class:: SentenceBoundaryDetectionTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the SENTENCE_BOUNDARY_DETECTION problem type
@@ -4763,6 +4841,7 @@ Attributes
 
 
 .. py:class:: SentimentDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4810,6 +4889,7 @@ Attributes
 
 .. py:class:: DocumentClassificationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_CLASSIFICATION problem type
@@ -4849,6 +4929,7 @@ Attributes
 
 .. py:class:: DocumentSummarizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the DOCUMENT_SUMMARIZATION problem type
@@ -4880,6 +4961,7 @@ Attributes
 
 
 .. py:class:: DocumentVisualizationTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4913,6 +4995,7 @@ Attributes
 
 .. py:class:: ClusteringTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the CLUSTERING problem type
@@ -4930,6 +5013,7 @@ Attributes
 
 
 .. py:class:: ClusteringTimeseriesTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -4956,6 +5040,7 @@ Attributes
 
 .. py:class:: EventAnomalyTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the EVENT_ANOMALY problem type
@@ -4973,6 +5058,7 @@ Attributes
 
 
 .. py:class:: CumulativeForecastingTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5026,6 +5112,7 @@ Attributes
 
 
 .. py:class:: AnomalyDetectionTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5087,6 +5174,7 @@ Attributes
 
 .. py:class:: ThemeAnalysisTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the THEME ANALYSIS problem type
@@ -5096,6 +5184,7 @@ Attributes
 
 
 .. py:class:: AIAgentTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5121,6 +5210,7 @@ Attributes
 
 
 .. py:class:: CustomTrainedModelTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5167,6 +5257,7 @@ Attributes
 
 
 .. py:class:: CustomAlgorithmTrainingConfig
+
 
    Bases: :py:obj:`TrainingConfig`
 
@@ -5228,6 +5319,7 @@ Attributes
 
 .. py:class:: OptimizationTrainingConfig
 
+
    Bases: :py:obj:`TrainingConfig`
 
    Training config for the OPTIMIZATION problem type
@@ -5245,6 +5337,7 @@ Attributes
 
 
 .. py:class:: _TrainingConfigFactory
+
 
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
@@ -5266,6 +5359,7 @@ Attributes
 
 
 .. py:class:: DeployableAlgorithm
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5302,6 +5396,7 @@ Attributes
 
 
 .. py:class:: ForecastingMonitorConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5343,6 +5438,7 @@ Attributes
 
 .. py:class:: AlertConditionConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -5359,6 +5455,7 @@ Attributes
 
 
 .. py:class:: AccuracyBelowThresholdConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5377,6 +5474,7 @@ Attributes
 
 
 .. py:class:: FeatureDriftConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5417,6 +5515,7 @@ Attributes
 
 .. py:class:: TargetDriftConditionConfig
 
+
    Bases: :py:obj:`AlertConditionConfig`
 
    Target Drift Condition Config for Monitor Alerts
@@ -5441,6 +5540,7 @@ Attributes
 
 
 .. py:class:: HistoryLengthDriftConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5467,6 +5567,7 @@ Attributes
 
 .. py:class:: DataIntegrityViolationConditionConfig
 
+
    Bases: :py:obj:`AlertConditionConfig`
 
    Data Integrity Violation Condition Config for Monitor Alerts
@@ -5491,6 +5592,7 @@ Attributes
 
 
 .. py:class:: BiasViolationConditionConfig
+
 
    Bases: :py:obj:`AlertConditionConfig`
 
@@ -5524,6 +5626,7 @@ Attributes
 
 .. py:class:: PredictionCountConditionConfig
 
+
    Bases: :py:obj:`AlertConditionConfig`
 
    Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.
@@ -5555,6 +5658,7 @@ Attributes
 
 .. py:class:: _AlertConditionConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -5581,6 +5685,7 @@ Attributes
 
 .. py:class:: AlertActionConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -5597,6 +5702,7 @@ Attributes
 
 
 .. py:class:: EmailActionConfig
+
 
    Bases: :py:obj:`AlertActionConfig`
 
@@ -5623,6 +5729,7 @@ Attributes
 
 .. py:class:: _AlertActionConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -5643,6 +5750,7 @@ Attributes
 
 
 .. py:class:: FeatureMappingConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5666,6 +5774,7 @@ Attributes
 
 
 .. py:class:: ProjectFeatureGroupTypeMappingsConfig
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5693,6 +5802,7 @@ Attributes
 
 
 .. py:class:: PythonFunctionArgument
+
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
@@ -5737,6 +5847,7 @@ Attributes
 
 .. py:class:: OutputVariableMapping
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    A config class for python function arguments
@@ -5759,6 +5870,7 @@ Attributes
 
 .. py:class:: FeatureGroupExportConfig
 
+
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    Helper class that provides a standard way to create an ABC using
@@ -5775,6 +5887,7 @@ Attributes
 
 
 .. py:class:: FileConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -5805,6 +5918,7 @@ Attributes
 
 
 .. py:class:: DatabaseConnectorExportConfig
+
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
@@ -5856,6 +5970,7 @@ Attributes
 
 .. py:class:: _FeatureGroupExportConfigFactory
 
+
    Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
 
    Helper class that provides a standard way to create an ABC using
@@ -5876,6 +5991,7 @@ Attributes
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`ReadOnlyClient`
 
@@ -6435,7 +6551,7 @@ Attributes
       :type package_requirements: List
 
 
-   .. py:method:: update_agent_with_function(model_id, agent_function, memory = None, package_requirements = None)
+   .. py:method:: update_agent_with_function(model_id, agent_function, memory = None, package_requirements = None, enable_binary_input = None)
 
       Updates the agent with a new agent function.
 
@@ -6447,6 +6563,8 @@ Attributes
       :type memory: int
       :param package_requirements: List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
       :type package_requirements: List
+      :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
+      :type enable_binary_input: bool
 
 
    .. py:method:: execute_feature_group_sql(sql, fix_query_on_error = False, timeout=3600, delay=2)
@@ -6487,6 +6605,14 @@ Attributes
       :rtype: str
 
 
+   .. py:method:: set_agent_context_conversation_id(conversation_id)
+
+      Sets the deployment conversation ID from the current request context.
+
+      :param conversation_id: The deployment conversation ID for the current request being processed by the Agent.
+      :type conversation_id: str
+
+
    .. py:method:: get_agent_context_external_session_id()
 
       Gets the external session ID from the current request context if it has been set with the request.
@@ -6496,6 +6622,14 @@ Attributes
       :rtype: str
 
 
+   .. py:method:: set_agent_context_external_session_id(external_session_id)
+
+      Sets the external session ID from the current request context if it has been set with the request.
+
+      :param external_session_id: The external session ID for the current request being processed by the Agent.
+      :type external_session_id: str
+
+
    .. py:method:: get_agent_context_doc_ids()
 
       Gets the document ID from the current request context if a document has been uploaded with the request.
@@ -6503,6 +6637,14 @@ Attributes
 
       :returns: The document IDs the current request being processed by the Agent.
       :rtype: List[str]
+
+
+   .. py:method:: set_agent_context_doc_ids(doc_ids)
+
+      Sets the doc_ids from the current request context.
+
+      :param doc_ids: The doc_ids associated with the current request context.
+      :type doc_ids: List[str]
 
 
    .. py:method:: get_agent_context_blob_inputs()
@@ -6519,19 +6661,27 @@ Attributes
       Clears the current request context.
 
 
-   .. py:method:: streaming_evaluate_prompt(prompt, system_message = None, llm_name = None, max_tokens = None)
+   .. py:method:: streaming_evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
 
       Generate response to the prompt using the specified model.
       This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
 
       :param prompt: Prompt to use for generation.
       :type prompt: str
-      :param system_message: System message for models that support it.
+      :param system_message: System prompt for models that support it.
       :type system_message: str
-      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
-      :type llm_name: str
+      :param llm_name: Name of the underlying LLM to be used for generation. Default is auto selection.
+      :type llm_name: LLMName
       :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
       :type max_tokens: int
+      :param temperature: Temperature to use for generation. Higher temperature makes more non-deterministic responses, a value of zero makes mostly deterministic reponses. Default is 0.0. A range of 0.0 - 2.0 is allowed.
+      :type temperature: float
+      :param messages: A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
+      :type messages: list
+      :param response_type: Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
+      :type response_type: str
+      :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
+      :type json_response_schema: dict
 
       :returns: The response from the model.
       :rtype: text
@@ -6570,7 +6720,7 @@ Attributes
       :type message: str
 
 
-   .. py:method:: _stream_llm_call(llm_args)
+   .. py:method:: _stream_llm_call(**kwargs)
 
 
    .. py:method:: _call_aiagent_app_send_message(request_id, caller, message=None, llm_args=None, proxy_caller=False)
@@ -6616,7 +6766,7 @@ Attributes
       :rtype: LlmExecutionResult
 
 
-   .. py:method:: _get_doc_retriver_deployment_info(document_retriever_id)
+   .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
    .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
@@ -7027,7 +7177,7 @@ Attributes
 
       Creates a new FeatureGroup from a SQL statement.
 
-      :param table_name: The unique name to be given to the FeatureGroup.
+      :param table_name: The unique name to be given to the FeatureGroup. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param sql: Input SQL statement for forming the FeatureGroup.
       :type sql: str
@@ -7042,7 +7192,7 @@ Attributes
 
       Creates a new feature group from a SQL statement.
 
-      :param table_name: The unique name to be given to the feature group.
+      :param table_name: The unique name to be given to the feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param feature_group_template_id: The unique ID associated with the template that will be used to create this feature group.
       :type feature_group_template_id: str
@@ -7066,7 +7216,7 @@ Attributes
       This method expects the source code to be a valid language source file containing a function. This function needs to return a DataFrame when executed; this DataFrame will be used as the materialized version of this feature group table.
 
 
-      :param table_name: The unique name to be given to the feature group.
+      :param table_name: The unique name to be given to the feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param function_source_code: Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called function_name. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
       :type function_source_code: str
@@ -7104,7 +7254,7 @@ Attributes
 
       :param feature_group_id: The unique ID associated with the pre-existing Feature Group that will be sampled by this new Feature Group. i.e. the input for sampling.
       :type feature_group_id: str
-      :param table_name: The unique name to be given to this sampling Feature Group.
+      :param table_name: The unique name to be given to this sampling Feature Group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param sampling_config: Dictionary defining the sampling method and its parameters.
       :type sampling_config: SamplingConfig
@@ -7121,7 +7271,7 @@ Attributes
 
               Args:
                   source_feature_group_id (str): Unique string identifier corresponding to the dataset feature group that will have its versions merged into this feature group.
-                  table_name (str): Unique string identifier to be given to this merge feature group.
+                  table_name (str): Unique string identifier to be given to this merge feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
                   merge_config (MergeConfig): JSON object defining the merging method and its parameters.
                   description (str): Human-readable description of this feature group.
 
@@ -7137,7 +7287,7 @@ Attributes
 
       :param source_feature_group_id: Unique string identifier corresponding to the Feature Group to which the operator will be applied.
       :type source_feature_group_id: str
-      :param table_name: Unique string identifier for the operator Feature Group.
+      :param table_name: Unique string identifier for the operator Feature Group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param operator_config: JSON object (aka map) defining the operator and its parameters.
       :type operator_config: dict
@@ -7154,7 +7304,7 @@ Attributes
 
       :param feature_group_version: Unique string identifier associated with the Feature Group version being snapshotted.
       :type feature_group_version: str
-      :param table_name: Name for the newly created Snapshot Feature Group table.
+      :param table_name: Name for the newly created Snapshot Feature Group table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
 
       :returns: Feature Group corresponding to the newly created Snapshot.
@@ -7165,7 +7315,7 @@ Attributes
 
       Creates an Online Feature Group.
 
-      :param table_name: Name for the newly created feature group.
+      :param table_name: Name for the newly created feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param primary_key: The primary key for indexing the online feature group.
       :type primary_key: str
@@ -7379,7 +7529,7 @@ Attributes
       :type feature_group_id: str
       :param nested_feature_name: The name of the feature.
       :type nested_feature_name: str
-      :param table_name: The table name of the feature group to nest.
+      :param table_name: The table name of the feature group to nest. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param using_clause: The SQL join column or logic to join the nested table with the parent.
       :type using_clause: str
@@ -7400,7 +7550,7 @@ Attributes
       :type feature_group_id: str
       :param nested_feature_name: The name of the feature to be updated.
       :type nested_feature_name: str
-      :param table_name: The name of the table.
+      :param table_name: The name of the table. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type table_name: str
       :param using_clause: The SQL join column or logic to join the nested table with the parent.
       :type using_clause: str
@@ -9485,14 +9635,14 @@ Attributes
 
    .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
 
-      Creates a refresh policy with a particular cron pattern and refresh type.
+      Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.
 
       A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.
 
 
       :param name: The name of the refresh policy.
       :type name: str
-      :param cron: A cron-like string specifying the frequency of the refresh policy.
+      :param cron: A cron-like string specifying the frequency of the refresh policy in UTC time.
       :type cron: str
       :param refresh_type: The refresh type used to determine what is being refreshed, such as a single dataset, dataset and model, or more.
       :type refresh_type: str
@@ -10368,7 +10518,7 @@ Attributes
       :type output_includes_metadata: bool
       :param result_input_columns: If present, will limit result files or feature groups to only include columns present in this list.
       :type result_input_columns: list
-      :param input_feature_groups: A dict of {'<feature_group_type>': '<table_name>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
+      :param input_feature_groups: A dict of {'<feature_group_type>': '<feature_group_id>'} which overrides the default input data of that type for the Batch Prediction. Default input data is the training data that was used for training the deployed model.
       :type input_feature_groups: dict
 
       :returns: The batch prediction description.
@@ -10797,7 +10947,7 @@ Attributes
 
       Creates a custom Python function that is reusable.
 
-      :param name: The name to identify the Python function.
+      :param name: The name to identify the Python function. Must be a valid Python identifier.
       :type name: str
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
@@ -10818,7 +10968,7 @@ Attributes
 
       Update custom python function with user inputs for the given python function.
 
-      :param name: The name to identify the Python function.
+      :param name: The name to identify the Python function. Must be a valid Python identifier.
       :type name: str
       :param source_code: Contents of a valid Python source code file. The source code should contain the transform feature group functions. A list of allowed imports and system libraries for each language is specified in the user functions documentation section.
       :type source_code: str
@@ -10837,7 +10987,7 @@ Attributes
 
       Removes an existing Python function.
 
-      :param name: The name to identify the Python function.
+      :param name: The name to identify the Python function. Must be a valid Python identifier.
       :type name: str
 
 
@@ -11150,6 +11300,14 @@ Attributes
 
       :returns: An object describing the graph dashboard.
       :rtype: GraphDashboard
+
+
+   .. py:method:: delete_graph_from_dashboard(graph_reference_id)
+
+      Deletes a python plot function from a dashboard
+
+      :param graph_reference_id: Unique String Identifier for the graph
+      :type graph_reference_id: str
 
 
    .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
@@ -11742,24 +11900,7 @@ Attributes
       :rtype: LlmInput
 
 
-   .. py:method:: get_llm_parameters(prompt, system_message = None, llm_name = None, max_tokens = None)
-
-      Generate parameteres to the prompt using the given inputs
-
-      :param prompt: Prompt to use for generation.
-      :type prompt: str
-      :param system_message: System message for models that support it.
-      :type system_message: str
-      :param llm_name: Name of the underlying LLM to be used for generation. Should be one of 'gpt-4' or 'gpt-3.5-turbo'. Default is auto selection.
-      :type llm_name: LLMName
-      :param max_tokens: Maximum number of tokens to generate. If set, the model will just stop generating after this token limit is reached.
-      :type max_tokens: int
-
-      :returns: The parameters for LLM using the given inputs.
-      :rtype: LlmParameters
-
-
-   .. py:method:: generate_code_for_data_query_using_llm(query, feature_group_ids = None, external_database_schemas = None, prompt_context = None, llm_name = None, temperature = None)
+   .. py:method:: generate_code_for_data_query_using_llm(query, feature_group_ids = None, external_database_schemas = None, prompt_context = None, llm_name = None, temperature = None, sql_dialect = 'Spark')
 
       Execute a data query using a large language model in an async fashion.
 
@@ -11775,6 +11916,8 @@ Attributes
       :type llm_name: LLMName
       :param temperature: The temperature to use for the language model if supported. If not provided, the default temperature is used.
       :type temperature: float
+      :param sql_dialect: The dialect of sql to generate sql for. The default is Spark.
+      :type sql_dialect: str
 
       :returns: The generated SQL code.
       :rtype: LlmGeneratedCode
@@ -11958,6 +12101,7 @@ Attributes
 
 .. py:exception:: ApiException(message, http_status, exception = None, request_id = None)
 
+
    Bases: :py:obj:`Exception`
 
    Default ApiException raised by APIs
@@ -11979,6 +12123,7 @@ Attributes
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
 
+
    Options for configuring the ApiClient
 
    :param exception_on_404: If true, will raise an exception on a 404 from the server, else will return None.
@@ -11988,6 +12133,7 @@ Attributes
 
 
 .. py:class:: ReadOnlyClient(api_key = None, server = None, client_options = None, skip_version_check = False)
+
 
    Bases: :py:obj:`BaseApiClient`
 
@@ -12265,7 +12411,7 @@ Attributes
       :rtype: ProjectFeatureGroup
 
 
-   .. py:method:: list_project_feature_groups(project_id, filter_feature_group_use = None)
+   .. py:method:: list_project_feature_groups(project_id, filter_feature_group_use = None, limit = 100, start_after_id = None)
 
       List all the feature groups associated with a project
 
@@ -12273,6 +12419,10 @@ Attributes
       :type project_id: str
       :param filter_feature_group_use: The feature group use filter, when given as an argument only allows feature groups present in this project to be returned if they are of the given use. Possible values are: 'USER_CREATED', 'BATCH_PREDICTION_OUTPUT'.
       :type filter_feature_group_use: str
+      :param limit: The maximum number of feature groups to be retrieved.
+      :type limit: int
+      :param start_after_id: An offset parameter to exclude all feature groups up to a specified ID.
+      :type start_after_id: str
 
       :returns: All the Feature Groups in a project.
       :rtype: list[ProjectFeatureGroup]
@@ -13433,9 +13583,9 @@ Attributes
 
    .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
-      List the refresh policies for the organization
+      List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
-      :param project_id: Optionally, a Project ID can be specified so that all datasets, models, deployments, batch predictions, prediction metrics, model monitors, and notebooks are captured at the instant this policy was created.
+      :param project_id: Project ID for which we wish to see the refresh policies attached.
       :type project_id: str
       :param dataset_ids: Comma-separated list of Dataset IDs.
       :type dataset_ids: list
@@ -13582,7 +13732,7 @@ Attributes
 
       Describe a Python Function.
 
-      :param name: The name to identify the Python function.
+      :param name: The name to identify the Python function. Must be a valid Python identifier.
       :type name: str
 
       :returns: The Python function object.
@@ -13699,14 +13849,6 @@ Attributes
 
       :returns: A list of graph dashboards.
       :rtype: list[GraphDashboard]
-
-
-   .. py:method:: delete_graph_from_dashboard(graph_reference_id)
-
-      Deletes a python plot function from a dashboard
-
-      :param graph_reference_id: Unique String Identifier for the graph
-      :type graph_reference_id: str
 
 
    .. py:method:: describe_graph_for_dashboard(graph_reference_id)
@@ -14087,6 +14229,7 @@ Attributes
    
 
 .. py:class:: PredictionClient(client_options = None)
+
 
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
@@ -14872,6 +15015,7 @@ Attributes
 
 .. py:class:: StreamingClient(client_options = None)
 
+
    Bases: :py:obj:`abacusai.client.BaseApiClient`
 
    Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods
@@ -14961,7 +15105,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.0.0'
+   :value: '1.0.1'
 
    
 
