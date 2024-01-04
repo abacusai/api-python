@@ -463,7 +463,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.0.1'
+      :value: '1.0.2'
 
       
 
@@ -4913,7 +4913,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, timestamp_column = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None)
 
       Creates a dataset from a Database Connector.
 
@@ -4933,8 +4933,8 @@ Attributes
       :type sql_query: str
       :param incremental: Signifies if the dataset is an incremental dataset.
       :type incremental: bool
-      :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
-      :type timestamp_column: str
+      :param incremental_database_connector_config: The config for incremental datasets. Only valid if incremental is True
+      :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
 
       :returns: The created dataset.
       :rtype: Dataset

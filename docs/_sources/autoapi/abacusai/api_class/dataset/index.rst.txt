@@ -14,6 +14,7 @@ Classes
 
    abacusai.api_class.dataset.ParsingConfig
    abacusai.api_class.dataset.DocumentProcessingConfig
+   abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig
 
 
 
@@ -92,6 +93,22 @@ Classes
    .. py:attribute:: convert_to_markdown
       :type: bool
       :value: False
+
+      
+
+
+.. py:class:: IncrementalDatabaseConnectorConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Config information for incremental datasets from database connectors
+
+   :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
+   :type timestamp_column: str
+
+   .. py:attribute:: timestamp_column
+      :type: str
 
       
 

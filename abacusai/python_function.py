@@ -16,10 +16,11 @@ class PythonFunction(AbstractApiClass):
             functionName (str): The name of the Python function to be used.
             pythonFunctionId (str): The unique identifier of the Python function.
             functionType (str): The type of the Python function.
+            packageRequirements (list): The pip package dependencies required to run the code
             codeSource (CodeSource): Information about the source code of the Python function.
     """
 
-    def __init__(self, client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, codeSource={}):
+    def __init__(self, client, notebookId=None, name=None, createdAt=None, functionVariableMappings=None, outputVariableMappings=None, functionName=None, pythonFunctionId=None, functionType=None, packageRequirements=None, codeSource={}):
         super().__init__(client, pythonFunctionId)
         self.notebook_id = notebookId
         self.name = name
@@ -29,11 +30,12 @@ class PythonFunction(AbstractApiClass):
         self.function_name = functionName
         self.python_function_id = pythonFunctionId
         self.function_type = functionType
+        self.package_requirements = packageRequirements
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
         repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'function_variable_mappings': repr(self.function_variable_mappings), f'output_variable_mappings': repr(
-            self.output_variable_mappings), f'function_name': repr(self.function_name), f'python_function_id': repr(self.python_function_id), f'function_type': repr(self.function_type), f'code_source': repr(self.code_source)}
+            self.output_variable_mappings), f'function_name': repr(self.function_name), f'python_function_id': repr(self.python_function_id), f'function_type': repr(self.function_type), f'package_requirements': repr(self.package_requirements), f'code_source': repr(self.code_source)}
         class_name = "PythonFunction"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -47,7 +49,7 @@ class PythonFunction(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'output_variable_mappings': self.output_variable_mappings,
-                'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
+                'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'package_requirements': self.package_requirements, 'code_source': self._get_attribute_as_dict(self.code_source)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None):

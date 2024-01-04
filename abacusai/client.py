@@ -33,8 +33,9 @@ from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
     BatchPredictionArgs, BlobInput, DatasetConfig, DocumentProcessingConfig,
     DocumentRetrieverConfig, EvalArtifactType, FeatureGroupExportConfig,
-    ForecastingMonitorConfig, LLMName, MergeConfig, ParsingConfig, ProblemType,
-    PythonFunctionType, SamplingConfig, TrainingConfig
+    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
+    MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
+    SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, clean_column_name,
@@ -520,7 +521,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.0.1'
+    client_version = '1.0.2'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -4841,7 +4842,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromFileConnector', 'POST', query_params={'datasetId': dataset_id}, body={'location': location, 'fileFormat': file_format, 'csvDelimiter': csv_delimiter, 'mergeFileSchemas': merge_file_schemas, 'parsingConfig': parsing_config}, parse_type=DatasetVersion)
 
-    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, timestamp_column: str = None) -> Dataset:
+    def create_dataset_from_database_connector(self, table_name: str, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, refresh_schedule: str = None, sql_query: str = None, incremental: bool = False, incremental_database_connector_config: Union[dict, IncrementalDatabaseConnectorConfig] = None) -> Dataset:
         """Creates a dataset from a Database Connector.
 
         Args:
@@ -4853,11 +4854,11 @@ Creates a new feature group defined as the union of other feature group versions
             refresh_schedule (str): The Cron time string format that describes a schedule to retrieve the latest version of the imported dataset. The time is specified in UTC.
             sql_query (str): The full SQL query to use when fetching data. If present, this parameter will override `object_name`, `columns`, `timestamp_column`, and `query_arguments`.
             incremental (bool): Signifies if the dataset is an incremental dataset.
-            timestamp_column (str): If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
+            incremental_database_connector_config (IncrementalDatabaseConnectorConfig): The config for incremental datasets. Only valid if incremental is True
 
         Returns:
             Dataset: The created dataset."""
-        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'timestampColumn': timestamp_column}, parse_type=Dataset)
+        return self._call_api('createDatasetFromDatabaseConnector', 'POST', query_params={}, body={'tableName': table_name, 'databaseConnectorId': database_connector_id, 'objectName': object_name, 'columns': columns, 'queryArguments': query_arguments, 'refreshSchedule': refresh_schedule, 'sqlQuery': sql_query, 'incremental': incremental, 'incrementalDatabaseConnectorConfig': incremental_database_connector_config}, parse_type=Dataset)
 
     def create_dataset_from_application_connector(self, table_name: str, application_connector_id: str, dataset_config: Union[dict, DatasetConfig] = None, refresh_schedule: str = None) -> Dataset:
         """Creates a dataset from an Application Connector.

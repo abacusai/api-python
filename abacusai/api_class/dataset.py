@@ -30,3 +30,14 @@ class DocumentProcessingConfig(ApiClass):
     remove_header_footer: bool = False
     remove_watermarks: bool = None
     convert_to_markdown: bool = False
+
+
+@dataclasses.dataclass
+class IncrementalDatabaseConnectorConfig(ApiClass):
+    """
+    Config information for incremental datasets from database connectors
+
+    Args:
+        timestamp_column (str): If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
+    """
+    timestamp_column: str = dataclasses.field(default=None)

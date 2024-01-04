@@ -392,6 +392,8 @@ class LLMName(ApiEnum):
     PALM = 'PALM'
     PALM_TEXT = 'PALM_TEXT'
     MIXTRAL_CHAT = 'MIXTRAL_CHAT'
+    MISTRAL = 'MISTRAL'
+    GEMINI = 'GEMINI'
 
 
 class MonitorAlertType(ApiEnum):

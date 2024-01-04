@@ -246,6 +246,7 @@ Classes
    abacusai.OcrMode
    abacusai.ParsingConfig
    abacusai.DocumentProcessingConfig
+   abacusai.IncrementalDatabaseConnectorConfig
    abacusai.DatasetConfig
    abacusai.ConfluenceDatasetConfig
    abacusai.GoogleAnalyticsDatasetConfig
@@ -1119,6 +1120,22 @@ Attributes
    .. py:attribute:: convert_to_markdown
       :type: bool
       :value: False
+
+      
+
+
+.. py:class:: IncrementalDatabaseConnectorConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Config information for incremental datasets from database connectors
+
+   :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
+   :type timestamp_column: str
+
+   .. py:attribute:: timestamp_column
+      :type: str
 
       
 
@@ -3132,6 +3149,16 @@ Attributes
 
    .. py:attribute:: MIXTRAL_CHAT
       :value: 'MIXTRAL_CHAT'
+
+      
+
+   .. py:attribute:: MISTRAL
+      :value: 'MISTRAL'
+
+      
+
+   .. py:attribute:: GEMINI
+      :value: 'GEMINI'
 
       
 
@@ -8301,7 +8328,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, timestamp_column = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None)
 
       Creates a dataset from a Database Connector.
 
@@ -8321,8 +8348,8 @@ Attributes
       :type sql_query: str
       :param incremental: Signifies if the dataset is an incremental dataset.
       :type incremental: bool
-      :param timestamp_column: If dataset is incremental, this is the column name of the required column in the dataset. This column must contain timestamps in descending order which are used to determine the increments of the incremental dataset.
-      :type timestamp_column: str
+      :param incremental_database_connector_config: The config for incremental datasets. Only valid if incremental is True
+      :type incremental_database_connector_config: IncrementalDatabaseConnectorConfig
 
       :returns: The created dataset.
       :rtype: Dataset
@@ -15105,7 +15132,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.0.1'
+   :value: '1.0.2'
 
    
 
