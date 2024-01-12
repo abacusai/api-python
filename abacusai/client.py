@@ -168,6 +168,23 @@ DEFAULT_SERVER = 'https://api.abacus.ai'
 _request_context = threading.local()
 
 
+def _is_json_serializable(object: any):
+    """
+    Tests if an object is JSON serializable.
+
+    Args:
+        object (any): The object to test.
+
+    Returns:
+        bool: True if the object is JSON serializable, False otherwise.
+    """
+    try:
+        json.dumps(object)
+        return True
+    except TypeError:
+        return False
+
+
 def _requests_retry_session(retries=5, backoff_factor=0.1, status_forcelist=(502, 503, 504), session=None, retry_500: bool = False):
     session = session or requests.Session()
     if retry_500:
@@ -206,6 +223,29 @@ def _discover_service_url(service_discovery_url, client_version, deployment_id, 
 
 
 _cached_endpoints = {}
+
+
+class Blob:
+
+    def __init__(self, contents: bytes, mime_type: str, filename: str = None):
+        self.filename = filename
+        self.contents = contents
+        self.mime_type = mime_type
+
+
+class AgentResponse:
+    """
+    Response Object for agent to support attachments
+    """
+
+    def __init__(self, *args):
+        self.data_list = []
+        for arg in args:
+            if isinstance(arg, Blob) or _is_json_serializable(arg):
+                self.data_list.append(arg)
+            else:
+                raise Exception(
+                    'AgentResponse can only contain Blob or json serializable objects')
 
 
 class ClientOptions:
@@ -521,7 +561,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.0.2'
+    client_version = '1.0.5'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -736,11 +776,11 @@ class BaseApiClient:
                 val, dict)) else val for key, val in query_params.items()} if query_params else query_params
             return _session.get(url, params=cleaned_params, headers=headers, stream=stream)
         elif method == 'POST':
-            return _session.post(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
+            return _session.post(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 600)
         elif method == 'PUT':
-            return _session.put(url, params=query_params, data=body, headers=headers, files=files, timeout=timeout or 200)
+            return _session.put(url, params=query_params, data=body, headers=headers, files=files, timeout=timeout or 600)
         elif method == 'PATCH':
-            return _session.patch(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 200)
+            return _session.patch(url, params=query_params, json=body, headers=headers, files=files, timeout=timeout or 600)
         elif method == 'DELETE':
             return _session.delete(url, params=query_params, data=body, headers=headers)
         else:
@@ -4020,7 +4060,7 @@ class ApiClient(ReadOnlyClient):
             table_name (str): The unique name to be given to the feature group. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             function_source_code (str): Contents of a valid source code file in a supported Feature Group specification language (currently only Python). The source code should contain a function called function_name. A list of allowed import and system libraries for each language is specified in the user functions documentation section.
             function_name (str): Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
-            input_feature_groups (list): List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+            input_feature_groups (list): List of feature group names that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
             description (str): The description for this feature group.
             cpu_size (str): Size of the CPU for the feature group function.
             memory (int): Memory (in GB) for the feature group function.
@@ -6376,17 +6416,20 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token)
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=prediction_url)
 
-    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, return_detected_images: bool = False) -> Dict:
+    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, return_detected_images: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
         """Generate text from a document
 
         Args:
             deployment_token (str): Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
             deployment_id (str): Unique identifier of a deployment created under the project.
             document (io.TextIOBase): Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
-            return_detected_images (bool): whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))"""
+            adjust_doc_orientation (bool): (Optional) whether to detect the document page orientation and rotate it if needed.
+            return_detected_images (bool): whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
+            save_predicted_pdf (bool): (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
+            save_extracted_features (bool): (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'returnDetectedImages': return_detected_images}, files={'document': document}, server_override=prediction_url)
+        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'adjustDocOrientation': adjust_doc_orientation, 'returnDetectedImages': return_detected_images, 'savePredictedPdf': save_predicted_pdf, 'saveExtractedFeatures': save_extracted_features}, files={'document': document}, server_override=prediction_url)
 
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
         """Transcribe the audio
@@ -7462,7 +7505,7 @@ Creates a new feature group defined as the union of other feature group versions
             user_message_indices (list): Optional list of user message indices to clear. The associated bot response will also be cleared. If not provided, all messages will be cleared."""
         return self._proxy_request('clearDeploymentConversation', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'userMessageIndices': user_message_indices}, is_sync=True)
 
-    def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, deployment_id: str = None, deployment_token: str = None):
+    def set_deployment_conversation_feedback(self, deployment_conversation_id: str, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None, deployment_token: str = None):
         """Sets a deployment conversation message as useful or not useful
 
         Args:
@@ -7471,9 +7514,10 @@ Creates a new feature group defined as the union of other feature group versions
             is_useful (bool): If the message is useful. If true, the message is useful. If false, clear the useful flag.
             is_not_useful (bool): If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
             feedback (str): Optional feedback on why the message is useful or not useful
+            feedback_type (str): Optional feedback type
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in."""
-        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback})
+        return self._call_api('setDeploymentConversationFeedback', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'deploymentConversationId': deployment_conversation_id, 'messageIndex': message_index, 'isUseful': is_useful, 'isNotUseful': is_not_useful, 'feedback': feedback, 'feedbackType': feedback_type})
 
     def rename_deployment_conversation(self, deployment_conversation_id: str, name: str, deployment_id: str = None, deployment_token: str = None):
         """Rename a Deployment Conversation.

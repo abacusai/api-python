@@ -140,6 +140,10 @@ class ApiClass(ABC):
                 return builder.from_dict(input_dict)
             if not cls._upper_snake_case_keys:
                 input_dict = {snake_case(k): v for k, v in input_dict.items()}
+            if not cls._support_kwargs:
+                # only use keys that are valid fields in the ApiClass
+                field_names = set((field.name) for field in dataclasses.fields(cls))
+                input_dict = {k: v for k, v in input_dict.items() if k in field_names}
         return cls(**input_dict)
 
 

@@ -83,7 +83,7 @@ class DeploymentConversation(AbstractApiClass):
         """
         return self.client.clear_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, deployment_token, user_message_indices)
 
-    def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, deployment_id: str = None, deployment_token: str = None):
+    def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None, deployment_token: str = None):
         """
         Sets a deployment conversation message as useful or not useful
 
@@ -92,10 +92,11 @@ class DeploymentConversation(AbstractApiClass):
             is_useful (bool): If the message is useful. If true, the message is useful. If false, clear the useful flag.
             is_not_useful (bool): If the message is not useful. If true, the message is not useful. If set to false, clear the useful flag.
             feedback (str): Optional feedback on why the message is useful or not useful
+            feedback_type (str): Optional feedback type
             deployment_id (str): The deployment this conversation belongs to. This is required if not logged in.
             deployment_token (str): The deployment token to authenticate access to the deployment. This is required if not logged in.
         """
-        return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback, deployment_id, deployment_token)
+        return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback, feedback_type, deployment_id, deployment_token)
 
     def rename(self, name: str, deployment_id: str = None, deployment_token: str = None):
         """

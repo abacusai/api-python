@@ -250,7 +250,7 @@ class FeatureGroupVersion(AbstractApiClass):
 
         Args:
             doc_id_feature (str): The name of the feature / column containing the document ID.
-            document_feature (str): The name of the feature / column containing the page infos. This column will be replaced with the extracted document data.
+            document_feature (str): The name of the feature / column which either contains the document data itself or page infos with path to remotely stored documents. This column will be replaced with the extracted document data.
             max_workers (int, optional): The number of threads.
 
         Returns:

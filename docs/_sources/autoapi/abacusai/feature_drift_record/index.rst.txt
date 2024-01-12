@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureDriftRecord(client, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None)
+.. py:class:: FeatureDriftRecord(client, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, psi=None, csi=None, chiSquare=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -36,6 +36,12 @@ Classes
    :type wsDistance: float
    :param ksStatistic: Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
    :type ksStatistic: float
+   :param psi: Population stability index computed between the training distribution and the range of values in the specified window.
+   :type psi: float
+   :param csi: Characteristic Stability Index computed between the training distribution and the range of values in the specified window.
+   :type csi: float
+   :param chiSquare: Chi-square statistic computed between the training distribution and the range of values in the specified window.
+   :type chiSquare: float
 
    .. py:method:: __repr__()
 

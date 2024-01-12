@@ -93,7 +93,7 @@ Classes
       :type user_message_indices: list
 
 
-   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, deployment_id = None, deployment_token = None)
+   .. py:method:: set_feedback(message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -105,6 +105,8 @@ Classes
       :type is_not_useful: bool
       :param feedback: Optional feedback on why the message is useful or not useful
       :type feedback: str
+      :param feedback_type: Optional feedback type
+      :type feedback_type: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.

@@ -443,6 +443,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
         behavior_instructions (str): Customize the overall role instructions for the LLM.
         response_instructions (str): Customize instructions for what the LLM responses should look like.
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
+        data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
+        data_prompt_context (str): Prompt context for the data feature group ids.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -452,6 +454,8 @@ class ChatLLMTrainingConfig(TrainingConfig):
     behavior_instructions: str = None
     response_instructions: str = None
     max_search_results: int = None
+    data_feature_group_ids: List[str] = None
+    data_prompt_context: str = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

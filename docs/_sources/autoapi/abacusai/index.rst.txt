@@ -156,6 +156,7 @@ Submodules
    module/index.rst
    monitor_alert/index.rst
    monitor_alert_version/index.rst
+   monitor_drift_and_distributions/index.rst
    natural_language_explanation/index.rst
    nested_feature/index.rst
    nested_feature_schema/index.rst
@@ -357,6 +358,7 @@ Classes
    abacusai.FileConnectorExportConfig
    abacusai.DatabaseConnectorExportConfig
    abacusai._FeatureGroupExportConfigFactory
+   abacusai.AgentResponse
    abacusai.ApiClient
    abacusai.ClientOptions
    abacusai.ReadOnlyClient
@@ -3147,18 +3149,18 @@ Attributes
 
       
 
+   .. py:attribute:: GEMINI_PRO
+      :value: 'GEMINI_PRO'
+
+      
+
    .. py:attribute:: MIXTRAL_CHAT
       :value: 'MIXTRAL_CHAT'
 
       
 
-   .. py:attribute:: MISTRAL
-      :value: 'MISTRAL'
-
-      
-
-   .. py:attribute:: GEMINI
-      :value: 'GEMINI'
+   .. py:attribute:: MISTRAL_MEDIUM
+      :value: 'MISTRAL_MEDIUM'
 
       
 
@@ -3234,6 +3236,21 @@ Attributes
 
    .. py:attribute:: JS
       :value: 'js'
+
+      
+
+   .. py:attribute:: PSI
+      :value: 'psi'
+
+      
+
+   .. py:attribute:: CHI_SQUARE
+      :value: 'chi_square'
+
+      
+
+   .. py:attribute:: CSI
+      :value: 'csi'
 
       
 
@@ -4789,6 +4806,9 @@ Attributes
    :type response_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
+   :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
+   :param data_prompt_context: Prompt context for the data feature group ids.
+   :type data_prompt_context: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -4827,6 +4847,16 @@ Attributes
 
    .. py:attribute:: max_search_results
       :type: int
+
+      
+
+   .. py:attribute:: data_feature_group_ids
+      :type: List[str]
+
+      
+
+   .. py:attribute:: data_prompt_context
+      :type: str
 
       
 
@@ -6015,6 +6045,12 @@ Attributes
    .. py:attribute:: config_class_map
 
       
+
+
+.. py:class:: AgentResponse(*args)
+
+
+   Response Object for agent to support attachments
 
 
 .. py:class:: ApiClient(api_key = None, server = None, client_options = None, skip_version_check = False)
@@ -7249,7 +7285,7 @@ Attributes
       :type function_source_code: str
       :param function_name: Name of the function found in the source code that will be executed (on the optional inputs) to materialize this feature group.
       :type function_name: str
-      :param input_feature_groups: List of feature groups that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
+      :param input_feature_groups: List of feature group names that are supplied to the function as parameters. Each of the parameters are materialized Dataframes (same type as the functions return value).
       :type input_feature_groups: list
       :param description: The description for this feature group.
       :type description: str
@@ -10327,7 +10363,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, return_detected_images = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -10337,8 +10373,14 @@ Attributes
       :type deployment_id: str
       :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
       :type document: io.TextIOBase
+      :param adjust_doc_orientation: (Optional) whether to detect the document page orientation and rotate it if needed.
+      :type adjust_doc_orientation: bool
       :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
       :type return_detected_images: bool
+      :param save_predicted_pdf: (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
+      :type save_predicted_pdf: bool
+      :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
+      :type save_extracted_features: bool
 
 
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
@@ -11693,7 +11735,7 @@ Attributes
       :type user_message_indices: list
 
 
-   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, deployment_id = None, deployment_token = None)
+   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -11707,6 +11749,8 @@ Attributes
       :type is_not_useful: bool
       :param feedback: Optional feedback on why the message is useful or not useful
       :type feedback: str
+      :param feedback_type: Optional feedback type
+      :type feedback_type: str
       :param deployment_id: The deployment this conversation belongs to. This is required if not logged in.
       :type deployment_id: str
       :param deployment_token: The deployment token to authenticate access to the deployment. This is required if not logged in.
@@ -14855,7 +14899,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, return_detected_images = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -14865,8 +14909,14 @@ Attributes
       :type deployment_id: str
       :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
       :type document: io.TextIOBase
+      :param adjust_doc_orientation: (Optional) whether to detect the document page orientation and rotate it if needed.
+      :type adjust_doc_orientation: bool
       :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
       :type return_detected_images: bool
+      :param save_predicted_pdf: (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
+      :type save_predicted_pdf: bool
+      :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
+      :type save_extracted_features: bool
 
 
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
@@ -15132,7 +15182,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.0.2'
+   :value: '1.0.5'
 
    
 

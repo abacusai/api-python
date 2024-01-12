@@ -22,8 +22,8 @@ class ForecastingMonitorSummary(AbstractApiClass):
             predictionsHistogram (ForecastingAnalysisGraphData): Data showing predictions histogram
             trainHistoryData (ForecastingAnalysisGraphData): Data showing length of history distribution
             predictHistoryData (ForecastingAnalysisGraphData): Data showing length of history distribution
-            targetDrift (FeatureDriftRecord): Data showing drift of the target for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic
-            historyDrift (FeatureDriftRecord): Data showing drift of the history for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic
+            targetDrift (FeatureDriftRecord): Data showing drift of the target for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic, psi, csi, chi_square
+            historyDrift (FeatureDriftRecord): Data showing drift of the history for all drift types: distance (KL divergence), js_distance, ws_distance, ks_statistic, psi, csi, chi_square
     """
 
     def __init__(self, client, predictionTimestampCol=None, predictionTargetCol=None, trainingTimestampCol=None, trainingTargetCol=None, predictionItemId=None, trainingItemId=None, forecastFrequency=None, trainingTargetAcrossTime={}, predictionTargetAcrossTime={}, actualsHistogram={}, predictionsHistogram={}, trainHistoryData={}, predictHistoryData={}, targetDrift={}, historyDrift={}):

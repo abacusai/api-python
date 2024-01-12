@@ -492,17 +492,20 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=prediction_url)
 
-    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, return_detected_images: bool = False) -> Dict:
+    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, return_detected_images: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
         """Generate text from a document
 
         Args:
             deployment_token (str): Authentication token to access created deployments. This token is only authorized to predict on deployments in the current project, and can be safely embedded in an application or website.
             deployment_id (str): Unique identifier of a deployment created under the project.
             document (io.TextIOBase): Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
-            return_detected_images (bool): whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))"""
+            adjust_doc_orientation (bool): (Optional) whether to detect the document page orientation and rotate it if needed.
+            return_detected_images (bool): whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
+            save_predicted_pdf (bool): (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
+            save_extracted_features (bool): (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'returnDetectedImages': return_detected_images}, files={'document': document}, server_override=prediction_url)
+        return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'adjustDocOrientation': adjust_doc_orientation, 'returnDetectedImages': return_detected_images, 'savePredictedPdf': save_predicted_pdf, 'saveExtractedFeatures': save_extracted_features}, files={'document': document}, server_override=prediction_url)
 
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
         """Transcribe the audio

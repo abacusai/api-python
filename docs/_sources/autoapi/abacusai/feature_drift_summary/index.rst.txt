@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nestedSummary=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
+.. py:class:: FeatureDriftSummary(client, featureIndex=None, name=None, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, predictionDrift=None, targetColumn=None, dataIntegrityTimeseries=None, nestedSummary=None, psi=None, csi=None, chiSquare=None, nullViolations={}, typeViolations={}, rangeViolations={}, catViolations={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -46,6 +46,12 @@ Classes
    :type dataIntegrityTimeseries: dict
    :param nestedSummary: Summary of model monitoring statistics for nested features.
    :type nestedSummary: list[dict]
+   :param psi: Population stability index computed between the training distribution and the range of values in the specified window.
+   :type psi: float
+   :param csi: Characteristic Stability Index computed between the training distribution and the range of values in the specified window.
+   :type csi: float
+   :param chiSquare: Chi-square statistic computed between the training distribution and the range of values in the specified window.
+   :type chiSquare: float
    :param nullViolations: A list of dicts of feature names and a description of corresponding null violations.
    :type nullViolations: NullViolation
    :param typeViolations: A list of dicts of feature names and corresponding type mismatches.

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, docInfos=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,8 +44,12 @@ Classes
    :type isUseful: bool
    :param feedback: The feedback provided for the message
    :type feedback: str
+   :param feedbackType: The type of feedback provided for the message
+   :type feedbackType: str
    :param docInfos: A list of information on the documents associated with the message
    :type docInfos: list
+   :param keywordArguments: User message only. A dictionary of keyword arguments used to generate response.
+   :type keywordArguments: dict
 
    .. py:method:: __repr__()
 

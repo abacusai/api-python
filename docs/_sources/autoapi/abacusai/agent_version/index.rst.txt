@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AgentVersion(client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, codeSource={})
+.. py:class:: AgentVersion(client, agentVersion=None, status=None, agentId=None, agentConfig=None, publishingStartedAt=None, publishingCompletedAt=None, pendingDeploymentIds=None, failedDeploymentIds=None, error=None, agentExecutionConfig=None, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,6 +44,8 @@ Classes
    :type failedDeploymentIds: list
    :param error: Relevant error if the status is FAILED.
    :type error: str
+   :param agentExecutionConfig: The config for arguments used to execute the agent.
+   :type agentExecutionConfig: dict
    :param codeSource: If a python model, information on where the source code is located.
    :type codeSource: CodeSource
 

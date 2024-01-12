@@ -4017,18 +4017,18 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.GEMINI_PRO">
+<span class="sig-name descname"><span class="pre">GEMINI_PRO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI_PRO'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.GEMINI_PRO" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.LLMName.MIXTRAL_CHAT">
 <span class="sig-name descname"><span class="pre">MIXTRAL_CHAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MIXTRAL_CHAT'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.MIXTRAL_CHAT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.LLMName.MISTRAL">
-<span class="sig-name descname"><span class="pre">MISTRAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MISTRAL'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.MISTRAL" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.LLMName.GEMINI">
-<span class="sig-name descname"><span class="pre">GEMINI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GEMINI'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.GEMINI" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="abacusai.api_class.LLMName.MISTRAL_MEDIUM">
+<span class="sig-name descname"><span class="pre">MISTRAL_MEDIUM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MISTRAL_MEDIUM'</span></em><a class="headerlink" href="#abacusai.api_class.LLMName.MISTRAL_MEDIUM" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4100,6 +4100,21 @@ This also validates the fields ( type, value, etc ) received in the dictionary.<
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.FeatureDriftType.JS">
 <span class="sig-name descname"><span class="pre">JS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'js'</span></em><a class="headerlink" href="#abacusai.api_class.FeatureDriftType.JS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FeatureDriftType.PSI">
+<span class="sig-name descname"><span class="pre">PSI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'psi'</span></em><a class="headerlink" href="#abacusai.api_class.FeatureDriftType.PSI" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FeatureDriftType.CHI_SQUARE">
+<span class="sig-name descname"><span class="pre">CHI_SQUARE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'chi_square'</span></em><a class="headerlink" href="#abacusai.api_class.FeatureDriftType.CHI_SQUARE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.FeatureDriftType.CSI">
+<span class="sig-name descname"><span class="pre">CSI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'csi'</span></em><a class="headerlink" href="#abacusai.api_class.FeatureDriftType.CSI" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -5865,6 +5880,8 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>behavior_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize the overall role instructions for the LLM.</p></li>
 <li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize instructions for what the LLM responses should look like.</p></li>
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
+<li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group ids to use to possibly query for the chatllm.</p></li>
+<li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group ids.</p></li>
 </ul>
 </dd>
 </dl>
@@ -5906,6 +5923,16 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.max_search_results">
 <span class="sig-name descname"><span class="pre">max_search_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.max_search_results" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.data_feature_group_ids">
+<span class="sig-name descname"><span class="pre">data_feature_group_ids</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.data_feature_group_ids" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.ChatLLMTrainingConfig.data_prompt_context">
+<span class="sig-name descname"><span class="pre">data_prompt_context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.ChatLLMTrainingConfig.data_prompt_context" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

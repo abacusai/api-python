@@ -391,9 +391,9 @@ class LLMName(ApiEnum):
     LLAMA2_CHAT = 'LLAMA2_CHAT'
     PALM = 'PALM'
     PALM_TEXT = 'PALM_TEXT'
+    GEMINI_PRO = 'GEMINI_PRO'
     MIXTRAL_CHAT = 'MIXTRAL_CHAT'
-    MISTRAL = 'MISTRAL'
-    GEMINI = 'GEMINI'
+    MISTRAL_MEDIUM = 'MISTRAL_MEDIUM'
 
 
 class MonitorAlertType(ApiEnum):
@@ -411,6 +411,9 @@ class FeatureDriftType(ApiEnum):
     KS = 'ks'
     WS = 'ws'
     JS = 'js'
+    PSI = 'psi'
+    CHI_SQUARE = 'chi_square'
+    CSI = 'csi'
 
 
 class DataIntegrityViolationType(ApiEnum):

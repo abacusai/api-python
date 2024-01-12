@@ -144,6 +144,11 @@ class DocumentRetriever(AbstractApiClass):
         Args:
             timeout (int, optional): The waiting time given to the call to finish, if it doesn't finish by the allocated time, the call is said to be timed out. Default value given is 3600 seconds.
         """
+        # For the first time this is called, e.g. called after createDocumentRetriever, it needs to do indexing.
+        # In this case, get_status will not return STOPPED but deployment could be in STOPPED state, due to
+        # we set deployment to be off by default for some cases.
+        # So wait for indexing is done and then call restart.
+        self.client._poll(self, {'PENDING', 'INDEXING'}, timeout=timeout / 2)
         if self.get_status() == 'STOPPED':
             self.client.restart_document_retriever(self.document_retriever_id)
         version = self.describe().latest_document_retriever_version

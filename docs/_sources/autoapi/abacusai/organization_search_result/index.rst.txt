@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: OrganizationSearchResult(client, score=None, featureGroup={}, featureGroupVersion={})
+.. py:class:: OrganizationSearchResult(client, score=None, featureGroupContext=None, featureGroup={}, featureGroupVersion={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -28,6 +28,8 @@ Classes
    :type client: ApiClient
    :param score: The relevance score of the search result.
    :type score: float
+   :param featureGroupContext: The rendered context for the feature group that can be used in prompts
+   :type featureGroupContext: str
    :param featureGroup: The feature group object retrieved through search.
    :type featureGroup: FeatureGroup
    :param featureGroupVersion: The feature group version object retrieved through search.

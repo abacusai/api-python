@@ -617,7 +617,7 @@ Classes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, return_detected_images = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -627,8 +627,14 @@ Classes
       :type deployment_id: str
       :param document: Input document which can be an image, pdf, or word document (Some formats might not be supported yet)
       :type document: io.TextIOBase
+      :param adjust_doc_orientation: (Optional) whether to detect the document page orientation and rotate it if needed.
+      :type adjust_doc_orientation: bool
       :param return_detected_images: whether the detected images should be saved in docstore or not (if true, adds a docstore id to the response (may not be available for some algorithms))
       :type return_detected_images: bool
+      :param save_predicted_pdf: (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
+      :type save_predicted_pdf: bool
+      :param save_extracted_features: (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False.
+      :type save_extracted_features: bool
 
 
    .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)

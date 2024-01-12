@@ -1242,6 +1242,9 @@ Classes
    :type response_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
+   :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
+   :param data_prompt_context: Prompt context for the data feature group ids.
+   :type data_prompt_context: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -1280,6 +1283,16 @@ Classes
 
    .. py:attribute:: max_search_results
       :type: int
+
+      
+
+   .. py:attribute:: data_feature_group_ids
+      :type: List[str]
+
+      
+
+   .. py:attribute:: data_prompt_context
+      :type: str
 
       
 

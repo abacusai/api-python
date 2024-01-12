@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: EmbeddingFeatureDriftDistribution(client, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, averageDrift={})
+.. py:class:: EmbeddingFeatureDriftDistribution(client, distance=None, jsDistance=None, wsDistance=None, ksStatistic=None, psi=None, csi=None, chiSquare=None, averageDrift={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,6 +34,12 @@ Classes
    :type wsDistance: list
    :param ksStatistic: Histogram data of Kolmogorov-Smirnov statistic computed between the training distribution and the range of values in the specified window.
    :type ksStatistic: list
+   :param psi: Histogram data of Population stability index computed between the training distribution and the range of values in the specified window.
+   :type psi: list
+   :param csi: Histogram data of Characteristic Stability Index computed between the training distribution and the range of values in the specified window.
+   :type csi: list
+   :param chiSquare: Histogram data of Chi-square statistic computed between the training distribution and the range of values in the specified window.
+   :type chiSquare: list
    :param averageDrift: Average drift embedding for each type of drift
    :type averageDrift: DriftTypesValue
 

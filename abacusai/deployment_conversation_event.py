@@ -16,10 +16,12 @@ class DeploymentConversationEvent(AbstractApiClass):
             searchResults (dict): The search results for the message.
             isUseful (bool): Whether this message was marked as useful or not
             feedback (str): The feedback provided for the message
+            feedbackType (str): The type of feedback provided for the message
             docInfos (list): A list of information on the documents associated with the message
+            keywordArguments (dict): User message only. A dictionary of keyword arguments used to generate response.
     """
 
-    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, docInfos=None):
+    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None):
         super().__init__(client, None)
         self.role = role
         self.text = text
@@ -30,11 +32,13 @@ class DeploymentConversationEvent(AbstractApiClass):
         self.search_results = searchResults
         self.is_useful = isUseful
         self.feedback = feedback
+        self.feedback_type = feedbackType
         self.doc_infos = docInfos
+        self.keyword_arguments = keywordArguments
 
     def __repr__(self):
-        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(self.regenerate_attempt), f'model_version': repr(
-            self.model_version), f'search_results': repr(self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'doc_infos': repr(self.doc_infos)}
+        repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(self.regenerate_attempt), f'model_version': repr(self.model_version), f'search_results': repr(
+            self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'feedback_type': repr(self.feedback_type), f'doc_infos': repr(self.doc_infos), f'keyword_arguments': repr(self.keyword_arguments)}
         class_name = "DeploymentConversationEvent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -47,6 +51,6 @@ class DeploymentConversationEvent(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'message_index': self.message_index, 'regenerate_attempt': self.regenerate_attempt,
-                'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback, 'doc_infos': self.doc_infos}
+        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'message_index': self.message_index, 'regenerate_attempt': self.regenerate_attempt, 'model_version': self.model_version,
+                'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback, 'feedback_type': self.feedback_type, 'doc_infos': self.doc_infos, 'keyword_arguments': self.keyword_arguments}
         return {key: value for key, value in resp.items() if value is not None}

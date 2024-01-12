@@ -1,0 +1,53 @@
+:py:mod:`abacusai.monitor_drift_and_distributions`
+==================================================
+
+.. py:module:: abacusai.monitor_drift_and_distributions
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.monitor_drift_and_distributions.MonitorDriftAndDistributions
+
+
+
+
+.. py:class:: MonitorDriftAndDistributions(client, featureDrifts=None, featureDistributions=None, nestedDrifts=None, forecastingMonitorSummary={}, embeddingsDistribution={})
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   Summary of important model monitoring statistics for features available in a model monitoring instance
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param featureDrifts: A list of dicts of eligible feature names and corresponding overall feature drift measures.
+   :type featureDrifts: list[dict]
+   :param featureDistributions: A list of dicts of feature names and corresponding feature distributions.
+   :type featureDistributions: list[dict]
+   :param nestedDrifts: A list of dicts of nested feature names and corresponding overall feature drift measures.
+   :type nestedDrifts: list[dict]
+   :param forecastingMonitorSummary: Summary of important model monitoring statistics for features available in a model monitoring instance
+   :type forecastingMonitorSummary: ForecastingMonitorSummary
+   :param embeddingsDistribution: Summary of important model monitoring statistics for features available in a model monitoring instance
+   :type embeddingsDistribution: EmbeddingFeatureDriftDistribution
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+
