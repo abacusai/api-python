@@ -12,6 +12,7 @@ Submodules
 
    abstract/index.rst
    ai_agents/index.rst
+   ai_chat/index.rst
    batch_prediction/index.rst
    blob_input/index.rst
    dataset/index.rst
@@ -37,6 +38,8 @@ Classes
 
    abacusai.api_class.ApiClass
    abacusai.api_class.FieldDescriptor
+   abacusai.api_class.ApiClass
+   abacusai.api_class.HotkeyPrompt
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.BatchPredictionArgs
@@ -147,6 +150,7 @@ Classes
    abacusai.api_class.ClusteringTrainingConfig
    abacusai.api_class.ClusteringTimeseriesTrainingConfig
    abacusai.api_class.EventAnomalyTrainingConfig
+   abacusai.api_class.TimeseriesAnomalyTrainingConfig
    abacusai.api_class.CumulativeForecastingTrainingConfig
    abacusai.api_class.AnomalyDetectionTrainingConfig
    abacusai.api_class.ThemeAnalysisTrainingConfig
@@ -172,6 +176,7 @@ Classes
    abacusai.api_class.AlertActionConfig
    abacusai.api_class.EmailActionConfig
    abacusai.api_class._AlertActionConfigFactory
+   abacusai.api_class.MonitorThresholdConfig
    abacusai.api_class.ApiClass
    abacusai.api_class.FeatureMappingConfig
    abacusai.api_class.ProjectFeatureGroupTypeMappingsConfig
@@ -281,6 +286,89 @@ Classes
 
    .. py:attribute:: type
       :type: abacusai.api_class.enums.FieldDescriptorType
+
+      
+
+
+.. py:class:: ApiClass
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _upper_snake_case_keys
+      :type: bool
+
+      
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+   .. py:method:: __str__()
+
+      Return str(self).
+
+
+   .. py:method:: _repr_html_()
+
+
+   .. py:method:: __getitem__(item)
+
+
+   .. py:method:: __setitem__(item, value)
+
+
+   .. py:method:: _unset_item(item)
+
+
+   .. py:method:: get(item, default = None)
+
+
+   .. py:method:: pop(item, default = NotImplemented)
+
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+   .. py:method:: from_dict(input_dict)
+      :classmethod:
+
+
+
+.. py:class:: HotkeyPrompt
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   A config class for a Data Science Co-Pilot Hotkey
+
+   :param prompt: The prompt to send to Data Science Co-Pilot
+   :type prompt: str
+   :param title: A short, descriptive title for the prompt. If not provided, one will be automatically generated.
+   :type title: str
+
+   .. py:attribute:: prompt
+      :type: str
+
+      
+
+   .. py:attribute:: title
+      :type: str
 
       
 
@@ -825,7 +913,7 @@ Classes
       
 
    .. py:attribute:: config_class_key
-      :value: 'problemType'
+      :value: 'problem_type'
 
       
 
@@ -1499,7 +1587,7 @@ Classes
       
 
    .. py:attribute:: config_class_key
-      :value: 'applicationConnectorType'
+      :value: 'application_connector_type'
 
       
 
@@ -1812,6 +1900,11 @@ Classes
 
    .. py:attribute:: THEME_ANALYSIS
       :value: 'theme_analysis'
+
+      
+
+   .. py:attribute:: TS_ANOMALY
+      :value: 'ts_anomaly'
 
       
 
@@ -3723,6 +3816,11 @@ Classes
 
    An abstract class for the sampling config of a feature group
 
+   .. py:attribute:: sampling_method
+      :type: abacusai.api_class.enums.SamplingMethodType
+
+      
+
    .. py:method:: _get_builder()
       :classmethod:
 
@@ -3755,10 +3853,8 @@ Classes
 
       
 
-   .. py:attribute:: sampling_method
-      :type: abacusai.api_class.enums.SamplingMethodType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: PercentSamplingConfig
@@ -3785,10 +3881,8 @@ Classes
 
       
 
-   .. py:attribute:: sampling_method
-      :type: abacusai.api_class.enums.SamplingMethodType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: _SamplingConfigFactory
@@ -3804,6 +3898,10 @@ Classes
 
       
 
+   .. py:attribute:: config_abstract_class
+
+      
+
    .. py:attribute:: config_class_map
 
       
@@ -3815,6 +3913,11 @@ Classes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
+
+   .. py:attribute:: merge_mode
+      :type: abacusai.api_class.enums.MergeMode
+
+      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -3841,10 +3944,8 @@ Classes
 
       
 
-   .. py:attribute:: merge_mode
-      :type: abacusai.api_class.enums.MergeMode
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: TimeWindowMergeConfig
@@ -3871,10 +3972,8 @@ Classes
 
       
 
-   .. py:attribute:: merge_mode
-      :type: abacusai.api_class.enums.MergeMode
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: _MergeConfigFactory
@@ -3887,6 +3986,10 @@ Classes
 
    .. py:attribute:: config_class_key
       :value: 'merge_mode'
+
+      
+
+   .. py:attribute:: config_abstract_class
 
       
 
@@ -5185,6 +5288,8 @@ Classes
    :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
    :param data_prompt_context: Prompt context for the data feature group ids.
    :type data_prompt_context: str
+   :param hide_generated_sql: When running data queries, hides the generated SQL in the response and will just return the table.
+   :type hide_generated_sql: bool
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5233,6 +5338,11 @@ Classes
 
    .. py:attribute:: data_prompt_context
       :type: str
+
+      
+
+   .. py:attribute:: hide_generated_sql
+      :type: bool
 
       
 
@@ -5483,6 +5593,38 @@ Classes
 
    .. py:attribute:: anomaly_fraction
       :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TimeseriesAnomalyTrainingConfig
+
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the TS_ANOMALY problem type
+
+   Args:
+   type_of_split: Type of data splitting into train/test.
+   test_start (str): Limit training data to dates before the given test start.
+   test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+
+
+   .. py:attribute:: type_of_split
+      :type: str
+
+      
+
+   .. py:attribute:: test_start
+      :type: str
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
 
       
 
@@ -6327,6 +6469,41 @@ Classes
       
 
 
+.. py:class:: MonitorThresholdConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Monitor Threshold Config for Monitor Alerts
+
+   :param drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+   :type drift_type: FeatureDriftType
+   :param threshold_config: Thresholds for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold_config: ThresholdConfigs
+
+   .. py:attribute:: drift_type
+      :type: abacusai.api_class.enums.FeatureDriftType
+
+      
+
+   .. py:attribute:: at_risk_threshold
+      :type: float
+
+      
+
+   .. py:attribute:: severely_drifting_threshold
+      :type: float
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
 .. py:class:: ApiClass
 
 
@@ -6677,11 +6854,6 @@ Classes
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: connector_type
-      :type: abacusai.api_class.enums.ConnectorType
-
-      
-
    .. py:attribute:: location
       :type: str
 
@@ -6691,6 +6863,9 @@ Classes
       :type: str
 
       
+
+   .. py:method:: __post_init__()
+
 
    .. py:method:: to_dict()
 
@@ -6743,6 +6918,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -6764,7 +6942,7 @@ Classes
       
 
    .. py:attribute:: config_class_key
-      :value: 'connectorType'
+      :value: 'connector_type'
 
       
 

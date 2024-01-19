@@ -9,7 +9,7 @@ class BatchPredictionArgs(ApiClass):
     _support_kwargs: bool = dataclasses.field(default=True, repr=False, init=False)
 
     kwargs: dict = dataclasses.field(default_factory=dict)
-    problem_type: enums.ProblemType = dataclasses.field(default=None)
+    problem_type: enums.ProblemType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(cls):
@@ -223,7 +223,7 @@ class ChatLLMBatchPredictionArgs(BatchPredictionArgs):
 @dataclasses.dataclass
 class _BatchPredictionArgsFactory(_ApiClassFactory):
     config_abstract_class = BatchPredictionArgs
-    config_class_key = 'problemType'
+    config_class_key = 'problem_type'
     config_class_map = {
         enums.ProblemType.ANOMALY_DETECTION: AnomalyDetectionBatchPredictionArgs,
         enums.ProblemType.ANOMALY_OUTLIERS: AnomalyOutliersBatchPredictionArgs,

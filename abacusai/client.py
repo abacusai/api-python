@@ -13,6 +13,7 @@ import time
 import warnings
 from functools import lru_cache
 from typing import Callable, Dict, List, Union
+from uuid import uuid4
 
 import pandas as pd
 import requests
@@ -81,6 +82,7 @@ from .eda_forecasting_analysis import EdaForecastingAnalysis
 from .eda_version import EdaVersion
 from .execute_feature_group_operation import ExecuteFeatureGroupOperation
 from .external_application import ExternalApplication
+from .external_invite_success import ExternalInviteSuccess
 from .extracted_fields import ExtractedFields
 from .feature import Feature
 from .feature_distribution import FeatureDistribution
@@ -227,9 +229,20 @@ _cached_endpoints = {}
 
 class Blob:
 
-    def __init__(self, contents: bytes, mime_type: str, filename: str = None):
+    def __init__(self, contents: bytes, mime_type: str = None, filename: str = None):
+        if contents is None or not isinstance(contents, bytes):
+            raise Exception(
+                'Contents are required and should be of bytes type')
         self.filename = filename
         self.contents = contents
+        if mime_type is None:
+            try:
+                import magic
+                mime_type = magic.Magic(mime=True).from_buffer(contents)
+            except Exception:
+                pass
+        if mime_type is not None and not isinstance(mime_type, str):
+            raise Exception('mime_type should be of string type')
         self.mime_type = mime_type
 
 
@@ -561,7 +574,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.0.5'
+    client_version = '1.1.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -653,7 +666,7 @@ class BaseApiClient:
                 obj[key] = val.value
             elif callable(val):
                 try:
-                    obj[key] = inspect.getsource(val)
+                    obj[key] = get_clean_function_source_code(val)
                 except OSError:
                     raise OSError(
                         f'Could not get source for function {key}. Please pass a stringified version of this function when the function is defined in a shell environment.')
@@ -1919,18 +1932,6 @@ class ReadOnlyClient(BaseApiClient):
             list[MonitorAlertVersion]: A list of monitor alert versions."""
         return self._call_api('listMonitorAlertVersionsForMonitorVersion', 'GET', query_params={'modelMonitorVersion': model_monitor_version}, parse_type=MonitorAlertVersion)
 
-    def get_model_monitoring_logs(self, model_monitor_version: str, stdout: bool = False, stderr: bool = False) -> FunctionLogs:
-        """Returns monitoring logs for the model.
-
-        Args:
-            model_monitor_version (str): The unique version ID of the model monitor version
-            stdout (bool): Set True to get info logs
-            stderr (bool): Set True to get error logs
-
-        Returns:
-            FunctionLogs: A function logs."""
-        return self._call_api('getModelMonitoringLogs', 'GET', query_params={'modelMonitorVersion': model_monitor_version, 'stdout': stdout, 'stderr': stderr}, parse_type=FunctionLogs)
-
     def get_drift_for_feature(self, model_monitor_version: str, feature_name: str, nested_feature_name: str = None) -> FeatureDistribution:
         """Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
@@ -2535,6 +2536,14 @@ class ReadOnlyClient(BaseApiClient):
             list[ExternalApplication]: List of External Applications."""
         return self._call_api('listExternalApplications', 'GET', query_params={}, parse_type=ExternalApplication)
 
+    def download_agent_attachment(self, deployment_id: str, attachment_id: str) -> io.BytesIO:
+        """Return an agent attachment.
+
+        Args:
+            deployment_id (str): The deployment ID.
+            attachment_id (str): The attachment ID."""
+        return self._proxy_request('downloadAgentAttachment', 'GET', query_params={'deploymentId': deployment_id, 'attachmentId': attachment_id}, is_sync=True, streamable_response=True)
+
     def describe_agent(self, agent_id: str) -> Agent:
         """Retrieves a full description of the specified model.
 
@@ -2626,24 +2635,24 @@ class ReadOnlyClient(BaseApiClient):
 def get_source_code_info(train_function: callable, predict_function: callable = None, predict_many_function: callable = None, initialize_function: callable = None, common_functions: list = None):
     if not train_function:
         return None, None, None, None, None
-    function_source_code = inspect.getsource(train_function)
+    function_source_code = get_clean_function_source_code(train_function)
     predict_function_name, predict_many_function_name, initialize_function_name = None, None, None
     if predict_function is not None:
         predict_function_name = predict_function.__name__
-        function_source_code = function_source_code + \
-            '\n\n' + inspect.getsource(predict_function)
+        function_source_code = function_source_code + '\n\n' + \
+            get_clean_function_source_code(predict_function)
     if predict_many_function is not None:
         predict_many_function_name = predict_many_function.__name__
-        function_source_code = function_source_code + \
-            '\n\n' + inspect.getsource(predict_many_function)
+        function_source_code = function_source_code + '\n\n' + \
+            get_clean_function_source_code(predict_many_function)
     if initialize_function is not None:
         initialize_function_name = initialize_function.__name__
-        function_source_code = function_source_code + \
-            '\n\n' + inspect.getsource(initialize_function)
+        function_source_code = function_source_code + '\n\n' + \
+            get_clean_function_source_code(initialize_function)
     if common_functions:
         for func in common_functions:
             function_source_code = function_source_code + \
-                '\n\n' + inspect.getsource(func)
+                '\n\n' + get_clean_function_source_code(func)
     return function_source_code, train_function.__name__, predict_function_name, predict_many_function_name, initialize_function_name
 
 
@@ -2670,6 +2679,8 @@ def get_module_code_from_notebook(file_path):
 def include_modules(source_code, included_modules):
     if not source_code or not included_modules:
         return source_code
+    if not isinstance(included_modules, list) or not all([isinstance(m, str) for m in included_modules or []]):
+        raise ValueError('Included modules must be of type list of strings')
     return '\n'.join([f'from {m} import *' for m in included_modules]) + '\n\n' + source_code
 
 
@@ -2738,7 +2749,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             table_name (str): The table name to assign to the feature group created by this call
-            df (pandas.DataFrame): The dataframe to upload
+            df (pandas.DataFrame): The dataframe to upload and use as the data source for the feature group
             clean_column_names (bool): If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
         """
         df = self._validate_pandas_df(df, clean_column_names)
@@ -2836,11 +2847,12 @@ class ApiClient(ReadOnlyClient):
         initialize_function_name = None
         predict_function_name = None
         if predict_function:
-            function_source_code = inspect.getsource(predict_function)
+            function_source_code = get_clean_function_source_code(
+                predict_function)
             predict_function_name = predict_function.__name__
         if initialize_function is not None:
             initialize_function_name = initialize_function.__name__
-            function_source_code = inspect.getsource(
+            function_source_code = get_clean_function_source_code(
                 initialize_function) + '\n\n' + function_source_code
         if function_source_code:
             function_source_code = include_modules(
@@ -2867,11 +2879,12 @@ class ApiClient(ReadOnlyClient):
         initialize_function_name = None
         predict_function_name = None
         if predict_function:
-            function_source_code = inspect.getsource(predict_function)
+            function_source_code = get_clean_function_source_code(
+                predict_function)
             predict_function_name = predict_function.__name__
         if initialize_function is not None:
             initialize_function_name = initialize_function.__name__
-            function_source_code = inspect.getsource(
+            function_source_code = get_clean_function_source_code(
                 initialize_function) + '\n\n' + function_source_code
         if function_source_code:
             function_source_code = include_modules(
@@ -2953,7 +2966,7 @@ class ApiClient(ReadOnlyClient):
             memory (int): Memory (in GB) for the step function.
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
-        source_code = inspect.getsource(function)
+        source_code = get_clean_function_source_code(function)
 
         source_code = include_modules(source_code, included_modules)
 
@@ -2992,7 +3005,7 @@ class ApiClient(ReadOnlyClient):
             memory (int): Memory (in GB) for the step function.
             included_modules (list): A list of user-created modules that will be included, which is equivalent to 'from module import *'
         """
-        source_code = inspect.getsource(function)
+        source_code = get_clean_function_source_code(function)
 
         source_code = include_modules(source_code, included_modules)
 
@@ -3075,7 +3088,7 @@ class ApiClient(ReadOnlyClient):
         Returns:
             PythonFunction: The python_function object.
         """
-        source_code = inspect.getsource(function)
+        source_code = get_clean_function_source_code(function)
         source_code = include_modules(source_code, included_modules)
         return self.update_python_function(name=name, source_code=source_code, function_name=function.__name__, function_variable_mappings=function_variable_mappings, package_requirements=package_requirements)
 
@@ -3412,7 +3425,7 @@ class ApiClient(ReadOnlyClient):
             package_requirements (List): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
         """
-        function_source_code = inspect.getsource(agent_function)
+        function_source_code = get_clean_function_source_code(agent_function)
         agent_function_name = agent_function.__name__
         return self.update_agent(model_id=model_id, function_source_code=function_source_code, agent_function_name=agent_function_name, memory=memory, package_requirements=package_requirements, enable_binary_input=enable_binary_input)
 
@@ -3633,13 +3646,16 @@ class ApiClient(ReadOnlyClient):
         else:
             raise Exception('Either message or llm_args must be provided.')
         headers = {'APIKEY': self.api_key}
-        response = self._request(
-            api_endpont, method='POST', body=body, headers=headers)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            raise Exception(
-                f'Error calling AI Agent app message endpoint. Status code: {response.status_code}. Response: {response.text}')
+        body['connectionId'] = uuid4().hex
+        for _ in range(3):
+            response = self._request(
+                api_endpont, method='POST', body=body, headers=headers)
+            if response.status_code == 200:
+                return response.json()
+            elif response.status_code in (502, 503, 504):
+                continue
+        raise Exception(
+            f'Error calling AI Agent app message endpoint. Status code: {response.status_code}. Response: {response.text}')
 
     def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 600):
         start_time = time.time()
@@ -3811,14 +3827,15 @@ class ApiClient(ReadOnlyClient):
             email (str): The email address of the user to remove from the organization."""
         return self._call_api('removeUserFromOrganization', 'DELETE', query_params={'email': email})
 
-    def send_email(self, email: str, subject: str, body: str):
-        """Send an email to the specified email address with provided subject and body.
+    def send_email(self, email: str, subject: str, body: str, is_html: bool = False):
+        """Send an email to the specified email address with provided subject and contents.
 
         Args:
             email (str): The email address to send the email to.
             subject (str): The subject of the email.
-            body (str): The body of the email."""
-        return self._call_api('sendEmail', 'POST', query_params={}, body={'email': email, 'subject': subject, 'body': body})
+            body (str): The body of the email.
+            is_html (bool): Whether the body is html or not."""
+        return self._call_api('sendEmail', 'POST', query_params={}, body={'email': email, 'subject': subject, 'body': body, 'isHtml': is_html})
 
     def create_deployment_webhook(self, deployment_id: str, endpoint: str, webhook_event_type: str, payload_template: dict = None) -> Webhook:
         """Create a webhook attached to a given deployment ID.
@@ -3855,7 +3872,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION_NEW,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project."""
@@ -4751,7 +4768,7 @@ Creates a new feature group defined as the union of other feature group versions
         return self._call_api('deleteFeatureGroup', 'DELETE', query_params={'featureGroupId': feature_group_id})
 
     def create_feature_group_version(self, feature_group_id: str, variable_bindings: dict = None) -> FeatureGroupVersion:
-        """Creates a snapshot for a specified feature group.
+        """Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.
 
         Args:
             feature_group_id (str): Unique string identifier associated with the feature group.
@@ -6090,6 +6107,21 @@ Creates a new feature group defined as the union of other feature group versions
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
+
+    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
+        """Returns a list of anomalous timestamps from the training dataset.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            start_timestamp (str): timestamp from which anomalies have to be detected in the training data
+            end_timestamp (str): timestamp to which anomalies have to be detected in the training data
+            query_data (dict): additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records
+            get_all_item_data (bool): set this to true if anomaly detection has to be performed on all the data related to input ids
+            series_ids (list): list of series ids on which the anomaly detection has to be performed"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getTimeseriesAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'queryData': query_data, 'getAllItemData': get_all_item_data, 'seriesIds': series_ids}, server_override=prediction_url)
 
     def is_anomaly(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
         """Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
@@ -7546,16 +7578,19 @@ Creates a new feature group defined as the union of other feature group versions
             user_group_id (str): The ID of the App User Group."""
         return self._call_api('deleteAppUserGroup', 'DELETE', query_params={'userGroupId': user_group_id})
 
-    def invite_user_to_app_user_group(self, email: str, user_group_id: str):
-        """Invite a user to an App User Group. This method will send the specified email address an invitation link to join a specific user group.
+    def invite_users_to_app_user_group(self, user_group_id: str, emails: list) -> ExternalInviteSuccess:
+        """Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.
 
         This will allow them to use any chatbots that this user group has access to.
 
 
         Args:
-            email (str): The email address to invite to your user group.
-            user_group_id (str): The ID of the App User Group to invite the user to."""
-        return self._call_api('inviteUserToAppUserGroup', 'POST', query_params={}, body={'email': email, 'userGroupId': user_group_id})
+            user_group_id (str): The ID of the App User Group to invite the user to.
+            emails (list): The email addresses to invite to your user group.
+
+        Returns:
+            ExternalInviteSuccess: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not."""
+        return self._call_api('inviteUsersToAppUserGroup', 'POST', query_params={}, body={'userGroupId': user_group_id, 'emails': emails}, parse_type=ExternalInviteSuccess)
 
     def add_users_to_app_user_group(self, user_group_id: str, user_emails: list):
         """Adds users to a App User Group.

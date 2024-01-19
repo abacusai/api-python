@@ -156,12 +156,12 @@ class _ApiClassFactory(ABC):
     @classmethod
     def from_dict(cls, config: dict) -> ApiClass:
         support_kwargs = cls.config_abstract_class and cls.config_abstract_class._support_kwargs
-        config_class_key = cls.config_class_key if (cls.config_abstract_class and not cls.config_abstract_class._upper_snake_case_keys) else camel_case(cls.config_class_key)
+        not_upper_snake_case_keys = cls.config_abstract_class and not cls.config_abstract_class._upper_snake_case_keys
+        config_class_key = cls.config_class_key if (not_upper_snake_case_keys) else camel_case(cls.config_class_key)
+        if not_upper_snake_case_keys and config_class_key not in config and camel_case(config_class_key) in config:
+            config_class_key = camel_case(config_class_key)
         if not support_kwargs and config_class_key not in (config or {}):
-            if camel_case(config_class_key) in (config or {}):
-                config_class_key = camel_case(config_class_key)
-            else:
-                raise KeyError(f'Could not find {config_class_key} in {config}')
+            raise KeyError(f'Could not find {config_class_key} in {config}')
         config_class_type = config.get(config_class_key, None)
         if isinstance(config_class_type, str):
             config_class_type = config_class_type.upper()
@@ -186,4 +186,5 @@ class _ApiClassFactory(ABC):
             raise ValueError(f'Invalid type {config_class_type}')
         if not config_class._upper_snake_case_keys:
             config = {snake_case(k): v for k, v in config.items()}
+        config.pop(snake_case(config_class_key), None)
         return config_class(**config)

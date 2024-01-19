@@ -7,7 +7,7 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class AlertConditionConfig(ApiClass):
-    alert_type: enums.MonitorAlertType = dataclasses.field(default=None, init=True)
+    alert_type: enums.MonitorAlertType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(cls):
@@ -149,7 +149,7 @@ class _AlertConditionConfigFactory(_ApiClassFactory):
 
 @dataclasses.dataclass
 class AlertActionConfig(ApiClass):
-    action_type: enums.AlertActionType = dataclasses.field(default=None, repr=False, init=True)
+    action_type: enums.AlertActionType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(cls):
@@ -179,3 +179,24 @@ class _AlertActionConfigFactory(_ApiClassFactory):
     config_class_map = {
         enums.AlertActionType.EMAIL: EmailActionConfig,
     }
+
+
+@dataclasses.dataclass
+class MonitorThresholdConfig(ApiClass):
+    """
+    Monitor Threshold Config for Monitor Alerts
+
+    Args:
+        drift_type (FeatureDriftType): Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+        threshold_config (ThresholdConfigs): Thresholds for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+    """
+    drift_type: enums.FeatureDriftType = dataclasses.field(default=None)
+    at_risk_threshold: float = dataclasses.field(default=None)
+    severely_drifting_threshold: float = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {
+            'drift_type': self.drift_type,
+            'at_risk_threshold': self.at_risk_threshold,
+            'severely_drifting_threshold': self.severely_drifting_threshold,
+        }

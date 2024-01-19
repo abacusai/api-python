@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, externalSessionId=None, regenerateAttempt=None, history={})
+.. py:class:: DeploymentConversation(client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, history={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,6 +34,8 @@ Classes
    :type deploymentId: str
    :param createdAt: The timestamp at which the deployment conversation was created.
    :type createdAt: str
+   :param lastEventCreatedAt: The timestamp at which the most recent corresponding deployment conversation event was created at.
+   :type lastEventCreatedAt: str
    :param externalSessionId: The external session id associated with the deployment conversation.
    :type externalSessionId: str
    :param regenerateAttempt: The sequence number of regeneration. Not regenerated if 0.

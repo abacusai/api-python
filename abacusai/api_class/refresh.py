@@ -7,7 +7,7 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class FeatureGroupExportConfig(ApiClass):
-    connector_type: enums.ConnectorType = dataclasses.field(default=None)
+    connector_type: enums.ConnectorType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(cls):
@@ -16,9 +16,11 @@ class FeatureGroupExportConfig(ApiClass):
 
 @dataclasses.dataclass
 class FileConnectorExportConfig(FeatureGroupExportConfig):
-    connector_type: enums.ConnectorType = dataclasses.field(default=enums.ConnectorType.FILE, repr=False)
     location: str = dataclasses.field(default=None)
     export_file_format: str = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.connector_type = enums.ConnectorType.FILE
 
     def to_dict(self):
         return {
@@ -38,6 +40,9 @@ class DatabaseConnectorExportConfig(FeatureGroupExportConfig):
     additional_id_columns: List[str] = dataclasses.field(default=None)
     data_columns: Dict[str, str] = dataclasses.field(default=None)
 
+    def __post_init__(self):
+        self.connector_type = enums.ConnectorType.DATABASE
+
     def to_dict(self):
         return {
             'connector_type': self.connector_type,
@@ -53,7 +58,7 @@ class DatabaseConnectorExportConfig(FeatureGroupExportConfig):
 @dataclasses.dataclass
 class _FeatureGroupExportConfigFactory(_ApiClassFactory):
     config_abstract_class = FeatureGroupExportConfig
-    config_class_key = 'connectorType'
+    config_class_key = 'connector_type'
     config_class_map = {
         enums.ConnectorType.FILE: FileConnectorExportConfig,
         enums.ConnectorType.DATABASE: DatabaseConnectorExportConfig,

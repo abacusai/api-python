@@ -24,6 +24,7 @@ Classes
    abacusai.api_class.monitor_alert.AlertActionConfig
    abacusai.api_class.monitor_alert.EmailActionConfig
    abacusai.api_class.monitor_alert._AlertActionConfigFactory
+   abacusai.api_class.monitor_alert.MonitorThresholdConfig
 
 
 
@@ -339,5 +340,40 @@ Classes
    .. py:attribute:: config_class_map
 
       
+
+
+.. py:class:: MonitorThresholdConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Monitor Threshold Config for Monitor Alerts
+
+   :param drift_type: Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.
+   :type drift_type: FeatureDriftType
+   :param threshold_config: Thresholds for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.
+   :type threshold_config: ThresholdConfigs
+
+   .. py:attribute:: drift_type
+      :type: abacusai.api_class.enums.FeatureDriftType
+
+      
+
+   .. py:attribute:: at_risk_threshold
+      :type: float
+
+      
+
+   .. py:attribute:: severely_drifting_threshold
+      :type: float
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
 
 

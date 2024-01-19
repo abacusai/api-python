@@ -46,11 +46,6 @@ Classes
    Helper class that provides a standard way to create an ABC using
    inheritance.
 
-   .. py:attribute:: connector_type
-      :type: abacusai.api_class.enums.ConnectorType
-
-      
-
    .. py:attribute:: location
       :type: str
 
@@ -60,6 +55,9 @@ Classes
       :type: str
 
       
+
+   .. py:method:: __post_init__()
+
 
    .. py:method:: to_dict()
 
@@ -112,6 +110,9 @@ Classes
 
       
 
+   .. py:method:: __post_init__()
+
+
    .. py:method:: to_dict()
 
       Standardizes converting an ApiClass to dictionary.
@@ -133,7 +134,7 @@ Classes
       
 
    .. py:attribute:: config_class_key
-      :value: 'connectorType'
+      :value: 'connector_type'
 
       
 

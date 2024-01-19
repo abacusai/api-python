@@ -76,7 +76,7 @@ Attributes
 
    
 
-.. py:class:: Blob(contents, mime_type, filename = None)
+.. py:class:: Blob(contents, mime_type = None, filename = None)
 
 
 
@@ -487,7 +487,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.0.5'
+      :value: '1.1.0'
 
       
 
@@ -1799,21 +1799,6 @@ Attributes
       :rtype: list[MonitorAlertVersion]
 
 
-   .. py:method:: get_model_monitoring_logs(model_monitor_version, stdout = False, stderr = False)
-
-      Returns monitoring logs for the model.
-
-      :param model_monitor_version: The unique version ID of the model monitor version
-      :type model_monitor_version: str
-      :param stdout: Set True to get info logs
-      :type stdout: bool
-      :param stderr: Set True to get error logs
-      :type stderr: bool
-
-      :returns: A function logs.
-      :rtype: FunctionLogs
-
-
    .. py:method:: get_drift_for_feature(model_monitor_version, feature_name, nested_feature_name = None)
 
       Gets the feature drift associated with a single feature in an output feature group from a prediction.
@@ -2514,6 +2499,16 @@ Attributes
       :rtype: list[ExternalApplication]
 
 
+   .. py:method:: download_agent_attachment(deployment_id, attachment_id)
+
+      Return an agent attachment.
+
+      :param deployment_id: The deployment ID.
+      :type deployment_id: str
+      :param attachment_id: The attachment ID.
+      :type attachment_id: str
+
+
    .. py:method:: describe_agent(agent_id)
 
       Retrieves a full description of the specified model.
@@ -2680,7 +2675,7 @@ Attributes
 
       :param table_name: The table name to assign to the feature group created by this call
       :type table_name: str
-      :param df: The dataframe to upload
+      :param df: The dataframe to upload and use as the data source for the feature group
       :type df: pandas.DataFrame
       :param clean_column_names: If true, the dataframe's column names will be automatically cleaned to be complaint with Abacus.AI's column requirements. Otherwise it will raise a ValueError.
       :type clean_column_names: bool
@@ -3532,9 +3527,9 @@ Attributes
       :type email: str
 
 
-   .. py:method:: send_email(email, subject, body)
+   .. py:method:: send_email(email, subject, body, is_html = False)
 
-      Send an email to the specified email address with provided subject and body.
+      Send an email to the specified email address with provided subject and contents.
 
       :param email: The email address to send the email to.
       :type email: str
@@ -3542,6 +3537,8 @@ Attributes
       :type subject: str
       :param body: The body of the email.
       :type body: str
+      :param is_html: Whether the body is html or not.
+      :type is_html: bool
 
 
    .. py:method:: create_deployment_webhook(deployment_id, endpoint, webhook_event_type, payload_template = None)
@@ -3589,7 +3586,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION_NEW,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -4759,7 +4756,7 @@ Attributes
 
    .. py:method:: create_feature_group_version(feature_group_id, variable_bindings = None)
 
-      Creates a snapshot for a specified feature group.
+      Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.
 
       :param feature_group_id: Unique string identifier associated with the feature group.
       :type feature_group_id: str
@@ -6520,6 +6517,26 @@ Attributes
       :type threshold: float
       :param histogram: If True, will return a histogram of the distribution of all points.
       :type histogram: bool
+
+
+   .. py:method:: get_timeseries_anomalies(deployment_token, deployment_id, start_timestamp = None, end_timestamp = None, query_data = None, get_all_item_data = False, series_ids = None)
+
+      Returns a list of anomalous timestamps from the training dataset.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param start_timestamp: timestamp from which anomalies have to be detected in the training data
+      :type start_timestamp: str
+      :param end_timestamp: timestamp to which anomalies have to be detected in the training data
+      :type end_timestamp: str
+      :param query_data: additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records
+      :type query_data: dict
+      :param get_all_item_data: set this to true if anomaly detection has to be performed on all the data related to input ids
+      :type get_all_item_data: bool
+      :param series_ids: list of series ids on which the anomaly detection has to be performed
+      :type series_ids: list
 
 
    .. py:method:: is_anomaly(deployment_token, deployment_id, query_data = None)
@@ -8363,17 +8380,20 @@ Attributes
       :type user_group_id: str
 
 
-   .. py:method:: invite_user_to_app_user_group(email, user_group_id)
+   .. py:method:: invite_users_to_app_user_group(user_group_id, emails)
 
-      Invite a user to an App User Group. This method will send the specified email address an invitation link to join a specific user group.
+      Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.
 
       This will allow them to use any chatbots that this user group has access to.
 
 
-      :param email: The email address to invite to your user group.
-      :type email: str
       :param user_group_id: The ID of the App User Group to invite the user to.
       :type user_group_id: str
+      :param emails: The email addresses to invite to your user group.
+      :type emails: list
+
+      :returns: The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.
+      :rtype: ExternalInviteSuccess
 
 
    .. py:method:: add_users_to_app_user_group(user_group_id, user_emails)

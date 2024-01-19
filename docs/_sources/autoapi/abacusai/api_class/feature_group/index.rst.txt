@@ -31,6 +31,11 @@ Classes
 
    An abstract class for the sampling config of a feature group
 
+   .. py:attribute:: sampling_method
+      :type: abacusai.api_class.enums.SamplingMethodType
+
+      
+
    .. py:method:: _get_builder()
       :classmethod:
 
@@ -63,10 +68,8 @@ Classes
 
       
 
-   .. py:attribute:: sampling_method
-      :type: abacusai.api_class.enums.SamplingMethodType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: PercentSamplingConfig
@@ -93,10 +96,8 @@ Classes
 
       
 
-   .. py:attribute:: sampling_method
-      :type: abacusai.api_class.enums.SamplingMethodType
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: _SamplingConfigFactory
@@ -112,6 +113,10 @@ Classes
 
       
 
+   .. py:attribute:: config_abstract_class
+
+      
+
    .. py:attribute:: config_class_map
 
       
@@ -123,6 +128,11 @@ Classes
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
    An abstract class for the merge config of a feature group
+
+   .. py:attribute:: merge_mode
+      :type: abacusai.api_class.enums.MergeMode
+
+      
 
    .. py:method:: _get_builder()
       :classmethod:
@@ -149,10 +159,8 @@ Classes
 
       
 
-   .. py:attribute:: merge_mode
-      :type: abacusai.api_class.enums.MergeMode
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: TimeWindowMergeConfig
@@ -179,10 +187,8 @@ Classes
 
       
 
-   .. py:attribute:: merge_mode
-      :type: abacusai.api_class.enums.MergeMode
+   .. py:method:: __post_init__()
 
-      
 
 
 .. py:class:: _MergeConfigFactory
@@ -195,6 +201,10 @@ Classes
 
    .. py:attribute:: config_class_key
       :value: 'merge_mode'
+
+      
+
+   .. py:attribute:: config_abstract_class
 
       
 

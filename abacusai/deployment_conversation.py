@@ -12,17 +12,19 @@ class DeploymentConversation(AbstractApiClass):
             name (str): The name of the deployment conversation.
             deploymentId (str): The deployment id associated with the deployment conversation.
             createdAt (str): The timestamp at which the deployment conversation was created.
+            lastEventCreatedAt (str): The timestamp at which the most recent corresponding deployment conversation event was created at.
             externalSessionId (str): The external session id associated with the deployment conversation.
             regenerateAttempt (int): The sequence number of regeneration. Not regenerated if 0.
             history (DeploymentConversationEvent): The history of the deployment conversation.
     """
 
-    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, externalSessionId=None, regenerateAttempt=None, history={}):
+    def __init__(self, client, deploymentConversationId=None, name=None, deploymentId=None, createdAt=None, lastEventCreatedAt=None, externalSessionId=None, regenerateAttempt=None, history={}):
         super().__init__(client, deploymentConversationId)
         self.deployment_conversation_id = deploymentConversationId
         self.name = name
         self.deployment_id = deploymentId
         self.created_at = createdAt
+        self.last_event_created_at = lastEventCreatedAt
         self.external_session_id = externalSessionId
         self.regenerate_attempt = regenerateAttempt
         self.history = client._build_class(
@@ -30,7 +32,7 @@ class DeploymentConversation(AbstractApiClass):
 
     def __repr__(self):
         repr_dict = {f'deployment_conversation_id': repr(self.deployment_conversation_id), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'created_at': repr(
-            self.created_at), f'external_session_id': repr(self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'history': repr(self.history)}
+            self.created_at), f'last_event_created_at': repr(self.last_event_created_at), f'external_session_id': repr(self.external_session_id), f'regenerate_attempt': repr(self.regenerate_attempt), f'history': repr(self.history)}
         class_name = "DeploymentConversation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -43,8 +45,8 @@ class DeploymentConversation(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at,
-                'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'history': self._get_attribute_as_dict(self.history)}
+        resp = {'deployment_conversation_id': self.deployment_conversation_id, 'name': self.name, 'deployment_id': self.deployment_id, 'created_at': self.created_at, 'last_event_created_at':
+                self.last_event_created_at, 'external_session_id': self.external_session_id, 'regenerate_attempt': self.regenerate_attempt, 'history': self._get_attribute_as_dict(self.history)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def get(self, external_session_id: str = None, deployment_id: str = None, deployment_token: str = None):

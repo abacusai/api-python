@@ -137,19 +137,6 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.list_monitor_alert_versions_for_monitor_version(self.model_monitor_version)
 
-    def get_model_monitoring_logs(self, stdout: bool = False, stderr: bool = False):
-        """
-        Returns monitoring logs for the model.
-
-        Args:
-            stdout (bool): Set True to get info logs
-            stderr (bool): Set True to get error logs
-
-        Returns:
-            FunctionLogs: A function logs.
-        """
-        return self.client.get_model_monitoring_logs(self.model_monitor_version, stdout, stderr)
-
     def get_drift_for_feature(self, feature_name: str, nested_feature_name: str = None):
         """
         Gets the feature drift associated with a single feature in an output feature group from a prediction.

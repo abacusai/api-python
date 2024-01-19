@@ -1,4 +1,5 @@
 from .ai_agents import *
+from .ai_chat import *
 from .batch_prediction import *
 from .blob_input import *
 from .dataset import *

@@ -48,6 +48,7 @@ class ProblemType(ApiEnum):
     OPTIMIZATION = 'optimization'
     PRETRAINED_MODELS = 'pretrained'
     THEME_ANALYSIS = 'theme_analysis'
+    TS_ANOMALY = 'ts_anomaly'
 
 
 class RegressionObjective(ApiEnum):

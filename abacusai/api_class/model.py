@@ -445,6 +445,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
         data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
         data_prompt_context (str): Prompt context for the data feature group ids.
+        hide_generated_sql (bool): When running data queries, hides the generated SQL in the response and will just return the table.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -456,6 +457,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     max_search_results: int = None
     data_feature_group_ids: List[str] = None
     data_prompt_context: str = None
+    hide_generated_sql: bool = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM
@@ -610,6 +612,25 @@ class EventAnomalyTrainingConfig(TrainingConfig):
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.EVENT_ANOMALY
+
+
+@dataclasses.dataclass
+class TimeseriesAnomalyTrainingConfig(TrainingConfig):
+    """
+    Training config for the TS_ANOMALY problem type
+
+    Args:
+    type_of_split: Type of data splitting into train/test.
+    test_start (str): Limit training data to dates before the given test start.
+    test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+
+    """
+    type_of_split: str = dataclasses.field(default=None)
+    test_start: str = dataclasses.field(default=None)
+    test_split: int = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.problem_type = enums.ProblemType.TS_ANOMALY
 
 
 @dataclasses.dataclass
@@ -776,7 +797,8 @@ class _TrainingConfigFactory(_ApiClassFactory):
         enums.ProblemType.SENTIMENT_DETECTION: SentimentDetectionTrainingConfig,
         enums.ProblemType.THEME_ANALYSIS: ThemeAnalysisTrainingConfig,
         enums.ProblemType.CUSTOM_ALGORITHM: CustomAlgorithmTrainingConfig,
-        enums.ProblemType.OPTIMIZATION: OptimizationTrainingConfig
+        enums.ProblemType.OPTIMIZATION: OptimizationTrainingConfig,
+        enums.ProblemType.TS_ANOMALY: TimeseriesAnomalyTrainingConfig,
     }
 
 

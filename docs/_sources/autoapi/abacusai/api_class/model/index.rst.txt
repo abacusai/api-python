@@ -27,6 +27,7 @@ Classes
    abacusai.api_class.model.ClusteringTrainingConfig
    abacusai.api_class.model.ClusteringTimeseriesTrainingConfig
    abacusai.api_class.model.EventAnomalyTrainingConfig
+   abacusai.api_class.model.TimeseriesAnomalyTrainingConfig
    abacusai.api_class.model.CumulativeForecastingTrainingConfig
    abacusai.api_class.model.AnomalyDetectionTrainingConfig
    abacusai.api_class.model.ThemeAnalysisTrainingConfig
@@ -1245,6 +1246,8 @@ Classes
    :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
    :param data_prompt_context: Prompt context for the data feature group ids.
    :type data_prompt_context: str
+   :param hide_generated_sql: When running data queries, hides the generated SQL in the response and will just return the table.
+   :type hide_generated_sql: bool
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -1293,6 +1296,11 @@ Classes
 
    .. py:attribute:: data_prompt_context
       :type: str
+
+      
+
+   .. py:attribute:: hide_generated_sql
+      :type: bool
 
       
 
@@ -1543,6 +1551,38 @@ Classes
 
    .. py:attribute:: anomaly_fraction
       :type: float
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TimeseriesAnomalyTrainingConfig
+
+
+   Bases: :py:obj:`TrainingConfig`
+
+   Training config for the TS_ANOMALY problem type
+
+   Args:
+   type_of_split: Type of data splitting into train/test.
+   test_start (str): Limit training data to dates before the given test start.
+   test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+
+
+   .. py:attribute:: type_of_split
+      :type: str
+
+      
+
+   .. py:attribute:: test_start
+      :type: str
+
+      
+
+   .. py:attribute:: test_split
+      :type: int
 
       
 

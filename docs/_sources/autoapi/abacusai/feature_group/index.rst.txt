@@ -975,7 +975,7 @@ Classes
 
    .. py:method:: create_version(variable_bindings = None)
 
-      Creates a snapshot for a specified feature group.
+      Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.
 
       :param variable_bindings: Dictionary defining variable bindings that override parent feature group values.
       :type variable_bindings: dict

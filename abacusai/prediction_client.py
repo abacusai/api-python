@@ -167,6 +167,21 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
 
+    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
+        """Returns a list of anomalous timestamps from the training dataset.
+
+        Args:
+            deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): The unique identifier to a deployment created under the project.
+            start_timestamp (str): timestamp from which anomalies have to be detected in the training data
+            end_timestamp (str): timestamp to which anomalies have to be detected in the training data
+            query_data (dict): additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records
+            get_all_item_data (bool): set this to true if anomaly detection has to be performed on all the data related to input ids
+            series_ids (list): list of series ids on which the anomaly detection has to be performed"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getTimeseriesAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'queryData': query_data, 'getAllItemData': get_all_item_data, 'seriesIds': series_ids}, server_override=prediction_url)
+
     def is_anomaly(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
         """Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 

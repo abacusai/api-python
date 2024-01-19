@@ -131,6 +131,9 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory" title="abacusai.api_class.monitor_alert._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig" title="abacusai.api_class.monitor_alert.MonitorThresholdConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorThresholdConfig</span></code></a></p></td>
+<td><p>Monitor Threshold Config for Monitor Alerts</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -470,6 +473,44 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.monitor_alert._AlertActionConfigFactory.config_class_map">
 <span class="sig-name descname"><span class="pre">config_class_map</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert._AlertActionConfigFactory.config_class_map" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor_alert.</span></span><span class="sig-name descname"><span class="pre">MonitorThresholdConfig</span></span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Monitor Threshold Config for Monitor Alerts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>drift_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FeatureDriftType" title="abacusai.api_class.enums.FeatureDriftType"><em>FeatureDriftType</em></a>) – Feature drift type to apply the threshold on to determine whether a column has drifted significantly enough to be a violation.</p></li>
+<li><p><strong>threshold_config</strong> (<em>ThresholdConfigs</em>) – Thresholds for when to consider a column to be in violation. The alert will only fire when the drift value is strictly greater than the threshold.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.drift_type">
+<span class="sig-name descname"><span class="pre">drift_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.FeatureDriftType" title="abacusai.api_class.enums.FeatureDriftType"><span class="pre">abacusai.api_class.enums.FeatureDriftType</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.drift_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.at_risk_threshold">
+<span class="sig-name descname"><span class="pre">at_risk_threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.at_risk_threshold" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.severely_drifting_threshold">
+<span class="sig-name descname"><span class="pre">severely_drifting_threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.severely_drifting_threshold" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor_alert.MonitorThresholdConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor_alert.MonitorThresholdConfig.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
 
 </dd></dl>
 

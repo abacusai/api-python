@@ -6,7 +6,7 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class DatasetConfig(ApiClass):
-    application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False)
+    application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(cls):
@@ -145,7 +145,7 @@ class ZendeskDatasetConfig(DatasetConfig):
 @dataclasses.dataclass
 class _DatasetConfigFactory(_ApiClassFactory):
     config_abstract_class = DatasetConfig
-    config_class_key = 'applicationConnectorType'
+    config_class_key = 'application_connector_type'
     config_class_map = {
         enums.ApplicationConnectorType.CONFLUENCE: ConfluenceDatasetConfig,
         enums.ApplicationConnectorType.GOOGLEANALYTICS: GoogleAnalyticsDatasetConfig,

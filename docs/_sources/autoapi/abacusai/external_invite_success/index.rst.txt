@@ -1,0 +1,51 @@
+:py:mod:`abacusai.external_invite_success`
+==========================================
+
+.. py:module:: abacusai.external_invite_success
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.external_invite_success.ExternalInviteSuccess
+
+
+
+
+.. py:class:: ExternalInviteSuccess(client, userAlreadyInOrg=None, userAlreadyInAppGroup=None, userExistsAsInternal=None, successfulInvites=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The response of the invites for different emails
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param userAlreadyInOrg: List of user emails not successfullt invited, because they are already in the organization.
+   :type userAlreadyInOrg: list
+   :param userAlreadyInAppGroup: List of user emails not successfully invited, because they are already in the application group.
+   :type userAlreadyInAppGroup: list
+   :param userExistsAsInternal: List of user emails not successfully invited, because they are already internal users.
+   :type userExistsAsInternal: list
+   :param successfulInvites: List of users successfully invited.
+   :type successfulInvites: list
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

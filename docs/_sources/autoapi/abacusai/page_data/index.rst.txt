@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None)
+.. py:class:: PageData(client, docId=None, page=None, height=None, width=None, pageCount=None, pageText=None, pageTokenStartOffset=None, tokenCount=None, tokens=None, extractedText=None, rotationAngle=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -46,6 +46,8 @@ Classes
    :type tokens: list
    :param extractedText: The extracted text in the page obtained from OCR.
    :type extractedText: str
+   :param rotationAngle: The detected rotation angle of the page in degrees. Positive values indicate clockwise and negative values indicate anti-clockwise rotation from the original orientation.
+   :type rotationAngle: float
 
    .. py:method:: __repr__()
 

@@ -120,6 +120,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../external_application/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../external_invite_success/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_invite_success</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../extracted_fields/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.extracted_fields</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
@@ -1494,7 +1495,7 @@ feature groups for those input feature groups.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.create_version">
 <span class="sig-name descname"><span class="pre">create_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.create_version" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a snapshot for a specified feature group.</p>
+<dd><p>Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>variable_bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Dictionary defining variable bindings that override parent feature group values.</p>

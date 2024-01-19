@@ -957,7 +957,7 @@ class FeatureGroup(AbstractApiClass):
 
     def create_version(self, variable_bindings: dict = None):
         """
-        Creates a snapshot for a specified feature group.
+        Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.
 
         Args:
             variable_bindings (dict): Dictionary defining variable bindings that override parent feature group values.

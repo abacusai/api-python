@@ -123,6 +123,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../embedding_feature_drift_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.embedding_feature_drift_distribution</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../execute_feature_group_operation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.execute_feature_group_operation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../external_application/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_application</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../external_invite_success/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.external_invite_success</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../extracted_fields/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.extracted_fields</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../feature_distribution/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.feature_distribution</span></code></a></li>
@@ -404,7 +405,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.client.Blob">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">Blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mime_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.Blob" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.client.</span></span><span class="sig-name descname"><span class="pre">Blob</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mime_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.Blob" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -838,7 +839,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.0.5'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.1.0'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2867,27 +2868,6 @@ encounters an unexpected error while processing the request.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_model_monitoring_logs">
-<span class="sig-name descname"><span class="pre">get_model_monitoring_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_model_monitoring_logs" title="Permalink to this definition"></a></dt>
-<dd><p>Returns monitoring logs for the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model_monitor_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique version ID of the model monitor version</p></li>
-<li><p><strong>stdout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Set True to get info logs</p></li>
-<li><p><strong>stderr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Set True to get error logs</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function logs.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../function_logs/index.html#abacusai.function_logs.FunctionLogs" title="abacusai.function_logs.FunctionLogs">FunctionLogs</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.get_drift_for_feature">
 <span class="sig-name descname"><span class="pre">get_drift_for_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nested_feature_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.get_drift_for_feature" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the feature drift associated with a single feature in an output feature group from a prediction.</p>
@@ -3930,6 +3910,23 @@ If num_rows is set, we return maximum of num_rows latest updated rows.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.download_agent_attachment">
+<span class="sig-name descname"><span class="pre">download_agent_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attachment_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.download_agent_attachment" title="Permalink to this definition"></a></dt>
+<dd><p>Return an agent attachment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment ID.</p></li>
+<li><p><strong>attachment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The attachment ID.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.12)">io.BytesIO</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_agent">
 <span class="sig-name descname"><span class="pre">describe_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_agent" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves a full description of the specified model.</p>
@@ -4173,7 +4170,7 @@ Updates an existing dataset from a pandas dataframe</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The table name to assign to the feature group created by this call</p></li>
-<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload</p></li>
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The dataframe to upload and use as the data source for the feature group</p></li>
 <li><p><strong>clean_column_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If true, the dataframe’s column names will be automatically cleaned to be complaint with Abacus.AI’s column requirements. Otherwise it will raise a ValueError.</p></li>
 </ul>
 </dd>
@@ -5225,14 +5222,15 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.send_email">
-<span class="sig-name descname"><span class="pre">send_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.send_email" title="Permalink to this definition"></a></dt>
-<dd><p>Send an email to the specified email address with provided subject and body.</p>
+<span class="sig-name descname"><span class="pre">send_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_html</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.send_email" title="Permalink to this definition"></a></dt>
+<dd><p>Send an email to the specified email address with provided subject and contents.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The email address to send the email to.</p></li>
 <li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The subject of the email.</p></li>
 <li><p><strong>body</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The body of the email.</p></li>
+<li><p><strong>is_html</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the body is html or not.</p></li>
 </ul>
 </dd>
 </dl>
@@ -5295,7 +5293,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The project’s name.</p></li>
-<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
+<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY_DETECTION_NEW,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -6771,7 +6769,7 @@ feature groups for those input feature groups.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_feature_group_version">
 <span class="sig-name descname"><span class="pre">create_feature_group_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_bindings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_feature_group_version" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a snapshot for a specified feature group.</p>
+<dd><p>Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -8868,6 +8866,28 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/io.html#io.BytesIO" title="(in Python v3.12)">io.BytesIO</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.get_timeseries_anomalies">
+<span class="sig-name descname"><span class="pre">get_timeseries_anomalies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_timestamp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all_item_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">series_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.get_timeseries_anomalies" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of anomalous timestamps from the training dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.</p></li>
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier to a deployment created under the project.</p></li>
+<li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – timestamp from which anomalies have to be detected in the training data</p></li>
+<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – timestamp to which anomalies have to be detected in the training data</p></li>
+<li><p><strong>query_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records</p></li>
+<li><p><strong>get_all_item_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – set this to true if anomaly detection has to be performed on all the data related to input ids</p></li>
+<li><p><strong>series_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – list of series ids on which the anomaly detection has to be performed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -11190,16 +11210,22 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.client.ApiClient.invite_user_to_app_user_group">
-<span class="sig-name descname"><span class="pre">invite_user_to_app_user_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_group_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.invite_user_to_app_user_group" title="Permalink to this definition"></a></dt>
-<dd><p>Invite a user to an App User Group. This method will send the specified email address an invitation link to join a specific user group.</p>
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.invite_users_to_app_user_group">
+<span class="sig-name descname"><span class="pre">invite_users_to_app_user_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emails</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.invite_users_to_app_user_group" title="Permalink to this definition"></a></dt>
+<dd><p>Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.</p>
 <p>This will allow them to use any chatbots that this user group has access to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>email</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The email address to invite to your user group.</p></li>
 <li><p><strong>user_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the App User Group to invite the user to.</p></li>
+<li><p><strong>emails</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – The email addresses to invite to your user group.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The response of the invitation. This will contain the emails that were successfully invited and the emails that were not.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../external_invite_success/index.html#abacusai.external_invite_success.ExternalInviteSuccess" title="abacusai.external_invite_success.ExternalInviteSuccess">ExternalInviteSuccess</a></p>
 </dd>
 </dl>
 </dd></dl>

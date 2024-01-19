@@ -437,6 +437,15 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_external_application(self.deployment_id, name, logo, theme)
 
+    def download_agent_attachment(self, attachment_id: str):
+        """
+        Return an agent attachment.
+
+        Args:
+            attachment_id (str): The attachment ID.
+        """
+        return self.client.download_agent_attachment(self.deployment_id, attachment_id)
+
     def wait_for_deployment(self, wait_states={'PENDING', 'DEPLOYING'}, timeout=900):
         """
         A waiting call until deployment is completed.

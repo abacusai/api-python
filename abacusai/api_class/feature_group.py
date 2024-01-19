@@ -10,6 +10,7 @@ class SamplingConfig(ApiClass):
     """
     An abstract class for the sampling config of a feature group
     """
+    sampling_method: enums.SamplingMethodType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(cls):
@@ -32,7 +33,9 @@ class NSamplingConfig(SamplingConfig):
     """
     sample_count: int
     key_columns: List[str] = dataclasses.field(default_factory=list)
-    sampling_method: enums.SamplingMethodType = enums.SamplingMethodType.N_SAMPLING
+
+    def __post_init__(self):
+        self.sampling_method = enums.SamplingMethodType.N_SAMPLING
 
 
 @dataclasses.dataclass
@@ -47,12 +50,15 @@ class PercentSamplingConfig(SamplingConfig):
     """
     sample_percent: float
     key_columns: List[str] = dataclasses.field(default_factory=list)
-    sampling_method: enums.SamplingMethodType = enums.SamplingMethodType.PERCENT_SAMPLING
+
+    def __post_init__(self):
+        self.sampling_method = enums.SamplingMethodType.PERCENT_SAMPLING
 
 
 @dataclasses.dataclass
 class _SamplingConfigFactory(_ApiClassFactory):
     config_class_key = 'sampling_method'
+    config_abstract_class = SamplingConfig
     config_class_map = {
         enums.SamplingMethodType.N_SAMPLING: NSamplingConfig,
         enums.SamplingMethodType.PERCENT_SAMPLING: PercentSamplingConfig,
@@ -64,6 +70,7 @@ class MergeConfig(ApiClass):
     """
     An abstract class for the merge config of a feature group
     """
+    merge_mode: enums.MergeMode = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
     def _get_builder(self):
@@ -84,7 +91,9 @@ class LastNMergeConfig(MergeConfig):
         num_versions (int): The number of versions to merge. num_versions == 0 means merge all versions.
     """
     num_versions: int
-    merge_mode: enums.MergeMode = enums.MergeMode.LAST_N
+
+    def __post_init__(self):
+        self.merge_mode = enums.MergeMode.LAST_N
 
 
 @dataclasses.dataclass
@@ -99,12 +108,15 @@ class TimeWindowMergeConfig(MergeConfig):
     """
     feature_name: str
     time_window_size_ms: int
-    merge_mode: enums.MergeMode = enums.MergeMode.TIME_WINDOW
+
+    def __post_init__(self):
+        self.merge_mode = enums.MergeMode.TIME_WINDOW
 
 
 @dataclasses.dataclass
 class _MergeConfigFactory(_ApiClassFactory):
     config_class_key = 'merge_mode'
+    config_abstract_class = MergeConfig
     config_class_map = {
         enums.MergeMode.LAST_N: LastNMergeConfig,
         enums.MergeMode.TIME_WINDOW: TimeWindowMergeConfig,

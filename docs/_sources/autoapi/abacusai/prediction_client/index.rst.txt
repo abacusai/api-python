@@ -203,6 +203,26 @@ Classes
       :type histogram: bool
 
 
+   .. py:method:: get_timeseries_anomalies(deployment_token, deployment_id, start_timestamp = None, end_timestamp = None, query_data = None, get_all_item_data = False, series_ids = None)
+
+      Returns a list of anomalous timestamps from the training dataset.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param start_timestamp: timestamp from which anomalies have to be detected in the training data
+      :type start_timestamp: str
+      :param end_timestamp: timestamp to which anomalies have to be detected in the training data
+      :type end_timestamp: str
+      :param query_data: additional data on which anomaly detection has to be performed, it can either be a single record or list of records or a json string representing list of records
+      :type query_data: dict
+      :param get_all_item_data: set this to true if anomaly detection has to be performed on all the data related to input ids
+      :type get_all_item_data: bool
+      :param series_ids: list of series ids on which the anomaly detection has to be performed
+      :type series_ids: list
+
+
    .. py:method:: is_anomaly(deployment_token, deployment_id, query_data = None)
 
       Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
