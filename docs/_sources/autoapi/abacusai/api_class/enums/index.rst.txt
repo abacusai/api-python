@@ -39,6 +39,8 @@ Classes
    abacusai.api_class.enums.ForecastingLocalScaling
    abacusai.api_class.enums.ForecastingFillMethod
    abacusai.api_class.enums.ForecastingQuanitlesExtensionMethod
+   abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
+   abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
    abacusai.api_class.enums.NERObjective
    abacusai.api_class.enums.NERModelType
    abacusai.api_class.enums.NLPDocumentFormat
@@ -1258,6 +1260,46 @@ Classes
       
 
 
+.. py:class:: TimeseriesAnomalyDataSplitType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AUTO
+      :value: 'Automatic Time Based'
+
+      
+
+   .. py:attribute:: TIMESTAMP
+      :value: 'Fixed Timestamp Based'
+
+      
+
+
+.. py:class:: TimeseriesAnomalyTypeOfAnomaly
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: HIGH_PEAK
+      :value: 'high_peak'
+
+      
+
+   .. py:attribute:: LOW_PEAK
+      :value: 'low_peak'
+
+      
+
+
 .. py:class:: NERObjective
 
 
@@ -1494,6 +1536,11 @@ Classes
 
    .. py:attribute:: TEAMS
       :value: 'TEAMS'
+
+      
+
+   .. py:attribute:: ABACUSUSAGEMETRICS
+      :value: 'ABACUSUSAGEMETRICS'
 
       
 

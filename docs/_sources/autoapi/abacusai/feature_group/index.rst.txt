@@ -132,7 +132,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: add_to_project(project_id, feature_group_type = 'CUSTOM_TABLE')
+   .. py:method:: add_to_project(project_id = None, feature_group_type = 'CUSTOM_TABLE')
 
       Adds a feature group to a project.
 
@@ -142,7 +142,7 @@ Classes
       :type feature_group_type: str
 
 
-   .. py:method:: set_project_config(project_id, project_config = None)
+   .. py:method:: set_project_config(project_id = None, project_config = None)
 
       Sets a feature group's project config
 
@@ -152,7 +152,7 @@ Classes
       :type project_config: dict
 
 
-   .. py:method:: get_project_config(project_id)
+   .. py:method:: get_project_config(project_id = None)
 
       Gets a feature group's project config
 
@@ -163,7 +163,7 @@ Classes
       :rtype: ProjectConfig
 
 
-   .. py:method:: remove_from_project(project_id)
+   .. py:method:: remove_from_project(project_id = None)
 
       Removes a feature group from a project.
 
@@ -171,7 +171,7 @@ Classes
       :type project_id: str
 
 
-   .. py:method:: set_type(project_id, feature_group_type = 'CUSTOM_TABLE')
+   .. py:method:: set_type(project_id = None, feature_group_type = 'CUSTOM_TABLE')
 
       Update the feature group type in a project. The feature group must already be added to the project.
 
@@ -211,7 +211,7 @@ Classes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: update_annotation_status(feature_name, status, doc_id = None, feature_group_row_identifier = None, save_metadata = False)
+   .. py:method:: update_annotation_status(feature_name = None, status = None, doc_id = None, feature_group_row_identifier = None, save_metadata = False)
 
       Update the status of an annotation entry.
 
@@ -230,7 +230,7 @@ Classes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: get_document_to_annotate(project_id, feature_name, feature_group_row_identifier = None, get_previous = False)
+   .. py:method:: get_document_to_annotate(project_id = None, feature_name = None, feature_group_row_identifier = None, get_previous = False)
 
       Get an available document that needs to be annotated for a annotation feature group.
 
@@ -260,7 +260,7 @@ Classes
       :rtype: AnnotationsStatus
 
 
-   .. py:method:: import_annotation_labels(file, annotation_type)
+   .. py:method:: import_annotation_labels(file = None, annotation_type = None)
 
       Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
 
@@ -273,7 +273,7 @@ Classes
       :rtype: AnnotationConfig
 
 
-   .. py:method:: create_sampling(table_name, sampling_config, description = None)
+   .. py:method:: create_sampling(table_name = None, sampling_config = None, description = None)
 
       Creates a new Feature Group defined as a sample of rows from another Feature Group.
 
@@ -291,7 +291,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_sampling_config(sampling_config)
+   .. py:method:: set_sampling_config(sampling_config = None)
 
       Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
@@ -302,7 +302,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_merge_config(merge_config)
+   .. py:method:: set_merge_config(merge_config = None)
 
       Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
@@ -313,7 +313,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_operator_config(operator_config)
+   .. py:method:: set_operator_config(operator_config = None)
 
       Set a OperatorFeatureGroup’s operator config to the values provided.
 
@@ -321,7 +321,7 @@ Classes
       :type operator_config: dict
 
 
-   .. py:method:: set_schema(schema)
+   .. py:method:: set_schema(schema = None)
 
       Creates a new schema and points the feature group to the new feature group schema ID.
 
@@ -340,7 +340,7 @@ Classes
       :rtype: list[Feature]
 
 
-   .. py:method:: create_feature(name, select_expression)
+   .. py:method:: create_feature(name = None, select_expression = None)
 
       Creates a new feature in a Feature Group from a SQL select statement.
 
@@ -353,7 +353,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_tag(tag)
+   .. py:method:: add_tag(tag = None)
 
       Adds a tag to the feature group
 
@@ -361,7 +361,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: remove_tag(tag)
+   .. py:method:: remove_tag(tag = None)
 
       Removes a tag from the specified feature group.
 
@@ -369,7 +369,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: add_annotatable_feature(name, annotation_type)
+   .. py:method:: add_annotatable_feature(name = None, annotation_type = None)
 
       Add an annotatable feature in a Feature Group
 
@@ -382,7 +382,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_as_annotatable_feature(feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
+   .. py:method:: set_feature_as_annotatable_feature(feature_name = None, annotation_type = None, feature_group_row_identifier_feature = None, doc_id_feature = None)
 
       Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
@@ -399,7 +399,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_annotation_status_feature(feature_name)
+   .. py:method:: set_annotation_status_feature(feature_name = None)
 
       Sets a feature as the annotation status feature for a feature group.
 
@@ -410,7 +410,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: unset_feature_as_annotatable_feature(feature_name)
+   .. py:method:: unset_feature_as_annotatable_feature(feature_name = None)
 
       Unsets a feature as annotatable
 
@@ -421,7 +421,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_annotation_label(label_name, annotation_type, label_definition = None)
+   .. py:method:: add_annotation_label(label_name = None, annotation_type = None, label_definition = None)
 
       Adds an annotation label
 
@@ -436,7 +436,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: remove_annotation_label(label_name)
+   .. py:method:: remove_annotation_label(label_name = None)
 
       Removes an annotation label
 
@@ -447,7 +447,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_feature_tag(feature, tag)
+   .. py:method:: add_feature_tag(feature = None, tag = None)
 
       Adds a tag on a feature
 
@@ -457,7 +457,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: remove_feature_tag(feature, tag)
+   .. py:method:: remove_feature_tag(feature = None, tag = None)
 
       Removes a tag from a feature
 
@@ -467,7 +467,7 @@ Classes
       :type tag: str
 
 
-   .. py:method:: create_nested_feature(nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
+   .. py:method:: create_nested_feature(nested_feature_name = None, table_name = None, using_clause = None, where_clause = None, order_clause = None)
 
       Creates a new nested feature in a feature group from a SQL statement.
 
@@ -486,7 +486,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_nested_feature(nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
+   .. py:method:: update_nested_feature(nested_feature_name = None, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
 
       Updates a previously existing nested feature in a feature group.
 
@@ -507,7 +507,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_nested_feature(nested_feature_name)
+   .. py:method:: delete_nested_feature(nested_feature_name = None)
 
       Delete a nested feature.
 
@@ -518,7 +518,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_feature(feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
+   .. py:method:: create_point_in_time_feature(feature_name = None, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
 
       Creates a new point in time feature in a feature group using another historical feature group, window spec, and aggregate expression.
 
@@ -552,7 +552,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_feature(feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
+   .. py:method:: update_point_in_time_feature(feature_name = None, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
 
       Updates an existing Point-in-Time (PiT) feature in a feature group. See `createPointInTimeFeature` for detailed semantics.
 
@@ -583,7 +583,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_group(group_name, window_key, aggregation_keys, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
+   .. py:method:: create_point_in_time_group(group_name = None, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
 
       Create a Point-in-Time Group
 
@@ -612,7 +612,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: generate_point_in_time_features(group_name, columns, window_functions, prefix = None)
+   .. py:method:: generate_point_in_time_features(group_name = None, columns = None, window_functions = None, prefix = None)
 
       Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
 
@@ -629,7 +629,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_group(group_name, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
+   .. py:method:: update_point_in_time_group(group_name = None, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
 
       Update Point-in-Time Group
 
@@ -658,7 +658,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_point_in_time_group(group_name)
+   .. py:method:: delete_point_in_time_group(group_name = None)
 
       Delete point in time group
 
@@ -669,7 +669,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_group_feature(group_name, name, expression)
+   .. py:method:: create_point_in_time_group_feature(group_name = None, name = None, expression = None)
 
       Create point in time group feature
 
@@ -684,7 +684,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_group_feature(group_name, name, expression)
+   .. py:method:: update_point_in_time_group_feature(group_name = None, name = None, expression = None)
 
       Update a feature's SQL expression in a point in time group
 
@@ -699,7 +699,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_type(feature, feature_type)
+   .. py:method:: set_feature_type(feature = None, feature_type = None)
 
       Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
@@ -712,7 +712,7 @@ Classes
       :rtype: Schema
 
 
-   .. py:method:: invalidate_streaming_data(invalid_before_timestamp)
+   .. py:method:: invalidate_streaming_data(invalid_before_timestamp = None)
 
       Invalidates all streaming data with timestamp before invalidBeforeTimestamp
 
@@ -720,7 +720,7 @@ Classes
       :type invalid_before_timestamp: int
 
 
-   .. py:method:: concatenate_data(source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
+   .. py:method:: concatenate_data(source_feature_group_id = None, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
@@ -806,7 +806,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_python_function_bindings(python_function_bindings)
+   .. py:method:: update_python_function_bindings(python_function_bindings = None)
 
       Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
@@ -814,7 +814,7 @@ Classes
       :type python_function_bindings: list
 
 
-   .. py:method:: update_python_function(python_function_name, python_function_bindings = [])
+   .. py:method:: update_python_function(python_function_name = None, python_function_bindings = [])
 
       Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -828,7 +828,7 @@ Classes
       :type python_function_bindings: list
 
 
-   .. py:method:: update_sql_definition(sql)
+   .. py:method:: update_sql_definition(sql = None)
 
       Updates the SQL statement for a feature group.
 
@@ -839,7 +839,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_dataset_feature_expression(feature_expression)
+   .. py:method:: update_dataset_feature_expression(feature_expression = None)
 
       Updates the SQL feature expression for a Dataset FeatureGroup's custom features
 
@@ -877,7 +877,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature(name, select_expression = None, new_name = None)
+   .. py:method:: update_feature(name = None, select_expression = None, new_name = None)
 
       Modifies an existing feature in a feature group.
 
@@ -922,7 +922,7 @@ Classes
       :rtype: ModificationLockInfo
 
 
-   .. py:method:: add_user_to_modifiers(email)
+   .. py:method:: add_user_to_modifiers(email = None)
 
       Adds a user to a feature group.
 
@@ -930,7 +930,7 @@ Classes
       :type email: str
 
 
-   .. py:method:: add_organization_group_to_modifiers(organization_group_id)
+   .. py:method:: add_organization_group_to_modifiers(organization_group_id = None)
 
       Add OrganizationGroup to a feature group modifiers list
 
@@ -938,7 +938,7 @@ Classes
       :type organization_group_id: str
 
 
-   .. py:method:: remove_user_from_modifiers(email)
+   .. py:method:: remove_user_from_modifiers(email = None)
 
       Removes a user from a specified feature group.
 
@@ -946,7 +946,7 @@ Classes
       :type email: str
 
 
-   .. py:method:: remove_organization_group_from_modifiers(organization_group_id)
+   .. py:method:: remove_organization_group_from_modifiers(organization_group_id = None)
 
       Removes an OrganizationGroup from a feature group modifiers list
 
@@ -954,7 +954,7 @@ Classes
       :type organization_group_id: str
 
 
-   .. py:method:: delete_feature(name)
+   .. py:method:: delete_feature(name = None)
 
       Removes a feature from the feature group.
 
@@ -997,7 +997,7 @@ Classes
       :rtype: list[FeatureGroupVersion]
 
 
-   .. py:method:: create_template(name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
+   .. py:method:: create_template(name = None, template_sql = None, template_variables = None, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
 
       Create a feature group template.
 
@@ -1037,7 +1037,7 @@ Classes
       :type feature_group_id: str
 
 
-   .. py:method:: append_data(streaming_token, data)
+   .. py:method:: append_data(streaming_token = None, data = None)
 
       Appends new data into the feature group for a given lookup key recordId.
 
@@ -1047,7 +1047,7 @@ Classes
       :type data: dict
 
 
-   .. py:method:: upsert_multiple_data(streaming_token, data)
+   .. py:method:: upsert_multiple_data(streaming_token = None, data = None)
 
       Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
@@ -1057,7 +1057,7 @@ Classes
       :type data: list
 
 
-   .. py:method:: append_multiple_data(streaming_token, data)
+   .. py:method:: append_multiple_data(streaming_token = None, data = None)
 
       Appends new data into the feature group for a given lookup key recordId.
 
@@ -1080,7 +1080,7 @@ Classes
       :rtype: FeatureGroupRow
 
 
-   .. py:method:: upsert_online_data(data)
+   .. py:method:: upsert_online_data(data = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -1091,7 +1091,7 @@ Classes
       :rtype: FeatureGroupRow
 
 
-   .. py:method:: delete_data(primary_key)
+   .. py:method:: delete_data(primary_key = None)
 
       Deletes a row from the feature group given the primary key
 
@@ -1116,7 +1116,7 @@ Classes
       :rtype: list[FeatureGroupRow]
 
 
-   .. py:method:: add_document(document)
+   .. py:method:: add_document(document = None)
 
       Adds a document to the feature group.
 

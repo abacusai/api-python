@@ -65,7 +65,7 @@ class DatabaseConnector(AbstractApiClass):
         """
         return self.client.get_database_connector_object_schema(self.database_connector_id, object_name, fetch_raw_data)
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         Renames a Database Connector
 
@@ -92,7 +92,7 @@ class DatabaseConnector(AbstractApiClass):
         """
         return self.client.delete_database_connector(self.database_connector_id)
 
-    def query(self, query: str):
+    def query(self, query: str = None):
         """
         Runs a query in the specified database connector.
 

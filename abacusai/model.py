@@ -137,7 +137,7 @@ class Model(AbstractApiClass):
         """
         return self.client.describe_model(self.model_id)
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         Renames a model
 
@@ -221,7 +221,7 @@ class Model(AbstractApiClass):
         """
         return self.client.update_python_model_git(self.model_id, application_connector_id, branch_name, python_root, train_function_name, predict_function_name, predict_many_function_name, train_module_name, predict_module_name, training_input_tables, cpu_size, memory, use_gpu)
 
-    def set_training_config(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list = None):
+    def set_training_config(self, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None):
         """
         Edits the default model training config
 
@@ -234,7 +234,7 @@ class Model(AbstractApiClass):
         """
         return self.client.set_model_training_config(self.model_id, training_config, feature_group_ids)
 
-    def set_prediction_params(self, prediction_config: dict):
+    def set_prediction_params(self, prediction_config: dict = None):
         """
         Sets the model prediction config for the model
 

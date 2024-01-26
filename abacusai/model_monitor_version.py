@@ -112,7 +112,7 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.delete_model_monitor_version(self.model_monitor_version)
 
-    def metric_data(self, metric_type: str, actual_values_to_detail: list = None):
+    def metric_data(self, metric_type: str = None, actual_values_to_detail: list = None):
         """
         Provides the data needed for decile metrics associated with the model monitor.
 
@@ -137,7 +137,7 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         return self.client.list_monitor_alert_versions_for_monitor_version(self.model_monitor_version)
 
-    def get_drift_for_feature(self, feature_name: str, nested_feature_name: str = None):
+    def get_drift_for_feature(self, feature_name: str = None, nested_feature_name: str = None):
         """
         Gets the feature drift associated with a single feature in an output feature group from a prediction.
 

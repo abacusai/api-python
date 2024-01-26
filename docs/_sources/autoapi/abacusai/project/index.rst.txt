@@ -71,7 +71,7 @@ Classes
       :rtype: Project
 
 
-   .. py:method:: rename(name)
+   .. py:method:: rename(name = None)
 
       This method renames a project after it is created.
 
@@ -94,7 +94,7 @@ Classes
       :type project_id: str
 
 
-   .. py:method:: add_tags(tags)
+   .. py:method:: add_tags(tags = None)
 
       This method adds a tag to a project.
 
@@ -102,7 +102,7 @@ Classes
       :type tags: list
 
 
-   .. py:method:: remove_tags(tags)
+   .. py:method:: remove_tags(tags = None)
 
       This method removes a tag from a project.
 
@@ -110,7 +110,7 @@ Classes
       :type tags: list
 
 
-   .. py:method:: set_feature_mapping(feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)
+   .. py:method:: set_feature_mapping(feature_group_id = None, feature_name = None, feature_mapping = None, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 
@@ -138,7 +138,7 @@ Classes
       :rtype: ProjectValidation
 
 
-   .. py:method:: infer_feature_mappings(feature_group_id)
+   .. py:method:: infer_feature_mappings(feature_group_id = None)
 
       Infer the feature mappings for the feature group in the project based on the problem type.
 
@@ -149,7 +149,7 @@ Classes
       :rtype: InferredFeatureMappings
 
 
-   .. py:method:: describe_feature_group(feature_group_id)
+   .. py:method:: describe_feature_group(feature_group_id = None)
 
       Describe a feature group associated with a project
 
@@ -205,7 +205,7 @@ Classes
       :rtype: list[TrainingConfigOptions]
 
 
-   .. py:method:: create_train_test_data_split_feature_group(training_config, feature_group_ids)
+   .. py:method:: create_train_test_data_split_feature_group(training_config = None, feature_group_ids = None)
 
       Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
@@ -249,7 +249,7 @@ Classes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
+   .. py:method:: create_model_from_python(function_source_code = None, train_function_name = None, training_input_tables = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
 
       Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -317,7 +317,7 @@ Classes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: create_model_monitor(prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
+   .. py:method:: create_model_monitor(prediction_feature_group_id = None, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
 
       Runs a model monitor for the specified project.
 
@@ -361,7 +361,7 @@ Classes
       :rtype: list[ModelMonitor]
 
 
-   .. py:method:: create_vision_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
+   .. py:method:: create_vision_drift_monitor(prediction_feature_group_id = None, training_feature_group_id = None, name = None, feature_mappings = None, training_feature_mappings = None, target_value_performance = None, refresh_schedule = None)
 
       Runs a vision drift monitor for the specified project.
 
@@ -384,7 +384,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_nlp_drift_monitor(prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
+   .. py:method:: create_nlp_drift_monitor(prediction_feature_group_id = None, training_feature_group_id = None, name = None, feature_mappings = None, training_feature_mappings = None, target_value_performance = None, refresh_schedule = None)
 
       Runs an NLP drift monitor for the specified project.
 
@@ -407,7 +407,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_forecasting_monitor(name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency = None, refresh_schedule = None)
+   .. py:method:: create_forecasting_monitor(name = None, prediction_feature_group_id = None, training_feature_group_id = None, training_forecast_config = None, prediction_forecast_config = None, forecast_frequency = None, refresh_schedule = None)
 
       Runs a forecasting monitor for the specified project.
 
@@ -430,7 +430,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
+   .. py:method:: create_eda(feature_group_id = None, name = None, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
 
       Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -483,7 +483,7 @@ Classes
       :rtype: list[HoldoutAnalysis]
 
 
-   .. py:method:: create_monitor_alert(model_monitor_id, alert_name, condition_config, action_config)
+   .. py:method:: create_monitor_alert(model_monitor_id = None, alert_name = None, condition_config = None, action_config = None)
 
       Create a monitor alert for the given conditions and monitor
 
@@ -594,7 +594,7 @@ Classes
       :rtype: list[Pipeline]
 
 
-   .. py:method:: create_graph_dashboard(name, python_function_ids = None)
+   .. py:method:: create_graph_dashboard(name = None, python_function_ids = None)
 
       Create a plot dashboard given selected python plots
 
@@ -618,7 +618,7 @@ Classes
       :rtype: list[GraphDashboard]
 
 
-   .. py:method:: list_builtin_algorithms(feature_group_ids, training_config = None)
+   .. py:method:: list_builtin_algorithms(feature_group_ids = None, training_config = None)
 
       Return list of built-in algorithms based on given input data and training config.
 
@@ -642,7 +642,7 @@ Classes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
+   .. py:method:: create_agent(function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, feature_group_id = None)
 
       Creates a new AI agent.
 
@@ -660,19 +660,21 @@ Classes
       :type description: str
       :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
       :type enable_binary_input: bool
+      :param feature_group_id: The ID of the feature group to use for evaluation.
+      :type feature_group_id: str
 
       :returns: The new agent
       :rtype: Agent
 
 
-   .. py:method:: create_document_retriever(name, feature_group_id, document_retriever_config = None)
+   .. py:method:: create_document_retriever(name = None, feature_group_id = None, document_retriever_config = None)
 
       Returns a document retriever that stores embeddings for document chunks in a feature group.
 
       Document columns in the feature group are broken into chunks. For cases with multiple document columns, chunks from all columns are combined together to form a single chunk.
 
 
-      :param name: The name of the vector store.
+      :param name: The name of the vector store. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
       :type name: str
       :param feature_group_id: The ID of the feature group that the vector store is associated with.
       :type feature_group_id: str

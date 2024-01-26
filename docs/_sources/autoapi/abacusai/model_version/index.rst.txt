@@ -114,7 +114,7 @@ Classes
       :type metric: str
 
 
-   .. py:method:: query_test_point_predictions(algorithm, to_row, from_row = 0, sql_where_clause = '')
+   .. py:method:: query_test_point_predictions(algorithm = None, to_row = None, from_row = 0, sql_where_clause = '')
 
       Query the test points predictions data for a specific algorithm.
 
@@ -150,7 +150,7 @@ Classes
       :type model_version: str
 
 
-   .. py:method:: export_model_artifact_as_feature_group(table_name, artifact_type = None)
+   .. py:method:: export_model_artifact_as_feature_group(table_name = None, artifact_type = None)
 
       Exports metric artifact data for a model as a feature group.
 
@@ -217,7 +217,7 @@ Classes
       :rtype: FunctionLogs
 
 
-   .. py:method:: export_custom(output_location, algorithm = None)
+   .. py:method:: export_custom(output_location = None, algorithm = None)
 
       Bundle custom model artifacts to a zip file, and export to the specified location.
 

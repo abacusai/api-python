@@ -94,7 +94,7 @@ class Deployment(AbstractApiClass):
                 'algorithm': self.algorithm, 'pending_model_version': self.pending_model_version, 'model_deployment_config': self.model_deployment_config, 'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'pending_prediction_operator_version': self.pending_prediction_operator_version, 'online_feature_group_id': self.online_feature_group_id, 'output_online_feature_group_id': self.output_online_feature_group_id, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def create_webhook(self, endpoint: str, webhook_event_type: str, payload_template: dict = None):
+    def create_webhook(self, endpoint: str = None, webhook_event_type: str = None, payload_template: dict = None):
         """
         Create a webhook attached to a given deployment ID.
 
@@ -153,7 +153,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.update_deployment(self.deployment_id, description, auto_deploy, skip_metrics_check)
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         Updates a deployment's name
 
@@ -174,7 +174,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_auto_deployment(self.deployment_id, enable)
 
-    def set_model_version(self, model_version: str, algorithm: str = None, model_deployment_config: dict = None):
+    def set_model_version(self, model_version: str = None, algorithm: str = None, model_deployment_config: dict = None):
         """
         Promotes a model version and/or algorithm to be the active served deployment version
 
@@ -185,7 +185,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_deployment_model_version(self.deployment_id, model_version, algorithm, model_deployment_config)
 
-    def set_feature_group_version(self, feature_group_version: str):
+    def set_feature_group_version(self, feature_group_version: str = None):
         """
         Promotes a feature group version to be served in the deployment.
 
@@ -194,7 +194,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_deployment_feature_group_version(self.deployment_id, feature_group_version)
 
-    def set_prediction_operator_version(self, prediction_operator_version: str):
+    def set_prediction_operator_version(self, prediction_operator_version: str = None):
         """
         Promotes a prediction operator version to be served in the deployment.
 
@@ -240,7 +240,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.set_deployment_feature_group_export_file_connector_output(self.deployment_id, file_format, output_location)
 
-    def set_feature_group_export_database_connector_output(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None):
+    def set_feature_group_export_database_connector_output(self, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None, additional_id_columns: list = None):
         """
         Sets the export output for the Feature Group Deployment to a Database connector.
 
@@ -263,7 +263,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.remove_deployment_feature_group_export_output(self.deployment_id)
 
-    def create_alert(self, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
+    def create_alert(self, alert_name: str = None, condition_config: Union[dict, AlertConditionConfig] = None, action_config: Union[dict, AlertActionConfig] = None):
         """
         Create a deployment alert for the given conditions.
 
@@ -292,7 +292,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.list_deployment_alerts(self.deployment_id)
 
-    def get_conversation_response(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False):
+    def get_conversation_response(self, message: str = None, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -337,7 +337,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, input_feature_groups)
 
-    def describe_feature_group_row_process_by_key(self, primary_key_value: str):
+    def describe_feature_group_row_process_by_key(self, primary_key_value: str = None):
         """
         Gets the feature group row process.
 
@@ -374,7 +374,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_feature_group_row_process_summary(self.deployment_id)
 
-    def reset_feature_group_row_process_by_key(self, primary_key_value: str):
+    def reset_feature_group_row_process_by_key(self, primary_key_value: str = None):
         """
         Resets a feature group row process so that it can be reprocessed
 
@@ -386,7 +386,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.reset_feature_group_row_process_by_key(self.deployment_id, primary_key_value)
 
-    def get_feature_group_row_process_logs_by_key(self, primary_key_value: str):
+    def get_feature_group_row_process_logs_by_key(self, primary_key_value: str = None):
         """
         Gets the logs for a feature group row process
 
@@ -398,7 +398,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_feature_group_row_process_logs_by_key(self.deployment_id, primary_key_value)
 
-    def create_conversation(self, name: str, deployment_token: str = None):
+    def create_conversation(self, name: str = None, deployment_token: str = None):
         """
         Creates a deployment conversation.
 
@@ -437,7 +437,7 @@ class Deployment(AbstractApiClass):
         """
         return self.client.create_external_application(self.deployment_id, name, logo, theme)
 
-    def download_agent_attachment(self, attachment_id: str):
+    def download_agent_attachment(self, attachment_id: str = None):
         """
         Return an agent attachment.
 

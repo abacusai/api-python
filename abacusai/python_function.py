@@ -52,7 +52,7 @@ class PythonFunction(AbstractApiClass):
                 'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'package_requirements': self.package_requirements, 'code_source': self._get_attribute_as_dict(self.code_source)}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None):
+    def add_graph_to_dashboard(self, graph_dashboard_id: str = None, function_variable_mappings: dict = None, name: str = None):
         """
         Add a python plot function to a dashboard
 

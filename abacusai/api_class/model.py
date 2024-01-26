@@ -620,14 +620,23 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     Training config for the TS_ANOMALY problem type
 
     Args:
-    type_of_split: Type of data splitting into train/test.
+    type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
     test_start (str): Limit training data to dates before the given test start.
     test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-
+    fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
+    handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
+    timeseries_frequency (str): set this to control frequency of filling missing values
+    min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
+    anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
     """
-    type_of_split: str = dataclasses.field(default=None)
+    type_of_split: enums.TimeseriesAnomalyDataSplitType = dataclasses.field(default=None)
     test_start: str = dataclasses.field(default=None)
     test_split: int = dataclasses.field(default=None)
+    fill_missing_values: List[dict] = dataclasses.field(default=None)
+    handle_zeros_as_missing_values: bool = dataclasses.field(default=None)
+    timeseries_frequency: str = dataclasses.field(default=None)
+    min_samples_in_normal_region: int = dataclasses.field(default=None)
+    anomaly_type: enums.TimeseriesAnomalyTypeOfAnomaly = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.TS_ANOMALY

@@ -48,7 +48,7 @@ Classes
    :type connectorType: str
    :param legacyInputLocation: The location of the input data.
    :type legacyInputLocation: str
-   :param featureGroupTableName: The table name of the Batch Prediction feature group.
+   :param featureGroupTableName: The table name of the Batch Prediction output feature group.
    :type featureGroupTableName: str
    :param summaryFeatureGroupTableName: The table name of the metrics summary feature group output by Batch Prediction.
    :type summaryFeatureGroupTableName: str
@@ -186,7 +186,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_feature_group_output(table_name)
+   .. py:method:: set_feature_group_output(table_name = None)
 
       Creates a feature group and sets it as the batch prediction output.
 
@@ -208,7 +208,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_feature_group(feature_group_type, feature_group_id = None)
+   .. py:method:: set_feature_group(feature_group_type = None, feature_group_id = None)
 
       Sets the batch prediction input feature group.
 
@@ -221,7 +221,7 @@ Classes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_dataset_remap(dataset_id_remap)
+   .. py:method:: set_dataset_remap(dataset_id_remap = None)
 
       For the purpose of this batch prediction, will swap out datasets in the training feature groups
 

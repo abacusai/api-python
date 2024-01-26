@@ -24,7 +24,7 @@ class BatchPrediction(AbstractApiClass):
             fileOutputFormat (str): The format of the batch prediction output (CSV or JSON).
             connectorType (str): Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR.
             legacyInputLocation (str): The location of the input data.
-            featureGroupTableName (str): The table name of the Batch Prediction feature group.
+            featureGroupTableName (str): The table name of the Batch Prediction output feature group.
             summaryFeatureGroupTableName (str): The table name of the metrics summary feature group output by Batch Prediction.
             csvInputPrefix (str): A prefix to prepend to the input columns, only applies when output format is CSV.
             csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV.
@@ -183,7 +183,7 @@ class BatchPrediction(AbstractApiClass):
         """
         return self.client.set_batch_prediction_database_connector_output(self.batch_prediction_id, database_connector_id, database_output_config)
 
-    def set_feature_group_output(self, table_name: str):
+    def set_feature_group_output(self, table_name: str = None):
         """
         Creates a feature group and sets it as the batch prediction output.
 
@@ -207,7 +207,7 @@ class BatchPrediction(AbstractApiClass):
         """
         return self.client.set_batch_prediction_output_to_console(self.batch_prediction_id)
 
-    def set_feature_group(self, feature_group_type: str, feature_group_id: str = None):
+    def set_feature_group(self, feature_group_type: str = None, feature_group_id: str = None):
         """
         Sets the batch prediction input feature group.
 
@@ -220,7 +220,7 @@ class BatchPrediction(AbstractApiClass):
         """
         return self.client.set_batch_prediction_feature_group(self.batch_prediction_id, feature_group_type, feature_group_id)
 
-    def set_dataset_remap(self, dataset_id_remap: dict):
+    def set_dataset_remap(self, dataset_id_remap: dict = None):
         """
         For the purpose of this batch prediction, will swap out datasets in the training feature groups
 

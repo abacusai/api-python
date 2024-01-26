@@ -71,6 +71,7 @@ Classes
    abacusai.api_class.OneDriveDatasetConfig
    abacusai.api_class.SharepointDatasetConfig
    abacusai.api_class.ZendeskDatasetConfig
+   abacusai.api_class.AbacusUsageMetricsDatasetConfig
    abacusai.api_class._DatasetConfigFactory
    abacusai.api_class.ApiClass
    abacusai.api_class.VectorStoreTextEncoder
@@ -103,6 +104,8 @@ Classes
    abacusai.api_class.ForecastingLocalScaling
    abacusai.api_class.ForecastingFillMethod
    abacusai.api_class.ForecastingQuanitlesExtensionMethod
+   abacusai.api_class.TimeseriesAnomalyDataSplitType
+   abacusai.api_class.TimeseriesAnomalyTypeOfAnomaly
    abacusai.api_class.NERObjective
    abacusai.api_class.NERModelType
    abacusai.api_class.NLPDocumentFormat
@@ -1574,6 +1577,17 @@ Classes
 
 
 
+.. py:class:: AbacusUsageMetricsDatasetConfig
+
+
+   Bases: :py:obj:`DatasetConfig`
+
+   Dataset config for Abacus Usage Metrics Application Connector
+
+   .. py:method:: __post_init__()
+
+
+
 .. py:class:: _DatasetConfigFactory
 
 
@@ -2919,6 +2933,46 @@ Classes
       
 
 
+.. py:class:: TimeseriesAnomalyDataSplitType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: AUTO
+      :value: 'Automatic Time Based'
+
+      
+
+   .. py:attribute:: TIMESTAMP
+      :value: 'Fixed Timestamp Based'
+
+      
+
+
+.. py:class:: TimeseriesAnomalyTypeOfAnomaly
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: HIGH_PEAK
+      :value: 'high_peak'
+
+      
+
+   .. py:attribute:: LOW_PEAK
+      :value: 'low_peak'
+
+      
+
+
 .. py:class:: NERObjective
 
 
@@ -3155,6 +3209,11 @@ Classes
 
    .. py:attribute:: TEAMS
       :value: 'TEAMS'
+
+      
+
+   .. py:attribute:: ABACUSUSAGEMETRICS
+      :value: 'ABACUSUSAGEMETRICS'
 
       
 
@@ -5608,13 +5667,17 @@ Classes
    Training config for the TS_ANOMALY problem type
 
    Args:
-   type_of_split: Type of data splitting into train/test.
+   type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
    test_start (str): Limit training data to dates before the given test start.
    test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-
+   fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
+   handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
+   timeseries_frequency (str): set this to control frequency of filling missing values
+   min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
+   anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
 
    .. py:attribute:: type_of_split
-      :type: str
+      :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
 
       
 
@@ -5625,6 +5688,31 @@ Classes
 
    .. py:attribute:: test_split
       :type: int
+
+      
+
+   .. py:attribute:: fill_missing_values
+      :type: List[dict]
+
+      
+
+   .. py:attribute:: handle_zeros_as_missing_values
+      :type: bool
+
+      
+
+   .. py:attribute:: timeseries_frequency
+      :type: str
+
+      
+
+   .. py:attribute:: min_samples_in_normal_region
+      :type: int
+
+      
+
+   .. py:attribute:: anomaly_type
+      :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
 
       
 
@@ -6882,11 +6970,6 @@ Classes
 
    Helper class that provides a standard way to create an ABC using
    inheritance.
-
-   .. py:attribute:: connector_type
-      :type: abacusai.api_class.enums.ConnectorType
-
-      
 
    .. py:attribute:: database_connector_id
       :type: str

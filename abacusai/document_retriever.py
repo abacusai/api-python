@@ -54,7 +54,7 @@ class DocumentRetriever(AbstractApiClass):
                 self.indexing_required, 'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         Updates an existing document retriever.
 
@@ -114,7 +114,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         return self.client.list_document_retriever_versions(self.document_retriever_id, limit, start_after_version)
 
-    def get_document_snippet(self, document_id: str, start_word_index: int = None, end_word_index: int = None):
+    def get_document_snippet(self, document_id: str = None, start_word_index: int = None, end_word_index: int = None):
         """
         Get a snippet from documents in the document retriever.
 

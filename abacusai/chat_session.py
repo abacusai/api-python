@@ -66,7 +66,7 @@ class ChatSession(AbstractApiClass):
         """
         return self.client.get_chat_session(self.chat_session_id)
 
-    def delete_chat_message(self, message_index: int):
+    def delete_chat_message(self, message_index: int = None):
         """
         Deletes a message in a chat session and its associated response.
 
@@ -84,7 +84,7 @@ class ChatSession(AbstractApiClass):
         """
         return self.client.export_chat_session(self.chat_session_id)
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         Renames a chat session with Data Science Co-pilot.
 

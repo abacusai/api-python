@@ -39,7 +39,7 @@ Classes
       :type \*\*kwargs: dict
 
 
-   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_token = None, deployment_id = None, query_data = None, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
@@ -55,7 +55,7 @@ Classes
       :type result_columns: list
 
 
-   .. py:method:: predict(deployment_token, deployment_id, query_data)
+   .. py:method:: predict(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a prediction for Predictive Modeling
 
@@ -67,7 +67,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_multiple(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a list of predictions for predictive modeling.
 
@@ -79,7 +79,7 @@ Classes
       :type query_data: list
 
 
-   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_from_datasets(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a list of predictions for Predictive Modeling.
 
@@ -91,7 +91,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_lead(deployment_token, deployment_id, query_data, explain_predictions = False, explainer_type = None)
+   .. py:method:: predict_lead(deployment_token = None, deployment_id = None, query_data = None, explain_predictions = False, explainer_type = None)
 
       Returns the probability of a user being a lead based on their interaction with the service/product and their own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
@@ -107,7 +107,7 @@ Classes
       :type explainer_type: str
 
 
-   .. py:method:: predict_churn(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_churn(deployment_token = None, deployment_id = None, query_data = None, explain_predictions = False, explainer_type = None)
 
       Returns the probability of a user to churn out in response to their interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
 
@@ -117,9 +117,13 @@ Classes
       :type deployment_id: str
       :param query_data: This will be a dictionary where the 'key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' will be the unique value of the same entity.
       :type query_data: dict
+      :param explain_predictions: Will explain predictions for churn
+      :type explain_predictions: bool
+      :param explainer_type: Type of explainer to use for explanations
+      :type explainer_type: str
 
 
-   .. py:method:: predict_takeover(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_takeover(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in the dataset mapped to the column mappings in our system (e.g., column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
@@ -131,7 +135,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_fraud(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_fraud(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns the probability of a transaction performed under a specific account being fraudulent or not. Note that the inputs to this method, wherever applicable, should be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
 
@@ -143,7 +147,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(deployment_token, deployment_id, query_data, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_class(deployment_token = None, deployment_id = None, query_data = None, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a classification prediction
 
@@ -169,7 +173,7 @@ Classes
       :type explainer_type: str
 
 
-   .. py:method:: predict_target(deployment_token, deployment_id, query_data, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_target(deployment_token = None, deployment_id = None, query_data = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
@@ -189,7 +193,7 @@ Classes
       :type explainer_type: str
 
 
-   .. py:method:: get_anomalies(deployment_token, deployment_id, threshold = None, histogram = False)
+   .. py:method:: get_anomalies(deployment_token = None, deployment_id = None, threshold = None, histogram = False)
 
       Returns a list of anomalies from the training dataset.
 
@@ -203,7 +207,7 @@ Classes
       :type histogram: bool
 
 
-   .. py:method:: get_timeseries_anomalies(deployment_token, deployment_id, start_timestamp = None, end_timestamp = None, query_data = None, get_all_item_data = False, series_ids = None)
+   .. py:method:: get_timeseries_anomalies(deployment_token = None, deployment_id = None, start_timestamp = None, end_timestamp = None, query_data = None, get_all_item_data = False, series_ids = None)
 
       Returns a list of anomalous timestamps from the training dataset.
 
@@ -223,7 +227,7 @@ Classes
       :type series_ids: list
 
 
-   .. py:method:: is_anomaly(deployment_token, deployment_id, query_data = None)
+   .. py:method:: is_anomaly(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
@@ -235,7 +239,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_event_anomaly_score(deployment_token, deployment_id, query_data = None)
+   .. py:method:: get_event_anomaly_score(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns an anomaly score for an event.
 
@@ -247,7 +251,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None, get_item_data = False)
+   .. py:method:: get_forecast(deployment_token = None, deployment_id = None, query_data = None, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None, get_item_data = False)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -271,7 +275,7 @@ Classes
       :type get_item_data: bool
 
 
-   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False, catalog_id = None)
+   .. py:method:: get_k_nearest(deployment_token = None, deployment_id = None, vector = None, k = None, distance = None, include_score = False, catalog_id = None)
 
       Returns the k nearest neighbors for the provided embedding vector.
 
@@ -291,7 +295,7 @@ Classes
       :type catalog_id: str
 
 
-   .. py:method:: get_multiple_k_nearest(deployment_token, deployment_id, queries)
+   .. py:method:: get_multiple_k_nearest(deployment_token = None, deployment_id = None, queries = None)
 
       Returns the k nearest neighbors for the queries provided.
 
@@ -303,7 +307,7 @@ Classes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
+   .. py:method:: get_labels(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a list of scored labels for a document.
 
@@ -315,7 +319,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
+   .. py:method:: get_entities_from_pdf(deployment_token = None, deployment_id = None, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -335,7 +339,7 @@ Classes
       :type save_extracted_features: bool
 
 
-   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
+   .. py:method:: get_recommendations(deployment_token = None, deployment_id = None, query_data = None, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -367,7 +371,7 @@ Classes
       :type diversity_max_results_per_value: int
 
 
-   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
+   .. py:method:: get_personalized_ranking(deployment_token = None, deployment_id = None, query_data = None, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
       Returns a list of items with personalized promotions for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -385,7 +389,7 @@ Classes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
+   .. py:method:: get_ranked_items(deployment_token = None, deployment_id = None, query_data = None, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -409,7 +413,7 @@ Classes
       :type diversity_max_results_per_value: int
 
 
-   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
+   .. py:method:: get_related_items(deployment_token = None, deployment_id = None, query_data = None, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -431,7 +435,7 @@ Classes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token = None, deployment_id = None, messages = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -459,7 +463,7 @@ Classes
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id = None, message = None, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -489,7 +493,7 @@ Classes
       :type ignore_documents: bool
 
 
-   .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
+   .. py:method:: get_search_results(deployment_token = None, deployment_id = None, query_data = None, num = 15)
 
       Return the most relevant search results to the search query from the uploaded documents.
 
@@ -503,7 +507,7 @@ Classes
       :type num: int
 
 
-   .. py:method:: get_sentiment(deployment_token, deployment_id, document)
+   .. py:method:: get_sentiment(deployment_token = None, deployment_id = None, document = None)
 
       Predicts sentiment on a document
 
@@ -515,7 +519,7 @@ Classes
       :type document: str
 
 
-   .. py:method:: get_entailment(deployment_token, deployment_id, document)
+   .. py:method:: get_entailment(deployment_token = None, deployment_id = None, document = None)
 
       Predicts the classification of the document
 
@@ -527,7 +531,7 @@ Classes
       :type document: str
 
 
-   .. py:method:: get_classification(deployment_token, deployment_id, document)
+   .. py:method:: get_classification(deployment_token = None, deployment_id = None, document = None)
 
       Predicts the classification of the document
 
@@ -539,7 +543,7 @@ Classes
       :type document: str
 
 
-   .. py:method:: get_summary(deployment_token, deployment_id, query_data)
+   .. py:method:: get_summary(deployment_token = None, deployment_id = None, query_data = None)
 
       Returns a JSON of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
@@ -551,7 +555,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_language(deployment_token, deployment_id, query_data)
+   .. py:method:: predict_language(deployment_token = None, deployment_id = None, query_data = None)
 
       Predicts the language of the text
 
@@ -563,7 +567,7 @@ Classes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
+   .. py:method:: get_assignments(deployment_token = None, deployment_id = None, query_data = None, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
 
       Get all positive assignments that match a query.
 
@@ -581,7 +585,7 @@ Classes
       :type include_all_assignments: bool
 
 
-   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
+   .. py:method:: get_alternative_assignments(deployment_token = None, deployment_id = None, query_data = None, add_constraints = None, solve_time_limit_seconds = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -597,7 +601,7 @@ Classes
       :type solve_time_limit_seconds: float
 
 
-   .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
+   .. py:method:: check_constraints(deployment_token = None, deployment_id = None, query_data = None)
 
       Check for any constraints violated by the overrides.
 
@@ -609,7 +613,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob)
+   .. py:method:: predict_with_binary_data(deployment_token = None, deployment_id = None, blob = None)
 
       Make predictions for a given blob, e.g. image, audio
 
@@ -621,7 +625,7 @@ Classes
       :type blob: io.TextIOBase
 
 
-   .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
+   .. py:method:: describe_image(deployment_token = None, deployment_id = None, image = None, categories = None, top_n = None)
 
       Describe the similarity between an image and a list of categories.
 
@@ -637,7 +641,7 @@ Classes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
+   .. py:method:: get_text_from_document(deployment_token = None, deployment_id = None, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -657,7 +661,7 @@ Classes
       :type save_extracted_features: bool
 
 
-   .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
+   .. py:method:: transcribe_audio(deployment_token = None, deployment_id = None, audio = None)
 
       Transcribe the audio
 
@@ -669,7 +673,7 @@ Classes
       :type audio: io.TextIOBase
 
 
-   .. py:method:: classify_image(deployment_token, deployment_id, image = None, doc_id = None)
+   .. py:method:: classify_image(deployment_token = None, deployment_id = None, image = None, doc_id = None)
 
       Classify an image.
 
@@ -683,7 +687,7 @@ Classes
       :type doc_id: str
 
 
-   .. py:method:: classify_pdf(deployment_token, deployment_id, pdf = None)
+   .. py:method:: classify_pdf(deployment_token = None, deployment_id = None, pdf = None)
 
       Returns a classification prediction from a PDF
 
@@ -695,7 +699,7 @@ Classes
       :type pdf: io.TextIOBase
 
 
-   .. py:method:: get_cluster(deployment_token, deployment_id, query_data)
+   .. py:method:: get_cluster(deployment_token = None, deployment_id = None, query_data = None)
 
       Predicts the cluster for given data.
 
@@ -707,7 +711,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: get_objects_from_image(deployment_token, deployment_id, image)
+   .. py:method:: get_objects_from_image(deployment_token = None, deployment_id = None, image = None)
 
       Classify an image.
 
@@ -719,7 +723,7 @@ Classes
       :type image: io.TextIOBase
 
 
-   .. py:method:: score_image(deployment_token, deployment_id, image)
+   .. py:method:: score_image(deployment_token = None, deployment_id = None, image = None)
 
       Score on image.
 
@@ -731,7 +735,7 @@ Classes
       :type image: io.TextIOBase
 
 
-   .. py:method:: transfer_style(deployment_token, deployment_id, source_image, style_image)
+   .. py:method:: transfer_style(deployment_token = None, deployment_id = None, source_image = None, style_image = None)
 
       Change the source image to adopt the visual style from the style image.
 
@@ -745,7 +749,7 @@ Classes
       :type style_image: io.TextIOBase
 
 
-   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
+   .. py:method:: generate_image(deployment_token = None, deployment_id = None, query_data = None)
 
       Generate an image from text prompt.
 
@@ -757,7 +761,7 @@ Classes
       :type query_data: dict
 
 
-   .. py:method:: execute_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None)
+   .. py:method:: execute_agent(deployment_token = None, deployment_id = None, arguments = None, keyword_arguments = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -771,7 +775,7 @@ Classes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None)
+   .. py:method:: execute_conversation_agent(deployment_token = None, deployment_id = None, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -793,7 +797,7 @@ Classes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
+   .. py:method:: lookup_matches(deployment_token = None, deployment_id = None, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 

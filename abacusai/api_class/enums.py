@@ -282,6 +282,17 @@ class ForecastingQuanitlesExtensionMethod(ApiEnum):
     ANCESTRAL_SIMULATION = 'simulation'
 
 
+# Timeseries Anomaly Detection
+class TimeseriesAnomalyDataSplitType(ApiEnum):
+    AUTO = 'Automatic Time Based'
+    TIMESTAMP = 'Fixed Timestamp Based'
+
+
+class TimeseriesAnomalyTypeOfAnomaly(ApiEnum):
+    HIGH_PEAK = 'high_peak'
+    LOW_PEAK = 'low_peak'
+
+
 # Named Entity Recognition
 class NERObjective(ApiEnum):
     LOG_LOSS = 'log_loss'
@@ -338,6 +349,7 @@ class ApplicationConnectorType(ApiEnum):
     SLACK = 'SLACK'
     SHAREPOINT = 'SHAREPOINT'
     TEAMS = 'TEAMS'
+    ABACUSUSAGEMETRICS = 'ABACUSUSAGEMETRICS'
 
 
 class PythonFunctionArgumentType(ApiEnum):

@@ -146,7 +146,7 @@ class ModelMonitor(AbstractApiClass):
         """
         return self.client.list_model_monitor_versions(self.model_monitor_id, limit, start_after_version)
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         Renames a model monitor
 

@@ -1,7 +1,7 @@
 from .return_class import AbstractApiClass
 
 
-class ExternalInviteSuccess(AbstractApiClass):
+class ExternalInvite(AbstractApiClass):
     """
         The response of the invites for different emails
 
@@ -23,7 +23,7 @@ class ExternalInviteSuccess(AbstractApiClass):
     def __repr__(self):
         repr_dict = {f'user_already_in_org': repr(self.user_already_in_org), f'user_already_in_app_group': repr(
             self.user_already_in_app_group), f'user_exists_as_internal': repr(self.user_exists_as_internal), f'successful_invites': repr(self.successful_invites)}
-        class_name = "ExternalInviteSuccess"
+        class_name = "ExternalInvite"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
         return f"{class_name}({repr_str})"

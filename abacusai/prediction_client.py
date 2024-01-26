@@ -30,7 +30,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body=kwargs, server_override=prediction_url)
 
-    def lookup_features(self, deployment_token: str, deployment_id: str, query_data: dict, limit_results: int = None, result_columns: list = None) -> Dict:
+    def lookup_features(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, limit_results: int = None, result_columns: list = None) -> Dict:
         """Returns the feature group deployed in the feature store project.
 
         Args:
@@ -43,7 +43,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
-    def predict(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns a prediction for Predictive Modeling
 
         Args:
@@ -54,7 +54,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list) -> Dict:
+    def predict_multiple(self, deployment_token: str = None, deployment_id: str = None, query_data: list = None) -> Dict:
         """Returns a list of predictions for predictive modeling.
 
         Args:
@@ -65,7 +65,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictMultiple', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_from_datasets(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict_from_datasets(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns a list of predictions for Predictive Modeling.
 
         Args:
@@ -76,7 +76,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictFromDatasets', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_lead(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
+    def predict_lead(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
         """Returns the probability of a user being a lead based on their interaction with the service/product and their own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
         Args:
@@ -89,18 +89,20 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictLead', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
-    def predict_churn(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict_churn(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
         """Returns the probability of a user to churn out in response to their interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
 
         Args:
             deployment_token (str): The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             deployment_id (str): The unique identifier to a deployment created under the project.
-            query_data (dict): This will be a dictionary where the 'key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' will be the unique value of the same entity."""
+            query_data (dict): This will be a dictionary where the 'key' will be the column name (e.g. a column with name 'user_id' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed and the 'value' will be the unique value of the same entity.
+            explain_predictions (bool): Will explain predictions for churn
+            explainer_type (str): Type of explainer to use for explanations"""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token)
-        return self._call_api('predictChurn', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
+        return self._call_api('predictChurn', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
-    def predict_takeover(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict_takeover(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in the dataset mapped to the column mappings in our system (e.g., column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
         Args:
@@ -111,7 +113,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictTakeover', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_fraud(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def predict_fraud(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns the probability of a transaction performed under a specific account being fraudulent or not. Note that the inputs to this method, wherever applicable, should be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
 
         Args:
@@ -122,7 +124,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
+    def predict_class(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
         """Returns a classification prediction
 
         Args:
@@ -140,7 +142,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'thresholds': thresholds, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=prediction_url)
 
-    def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
+    def predict_target(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
         """Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
         Args:
@@ -155,7 +157,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=prediction_url)
 
-    def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False) -> io.BytesIO:
+    def get_anomalies(self, deployment_token: str = None, deployment_id: str = None, threshold: float = None, histogram: bool = False) -> io.BytesIO:
         """Returns a list of anomalies from the training dataset.
 
         Args:
@@ -167,7 +169,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
 
-    def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
+    def get_timeseries_anomalies(self, deployment_token: str = None, deployment_id: str = None, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
         """Returns a list of anomalous timestamps from the training dataset.
 
         Args:
@@ -182,7 +184,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getTimeseriesAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'queryData': query_data, 'getAllItemData': get_all_item_data, 'seriesIds': series_ids}, server_override=prediction_url)
 
-    def is_anomaly(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
+    def is_anomaly(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
         Args:
@@ -193,7 +195,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('isAnomaly', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_event_anomaly_score(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
+    def get_event_anomaly_score(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns an anomaly score for an event.
 
         Args:
@@ -204,7 +206,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getEventAnomalyScore', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None, get_item_data: bool = False) -> Dict:
+    def get_forecast(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None, get_item_data: bool = False) -> Dict:
         """Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
         Args:
@@ -221,7 +223,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type, 'getItemData': get_item_data}, server_override=prediction_url)
 
-    def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
+    def get_k_nearest(self, deployment_token: str = None, deployment_id: str = None, vector: list = None, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
         """Returns the k nearest neighbors for the provided embedding vector.
 
         Args:
@@ -236,7 +238,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score, 'catalogId': catalog_id}, server_override=prediction_url)
 
-    def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):
+    def get_multiple_k_nearest(self, deployment_token: str = None, deployment_id: str = None, queries: list = None):
         """Returns the k nearest neighbors for the queries provided.
 
         Args:
@@ -247,7 +249,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries}, server_override=prediction_url)
 
-    def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_labels(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns a list of scored labels for a document.
 
         Args:
@@ -258,7 +260,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False, save_extracted_features: bool = None) -> Dict:
+    def get_entities_from_pdf(self, deployment_token: str = None, deployment_id: str = None, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False, save_extracted_features: bool = None) -> Dict:
         """Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
         Args:
@@ -273,7 +275,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id, 'returnExtractedFeatures': return_extracted_features, 'verbose': verbose, 'saveExtractedFeatures': save_extracted_features}, files={'pdf': pdf}, server_override=prediction_url)
 
-    def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
+    def get_recommendations(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
         """Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
         Args:
@@ -294,7 +296,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getRecommendations', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'excludeItemIds': exclude_item_ids, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items, 'exploreFraction': explore_fraction, 'diversityAttributeName': diversity_attribute_name, 'diversityMaxResultsPerValue': diversity_max_results_per_value}, server_override=prediction_url)
 
-    def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
+    def get_personalized_ranking(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
         """Returns a list of items with personalized promotions for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -308,7 +310,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=prediction_url)
 
-    def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, score_field: str = None, scaling_factors: list = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
+    def get_ranked_items(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, preserve_ranks: list = None, preserve_unknown_items: bool = False, score_field: str = None, scaling_factors: list = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
         """Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -325,7 +327,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'diversityAttributeName': diversity_attribute_name, 'diversityMaxResultsPerValue': diversity_max_results_per_value}, server_override=prediction_url)
 
-    def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None) -> Dict:
+    def get_related_items(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, num_items: int = None, page: int = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None) -> Dict:
         """Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
         Args:
@@ -341,7 +343,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
-    def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_chat_response(self, deployment_token: str = None, deployment_id: str = None, messages: list = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a chat response which continues the conversation based on the input messages and search results.
 
         Args:
@@ -360,7 +362,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_conversation_response(self, deployment_id: str = None, message: str = None, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -378,7 +380,7 @@ class PredictionClient(BaseApiClient):
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response."""
         return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents})
 
-    def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
+    def get_search_results(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
 
         Args:
@@ -390,7 +392,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'num': num}, server_override=prediction_url)
 
-    def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+    def get_sentiment(self, deployment_token: str = None, deployment_id: str = None, document: str = None) -> Dict:
         """Predicts sentiment on a document
 
         Args:
@@ -401,7 +403,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
-    def get_entailment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+    def get_entailment(self, deployment_token: str = None, deployment_id: str = None, document: str = None) -> Dict:
         """Predicts the classification of the document
 
         Args:
@@ -412,7 +414,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
-    def get_classification(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
+    def get_classification(self, deployment_token: str = None, deployment_id: str = None, document: str = None) -> Dict:
         """Predicts the classification of the document
 
         Args:
@@ -423,7 +425,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getClassification', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
-    def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_summary(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Returns a JSON of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
         Args:
@@ -434,7 +436,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getSummary', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
+    def predict_language(self, deployment_token: str = None, deployment_id: str = None, query_data: str = None) -> Dict:
         """Predicts the language of the text
 
         Args:
@@ -445,7 +447,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None, include_all_assignments: bool = False) -> Dict:
+    def get_assignments(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, forced_assignments: dict = None, solve_time_limit_seconds: float = None, include_all_assignments: bool = False) -> Dict:
         """Get all positive assignments that match a query.
 
         Args:
@@ -459,7 +461,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'includeAllAssignments': include_all_assignments}, server_override=prediction_url)
 
-    def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None, solve_time_limit_seconds: float = None) -> Dict:
+    def get_alternative_assignments(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None, add_constraints: list = None, solve_time_limit_seconds: float = None) -> Dict:
         """Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
         Args:
@@ -472,7 +474,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
 
-    def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def check_constraints(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Check for any constraints violated by the overrides.
 
         Args:
@@ -483,7 +485,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase) -> Dict:
+    def predict_with_binary_data(self, deployment_token: str = None, deployment_id: str = None, blob: io.TextIOBase = None) -> Dict:
         """Make predictions for a given blob, e.g. image, audio
 
         Args:
@@ -494,7 +496,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'blob': blob}, server_override=prediction_url)
 
-    def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list, top_n: int = None) -> Dict:
+    def describe_image(self, deployment_token: str = None, deployment_id: str = None, image: io.TextIOBase = None, categories: list = None, top_n: int = None) -> Dict:
         """Describe the similarity between an image and a list of categories.
 
         Args:
@@ -507,7 +509,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'categories': categories, 'topN': top_n}, files={'image': image}, server_override=prediction_url)
 
-    def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, return_detected_images: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
+    def get_text_from_document(self, deployment_token: str = None, deployment_id: str = None, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, return_detected_images: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
         """Generate text from a document
 
         Args:
@@ -522,7 +524,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'adjustDocOrientation': adjust_doc_orientation, 'returnDetectedImages': return_detected_images, 'savePredictedPdf': save_predicted_pdf, 'saveExtractedFeatures': save_extracted_features}, files={'document': document}, server_override=prediction_url)
 
-    def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
+    def transcribe_audio(self, deployment_token: str = None, deployment_id: str = None, audio: io.TextIOBase = None) -> Dict:
         """Transcribe the audio
 
         Args:
@@ -533,7 +535,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('transcribeAudio', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'audio': audio}, server_override=prediction_url)
 
-    def classify_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase = None, doc_id: str = None) -> Dict:
+    def classify_image(self, deployment_token: str = None, deployment_id: str = None, image: io.TextIOBase = None, doc_id: str = None) -> Dict:
         """Classify an image.
 
         Args:
@@ -545,7 +547,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id, 'docId': doc_id}, files={'image': image}, server_override=prediction_url)
 
-    def classify_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None) -> Dict:
+    def classify_pdf(self, deployment_token: str = None, deployment_id: str = None, pdf: io.TextIOBase = None) -> Dict:
         """Returns a classification prediction from a PDF
 
         Args:
@@ -556,7 +558,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('classifyPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'pdf': pdf}, server_override=prediction_url)
 
-    def get_cluster(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
+    def get_cluster(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> Dict:
         """Predicts the cluster for given data.
 
         Args:
@@ -567,7 +569,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getCluster', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
-    def get_objects_from_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
+    def get_objects_from_image(self, deployment_token: str = None, deployment_id: str = None, image: io.TextIOBase = None) -> Dict:
         """Classify an image.
 
         Args:
@@ -578,7 +580,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('getObjectsFromImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=prediction_url)
 
-    def score_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
+    def score_image(self, deployment_token: str = None, deployment_id: str = None, image: io.TextIOBase = None) -> Dict:
         """Score on image.
 
         Args:
@@ -589,7 +591,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('scoreImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'image': image}, server_override=prediction_url)
 
-    def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> io.BytesIO:
+    def transfer_style(self, deployment_token: str = None, deployment_id: str = None, source_image: io.TextIOBase = None, style_image: io.TextIOBase = None) -> io.BytesIO:
         """Change the source image to adopt the visual style from the style image.
 
         Args:
@@ -601,7 +603,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, files={'sourceImage': source_image, 'styleImage': style_image}, streamable_response=True, server_override=prediction_url)
 
-    def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> io.BytesIO:
+    def generate_image(self, deployment_token: str = None, deployment_id: str = None, query_data: dict = None) -> io.BytesIO:
         """Generate an image from text prompt.
 
         Args:
@@ -612,7 +614,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
 
-    def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
+    def execute_agent(self, deployment_token: str = None, deployment_id: str = None, arguments: list = None, keyword_arguments: dict = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
@@ -624,7 +626,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
-    def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None) -> Dict:
+    def execute_conversation_agent(self, deployment_token: str = None, deployment_id: str = None, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
         Args:
@@ -640,7 +642,7 @@ class PredictionClient(BaseApiClient):
             deployment_id, deployment_token)
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos}, server_override=prediction_url)
 
-    def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
+    def lookup_matches(self, deployment_token: str = None, deployment_id: str = None, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None) -> List[DocumentRetrieverLookupResult]:
         """Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
         Original documents are splitted into chunks and stored in the document retriever. This lookup function will return the relevant chunks

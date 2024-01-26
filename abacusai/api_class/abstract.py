@@ -3,6 +3,7 @@ import datetime
 import inspect
 import re
 from abc import ABC
+from copy import deepcopy
 from typing import Any
 
 from .enums import ApiEnum
@@ -137,7 +138,21 @@ class ApiClass(ABC):
     def from_dict(cls, input_dict: dict):
         if input_dict:
             if builder := cls._get_builder():
-                return builder.from_dict(input_dict)
+                config_class_key = None
+                value = next((key for key, val in builder.config_class_map.items() if val.__name__ == cls.__name__), None)
+                input_dict_with_config_key = input_dict
+                if value is not None:
+                    input_dict_with_config_key = deepcopy(input_dict)
+                    if builder.config_abstract_class._upper_snake_case_keys:
+                        config_class_key = upper_snake_case(builder.config_class_key)
+                        if config_class_key not in input_dict_with_config_key:
+                            input_dict_with_config_key[config_class_key] = value
+                    else:
+                        config_class_key = builder.config_class_key
+                        if config_class_key not in input_dict_with_config_key and camel_case(config_class_key) not in input_dict_with_config_key:
+                            input_dict_with_config_key[config_class_key] = value
+
+                return builder.from_dict(input_dict_with_config_key)
             if not cls._upper_snake_case_keys:
                 input_dict = {snake_case(k): v for k, v in input_dict.items()}
             if not cls._support_kwargs:
@@ -156,16 +171,21 @@ class _ApiClassFactory(ABC):
     @classmethod
     def from_dict(cls, config: dict) -> ApiClass:
         support_kwargs = cls.config_abstract_class and cls.config_abstract_class._support_kwargs
-        not_upper_snake_case_keys = cls.config_abstract_class and not cls.config_abstract_class._upper_snake_case_keys
-        config_class_key = cls.config_class_key if (not_upper_snake_case_keys) else camel_case(cls.config_class_key)
-        if not_upper_snake_case_keys and config_class_key not in config and camel_case(config_class_key) in config:
+        is_upper_snake_case_keys = cls.config_abstract_class and cls.config_abstract_class._upper_snake_case_keys
+        config_class_key = upper_snake_case(cls.config_class_key) if is_upper_snake_case_keys else cls.config_class_key
+        # Logic here is that the we keep the config_class_key in snake_case if _upper_snake_case_keys is False else we convert it to upper_snake_case
+        # if _upper_snake_case_keys is False then we check in both casing: 1. snake_case and 2. camel_case
+        if not is_upper_snake_case_keys and config_class_key not in config and camel_case(config_class_key) in config:
             config_class_key = camel_case(config_class_key)
+
         if not support_kwargs and config_class_key not in (config or {}):
             raise KeyError(f'Could not find {config_class_key} in {config}')
         config_class_type = config.get(config_class_key, None)
+
         if isinstance(config_class_type, str):
             config_class_type = config_class_type.upper()
         config_class = cls.config_class_map.get(config_class_type)
+
         if support_kwargs:
             if config_class:
                 field_names = set((field.name) for field in dataclasses.fields(config_class))
@@ -173,7 +193,7 @@ class _ApiClassFactory(ABC):
                 kwargs = {}
                 for k, v in config.items():
                     if snake_case(k) in field_names:
-                        trimmed_config[k] = v
+                        trimmed_config[snake_case(k)] = v
                     else:
                         kwargs[k] = v
                 if len(kwargs):

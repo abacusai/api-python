@@ -32,7 +32,6 @@ class FileConnectorExportConfig(FeatureGroupExportConfig):
 
 @dataclasses.dataclass
 class DatabaseConnectorExportConfig(FeatureGroupExportConfig):
-    connector_type: enums.ConnectorType = dataclasses.field(default=enums.ConnectorType.DATABASE, repr=False)
     database_connector_id: str = dataclasses.field(default=None)
     mode: str = dataclasses.field(default=None)
     object_name: str = dataclasses.field(default=None)

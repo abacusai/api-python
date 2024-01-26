@@ -78,7 +78,7 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: create_snapshot_feature_group(table_name)
+   .. py:method:: create_snapshot_feature_group(table_name = None)
 
       Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
@@ -89,7 +89,7 @@ Classes
       :rtype: FeatureGroup
 
 
-   .. py:method:: export_to_file_connector(location, export_file_format, overwrite = False)
+   .. py:method:: export_to_file_connector(location = None, export_file_format = None, overwrite = False)
 
       Export Feature group to File Connector.
 
@@ -104,7 +104,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_to_database_connector(database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
+   .. py:method:: export_to_database_connector(database_connector_id = None, object_name = None, write_mode = None, database_feature_mapping = None, id_column = None, additional_id_columns = None)
 
       Export Feature group to Database Connector.
 
@@ -125,7 +125,7 @@ Classes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_to_console(export_file_format)
+   .. py:method:: export_to_console(export_file_format = None)
 
       Export Feature group to console.
 

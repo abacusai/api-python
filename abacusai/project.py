@@ -71,7 +71,7 @@ class Project(AbstractApiClass):
         """
         return self.client.describe_project(self.project_id)
 
-    def rename(self, name: str):
+    def rename(self, name: str = None):
         """
         This method renames a project after it is created.
 
@@ -96,7 +96,7 @@ class Project(AbstractApiClass):
         """
         return self.client.delete_project(self.project_id)
 
-    def add_tags(self, tags: list):
+    def add_tags(self, tags: list = None):
         """
         This method adds a tag to a project.
 
@@ -105,7 +105,7 @@ class Project(AbstractApiClass):
         """
         return self.client.add_project_tags(self.project_id, tags)
 
-    def remove_tags(self, tags: list):
+    def remove_tags(self, tags: list = None):
         """
         This method removes a tag from a project.
 
@@ -114,7 +114,7 @@ class Project(AbstractApiClass):
         """
         return self.client.remove_project_tags(self.project_id, tags)
 
-    def set_feature_mapping(self, feature_group_id: str, feature_name: str, feature_mapping: str = None, nested_column_name: str = None):
+    def set_feature_mapping(self, feature_group_id: str = None, feature_name: str = None, feature_mapping: str = None, nested_column_name: str = None):
         """
         Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 
@@ -141,7 +141,7 @@ class Project(AbstractApiClass):
         """
         return self.client.validate_project(self.project_id, feature_group_ids)
 
-    def infer_feature_mappings(self, feature_group_id: str):
+    def infer_feature_mappings(self, feature_group_id: str = None):
         """
         Infer the feature mappings for the feature group in the project based on the problem type.
 
@@ -153,7 +153,7 @@ class Project(AbstractApiClass):
         """
         return self.client.infer_feature_mappings(self.project_id, feature_group_id)
 
-    def describe_feature_group(self, feature_group_id: str):
+    def describe_feature_group(self, feature_group_id: str = None):
         """
         Describe a feature group associated with a project
 
@@ -207,7 +207,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_training_config_options(self.project_id, feature_group_ids, for_retrain, current_training_config)
 
-    def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig], feature_group_ids: list):
+    def create_train_test_data_split_feature_group(self, training_config: Union[dict, TrainingConfig] = None, feature_group_ids: list = None):
         """
         Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
@@ -242,7 +242,7 @@ class Project(AbstractApiClass):
         """
         return self.client.train_model(self.project_id, name, training_config, feature_group_ids, refresh_schedule, custom_algorithms, custom_algorithms_only, custom_algorithm_configs, builtin_algorithms, cpu_size, memory, algorithm_training_configs)
 
-    def create_model_from_python(self, function_source_code: str, train_function_name: str, training_input_tables: list, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False, is_thread_safe: bool = None):
+    def create_model_from_python(self, function_source_code: str = None, train_function_name: str = None, training_input_tables: list = None, predict_function_name: str = None, predict_many_function_name: str = None, initialize_function_name: str = None, name: str = None, cpu_size: str = None, memory: int = None, training_config: Union[dict, TrainingConfig] = None, exclusive_run: bool = False, package_requirements: list = None, use_gpu: bool = False, is_thread_safe: bool = None):
         """
         Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -297,7 +297,7 @@ class Project(AbstractApiClass):
         """
         return self.client.get_custom_train_function_info(self.project_id, feature_group_names_for_training, training_data_parameter_name_override, training_config, custom_algorithm_config)
 
-    def create_model_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None):
+    def create_model_monitor(self, prediction_feature_group_id: str = None, training_feature_group_id: str = None, name: str = None, refresh_schedule: str = None, target_value: str = None, target_value_bias: str = None, target_value_performance: str = None, feature_mappings: dict = None, model_id: str = None, training_feature_mappings: dict = None, feature_group_base_monitor_config: dict = None, feature_group_comparison_monitor_config: dict = None):
         """
         Runs a model monitor for the specified project.
 
@@ -332,7 +332,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_model_monitors(self.project_id)
 
-    def create_vision_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, feature_mappings: dict, training_feature_mappings: dict, target_value_performance: str = None, refresh_schedule: str = None):
+    def create_vision_drift_monitor(self, prediction_feature_group_id: str = None, training_feature_group_id: str = None, name: str = None, feature_mappings: dict = None, training_feature_mappings: dict = None, target_value_performance: str = None, refresh_schedule: str = None):
         """
         Runs a vision drift monitor for the specified project.
 
@@ -350,7 +350,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_vision_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
-    def create_nlp_drift_monitor(self, prediction_feature_group_id: str, training_feature_group_id: str, name: str, feature_mappings: dict, training_feature_mappings: dict, target_value_performance: str = None, refresh_schedule: str = None):
+    def create_nlp_drift_monitor(self, prediction_feature_group_id: str = None, training_feature_group_id: str = None, name: str = None, feature_mappings: dict = None, training_feature_mappings: dict = None, target_value_performance: str = None, refresh_schedule: str = None):
         """
         Runs an NLP drift monitor for the specified project.
 
@@ -368,7 +368,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_nlp_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
-    def create_forecasting_monitor(self, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str = None, refresh_schedule: str = None):
+    def create_forecasting_monitor(self, name: str = None, prediction_feature_group_id: str = None, training_feature_group_id: str = None, training_forecast_config: Union[dict, ForecastingMonitorConfig] = None, prediction_forecast_config: Union[dict, ForecastingMonitorConfig] = None, forecast_frequency: str = None, refresh_schedule: str = None):
         """
         Runs a forecasting monitor for the specified project.
 
@@ -386,7 +386,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_forecasting_monitor(self.project_id, name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency, refresh_schedule)
 
-    def create_eda(self, feature_group_id: str, name: str, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None):
+    def create_eda(self, feature_group_id: str = None, name: str = None, refresh_schedule: str = None, include_collinearity: bool = False, include_data_consistency: bool = False, collinearity_keys: list = None, primary_keys: list = None, data_consistency_test_config: dict = None, data_consistency_reference_config: dict = None, feature_mappings: dict = None, forecast_frequency: str = None):
         """
         Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -432,7 +432,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_holdout_analysis(self.project_id, model_id)
 
-    def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
+    def create_monitor_alert(self, model_monitor_id: str = None, alert_name: str = None, condition_config: Union[dict, AlertConditionConfig] = None, action_config: Union[dict, AlertActionConfig] = None):
         """
         Create a monitor alert for the given conditions and monitor
 
@@ -541,7 +541,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_pipelines(self.project_id)
 
-    def create_graph_dashboard(self, name: str, python_function_ids: list = None):
+    def create_graph_dashboard(self, name: str = None, python_function_ids: list = None):
         """
         Create a plot dashboard given selected python plots
 
@@ -566,7 +566,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_graph_dashboards(self.project_id)
 
-    def list_builtin_algorithms(self, feature_group_ids: list, training_config: Union[dict, TrainingConfig] = None):
+    def list_builtin_algorithms(self, feature_group_ids: list = None, training_config: Union[dict, TrainingConfig] = None):
         """
         Return list of built-in algorithms based on given input data and training config.
 
@@ -591,7 +591,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id, name)
 
-    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False):
+    def create_agent(self, function_source_code: str = None, agent_function_name: str = None, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, feature_group_id: str = None):
         """
         Creates a new AI agent.
 
@@ -603,13 +603,14 @@ class Project(AbstractApiClass):
             package_requirements (list): A list of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             description (str): A description of the agent, including its purpose and instructions.
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
+            feature_group_id (str): The ID of the feature group to use for evaluation.
 
         Returns:
             Agent: The new agent
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, feature_group_id)
 
-    def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
+    def create_document_retriever(self, name: str = None, feature_group_id: str = None, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """
         Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -617,7 +618,7 @@ class Project(AbstractApiClass):
 
 
         Args:
-            name (str): The name of the vector store.
+            name (str): The name of the vector store. Can be up to 120 characters long and can only contain alphanumeric characters and underscores.
             feature_group_id (str): The ID of the feature group that the vector store is associated with.
             document_retriever_config (DocumentRetrieverConfig): The configuration, including chunk_size and chunk_overlap_fraction, for document retrieval.
 
