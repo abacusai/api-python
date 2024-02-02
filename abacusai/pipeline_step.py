@@ -86,7 +86,7 @@ class PipelineStep(AbstractApiClass):
         """
         return self.client.update_pipeline_step(self.pipeline_step_id, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements, cpu_size, memory)
 
-    def rename(self, step_name: str = None):
+    def rename(self, step_name: str):
         """
         Renames a step in a given pipeline.
 

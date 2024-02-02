@@ -79,7 +79,7 @@ class FeatureGroupVersion(AbstractApiClass):
                 'python_function_bindings': self.python_function_bindings, 'indexing_config_warning_msg': self.indexing_config_warning_msg, 'features': self._get_attribute_as_dict(self.features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'code_source': self._get_attribute_as_dict(self.code_source), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config)}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def create_snapshot_feature_group(self, table_name: str = None):
+    def create_snapshot_feature_group(self, table_name: str):
         """
         Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
@@ -91,7 +91,7 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.create_snapshot_feature_group(self.feature_group_version, table_name)
 
-    def export_to_file_connector(self, location: str = None, export_file_format: str = None, overwrite: bool = False):
+    def export_to_file_connector(self, location: str, export_file_format: str, overwrite: bool = False):
         """
         Export Feature group to File Connector.
 
@@ -105,7 +105,7 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.export_feature_group_version_to_file_connector(self.feature_group_version, location, export_file_format, overwrite)
 
-    def export_to_database_connector(self, database_connector_id: str = None, object_name: str = None, write_mode: str = None, database_feature_mapping: dict = None, id_column: str = None, additional_id_columns: list = None):
+    def export_to_database_connector(self, database_connector_id: str, object_name: str, write_mode: str, database_feature_mapping: dict, id_column: str = None, additional_id_columns: list = None):
         """
         Export Feature group to Database Connector.
 
@@ -122,7 +122,7 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.export_feature_group_version_to_database_connector(self.feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column, additional_id_columns)
 
-    def export_to_console(self, export_file_format: str = None):
+    def export_to_console(self, export_file_format: str):
         """
         Export Feature group to console.
 

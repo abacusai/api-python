@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, attachments=None, chatType=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, attachments=None, chatType=None, agentResponse=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54,6 +54,10 @@ Classes
    :type attachments: list
    :param chatType: The type of chat llm that was run for the message.
    :type chatType: str
+   :param agentResponse: Response from the agent. Only for conversation with agents.
+   :type agentResponse: dict
+   :param error: The error message in case of an error.
+   :type error: str
 
    .. py:method:: __repr__()
 

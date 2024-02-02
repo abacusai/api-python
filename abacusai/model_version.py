@@ -115,7 +115,7 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.set_model_objective(self.model_version, metric)
 
-    def query_test_point_predictions(self, algorithm: str = None, to_row: int = None, from_row: int = 0, sql_where_clause: str = ''):
+    def query_test_point_predictions(self, algorithm: str, to_row: int, from_row: int = 0, sql_where_clause: str = ''):
         """
         Query the test points predictions data for a specific algorithm.
 
@@ -151,7 +151,7 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.delete_model_version(self.model_version)
 
-    def export_model_artifact_as_feature_group(self, table_name: str = None, artifact_type: Union[dict, EvalArtifactType] = None):
+    def export_model_artifact_as_feature_group(self, table_name: str, artifact_type: Union[dict, EvalArtifactType] = None):
         """
         Exports metric artifact data for a model as a feature group.
 
@@ -223,7 +223,7 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.get_training_logs(self.model_version, stdout, stderr)
 
-    def export_custom(self, output_location: str = None, algorithm: str = None):
+    def export_custom(self, output_location: str, algorithm: str = None):
         """
         Bundle custom model artifacts to a zip file, and export to the specified location.
 

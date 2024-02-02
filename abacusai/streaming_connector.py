@@ -52,7 +52,7 @@ class StreamingConnector(AbstractApiClass):
         """
         return self.client.verify_streaming_connector(self.streaming_connector_id)
 
-    def rename(self, name: str = None):
+    def rename(self, name: str):
         """
         Renames a Streaming Connector
 

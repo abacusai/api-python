@@ -65,7 +65,7 @@ class OrganizationGroup(AbstractApiClass):
         """
         return self.client.describe_organization_group(self.organization_group_id)
 
-    def add_permission(self, permission: str = None):
+    def add_permission(self, permission: str):
         """
         Adds a permission to the specified Organization Group.
 
@@ -74,7 +74,7 @@ class OrganizationGroup(AbstractApiClass):
         """
         return self.client.add_organization_group_permission(self.organization_group_id, permission)
 
-    def remove_permission(self, permission: str = None):
+    def remove_permission(self, permission: str):
         """
         Removes a permission from the specified Organization Group.
 
@@ -92,7 +92,7 @@ class OrganizationGroup(AbstractApiClass):
         """
         return self.client.delete_organization_group(self.organization_group_id)
 
-    def add_user_to(self, email: str = None):
+    def add_user_to(self, email: str):
         """
         Adds a user to the specified Organization Group.
 
@@ -101,7 +101,7 @@ class OrganizationGroup(AbstractApiClass):
         """
         return self.client.add_user_to_organization_group(self.organization_group_id, email)
 
-    def remove_user_from(self, email: str = None):
+    def remove_user_from(self, email: str):
         """
         Removes a user from an Organization Group.
 

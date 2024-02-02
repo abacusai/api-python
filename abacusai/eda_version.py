@@ -114,7 +114,7 @@ class EdaVersion(AbstractApiClass):
         """
         return self.client.get_collinearity_for_feature(self.eda_version, feature_name)
 
-    def get_feature_association(self, reference_feature_name: str = None, test_feature_name: str = None):
+    def get_feature_association(self, reference_feature_name: str, test_feature_name: str):
         """
         Gets the Feature Association for the given features from the feature group version within the eda_version.
 

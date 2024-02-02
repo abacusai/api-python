@@ -151,7 +151,7 @@ class Dataset(AbstractApiClass):
         """
         return self.client.snapshot_streaming_data(self.dataset_id)
 
-    def set_column_data_type(self, column: str = None, data_type: str = None):
+    def set_column_data_type(self, column: str, data_type: str):
         """
         Set a Dataset's column type.
 
@@ -187,7 +187,7 @@ class Dataset(AbstractApiClass):
         """
         return self.client.get_dataset_schema(self.dataset_id)
 
-    def set_database_connector_config(self, database_connector_id: str = None, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
+    def set_database_connector_config(self, database_connector_id: str, object_name: str = None, columns: str = None, query_arguments: str = None, sql_query: str = None):
         """
         Sets database connector config for a dataset. This method is currently only supported for streaming datasets.
 

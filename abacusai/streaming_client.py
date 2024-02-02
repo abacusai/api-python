@@ -15,7 +15,7 @@ class StreamingClient(BaseApiClient):
         if client_options and client_options.server:
             self.prediction_endpoint = client_options.server
 
-    def upsert_item_embeddings(self, streaming_token: str = None, model_id: str = None, item_id: str = None, vector: list = None, catalog_id: str = None):
+    def upsert_item_embeddings(self, streaming_token: str, model_id: str, item_id: str, vector: list, catalog_id: str = None):
         """Upserts an embedding vector for an item id for a model_id.
 
         Args:
@@ -28,7 +28,7 @@ class StreamingClient(BaseApiClient):
             streaming_token, model_id=model_id)
         return self._call_api('upsertItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'itemId': item_id, 'vector': vector, 'catalogId': catalog_id}, server_override=prediction_url)
 
-    def delete_item_embeddings(self, streaming_token: str = None, model_id: str = None, item_ids: list = None, catalog_id: str = None):
+    def delete_item_embeddings(self, streaming_token: str, model_id: str, item_ids: list, catalog_id: str = None):
         """Deletes KNN embeddings for a list of item IDs for a given model ID.
 
         Args:
@@ -40,7 +40,7 @@ class StreamingClient(BaseApiClient):
             streaming_token, model_id=model_id)
         return self._call_api('deleteItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'itemIds': item_ids, 'catalogId': catalog_id}, server_override=prediction_url)
 
-    def upsert_multiple_item_embeddings(self, streaming_token: str = None, model_id: str = None, upserts: list = None, catalog_id: str = None):
+    def upsert_multiple_item_embeddings(self, streaming_token: str, model_id: str, upserts: list, catalog_id: str = None):
         """Upserts a knn embedding for multiple item ids for a model_id.
 
         Args:
@@ -52,7 +52,7 @@ class StreamingClient(BaseApiClient):
             streaming_token, model_id=model_id)
         return self._call_api('upsertMultipleItemEmbeddings', 'POST', query_params={'streamingToken': streaming_token}, body={'modelId': model_id, 'upserts': upserts, 'catalogId': catalog_id}, server_override=prediction_url)
 
-    def append_data(self, feature_group_id: str = None, streaming_token: str = None, data: dict = None):
+    def append_data(self, feature_group_id: str, streaming_token: str, data: dict):
         """Appends new data into the feature group for a given lookup key recordId.
 
         Args:
@@ -63,7 +63,7 @@ class StreamingClient(BaseApiClient):
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('appendData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
-    def upsert_multiple_data(self, feature_group_id: str = None, streaming_token: str = None, data: list = None):
+    def upsert_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
         """Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
         Args:
@@ -74,7 +74,7 @@ class StreamingClient(BaseApiClient):
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('upsertMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
-    def append_multiple_data(self, feature_group_id: str = None, streaming_token: str = None, data: list = None):
+    def append_multiple_data(self, feature_group_id: str, streaming_token: str, data: list):
         """Appends new data into the feature group for a given lookup key recordId.
 
         Args:

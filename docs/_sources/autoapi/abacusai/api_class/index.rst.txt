@@ -2507,6 +2507,11 @@ Classes
 
       
 
+   .. py:attribute:: HTML
+      :value: 'HTML'
+
+      
+
 
 .. py:class:: ExperimentationMode
 
@@ -5342,6 +5347,8 @@ Classes
    :type behavior_instructions: str
    :param response_instructions: Customize instructions for what the LLM responses should look like.
    :type response_instructions: str
+   :param lookup_rewrite_instructions: Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
+   :type lookup_rewrite_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
    :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
@@ -5349,6 +5356,8 @@ Classes
    :type data_prompt_context: str
    :param hide_generated_sql: When running data queries, hides the generated SQL in the response and will just return the table.
    :type hide_generated_sql: bool
+   :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
+   :type disable_data_summarization: bool
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5385,6 +5394,11 @@ Classes
 
       
 
+   .. py:attribute:: lookup_rewrite_instructions
+      :type: str
+
+      
+
    .. py:attribute:: max_search_results
       :type: int
 
@@ -5401,6 +5415,11 @@ Classes
       
 
    .. py:attribute:: hide_generated_sql
+      :type: bool
+
+      
+
+   .. py:attribute:: disable_data_summarization
       :type: bool
 
       

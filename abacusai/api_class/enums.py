@@ -184,6 +184,7 @@ class FileFormat(ApiEnum):
     NUMBERS = 'NUMBERS'
     PPTX = 'PPTX'
     PPT = 'PPT'
+    HTML = 'HTML'
 
 
 class ExperimentationMode(ApiEnum):

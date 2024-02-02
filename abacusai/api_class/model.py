@@ -442,10 +442,12 @@ class ChatLLMTrainingConfig(TrainingConfig):
         include_general_knowledge (bool): Allow the LLM to rely not just on search results, but to fall back on general knowledge.
         behavior_instructions (str): Customize the overall role instructions for the LLM.
         response_instructions (str): Customize instructions for what the LLM responses should look like.
+        lookup_rewrite_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
         data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
         data_prompt_context (str): Prompt context for the data feature group ids.
         hide_generated_sql (bool): When running data queries, hides the generated SQL in the response and will just return the table.
+        disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -454,10 +456,12 @@ class ChatLLMTrainingConfig(TrainingConfig):
     include_general_knowledge: bool = None
     behavior_instructions: str = None
     response_instructions: str = None
+    lookup_rewrite_instructions: str = None
     max_search_results: int = None
     data_feature_group_ids: List[str] = None
     data_prompt_context: str = None
     hide_generated_sql: bool = None
+    disable_data_summarization: bool = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

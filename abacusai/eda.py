@@ -102,7 +102,7 @@ class Eda(AbstractApiClass):
         """
         return self.client.list_eda_versions(self.eda_id, limit, start_after_version)
 
-    def rename(self, name: str = None):
+    def rename(self, name: str):
         """
         Renames an EDA
 

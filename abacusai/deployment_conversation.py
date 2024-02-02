@@ -85,7 +85,7 @@ class DeploymentConversation(AbstractApiClass):
         """
         return self.client.clear_deployment_conversation(self.deployment_conversation_id, external_session_id, deployment_id, deployment_token, user_message_indices)
 
-    def set_feedback(self, message_index: int = None, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None, deployment_token: str = None):
+    def set_feedback(self, message_index: int, is_useful: bool = None, is_not_useful: bool = None, feedback: str = None, feedback_type: str = None, deployment_id: str = None, deployment_token: str = None):
         """
         Sets a deployment conversation message as useful or not useful
 
@@ -100,7 +100,7 @@ class DeploymentConversation(AbstractApiClass):
         """
         return self.client.set_deployment_conversation_feedback(self.deployment_conversation_id, message_index, is_useful, is_not_useful, feedback, feedback_type, deployment_id, deployment_token)
 
-    def rename(self, name: str = None, deployment_id: str = None, deployment_token: str = None):
+    def rename(self, name: str, deployment_id: str = None, deployment_token: str = None):
         """
         Rename a Deployment Conversation.
 

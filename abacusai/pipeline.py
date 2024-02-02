@@ -102,7 +102,7 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.update_pipeline(self.pipeline_id, project_id, pipeline_variable_mappings, cron, is_prod)
 
-    def rename(self, pipeline_name: str = None):
+    def rename(self, pipeline_name: str):
         """
         Renames a pipeline.
 
@@ -147,7 +147,7 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.run_pipeline(self.pipeline_id, pipeline_variable_mappings)
 
-    def create_step(self, step_name: str = None, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None):
+    def create_step(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None):
         """
         Creates a step in a given pipeline.
 
@@ -167,7 +167,7 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.create_pipeline_step(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements, cpu_size, memory)
 
-    def describe_step_by_name(self, step_name: str = None):
+    def describe_step_by_name(self, step_name: str):
         """
         Describes a pipeline step by the step name.
 

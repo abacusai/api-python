@@ -146,7 +146,7 @@ class FeatureGroup(AbstractApiClass):
                 'template_bindings': self.template_bindings, 'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'use_gpu': self.use_gpu, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'explanation': self._get_attribute_as_dict(self.explanation), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def add_to_project(self, project_id: str = None, feature_group_type: str = 'CUSTOM_TABLE'):
+    def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """
         Adds a feature group to a project.
 
@@ -156,7 +156,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_feature_group_to_project(self.feature_group_id, project_id, feature_group_type)
 
-    def set_project_config(self, project_id: str = None, project_config: dict = None):
+    def set_project_config(self, project_id: str, project_config: dict = None):
         """
         Sets a feature group's project config
 
@@ -166,7 +166,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_project_feature_group_config(self.feature_group_id, project_id, project_config)
 
-    def get_project_config(self, project_id: str = None):
+    def get_project_config(self, project_id: str):
         """
         Gets a feature group's project config
 
@@ -178,7 +178,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_project_feature_group_config(self.feature_group_id, project_id)
 
-    def remove_from_project(self, project_id: str = None):
+    def remove_from_project(self, project_id: str):
         """
         Removes a feature group from a project.
 
@@ -187,7 +187,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_feature_group_from_project(self.feature_group_id, project_id)
 
-    def set_type(self, project_id: str = None, feature_group_type: str = 'CUSTOM_TABLE'):
+    def set_type(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """
         Update the feature group type in a project. The feature group must already be added to the project.
 
@@ -225,7 +225,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.verify_and_describe_annotation(self.feature_group_id, feature_name, doc_id, feature_group_row_identifier)
 
-    def update_annotation_status(self, feature_name: str = None, status: str = None, doc_id: str = None, feature_group_row_identifier: str = None, save_metadata: bool = False):
+    def update_annotation_status(self, feature_name: str, status: str, doc_id: str = None, feature_group_row_identifier: str = None, save_metadata: bool = False):
         """
         Update the status of an annotation entry.
 
@@ -241,7 +241,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_annotation_status(self.feature_group_id, feature_name, status, doc_id, feature_group_row_identifier, save_metadata)
 
-    def get_document_to_annotate(self, project_id: str = None, feature_name: str = None, feature_group_row_identifier: str = None, get_previous: bool = False):
+    def get_document_to_annotate(self, project_id: str, feature_name: str, feature_group_row_identifier: str = None, get_previous: bool = False):
         """
         Get an available document that needs to be annotated for a annotation feature group.
 
@@ -269,7 +269,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_annotations_status(self.feature_group_id, feature_name, check_for_materialization)
 
-    def import_annotation_labels(self, file: io.TextIOBase = None, annotation_type: str = None):
+    def import_annotation_labels(self, file: io.TextIOBase, annotation_type: str):
         """
         Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
 
@@ -282,7 +282,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.import_annotation_labels(self.feature_group_id, file, annotation_type)
 
-    def create_sampling(self, table_name: str = None, sampling_config: Union[dict, SamplingConfig] = None, description: str = None):
+    def create_sampling(self, table_name: str, sampling_config: Union[dict, SamplingConfig], description: str = None):
         """
         Creates a new Feature Group defined as a sample of rows from another Feature Group.
 
@@ -299,7 +299,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_sampling_feature_group(self.feature_group_id, table_name, sampling_config, description)
 
-    def set_sampling_config(self, sampling_config: Union[dict, SamplingConfig] = None):
+    def set_sampling_config(self, sampling_config: Union[dict, SamplingConfig]):
         """
         Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
@@ -311,7 +311,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_group_sampling_config(self.feature_group_id, sampling_config)
 
-    def set_merge_config(self, merge_config: Union[dict, MergeConfig] = None):
+    def set_merge_config(self, merge_config: Union[dict, MergeConfig]):
         """
         Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
@@ -323,7 +323,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_group_merge_config(self.feature_group_id, merge_config)
 
-    def set_operator_config(self, operator_config: dict = None):
+    def set_operator_config(self, operator_config: dict):
         """
         Set a OperatorFeatureGroup’s operator config to the values provided.
 
@@ -332,7 +332,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_group_operator_config(self.feature_group_id, operator_config)
 
-    def set_schema(self, schema: list = None):
+    def set_schema(self, schema: list):
         """
         Creates a new schema and points the feature group to the new feature group schema ID.
 
@@ -353,7 +353,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_feature_group_schema(self.feature_group_id, project_id)
 
-    def create_feature(self, name: str = None, select_expression: str = None):
+    def create_feature(self, name: str, select_expression: str):
         """
         Creates a new feature in a Feature Group from a SQL select statement.
 
@@ -366,7 +366,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_feature(self.feature_group_id, name, select_expression)
 
-    def add_tag(self, tag: str = None):
+    def add_tag(self, tag: str):
         """
         Adds a tag to the feature group
 
@@ -375,7 +375,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_feature_group_tag(self.feature_group_id, tag)
 
-    def remove_tag(self, tag: str = None):
+    def remove_tag(self, tag: str):
         """
         Removes a tag from the specified feature group.
 
@@ -384,7 +384,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_feature_group_tag(self.feature_group_id, tag)
 
-    def add_annotatable_feature(self, name: str = None, annotation_type: str = None):
+    def add_annotatable_feature(self, name: str, annotation_type: str):
         """
         Add an annotatable feature in a Feature Group
 
@@ -397,7 +397,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_annotatable_feature(self.feature_group_id, name, annotation_type)
 
-    def set_feature_as_annotatable_feature(self, feature_name: str = None, annotation_type: str = None, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None):
+    def set_feature_as_annotatable_feature(self, feature_name: str, annotation_type: str, feature_group_row_identifier_feature: str = None, doc_id_feature: str = None):
         """
         Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
@@ -412,7 +412,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_as_annotatable_feature(self.feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature, doc_id_feature)
 
-    def set_annotation_status_feature(self, feature_name: str = None):
+    def set_annotation_status_feature(self, feature_name: str):
         """
         Sets a feature as the annotation status feature for a feature group.
 
@@ -424,7 +424,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_annotation_status_feature(self.feature_group_id, feature_name)
 
-    def unset_feature_as_annotatable_feature(self, feature_name: str = None):
+    def unset_feature_as_annotatable_feature(self, feature_name: str):
         """
         Unsets a feature as annotatable
 
@@ -436,7 +436,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.unset_feature_as_annotatable_feature(self.feature_group_id, feature_name)
 
-    def add_annotation_label(self, label_name: str = None, annotation_type: str = None, label_definition: str = None):
+    def add_annotation_label(self, label_name: str, annotation_type: str, label_definition: str = None):
         """
         Adds an annotation label
 
@@ -450,7 +450,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_feature_group_annotation_label(self.feature_group_id, label_name, annotation_type, label_definition)
 
-    def remove_annotation_label(self, label_name: str = None):
+    def remove_annotation_label(self, label_name: str):
         """
         Removes an annotation label
 
@@ -462,7 +462,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_feature_group_annotation_label(self.feature_group_id, label_name)
 
-    def add_feature_tag(self, feature: str = None, tag: str = None):
+    def add_feature_tag(self, feature: str, tag: str):
         """
         Adds a tag on a feature
 
@@ -472,7 +472,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_feature_tag(self.feature_group_id, feature, tag)
 
-    def remove_feature_tag(self, feature: str = None, tag: str = None):
+    def remove_feature_tag(self, feature: str, tag: str):
         """
         Removes a tag from a feature
 
@@ -482,7 +482,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_feature_tag(self.feature_group_id, feature, tag)
 
-    def create_nested_feature(self, nested_feature_name: str = None, table_name: str = None, using_clause: str = None, where_clause: str = None, order_clause: str = None):
+    def create_nested_feature(self, nested_feature_name: str, table_name: str, using_clause: str, where_clause: str = None, order_clause: str = None):
         """
         Creates a new nested feature in a feature group from a SQL statement.
 
@@ -498,7 +498,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_nested_feature(self.feature_group_id, nested_feature_name, table_name, using_clause, where_clause, order_clause)
 
-    def update_nested_feature(self, nested_feature_name: str = None, table_name: str = None, using_clause: str = None, where_clause: str = None, order_clause: str = None, new_nested_feature_name: str = None):
+    def update_nested_feature(self, nested_feature_name: str, table_name: str = None, using_clause: str = None, where_clause: str = None, order_clause: str = None, new_nested_feature_name: str = None):
         """
         Updates a previously existing nested feature in a feature group.
 
@@ -515,7 +515,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_nested_feature(self.feature_group_id, nested_feature_name, table_name, using_clause, where_clause, order_clause, new_nested_feature_name)
 
-    def delete_nested_feature(self, nested_feature_name: str = None):
+    def delete_nested_feature(self, nested_feature_name: str):
         """
         Delete a nested feature.
 
@@ -527,7 +527,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.delete_nested_feature(self.feature_group_id, nested_feature_name)
 
-    def create_point_in_time_feature(self, feature_name: str = None, history_table_name: str = None, aggregation_keys: list = None, timestamp_key: str = None, historical_timestamp_key: str = None, expression: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
+    def create_point_in_time_feature(self, feature_name: str, history_table_name: str, aggregation_keys: list, timestamp_key: str, historical_timestamp_key: str, expression: str, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
         """
         Creates a new point in time feature in a feature group using another historical feature group, window spec, and aggregate expression.
 
@@ -553,7 +553,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position)
 
-    def update_point_in_time_feature(self, feature_name: str = None, history_table_name: str = None, aggregation_keys: list = None, timestamp_key: str = None, historical_timestamp_key: str = None, expression: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = None, lookback_count: int = None, lookback_until_position: int = None, new_feature_name: str = None):
+    def update_point_in_time_feature(self, feature_name: str, history_table_name: str = None, aggregation_keys: list = None, timestamp_key: str = None, historical_timestamp_key: str = None, expression: str = None, lookback_window_seconds: float = None, lookback_window_lag_seconds: float = None, lookback_count: int = None, lookback_until_position: int = None, new_feature_name: str = None):
         """
         Updates an existing Point-in-Time (PiT) feature in a feature group. See `createPointInTimeFeature` for detailed semantics.
 
@@ -575,7 +575,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_point_in_time_feature(self.feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds, lookback_window_lag_seconds, lookback_count, lookback_until_position, new_feature_name)
 
-    def create_point_in_time_group(self, group_name: str = None, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
+    def create_point_in_time_group(self, group_name: str, window_key: str, aggregation_keys: list, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = 0, lookback_count: int = None, lookback_until_position: int = 0):
         """
         Create a Point-in-Time Group
 
@@ -596,7 +596,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
 
-    def generate_point_in_time_features(self, group_name: str = None, columns: list = None, window_functions: list = None, prefix: str = None):
+    def generate_point_in_time_features(self, group_name: str, columns: list, window_functions: list, prefix: str = None):
         """
         Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
 
@@ -611,7 +611,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.generate_point_in_time_features(self.feature_group_id, group_name, columns, window_functions, prefix)
 
-    def update_point_in_time_group(self, group_name: str = None, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None):
+    def update_point_in_time_group(self, group_name: str, window_key: str = None, aggregation_keys: list = None, history_table_name: str = None, history_window_key: str = None, history_aggregation_keys: list = None, lookback_window: float = None, lookback_window_lag: float = None, lookback_count: int = None, lookback_until_position: int = None):
         """
         Update Point-in-Time Group
 
@@ -632,7 +632,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_point_in_time_group(self.feature_group_id, group_name, window_key, aggregation_keys, history_table_name, history_window_key, history_aggregation_keys, lookback_window, lookback_window_lag, lookback_count, lookback_until_position)
 
-    def delete_point_in_time_group(self, group_name: str = None):
+    def delete_point_in_time_group(self, group_name: str):
         """
         Delete point in time group
 
@@ -644,7 +644,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.delete_point_in_time_group(self.feature_group_id, group_name)
 
-    def create_point_in_time_group_feature(self, group_name: str = None, name: str = None, expression: str = None):
+    def create_point_in_time_group_feature(self, group_name: str, name: str, expression: str):
         """
         Create point in time group feature
 
@@ -658,7 +658,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.create_point_in_time_group_feature(self.feature_group_id, group_name, name, expression)
 
-    def update_point_in_time_group_feature(self, group_name: str = None, name: str = None, expression: str = None):
+    def update_point_in_time_group_feature(self, group_name: str, name: str, expression: str):
         """
         Update a feature's SQL expression in a point in time group
 
@@ -672,7 +672,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_point_in_time_group_feature(self.feature_group_id, group_name, name, expression)
 
-    def set_feature_type(self, feature: str = None, feature_type: str = None):
+    def set_feature_type(self, feature: str, feature_type: str):
         """
         Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
@@ -685,7 +685,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.set_feature_type(self.feature_group_id, feature, feature_type)
 
-    def invalidate_streaming_data(self, invalid_before_timestamp: int = None):
+    def invalidate_streaming_data(self, invalid_before_timestamp: int):
         """
         Invalidates all streaming data with timestamp before invalidBeforeTimestamp
 
@@ -694,7 +694,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.invalidate_streaming_feature_group_data(self.feature_group_id, invalid_before_timestamp)
 
-    def concatenate_data(self, source_feature_group_id: str = None, merge_type: str = 'UNION', replace_until_timestamp: int = None, skip_materialize: bool = False):
+    def concatenate_data(self, source_feature_group_id: str, merge_type: str = 'UNION', replace_until_timestamp: int = None, skip_materialize: bool = False):
         """
         Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
@@ -784,7 +784,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_template_bindings(self.feature_group_id, template_bindings)
 
-    def update_python_function_bindings(self, python_function_bindings: list = None):
+    def update_python_function_bindings(self, python_function_bindings: list):
         """
         Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
@@ -793,7 +793,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_python_function_bindings(self.feature_group_id, python_function_bindings)
 
-    def update_python_function(self, python_function_name: str = None, python_function_bindings: list = []):
+    def update_python_function(self, python_function_name: str, python_function_bindings: list = []):
         """
         Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -807,7 +807,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_python_function(self.feature_group_id, python_function_name, python_function_bindings)
 
-    def update_sql_definition(self, sql: str = None):
+    def update_sql_definition(self, sql: str):
         """
         Updates the SQL statement for a feature group.
 
@@ -819,7 +819,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_sql_definition(self.feature_group_id, sql)
 
-    def update_dataset_feature_expression(self, feature_expression: str = None):
+    def update_dataset_feature_expression(self, feature_expression: str):
         """
         Updates the SQL feature expression for a Dataset FeatureGroup's custom features
 
@@ -851,7 +851,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.update_feature_group_function_definition(self.feature_group_id, function_source_code, function_name, input_feature_groups, cpu_size, memory, package_requirements, use_original_csv_names, python_function_bindings, use_gpu)
 
-    def update_feature(self, name: str = None, select_expression: str = None, new_name: str = None):
+    def update_feature(self, name: str, select_expression: str = None, new_name: str = None):
         """
         Modifies an existing feature in a feature group.
 
@@ -898,7 +898,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.list_feature_group_modifiers(self.feature_group_id)
 
-    def add_user_to_modifiers(self, email: str = None):
+    def add_user_to_modifiers(self, email: str):
         """
         Adds a user to a feature group.
 
@@ -907,7 +907,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_user_to_feature_group_modifiers(self.feature_group_id, email)
 
-    def add_organization_group_to_modifiers(self, organization_group_id: str = None):
+    def add_organization_group_to_modifiers(self, organization_group_id: str):
         """
         Add OrganizationGroup to a feature group modifiers list
 
@@ -916,7 +916,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.add_organization_group_to_feature_group_modifiers(self.feature_group_id, organization_group_id)
 
-    def remove_user_from_modifiers(self, email: str = None):
+    def remove_user_from_modifiers(self, email: str):
         """
         Removes a user from a specified feature group.
 
@@ -925,7 +925,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_user_from_feature_group_modifiers(self.feature_group_id, email)
 
-    def remove_organization_group_from_modifiers(self, organization_group_id: str = None):
+    def remove_organization_group_from_modifiers(self, organization_group_id: str):
         """
         Removes an OrganizationGroup from a feature group modifiers list
 
@@ -934,7 +934,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.remove_organization_group_from_feature_group_modifiers(self.feature_group_id, organization_group_id)
 
-    def delete_feature(self, name: str = None):
+    def delete_feature(self, name: str):
         """
         Removes a feature from the feature group.
 
@@ -980,7 +980,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.list_feature_group_versions(self.feature_group_id, limit, start_after_version)
 
-    def create_template(self, name: str = None, template_sql: str = None, template_variables: list = None, description: str = None, template_bindings: list = None, should_attach_feature_group_to_template: bool = False):
+    def create_template(self, name: str, template_sql: str, template_variables: list, description: str = None, template_bindings: list = None, should_attach_feature_group_to_template: bool = False):
         """
         Create a feature group template.
 
@@ -1018,7 +1018,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_recent_feature_group_streamed_data(self.feature_group_id)
 
-    def append_data(self, streaming_token: str = None, data: dict = None):
+    def append_data(self, streaming_token: str, data: dict):
         """
         Appends new data into the feature group for a given lookup key recordId.
 
@@ -1028,7 +1028,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.append_data(self.feature_group_id, streaming_token, data)
 
-    def upsert_multiple_data(self, streaming_token: str = None, data: list = None):
+    def upsert_multiple_data(self, streaming_token: str, data: list):
         """
         Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
@@ -1038,7 +1038,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.upsert_multiple_data(self.feature_group_id, streaming_token, data)
 
-    def append_multiple_data(self, streaming_token: str = None, data: list = None):
+    def append_multiple_data(self, streaming_token: str, data: list):
         """
         Appends new data into the feature group for a given lookup key recordId.
 
@@ -1061,7 +1061,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.upsert_data(self.feature_group_id, streaming_token, data)
 
-    def upsert_online_data(self, data: dict = None):
+    def upsert_online_data(self, data: dict):
         """
         Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -1073,7 +1073,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.upsert_online_data(self.feature_group_id, data)
 
-    def delete_data(self, primary_key: str = None):
+    def delete_data(self, primary_key: str):
         """
         Deletes a row from the feature group given the primary key
 
@@ -1099,7 +1099,7 @@ class FeatureGroup(AbstractApiClass):
         """
         return self.client.get_data(self.feature_group_id, primary_key, num_rows)
 
-    def add_document(self, document: io.TextIOBase = None):
+    def add_document(self, document: io.TextIOBase):
         """
         Adds a document to the feature group.
 

@@ -487,7 +487,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.1.1'
+      :value: '1.1.2'
 
       
 
@@ -573,7 +573,7 @@ Attributes
       :rtype: list[OrganizationGroup]
 
 
-   .. py:method:: describe_organization_group(organization_group_id = None)
+   .. py:method:: describe_organization_group(organization_group_id)
 
       Returns the specific organization group passed in by the user.
 
@@ -584,7 +584,7 @@ Attributes
       :rtype: OrganizationGroup
 
 
-   .. py:method:: describe_webhook(webhook_id = None)
+   .. py:method:: describe_webhook(webhook_id)
 
       Describe the webhook with a given ID.
 
@@ -595,7 +595,7 @@ Attributes
       :rtype: Webhook
 
 
-   .. py:method:: list_deployment_webhooks(deployment_id = None)
+   .. py:method:: list_deployment_webhooks(deployment_id)
 
       List all the webhooks attached to a given deployment.
 
@@ -614,7 +614,7 @@ Attributes
       :rtype: list[UseCase]
 
 
-   .. py:method:: describe_problem_type(problem_type = None)
+   .. py:method:: describe_problem_type(problem_type)
 
       Describes a problem type
 
@@ -625,7 +625,7 @@ Attributes
       :rtype: ProblemType
 
 
-   .. py:method:: describe_use_case_requirements(use_case = None)
+   .. py:method:: describe_use_case_requirements(use_case)
 
       This API call returns the feature requirements for a specified use case.
 
@@ -636,7 +636,7 @@ Attributes
       :rtype: list[UseCaseRequirements]
 
 
-   .. py:method:: describe_project(project_id = None)
+   .. py:method:: describe_project(project_id)
 
       Returns a description of a project.
 
@@ -660,7 +660,7 @@ Attributes
       :rtype: list[Project]
 
 
-   .. py:method:: get_project_feature_group_config(feature_group_id = None, project_id = None)
+   .. py:method:: get_project_feature_group_config(feature_group_id, project_id)
 
       Gets a feature group's project config
 
@@ -673,7 +673,7 @@ Attributes
       :rtype: ProjectConfig
 
 
-   .. py:method:: validate_project(project_id = None, feature_group_ids = None)
+   .. py:method:: validate_project(project_id, feature_group_ids = None)
 
       Validates that the specified project has all required feature group types for its use case and that all required feature columns are set.
 
@@ -686,7 +686,7 @@ Attributes
       :rtype: ProjectValidation
 
 
-   .. py:method:: infer_feature_mappings(project_id = None, feature_group_id = None)
+   .. py:method:: infer_feature_mappings(project_id, feature_group_id)
 
       Infer the feature mappings for the feature group in the project based on the problem type.
 
@@ -699,7 +699,7 @@ Attributes
       :rtype: InferredFeatureMappings
 
 
-   .. py:method:: verify_and_describe_annotation(feature_group_id = None, feature_name = None, doc_id = None, feature_group_row_identifier = None)
+   .. py:method:: verify_and_describe_annotation(feature_group_id, feature_name = None, doc_id = None, feature_group_row_identifier = None)
 
       Get the latest annotation entry for a given feature group, feature, and document along with verification information.
 
@@ -716,7 +716,7 @@ Attributes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: get_annotations_status(feature_group_id = None, feature_name = None, check_for_materialization = False)
+   .. py:method:: get_annotations_status(feature_group_id, feature_name = None, check_for_materialization = False)
 
       Get the status of the annotations for a given feature group and feature.
 
@@ -731,7 +731,7 @@ Attributes
       :rtype: AnnotationsStatus
 
 
-   .. py:method:: get_feature_group_schema(feature_group_id = None, project_id = None)
+   .. py:method:: get_feature_group_schema(feature_group_id, project_id = None)
 
       Returns a schema for a given FeatureGroup in a project.
 
@@ -752,7 +752,7 @@ Attributes
       :rtype: list[GeneratedPitFeatureConfigOption]
 
 
-   .. py:method:: describe_feature_group(feature_group_id = None)
+   .. py:method:: describe_feature_group(feature_group_id)
 
       Describe a Feature Group.
 
@@ -763,7 +763,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: describe_feature_group_by_table_name(table_name = None)
+   .. py:method:: describe_feature_group_by_table_name(table_name)
 
       Describe a Feature Group by its table name.
 
@@ -791,7 +791,7 @@ Attributes
       :rtype: list[FeatureGroup]
 
 
-   .. py:method:: describe_project_feature_group(project_id = None, feature_group_id = None)
+   .. py:method:: describe_project_feature_group(project_id, feature_group_id)
 
       Describe a feature group associated with a project
 
@@ -804,7 +804,7 @@ Attributes
       :rtype: ProjectFeatureGroup
 
 
-   .. py:method:: list_project_feature_groups(project_id = None, filter_feature_group_use = None, limit = 100, start_after_id = None)
+   .. py:method:: list_project_feature_groups(project_id, filter_feature_group_use = None, limit = 100, start_after_id = None)
 
       List all the feature groups associated with a project
 
@@ -821,7 +821,7 @@ Attributes
       :rtype: list[ProjectFeatureGroup]
 
 
-   .. py:method:: list_python_function_feature_groups(name = None, limit = 100)
+   .. py:method:: list_python_function_feature_groups(name, limit = 100)
 
       List all the feature groups associated with a python function.
 
@@ -834,7 +834,7 @@ Attributes
       :rtype: list[FeatureGroup]
 
 
-   .. py:method:: get_execute_feature_group_operation_result_part_count(feature_group_operation_run_id = None)
+   .. py:method:: get_execute_feature_group_operation_result_part_count(feature_group_operation_run_id)
 
       Gets the number of parts in the result of the execution of fg operation
 
@@ -842,7 +842,7 @@ Attributes
       :type feature_group_operation_run_id: str
 
 
-   .. py:method:: download_execute_feature_group_operation_result_part_chunk(feature_group_operation_run_id = None, part = None, offset = 0, chunk_size = 10485760)
+   .. py:method:: download_execute_feature_group_operation_result_part_chunk(feature_group_operation_run_id, part, offset = 0, chunk_size = 10485760)
 
       Downloads a chunk of the result of the execution of fg operation
 
@@ -856,7 +856,7 @@ Attributes
       :type chunk_size: int
 
 
-   .. py:method:: get_feature_group_version_export_download_url(feature_group_export_id = None)
+   .. py:method:: get_feature_group_version_export_download_url(feature_group_export_id)
 
       Get a link to download the feature group version.
 
@@ -867,7 +867,7 @@ Attributes
       :rtype: FeatureGroupExportDownloadUrl
 
 
-   .. py:method:: describe_feature_group_export(feature_group_export_id = None)
+   .. py:method:: describe_feature_group_export(feature_group_export_id)
 
       A feature group export
 
@@ -878,7 +878,7 @@ Attributes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: list_feature_group_exports(feature_group_id = None)
+   .. py:method:: list_feature_group_exports(feature_group_id)
 
       Lists all of the feature group exports for the feature group
 
@@ -889,7 +889,7 @@ Attributes
       :rtype: list[FeatureGroupExport]
 
 
-   .. py:method:: get_feature_group_export_connector_errors(feature_group_export_id = None)
+   .. py:method:: get_feature_group_export_connector_errors(feature_group_export_id)
 
       Returns a stream containing the write errors of the feature group export database connection, if any writes failed to the database connector.
 
@@ -897,7 +897,7 @@ Attributes
       :type feature_group_export_id: str
 
 
-   .. py:method:: list_feature_group_modifiers(feature_group_id = None)
+   .. py:method:: list_feature_group_modifiers(feature_group_id)
 
       List the users who can modify a given feature group.
 
@@ -908,7 +908,7 @@ Attributes
       :rtype: ModificationLockInfo
 
 
-   .. py:method:: get_materialization_logs(feature_group_version = None, stdout = False, stderr = False)
+   .. py:method:: get_materialization_logs(feature_group_version, stdout = False, stderr = False)
 
       Returns logs for a materialized feature group version.
 
@@ -923,7 +923,7 @@ Attributes
       :rtype: FunctionLogs
 
 
-   .. py:method:: list_feature_group_versions(feature_group_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_feature_group_versions(feature_group_id, limit = 100, start_after_version = None)
 
       Retrieves a list of all feature group versions for the specified feature group.
 
@@ -938,7 +938,7 @@ Attributes
       :rtype: list[FeatureGroupVersion]
 
 
-   .. py:method:: describe_feature_group_version(feature_group_version = None)
+   .. py:method:: describe_feature_group_version(feature_group_version)
 
       Describe a feature group version.
 
@@ -949,7 +949,7 @@ Attributes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: get_feature_group_version_metrics(feature_group_version = None, selected_columns = None, include_charts = False, include_statistics = True)
+   .. py:method:: get_feature_group_version_metrics(feature_group_version, selected_columns = None, include_charts = False, include_statistics = True)
 
       Get metrics for a specific feature group version.
 
@@ -966,7 +966,7 @@ Attributes
       :rtype: DataMetrics
 
 
-   .. py:method:: describe_feature_group_template(feature_group_template_id = None)
+   .. py:method:: describe_feature_group_template(feature_group_template_id)
 
       Describe a Feature Group Template.
 
@@ -994,7 +994,7 @@ Attributes
       :rtype: list[FeatureGroupTemplate]
 
 
-   .. py:method:: list_project_feature_group_templates(project_id = None, limit = 100, start_after_id = None, should_include_all_system_templates = False)
+   .. py:method:: list_project_feature_group_templates(project_id, limit = 100, start_after_id = None, should_include_all_system_templates = False)
 
       List feature group templates for feature groups associated with the project.
 
@@ -1011,7 +1011,7 @@ Attributes
       :rtype: list[FeatureGroupTemplate]
 
 
-   .. py:method:: suggest_feature_group_template_for_feature_group(feature_group_id = None)
+   .. py:method:: suggest_feature_group_template_for_feature_group(feature_group_id)
 
       Suggest values for a feature gruop template, based on a feature group.
 
@@ -1022,7 +1022,7 @@ Attributes
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: get_dataset_schema(dataset_id = None)
+   .. py:method:: get_dataset_schema(dataset_id)
 
       Retrieves the column schema of a dataset.
 
@@ -1033,7 +1033,7 @@ Attributes
       :rtype: list[DatasetColumn]
 
 
-   .. py:method:: set_dataset_database_connector_config(dataset_id = None, database_connector_id = None, object_name = None, columns = None, query_arguments = None, sql_query = None)
+   .. py:method:: set_dataset_database_connector_config(dataset_id, database_connector_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
 
       Sets database connector config for a dataset. This method is currently only supported for streaming datasets.
 
@@ -1051,7 +1051,7 @@ Attributes
       :type sql_query: str
 
 
-   .. py:method:: get_dataset_version_metrics(dataset_version = None, selected_columns = None, include_charts = False, include_statistics = True)
+   .. py:method:: get_dataset_version_metrics(dataset_version, selected_columns = None, include_charts = False, include_statistics = True)
 
       Get metrics for a specific dataset version.
 
@@ -1068,7 +1068,7 @@ Attributes
       :rtype: DataMetrics
 
 
-   .. py:method:: get_file_connector_instructions(bucket = None, write_permission = False)
+   .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
 
       Retrieves verification information to create a data connector to a cloud storage bucket.
 
@@ -1097,7 +1097,7 @@ Attributes
       :rtype: list[FileConnector]
 
 
-   .. py:method:: list_database_connector_objects(database_connector_id = None, fetch_raw_data = False)
+   .. py:method:: list_database_connector_objects(database_connector_id, fetch_raw_data = False)
 
       Lists querable objects in the database connector.
 
@@ -1107,7 +1107,7 @@ Attributes
       :type fetch_raw_data: bool
 
 
-   .. py:method:: get_database_connector_object_schema(database_connector_id = None, object_name = None, fetch_raw_data = False)
+   .. py:method:: get_database_connector_object_schema(database_connector_id, object_name = None, fetch_raw_data = False)
 
       Get the schema of an object in an database connector.
 
@@ -1122,7 +1122,7 @@ Attributes
       :rtype: DatabaseConnectorSchema
 
 
-   .. py:method:: query_database_connector(database_connector_id = None, query = None)
+   .. py:method:: query_database_connector(database_connector_id, query)
 
       Runs a query in the specified database connector.
 
@@ -1140,7 +1140,7 @@ Attributes
       :rtype: list[ApplicationConnector]
 
 
-   .. py:method:: list_application_connector_objects(application_connector_id = None)
+   .. py:method:: list_application_connector_objects(application_connector_id)
 
       Lists querable objects in the application connector.
 
@@ -1164,7 +1164,7 @@ Attributes
       :rtype: list[StreamingAuthToken]
 
 
-   .. py:method:: get_recent_feature_group_streamed_data(feature_group_id = None)
+   .. py:method:: get_recent_feature_group_streamed_data(feature_group_id)
 
       Returns recently streamed data to a streaming feature group.
 
@@ -1180,7 +1180,7 @@ Attributes
       :rtype: list[Upload]
 
 
-   .. py:method:: describe_upload(upload_id = None)
+   .. py:method:: describe_upload(upload_id)
 
       Retrieves the current upload status (complete or inspecting) and the list of file parts uploaded for a specified dataset upload.
 
@@ -1206,7 +1206,7 @@ Attributes
       :rtype: list[Dataset]
 
 
-   .. py:method:: describe_dataset(dataset_id = None)
+   .. py:method:: describe_dataset(dataset_id)
 
       Retrieves a full description of the specified dataset, with attributes such as its ID, name, source type, etc.
 
@@ -1217,7 +1217,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: describe_dataset_version(dataset_version = None)
+   .. py:method:: describe_dataset_version(dataset_version)
 
       Retrieves a full description of the specified dataset version, including its ID, name, source type, and other attributes.
 
@@ -1228,7 +1228,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: list_dataset_versions(dataset_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_dataset_versions(dataset_id, limit = 100, start_after_version = None)
 
       Retrieves a list of all dataset versions for the specified dataset.
 
@@ -1243,7 +1243,7 @@ Attributes
       :rtype: list[DatasetVersion]
 
 
-   .. py:method:: get_dataset_version_logs(dataset_version = None)
+   .. py:method:: get_dataset_version_logs(dataset_version)
 
       Retrieves the dataset import logs.
 
@@ -1254,7 +1254,7 @@ Attributes
       :rtype: DatasetVersionLogs
 
 
-   .. py:method:: get_docstore_document(doc_id = None)
+   .. py:method:: get_docstore_document(doc_id)
 
       Return a document store document by id.
 
@@ -1262,7 +1262,7 @@ Attributes
       :type doc_id: str
 
 
-   .. py:method:: get_docstore_image(doc_id = None, max_width = None, max_height = None)
+   .. py:method:: get_docstore_image(doc_id, max_width = None, max_height = None)
 
       Return a document store image by id.
 
@@ -1274,7 +1274,7 @@ Attributes
       :type max_height: int
 
 
-   .. py:method:: get_docstore_page_data(doc_id = None, page = None)
+   .. py:method:: get_docstore_page_data(doc_id, page)
 
       Returns the extracted page data for a document page.
 
@@ -1287,7 +1287,7 @@ Attributes
       :rtype: PageData
 
 
-   .. py:method:: get_docstore_document_data(doc_id = None)
+   .. py:method:: get_docstore_document_data(doc_id)
 
       Returns the extracted data for a document.
 
@@ -1298,7 +1298,7 @@ Attributes
       :rtype: DocumentData
 
 
-   .. py:method:: describe_train_test_data_split_feature_group(model_id = None)
+   .. py:method:: describe_train_test_data_split_feature_group(model_id)
 
       Get the train and test data split for a trained model by its unique identifier. This is only supported for models with custom algorithms.
 
@@ -1309,7 +1309,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: describe_train_test_data_split_feature_group_version(model_version = None)
+   .. py:method:: describe_train_test_data_split_feature_group_version(model_version)
 
       Get the train and test data split for a trained model by model version. This is only supported for models with custom algorithms.
 
@@ -1320,7 +1320,7 @@ Attributes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: list_models(project_id = None)
+   .. py:method:: list_models(project_id)
 
       Retrieves the list of models in the specified project.
 
@@ -1331,7 +1331,7 @@ Attributes
       :rtype: list[Model]
 
 
-   .. py:method:: describe_model(model_id = None)
+   .. py:method:: describe_model(model_id)
 
       Retrieves a full description of the specified model.
 
@@ -1342,7 +1342,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: get_model_metrics(model_id = None, model_version = None, return_graphs = False, validation = False)
+   .. py:method:: get_model_metrics(model_id, model_version = None, return_graphs = False, validation = False)
 
       Retrieves metrics for all the algorithms trained in this model version.
 
@@ -1362,7 +1362,7 @@ Attributes
       :rtype: ModelMetrics
 
 
-   .. py:method:: query_test_point_predictions(model_version = None, algorithm = None, to_row = None, from_row = 0, sql_where_clause = '')
+   .. py:method:: query_test_point_predictions(model_version, algorithm, to_row, from_row = 0, sql_where_clause = '')
 
       Query the test points predictions data for a specific algorithm.
 
@@ -1381,7 +1381,7 @@ Attributes
       :rtype: TestPointPredictions
 
 
-   .. py:method:: get_feature_group_schemas_for_model_version(model_version = None)
+   .. py:method:: get_feature_group_schemas_for_model_version(model_version)
 
       Gets the schema (including feature mappings) for all feature groups used in the model version.
 
@@ -1392,7 +1392,7 @@ Attributes
       :rtype: list[ModelVersionFeatureGroupSchema]
 
 
-   .. py:method:: list_model_versions(model_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_model_versions(model_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions for a given model.
 
@@ -1407,7 +1407,7 @@ Attributes
       :rtype: list[ModelVersion]
 
 
-   .. py:method:: describe_model_version(model_version = None)
+   .. py:method:: describe_model_version(model_version)
 
       Retrieves a full description of the specified model version.
 
@@ -1418,7 +1418,7 @@ Attributes
       :rtype: ModelVersion
 
 
-   .. py:method:: get_feature_importance_by_model_version(model_version = None)
+   .. py:method:: get_feature_importance_by_model_version(model_version)
 
       Gets the feature importance calculated by various methods for the model.
 
@@ -1429,7 +1429,7 @@ Attributes
       :rtype: FeatureImportance
 
 
-   .. py:method:: get_training_data_logs(model_version = None)
+   .. py:method:: get_training_data_logs(model_version)
 
       Retrieves the data preparation logs during model training.
 
@@ -1440,7 +1440,7 @@ Attributes
       :rtype: list[DataPrepLogs]
 
 
-   .. py:method:: get_training_logs(model_version = None, stdout = False, stderr = False)
+   .. py:method:: get_training_logs(model_version, stdout = False, stderr = False)
 
       Returns training logs for the model.
 
@@ -1455,7 +1455,7 @@ Attributes
       :rtype: FunctionLogs
 
 
-   .. py:method:: describe_model_artifacts_export(model_artifacts_export_id = None)
+   .. py:method:: describe_model_artifacts_export(model_artifacts_export_id)
 
       Get the description and status of the model artifacts export.
 
@@ -1466,7 +1466,7 @@ Attributes
       :rtype: ModelArtifactsExport
 
 
-   .. py:method:: list_model_artifacts_exports(model_id = None, limit = 25)
+   .. py:method:: list_model_artifacts_exports(model_id, limit = 25)
 
       List all the model artifacts exports.
 
@@ -1479,7 +1479,7 @@ Attributes
       :rtype: list[ModelArtifactsExport]
 
 
-   .. py:method:: list_model_monitors(project_id = None)
+   .. py:method:: list_model_monitors(project_id)
 
       Retrieves the list of model monitors in the specified project.
 
@@ -1490,7 +1490,7 @@ Attributes
       :rtype: list[ModelMonitor]
 
 
-   .. py:method:: describe_model_monitor(model_monitor_id = None)
+   .. py:method:: describe_model_monitor(model_monitor_id)
 
       Retrieves a full description of the specified model monitor.
 
@@ -1501,7 +1501,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: get_prediction_drift(model_monitor_version = None)
+   .. py:method:: get_prediction_drift(model_monitor_version)
 
       Gets the label and prediction drifts for a model monitor.
 
@@ -1512,7 +1512,7 @@ Attributes
       :rtype: DriftDistributions
 
 
-   .. py:method:: get_model_monitor_summary(model_monitor_id = None)
+   .. py:method:: get_model_monitor_summary(model_monitor_id)
 
       Gets the summary of a model monitor across versions.
 
@@ -1523,7 +1523,7 @@ Attributes
       :rtype: ModelMonitorSummary
 
 
-   .. py:method:: list_model_monitor_versions(model_monitor_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_model_monitor_versions(model_monitor_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions for a given model monitor.
 
@@ -1538,7 +1538,7 @@ Attributes
       :rtype: list[ModelMonitorVersion]
 
 
-   .. py:method:: describe_model_monitor_version(model_monitor_version = None)
+   .. py:method:: describe_model_monitor_version(model_monitor_version)
 
       Retrieves a full description of the specified model monitor version.
 
@@ -1549,7 +1549,7 @@ Attributes
       :rtype: ModelMonitorVersion
 
 
-   .. py:method:: model_monitor_version_metric_data(model_monitor_version = None, metric_type = None, actual_values_to_detail = None)
+   .. py:method:: model_monitor_version_metric_data(model_monitor_version, metric_type, actual_values_to_detail = None)
 
       Provides the data needed for decile metrics associated with the model monitor.
 
@@ -1575,7 +1575,7 @@ Attributes
       :rtype: list[ModelMonitor]
 
 
-   .. py:method:: get_model_monitor_chart_from_organization(chart_type = None, limit = 15)
+   .. py:method:: get_model_monitor_chart_from_organization(chart_type, limit = 15)
 
       Gets a list of model monitor summaries across monitors for an organization.
 
@@ -1596,7 +1596,7 @@ Attributes
       :rtype: list[ModelMonitorOrgSummary]
 
 
-   .. py:method:: list_eda(project_id = None)
+   .. py:method:: list_eda(project_id)
 
       Retrieves the list of Exploratory Data Analysis (EDA) in the specified project.
 
@@ -1607,7 +1607,7 @@ Attributes
       :rtype: list[Eda]
 
 
-   .. py:method:: describe_eda(eda_id = None)
+   .. py:method:: describe_eda(eda_id)
 
       Retrieves a full description of the specified EDA object.
 
@@ -1618,7 +1618,7 @@ Attributes
       :rtype: Eda
 
 
-   .. py:method:: list_eda_versions(eda_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_eda_versions(eda_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions for a given EDA object.
 
@@ -1633,7 +1633,7 @@ Attributes
       :rtype: list[EdaVersion]
 
 
-   .. py:method:: describe_eda_version(eda_version = None)
+   .. py:method:: describe_eda_version(eda_version)
 
       Retrieves a full description of the specified EDA version.
 
@@ -1644,7 +1644,7 @@ Attributes
       :rtype: EdaVersion
 
 
-   .. py:method:: get_eda_collinearity(eda_version = None)
+   .. py:method:: get_eda_collinearity(eda_version)
 
       Gets the Collinearity between all features for the Exploratory Data Analysis.
 
@@ -1655,7 +1655,7 @@ Attributes
       :rtype: EdaCollinearity
 
 
-   .. py:method:: get_eda_data_consistency(eda_version = None, transformation_feature = None)
+   .. py:method:: get_eda_data_consistency(eda_version, transformation_feature = None)
 
       Gets the data consistency for the Exploratory Data Analysis.
 
@@ -1668,7 +1668,7 @@ Attributes
       :rtype: EdaDataConsistency
 
 
-   .. py:method:: get_collinearity_for_feature(eda_version = None, feature_name = None)
+   .. py:method:: get_collinearity_for_feature(eda_version, feature_name = None)
 
       Gets the Collinearity for the given feature from the Exploratory Data Analysis.
 
@@ -1681,7 +1681,7 @@ Attributes
       :rtype: EdaFeatureCollinearity
 
 
-   .. py:method:: get_feature_association(eda_version = None, reference_feature_name = None, test_feature_name = None)
+   .. py:method:: get_feature_association(eda_version, reference_feature_name, test_feature_name)
 
       Gets the Feature Association for the given features from the feature group version within the eda_version.
 
@@ -1696,7 +1696,7 @@ Attributes
       :rtype: EdaFeatureAssociation
 
 
-   .. py:method:: get_eda_forecasting_analysis(eda_version = None)
+   .. py:method:: get_eda_forecasting_analysis(eda_version)
 
       Gets the Forecasting analysis for the Exploratory Data Analysis.
 
@@ -1707,7 +1707,7 @@ Attributes
       :rtype: EdaForecastingAnalysis
 
 
-   .. py:method:: list_holdout_analysis(project_id = None, model_id = None)
+   .. py:method:: list_holdout_analysis(project_id, model_id = None)
 
       List holdout analyses for a project. Optionally, filter by model.
 
@@ -1720,7 +1720,7 @@ Attributes
       :rtype: list[HoldoutAnalysis]
 
 
-   .. py:method:: describe_holdout_analysis(holdout_analysis_id = None)
+   .. py:method:: describe_holdout_analysis(holdout_analysis_id)
 
       Get a holdout analysis.
 
@@ -1731,7 +1731,7 @@ Attributes
       :rtype: HoldoutAnalysis
 
 
-   .. py:method:: list_holdout_analysis_versions(holdout_analysis_id = None)
+   .. py:method:: list_holdout_analysis_versions(holdout_analysis_id)
 
       List holdout analysis versions for a holdout analysis.
 
@@ -1742,7 +1742,7 @@ Attributes
       :rtype: list[HoldoutAnalysisVersion]
 
 
-   .. py:method:: describe_holdout_analysis_version(holdout_analysis_version = None, get_metrics = False)
+   .. py:method:: describe_holdout_analysis_version(holdout_analysis_version, get_metrics = False)
 
       Get a holdout analysis version.
 
@@ -1755,7 +1755,7 @@ Attributes
       :rtype: HoldoutAnalysisVersion
 
 
-   .. py:method:: describe_monitor_alert(monitor_alert_id = None)
+   .. py:method:: describe_monitor_alert(monitor_alert_id)
 
       Describes a given monitor alert id
 
@@ -1766,7 +1766,7 @@ Attributes
       :rtype: MonitorAlert
 
 
-   .. py:method:: describe_monitor_alert_version(monitor_alert_version = None)
+   .. py:method:: describe_monitor_alert_version(monitor_alert_version)
 
       Describes a given monitor alert version id
 
@@ -1777,7 +1777,7 @@ Attributes
       :rtype: MonitorAlertVersion
 
 
-   .. py:method:: list_monitor_alerts_for_monitor(model_monitor_id = None)
+   .. py:method:: list_monitor_alerts_for_monitor(model_monitor_id)
 
       Retrieves the list of monitor alerts for a specified monitor.
 
@@ -1788,7 +1788,7 @@ Attributes
       :rtype: list[MonitorAlert]
 
 
-   .. py:method:: list_monitor_alert_versions_for_monitor_version(model_monitor_version = None)
+   .. py:method:: list_monitor_alert_versions_for_monitor_version(model_monitor_version)
 
       Retrieves the list of monitor alert versions for a specified monitor instance.
 
@@ -1799,7 +1799,7 @@ Attributes
       :rtype: list[MonitorAlertVersion]
 
 
-   .. py:method:: get_drift_for_feature(model_monitor_version = None, feature_name = None, nested_feature_name = None)
+   .. py:method:: get_drift_for_feature(model_monitor_version, feature_name, nested_feature_name = None)
 
       Gets the feature drift associated with a single feature in an output feature group from a prediction.
 
@@ -1814,7 +1814,7 @@ Attributes
       :rtype: FeatureDistribution
 
 
-   .. py:method:: get_outliers_for_feature(model_monitor_version = None, feature_name = None, nested_feature_name = None)
+   .. py:method:: get_outliers_for_feature(model_monitor_version, feature_name = None, nested_feature_name = None)
 
       Gets a list of outliers measured by a single feature (or overall) in an output feature group from a prediction.
 
@@ -1826,7 +1826,7 @@ Attributes
       :type nested_feature_name: str
 
 
-   .. py:method:: describe_prediction_operator(prediction_operator_id = None)
+   .. py:method:: describe_prediction_operator(prediction_operator_id)
 
       Describe an existing prediction operator.
 
@@ -1837,7 +1837,7 @@ Attributes
       :rtype: PredictionOperator
 
 
-   .. py:method:: list_prediction_operators(project_id = None)
+   .. py:method:: list_prediction_operators(project_id)
 
       List all the prediction operators inside a project.
 
@@ -1848,7 +1848,7 @@ Attributes
       :rtype: list[PredictionOperator]
 
 
-   .. py:method:: list_prediction_operator_versions(prediction_operator_id = None)
+   .. py:method:: list_prediction_operator_versions(prediction_operator_id)
 
       List all the prediction operator versions for a prediction operator.
 
@@ -1859,7 +1859,7 @@ Attributes
       :rtype: list[PredictionOperatorVersion]
 
 
-   .. py:method:: describe_deployment(deployment_id = None)
+   .. py:method:: describe_deployment(deployment_id)
 
       Retrieves a full description of the specified deployment.
 
@@ -1870,7 +1870,7 @@ Attributes
       :rtype: Deployment
 
 
-   .. py:method:: list_deployments(project_id = None)
+   .. py:method:: list_deployments(project_id)
 
       Retrieves a list of all deployments in the specified project.
 
@@ -1881,7 +1881,7 @@ Attributes
       :rtype: list[Deployment]
 
 
-   .. py:method:: list_deployment_tokens(project_id = None)
+   .. py:method:: list_deployment_tokens(project_id)
 
       Retrieves a list of all deployment tokens associated with the specified project.
 
@@ -1911,7 +1911,7 @@ Attributes
       :rtype: ApiEndpoint
 
 
-   .. py:method:: get_model_training_types_for_deployment(model_id = None, model_version = None, algorithm = None)
+   .. py:method:: get_model_training_types_for_deployment(model_id, model_version = None, algorithm = None)
 
       Returns types of models that can be deployed for a given model instance ID.
 
@@ -1926,7 +1926,7 @@ Attributes
       :rtype: ModelTrainingTypeForDeployment
 
 
-   .. py:method:: list_deployment_alerts(deployment_id = None)
+   .. py:method:: list_deployment_alerts(deployment_id)
 
       List the monitor alerts associated with the deployment id.
 
@@ -1937,7 +1937,7 @@ Attributes
       :rtype: list[MonitorAlert]
 
 
-   .. py:method:: describe_refresh_policy(refresh_policy_id = None)
+   .. py:method:: describe_refresh_policy(refresh_policy_id)
 
       Retrieve a single refresh policy
 
@@ -1948,7 +1948,7 @@ Attributes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: describe_refresh_pipeline_run(refresh_pipeline_run_id = None)
+   .. py:method:: describe_refresh_pipeline_run(refresh_pipeline_run_id)
 
       Retrieve a single refresh pipeline run
 
@@ -1986,7 +1986,7 @@ Attributes
       :rtype: list[RefreshPolicy]
 
 
-   .. py:method:: list_refresh_pipeline_runs(refresh_policy_id = None)
+   .. py:method:: list_refresh_pipeline_runs(refresh_policy_id)
 
       List the the times that the refresh policy has been run
 
@@ -1997,7 +1997,7 @@ Attributes
       :rtype: list[RefreshPipelineRun]
 
 
-   .. py:method:: download_batch_prediction_result_chunk(batch_prediction_version = None, offset = 0, chunk_size = 10485760)
+   .. py:method:: download_batch_prediction_result_chunk(batch_prediction_version, offset = 0, chunk_size = 10485760)
 
       Returns a stream containing the batch prediction results.
 
@@ -2009,7 +2009,7 @@ Attributes
       :type chunk_size: int
 
 
-   .. py:method:: get_batch_prediction_connector_errors(batch_prediction_version = None)
+   .. py:method:: get_batch_prediction_connector_errors(batch_prediction_version)
 
       Returns a stream containing the batch prediction database connection write errors, if any writes failed for the specified batch prediction job.
 
@@ -2017,7 +2017,7 @@ Attributes
       :type batch_prediction_version: str
 
 
-   .. py:method:: list_batch_predictions(project_id = None)
+   .. py:method:: list_batch_predictions(project_id)
 
       Retrieves a list of batch predictions in the project.
 
@@ -2028,7 +2028,7 @@ Attributes
       :rtype: list[BatchPrediction]
 
 
-   .. py:method:: describe_batch_prediction(batch_prediction_id = None)
+   .. py:method:: describe_batch_prediction(batch_prediction_id)
 
       Describe the batch prediction.
 
@@ -2039,7 +2039,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: list_batch_prediction_versions(batch_prediction_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_batch_prediction_versions(batch_prediction_id, limit = 100, start_after_version = None)
 
       Retrieves a list of versions of a given batch prediction
 
@@ -2054,7 +2054,7 @@ Attributes
       :rtype: list[BatchPredictionVersion]
 
 
-   .. py:method:: describe_batch_prediction_version(batch_prediction_version = None)
+   .. py:method:: describe_batch_prediction_version(batch_prediction_version)
 
       Describes a Batch Prediction Version.
 
@@ -2065,7 +2065,7 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: get_batch_prediction_version_logs(batch_prediction_version = None)
+   .. py:method:: get_batch_prediction_version_logs(batch_prediction_version)
 
       Retrieves the batch prediction logs.
 
@@ -2076,7 +2076,7 @@ Attributes
       :rtype: BatchPredictionVersionLogs
 
 
-   .. py:method:: get_data(feature_group_id = None, primary_key = None, num_rows = None)
+   .. py:method:: get_data(feature_group_id, primary_key = None, num_rows = None)
 
       Gets the feature group rows for online updatable feature groups.
 
@@ -2095,7 +2095,7 @@ Attributes
       :rtype: list[FeatureGroupRow]
 
 
-   .. py:method:: list_pending_feature_group_documents(feature_group_id = None)
+   .. py:method:: list_pending_feature_group_documents(feature_group_id)
 
       Lists all pending documents added to feature group.
 
@@ -2106,7 +2106,7 @@ Attributes
       :rtype: list[FeatureGroupDocument]
 
 
-   .. py:method:: describe_python_function(name = None)
+   .. py:method:: describe_python_function(name)
 
       Describe a Python Function.
 
@@ -2139,7 +2139,7 @@ Attributes
       :rtype: list[Pipeline]
 
 
-   .. py:method:: describe_pipeline_version(pipeline_version = None)
+   .. py:method:: describe_pipeline_version(pipeline_version)
 
       Describes a specified pipeline version
 
@@ -2150,7 +2150,7 @@ Attributes
       :rtype: PipelineVersion
 
 
-   .. py:method:: describe_pipeline_step(pipeline_step_id = None)
+   .. py:method:: describe_pipeline_step(pipeline_step_id)
 
       Deletes a step from a pipeline.
 
@@ -2161,7 +2161,7 @@ Attributes
       :rtype: PipelineStep
 
 
-   .. py:method:: describe_pipeline_step_by_name(pipeline_id = None, step_name = None)
+   .. py:method:: describe_pipeline_step_by_name(pipeline_id, step_name)
 
       Describes a pipeline step by the step name.
 
@@ -2174,7 +2174,7 @@ Attributes
       :rtype: PipelineStep
 
 
-   .. py:method:: describe_pipeline_step_version(pipeline_step_version = None)
+   .. py:method:: describe_pipeline_step_version(pipeline_step_version)
 
       Describes a pipeline step version.
 
@@ -2185,7 +2185,7 @@ Attributes
       :rtype: PipelineStepVersion
 
 
-   .. py:method:: list_pipeline_version_logs(pipeline_version = None)
+   .. py:method:: list_pipeline_version_logs(pipeline_version)
 
       Gets the logs for the steps in a given pipeline version.
 
@@ -2196,7 +2196,7 @@ Attributes
       :rtype: PipelineVersionLogs
 
 
-   .. py:method:: get_step_version_logs(pipeline_step_version = None)
+   .. py:method:: get_step_version_logs(pipeline_step_version)
 
       Gets the logs for a given step version.
 
@@ -2207,7 +2207,7 @@ Attributes
       :rtype: PipelineStepVersionLogs
 
 
-   .. py:method:: describe_graph_dashboard(graph_dashboard_id = None)
+   .. py:method:: describe_graph_dashboard(graph_dashboard_id)
 
       Describes a given graph dashboard.
 
@@ -2229,7 +2229,7 @@ Attributes
       :rtype: list[GraphDashboard]
 
 
-   .. py:method:: describe_graph_for_dashboard(graph_reference_id = None)
+   .. py:method:: describe_graph_for_dashboard(graph_reference_id)
 
       Describes a python plot to a graph dashboard
 
@@ -2240,7 +2240,7 @@ Attributes
       :rtype: PythonPlotFunction
 
 
-   .. py:method:: describe_algorithm(algorithm = None)
+   .. py:method:: describe_algorithm(algorithm)
 
       Retrieves a full description of the specified algorithm.
 
@@ -2264,7 +2264,7 @@ Attributes
       :rtype: list[Algorithm]
 
 
-   .. py:method:: describe_custom_loss_function(name = None)
+   .. py:method:: describe_custom_loss_function(name)
 
       Retrieve a full description of a previously registered custom loss function.
 
@@ -2288,7 +2288,7 @@ Attributes
       :rtype: CustomLossFunction
 
 
-   .. py:method:: describe_custom_metric(name = None)
+   .. py:method:: describe_custom_metric(name)
 
       Retrieves a full description of a previously registered custom metric function.
 
@@ -2299,7 +2299,7 @@ Attributes
       :rtype: CustomMetric
 
 
-   .. py:method:: describe_custom_metric_version(custom_metric_version = None)
+   .. py:method:: describe_custom_metric_version(custom_metric_version)
 
       Describes a given custom metric version
 
@@ -2323,7 +2323,7 @@ Attributes
       :rtype: list[CustomMetric]
 
 
-   .. py:method:: describe_module(name = None)
+   .. py:method:: describe_module(name)
 
       Retrieves a full description of the specified module.
 
@@ -2342,7 +2342,7 @@ Attributes
       :rtype: list[Module]
 
 
-   .. py:method:: get_organization_secret(secret_key = None)
+   .. py:method:: get_organization_secret(secret_key)
 
       Gets a secret.
 
@@ -2361,7 +2361,7 @@ Attributes
       :rtype: list[OrganizationSecret]
 
 
-   .. py:method:: query_feature_group_code_generator(query = None, language = None, project_id = None)
+   .. py:method:: query_feature_group_code_generator(query, language, project_id = None)
 
       Send a query to the feature group code generator tool to generate code for the query.
 
@@ -2406,7 +2406,7 @@ Attributes
       :rtype: NaturalLanguageExplanation
 
 
-   .. py:method:: get_chat_session(chat_session_id = None)
+   .. py:method:: get_chat_session(chat_session_id)
 
       Gets a chat session from Data Science Co-pilot.
 
@@ -2445,7 +2445,7 @@ Attributes
       :rtype: DeploymentConversation
 
 
-   .. py:method:: list_deployment_conversations(deployment_id = None)
+   .. py:method:: list_deployment_conversations(deployment_id)
 
       Lists all conversations for the given deployment and current user.
 
@@ -2469,7 +2469,7 @@ Attributes
       :rtype: DeploymentConversationExport
 
 
-   .. py:method:: get_app_user_group(user_group_id = None)
+   .. py:method:: get_app_user_group(user_group_id)
 
       Gets an App User Group.
 
@@ -2480,7 +2480,7 @@ Attributes
       :rtype: AppUserGroup
 
 
-   .. py:method:: describe_external_application(external_application_id = None)
+   .. py:method:: describe_external_application(external_application_id)
 
       Describes an External Application.
 
@@ -2499,7 +2499,7 @@ Attributes
       :rtype: list[ExternalApplication]
 
 
-   .. py:method:: download_agent_attachment(deployment_id = None, attachment_id = None)
+   .. py:method:: download_agent_attachment(deployment_id, attachment_id)
 
       Return an agent attachment.
 
@@ -2509,7 +2509,7 @@ Attributes
       :type attachment_id: str
 
 
-   .. py:method:: describe_agent(agent_id = None)
+   .. py:method:: describe_agent(agent_id)
 
       Retrieves a full description of the specified model.
 
@@ -2520,7 +2520,7 @@ Attributes
       :rtype: Agent
 
 
-   .. py:method:: describe_agent_version(agent_version = None)
+   .. py:method:: describe_agent_version(agent_version)
 
       Retrieves a full description of the specified agent version.
 
@@ -2531,7 +2531,7 @@ Attributes
       :rtype: AgentVersion
 
 
-   .. py:method:: search_feature_groups(text = None, num_results = 10, project_id = None, feature_group_ids = None)
+   .. py:method:: search_feature_groups(text, num_results = 10, project_id = None, feature_group_ids = None)
 
       Search feature groups based on text and filters.
 
@@ -2548,7 +2548,7 @@ Attributes
       :rtype: list[OrganizationSearchResult]
 
 
-   .. py:method:: list_document_retrievers(project_id = None, limit = 100, start_after_id = None)
+   .. py:method:: list_document_retrievers(project_id, limit = 100, start_after_id = None)
 
       List all the document retrievers.
 
@@ -2563,7 +2563,7 @@ Attributes
       :rtype: list[DocumentRetriever]
 
 
-   .. py:method:: describe_document_retriever(document_retriever_id = None)
+   .. py:method:: describe_document_retriever(document_retriever_id)
 
       Describe a Document Retriever.
 
@@ -2574,7 +2574,7 @@ Attributes
       :rtype: DocumentRetriever
 
 
-   .. py:method:: describe_document_retriever_by_name(name = None)
+   .. py:method:: describe_document_retriever_by_name(name)
 
       Describe a document retriever by its name.
 
@@ -2585,7 +2585,7 @@ Attributes
       :rtype: DocumentRetriever
 
 
-   .. py:method:: list_document_retriever_versions(document_retriever_id = None, limit = 100, start_after_version = None)
+   .. py:method:: list_document_retriever_versions(document_retriever_id, limit = 100, start_after_version = None)
 
       List all the document retriever versions with a given ID.
 
@@ -2600,7 +2600,7 @@ Attributes
       :rtype: list[DocumentRetrieverVersion]
 
 
-   .. py:method:: describe_document_retriever_version(document_retriever_version = None)
+   .. py:method:: describe_document_retriever_version(document_retriever_version)
 
       Describe a document retriever version.
 
@@ -3449,7 +3449,7 @@ Attributes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
-   .. py:method:: add_user_to_organization(email = None)
+   .. py:method:: add_user_to_organization(email)
 
       Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
 
@@ -3457,7 +3457,7 @@ Attributes
       :type email: str
 
 
-   .. py:method:: create_organization_group(group_name = None, permissions = None, default_group = False)
+   .. py:method:: create_organization_group(group_name, permissions, default_group = False)
 
       Creates a new Organization Group.
 
@@ -3472,7 +3472,7 @@ Attributes
       :rtype: OrganizationGroup
 
 
-   .. py:method:: add_organization_group_permission(organization_group_id = None, permission = None)
+   .. py:method:: add_organization_group_permission(organization_group_id, permission)
 
       Adds a permission to the specified Organization Group.
 
@@ -3482,7 +3482,7 @@ Attributes
       :type permission: str
 
 
-   .. py:method:: remove_organization_group_permission(organization_group_id = None, permission = None)
+   .. py:method:: remove_organization_group_permission(organization_group_id, permission)
 
       Removes a permission from the specified Organization Group.
 
@@ -3492,7 +3492,7 @@ Attributes
       :type permission: str
 
 
-   .. py:method:: delete_organization_group(organization_group_id = None)
+   .. py:method:: delete_organization_group(organization_group_id)
 
       Deletes the specified Organization Group
 
@@ -3500,7 +3500,7 @@ Attributes
       :type organization_group_id: str
 
 
-   .. py:method:: add_user_to_organization_group(organization_group_id = None, email = None)
+   .. py:method:: add_user_to_organization_group(organization_group_id, email)
 
       Adds a user to the specified Organization Group.
 
@@ -3510,7 +3510,7 @@ Attributes
       :type email: str
 
 
-   .. py:method:: remove_user_from_organization_group(organization_group_id = None, email = None)
+   .. py:method:: remove_user_from_organization_group(organization_group_id, email)
 
       Removes a user from an Organization Group.
 
@@ -3520,7 +3520,7 @@ Attributes
       :type email: str
 
 
-   .. py:method:: set_default_organization_group(organization_group_id = None)
+   .. py:method:: set_default_organization_group(organization_group_id)
 
       Sets the default Organization Group to which all new users joining an organization are automatically added.
 
@@ -3528,7 +3528,7 @@ Attributes
       :type organization_group_id: str
 
 
-   .. py:method:: delete_api_key(api_key_id = None)
+   .. py:method:: delete_api_key(api_key_id)
 
       Delete a specified API key.
 
@@ -3536,7 +3536,7 @@ Attributes
       :type api_key_id: str
 
 
-   .. py:method:: remove_user_from_organization(email = None)
+   .. py:method:: remove_user_from_organization(email)
 
       Removes the specified user from the organization. You can remove yourself; otherwise, you must be an organization administrator to use this method to remove other users from the organization.
 
@@ -3544,7 +3544,7 @@ Attributes
       :type email: str
 
 
-   .. py:method:: send_email(email = None, subject = None, body = None, is_html = False)
+   .. py:method:: send_email(email, subject, body, is_html = False)
 
       Send an email to the specified email address with provided subject and contents.
 
@@ -3558,7 +3558,7 @@ Attributes
       :type is_html: bool
 
 
-   .. py:method:: create_deployment_webhook(deployment_id = None, endpoint = None, webhook_event_type = None, payload_template = None)
+   .. py:method:: create_deployment_webhook(deployment_id, endpoint, webhook_event_type, payload_template = None)
 
       Create a webhook attached to a given deployment ID.
 
@@ -3575,7 +3575,7 @@ Attributes
       :rtype: Webhook
 
 
-   .. py:method:: update_webhook(webhook_id = None, endpoint = None, webhook_event_type = None, payload_template = None)
+   .. py:method:: update_webhook(webhook_id, endpoint = None, webhook_event_type = None, payload_template = None)
 
       Update the webhook
 
@@ -3589,7 +3589,7 @@ Attributes
       :type payload_template: dict
 
 
-   .. py:method:: delete_webhook(webhook_id = None)
+   .. py:method:: delete_webhook(webhook_id)
 
       Delete the webhook
 
@@ -3597,7 +3597,7 @@ Attributes
       :type webhook_id: str
 
 
-   .. py:method:: create_project(name = None, use_case = None)
+   .. py:method:: create_project(name, use_case)
 
       Creates a project with the specified project name and use case. Creating a project creates a container for all datasets and models associated with a particular problem/project. For example, if you want to create a model to detect fraud, you need to first create a project, upload datasets, create feature groups, and then create one or more models to get predictions for your use case.
 
@@ -3610,7 +3610,7 @@ Attributes
       :rtype: Project
 
 
-   .. py:method:: rename_project(project_id = None, name = None)
+   .. py:method:: rename_project(project_id, name)
 
       This method renames a project after it is created.
 
@@ -3620,7 +3620,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: delete_project(project_id = None)
+   .. py:method:: delete_project(project_id)
 
       Delete a specified project from your organization.
 
@@ -3635,7 +3635,7 @@ Attributes
       :type project_id: str
 
 
-   .. py:method:: add_project_tags(project_id = None, tags = None)
+   .. py:method:: add_project_tags(project_id, tags)
 
       This method adds a tag to a project.
 
@@ -3645,7 +3645,7 @@ Attributes
       :type tags: list
 
 
-   .. py:method:: remove_project_tags(project_id = None, tags = None)
+   .. py:method:: remove_project_tags(project_id, tags)
 
       This method removes a tag from a project.
 
@@ -3655,7 +3655,7 @@ Attributes
       :type tags: list
 
 
-   .. py:method:: add_feature_group_to_project(feature_group_id = None, project_id = None, feature_group_type = 'CUSTOM_TABLE')
+   .. py:method:: add_feature_group_to_project(feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE')
 
       Adds a feature group to a project.
 
@@ -3667,7 +3667,7 @@ Attributes
       :type feature_group_type: str
 
 
-   .. py:method:: set_project_feature_group_config(feature_group_id = None, project_id = None, project_config = None)
+   .. py:method:: set_project_feature_group_config(feature_group_id, project_id, project_config = None)
 
       Sets a feature group's project config
 
@@ -3679,7 +3679,7 @@ Attributes
       :type project_config: dict
 
 
-   .. py:method:: remove_feature_group_from_project(feature_group_id = None, project_id = None)
+   .. py:method:: remove_feature_group_from_project(feature_group_id, project_id)
 
       Removes a feature group from a project.
 
@@ -3689,7 +3689,7 @@ Attributes
       :type project_id: str
 
 
-   .. py:method:: set_feature_group_type(feature_group_id = None, project_id = None, feature_group_type = 'CUSTOM_TABLE')
+   .. py:method:: set_feature_group_type(feature_group_id, project_id, feature_group_type = 'CUSTOM_TABLE')
 
       Update the feature group type in a project. The feature group must already be added to the project.
 
@@ -3701,7 +3701,7 @@ Attributes
       :type feature_group_type: str
 
 
-   .. py:method:: set_feature_mapping(project_id = None, feature_group_id = None, feature_name = None, feature_mapping = None, nested_column_name = None)
+   .. py:method:: set_feature_mapping(project_id, feature_group_id, feature_name, feature_mapping = None, nested_column_name = None)
 
       Set a column's feature mapping. If the column mapping is single-use and already set in another column in this feature group, this call will first remove the other column's mapping and move it to this column.
 
@@ -3720,7 +3720,7 @@ Attributes
       :rtype: list[Feature]
 
 
-   .. py:method:: add_annotation(annotation = None, feature_group_id = None, feature_name = None, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', status = None, comments = None, project_id = None, save_metadata = False, pages = None)
+   .. py:method:: add_annotation(annotation, feature_group_id, feature_name, doc_id = None, feature_group_row_identifier = None, annotation_source = 'ui', status = None, comments = None, project_id = None, save_metadata = False, pages = None)
 
       Add an annotation entry to the database.
 
@@ -3751,7 +3751,7 @@ Attributes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: describe_annotation(feature_group_id = None, feature_name = None, doc_id = None, feature_group_row_identifier = None)
+   .. py:method:: describe_annotation(feature_group_id, feature_name = None, doc_id = None, feature_group_row_identifier = None)
 
       Get the latest annotation entry for a given feature group, feature, and document.
 
@@ -3768,7 +3768,7 @@ Attributes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: update_annotation_status(feature_group_id = None, feature_name = None, status = None, doc_id = None, feature_group_row_identifier = None, save_metadata = False)
+   .. py:method:: update_annotation_status(feature_group_id, feature_name, status, doc_id = None, feature_group_row_identifier = None, save_metadata = False)
 
       Update the status of an annotation entry.
 
@@ -3789,7 +3789,7 @@ Attributes
       :rtype: AnnotationEntry
 
 
-   .. py:method:: get_document_to_annotate(feature_group_id = None, project_id = None, feature_name = None, feature_group_row_identifier = None, get_previous = False)
+   .. py:method:: get_document_to_annotate(feature_group_id, project_id, feature_name, feature_group_row_identifier = None, get_previous = False)
 
       Get an available document that needs to be annotated for a annotation feature group.
 
@@ -3808,7 +3808,7 @@ Attributes
       :rtype: AnnotationDocument
 
 
-   .. py:method:: import_annotation_labels(feature_group_id = None, file = None, annotation_type = None)
+   .. py:method:: import_annotation_labels(feature_group_id, file, annotation_type)
 
       Imports annotation labels from csv file. All valid values in the file will be imported as labels (including header row if present).
 
@@ -3823,7 +3823,7 @@ Attributes
       :rtype: AnnotationConfig
 
 
-   .. py:method:: create_feature_group(table_name = None, sql = None, description = None)
+   .. py:method:: create_feature_group(table_name, sql, description = None)
 
       Creates a new FeatureGroup from a SQL statement.
 
@@ -3838,7 +3838,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_template(table_name = None, feature_group_template_id = None, template_bindings = None, should_attach_feature_group_to_template = True, description = None)
+   .. py:method:: create_feature_group_from_template(table_name, feature_group_template_id, template_bindings = None, should_attach_feature_group_to_template = True, description = None)
 
       Creates a new feature group from a SQL statement.
 
@@ -3857,7 +3857,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_feature_group_from_function(table_name = None, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None)
+   .. py:method:: create_feature_group_from_function(table_name, function_source_code = None, function_name = None, input_feature_groups = None, description = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_name = None, python_function_bindings = None, use_gpu = None)
 
       Creates a new feature in a Feature Group from user-provided code. Currently supported code languages are Python.
 
@@ -3895,7 +3895,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_sampling_feature_group(feature_group_id = None, table_name = None, sampling_config = None, description = None)
+   .. py:method:: create_sampling_feature_group(feature_group_id, table_name, sampling_config, description = None)
 
       Creates a new Feature Group defined as a sample of rows from another Feature Group.
 
@@ -3915,7 +3915,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_merge_feature_group(source_feature_group_id = None, table_name = None, merge_config = None, description = None)
+   .. py:method:: create_merge_feature_group(source_feature_group_id, table_name, merge_config, description = None)
 
       Creates a new feature group defined as the union of other feature group versions.
 
@@ -3931,7 +3931,7 @@ Attributes
       Creates a new feature group defined as the union of other feature group versions.
 
 
-   .. py:method:: create_operator_feature_group(source_feature_group_id = None, table_name = None, operator_config = None, description = None)
+   .. py:method:: create_operator_feature_group(source_feature_group_id, table_name, operator_config, description = None)
 
       Creates a new Feature Group defined by a pre-defined operator applied to another Feature Group.
 
@@ -3948,7 +3948,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_snapshot_feature_group(feature_group_version = None, table_name = None)
+   .. py:method:: create_snapshot_feature_group(feature_group_version, table_name)
 
       Creates a Snapshot Feature Group corresponding to a specific Feature Group version.
 
@@ -3961,7 +3961,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_online_feature_group(table_name = None, primary_key = None, description = None)
+   .. py:method:: create_online_feature_group(table_name, primary_key, description = None)
 
       Creates an Online Feature Group.
 
@@ -3976,7 +3976,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_group_sampling_config(feature_group_id = None, sampling_config = None)
+   .. py:method:: set_feature_group_sampling_config(feature_group_id, sampling_config)
 
       Set a FeatureGroup’s sampling to the config values provided, so that the rows the FeatureGroup returns will be a sample of those it would otherwise have returned.
 
@@ -3989,7 +3989,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_group_merge_config(feature_group_id = None, merge_config = None)
+   .. py:method:: set_feature_group_merge_config(feature_group_id, merge_config)
 
       Set a MergeFeatureGroup’s merge config to the values provided, so that the feature group only returns a bounded range of an incremental dataset.
 
@@ -4002,7 +4002,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_group_operator_config(feature_group_id = None, operator_config = None)
+   .. py:method:: set_feature_group_operator_config(feature_group_id, operator_config)
 
       Set a OperatorFeatureGroup’s operator config to the values provided.
 
@@ -4012,7 +4012,7 @@ Attributes
       :type operator_config: dict
 
 
-   .. py:method:: set_feature_group_schema(feature_group_id = None, schema = None)
+   .. py:method:: set_feature_group_schema(feature_group_id, schema)
 
       Creates a new schema and points the feature group to the new feature group schema ID.
 
@@ -4022,7 +4022,7 @@ Attributes
       :type schema: list
 
 
-   .. py:method:: create_feature(feature_group_id = None, name = None, select_expression = None)
+   .. py:method:: create_feature(feature_group_id, name, select_expression)
 
       Creates a new feature in a Feature Group from a SQL select statement.
 
@@ -4037,7 +4037,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_feature_group_tag(feature_group_id = None, tag = None)
+   .. py:method:: add_feature_group_tag(feature_group_id, tag)
 
       Adds a tag to the feature group
 
@@ -4047,7 +4047,7 @@ Attributes
       :type tag: str
 
 
-   .. py:method:: remove_feature_group_tag(feature_group_id = None, tag = None)
+   .. py:method:: remove_feature_group_tag(feature_group_id, tag)
 
       Removes a tag from the specified feature group.
 
@@ -4057,7 +4057,7 @@ Attributes
       :type tag: str
 
 
-   .. py:method:: add_annotatable_feature(feature_group_id = None, name = None, annotation_type = None)
+   .. py:method:: add_annotatable_feature(feature_group_id, name, annotation_type)
 
       Add an annotatable feature in a Feature Group
 
@@ -4072,7 +4072,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_as_annotatable_feature(feature_group_id = None, feature_name = None, annotation_type = None, feature_group_row_identifier_feature = None, doc_id_feature = None)
+   .. py:method:: set_feature_as_annotatable_feature(feature_group_id, feature_name, annotation_type, feature_group_row_identifier_feature = None, doc_id_feature = None)
 
       Sets an existing feature as an annotatable feature (Feature that can be annotated).
 
@@ -4091,7 +4091,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_annotation_status_feature(feature_group_id = None, feature_name = None)
+   .. py:method:: set_annotation_status_feature(feature_group_id, feature_name)
 
       Sets a feature as the annotation status feature for a feature group.
 
@@ -4104,7 +4104,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: unset_feature_as_annotatable_feature(feature_group_id = None, feature_name = None)
+   .. py:method:: unset_feature_as_annotatable_feature(feature_group_id, feature_name)
 
       Unsets a feature as annotatable
 
@@ -4117,7 +4117,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_feature_group_annotation_label(feature_group_id = None, label_name = None, annotation_type = None, label_definition = None)
+   .. py:method:: add_feature_group_annotation_label(feature_group_id, label_name, annotation_type, label_definition = None)
 
       Adds an annotation label
 
@@ -4134,7 +4134,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: remove_feature_group_annotation_label(feature_group_id = None, label_name = None)
+   .. py:method:: remove_feature_group_annotation_label(feature_group_id, label_name)
 
       Removes an annotation label
 
@@ -4147,7 +4147,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: add_feature_tag(feature_group_id = None, feature = None, tag = None)
+   .. py:method:: add_feature_tag(feature_group_id, feature, tag)
 
       Adds a tag on a feature
 
@@ -4159,7 +4159,7 @@ Attributes
       :type tag: str
 
 
-   .. py:method:: remove_feature_tag(feature_group_id = None, feature = None, tag = None)
+   .. py:method:: remove_feature_tag(feature_group_id, feature, tag)
 
       Removes a tag from a feature
 
@@ -4171,7 +4171,7 @@ Attributes
       :type tag: str
 
 
-   .. py:method:: create_nested_feature(feature_group_id = None, nested_feature_name = None, table_name = None, using_clause = None, where_clause = None, order_clause = None)
+   .. py:method:: create_nested_feature(feature_group_id, nested_feature_name, table_name, using_clause, where_clause = None, order_clause = None)
 
       Creates a new nested feature in a feature group from a SQL statement.
 
@@ -4192,7 +4192,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_nested_feature(feature_group_id = None, nested_feature_name = None, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
+   .. py:method:: update_nested_feature(feature_group_id, nested_feature_name, table_name = None, using_clause = None, where_clause = None, order_clause = None, new_nested_feature_name = None)
 
       Updates a previously existing nested feature in a feature group.
 
@@ -4215,7 +4215,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_nested_feature(feature_group_id = None, nested_feature_name = None)
+   .. py:method:: delete_nested_feature(feature_group_id, nested_feature_name)
 
       Delete a nested feature.
 
@@ -4228,7 +4228,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_feature(feature_group_id = None, feature_name = None, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
+   .. py:method:: create_point_in_time_feature(feature_group_id, feature_name, history_table_name, aggregation_keys, timestamp_key, historical_timestamp_key, expression, lookback_window_seconds = None, lookback_window_lag_seconds = 0, lookback_count = None, lookback_until_position = 0)
 
       Creates a new point in time feature in a feature group using another historical feature group, window spec, and aggregate expression.
 
@@ -4264,7 +4264,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_feature(feature_group_id = None, feature_name = None, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
+   .. py:method:: update_point_in_time_feature(feature_group_id, feature_name, history_table_name = None, aggregation_keys = None, timestamp_key = None, historical_timestamp_key = None, expression = None, lookback_window_seconds = None, lookback_window_lag_seconds = None, lookback_count = None, lookback_until_position = None, new_feature_name = None)
 
       Updates an existing Point-in-Time (PiT) feature in a feature group. See `createPointInTimeFeature` for detailed semantics.
 
@@ -4297,7 +4297,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_group(feature_group_id = None, group_name = None, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
+   .. py:method:: create_point_in_time_group(feature_group_id, group_name, window_key, aggregation_keys, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = 0, lookback_count = None, lookback_until_position = 0)
 
       Create a Point-in-Time Group
 
@@ -4328,7 +4328,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: generate_point_in_time_features(feature_group_id = None, group_name = None, columns = None, window_functions = None, prefix = None)
+   .. py:method:: generate_point_in_time_features(feature_group_id, group_name, columns, window_functions, prefix = None)
 
       Generates and adds PIT features given the selected columns to aggregate over, and the operations to include.
 
@@ -4347,7 +4347,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_group(feature_group_id = None, group_name = None, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
+   .. py:method:: update_point_in_time_group(feature_group_id, group_name, window_key = None, aggregation_keys = None, history_table_name = None, history_window_key = None, history_aggregation_keys = None, lookback_window = None, lookback_window_lag = None, lookback_count = None, lookback_until_position = None)
 
       Update Point-in-Time Group
 
@@ -4378,7 +4378,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_point_in_time_group(feature_group_id = None, group_name = None)
+   .. py:method:: delete_point_in_time_group(feature_group_id, group_name)
 
       Delete point in time group
 
@@ -4391,7 +4391,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: create_point_in_time_group_feature(feature_group_id = None, group_name = None, name = None, expression = None)
+   .. py:method:: create_point_in_time_group_feature(feature_group_id, group_name, name, expression)
 
       Create point in time group feature
 
@@ -4408,7 +4408,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_point_in_time_group_feature(feature_group_id = None, group_name = None, name = None, expression = None)
+   .. py:method:: update_point_in_time_group_feature(feature_group_id, group_name, name, expression)
 
       Update a feature's SQL expression in a point in time group
 
@@ -4425,7 +4425,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: set_feature_type(feature_group_id = None, feature = None, feature_type = None)
+   .. py:method:: set_feature_type(feature_group_id, feature, feature_type)
 
       Set the type of a feature in a feature group. Specify the feature group ID, feature name, and feature type, and the method will return the new column with the changes reflected.
 
@@ -4440,7 +4440,7 @@ Attributes
       :rtype: Schema
 
 
-   .. py:method:: invalidate_streaming_feature_group_data(feature_group_id = None, invalid_before_timestamp = None)
+   .. py:method:: invalidate_streaming_feature_group_data(feature_group_id, invalid_before_timestamp)
 
       Invalidates all streaming data with timestamp before invalidBeforeTimestamp
 
@@ -4450,7 +4450,7 @@ Attributes
       :type invalid_before_timestamp: int
 
 
-   .. py:method:: concatenate_feature_group_data(feature_group_id = None, source_feature_group_id = None, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
+   .. py:method:: concatenate_feature_group_data(feature_group_id, source_feature_group_id, merge_type = 'UNION', replace_until_timestamp = None, skip_materialize = False)
 
       Concatenates data from one Feature Group to another. Feature Groups can be merged if their schemas are compatible, they have the special `updateTimestampKey` column, and (if set) the `primaryKey` column. The second operand in the concatenate operation will be appended to the first operand (merge target).
 
@@ -4466,7 +4466,7 @@ Attributes
       :type skip_materialize: bool
 
 
-   .. py:method:: remove_concatenation_config(feature_group_id = None)
+   .. py:method:: remove_concatenation_config(feature_group_id)
 
       Removes the concatenation config on a destination feature group.
 
@@ -4474,7 +4474,7 @@ Attributes
       :type feature_group_id: str
 
 
-   .. py:method:: set_feature_group_indexing_config(feature_group_id = None, primary_key = None, update_timestamp_key = None, lookup_keys = None)
+   .. py:method:: set_feature_group_indexing_config(feature_group_id, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Sets various attributes of the feature group used for primary key, deployment lookups and streaming updates.
 
@@ -4501,7 +4501,7 @@ Attributes
       :rtype: ExecuteFeatureGroupOperation
 
 
-   .. py:method:: describe_async_feature_group_operation(feature_group_operation_run_id = None)
+   .. py:method:: describe_async_feature_group_operation(feature_group_operation_run_id)
 
       Gets the status of the execution of fg operation
 
@@ -4512,7 +4512,7 @@ Attributes
       :rtype: ExecuteFeatureGroupOperation
 
 
-   .. py:method:: update_feature_group(feature_group_id = None, description = None)
+   .. py:method:: update_feature_group(feature_group_id, description = None)
 
       Modify an existing Feature Group.
 
@@ -4525,7 +4525,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: detach_feature_group_from_template(feature_group_id = None)
+   .. py:method:: detach_feature_group_from_template(feature_group_id)
 
       Update a feature group to detach it from a template.
 
@@ -4536,7 +4536,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_template_bindings(feature_group_id = None, template_bindings = None)
+   .. py:method:: update_feature_group_template_bindings(feature_group_id, template_bindings = None)
 
       Update the feature group template bindings for a template feature group.
 
@@ -4549,7 +4549,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_python_function_bindings(feature_group_id = None, python_function_bindings = None)
+   .. py:method:: update_feature_group_python_function_bindings(feature_group_id, python_function_bindings)
 
       Updates an existing Feature Group's Python function bindings from a user-provided Python Function. If a list of feature groups are supplied within the Python function bindings, we will provide DataFrames (Pandas in the case of Python) with the materialized feature groups for those input feature groups as arguments to the function.
 
@@ -4559,7 +4559,7 @@ Attributes
       :type python_function_bindings: list
 
 
-   .. py:method:: update_feature_group_python_function(feature_group_id = None, python_function_name = None, python_function_bindings = [])
+   .. py:method:: update_feature_group_python_function(feature_group_id, python_function_name, python_function_bindings = [])
 
       Updates an existing Feature Group's python function from a user provided Python Function. If a list of feature groups are supplied within the python function
 
@@ -4575,7 +4575,7 @@ Attributes
       :type python_function_bindings: list
 
 
-   .. py:method:: update_feature_group_sql_definition(feature_group_id = None, sql = None)
+   .. py:method:: update_feature_group_sql_definition(feature_group_id, sql)
 
       Updates the SQL statement for a feature group.
 
@@ -4588,7 +4588,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_dataset_feature_group_feature_expression(feature_group_id = None, feature_expression = None)
+   .. py:method:: update_dataset_feature_group_feature_expression(feature_group_id, feature_expression)
 
       Updates the SQL feature expression for a Dataset FeatureGroup's custom features
 
@@ -4601,7 +4601,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature_group_function_definition(feature_group_id = None, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None, use_gpu = None)
+   .. py:method:: update_feature_group_function_definition(feature_group_id, function_source_code = None, function_name = None, input_feature_groups = None, cpu_size = None, memory = None, package_requirements = None, use_original_csv_names = False, python_function_bindings = None, use_gpu = None)
 
       Updates the function definition for a feature group
 
@@ -4630,7 +4630,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: update_feature(feature_group_id = None, name = None, select_expression = None, new_name = None)
+   .. py:method:: update_feature(feature_group_id, name, select_expression = None, new_name = None)
 
       Modifies an existing feature in a feature group.
 
@@ -4647,7 +4647,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: export_feature_group_version_to_file_connector(feature_group_version = None, location = None, export_file_format = None, overwrite = False)
+   .. py:method:: export_feature_group_version_to_file_connector(feature_group_version, location, export_file_format, overwrite = False)
 
       Export Feature group to File Connector.
 
@@ -4664,7 +4664,7 @@ Attributes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_feature_group_version_to_database_connector(feature_group_version = None, database_connector_id = None, object_name = None, write_mode = None, database_feature_mapping = None, id_column = None, additional_id_columns = None)
+   .. py:method:: export_feature_group_version_to_database_connector(feature_group_version, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Export Feature group to Database Connector.
 
@@ -4687,7 +4687,7 @@ Attributes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: export_feature_group_version_to_console(feature_group_version = None, export_file_format = None)
+   .. py:method:: export_feature_group_version_to_console(feature_group_version, export_file_format)
 
       Export Feature group to console.
 
@@ -4700,7 +4700,7 @@ Attributes
       :rtype: FeatureGroupExport
 
 
-   .. py:method:: set_feature_group_modifier_lock(feature_group_id = None, locked = True)
+   .. py:method:: set_feature_group_modifier_lock(feature_group_id, locked = True)
 
       Lock a feature group to prevent modification.
 
@@ -4710,7 +4710,7 @@ Attributes
       :type locked: bool
 
 
-   .. py:method:: add_user_to_feature_group_modifiers(feature_group_id = None, email = None)
+   .. py:method:: add_user_to_feature_group_modifiers(feature_group_id, email)
 
       Adds a user to a feature group.
 
@@ -4720,7 +4720,7 @@ Attributes
       :type email: str
 
 
-   .. py:method:: add_organization_group_to_feature_group_modifiers(feature_group_id = None, organization_group_id = None)
+   .. py:method:: add_organization_group_to_feature_group_modifiers(feature_group_id, organization_group_id)
 
       Add OrganizationGroup to a feature group modifiers list
 
@@ -4730,7 +4730,7 @@ Attributes
       :type organization_group_id: str
 
 
-   .. py:method:: remove_user_from_feature_group_modifiers(feature_group_id = None, email = None)
+   .. py:method:: remove_user_from_feature_group_modifiers(feature_group_id, email)
 
       Removes a user from a specified feature group.
 
@@ -4740,7 +4740,7 @@ Attributes
       :type email: str
 
 
-   .. py:method:: remove_organization_group_from_feature_group_modifiers(feature_group_id = None, organization_group_id = None)
+   .. py:method:: remove_organization_group_from_feature_group_modifiers(feature_group_id, organization_group_id)
 
       Removes an OrganizationGroup from a feature group modifiers list
 
@@ -4750,7 +4750,7 @@ Attributes
       :type organization_group_id: str
 
 
-   .. py:method:: delete_feature(feature_group_id = None, name = None)
+   .. py:method:: delete_feature(feature_group_id, name)
 
       Removes a feature from the feature group.
 
@@ -4763,7 +4763,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: delete_feature_group(feature_group_id = None)
+   .. py:method:: delete_feature_group(feature_group_id)
 
       Deletes a Feature Group.
 
@@ -4771,7 +4771,7 @@ Attributes
       :type feature_group_id: str
 
 
-   .. py:method:: create_feature_group_version(feature_group_id = None, variable_bindings = None)
+   .. py:method:: create_feature_group_version(feature_group_id, variable_bindings = None)
 
       Creates a snapshot for a specified feature group. Triggers materialization of the feature group. The new version of the feature group is created after it has materialized.
 
@@ -4784,7 +4784,7 @@ Attributes
       :rtype: FeatureGroupVersion
 
 
-   .. py:method:: create_feature_group_template(feature_group_id = None, name = None, template_sql = None, template_variables = None, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
+   .. py:method:: create_feature_group_template(feature_group_id, name, template_sql, template_variables, description = None, template_bindings = None, should_attach_feature_group_to_template = False)
 
       Create a feature group template.
 
@@ -4807,7 +4807,7 @@ Attributes
       :rtype: FeatureGroupTemplate
 
 
-   .. py:method:: delete_feature_group_template(feature_group_template_id = None)
+   .. py:method:: delete_feature_group_template(feature_group_template_id)
 
       Delete an existing feature group template.
 
@@ -4815,7 +4815,7 @@ Attributes
       :type feature_group_template_id: str
 
 
-   .. py:method:: update_feature_group_template(feature_group_template_id = None, template_sql = None, template_variables = None, description = None, name = None)
+   .. py:method:: update_feature_group_template(feature_group_template_id, template_sql = None, template_variables = None, description = None, name = None)
 
       Update a feature group template.
 
@@ -4853,7 +4853,7 @@ Attributes
       :rtype: ResolvedFeatureGroupTemplate
 
 
-   .. py:method:: cancel_upload(upload_id = None)
+   .. py:method:: cancel_upload(upload_id)
 
       Cancels an upload.
 
@@ -4861,7 +4861,7 @@ Attributes
       :type upload_id: str
 
 
-   .. py:method:: upload_part(upload_id = None, part_number = None, part_data = None)
+   .. py:method:: upload_part(upload_id, part_number, part_data)
 
       Uploads part of a large dataset file from your bucket to our system. Our system currently supports parts of up to 5GB and full files of up to 5TB. Note that each part must be at least 5MB in size, unless it is the last part in the sequence of parts for the full file.
 
@@ -4876,7 +4876,7 @@ Attributes
       :rtype: UploadPart
 
 
-   .. py:method:: mark_upload_complete(upload_id = None)
+   .. py:method:: mark_upload_complete(upload_id)
 
       Marks an upload process as complete.
 
@@ -4887,7 +4887,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_from_file_connector(table_name = None, location = None, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
+   .. py:method:: create_dataset_from_file_connector(table_name, location, file_format = None, refresh_schedule = None, csv_delimiter = None, filename_column = None, start_prefix = None, until_prefix = None, location_date_format = None, date_format_lookback_days = None, incremental = False, is_documentset = False, extract_bounding_boxes = False, document_processing_config = None, merge_file_schemas = False, reference_only_documentset = False, parsing_config = None)
 
       Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
@@ -4930,7 +4930,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_version_from_file_connector(dataset_id = None, location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None)
+   .. py:method:: create_dataset_version_from_file_connector(dataset_id, location = None, file_format = None, csv_delimiter = None, merge_file_schemas = None, parsing_config = None)
 
       Creates a new version of the specified dataset.
 
@@ -4951,7 +4951,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_database_connector(table_name = None, database_connector_id = None, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None)
+   .. py:method:: create_dataset_from_database_connector(table_name, database_connector_id, object_name = None, columns = None, query_arguments = None, refresh_schedule = None, sql_query = None, incremental = False, incremental_database_connector_config = None)
 
       Creates a dataset from a Database Connector.
 
@@ -4978,7 +4978,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_from_application_connector(table_name = None, application_connector_id = None, dataset_config = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_application_connector(table_name, application_connector_id, dataset_config = None, refresh_schedule = None)
 
       Creates a dataset from an Application Connector.
 
@@ -4995,7 +4995,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_version_from_database_connector(dataset_id = None, object_name = None, columns = None, query_arguments = None, sql_query = None)
+   .. py:method:: create_dataset_version_from_database_connector(dataset_id, object_name = None, columns = None, query_arguments = None, sql_query = None)
 
       Creates a new version of the specified dataset.
 
@@ -5014,7 +5014,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_version_from_application_connector(dataset_id = None, dataset_config = None)
+   .. py:method:: create_dataset_version_from_application_connector(dataset_id, dataset_config = None)
 
       Creates a new version of the specified dataset.
 
@@ -5027,7 +5027,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: create_dataset_from_upload(table_name = None, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None)
+   .. py:method:: create_dataset_from_upload(table_name, file_format = None, csv_delimiter = None, is_documentset = False, extract_bounding_boxes = False, parsing_config = None, merge_file_schemas = False, document_processing_config = None)
 
       Creates a dataset and returns an upload ID that can be used to upload a file.
 
@@ -5052,7 +5052,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_dataset_version_from_upload(dataset_id = None, file_format = None)
+   .. py:method:: create_dataset_version_from_upload(dataset_id, file_format = None)
 
       Creates a new version of the specified dataset using a local file upload.
 
@@ -5065,7 +5065,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: create_streaming_dataset(table_name = None, primary_key = None, update_timestamp_key = None, lookup_keys = None)
+   .. py:method:: create_streaming_dataset(table_name, primary_key = None, update_timestamp_key = None, lookup_keys = None)
 
       Creates a streaming dataset. Use a streaming dataset if your dataset is receiving information from multiple sources over an extended period of time.
 
@@ -5082,7 +5082,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: snapshot_streaming_data(dataset_id = None)
+   .. py:method:: snapshot_streaming_data(dataset_id)
 
       Snapshots the current data in the streaming dataset.
 
@@ -5093,7 +5093,7 @@ Attributes
       :rtype: DatasetVersion
 
 
-   .. py:method:: set_dataset_column_data_type(dataset_id = None, column = None, data_type = None)
+   .. py:method:: set_dataset_column_data_type(dataset_id, column, data_type)
 
       Set a Dataset's column type.
 
@@ -5108,7 +5108,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: create_dataset_from_streaming_connector(table_name = None, streaming_connector_id = None, streaming_args = None, refresh_schedule = None)
+   .. py:method:: create_dataset_from_streaming_connector(table_name, streaming_connector_id, streaming_args = None, refresh_schedule = None)
 
       Creates a dataset from a Streaming Connector
 
@@ -5125,7 +5125,7 @@ Attributes
       :rtype: Dataset
 
 
-   .. py:method:: set_streaming_retention_policy(dataset_id = None, retention_hours = None, retention_row_count = None, ignore_records_before_timestamp = None)
+   .. py:method:: set_streaming_retention_policy(dataset_id, retention_hours = None, retention_row_count = None, ignore_records_before_timestamp = None)
 
       Sets the streaming retention policy.
 
@@ -5139,7 +5139,7 @@ Attributes
       :type ignore_records_before_timestamp: int
 
 
-   .. py:method:: rename_database_connector(database_connector_id = None, name = None)
+   .. py:method:: rename_database_connector(database_connector_id, name)
 
       Renames a Database Connector
 
@@ -5149,7 +5149,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: rename_application_connector(application_connector_id = None, name = None)
+   .. py:method:: rename_application_connector(application_connector_id, name)
 
       Renames a Application Connector
 
@@ -5159,7 +5159,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: verify_database_connector(database_connector_id = None)
+   .. py:method:: verify_database_connector(database_connector_id)
 
       Checks if Abacus.AI can access the specified database.
 
@@ -5167,7 +5167,7 @@ Attributes
       :type database_connector_id: str
 
 
-   .. py:method:: verify_file_connector(bucket = None)
+   .. py:method:: verify_file_connector(bucket)
 
       Checks to see if Abacus.AI can access the given bucket.
 
@@ -5178,7 +5178,7 @@ Attributes
       :rtype: FileConnectorVerification
 
 
-   .. py:method:: delete_database_connector(database_connector_id = None)
+   .. py:method:: delete_database_connector(database_connector_id)
 
       Delete a database connector.
 
@@ -5186,7 +5186,7 @@ Attributes
       :type database_connector_id: str
 
 
-   .. py:method:: delete_application_connector(application_connector_id = None)
+   .. py:method:: delete_application_connector(application_connector_id)
 
       Delete an application connector.
 
@@ -5194,7 +5194,7 @@ Attributes
       :type application_connector_id: str
 
 
-   .. py:method:: delete_file_connector(bucket = None)
+   .. py:method:: delete_file_connector(bucket)
 
       Deletes a file connector
 
@@ -5202,7 +5202,7 @@ Attributes
       :type bucket: str
 
 
-   .. py:method:: verify_application_connector(application_connector_id = None)
+   .. py:method:: verify_application_connector(application_connector_id)
 
       Checks if Abacus.AI can access the application using the provided application connector ID.
 
@@ -5210,7 +5210,7 @@ Attributes
       :type application_connector_id: str
 
 
-   .. py:method:: set_azure_blob_connection_string(bucket = None, connection_string = None)
+   .. py:method:: set_azure_blob_connection_string(bucket, connection_string)
 
       Authenticates the specified Azure Blob Storage bucket using an authenticated Connection String.
 
@@ -5223,7 +5223,7 @@ Attributes
       :rtype: FileConnectorVerification
 
 
-   .. py:method:: verify_streaming_connector(streaming_connector_id = None)
+   .. py:method:: verify_streaming_connector(streaming_connector_id)
 
       Checks to see if Abacus.AI can access the streaming connector.
 
@@ -5231,7 +5231,7 @@ Attributes
       :type streaming_connector_id: str
 
 
-   .. py:method:: rename_streaming_connector(streaming_connector_id = None, name = None)
+   .. py:method:: rename_streaming_connector(streaming_connector_id, name)
 
       Renames a Streaming Connector
 
@@ -5241,7 +5241,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: delete_streaming_connector(streaming_connector_id = None)
+   .. py:method:: delete_streaming_connector(streaming_connector_id)
 
       Delete a streaming connector.
 
@@ -5257,7 +5257,7 @@ Attributes
       :rtype: StreamingAuthToken
 
 
-   .. py:method:: delete_streaming_token(streaming_token = None)
+   .. py:method:: delete_streaming_token(streaming_token)
 
       Deletes the specified streaming token.
 
@@ -5265,7 +5265,7 @@ Attributes
       :type streaming_token: str
 
 
-   .. py:method:: delete_dataset(dataset_id = None)
+   .. py:method:: delete_dataset(dataset_id)
 
       Deletes the specified dataset from the organization.
 
@@ -5288,7 +5288,7 @@ Attributes
       :rtype: DocumentData
 
 
-   .. py:method:: get_training_config_options(project_id = None, feature_group_ids = None, for_retrain = False, current_training_config = None)
+   .. py:method:: get_training_config_options(project_id, feature_group_ids = None, for_retrain = False, current_training_config = None)
 
       Retrieves the full initial description of the model training configuration options available for the specified project. The configuration options available are determined by the use case associated with the specified project. Refer to the [Use Case Documentation]({USE_CASES_URL}) for more information on use cases and use case-specific configuration options.
 
@@ -5305,7 +5305,7 @@ Attributes
       :rtype: list[TrainingConfigOptions]
 
 
-   .. py:method:: create_train_test_data_split_feature_group(project_id = None, training_config = None, feature_group_ids = None)
+   .. py:method:: create_train_test_data_split_feature_group(project_id, training_config, feature_group_ids)
 
       Get the train and test data split without training the model. Only supported for models with custom algorithms.
 
@@ -5320,7 +5320,7 @@ Attributes
       :rtype: FeatureGroup
 
 
-   .. py:method:: train_model(project_id = None, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
+   .. py:method:: train_model(project_id, name = None, training_config = None, feature_group_ids = None, refresh_schedule = None, custom_algorithms = None, custom_algorithms_only = False, custom_algorithm_configs = None, builtin_algorithms = None, cpu_size = None, memory = None, algorithm_training_configs = None)
 
       Create a new model and start its training in the given project.
 
@@ -5353,7 +5353,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: create_model_from_python(project_id = None, function_source_code = None, train_function_name = None, training_input_tables = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
+   .. py:method:: create_model_from_python(project_id, function_source_code, train_function_name, training_input_tables, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, name = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False, package_requirements = None, use_gpu = False, is_thread_safe = None)
 
       Initializes a new Model from user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -5395,7 +5395,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: rename_model(model_id = None, name = None)
+   .. py:method:: rename_model(model_id, name)
 
       Renames a model
 
@@ -5405,7 +5405,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: update_python_model(model_id = None, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None)
+   .. py:method:: update_python_model(model_id, function_source_code = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None, is_thread_safe = None)
 
       Updates an existing Python Model using user-provided Python code. If a list of input feature groups is supplied, they will be provided as arguments to the `train` and `predict` functions with the materialized feature groups for those input feature groups.
 
@@ -5441,7 +5441,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: update_python_model_zip(model_id = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
+   .. py:method:: update_python_model_zip(model_id, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Updates an existing Python Model using a provided zip file. If a list of input feature groups are supplied, they will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -5475,7 +5475,7 @@ Attributes
       :rtype: Upload
 
 
-   .. py:method:: update_python_model_git(model_id = None, application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
+   .. py:method:: update_python_model_git(model_id, application_connector_id = None, branch_name = None, python_root = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, train_module_name = None, predict_module_name = None, training_input_tables = None, cpu_size = None, memory = None, use_gpu = None)
 
       Updates an existing Python model using an existing Git application connector. If a list of input feature groups are supplied, these will be provided as arguments to the train and predict functions with the materialized feature groups for those input feature groups.
 
@@ -5513,7 +5513,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: set_model_training_config(model_id = None, training_config = None, feature_group_ids = None)
+   .. py:method:: set_model_training_config(model_id, training_config, feature_group_ids = None)
 
       Edits the default model training config
 
@@ -5528,7 +5528,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: set_model_objective(model_version = None, metric = None)
+   .. py:method:: set_model_objective(model_version, metric = None)
 
       Sets the best model for all model instances of the model based on the specified metric, and updates the training configuration to use the specified metric for any future model versions.
 
@@ -5541,7 +5541,7 @@ Attributes
       :type metric: str
 
 
-   .. py:method:: set_model_prediction_params(model_id = None, prediction_config = None)
+   .. py:method:: set_model_prediction_params(model_id, prediction_config)
 
       Sets the model prediction config for the model
 
@@ -5554,7 +5554,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: retrain_model(model_id = None, deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None, algorithm_training_configs = None)
+   .. py:method:: retrain_model(model_id, deployment_ids = None, feature_group_ids = None, custom_algorithms = None, builtin_algorithms = None, custom_algorithm_configs = None, cpu_size = None, memory = None, training_config = None, algorithm_training_configs = None)
 
       Retrains the specified model, with an option to choose the deployments to which the retraining will be deployed.
 
@@ -5583,7 +5583,7 @@ Attributes
       :rtype: Model
 
 
-   .. py:method:: delete_model(model_id = None)
+   .. py:method:: delete_model(model_id)
 
       Deletes the specified model and all its versions. Models which are currently used in deployments cannot be deleted.
 
@@ -5591,7 +5591,7 @@ Attributes
       :type model_id: str
 
 
-   .. py:method:: delete_model_version(model_version = None)
+   .. py:method:: delete_model_version(model_version)
 
       Deletes the specified model version. Model versions which are currently used in deployments cannot be deleted.
 
@@ -5599,7 +5599,7 @@ Attributes
       :type model_version: str
 
 
-   .. py:method:: export_model_artifact_as_feature_group(model_version = None, table_name = None, artifact_type = None)
+   .. py:method:: export_model_artifact_as_feature_group(model_version, table_name, artifact_type = None)
 
       Exports metric artifact data for a model as a feature group.
 
@@ -5626,7 +5626,7 @@ Attributes
       :type data_cluster_type: str
 
 
-   .. py:method:: get_custom_train_function_info(project_id = None, feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
+   .. py:method:: get_custom_train_function_info(project_id, feature_group_names_for_training = None, training_data_parameter_name_override = None, training_config = None, custom_algorithm_config = None)
 
       Returns information about how to call the custom train function.
 
@@ -5645,7 +5645,7 @@ Attributes
       :rtype: CustomTrainFunctionInfo
 
 
-   .. py:method:: export_custom_model_version(model_version = None, output_location = None, algorithm = None)
+   .. py:method:: export_custom_model_version(model_version, output_location, algorithm = None)
 
       Bundle custom model artifacts to a zip file, and export to the specified location.
 
@@ -5660,7 +5660,7 @@ Attributes
       :rtype: ModelArtifactsExport
 
 
-   .. py:method:: create_model_monitor(project_id = None, prediction_feature_group_id = None, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
+   .. py:method:: create_model_monitor(project_id, prediction_feature_group_id, training_feature_group_id = None, name = None, refresh_schedule = None, target_value = None, target_value_bias = None, target_value_performance = None, feature_mappings = None, model_id = None, training_feature_mappings = None, feature_group_base_monitor_config = None, feature_group_comparison_monitor_config = None)
 
       Runs a model monitor for the specified project.
 
@@ -5695,7 +5695,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: rerun_model_monitor(model_monitor_id = None)
+   .. py:method:: rerun_model_monitor(model_monitor_id)
 
       Re-runs the specified model monitor.
 
@@ -5706,7 +5706,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: rename_model_monitor(model_monitor_id = None, name = None)
+   .. py:method:: rename_model_monitor(model_monitor_id, name)
 
       Renames a model monitor
 
@@ -5716,7 +5716,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: delete_model_monitor(model_monitor_id = None)
+   .. py:method:: delete_model_monitor(model_monitor_id)
 
       Deletes the specified Model Monitor and all its versions.
 
@@ -5724,7 +5724,7 @@ Attributes
       :type model_monitor_id: str
 
 
-   .. py:method:: delete_model_monitor_version(model_monitor_version = None)
+   .. py:method:: delete_model_monitor_version(model_monitor_version)
 
       Deletes the specified model monitor version.
 
@@ -5732,7 +5732,7 @@ Attributes
       :type model_monitor_version: str
 
 
-   .. py:method:: create_vision_drift_monitor(project_id = None, prediction_feature_group_id = None, training_feature_group_id = None, name = None, feature_mappings = None, training_feature_mappings = None, target_value_performance = None, refresh_schedule = None)
+   .. py:method:: create_vision_drift_monitor(project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
 
       Runs a vision drift monitor for the specified project.
 
@@ -5757,7 +5757,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_nlp_drift_monitor(project_id = None, prediction_feature_group_id = None, training_feature_group_id = None, name = None, feature_mappings = None, training_feature_mappings = None, target_value_performance = None, refresh_schedule = None)
+   .. py:method:: create_nlp_drift_monitor(project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance = None, refresh_schedule = None)
 
       Runs an NLP drift monitor for the specified project.
 
@@ -5782,7 +5782,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_forecasting_monitor(project_id = None, name = None, prediction_feature_group_id = None, training_feature_group_id = None, training_forecast_config = None, prediction_forecast_config = None, forecast_frequency = None, refresh_schedule = None)
+   .. py:method:: create_forecasting_monitor(project_id, name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency = None, refresh_schedule = None)
 
       Runs a forecasting monitor for the specified project.
 
@@ -5807,7 +5807,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_eda(project_id = None, feature_group_id = None, name = None, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
+   .. py:method:: create_eda(project_id, feature_group_id, name, refresh_schedule = None, include_collinearity = False, include_data_consistency = False, collinearity_keys = None, primary_keys = None, data_consistency_test_config = None, data_consistency_reference_config = None, feature_mappings = None, forecast_frequency = None)
 
       Run an Exploratory Data Analysis (EDA) for the specified project.
 
@@ -5840,7 +5840,7 @@ Attributes
       :rtype: Eda
 
 
-   .. py:method:: rerun_eda(eda_id = None)
+   .. py:method:: rerun_eda(eda_id)
 
       Reruns the specified EDA object.
 
@@ -5851,7 +5851,7 @@ Attributes
       :rtype: Eda
 
 
-   .. py:method:: rename_eda(eda_id = None, name = None)
+   .. py:method:: rename_eda(eda_id, name)
 
       Renames an EDA
 
@@ -5861,7 +5861,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: delete_eda(eda_id = None)
+   .. py:method:: delete_eda(eda_id)
 
       Deletes the specified EDA and all its versions.
 
@@ -5869,7 +5869,7 @@ Attributes
       :type eda_id: str
 
 
-   .. py:method:: delete_eda_version(eda_version = None)
+   .. py:method:: delete_eda_version(eda_version)
 
       Deletes the specified EDA version.
 
@@ -5877,7 +5877,7 @@ Attributes
       :type eda_version: str
 
 
-   .. py:method:: create_holdout_analysis(name = None, model_id = None, feature_group_ids = None, model_version = None, algorithm = None)
+   .. py:method:: create_holdout_analysis(name, model_id, feature_group_ids, model_version = None, algorithm = None)
 
       Create a holdout analysis for a model
 
@@ -5896,7 +5896,7 @@ Attributes
       :rtype: HoldoutAnalysis
 
 
-   .. py:method:: rerun_holdout_analysis(holdout_analysis_id = None, model_version = None, algorithm = None)
+   .. py:method:: rerun_holdout_analysis(holdout_analysis_id, model_version = None, algorithm = None)
 
       Rerun a holdout analysis. A different model version and algorithm can be specified which should be under the same model.
 
@@ -5911,7 +5911,7 @@ Attributes
       :rtype: HoldoutAnalysisVersion
 
 
-   .. py:method:: create_monitor_alert(project_id = None, model_monitor_id = None, alert_name = None, condition_config = None, action_config = None)
+   .. py:method:: create_monitor_alert(project_id, model_monitor_id, alert_name, condition_config, action_config)
 
       Create a monitor alert for the given conditions and monitor
 
@@ -5930,7 +5930,7 @@ Attributes
       :rtype: MonitorAlert
 
 
-   .. py:method:: update_monitor_alert(monitor_alert_id = None, alert_name = None, condition_config = None, action_config = None)
+   .. py:method:: update_monitor_alert(monitor_alert_id, alert_name = None, condition_config = None, action_config = None)
 
       Update monitor alert
 
@@ -5947,7 +5947,7 @@ Attributes
       :rtype: MonitorAlert
 
 
-   .. py:method:: run_monitor_alert(monitor_alert_id = None)
+   .. py:method:: run_monitor_alert(monitor_alert_id)
 
       Reruns a given monitor alert from latest monitor instance
 
@@ -5958,7 +5958,7 @@ Attributes
       :rtype: MonitorAlert
 
 
-   .. py:method:: delete_monitor_alert(monitor_alert_id = None)
+   .. py:method:: delete_monitor_alert(monitor_alert_id)
 
       Delets a monitor alert
 
@@ -5966,7 +5966,7 @@ Attributes
       :type monitor_alert_id: str
 
 
-   .. py:method:: create_prediction_operator(name = None, project_id = None, source_code = None, predict_function_name = None, initialize_function_name = None, feature_group_ids = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = False)
+   .. py:method:: create_prediction_operator(name, project_id, source_code = None, predict_function_name = None, initialize_function_name = None, feature_group_ids = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = False)
 
       Create a new prediction operator.
 
@@ -5995,7 +5995,7 @@ Attributes
       :rtype: PredictionOperator
 
 
-   .. py:method:: update_prediction_operator(prediction_operator_id = None, name = None, feature_group_ids = None, source_code = None, initialize_function_name = None, predict_function_name = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
+   .. py:method:: update_prediction_operator(prediction_operator_id, name = None, feature_group_ids = None, source_code = None, initialize_function_name = None, predict_function_name = None, cpu_size = None, memory = None, package_requirements = None, use_gpu = None)
 
       Update an existing prediction operator.
 
@@ -6024,7 +6024,7 @@ Attributes
       :rtype: PredictionOperator
 
 
-   .. py:method:: delete_prediction_operator(prediction_operator_id = None)
+   .. py:method:: delete_prediction_operator(prediction_operator_id)
 
       Delete an existing prediction operator.
 
@@ -6032,7 +6032,7 @@ Attributes
       :type prediction_operator_id: str
 
 
-   .. py:method:: deploy_prediction_operator(prediction_operator_id = None, auto_deploy = True)
+   .. py:method:: deploy_prediction_operator(prediction_operator_id, auto_deploy = True)
 
       Deploy the prediction operator.
 
@@ -6045,7 +6045,7 @@ Attributes
       :rtype: Deployment
 
 
-   .. py:method:: create_prediction_operator_version(prediction_operator_id = None)
+   .. py:method:: create_prediction_operator_version(prediction_operator_id)
 
       Create a new version of the prediction operator.
 
@@ -6056,7 +6056,7 @@ Attributes
       :rtype: PredictionOperatorVersion
 
 
-   .. py:method:: delete_prediction_operator_version(prediction_operator_version = None)
+   .. py:method:: delete_prediction_operator_version(prediction_operator_version)
 
       Delete a prediction operator version.
 
@@ -6104,7 +6104,7 @@ Attributes
       :rtype: Deployment
 
 
-   .. py:method:: create_deployment_token(project_id = None, name = None)
+   .. py:method:: create_deployment_token(project_id, name = None)
 
       Creates a deployment token for the specified project.
 
@@ -6120,7 +6120,7 @@ Attributes
       :rtype: DeploymentAuthToken
 
 
-   .. py:method:: update_deployment(deployment_id = None, description = None, auto_deploy = None, skip_metrics_check = None)
+   .. py:method:: update_deployment(deployment_id, description = None, auto_deploy = None, skip_metrics_check = None)
 
       Updates a deployment's properties.
 
@@ -6134,7 +6134,7 @@ Attributes
       :type skip_metrics_check: bool
 
 
-   .. py:method:: rename_deployment(deployment_id = None, name = None)
+   .. py:method:: rename_deployment(deployment_id, name)
 
       Updates a deployment's name
 
@@ -6144,7 +6144,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: set_auto_deployment(deployment_id = None, enable = None)
+   .. py:method:: set_auto_deployment(deployment_id, enable = None)
 
       Enable or disable auto deployment for the specified deployment.
 
@@ -6157,7 +6157,7 @@ Attributes
       :type enable: bool
 
 
-   .. py:method:: set_deployment_model_version(deployment_id = None, model_version = None, algorithm = None, model_deployment_config = None)
+   .. py:method:: set_deployment_model_version(deployment_id, model_version, algorithm = None, model_deployment_config = None)
 
       Promotes a model version and/or algorithm to be the active served deployment version
 
@@ -6171,7 +6171,7 @@ Attributes
       :type model_deployment_config: dict
 
 
-   .. py:method:: set_deployment_feature_group_version(deployment_id = None, feature_group_version = None)
+   .. py:method:: set_deployment_feature_group_version(deployment_id, feature_group_version)
 
       Promotes a feature group version to be served in the deployment.
 
@@ -6181,7 +6181,7 @@ Attributes
       :type feature_group_version: str
 
 
-   .. py:method:: set_deployment_prediction_operator_version(deployment_id = None, prediction_operator_version = None)
+   .. py:method:: set_deployment_prediction_operator_version(deployment_id, prediction_operator_version)
 
       Promotes a prediction operator version to be served in the deployment.
 
@@ -6191,7 +6191,7 @@ Attributes
       :type prediction_operator_version: str
 
 
-   .. py:method:: start_deployment(deployment_id = None)
+   .. py:method:: start_deployment(deployment_id)
 
       Restarts the specified deployment that was previously suspended.
 
@@ -6199,7 +6199,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: stop_deployment(deployment_id = None)
+   .. py:method:: stop_deployment(deployment_id)
 
       Stops the specified deployment.
 
@@ -6207,7 +6207,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: delete_deployment(deployment_id = None)
+   .. py:method:: delete_deployment(deployment_id)
 
       Deletes the specified deployment. The deployment's models will not be affected. Note that the deployments are not recoverable after they are deleted.
 
@@ -6215,7 +6215,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: delete_deployment_token(deployment_token = None)
+   .. py:method:: delete_deployment_token(deployment_token)
 
       Deletes the specified deployment token.
 
@@ -6223,7 +6223,7 @@ Attributes
       :type deployment_token: str
 
 
-   .. py:method:: set_deployment_feature_group_export_file_connector_output(deployment_id = None, file_format = None, output_location = None)
+   .. py:method:: set_deployment_feature_group_export_file_connector_output(deployment_id, file_format = None, output_location = None)
 
       Sets the export output for the Feature Group Deployment to be a file connector.
 
@@ -6235,7 +6235,7 @@ Attributes
       :type output_location: str
 
 
-   .. py:method:: set_deployment_feature_group_export_database_connector_output(deployment_id = None, database_connector_id = None, object_name = None, write_mode = None, database_feature_mapping = None, id_column = None, additional_id_columns = None)
+   .. py:method:: set_deployment_feature_group_export_database_connector_output(deployment_id, database_connector_id, object_name, write_mode, database_feature_mapping, id_column = None, additional_id_columns = None)
 
       Sets the export output for the Feature Group Deployment to a Database connector.
 
@@ -6255,7 +6255,7 @@ Attributes
       :type additional_id_columns: list
 
 
-   .. py:method:: remove_deployment_feature_group_export_output(deployment_id = None)
+   .. py:method:: remove_deployment_feature_group_export_output(deployment_id)
 
       Removes the export type that is set for the Feature Group Deployment
 
@@ -6263,7 +6263,7 @@ Attributes
       :type deployment_id: str
 
 
-   .. py:method:: create_deployment_alert(deployment_id = None, alert_name = None, condition_config = None, action_config = None)
+   .. py:method:: create_deployment_alert(deployment_id, alert_name, condition_config, action_config)
 
       Create a deployment alert for the given conditions.
 
@@ -6283,7 +6283,7 @@ Attributes
       :rtype: MonitorAlert
 
 
-   .. py:method:: create_refresh_policy(name = None, cron = None, refresh_type = None, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
+   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
 
       Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.
 
@@ -6323,7 +6323,7 @@ Attributes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: delete_refresh_policy(refresh_policy_id = None)
+   .. py:method:: delete_refresh_policy(refresh_policy_id)
 
       Delete a refresh policy.
 
@@ -6331,7 +6331,7 @@ Attributes
       :type refresh_policy_id: str
 
 
-   .. py:method:: pause_refresh_policy(refresh_policy_id = None)
+   .. py:method:: pause_refresh_policy(refresh_policy_id)
 
       Pauses a refresh policy
 
@@ -6339,7 +6339,7 @@ Attributes
       :type refresh_policy_id: str
 
 
-   .. py:method:: resume_refresh_policy(refresh_policy_id = None)
+   .. py:method:: resume_refresh_policy(refresh_policy_id)
 
       Resumes a refresh policy
 
@@ -6347,7 +6347,7 @@ Attributes
       :type refresh_policy_id: str
 
 
-   .. py:method:: run_refresh_policy(refresh_policy_id = None)
+   .. py:method:: run_refresh_policy(refresh_policy_id)
 
       Force a run of the refresh policy.
 
@@ -6355,7 +6355,7 @@ Attributes
       :type refresh_policy_id: str
 
 
-   .. py:method:: update_refresh_policy(refresh_policy_id = None, name = None, cron = None, feature_group_export_config = None)
+   .. py:method:: update_refresh_policy(refresh_policy_id, name = None, cron = None, feature_group_export_config = None)
 
       Update the name or cron string of a refresh policy
 
@@ -6372,7 +6372,7 @@ Attributes
       :rtype: RefreshPolicy
 
 
-   .. py:method:: lookup_features(deployment_token = None, deployment_id = None, query_data = None, limit_results = None, result_columns = None)
+   .. py:method:: lookup_features(deployment_token, deployment_id, query_data, limit_results = None, result_columns = None)
 
       Returns the feature group deployed in the feature store project.
 
@@ -6388,7 +6388,7 @@ Attributes
       :type result_columns: list
 
 
-   .. py:method:: predict(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: predict(deployment_token, deployment_id, query_data)
 
       Returns a prediction for Predictive Modeling
 
@@ -6400,7 +6400,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_multiple(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: predict_multiple(deployment_token, deployment_id, query_data)
 
       Returns a list of predictions for predictive modeling.
 
@@ -6412,7 +6412,7 @@ Attributes
       :type query_data: list
 
 
-   .. py:method:: predict_from_datasets(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: predict_from_datasets(deployment_token, deployment_id, query_data)
 
       Returns a list of predictions for Predictive Modeling.
 
@@ -6424,7 +6424,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_lead(deployment_token = None, deployment_id = None, query_data = None, explain_predictions = False, explainer_type = None)
+   .. py:method:: predict_lead(deployment_token, deployment_id, query_data, explain_predictions = False, explainer_type = None)
 
       Returns the probability of a user being a lead based on their interaction with the service/product and their own attributes (e.g. income, assets, credit score, etc.). Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'user_id' mapped to mapping 'LEAD_ID' in our system).
 
@@ -6440,7 +6440,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: predict_churn(deployment_token = None, deployment_id = None, query_data = None, explain_predictions = False, explainer_type = None)
+   .. py:method:: predict_churn(deployment_token, deployment_id, query_data, explain_predictions = False, explainer_type = None)
 
       Returns the probability of a user to churn out in response to their interactions with the item/product/service. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'churn_result' mapped to mapping 'CHURNED_YN' in our system).
 
@@ -6456,7 +6456,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: predict_takeover(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: predict_takeover(deployment_token, deployment_id, query_data)
 
       Returns a probability for each class label associated with the types of fraud or a 'yes' or 'no' type label for the possibility of fraud. Note that the inputs to this method, wherever applicable, will be the column names in the dataset mapped to the column mappings in our system (e.g., column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
@@ -6468,7 +6468,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_fraud(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: predict_fraud(deployment_token, deployment_id, query_data)
 
       Returns the probability of a transaction performed under a specific account being fraudulent or not. Note that the inputs to this method, wherever applicable, should be the column names in your dataset mapped to the column mappings in our system (e.g. column 'account_number' mapped to the mapping 'ACCOUNT_ID' in our system).
 
@@ -6480,7 +6480,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_class(deployment_token = None, deployment_id = None, query_data = None, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_class(deployment_token, deployment_id, query_data, threshold = None, threshold_class = None, thresholds = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a classification prediction
 
@@ -6506,7 +6506,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: predict_target(deployment_token = None, deployment_id = None, query_data = None, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
+   .. py:method:: predict_target(deployment_token, deployment_id, query_data, explain_predictions = False, fixed_features = None, nested = None, explainer_type = None)
 
       Returns a prediction from a classification or regression model. Optionally, includes explanations.
 
@@ -6526,7 +6526,7 @@ Attributes
       :type explainer_type: str
 
 
-   .. py:method:: get_anomalies(deployment_token = None, deployment_id = None, threshold = None, histogram = False)
+   .. py:method:: get_anomalies(deployment_token, deployment_id, threshold = None, histogram = False)
 
       Returns a list of anomalies from the training dataset.
 
@@ -6540,7 +6540,7 @@ Attributes
       :type histogram: bool
 
 
-   .. py:method:: get_timeseries_anomalies(deployment_token = None, deployment_id = None, start_timestamp = None, end_timestamp = None, query_data = None, get_all_item_data = False, series_ids = None)
+   .. py:method:: get_timeseries_anomalies(deployment_token, deployment_id, start_timestamp = None, end_timestamp = None, query_data = None, get_all_item_data = False, series_ids = None)
 
       Returns a list of anomalous timestamps from the training dataset.
 
@@ -6560,7 +6560,7 @@ Attributes
       :type series_ids: list
 
 
-   .. py:method:: is_anomaly(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: is_anomaly(deployment_token, deployment_id, query_data = None)
 
       Returns a list of anomaly attributes based on login information for a specified account. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'account_name' mapped to mapping 'ACCOUNT_ID' in our system).
 
@@ -6572,7 +6572,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_event_anomaly_score(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: get_event_anomaly_score(deployment_token, deployment_id, query_data = None)
 
       Returns an anomaly score for an event.
 
@@ -6584,7 +6584,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_forecast(deployment_token = None, deployment_id = None, query_data = None, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None, get_item_data = False)
+   .. py:method:: get_forecast(deployment_token, deployment_id, query_data, future_data = None, num_predictions = None, prediction_start = None, explain_predictions = False, explainer_type = None, get_item_data = False)
 
       Returns a list of forecasts for a given entity under the specified project deployment. Note that the inputs to the deployed model will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'holiday_yn' mapped to mapping 'FUTURE' in our system).
 
@@ -6608,7 +6608,7 @@ Attributes
       :type get_item_data: bool
 
 
-   .. py:method:: get_k_nearest(deployment_token = None, deployment_id = None, vector = None, k = None, distance = None, include_score = False, catalog_id = None)
+   .. py:method:: get_k_nearest(deployment_token, deployment_id, vector, k = None, distance = None, include_score = False, catalog_id = None)
 
       Returns the k nearest neighbors for the provided embedding vector.
 
@@ -6628,7 +6628,7 @@ Attributes
       :type catalog_id: str
 
 
-   .. py:method:: get_multiple_k_nearest(deployment_token = None, deployment_id = None, queries = None)
+   .. py:method:: get_multiple_k_nearest(deployment_token, deployment_id, queries)
 
       Returns the k nearest neighbors for the queries provided.
 
@@ -6640,7 +6640,7 @@ Attributes
       :type queries: list
 
 
-   .. py:method:: get_labels(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: get_labels(deployment_token, deployment_id, query_data)
 
       Returns a list of scored labels for a document.
 
@@ -6652,7 +6652,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_entities_from_pdf(deployment_token = None, deployment_id = None, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
+   .. py:method:: get_entities_from_pdf(deployment_token, deployment_id, pdf = None, doc_id = None, return_extracted_features = False, verbose = False, save_extracted_features = None)
 
       Extracts text from the provided PDF and returns a list of recognized labels and their scores.
 
@@ -6672,7 +6672,7 @@ Attributes
       :type save_extracted_features: bool
 
 
-   .. py:method:: get_recommendations(deployment_token = None, deployment_id = None, query_data = None, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
+   .. py:method:: get_recommendations(deployment_token, deployment_id, query_data, num_items = None, page = None, exclude_item_ids = None, score_field = None, scaling_factors = None, restrict_items = None, exclude_items = None, explore_fraction = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of recommendations for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'time' mapped to mapping 'TIMESTAMP' in our system).
 
@@ -6704,7 +6704,7 @@ Attributes
       :type diversity_max_results_per_value: int
 
 
-   .. py:method:: get_personalized_ranking(deployment_token = None, deployment_id = None, query_data = None, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
+   .. py:method:: get_personalized_ranking(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, scaling_factors = None)
 
       Returns a list of items with personalized promotions for a given user under the specified project deployment. Note that the inputs to this method, wherever applicable, should be the column names in the dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -6722,7 +6722,7 @@ Attributes
       :type scaling_factors: list
 
 
-   .. py:method:: get_ranked_items(deployment_token = None, deployment_id = None, query_data = None, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
+   .. py:method:: get_ranked_items(deployment_token, deployment_id, query_data, preserve_ranks = None, preserve_unknown_items = False, score_field = None, scaling_factors = None, diversity_attribute_name = None, diversity_max_results_per_value = None)
 
       Returns a list of re-ranked items for a selected user when a list of items is required to be reranked according to the user's preferences. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -6746,7 +6746,7 @@ Attributes
       :type diversity_max_results_per_value: int
 
 
-   .. py:method:: get_related_items(deployment_token = None, deployment_id = None, query_data = None, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
+   .. py:method:: get_related_items(deployment_token, deployment_id, query_data, num_items = None, page = None, scaling_factors = None, restrict_items = None, exclude_items = None)
 
       Returns a list of related items for a given item under the specified project deployment. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'item_code' mapped to mapping 'ITEM_ID' in our system).
 
@@ -6768,7 +6768,7 @@ Attributes
       :type exclude_items: list
 
 
-   .. py:method:: get_chat_response(deployment_token = None, deployment_id = None, messages = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_chat_response(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a chat response which continues the conversation based on the input messages and search results.
 
@@ -6796,7 +6796,7 @@ Attributes
       :type ignore_documents: bool
 
 
-   .. py:method:: get_conversation_response(deployment_id = None, message = None, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -6826,7 +6826,7 @@ Attributes
       :type ignore_documents: bool
 
 
-   .. py:method:: get_search_results(deployment_token = None, deployment_id = None, query_data = None, num = 15)
+   .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
 
       Return the most relevant search results to the search query from the uploaded documents.
 
@@ -6840,7 +6840,7 @@ Attributes
       :type num: int
 
 
-   .. py:method:: get_sentiment(deployment_token = None, deployment_id = None, document = None)
+   .. py:method:: get_sentiment(deployment_token, deployment_id, document)
 
       Predicts sentiment on a document
 
@@ -6852,7 +6852,7 @@ Attributes
       :type document: str
 
 
-   .. py:method:: get_entailment(deployment_token = None, deployment_id = None, document = None)
+   .. py:method:: get_entailment(deployment_token, deployment_id, document)
 
       Predicts the classification of the document
 
@@ -6864,7 +6864,7 @@ Attributes
       :type document: str
 
 
-   .. py:method:: get_classification(deployment_token = None, deployment_id = None, document = None)
+   .. py:method:: get_classification(deployment_token, deployment_id, document)
 
       Predicts the classification of the document
 
@@ -6876,7 +6876,7 @@ Attributes
       :type document: str
 
 
-   .. py:method:: get_summary(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: get_summary(deployment_token, deployment_id, query_data)
 
       Returns a JSON of the predicted summary for the given document. Note that the inputs to this method, wherever applicable, will be the column names in your dataset mapped to the column mappings in our system (e.g. column 'text' mapped to mapping 'DOCUMENT' in our system).
 
@@ -6888,7 +6888,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_language(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: predict_language(deployment_token, deployment_id, query_data)
 
       Predicts the language of the text
 
@@ -6900,7 +6900,7 @@ Attributes
       :type query_data: str
 
 
-   .. py:method:: get_assignments(deployment_token = None, deployment_id = None, query_data = None, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
+   .. py:method:: get_assignments(deployment_token, deployment_id, query_data, forced_assignments = None, solve_time_limit_seconds = None, include_all_assignments = False)
 
       Get all positive assignments that match a query.
 
@@ -6918,7 +6918,7 @@ Attributes
       :type include_all_assignments: bool
 
 
-   .. py:method:: get_alternative_assignments(deployment_token = None, deployment_id = None, query_data = None, add_constraints = None, solve_time_limit_seconds = None)
+   .. py:method:: get_alternative_assignments(deployment_token, deployment_id, query_data, add_constraints = None, solve_time_limit_seconds = None)
 
       Get alternative positive assignments for given query. Optimal assignments are ignored and the alternative assignments are returned instead.
 
@@ -6934,7 +6934,7 @@ Attributes
       :type solve_time_limit_seconds: float
 
 
-   .. py:method:: check_constraints(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: check_constraints(deployment_token, deployment_id, query_data)
 
       Check for any constraints violated by the overrides.
 
@@ -6946,7 +6946,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: predict_with_binary_data(deployment_token = None, deployment_id = None, blob = None)
+   .. py:method:: predict_with_binary_data(deployment_token, deployment_id, blob)
 
       Make predictions for a given blob, e.g. image, audio
 
@@ -6958,7 +6958,7 @@ Attributes
       :type blob: io.TextIOBase
 
 
-   .. py:method:: describe_image(deployment_token = None, deployment_id = None, image = None, categories = None, top_n = None)
+   .. py:method:: describe_image(deployment_token, deployment_id, image, categories, top_n = None)
 
       Describe the similarity between an image and a list of categories.
 
@@ -6974,7 +6974,7 @@ Attributes
       :type top_n: int
 
 
-   .. py:method:: get_text_from_document(deployment_token = None, deployment_id = None, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
+   .. py:method:: get_text_from_document(deployment_token, deployment_id, document = None, adjust_doc_orientation = False, return_detected_images = False, save_predicted_pdf = False, save_extracted_features = False)
 
       Generate text from a document
 
@@ -6994,7 +6994,7 @@ Attributes
       :type save_extracted_features: bool
 
 
-   .. py:method:: transcribe_audio(deployment_token = None, deployment_id = None, audio = None)
+   .. py:method:: transcribe_audio(deployment_token, deployment_id, audio)
 
       Transcribe the audio
 
@@ -7006,7 +7006,7 @@ Attributes
       :type audio: io.TextIOBase
 
 
-   .. py:method:: classify_image(deployment_token = None, deployment_id = None, image = None, doc_id = None)
+   .. py:method:: classify_image(deployment_token, deployment_id, image = None, doc_id = None)
 
       Classify an image.
 
@@ -7020,7 +7020,7 @@ Attributes
       :type doc_id: str
 
 
-   .. py:method:: classify_pdf(deployment_token = None, deployment_id = None, pdf = None)
+   .. py:method:: classify_pdf(deployment_token, deployment_id, pdf = None)
 
       Returns a classification prediction from a PDF
 
@@ -7032,7 +7032,7 @@ Attributes
       :type pdf: io.TextIOBase
 
 
-   .. py:method:: get_cluster(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: get_cluster(deployment_token, deployment_id, query_data)
 
       Predicts the cluster for given data.
 
@@ -7044,7 +7044,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: get_objects_from_image(deployment_token = None, deployment_id = None, image = None)
+   .. py:method:: get_objects_from_image(deployment_token, deployment_id, image)
 
       Classify an image.
 
@@ -7056,7 +7056,7 @@ Attributes
       :type image: io.TextIOBase
 
 
-   .. py:method:: score_image(deployment_token = None, deployment_id = None, image = None)
+   .. py:method:: score_image(deployment_token, deployment_id, image)
 
       Score on image.
 
@@ -7068,7 +7068,7 @@ Attributes
       :type image: io.TextIOBase
 
 
-   .. py:method:: transfer_style(deployment_token = None, deployment_id = None, source_image = None, style_image = None)
+   .. py:method:: transfer_style(deployment_token, deployment_id, source_image, style_image)
 
       Change the source image to adopt the visual style from the style image.
 
@@ -7082,7 +7082,7 @@ Attributes
       :type style_image: io.TextIOBase
 
 
-   .. py:method:: generate_image(deployment_token = None, deployment_id = None, query_data = None)
+   .. py:method:: generate_image(deployment_token, deployment_id, query_data)
 
       Generate an image from text prompt.
 
@@ -7094,7 +7094,7 @@ Attributes
       :type query_data: dict
 
 
-   .. py:method:: execute_agent(deployment_token = None, deployment_id = None, arguments = None, keyword_arguments = None)
+   .. py:method:: execute_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -7108,7 +7108,7 @@ Attributes
       :type keyword_arguments: dict
 
 
-   .. py:method:: execute_conversation_agent(deployment_token = None, deployment_id = None, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None)
+   .. py:method:: execute_conversation_agent(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, regenerate = False, doc_infos = None)
 
       Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.
 
@@ -7130,7 +7130,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token = None, deployment_id = None, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -7164,7 +7164,7 @@ Attributes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
-   .. py:method:: create_batch_prediction(deployment_id = None, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
+   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -7205,7 +7205,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: start_batch_prediction(batch_prediction_id = None)
+   .. py:method:: start_batch_prediction(batch_prediction_id)
 
       Creates a new batch prediction version job for a given batch prediction job description.
 
@@ -7216,7 +7216,7 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: update_batch_prediction(batch_prediction_id = None, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
+   .. py:method:: update_batch_prediction(batch_prediction_id, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
 
       Update a batch prediction job description.
 
@@ -7247,7 +7247,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_batch_prediction_file_connector_output(batch_prediction_id = None, output_format = None, output_location = None)
+   .. py:method:: set_batch_prediction_file_connector_output(batch_prediction_id, output_format = None, output_location = None)
 
       Updates the file connector output configuration of the batch prediction
 
@@ -7262,7 +7262,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_batch_prediction_database_connector_output(batch_prediction_id = None, database_connector_id = None, database_output_config = None)
+   .. py:method:: set_batch_prediction_database_connector_output(batch_prediction_id, database_connector_id = None, database_output_config = None)
 
       Updates the database connector output configuration of the batch prediction
 
@@ -7277,7 +7277,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_batch_prediction_feature_group_output(batch_prediction_id = None, table_name = None)
+   .. py:method:: set_batch_prediction_feature_group_output(batch_prediction_id, table_name)
 
       Creates a feature group and sets it as the batch prediction output.
 
@@ -7290,7 +7290,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_batch_prediction_output_to_console(batch_prediction_id = None)
+   .. py:method:: set_batch_prediction_output_to_console(batch_prediction_id)
 
       Sets the batch prediction output to the console, clearing both the file connector and database connector configurations.
 
@@ -7301,7 +7301,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_batch_prediction_feature_group(batch_prediction_id = None, feature_group_type = None, feature_group_id = None)
+   .. py:method:: set_batch_prediction_feature_group(batch_prediction_id, feature_group_type, feature_group_id = None)
 
       Sets the batch prediction input feature group.
 
@@ -7316,7 +7316,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: set_batch_prediction_dataset_remap(batch_prediction_id = None, dataset_id_remap = None)
+   .. py:method:: set_batch_prediction_dataset_remap(batch_prediction_id, dataset_id_remap)
 
       For the purpose of this batch prediction, will swap out datasets in the training feature groups
 
@@ -7329,7 +7329,7 @@ Attributes
       :rtype: BatchPrediction
 
 
-   .. py:method:: delete_batch_prediction(batch_prediction_id = None)
+   .. py:method:: delete_batch_prediction(batch_prediction_id)
 
       Deletes a batch prediction and associated data, such as associated monitors.
 
@@ -7337,7 +7337,7 @@ Attributes
       :type batch_prediction_id: str
 
 
-   .. py:method:: add_user_item_interaction(streaming_token = None, dataset_id = None, timestamp = None, user_id = None, item_id = None, event_type = None, additional_attributes = None)
+   .. py:method:: add_user_item_interaction(streaming_token, dataset_id, timestamp, user_id, item_id, event_type, additional_attributes)
 
       Adds a user-item interaction record (data row) to a streaming dataset.
 
@@ -7357,7 +7357,7 @@ Attributes
       :type additional_attributes: dict
 
 
-   .. py:method:: upsert_user_attributes(streaming_token = None, dataset_id = None, user_id = None, user_attributes = None)
+   .. py:method:: upsert_user_attributes(streaming_token, dataset_id, user_id, user_attributes)
 
       Adds a user attribute record (data row) to a streaming dataset.
 
@@ -7374,7 +7374,7 @@ Attributes
       :type user_attributes: dict
 
 
-   .. py:method:: upsert_item_attributes(streaming_token = None, dataset_id = None, item_id = None, item_attributes = None)
+   .. py:method:: upsert_item_attributes(streaming_token, dataset_id, item_id, item_attributes)
 
       Adds an item attributes record (data row) to a streaming dataset.
 
@@ -7391,7 +7391,7 @@ Attributes
       :type item_attributes: dict
 
 
-   .. py:method:: add_multiple_user_item_interactions(streaming_token = None, dataset_id = None, interactions = None)
+   .. py:method:: add_multiple_user_item_interactions(streaming_token, dataset_id, interactions)
 
       Adds a user-item interaction record (data row) to a streaming dataset.
 
@@ -7403,7 +7403,7 @@ Attributes
       :type interactions: list
 
 
-   .. py:method:: upsert_multiple_user_attributes(streaming_token = None, dataset_id = None, upserts = None)
+   .. py:method:: upsert_multiple_user_attributes(streaming_token, dataset_id, upserts)
 
       Adds multiple user attributes records (data rows) to a streaming dataset.
 
@@ -7415,7 +7415,7 @@ Attributes
       :type upserts: list
 
 
-   .. py:method:: upsert_multiple_item_attributes(streaming_token = None, dataset_id = None, upserts = None)
+   .. py:method:: upsert_multiple_item_attributes(streaming_token, dataset_id, upserts)
 
       Adds multiple item attributes records (data rows) to a streaming dataset.
 
@@ -7427,7 +7427,7 @@ Attributes
       :type upserts: list
 
 
-   .. py:method:: upsert_item_embeddings(streaming_token = None, model_id = None, item_id = None, vector = None, catalog_id = None)
+   .. py:method:: upsert_item_embeddings(streaming_token, model_id, item_id, vector, catalog_id = None)
 
       Upserts an embedding vector for an item id for a model_id.
 
@@ -7443,7 +7443,7 @@ Attributes
       :type catalog_id: str
 
 
-   .. py:method:: delete_item_embeddings(streaming_token = None, model_id = None, item_ids = None, catalog_id = None)
+   .. py:method:: delete_item_embeddings(streaming_token, model_id, item_ids, catalog_id = None)
 
       Deletes KNN embeddings for a list of item IDs for a given model ID.
 
@@ -7457,7 +7457,7 @@ Attributes
       :type catalog_id: str
 
 
-   .. py:method:: upsert_multiple_item_embeddings(streaming_token = None, model_id = None, upserts = None, catalog_id = None)
+   .. py:method:: upsert_multiple_item_embeddings(streaming_token, model_id, upserts, catalog_id = None)
 
       Upserts a knn embedding for multiple item ids for a model_id.
 
@@ -7471,7 +7471,7 @@ Attributes
       :type catalog_id: str
 
 
-   .. py:method:: append_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: append_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
 
@@ -7483,7 +7483,7 @@ Attributes
       :type data: dict
 
 
-   .. py:method:: upsert_multiple_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: upsert_multiple_data(feature_group_id, streaming_token, data)
 
       Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
@@ -7495,7 +7495,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: append_multiple_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
 
@@ -7507,7 +7507,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: upsert_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: upsert_data(feature_group_id, streaming_token = None, data = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -7522,7 +7522,7 @@ Attributes
       :rtype: FeatureGroupRow
 
 
-   .. py:method:: upsert_online_data(feature_group_id = None, data = None)
+   .. py:method:: upsert_online_data(feature_group_id, data)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -7535,7 +7535,7 @@ Attributes
       :rtype: FeatureGroupRow
 
 
-   .. py:method:: delete_data(feature_group_id = None, primary_key = None)
+   .. py:method:: delete_data(feature_group_id, primary_key)
 
       Deletes a row from the feature group given the primary key
 
@@ -7545,7 +7545,7 @@ Attributes
       :type primary_key: str
 
 
-   .. py:method:: add_feature_group_document(feature_group_id = None, document = None)
+   .. py:method:: add_feature_group_document(feature_group_id, document)
 
       Adds a document to the feature group.
 
@@ -7558,7 +7558,7 @@ Attributes
       :rtype: FeatureGroupDocument
 
 
-   .. py:method:: describe_feature_group_row_process_by_key(deployment_id = None, primary_key_value = None)
+   .. py:method:: describe_feature_group_row_process_by_key(deployment_id, primary_key_value)
 
       Gets the feature group row process.
 
@@ -7571,7 +7571,7 @@ Attributes
       :rtype: FeatureGroupRowProcess
 
 
-   .. py:method:: list_feature_group_row_processes(deployment_id = None, limit = None, status = None)
+   .. py:method:: list_feature_group_row_processes(deployment_id, limit = None, status = None)
 
       Gets a list of feature group row processes.
 
@@ -7586,7 +7586,7 @@ Attributes
       :rtype: list[FeatureGroupRowProcess]
 
 
-   .. py:method:: get_feature_group_row_process_summary(deployment_id = None)
+   .. py:method:: get_feature_group_row_process_summary(deployment_id)
 
       Gets a summary of the statuses of the individual feature group processes.
 
@@ -7597,7 +7597,7 @@ Attributes
       :rtype: FeatureGroupRowProcessSummary
 
 
-   .. py:method:: reset_feature_group_row_process_by_key(deployment_id = None, primary_key_value = None)
+   .. py:method:: reset_feature_group_row_process_by_key(deployment_id, primary_key_value)
 
       Resets a feature group row process so that it can be reprocessed
 
@@ -7610,7 +7610,7 @@ Attributes
       :rtype: FeatureGroupRowProcess
 
 
-   .. py:method:: get_feature_group_row_process_logs_by_key(deployment_id = None, primary_key_value = None)
+   .. py:method:: get_feature_group_row_process_logs_by_key(deployment_id, primary_key_value)
 
       Gets the logs for a feature group row process
 
@@ -7623,7 +7623,7 @@ Attributes
       :rtype: FeatureGroupRowProcessLogs
 
 
-   .. py:method:: create_python_function(name = None, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
+   .. py:method:: create_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None, function_type = 'FEATURE_GROUP')
 
       Creates a custom Python function that is reusable.
 
@@ -7644,7 +7644,7 @@ Attributes
       :rtype: PythonFunction
 
 
-   .. py:method:: update_python_function(name = None, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
+   .. py:method:: update_python_function(name, source_code = None, function_name = None, function_variable_mappings = None, package_requirements = None)
 
       Update custom python function with user inputs for the given python function.
 
@@ -7663,7 +7663,7 @@ Attributes
       :rtype: PythonFunction
 
 
-   .. py:method:: delete_python_function(name = None)
+   .. py:method:: delete_python_function(name)
 
       Removes an existing Python function.
 
@@ -7671,7 +7671,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_pipeline(pipeline_name = None, project_id = None, cron = None, is_prod = None)
+   .. py:method:: create_pipeline(pipeline_name, project_id = None, cron = None, is_prod = None)
 
       Creates a pipeline for executing multiple steps.
 
@@ -7688,7 +7688,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: describe_pipeline(pipeline_id = None)
+   .. py:method:: describe_pipeline(pipeline_id)
 
       Describes a given pipeline.
 
@@ -7699,7 +7699,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: describe_pipeline_by_name(pipeline_name = None)
+   .. py:method:: describe_pipeline_by_name(pipeline_name)
 
       Describes a given pipeline.
 
@@ -7710,7 +7710,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: update_pipeline(pipeline_id = None, project_id = None, pipeline_variable_mappings = None, cron = None, is_prod = None)
+   .. py:method:: update_pipeline(pipeline_id, project_id = None, pipeline_variable_mappings = None, cron = None, is_prod = None)
 
       Updates a pipeline for executing multiple steps.
 
@@ -7729,7 +7729,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: rename_pipeline(pipeline_id = None, pipeline_name = None)
+   .. py:method:: rename_pipeline(pipeline_id, pipeline_name)
 
       Renames a pipeline.
 
@@ -7742,7 +7742,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: delete_pipeline(pipeline_id = None)
+   .. py:method:: delete_pipeline(pipeline_id)
 
       Deletes a pipeline.
 
@@ -7750,7 +7750,7 @@ Attributes
       :type pipeline_id: str
 
 
-   .. py:method:: list_pipeline_versions(pipeline_id = None, limit = 200)
+   .. py:method:: list_pipeline_versions(pipeline_id, limit = 200)
 
       Lists the pipeline versions for a specified pipeline
 
@@ -7763,7 +7763,7 @@ Attributes
       :rtype: list[PipelineVersion]
 
 
-   .. py:method:: run_pipeline(pipeline_id = None, pipeline_variable_mappings = None)
+   .. py:method:: run_pipeline(pipeline_id, pipeline_variable_mappings = None)
 
       Runs a specified pipeline with the arguments provided.
 
@@ -7776,7 +7776,7 @@ Attributes
       :rtype: PipelineVersion
 
 
-   .. py:method:: reset_pipeline_version(pipeline_version = None, steps = None, include_downstream_steps = True)
+   .. py:method:: reset_pipeline_version(pipeline_version, steps = None, include_downstream_steps = True)
 
       Reruns a pipeline version for the given steps and downstream steps if specified.
 
@@ -7791,7 +7791,7 @@ Attributes
       :rtype: PipelineVersion
 
 
-   .. py:method:: create_pipeline_step(pipeline_id = None, step_name = None, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: create_pipeline_step(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Creates a step in a given pipeline.
 
@@ -7820,7 +7820,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: delete_pipeline_step(pipeline_step_id = None)
+   .. py:method:: delete_pipeline_step(pipeline_step_id)
 
       Deletes a step from a pipeline.
 
@@ -7828,7 +7828,7 @@ Attributes
       :type pipeline_step_id: str
 
 
-   .. py:method:: update_pipeline_step(pipeline_step_id = None, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: update_pipeline_step(pipeline_step_id, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
 
       Creates a step in a given pipeline.
 
@@ -7855,7 +7855,7 @@ Attributes
       :rtype: PipelineStep
 
 
-   .. py:method:: rename_pipeline_step(pipeline_step_id = None, step_name = None)
+   .. py:method:: rename_pipeline_step(pipeline_step_id, step_name)
 
       Renames a step in a given pipeline.
 
@@ -7868,7 +7868,7 @@ Attributes
       :rtype: PipelineStep
 
 
-   .. py:method:: unset_pipeline_refresh_schedule(pipeline_id = None)
+   .. py:method:: unset_pipeline_refresh_schedule(pipeline_id)
 
       Deletes the refresh schedule for a given pipeline.
 
@@ -7879,7 +7879,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: pause_pipeline_refresh_schedule(pipeline_id = None)
+   .. py:method:: pause_pipeline_refresh_schedule(pipeline_id)
 
       Pauses the refresh schedule for a given pipeline.
 
@@ -7890,7 +7890,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: resume_pipeline_refresh_schedule(pipeline_id = None)
+   .. py:method:: resume_pipeline_refresh_schedule(pipeline_id)
 
       Resumes the refresh schedule for a given pipeline.
 
@@ -7901,7 +7901,7 @@ Attributes
       :rtype: Pipeline
 
 
-   .. py:method:: skip_pending_pipeline_version_steps(pipeline_version = None)
+   .. py:method:: skip_pending_pipeline_version_steps(pipeline_version)
 
       Skips pending steps in a pipeline version.
 
@@ -7912,7 +7912,7 @@ Attributes
       :rtype: PipelineVersion
 
 
-   .. py:method:: create_graph_dashboard(project_id = None, name = None, python_function_ids = None)
+   .. py:method:: create_graph_dashboard(project_id, name, python_function_ids = None)
 
       Create a plot dashboard given selected python plots
 
@@ -7927,7 +7927,7 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: delete_graph_dashboard(graph_dashboard_id = None)
+   .. py:method:: delete_graph_dashboard(graph_dashboard_id)
 
       Deletes a graph dashboard
 
@@ -7935,7 +7935,7 @@ Attributes
       :type graph_dashboard_id: str
 
 
-   .. py:method:: update_graph_dashboard(graph_dashboard_id = None, name = None, python_function_ids = None)
+   .. py:method:: update_graph_dashboard(graph_dashboard_id, name = None, python_function_ids = None)
 
       Updates a graph dashboard
 
@@ -7950,7 +7950,7 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: add_graph_to_dashboard(python_function_id = None, graph_dashboard_id = None, function_variable_mappings = None, name = None)
+   .. py:method:: add_graph_to_dashboard(python_function_id, graph_dashboard_id, function_variable_mappings = None, name = None)
 
       Add a python plot function to a dashboard
 
@@ -7967,7 +7967,7 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: update_graph_to_dashboard(graph_reference_id = None, function_variable_mappings = None, name = None)
+   .. py:method:: update_graph_to_dashboard(graph_reference_id, function_variable_mappings = None, name = None)
 
       Update a python plot function to a dashboard
 
@@ -7982,7 +7982,7 @@ Attributes
       :rtype: GraphDashboard
 
 
-   .. py:method:: delete_graph_from_dashboard(graph_reference_id = None)
+   .. py:method:: delete_graph_from_dashboard(graph_reference_id)
 
       Deletes a python plot function from a dashboard
 
@@ -7990,7 +7990,7 @@ Attributes
       :type graph_reference_id: str
 
 
-   .. py:method:: create_algorithm(name = None, problem_type = None, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
+   .. py:method:: create_algorithm(name, problem_type, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = False, project_id = None, use_gpu = False, package_requirements = None)
 
       Creates a custom algorithm that is re-usable for model training.
 
@@ -8027,7 +8027,7 @@ Attributes
       :rtype: Algorithm
 
 
-   .. py:method:: delete_algorithm(algorithm = None)
+   .. py:method:: delete_algorithm(algorithm)
 
       Deletes the specified customer algorithm.
 
@@ -8035,7 +8035,7 @@ Attributes
       :type algorithm: str
 
 
-   .. py:method:: update_algorithm(algorithm = None, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
+   .. py:method:: update_algorithm(algorithm, source_code = None, training_data_parameter_names_mapping = None, training_config_parameter_name = None, train_function_name = None, predict_function_name = None, predict_many_function_name = None, initialize_function_name = None, config_options = None, is_default_enabled = None, use_gpu = None, package_requirements = None)
 
       Update a custom algorithm for the given algorithm name. If source code is provided, all function names for the source code must also be provided.
 
@@ -8068,7 +8068,7 @@ Attributes
       :rtype: Algorithm
 
 
-   .. py:method:: list_builtin_algorithms(project_id = None, feature_group_ids = None, training_config = None)
+   .. py:method:: list_builtin_algorithms(project_id, feature_group_ids, training_config = None)
 
       Return list of built-in algorithms based on given input data and training config.
 
@@ -8083,7 +8083,7 @@ Attributes
       :rtype: list[Algorithm]
 
 
-   .. py:method:: create_custom_loss_function_with_source_code(name = None, loss_function_type = None, loss_function_name = None, loss_function_source_code = None)
+   .. py:method:: create_custom_loss_function_with_source_code(name, loss_function_type, loss_function_name, loss_function_source_code)
 
       Registers a new custom loss function which can be used as an objective function during model training.
 
@@ -8100,7 +8100,7 @@ Attributes
       :rtype: CustomLossFunction
 
 
-   .. py:method:: update_custom_loss_function_with_source_code(name = None, loss_function_name = None, loss_function_source_code = None)
+   .. py:method:: update_custom_loss_function_with_source_code(name, loss_function_name, loss_function_source_code)
 
       Updates a previously registered custom loss function with a new function implementation.
 
@@ -8115,7 +8115,7 @@ Attributes
       :rtype: CustomLossFunction
 
 
-   .. py:method:: delete_custom_loss_function(name = None)
+   .. py:method:: delete_custom_loss_function(name)
 
       Deletes a previously registered custom loss function.
 
@@ -8123,7 +8123,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_custom_metric(name = None, problem_type = None, custom_metric_function_name = None, source_code = None)
+   .. py:method:: create_custom_metric(name, problem_type, custom_metric_function_name = None, source_code = None)
 
       Registers a new custom metric which can be used as an evaluation metric for the trained model.
 
@@ -8140,7 +8140,7 @@ Attributes
       :rtype: CustomMetric
 
 
-   .. py:method:: update_custom_metric(name = None, custom_metric_function_name = None, source_code = None)
+   .. py:method:: update_custom_metric(name, custom_metric_function_name, source_code)
 
       Updates a previously registered custom metric with a new function implementation.
 
@@ -8155,7 +8155,7 @@ Attributes
       :rtype: CustomMetric
 
 
-   .. py:method:: delete_custom_metric(name = None)
+   .. py:method:: delete_custom_metric(name)
 
       Deletes a previously registered custom metric.
 
@@ -8163,7 +8163,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: create_module(name = None, source_code = None)
+   .. py:method:: create_module(name, source_code = None)
 
       Creates a module that's re-usable in customer's code, e.g. python function, bring your own algorithm and etc.
 
@@ -8176,7 +8176,7 @@ Attributes
       :rtype: Module
 
 
-   .. py:method:: delete_module(name = None)
+   .. py:method:: delete_module(name)
 
       Deletes the specified customer module.
 
@@ -8184,7 +8184,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: update_module(name = None, source_code = None)
+   .. py:method:: update_module(name, source_code = None)
 
       Update the module.
 
@@ -8197,7 +8197,7 @@ Attributes
       :rtype: Module
 
 
-   .. py:method:: create_organization_secret(secret_key = None, value = None)
+   .. py:method:: create_organization_secret(secret_key, value)
 
       Creates a secret which can be accessed in functions and notebooks.
 
@@ -8210,7 +8210,7 @@ Attributes
       :rtype: OrganizationSecret
 
 
-   .. py:method:: delete_organization_secret(secret_key = None)
+   .. py:method:: delete_organization_secret(secret_key)
 
       Deletes a secret.
 
@@ -8218,7 +8218,7 @@ Attributes
       :type secret_key: str
 
 
-   .. py:method:: update_organization_secret(secret_key = None, value = None)
+   .. py:method:: update_organization_secret(secret_key, value)
 
       Updates a secret.
 
@@ -8231,7 +8231,7 @@ Attributes
       :rtype: OrganizationSecret
 
 
-   .. py:method:: set_natural_language_explanation(short_explanation = None, long_explanation = None, feature_group_id = None, feature_group_version = None, model_id = None)
+   .. py:method:: set_natural_language_explanation(short_explanation, long_explanation, feature_group_id = None, feature_group_version = None, model_id = None)
 
       Saves the natural language explanation of an artifact with given ID. The artifact can be - Feature Group or Feature Group Version
 
@@ -8260,7 +8260,7 @@ Attributes
       :rtype: ChatSession
 
 
-   .. py:method:: delete_chat_message(chat_session_id = None, message_index = None)
+   .. py:method:: delete_chat_message(chat_session_id, message_index)
 
       Deletes a message in a chat session and its associated response.
 
@@ -8270,7 +8270,7 @@ Attributes
       :type message_index: int
 
 
-   .. py:method:: export_chat_session(chat_session_id = None)
+   .. py:method:: export_chat_session(chat_session_id)
 
       Exports a chat session to an HTML file
 
@@ -8278,7 +8278,7 @@ Attributes
       :type chat_session_id: str
 
 
-   .. py:method:: rename_chat_session(chat_session_id = None, name = None)
+   .. py:method:: rename_chat_session(chat_session_id, name)
 
       Renames a chat session with Data Science Co-pilot.
 
@@ -8288,7 +8288,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: suggest_abacus_apis(query = None, verbosity = 1, limit = 5)
+   .. py:method:: suggest_abacus_apis(query, verbosity = 1, limit = 5)
 
       Suggests several Abacus APIs that are most relevant to the supplied natural language query.
 
@@ -8303,7 +8303,7 @@ Attributes
       :rtype: list[AbacusApi]
 
 
-   .. py:method:: create_deployment_conversation(deployment_id = None, name = None, deployment_token = None)
+   .. py:method:: create_deployment_conversation(deployment_id, name, deployment_token = None)
 
       Creates a deployment conversation.
 
@@ -8318,7 +8318,7 @@ Attributes
       :rtype: DeploymentConversation
 
 
-   .. py:method:: delete_deployment_conversation(deployment_conversation_id = None, deployment_id = None, deployment_token = None)
+   .. py:method:: delete_deployment_conversation(deployment_conversation_id, deployment_id = None, deployment_token = None)
 
       Delete a Deployment Conversation.
 
@@ -8346,7 +8346,7 @@ Attributes
       :type user_message_indices: list
 
 
-   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id = None, message_index = None, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
+   .. py:method:: set_deployment_conversation_feedback(deployment_conversation_id, message_index, is_useful = None, is_not_useful = None, feedback = None, feedback_type = None, deployment_id = None, deployment_token = None)
 
       Sets a deployment conversation message as useful or not useful
 
@@ -8368,7 +8368,7 @@ Attributes
       :type deployment_token: str
 
 
-   .. py:method:: rename_deployment_conversation(deployment_conversation_id = None, name = None, deployment_id = None, deployment_token = None)
+   .. py:method:: rename_deployment_conversation(deployment_conversation_id, name, deployment_id = None, deployment_token = None)
 
       Rename a Deployment Conversation.
 
@@ -8382,7 +8382,7 @@ Attributes
       :type deployment_token: str
 
 
-   .. py:method:: create_app_user_group(name = None)
+   .. py:method:: create_app_user_group(name)
 
       Creates a new App User Group. This User Group is used to have permissions to access the external chatbots.
 
@@ -8393,7 +8393,7 @@ Attributes
       :rtype: AppUserGroup
 
 
-   .. py:method:: delete_app_user_group(user_group_id = None)
+   .. py:method:: delete_app_user_group(user_group_id)
 
       Deletes an App User Group.
 
@@ -8401,7 +8401,7 @@ Attributes
       :type user_group_id: str
 
 
-   .. py:method:: invite_users_to_app_user_group(user_group_id = None, emails = None)
+   .. py:method:: invite_users_to_app_user_group(user_group_id, emails)
 
       Invite users to an App User Group. This method will send the specified email addresses an invitation link to join a specific user group.
 
@@ -8417,7 +8417,7 @@ Attributes
       :rtype: ExternalInvite
 
 
-   .. py:method:: add_users_to_app_user_group(user_group_id = None, user_emails = None)
+   .. py:method:: add_users_to_app_user_group(user_group_id, user_emails)
 
       Adds users to a App User Group.
 
@@ -8427,7 +8427,7 @@ Attributes
       :type user_emails: list
 
 
-   .. py:method:: remove_users_from_app_user_group(user_group_id = None, user_emails = None)
+   .. py:method:: remove_users_from_app_user_group(user_group_id, user_emails)
 
       Removes users from an App User Group.
 
@@ -8437,7 +8437,7 @@ Attributes
       :type user_emails: list
 
 
-   .. py:method:: add_app_user_group_to_external_application(user_group_id = None, external_application_id = None)
+   .. py:method:: add_app_user_group_to_external_application(user_group_id, external_application_id)
 
       Adds a permission for an App User Group to access an External Application.
 
@@ -8447,7 +8447,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: remove_app_user_group_from_external_application(user_group_id = None, external_application_id = None)
+   .. py:method:: remove_app_user_group_from_external_application(user_group_id, external_application_id)
 
       Removes a permission for an App User Group to access an External Application.
 
@@ -8457,7 +8457,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_external_application(deployment_id = None, name = None, logo = None, theme = None)
+   .. py:method:: create_external_application(deployment_id, name = None, logo = None, theme = None)
 
       Creates a new External Application from an existing ChatLLM Deployment.
 
@@ -8474,7 +8474,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: update_external_application(external_application_id = None, name = None, theme = None)
+   .. py:method:: update_external_application(external_application_id, name = None, theme = None)
 
       Updates an External Application.
 
@@ -8489,7 +8489,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: delete_external_application(external_application_id = None)
+   .. py:method:: delete_external_application(external_application_id)
 
       Deletes an External Application.
 
@@ -8497,7 +8497,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_agent(project_id = None, function_source_code = None, agent_function_name = None, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, feature_group_id = None)
+   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None)
 
       Creates a new AI agent.
 
@@ -8517,14 +8517,14 @@ Attributes
       :type description: str
       :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
       :type enable_binary_input: bool
-      :param feature_group_id: The ID of the feature group to use for evaluation.
-      :type feature_group_id: str
+      :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
+      :type evaluation_feature_group_id: str
 
       :returns: The new agent
       :rtype: Agent
 
 
-   .. py:method:: update_agent(model_id = None, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -8572,7 +8572,7 @@ Attributes
       :rtype: LlmResponse
 
 
-   .. py:method:: render_feature_groups_for_llm(feature_group_ids = None, token_budget = None, include_definition = True)
+   .. py:method:: render_feature_groups_for_llm(feature_group_ids, token_budget = None, include_definition = True)
 
       Encode feature groups as language model inputs.
 
@@ -8587,7 +8587,7 @@ Attributes
       :rtype: LlmInput
 
 
-   .. py:method:: generate_code_for_data_query_using_llm(query = None, feature_group_ids = None, external_database_schemas = None, prompt_context = None, llm_name = None, temperature = None, sql_dialect = 'Spark')
+   .. py:method:: generate_code_for_data_query_using_llm(query, feature_group_ids = None, external_database_schemas = None, prompt_context = None, llm_name = None, temperature = None, sql_dialect = 'Spark')
 
       Execute a data query using a large language model in an async fashion.
 
@@ -8610,7 +8610,7 @@ Attributes
       :rtype: LlmGeneratedCode
 
 
-   .. py:method:: extract_data_using_llm(field_descriptors = None, document_id = None, document_text = None, llm_name = None)
+   .. py:method:: extract_data_using_llm(field_descriptors, document_id = None, document_text = None, llm_name = None)
 
       Extract fields from a document using a large language model.
 
@@ -8627,7 +8627,7 @@ Attributes
       :rtype: ExtractedFields
 
 
-   .. py:method:: execute_agent_with_binary_data(deployment_token = None, deployment_id = None, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
 
       Executes a deployed AI agent function with binary data as inputs.
 
@@ -8673,7 +8673,7 @@ Attributes
       :rtype: ChatMessage
 
 
-   .. py:method:: create_document_retriever(project_id = None, name = None, feature_group_id = None, document_retriever_config = None)
+   .. py:method:: create_document_retriever(project_id, name, feature_group_id, document_retriever_config = None)
 
       Returns a document retriever that stores embeddings for document chunks in a feature group.
 
@@ -8693,7 +8693,7 @@ Attributes
       :rtype: DocumentRetriever
 
 
-   .. py:method:: rename_document_retriever(document_retriever_id = None, name = None)
+   .. py:method:: rename_document_retriever(document_retriever_id, name)
 
       Updates an existing document retriever.
 
@@ -8706,7 +8706,7 @@ Attributes
       :rtype: DocumentRetriever
 
 
-   .. py:method:: create_document_retriever_version(document_retriever_id = None, feature_group_id = None, document_retriever_config = None)
+   .. py:method:: create_document_retriever_version(document_retriever_id, feature_group_id = None, document_retriever_config = None)
 
       Creates a document retriever version from the latest version of the feature group that the document retriever associated with.
 
@@ -8721,7 +8721,7 @@ Attributes
       :rtype: DocumentRetrieverVersion
 
 
-   .. py:method:: delete_document_retriever(vector_store_id = None)
+   .. py:method:: delete_document_retriever(vector_store_id)
 
       Delete a Document Retriever.
 
@@ -8729,7 +8729,7 @@ Attributes
       :type vector_store_id: str
 
 
-   .. py:method:: get_document_snippet(document_retriever_id = None, document_id = None, start_word_index = None, end_word_index = None)
+   .. py:method:: get_document_snippet(document_retriever_id, document_id, start_word_index = None, end_word_index = None)
 
       Get a snippet from documents in the document retriever.
 
@@ -8746,7 +8746,7 @@ Attributes
       :rtype: DocumentRetrieverLookupResult
 
 
-   .. py:method:: restart_document_retriever(document_retriever_id = None)
+   .. py:method:: restart_document_retriever(document_retriever_id)
 
       Restart the document retriever if it is stopped.
 

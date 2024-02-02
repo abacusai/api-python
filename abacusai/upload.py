@@ -63,7 +63,7 @@ class Upload(AbstractApiClass):
         """
         return self.client.cancel_upload(self.upload_id)
 
-    def part(self, part_number: int = None, part_data: io.TextIOBase = None):
+    def part(self, part_number: int, part_data: io.TextIOBase):
         """
         Uploads part of a large dataset file from your bucket to our system. Our system currently supports parts of up to 5GB and full files of up to 5TB. Note that each part must be at least 5MB in size, unless it is the last part in the sequence of parts for the full file.
 

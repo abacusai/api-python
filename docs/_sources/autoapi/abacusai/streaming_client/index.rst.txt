@@ -27,7 +27,7 @@ Classes
    :param client_options: Optional API client configurations
    :type client_options: ClientOptions
 
-   .. py:method:: upsert_item_embeddings(streaming_token = None, model_id = None, item_id = None, vector = None, catalog_id = None)
+   .. py:method:: upsert_item_embeddings(streaming_token, model_id, item_id, vector, catalog_id = None)
 
       Upserts an embedding vector for an item id for a model_id.
 
@@ -43,7 +43,7 @@ Classes
       :type catalog_id: str
 
 
-   .. py:method:: delete_item_embeddings(streaming_token = None, model_id = None, item_ids = None, catalog_id = None)
+   .. py:method:: delete_item_embeddings(streaming_token, model_id, item_ids, catalog_id = None)
 
       Deletes KNN embeddings for a list of item IDs for a given model ID.
 
@@ -57,7 +57,7 @@ Classes
       :type catalog_id: str
 
 
-   .. py:method:: upsert_multiple_item_embeddings(streaming_token = None, model_id = None, upserts = None, catalog_id = None)
+   .. py:method:: upsert_multiple_item_embeddings(streaming_token, model_id, upserts, catalog_id = None)
 
       Upserts a knn embedding for multiple item ids for a model_id.
 
@@ -71,7 +71,7 @@ Classes
       :type catalog_id: str
 
 
-   .. py:method:: append_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: append_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
 
@@ -83,7 +83,7 @@ Classes
       :type data: dict
 
 
-   .. py:method:: upsert_multiple_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: upsert_multiple_data(feature_group_id, streaming_token, data)
 
       Update new data into the feature group for a given lookup key recordId if the recordId is found; otherwise, insert new data into the feature group.
 
@@ -95,7 +95,7 @@ Classes
       :type data: list
 
 
-   .. py:method:: append_multiple_data(feature_group_id = None, streaming_token = None, data = None)
+   .. py:method:: append_multiple_data(feature_group_id, streaming_token, data)
 
       Appends new data into the feature group for a given lookup key recordId.
 

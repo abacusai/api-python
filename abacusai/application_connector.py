@@ -43,7 +43,7 @@ class ApplicationConnector(AbstractApiClass):
                 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
         return {key: value for key, value in resp.items() if value is not None}
 
-    def rename(self, name: str = None):
+    def rename(self, name: str):
         """
         Renames a Application Connector
 

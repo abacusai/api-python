@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None)
+.. py:class:: ApiEndpoint(client, apiEndpoint=None, predictEndpoint=None, proxyEndpoint=None, llmEndpoint=None, externalChatEndpoint=None, dashboardEndpoint=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -34,6 +34,10 @@ Classes
    :type proxyEndpoint: str
    :param llmEndpoint: The URI that can be used to make llm api calls
    :type llmEndpoint: str
+   :param externalChatEndpoint: The URI that can be used to access the external chat
+   :type externalChatEndpoint: str
+   :param dashboardEndpoint: The URI that the external chat will use to go back to the dashboard
+   :type dashboardEndpoint: str
 
    .. py:method:: __repr__()
 
