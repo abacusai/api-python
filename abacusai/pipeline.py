@@ -147,7 +147,7 @@ class Pipeline(AbstractApiClass):
         """
         return self.client.run_pipeline(self.pipeline_id, pipeline_variable_mappings)
 
-    def create_step(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None):
+    def create_step(self, step_name: str, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None, timeout: int = None):
         """
         Creates a step in a given pipeline.
 
@@ -161,11 +161,12 @@ class Pipeline(AbstractApiClass):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
             memory (int): Memory (in GB) for the step function.
+            timeout (int): Timeout for the step in minutes, default is 300 minutes.
 
         Returns:
             Pipeline: Object describing the pipeline.
         """
-        return self.client.create_pipeline_step(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements, cpu_size, memory)
+        return self.client.create_pipeline_step(self.pipeline_id, step_name, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements, cpu_size, memory, timeout)
 
     def describe_step_by_name(self, step_name: str):
         """

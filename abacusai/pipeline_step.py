@@ -19,11 +19,12 @@ class PipelineStep(AbstractApiClass):
             stepDependencies (list[str]): List of steps this step depends on.
             cpuSize (str): CPU size specified for the step function.
             memory (int): Memory in GB specified for the step function.
+            timeout (int): Timeout for the step in minutes, default is 300 minutes.
             pythonFunction (PythonFunction): Information about the python function for the step.
             codeSource (CodeSource): Information about the source code of the step function.
     """
 
-    def __init__(self, client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, pythonFunction={}, codeSource={}):
+    def __init__(self, client, pipelineStepId=None, pipelineId=None, stepName=None, pipelineName=None, createdAt=None, updatedAt=None, pythonFunctionId=None, stepDependencies=None, cpuSize=None, memory=None, timeout=None, pythonFunction={}, codeSource={}):
         super().__init__(client, pipelineStepId)
         self.pipeline_step_id = pipelineStepId
         self.pipeline_id = pipelineId
@@ -35,13 +36,14 @@ class PipelineStep(AbstractApiClass):
         self.step_dependencies = stepDependencies
         self.cpu_size = cpuSize
         self.memory = memory
+        self.timeout = timeout
         self.python_function = client._build_class(
             PythonFunction, pythonFunction)
         self.code_source = client._build_class(CodeSource, codeSource)
 
     def __repr__(self):
-        repr_dict = {f'pipeline_step_id': repr(self.pipeline_step_id), f'pipeline_id': repr(self.pipeline_id), f'step_name': repr(self.step_name), f'pipeline_name': repr(self.pipeline_name), f'created_at': repr(self.created_at), f'updated_at': repr(
-            self.updated_at), f'python_function_id': repr(self.python_function_id), f'step_dependencies': repr(self.step_dependencies), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'python_function': repr(self.python_function), f'code_source': repr(self.code_source)}
+        repr_dict = {f'pipeline_step_id': repr(self.pipeline_step_id), f'pipeline_id': repr(self.pipeline_id), f'step_name': repr(self.step_name), f'pipeline_name': repr(self.pipeline_name), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'python_function_id': repr(
+            self.python_function_id), f'step_dependencies': repr(self.step_dependencies), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'timeout': repr(self.timeout), f'python_function': repr(self.python_function), f'code_source': repr(self.code_source)}
         class_name = "PipelineStep"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -55,7 +57,7 @@ class PipelineStep(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id,
-                'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'python_function': self._get_attribute_as_dict(self.python_function), 'code_source': self._get_attribute_as_dict(self.code_source)}
+                'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'timeout': self.timeout, 'python_function': self._get_attribute_as_dict(self.python_function), 'code_source': self._get_attribute_as_dict(self.code_source)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def delete(self):
@@ -67,7 +69,7 @@ class PipelineStep(AbstractApiClass):
         """
         return self.client.delete_pipeline_step(self.pipeline_step_id)
 
-    def update(self, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None):
+    def update(self, function_name: str = None, source_code: str = None, step_input_mappings: list = None, output_variable_mappings: list = None, step_dependencies: list = None, package_requirements: list = None, cpu_size: str = None, memory: int = None, timeout: int = None):
         """
         Creates a step in a given pipeline.
 
@@ -80,11 +82,12 @@ class PipelineStep(AbstractApiClass):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0'].
             cpu_size (str): Size of the CPU for the step function.
             memory (int): Memory (in GB) for the step function.
+            timeout (int): Timeout for the pipeline step, default is 300 minutes.
 
         Returns:
             PipelineStep: Object describing the pipeline.
         """
-        return self.client.update_pipeline_step(self.pipeline_step_id, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements, cpu_size, memory)
+        return self.client.update_pipeline_step(self.pipeline_step_id, function_name, source_code, step_input_mappings, output_variable_mappings, step_dependencies, package_requirements, cpu_size, memory, timeout)
 
     def rename(self, step_name: str):
         """

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, globalPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -48,8 +48,12 @@ Classes
    :type connectorType: str
    :param legacyInputLocation: The location of the input data.
    :type legacyInputLocation: str
+   :param outputFeatureGroupId: The BP output feature group id if applicable
+   :type outputFeatureGroupId: str
    :param featureGroupTableName: The table name of the Batch Prediction output feature group.
    :type featureGroupTableName: str
+   :param outputFeatureGroupTableName: The table name of the Batch Prediction output feature group.
+   :type outputFeatureGroupTableName: str
    :param summaryFeatureGroupTableName: The table name of the metrics summary feature group output by Batch Prediction.
    :type summaryFeatureGroupTableName: str
    :param csvInputPrefix: A prefix to prepend to the input columns, only applies when output format is CSV.
@@ -74,6 +78,8 @@ Classes
    :type latestBatchPredictionVersion: BatchPredictionVersion
    :param refreshSchedules: List of refresh schedules that dictate the next time the batch prediction will be run.
    :type refreshSchedules: RefreshSchedule
+   :param inputFeatureGroups: List of prediction feature groups.
+   :type inputFeatureGroups: PredictionFeatureGroup
 
    .. py:method:: __repr__()
 

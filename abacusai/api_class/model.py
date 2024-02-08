@@ -384,6 +384,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
         active_labels_column (str): Entities that have been marked in a particular text
         document_format (NLPDocumentFormat): Format of the input documents.
         include_longformer (bool): Whether to include the longformer model.
+        minimum_bounding_box_overlap_ratio (float): Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
         save_predicted_pdf (bool): Whether to save predicted PDF documents
         enhanced_ocr (bool): Enhanced text extraction from predicted digital documents
     """
@@ -397,6 +398,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     active_labels_column: str = dataclasses.field(default=None)
     document_format: enums.NLPDocumentFormat = dataclasses.field(default=None)
     include_longformer: bool = dataclasses.field(default=None)
+    minimum_bounding_box_overlap_ratio: float = 0.0
     # OCR
     save_predicted_pdf: bool = True
     enhanced_ocr: bool = False
@@ -632,6 +634,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     timeseries_frequency (str): set this to control frequency of filling missing values
     min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
     anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
+    threshold_score (float): Threshold score for anomaly detection
     """
     type_of_split: enums.TimeseriesAnomalyDataSplitType = dataclasses.field(default=None)
     test_start: str = dataclasses.field(default=None)
@@ -641,6 +644,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     timeseries_frequency: str = dataclasses.field(default=None)
     min_samples_in_normal_region: int = dataclasses.field(default=None)
     anomaly_type: enums.TimeseriesAnomalyTypeOfAnomaly = dataclasses.field(default=None)
+    threshold_score: float = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.TS_ANOMALY

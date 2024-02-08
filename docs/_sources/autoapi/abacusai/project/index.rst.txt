@@ -642,7 +642,7 @@ Classes
       :rtype: ChatSession
 
 
-   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None)
+   .. py:method:: create_agent(function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None)
 
       Creates a new AI agent.
 
@@ -662,6 +662,10 @@ Classes
       :type enable_binary_input: bool
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
       :type evaluation_feature_group_id: str
+      :param agent_input_schema: The schema of the input data for the agent.
+      :type agent_input_schema: dict
+      :param agent_output_schema: The schema of the output data for the agent.
+      :type agent_output_schema: dict
 
       :returns: The new agent
       :rtype: Agent

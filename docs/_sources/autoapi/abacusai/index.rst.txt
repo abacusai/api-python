@@ -1146,6 +1146,7 @@ Attributes
 
    .. py:attribute:: remove_watermarks
       :type: bool
+      :value: True
 
       
 
@@ -1446,6 +1447,14 @@ Attributes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Abacus Usage Metrics Application Connector
+
+   :param include_entire_conversation_history: Whether to show the entire history for this deployment conversation
+   :type include_entire_conversation_history: bool
+
+   .. py:attribute:: include_entire_conversation_history
+      :type: bool
+
+      
 
    .. py:method:: __post_init__()
 
@@ -4774,6 +4783,8 @@ Attributes
    :type document_format: NLPDocumentFormat
    :param include_longformer: Whether to include the longformer model.
    :type include_longformer: bool
+   :param minimum_bounding_box_overlap_ratio: Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
+   :type minimum_bounding_box_overlap_ratio: float
    :param save_predicted_pdf: Whether to save predicted PDF documents
    :type save_predicted_pdf: bool
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
@@ -4816,6 +4827,12 @@ Attributes
 
    .. py:attribute:: include_longformer
       :type: bool
+
+      
+
+   .. py:attribute:: minimum_bounding_box_overlap_ratio
+      :type: float
+      :value: 0.0
 
       
 
@@ -5257,6 +5274,7 @@ Attributes
    timeseries_frequency (str): set this to control frequency of filling missing values
    min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
    anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
+   threshold_score (float): Threshold score for anomaly detection
 
    .. py:attribute:: type_of_split
       :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
@@ -5295,6 +5313,11 @@ Attributes
 
    .. py:attribute:: anomaly_type
       :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+
+      
+
+   .. py:attribute:: threshold_score
+      :type: float
 
       
 
@@ -6497,7 +6520,7 @@ Attributes
       :type is_thread_safe: bool
 
 
-   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, included_modules = None)
+   .. py:method:: create_pipeline_step_from_function(pipeline_id, step_name, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, included_modules = None, timeout = None)
 
       Creates a step in a given pipeline from a python function.
 
@@ -6521,9 +6544,11 @@ Attributes
       :type memory: int
       :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
+      :param timeout: Timeout for how long the step can run in minutes, default is 300 minutes.
+      :type timeout: int
 
 
-   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, included_modules = None)
+   .. py:method:: update_pipeline_step_from_function(pipeline_step_id, function, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, included_modules = None, timeout = None)
 
       Updates a pipeline step from a python function.
 
@@ -6545,6 +6570,8 @@ Attributes
       :type memory: int
       :param included_modules: A list of user-created modules that will be included, which is equivalent to 'from module import *'
       :type included_modules: list
+      :param timeout: Timeout for the step in minutes, default is 300 minutes.
+      :type timeout: int
 
 
    .. py:method:: create_python_function_from_function(name, function, function_variable_mappings = None, package_requirements = None, function_type = PythonFunctionType.FEATURE_GROUP.value)
@@ -7068,7 +7095,7 @@ Attributes
    .. py:method:: _get_doc_retriever_deployment_info(document_retriever_id)
 
 
-   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
+   .. py:method:: get_matching_documents(document_retriever_id, query, filters = None, limit = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -7095,6 +7122,8 @@ Attributes
       :type max_words_per_chunk: int
       :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
       :type score_multiplier_column: str
+      :param min_score: If provided, will filter out the results with score lower than the value specified.
+      :type min_score: float
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -8924,6 +8953,38 @@ Attributes
       :type dataset_id: str
 
 
+   .. py:method:: get_docstore_page_data(doc_id, page, document_processing_config = None, document_processing_version = None)
+
+      Returns the extracted page data for a document page.
+
+      :param doc_id: A unique Docstore string identifier for the document.
+      :type doc_id: str
+      :param page: The page number to retrieve. Page numbers start from 0.
+      :type page: int
+      :param document_processing_config: The document processing configuration to use for returning the data. If not provided, the latest available data or the default configuration will be used.
+      :type document_processing_config: DocumentProcessingConfig
+      :param document_processing_version: The document processing version to use for returning the data. If not provided, the latest version will be used.
+      :type document_processing_version: str
+
+      :returns: The extracted page data.
+      :rtype: PageData
+
+
+   .. py:method:: get_docstore_document_data(doc_id, document_processing_config = None, document_processing_version = None)
+
+      Returns the extracted data for a document.
+
+      :param doc_id: A unique Docstore string identifier for the document.
+      :type doc_id: str
+      :param document_processing_config: The document processing configuration to use for returning the data. If not provided, the latest available data or the default configuration will be used.
+      :type document_processing_config: DocumentProcessingConfig
+      :param document_processing_version: The document processing version to use for returning the data. If not provided, the latest version will be used.
+      :type document_processing_version: str
+
+      :returns: The extracted document data.
+      :rtype: DocumentData
+
+
    .. py:method:: extract_document_data(document = None, doc_id = None, document_processing_config = None)
 
       Extracts data from a document.
@@ -10447,6 +10508,36 @@ Attributes
       :type ignore_documents: bool
 
 
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
+
+      Return a chat response which continues the conversation based on the input messages and search results.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+      :type messages: list
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+      :type ignore_documents: bool
+      :param attachments: A dictionary of binary data to use to answer the queries.
+      :type attachments: None
+
+
    .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
@@ -10475,6 +10566,38 @@ Attributes
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
+
+
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
+
+      Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
+
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param message: A message from the user
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
+      :type ignore_documents: bool
+      :param attachments: A dictionary of binary data to use to answer the queries.
+      :type attachments: None
 
 
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
@@ -10781,7 +10904,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -10810,6 +10933,8 @@ Attributes
       :type max_words_per_chunk: int
       :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
       :type score_multiplier_column: str
+      :param min_score: If provided, will filter out the results with score less than the value specified.
+      :type min_score: float
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
@@ -11442,7 +11567,7 @@ Attributes
       :rtype: PipelineVersion
 
 
-   .. py:method:: create_pipeline_step(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: create_pipeline_step(pipeline_id, step_name, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, timeout = None)
 
       Creates a step in a given pipeline.
 
@@ -11466,6 +11591,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the step function.
       :type memory: int
+      :param timeout: Timeout for the step in minutes, default is 300 minutes.
+      :type timeout: int
 
       :returns: Object describing the pipeline.
       :rtype: Pipeline
@@ -11479,7 +11606,7 @@ Attributes
       :type pipeline_step_id: str
 
 
-   .. py:method:: update_pipeline_step(pipeline_step_id, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None)
+   .. py:method:: update_pipeline_step(pipeline_step_id, function_name = None, source_code = None, step_input_mappings = None, output_variable_mappings = None, step_dependencies = None, package_requirements = None, cpu_size = None, memory = None, timeout = None)
 
       Creates a step in a given pipeline.
 
@@ -11501,6 +11628,8 @@ Attributes
       :type cpu_size: str
       :param memory: Memory (in GB) for the step function.
       :type memory: int
+      :param timeout: Timeout for the pipeline step, default is 300 minutes.
+      :type timeout: int
 
       :returns: Object describing the pipeline.
       :rtype: PipelineStep
@@ -12148,7 +12277,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None)
+   .. py:method:: create_agent(project_id, function_source_code, agent_function_name, name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, evaluation_feature_group_id = None, agent_input_schema = None, agent_output_schema = None)
 
       Creates a new AI agent.
 
@@ -12170,12 +12299,16 @@ Attributes
       :type enable_binary_input: bool
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
       :type evaluation_feature_group_id: str
+      :param agent_input_schema: The schema of the input data for the agent.
+      :type agent_input_schema: dict
+      :param agent_output_schema: The schema of the output data for the agent.
+      :type agent_output_schema: dict
 
       :returns: The new agent
       :rtype: Agent
 
 
-   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False)
+   .. py:method:: update_agent(model_id, function_source_code = None, agent_function_name = None, memory = None, package_requirements = None, description = None, enable_binary_input = False, agent_input_schema = None, agent_output_schema = None)
 
       Updates an existing AI Agent using user-provided Python code. A new version of the agent will be created and published.
 
@@ -12193,6 +12326,10 @@ Attributes
       :type description: str
       :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
       :type enable_binary_input: bool
+      :param agent_input_schema: The schema of the input data for the agent.
+      :type agent_input_schema: dict
+      :param agent_output_schema: The schema of the output data for the agent.
+      :type agent_output_schema: dict
 
       :returns: The updated agent
       :rtype: Agent
@@ -13217,30 +13354,6 @@ Attributes
       :type max_width: int
       :param max_height: Rescales the returned image so the height is less than or equal to the given maximum height, while preserving the aspect ratio.
       :type max_height: int
-
-
-   .. py:method:: get_docstore_page_data(doc_id, page)
-
-      Returns the extracted page data for a document page.
-
-      :param doc_id: A unique Docstore string identifier for the document.
-      :type doc_id: str
-      :param page: The page number to retrieve. Page numbers start from 0.
-      :type page: int
-
-      :returns: The extracted page data.
-      :rtype: PageData
-
-
-   .. py:method:: get_docstore_document_data(doc_id)
-
-      Returns the extracted data for a document.
-
-      :param doc_id: A unique Docstore string identifier for the document.
-      :type doc_id: str
-
-      :returns: The extracted document data.
-      :rtype: DocumentData
 
 
    .. py:method:: describe_train_test_data_split_feature_group(model_id)
@@ -15007,6 +15120,36 @@ Attributes
       :type ignore_documents: bool
 
 
+   .. py:method:: get_chat_response_with_binary_data(deployment_token, deployment_id, messages, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
+
+      Return a chat response which continues the conversation based on the input messages and search results.
+
+      :param deployment_token: The deployment token to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param messages: A list of chronologically ordered messages, starting with a user message and alternating sources. A message is a dict with attributes:     is_user (bool): Whether the message is from the user.      text (str): The message's text.
+      :type messages: list
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrieved search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+      :type ignore_documents: bool
+      :param attachments: A dictionary of binary data to use to answer the queries.
+      :type attachments: None
+
+
    .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
@@ -15035,6 +15178,38 @@ Attributes
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
+
+
+   .. py:method:: get_conversation_response_with_binary_data(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
+
+      Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
+
+      :param deployment_id: The unique identifier to a deployment created under the project.
+      :type deployment_id: str
+      :param message: A message from the user
+      :type message: str
+      :param deployment_conversation_id: The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+      :type deployment_conversation_id: str
+      :param external_session_id: The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+      :type external_session_id: str
+      :param llm_name: Name of the specific LLM backend to use to power the chat experience
+      :type llm_name: str
+      :param num_completion_tokens: Default for maximum number of tokens for chat answers
+      :type num_completion_tokens: int
+      :param system_message: The generative LLM system message
+      :type system_message: str
+      :param temperature: The generative LLM temperature
+      :type temperature: float
+      :param filter_key_values: A dictionary mapping column names to a list of values to restrict the retrived search results.
+      :type filter_key_values: dict
+      :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+      :type search_score_cutoff: float
+      :param chat_config: A dictionary specifiying the query chat config override.
+      :type chat_config: dict
+      :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
+      :type ignore_documents: bool
+      :param attachments: A dictionary of binary data to use to answer the queries.
+      :type attachments: None
 
 
    .. py:method:: get_search_results(deployment_token, deployment_id, query_data, num = 15)
@@ -15341,7 +15516,7 @@ Attributes
       :type doc_infos: list
 
 
-   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None)
+   .. py:method:: lookup_matches(deployment_token, deployment_id, data = None, filters = None, num = None, result_columns = None, max_words = None, num_retrieval_margin_words = None, max_words_per_chunk = None, score_multiplier_column = None, min_score = None)
 
       Lookup document retrievers and return the matching documents from the document retriever deployed with given query.
 
@@ -15370,6 +15545,8 @@ Attributes
       :type max_words_per_chunk: int
       :param score_multiplier_column: If provided, will use the values in this column to modify the relevance score of the returned chunks. Values in this column must be numeric.
       :type score_multiplier_column: str
+      :param min_score: If provided, will filter out the results with score less than the value specified.
+      :type min_score: float
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]

@@ -24,11 +24,12 @@ class DocumentProcessingConfig(ApiClass):
         remove_watermarks (bool): Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
         convert_to_markdown (bool): Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
     """
+    # NOTE: The defaults should match with clouddb.document_processing_results table defaults
     extract_bounding_boxes: bool = False
     ocr_mode: OcrMode = OcrMode.DEFAULT
     use_full_ocr: bool = None
     remove_header_footer: bool = False
-    remove_watermarks: bool = None
+    remove_watermarks: bool = True
     convert_to_markdown: bool = False
 
 

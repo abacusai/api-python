@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, attachments=None, chatType=None, agentResponse=None, error=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, chatType=None, agentResponse=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -50,6 +50,8 @@ Classes
    :type docInfos: list
    :param keywordArguments: User message only. A dictionary of keyword arguments used to generate response.
    :type keywordArguments: dict
+   :param inputParams: User message only. A dictionary of input parameters used to generate response.
+   :type inputParams: dict
    :param attachments: A list of attachments associated with the message.
    :type attachments: list
    :param chatType: The type of chat llm that was run for the message.

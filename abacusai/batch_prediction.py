@@ -2,6 +2,7 @@ from typing import Union
 
 from .api_class import BatchPredictionArgs
 from .batch_prediction_version import BatchPredictionVersion
+from .prediction_feature_group import PredictionFeatureGroup
 from .prediction_input import PredictionInput
 from .refresh_schedule import RefreshSchedule
 from .return_class import AbstractApiClass
@@ -24,7 +25,9 @@ class BatchPrediction(AbstractApiClass):
             fileOutputFormat (str): The format of the batch prediction output (CSV or JSON).
             connectorType (str): Null if writing to internal console, else FEATURE_GROUP | FILE_CONNECTOR | DATABASE_CONNECTOR.
             legacyInputLocation (str): The location of the input data.
+            outputFeatureGroupId (str): The BP output feature group id if applicable
             featureGroupTableName (str): The table name of the Batch Prediction output feature group.
+            outputFeatureGroupTableName (str): The table name of the Batch Prediction output feature group.
             summaryFeatureGroupTableName (str): The table name of the metrics summary feature group output by Batch Prediction.
             csvInputPrefix (str): A prefix to prepend to the input columns, only applies when output format is CSV.
             csvPredictionPrefix (str): A prefix to prepend to the prediction columns, only applies when output format is CSV.
@@ -37,9 +40,10 @@ class BatchPrediction(AbstractApiClass):
             batchInputs (PredictionInput): Inputs to the batch prediction.
             latestBatchPredictionVersion (BatchPredictionVersion): The latest batch prediction version.
             refreshSchedules (RefreshSchedule): List of refresh schedules that dictate the next time the batch prediction will be run.
+            inputFeatureGroups (PredictionFeatureGroup): List of prediction feature groups.
     """
 
-    def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, featureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, globalPredictionArgs={}):
+    def __init__(self, client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}):
         super().__init__(client, batchPredictionId)
         self.batch_prediction_id = batchPredictionId
         self.created_at = createdAt
@@ -52,7 +56,9 @@ class BatchPrediction(AbstractApiClass):
         self.file_output_format = fileOutputFormat
         self.connector_type = connectorType
         self.legacy_input_location = legacyInputLocation
+        self.output_feature_group_id = outputFeatureGroupId
         self.feature_group_table_name = featureGroupTableName
+        self.output_feature_group_table_name = outputFeatureGroupTableName
         self.summary_feature_group_table_name = summaryFeatureGroupTableName
         self.csv_input_prefix = csvInputPrefix
         self.csv_prediction_prefix = csvPredictionPrefix
@@ -67,12 +73,14 @@ class BatchPrediction(AbstractApiClass):
             BatchPredictionVersion, latestBatchPredictionVersion)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
+        self.input_feature_groups = client._build_class(
+            PredictionFeatureGroup, inputFeatureGroups)
         self.global_prediction_args = client._build_class(
             BatchPredictionArgs, globalPredictionArgs)
 
     def __repr__(self):
-        repr_dict = {f'batch_prediction_id': repr(self.batch_prediction_id), f'created_at': repr(self.created_at), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'file_connector_output_location': repr(self.file_connector_output_location), f'database_connector_id': repr(self.database_connector_id), f'database_output_configuration': repr(self.database_output_configuration), f'explanations': repr(self.explanations), f'file_output_format': repr(self.file_output_format), f'connector_type': repr(self.connector_type), f'legacy_input_location': repr(self.legacy_input_location), f'feature_group_table_name': repr(self.feature_group_table_name), f'summary_feature_group_table_name': repr(
-            self.summary_feature_group_table_name), f'csv_input_prefix': repr(self.csv_input_prefix), f'csv_prediction_prefix': repr(self.csv_prediction_prefix), f'csv_explanations_prefix': repr(self.csv_explanations_prefix), f'output_includes_metadata': repr(self.output_includes_metadata), f'result_input_columns': repr(self.result_input_columns), f'model_monitor_id': repr(self.model_monitor_id), f'model_version': repr(self.model_version), f'algorithm': repr(self.algorithm), f'batch_inputs': repr(self.batch_inputs), f'latest_batch_prediction_version': repr(self.latest_batch_prediction_version), f'refresh_schedules': repr(self.refresh_schedules), f'global_prediction_args': repr(self.global_prediction_args)}
+        repr_dict = {f'batch_prediction_id': repr(self.batch_prediction_id), f'created_at': repr(self.created_at), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'file_connector_output_location': repr(self.file_connector_output_location), f'database_connector_id': repr(self.database_connector_id), f'database_output_configuration': repr(self.database_output_configuration), f'explanations': repr(self.explanations), f'file_output_format': repr(self.file_output_format), f'connector_type': repr(self.connector_type), f'legacy_input_location': repr(self.legacy_input_location), f'output_feature_group_id': repr(self.output_feature_group_id), f'feature_group_table_name': repr(self.feature_group_table_name), f'output_feature_group_table_name': repr(
+            self.output_feature_group_table_name), f'summary_feature_group_table_name': repr(self.summary_feature_group_table_name), f'csv_input_prefix': repr(self.csv_input_prefix), f'csv_prediction_prefix': repr(self.csv_prediction_prefix), f'csv_explanations_prefix': repr(self.csv_explanations_prefix), f'output_includes_metadata': repr(self.output_includes_metadata), f'result_input_columns': repr(self.result_input_columns), f'model_monitor_id': repr(self.model_monitor_id), f'model_version': repr(self.model_version), f'algorithm': repr(self.algorithm), f'batch_inputs': repr(self.batch_inputs), f'latest_batch_prediction_version': repr(self.latest_batch_prediction_version), f'refresh_schedules': repr(self.refresh_schedules), f'input_feature_groups': repr(self.input_feature_groups), f'global_prediction_args': repr(self.global_prediction_args)}
         class_name = "BatchPrediction"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None])
@@ -85,8 +93,8 @@ class BatchPrediction(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'feature_group_table_name': self.feature_group_table_name, 'summary_feature_group_table_name': self.summary_feature_group_table_name, 'csv_input_prefix': self.csv_input_prefix,
-                'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'output_includes_metadata': self.output_includes_metadata, 'result_input_columns': self.result_input_columns, 'model_monitor_id': self.model_monitor_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs), 'latest_batch_prediction_version': self._get_attribute_as_dict(self.latest_batch_prediction_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'global_prediction_args': self._get_attribute_as_dict(self.global_prediction_args)}
+        resp = {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'output_feature_group_id': self.output_feature_group_id, 'feature_group_table_name': self.feature_group_table_name, 'output_feature_group_table_name': self.output_feature_group_table_name, 'summary_feature_group_table_name': self.summary_feature_group_table_name,
+                'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'output_includes_metadata': self.output_includes_metadata, 'result_input_columns': self.result_input_columns, 'model_monitor_id': self.model_monitor_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs), 'latest_batch_prediction_version': self._get_attribute_as_dict(self.latest_batch_prediction_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'input_feature_groups': self._get_attribute_as_dict(self.input_feature_groups), 'global_prediction_args': self._get_attribute_as_dict(self.global_prediction_args)}
         return {key: value for key, value in resp.items() if value is not None}
 
     def start(self):

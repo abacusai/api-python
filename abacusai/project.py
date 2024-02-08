@@ -591,7 +591,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_chat_session(self.project_id, name)
 
-    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None):
+    def create_agent(self, function_source_code: str, agent_function_name: str, name: str = None, memory: int = None, package_requirements: list = None, description: str = None, enable_binary_input: bool = False, evaluation_feature_group_id: str = None, agent_input_schema: dict = None, agent_output_schema: dict = None):
         """
         Creates a new AI agent.
 
@@ -604,11 +604,13 @@ class Project(AbstractApiClass):
             description (str): A description of the agent, including its purpose and instructions.
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
+            agent_input_schema (dict): The schema of the input data for the agent.
+            agent_output_schema (dict): The schema of the output data for the agent.
 
         Returns:
             Agent: The new agent
         """
-        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id)
+        return self.client.create_agent(self.project_id, function_source_code, agent_function_name, name, memory, package_requirements, description, enable_binary_input, evaluation_feature_group_id, agent_input_schema, agent_output_schema)
 
     def create_document_retriever(self, name: str, feature_group_id: str, document_retriever_config: Union[dict, DocumentRetrieverConfig] = None):
         """

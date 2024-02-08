@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>abacusai.api_class &mdash; AbacusAI  documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=eafc0fe6" />
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=b3ba4146"></script>
-        <script src="../../../_static/doctools.js?v=888ff710"></script>
-        <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -1913,7 +1911,7 @@ inheritance.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.DocumentProcessingConfig.remove_watermarks">
-<span class="sig-name descname"><span class="pre">remove_watermarks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.DocumentProcessingConfig.remove_watermarks" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">remove_watermarks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#abacusai.api_class.DocumentProcessingConfig.remove_watermarks" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2375,6 +2373,16 @@ inheritance.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.</span></span><span class="sig-name descname"><span class="pre">AbacusUsageMetricsDatasetConfig</span></span><a class="headerlink" href="#abacusai.api_class.AbacusUsageMetricsDatasetConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.DatasetConfig" title="abacusai.api_class.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p>
 <p>Dataset config for Abacus Usage Metrics Application Connector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>include_entire_conversation_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to show the entire history for this deployment conversation</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.AbacusUsageMetricsDatasetConfig.include_entire_conversation_history">
+<span class="sig-name descname"><span class="pre">include_entire_conversation_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.AbacusUsageMetricsDatasetConfig.include_entire_conversation_history" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.AbacusUsageMetricsDatasetConfig.__post_init__">
 <span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.AbacusUsageMetricsDatasetConfig.__post_init__" title="Permalink to this definition"></a></dt>
@@ -5994,6 +6002,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>active_labels_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Entities that have been marked in a particular text</p></li>
 <li><p><strong>document_format</strong> (<a class="reference internal" href="#abacusai.api_class.NLPDocumentFormat" title="abacusai.api_class.NLPDocumentFormat"><em>NLPDocumentFormat</em></a>) – Format of the input documents.</p></li>
 <li><p><strong>include_longformer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to include the longformer model.</p></li>
+<li><p><strong>minimum_bounding_box_overlap_ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.</p></li>
 <li><p><strong>save_predicted_pdf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether to save predicted PDF documents</p></li>
 <li><p><strong>enhanced_ocr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enhanced text extraction from predicted digital documents</p></li>
 </ul>
@@ -6037,6 +6046,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.NamedEntityExtractionTrainingConfig.include_longformer">
 <span class="sig-name descname"><span class="pre">include_longformer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.NamedEntityExtractionTrainingConfig.include_longformer" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.NamedEntityExtractionTrainingConfig.minimum_bounding_box_overlap_ratio">
+<span class="sig-name descname"><span class="pre">minimum_bounding_box_overlap_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#abacusai.api_class.NamedEntityExtractionTrainingConfig.minimum_bounding_box_overlap_ratio" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -6491,7 +6505,8 @@ fill_missing_values (List[dict]): strategies to fill missing values and missing 
 handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
 timeseries_frequency (str): set this to control frequency of filling missing values
 min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
-anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies</p>
+anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
+threshold_score (float): Threshold score for anomaly detection</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.TimeseriesAnomalyTrainingConfig.type_of_split">
 <span class="sig-name descname"><span class="pre">type_of_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="enums/index.html#abacusai.api_class.enums.TimeseriesAnomalyDataSplitType" title="abacusai.api_class.enums.TimeseriesAnomalyDataSplitType"><span class="pre">abacusai.api_class.enums.TimeseriesAnomalyDataSplitType</span></a></em><a class="headerlink" href="#abacusai.api_class.TimeseriesAnomalyTrainingConfig.type_of_split" title="Permalink to this definition"></a></dt>
@@ -6530,6 +6545,11 @@ anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to dete
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.TimeseriesAnomalyTrainingConfig.anomaly_type">
 <span class="sig-name descname"><span class="pre">anomaly_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="enums/index.html#abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly" title="abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly"><span class="pre">abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly</span></a></em><a class="headerlink" href="#abacusai.api_class.TimeseriesAnomalyTrainingConfig.anomaly_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.TimeseriesAnomalyTrainingConfig.threshold_score">
+<span class="sig-name descname"><span class="pre">threshold_score</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.TimeseriesAnomalyTrainingConfig.threshold_score" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

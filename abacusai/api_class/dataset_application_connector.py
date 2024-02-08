@@ -146,7 +146,11 @@ class ZendeskDatasetConfig(DatasetConfig):
 class AbacusUsageMetricsDatasetConfig(DatasetConfig):
     """
     Dataset config for Abacus Usage Metrics Application Connector
+
+    Args:
+        include_entire_conversation_history (bool): Whether to show the entire history for this deployment conversation
     """
+    include_entire_conversation_history: bool = dataclasses.field(default=False)
 
     def __post_init__(self):
         self.application_connector_type = enums.ApplicationConnectorType.ABACUSUSAGEMETRICS

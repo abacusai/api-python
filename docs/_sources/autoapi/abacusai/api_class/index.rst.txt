@@ -1198,6 +1198,7 @@ Classes
 
    .. py:attribute:: remove_watermarks
       :type: bool
+      :value: True
 
       
 
@@ -1583,6 +1584,14 @@ Classes
    Bases: :py:obj:`DatasetConfig`
 
    Dataset config for Abacus Usage Metrics Application Connector
+
+   :param include_entire_conversation_history: Whether to show the entire history for this deployment conversation
+   :type include_entire_conversation_history: bool
+
+   .. py:attribute:: include_entire_conversation_history
+      :type: bool
+
+      
 
    .. py:method:: __post_init__()
 
@@ -5211,6 +5220,8 @@ Classes
    :type document_format: NLPDocumentFormat
    :param include_longformer: Whether to include the longformer model.
    :type include_longformer: bool
+   :param minimum_bounding_box_overlap_ratio: Tokens are considered to belong to annotation if the user bounding box is provided and ratio of (token_bounding_box ∩ annotation_bounding_box) / token_bounding_area is greater than the provided value.
+   :type minimum_bounding_box_overlap_ratio: float
    :param save_predicted_pdf: Whether to save predicted PDF documents
    :type save_predicted_pdf: bool
    :param enhanced_ocr: Enhanced text extraction from predicted digital documents
@@ -5253,6 +5264,12 @@ Classes
 
    .. py:attribute:: include_longformer
       :type: bool
+
+      
+
+   .. py:attribute:: minimum_bounding_box_overlap_ratio
+      :type: float
+      :value: 0.0
 
       
 
@@ -5694,6 +5711,7 @@ Classes
    timeseries_frequency (str): set this to control frequency of filling missing values
    min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
    anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
+   threshold_score (float): Threshold score for anomaly detection
 
    .. py:attribute:: type_of_split
       :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
@@ -5732,6 +5750,11 @@ Classes
 
    .. py:attribute:: anomaly_type
       :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+
+      
+
+   .. py:attribute:: threshold_score
+      :type: float
 
       
 

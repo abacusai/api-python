@@ -311,6 +311,26 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents)
 
+    def get_conversation_response_with_binary_data(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None):
+        """
+        Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
+
+        Args:
+            message (str): A message from the user
+            deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
+            external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
+            llm_name (str): Name of the specific LLM backend to use to power the chat experience
+            num_completion_tokens (int): Default for maximum number of tokens for chat answers
+            system_message (str): The generative LLM system message
+            temperature (float): The generative LLM temperature
+            filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
+            search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
+            chat_config (dict): A dictionary specifiying the query chat config override.
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
+            attachments (None): A dictionary of binary data to use to answer the queries.
+        """
+        return self.client.get_conversation_response_with_binary_data(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, attachments)
+
     def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """
         Creates a batch prediction job description for the given deployment.
