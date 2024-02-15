@@ -27,13 +27,14 @@ class EdaFeatureAssociation(AbstractApiClass):
         self.x_axis_column_values = xAxisColumnValues
         self.y_axis_column_values = yAxisColumnValues
         self.data_columns = dataColumns
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'data': repr(self.data), f'is_scatter': repr(self.is_scatter), f'is_box_whisker': repr(self.is_box_whisker), f'x_axis': repr(self.x_axis), f'y_axis': repr(
             self.y_axis), f'x_axis_column_values': repr(self.x_axis_column_values), f'y_axis_column_values': repr(self.y_axis_column_values), f'data_columns': repr(self.data_columns)}
         class_name = "EdaFeatureAssociation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -45,4 +46,4 @@ class EdaFeatureAssociation(AbstractApiClass):
         """
         resp = {'data': self.data, 'is_scatter': self.is_scatter, 'is_box_whisker': self.is_box_whisker, 'x_axis': self.x_axis, 'y_axis': self.y_axis,
                 'x_axis_column_values': self.x_axis_column_values, 'y_axis_column_values': self.y_axis_column_values, 'data_columns': self.data_columns}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

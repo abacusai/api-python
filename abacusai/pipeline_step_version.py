@@ -52,13 +52,14 @@ class PipelineStepVersion(AbstractApiClass):
         self.pipeline_step_version_references = client._build_class(
             PipelineStepVersionReference, pipelineStepVersionReferences)
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'step_name': repr(self.step_name), f'pipeline_step_version': repr(self.pipeline_step_version), f'pipeline_step_id': repr(self.pipeline_step_id), f'pipeline_id': repr(self.pipeline_id), f'pipeline_version': repr(self.pipeline_version), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'status': repr(self.status), f'error': repr(self.error), f'output_errors': repr(self.output_errors), f'python_function_id': repr(
             self.python_function_id), f'function_variable_mappings': repr(self.function_variable_mappings), f'step_dependencies': repr(self.step_dependencies), f'output_variable_mappings': repr(self.output_variable_mappings), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'timeout': repr(self.timeout), f'pipeline_step_version_references': repr(self.pipeline_step_version_references), f'code_source': repr(self.code_source)}
         class_name = "PipelineStepVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -70,7 +71,7 @@ class PipelineStepVersion(AbstractApiClass):
         """
         resp = {'step_name': self.step_name, 'pipeline_step_version': self.pipeline_step_version, 'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'status': self.status, 'error': self.error, 'output_errors': self.output_errors, 'python_function_id': self.python_function_id,
                 'function_variable_mappings': self.function_variable_mappings, 'step_dependencies': self.step_dependencies, 'output_variable_mappings': self.output_variable_mappings, 'cpu_size': self.cpu_size, 'memory': self.memory, 'timeout': self.timeout, 'pipeline_step_version_references': self._get_attribute_as_dict(self.pipeline_step_version_references), 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

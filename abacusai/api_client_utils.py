@@ -212,6 +212,7 @@ class DocstoreUtils:
 
         chunk_size = 10 * 1024 * 1024
 
+        df = df.drop_duplicates([doc_id_column])
         group_by_archive = df.groupby(
             df[doc_id_column].apply(lambda x: cls.get_archive_id(x)))
 

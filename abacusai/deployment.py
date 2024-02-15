@@ -74,13 +74,14 @@ class Deployment(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
         self.feature_group_export_config = client._build_class(
             FeatureGroupExportConfig, featureGroupExportConfig)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'deployment_id': repr(self.deployment_id), f'name': repr(self.name), f'status': repr(self.status), f'description': repr(self.description), f'deployed_at': repr(self.deployed_at), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'feature_group_id': repr(self.feature_group_id), f'feature_group_version': repr(self.feature_group_version), f'calls_per_second': repr(self.calls_per_second), f'auto_deploy': repr(self.auto_deploy), f'skip_metrics_check': repr(self.skip_metrics_check), f'algo_name': repr(self.algo_name), f'regions': repr(self.regions), f'error': repr(
             self.error), f'batch_streaming_updates': repr(self.batch_streaming_updates), f'algorithm': repr(self.algorithm), f'pending_model_version': repr(self.pending_model_version), f'model_deployment_config': repr(self.model_deployment_config), f'prediction_operator_id': repr(self.prediction_operator_id), f'prediction_operator_version': repr(self.prediction_operator_version), f'pending_prediction_operator_version': repr(self.pending_prediction_operator_version), f'online_feature_group_id': repr(self.online_feature_group_id), f'output_online_feature_group_id': repr(self.output_online_feature_group_id), f'refresh_schedules': repr(self.refresh_schedules), f'feature_group_export_config': repr(self.feature_group_export_config)}
         class_name = "Deployment"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -92,7 +93,7 @@ class Deployment(AbstractApiClass):
         """
         resp = {'deployment_id': self.deployment_id, 'name': self.name, 'status': self.status, 'description': self.description, 'deployed_at': self.deployed_at, 'created_at': self.created_at, 'project_id': self.project_id, 'model_id': self.model_id, 'model_version': self.model_version, 'feature_group_id': self.feature_group_id, 'feature_group_version': self.feature_group_version, 'calls_per_second': self.calls_per_second, 'auto_deploy': self.auto_deploy, 'skip_metrics_check': self.skip_metrics_check, 'algo_name': self.algo_name, 'regions': self.regions, 'error': self.error, 'batch_streaming_updates': self.batch_streaming_updates,
                 'algorithm': self.algorithm, 'pending_model_version': self.pending_model_version, 'model_deployment_config': self.model_deployment_config, 'prediction_operator_id': self.prediction_operator_id, 'prediction_operator_version': self.prediction_operator_version, 'pending_prediction_operator_version': self.pending_prediction_operator_version, 'online_feature_group_id': self.online_feature_group_id, 'output_online_feature_group_id': self.output_online_feature_group_id, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def create_webhook(self, endpoint: str, webhook_event_type: str, payload_template: dict = None):
         """
@@ -311,11 +312,12 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_conversation_response(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents)
 
-    def get_conversation_response_with_binary_data(self, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None):
+    def get_conversation_response_with_binary_data(self, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None):
         """
         Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
+            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             message (str): A message from the user
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
@@ -329,7 +331,7 @@ class Deployment(AbstractApiClass):
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries.
         """
-        return self.client.get_conversation_response_with_binary_data(self.deployment_id, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, attachments)
+        return self.client.get_conversation_response_with_binary_data(self.deployment_id, deployment_token, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, attachments)
 
     def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """

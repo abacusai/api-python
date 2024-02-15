@@ -19,13 +19,14 @@ class Annotation(AbstractApiClass):
         self.annotation_value = annotationValue
         self.comments = comments
         self.metadata = metadata
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'annotation_type': repr(self.annotation_type), f'annotation_value': repr(
             self.annotation_value), f'comments': repr(self.comments), f'metadata': repr(self.metadata)}
         class_name = "Annotation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class Annotation(AbstractApiClass):
         """
         resp = {'annotation_type': self.annotation_type, 'annotation_value': self.annotation_value,
                 'comments': self.comments, 'metadata': self.metadata}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

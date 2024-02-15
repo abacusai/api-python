@@ -29,13 +29,14 @@ class FeatureGroupTemplate(AbstractApiClass):
         self.template_variables = templateVariables
         self.created_at = createdAt
         self.updated_at = updatedAt
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_group_template_id': repr(self.feature_group_template_id), f'description': repr(self.description), f'feature_group_id': repr(self.feature_group_id), f'is_system_template': repr(
             self.is_system_template), f'name': repr(self.name), f'template_sql': repr(self.template_sql), f'template_variables': repr(self.template_variables), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at)}
         class_name = "FeatureGroupTemplate"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,7 +48,7 @@ class FeatureGroupTemplate(AbstractApiClass):
         """
         resp = {'feature_group_template_id': self.feature_group_template_id, 'description': self.description, 'feature_group_id': self.feature_group_id, 'is_system_template': self.is_system_template,
                 'name': self.name, 'template_sql': self.template_sql, 'template_variables': self.template_variables, 'created_at': self.created_at, 'updated_at': self.updated_at}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def delete(self):
         """

@@ -20,13 +20,14 @@ class ProblemType(AbstractApiClass):
         self.required_feature_group_type = requiredFeatureGroupType
         self.optional_feature_group_types = optionalFeatureGroupTypes
         self.use_cases_support_custom_algorithm = useCasesSupportCustomAlgorithm
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'problem_type': repr(self.problem_type), f'required_feature_group_type': repr(self.required_feature_group_type), f'optional_feature_group_types': repr(
             self.optional_feature_group_types), f'use_cases_support_custom_algorithm': repr(self.use_cases_support_custom_algorithm)}
         class_name = "ProblemType"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -38,4 +39,4 @@ class ProblemType(AbstractApiClass):
         """
         resp = {'problem_type': self.problem_type, 'required_feature_group_type': self.required_feature_group_type,
                 'optional_feature_group_types': self.optional_feature_group_types, 'use_cases_support_custom_algorithm': self.use_cases_support_custom_algorithm}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

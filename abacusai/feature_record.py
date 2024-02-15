@@ -13,12 +13,13 @@ class FeatureRecord(AbstractApiClass):
     def __init__(self, client, data=None):
         super().__init__(client, None)
         self.data = data
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'data': repr(self.data)}
         class_name = "FeatureRecord"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -29,4 +30,4 @@ class FeatureRecord(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'data': self.data}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

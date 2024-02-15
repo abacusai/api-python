@@ -24,13 +24,14 @@ class CustomLossFunction(AbstractApiClass):
         self.loss_function_name = lossFunctionName
         self.loss_function_type = lossFunctionType
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'loss_function_name': repr(
             self.loss_function_name), f'loss_function_type': repr(self.loss_function_type), f'code_source': repr(self.code_source)}
         class_name = "CustomLossFunction"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -42,4 +43,4 @@ class CustomLossFunction(AbstractApiClass):
         """
         resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'loss_function_name': self.loss_function_name,
                 'loss_function_type': self.loss_function_type, 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

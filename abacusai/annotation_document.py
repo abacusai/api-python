@@ -21,13 +21,14 @@ class AnnotationDocument(AbstractApiClass):
         self.feature_group_row_index = featureGroupRowIndex
         self.total_rows = totalRows
         self.is_annotation_present = isAnnotationPresent
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'doc_id': repr(self.doc_id), f'feature_group_row_identifier': repr(self.feature_group_row_identifier), f'feature_group_row_index': repr(
             self.feature_group_row_index), f'total_rows': repr(self.total_rows), f'is_annotation_present': repr(self.is_annotation_present)}
         class_name = "AnnotationDocument"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class AnnotationDocument(AbstractApiClass):
         """
         resp = {'doc_id': self.doc_id, 'feature_group_row_identifier': self.feature_group_row_identifier,
                 'feature_group_row_index': self.feature_group_row_index, 'total_rows': self.total_rows, 'is_annotation_present': self.is_annotation_present}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

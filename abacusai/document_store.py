@@ -23,13 +23,14 @@ class DocumentStore(AbstractApiClass):
         self.document_type = documentType
         self.document_count = documentCount
         self.approximate_size = approximateSize
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'document_store_id': repr(self.document_store_id), f'created_at': repr(self.created_at), f'name': repr(self.name), f'document_type': repr(
             self.document_type), f'document_count': repr(self.document_count), f'approximate_size': repr(self.approximate_size)}
         class_name = "DocumentStore"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -41,4 +42,4 @@ class DocumentStore(AbstractApiClass):
         """
         resp = {'document_store_id': self.document_store_id, 'created_at': self.created_at, 'name': self.name,
                 'document_type': self.document_type, 'document_count': self.document_count, 'approximate_size': self.approximate_size}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

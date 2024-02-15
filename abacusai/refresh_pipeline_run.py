@@ -40,13 +40,14 @@ class RefreshPipelineRun(AbstractApiClass):
         self.deployment_versions = deploymentVersions
         self.batch_predictions = batchPredictions
         self.refresh_policy = client._build_class(RefreshPolicy, refreshPolicy)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'refresh_pipeline_run_id': repr(self.refresh_pipeline_run_id), f'refresh_policy_id': repr(self.refresh_policy_id), f'created_at': repr(self.created_at), f'started_at': repr(self.started_at), f'completed_at': repr(self.completed_at), f'status': repr(self.status), f'refresh_type': repr(self.refresh_type), f'dataset_versions': repr(
             self.dataset_versions), f'feature_group_version': repr(self.feature_group_version), f'model_versions': repr(self.model_versions), f'prediction_metric_versions': repr(self.prediction_metric_versions), f'deployment_versions': repr(self.deployment_versions), f'batch_predictions': repr(self.batch_predictions), f'refresh_policy': repr(self.refresh_policy)}
         class_name = "RefreshPipelineRun"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -58,7 +59,7 @@ class RefreshPipelineRun(AbstractApiClass):
         """
         resp = {'refresh_pipeline_run_id': self.refresh_pipeline_run_id, 'refresh_policy_id': self.refresh_policy_id, 'created_at': self.created_at, 'started_at': self.started_at, 'completed_at': self.completed_at, 'status': self.status, 'refresh_type': self.refresh_type, 'dataset_versions': self.dataset_versions,
                 'feature_group_version': self.feature_group_version, 'model_versions': self.model_versions, 'prediction_metric_versions': self.prediction_metric_versions, 'deployment_versions': self.deployment_versions, 'batch_predictions': self.batch_predictions, 'refresh_policy': self._get_attribute_as_dict(self.refresh_policy)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

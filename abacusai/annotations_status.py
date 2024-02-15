@@ -27,13 +27,14 @@ class AnnotationsStatus(AbstractApiClass):
         self.is_materialization_needed = isMaterializationNeeded
         self.latest_materialized_annotation_config = client._build_class(
             AnnotationConfig, latestMaterializedAnnotationConfig)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'total': repr(self.total), f'done': repr(self.done), f'in_progress': repr(self.in_progress), f'todo': repr(self.todo), f'latest_updated_at': repr(
             self.latest_updated_at), f'is_materialization_needed': repr(self.is_materialization_needed), f'latest_materialized_annotation_config': repr(self.latest_materialized_annotation_config)}
         class_name = "AnnotationsStatus"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -45,4 +46,4 @@ class AnnotationsStatus(AbstractApiClass):
         """
         resp = {'total': self.total, 'done': self.done, 'in_progress': self.in_progress, 'todo': self.todo, 'latest_updated_at': self.latest_updated_at,
                 'is_materialization_needed': self.is_materialization_needed, 'latest_materialized_annotation_config': self._get_attribute_as_dict(self.latest_materialized_annotation_config)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

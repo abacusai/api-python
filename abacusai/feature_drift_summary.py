@@ -53,13 +53,14 @@ class FeatureDriftSummary(AbstractApiClass):
             RangeViolation, rangeViolations)
         self.cat_violations = client._build_class(
             CategoricalRangeViolation, catViolations)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_index': repr(self.feature_index), f'name': repr(self.name), f'distance': repr(self.distance), f'js_distance': repr(self.js_distance), f'ws_distance': repr(self.ws_distance), f'ks_statistic': repr(self.ks_statistic), f'prediction_drift': repr(self.prediction_drift), f'target_column': repr(self.target_column), f'data_integrity_timeseries': repr(
             self.data_integrity_timeseries), f'nested_summary': repr(self.nested_summary), f'psi': repr(self.psi), f'csi': repr(self.csi), f'chi_square': repr(self.chi_square), f'null_violations': repr(self.null_violations), f'type_violations': repr(self.type_violations), f'range_violations': repr(self.range_violations), f'cat_violations': repr(self.cat_violations)}
         class_name = "FeatureDriftSummary"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -71,4 +72,4 @@ class FeatureDriftSummary(AbstractApiClass):
         """
         resp = {'feature_index': self.feature_index, 'name': self.name, 'distance': self.distance, 'js_distance': self.js_distance, 'ws_distance': self.ws_distance, 'ks_statistic': self.ks_statistic, 'prediction_drift': self.prediction_drift, 'target_column': self.target_column, 'data_integrity_timeseries': self.data_integrity_timeseries, 'nested_summary': self.nested_summary,
                 'psi': self.psi, 'csi': self.csi, 'chi_square': self.chi_square, 'null_violations': self._get_attribute_as_dict(self.null_violations), 'type_violations': self._get_attribute_as_dict(self.type_violations), 'range_violations': self._get_attribute_as_dict(self.range_violations), 'cat_violations': self._get_attribute_as_dict(self.cat_violations)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

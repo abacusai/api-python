@@ -33,13 +33,14 @@ class DatasetVersion(AbstractApiClass):
         self.upload_id = uploadId
         self.merge_file_schemas = mergeFileSchemas
         self.invalid_records = invalidRecords
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'dataset_version': repr(self.dataset_version), f'status': repr(self.status), f'dataset_id': repr(self.dataset_id), f'size': repr(self.size), f'row_count': repr(self.row_count), f'created_at': repr(self.created_at), f'error': repr(
             self.error), f'incremental_queried_at': repr(self.incremental_queried_at), f'upload_id': repr(self.upload_id), f'merge_file_schemas': repr(self.merge_file_schemas), f'invalid_records': repr(self.invalid_records)}
         class_name = "DatasetVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -51,7 +52,7 @@ class DatasetVersion(AbstractApiClass):
         """
         resp = {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at,
                 'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):
         """

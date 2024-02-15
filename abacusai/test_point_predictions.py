@@ -23,13 +23,14 @@ class TestPointPredictions(AbstractApiClass):
         self.metrics_columns = metricsColumns
         self.summarized_metrics = summarizedMetrics
         self.error_description = errorDescription
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'count': repr(self.count), f'columns': repr(self.columns), f'data': repr(self.data), f'metrics_columns': repr(
             self.metrics_columns), f'summarized_metrics': repr(self.summarized_metrics), f'error_description': repr(self.error_description)}
         class_name = "TestPointPredictions"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -41,4 +42,4 @@ class TestPointPredictions(AbstractApiClass):
         """
         resp = {'count': self.count, 'columns': self.columns, 'data': self.data, 'metrics_columns': self.metrics_columns,
                 'summarized_metrics': self.summarized_metrics, 'error_description': self.error_description}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

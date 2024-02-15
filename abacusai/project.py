@@ -29,13 +29,14 @@ class Project(AbstractApiClass):
         self.problem_type = problemType
         self.created_at = createdAt
         self.tags = tags
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'project_id': repr(self.project_id), f'name': repr(self.name), f'use_case': repr(
             self.use_case), f'problem_type': repr(self.problem_type), f'created_at': repr(self.created_at), f'tags': repr(self.tags)}
         class_name = "Project"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,7 +48,7 @@ class Project(AbstractApiClass):
         """
         resp = {'project_id': self.project_id, 'name': self.name, 'use_case': self.use_case,
                 'problem_type': self.problem_type, 'created_at': self.created_at, 'tags': self.tags}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

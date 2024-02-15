@@ -19,13 +19,14 @@ class PointInTimeGroupFeature(AbstractApiClass):
         self.expression = expression
         self.pit_operation_type = pitOperationType
         self.pit_operation_config = pitOperationConfig
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'expression': repr(self.expression), f'pit_operation_type': repr(
             self.pit_operation_type), f'pit_operation_config': repr(self.pit_operation_config)}
         class_name = "PointInTimeGroupFeature"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class PointInTimeGroupFeature(AbstractApiClass):
         """
         resp = {'name': self.name, 'expression': self.expression, 'pit_operation_type':
                 self.pit_operation_type, 'pit_operation_config': self.pit_operation_config}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

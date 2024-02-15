@@ -25,13 +25,14 @@ class ExternalApplication(AbstractApiClass):
         self.theme = theme
         self.user_group_ids = userGroupIds
         self.use_case = useCase
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(
             self.deployment_id), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case)}
         class_name = "ExternalApplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -43,20 +44,21 @@ class ExternalApplication(AbstractApiClass):
         """
         resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id,
                 'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def update(self, name: str = None, theme: dict = None):
+    def update(self, name: str = None, theme: dict = None, deployment_id: str = None):
         """
         Updates an External Application.
 
         Args:
             name (str): The name of the External Application.
             theme (dict): The visual theme of the External Application.
+            deployment_id (str): The ID of the deployment to use.
 
         Returns:
             ExternalApplication: The updated External Application.
         """
-        return self.client.update_external_application(self.external_application_id, name, theme)
+        return self.client.update_external_application(self.external_application_id, name, theme, deployment_id)
 
     def refresh(self):
         """

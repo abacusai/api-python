@@ -21,13 +21,14 @@ class DocumentRetrieverLookupResult(AbstractApiClass):
         self.properties = properties
         self.pages = pages
         self.bounding_boxes = boundingBoxes
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'document': repr(self.document), f'score': repr(self.score), f'properties': repr(
             self.properties), f'pages': repr(self.pages), f'bounding_boxes': repr(self.bounding_boxes)}
         class_name = "DocumentRetrieverLookupResult"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class DocumentRetrieverLookupResult(AbstractApiClass):
         """
         resp = {'document': self.document, 'score': self.score, 'properties': self.properties,
                 'pages': self.pages, 'bounding_boxes': self.bounding_boxes}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

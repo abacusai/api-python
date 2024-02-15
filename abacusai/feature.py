@@ -42,13 +42,14 @@ class Feature(AbstractApiClass):
         self.columns = client._build_class(NestedFeature, columns)
         self.point_in_time_info = client._build_class(
             PointInTimeFeature, pointInTimeInfo)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'select_clause': repr(self.select_clause), f'feature_mapping': repr(self.feature_mapping), f'source_table': repr(self.source_table), f'original_name': repr(self.original_name), f'using_clause': repr(self.using_clause), f'order_clause': repr(self.order_clause), f'where_clause': repr(
             self.where_clause), f'feature_type': repr(self.feature_type), f'data_type': repr(self.data_type), f'detected_feature_type': repr(self.detected_feature_type), f'detected_data_type': repr(self.detected_data_type), f'columns': repr(self.columns), f'point_in_time_info': repr(self.point_in_time_info)}
         class_name = "Feature"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -60,4 +61,4 @@ class Feature(AbstractApiClass):
         """
         resp = {'name': self.name, 'select_clause': self.select_clause, 'feature_mapping': self.feature_mapping, 'source_table': self.source_table, 'original_name': self.original_name, 'using_clause': self.using_clause, 'order_clause': self.order_clause, 'where_clause': self.where_clause,
                 'feature_type': self.feature_type, 'data_type': self.data_type, 'detected_feature_type': self.detected_feature_type, 'detected_data_type': self.detected_data_type, 'columns': self._get_attribute_as_dict(self.columns), 'point_in_time_info': self._get_attribute_as_dict(self.point_in_time_info)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

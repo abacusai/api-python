@@ -29,13 +29,14 @@ class CodeSource(AbstractApiClass):
         self.error = error
         self.publishing_msg = publishingMsg
         self.module_dependencies = moduleDependencies
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'source_type': repr(self.source_type), f'source_code': repr(self.source_code), f'application_connector_id': repr(self.application_connector_id), f'application_connector_info': repr(
             self.application_connector_info), f'package_requirements': repr(self.package_requirements), f'status': repr(self.status), f'error': repr(self.error), f'publishing_msg': repr(self.publishing_msg), f'module_dependencies': repr(self.module_dependencies)}
         class_name = "CodeSource"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,7 +48,7 @@ class CodeSource(AbstractApiClass):
         """
         resp = {'source_type': self.source_type, 'source_code': self.source_code, 'application_connector_id': self.application_connector_id, 'application_connector_info': self.application_connector_info,
                 'package_requirements': self.package_requirements, 'status': self.status, 'error': self.error, 'publishing_msg': self.publishing_msg, 'module_dependencies': self.module_dependencies}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def import_as_cell(self):
         """

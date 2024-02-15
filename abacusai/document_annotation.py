@@ -19,13 +19,14 @@ class DocumentAnnotation(AbstractApiClass):
         self.bounding_box = boundingBox
         self.created_at = createdAt
         self.count = count
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'annotation': repr(self.annotation), f'bounding_box': repr(
             self.bounding_box), f'created_at': repr(self.created_at), f'count': repr(self.count)}
         class_name = "DocumentAnnotation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class DocumentAnnotation(AbstractApiClass):
         """
         resp = {'annotation': self.annotation, 'bounding_box': self.bounding_box,
                 'created_at': self.created_at, 'count': self.count}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

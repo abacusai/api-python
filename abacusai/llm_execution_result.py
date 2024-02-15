@@ -22,13 +22,14 @@ class LlmExecutionResult(AbstractApiClass):
         self.execution = client._build_class(
             ExecuteFeatureGroupOperation, execution)
         self.preview = client._build_class(LlmExecutionPreview, preview)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'status': repr(self.status), f'error': repr(
             self.error), f'execution': repr(self.execution), f'preview': repr(self.preview)}
         class_name = "LlmExecutionResult"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -40,4 +41,4 @@ class LlmExecutionResult(AbstractApiClass):
         """
         resp = {'status': self.status, 'error': self.error, 'execution': self._get_attribute_as_dict(
             self.execution), 'preview': self._get_attribute_as_dict(self.preview)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

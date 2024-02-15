@@ -33,13 +33,14 @@ class TrainingConfigOptions(AbstractApiClass):
         self.required = required
         self.last_model_value = lastModelValue
         self.needs_refresh = needsRefresh
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'data_type': repr(self.data_type), f'value_type': repr(self.value_type), f'value_options': repr(self.value_options), f'value': repr(self.value), f'default': repr(
             self.default), f'options': repr(self.options), f'description': repr(self.description), f'required': repr(self.required), f'last_model_value': repr(self.last_model_value), f'needs_refresh': repr(self.needs_refresh)}
         class_name = "TrainingConfigOptions"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -51,4 +52,4 @@ class TrainingConfigOptions(AbstractApiClass):
         """
         resp = {'name': self.name, 'data_type': self.data_type, 'value_type': self.value_type, 'value_options': self.value_options, 'value': self.value, 'default': self.default,
                 'options': self.options, 'description': self.description, 'required': self.required, 'last_model_value': self.last_model_value, 'needs_refresh': self.needs_refresh}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

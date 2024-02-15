@@ -29,13 +29,14 @@ class ItemStatistics(AbstractApiClass):
         self.stddev = stddev
         self.min = min
         self.max = max
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'missing_percent': repr(self.missing_percent), f'count': repr(self.count), f'median': repr(self.median), f'mean': repr(
             self.mean), f'p10': repr(self.p10), f'p90': repr(self.p90), f'stddev': repr(self.stddev), f'min': repr(self.min), f'max': repr(self.max)}
         class_name = "ItemStatistics"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,4 +48,4 @@ class ItemStatistics(AbstractApiClass):
         """
         resp = {'missing_percent': self.missing_percent, 'count': self.count, 'median': self.median,
                 'mean': self.mean, 'p10': self.p10, 'p90': self.p90, 'stddev': self.stddev, 'min': self.min, 'max': self.max}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

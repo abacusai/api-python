@@ -19,13 +19,14 @@ class ApiKey(AbstractApiClass):
         self.api_key = apiKey
         self.tag = tag
         self.created_at = createdAt
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'api_key_id': repr(self.api_key_id), f'api_key': repr(
             self.api_key), f'tag': repr(self.tag), f'created_at': repr(self.created_at)}
         class_name = "ApiKey"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,7 +38,7 @@ class ApiKey(AbstractApiClass):
         """
         resp = {'api_key_id': self.api_key_id, 'api_key': self.api_key,
                 'tag': self.tag, 'created_at': self.created_at}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def delete(self):
         """

@@ -21,13 +21,14 @@ class ModelMonitorSummary(AbstractApiClass):
         self.data_integrity = dataIntegrity
         self.bias_violations = biasViolations
         self.alerts = alerts
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'model_accuracy': repr(self.model_accuracy), f'model_drift': repr(self.model_drift), f'data_integrity': repr(
             self.data_integrity), f'bias_violations': repr(self.bias_violations), f'alerts': repr(self.alerts)}
         class_name = "ModelMonitorSummary"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class ModelMonitorSummary(AbstractApiClass):
         """
         resp = {'model_accuracy': self.model_accuracy, 'model_drift': self.model_drift,
                 'data_integrity': self.data_integrity, 'bias_violations': self.bias_violations, 'alerts': self.alerts}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

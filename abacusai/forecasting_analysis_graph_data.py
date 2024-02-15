@@ -31,13 +31,14 @@ class ForecastingAnalysisGraphData(AbstractApiClass):
             ItemStatistics, itemStatistics)
         self.chart_descriptions = client._build_class(
             EdaChartDescription, chartDescriptions)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'data': repr(self.data), f'x_axis': repr(self.x_axis), f'y_axis': repr(self.y_axis), f'data_columns': repr(self.data_columns), f'chart_name': repr(
             self.chart_name), f'chart_types': repr(self.chart_types), f'item_statistics': repr(self.item_statistics), f'chart_descriptions': repr(self.chart_descriptions)}
         class_name = "ForecastingAnalysisGraphData"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -49,4 +50,4 @@ class ForecastingAnalysisGraphData(AbstractApiClass):
         """
         resp = {'data': self.data, 'x_axis': self.x_axis, 'y_axis': self.y_axis, 'data_columns': self.data_columns, 'chart_name': self.chart_name, 'chart_types': self.chart_types,
                 'item_statistics': self._get_attribute_as_dict(self.item_statistics), 'chart_descriptions': self._get_attribute_as_dict(self.chart_descriptions)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

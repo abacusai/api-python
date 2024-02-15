@@ -40,13 +40,14 @@ class Agent(AbstractApiClass):
         self.code_source = client._build_class(CodeSource, codeSource)
         self.latest_agent_version = client._build_class(
             AgentVersion, latestAgentVersion)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'agent_id': repr(self.agent_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'notebook_id': repr(self.notebook_id), f'predict_function_name': repr(self.predict_function_name), f'source_code': repr(
             self.source_code), f'agent_config': repr(self.agent_config), f'memory': repr(self.memory), f'training_required': repr(self.training_required), f'agent_execution_config': repr(self.agent_execution_config), f'code_source': repr(self.code_source), f'latest_agent_version': repr(self.latest_agent_version)}
         class_name = "Agent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -58,7 +59,7 @@ class Agent(AbstractApiClass):
         """
         resp = {'name': self.name, 'agent_id': self.agent_id, 'created_at': self.created_at, 'project_id': self.project_id, 'notebook_id': self.notebook_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'agent_config': self.agent_config,
                 'memory': self.memory, 'training_required': self.training_required, 'agent_execution_config': self.agent_execution_config, 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_agent_version': self._get_attribute_as_dict(self.latest_agent_version)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

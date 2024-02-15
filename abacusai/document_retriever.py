@@ -34,13 +34,14 @@ class DocumentRetriever(AbstractApiClass):
             DocumentRetrieverVersion, latestDocumentRetrieverVersion)
         self.document_retriever_config = client._build_class(
             DocumentRetrieverConfig, documentRetrieverConfig)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'document_retriever_id': repr(self.document_retriever_id), f'created_at': repr(self.created_at), f'feature_group_id': repr(self.feature_group_id), f'feature_group_name': repr(
             self.feature_group_name), f'indexing_required': repr(self.indexing_required), f'latest_document_retriever_version': repr(self.latest_document_retriever_version), f'document_retriever_config': repr(self.document_retriever_config)}
         class_name = "DocumentRetriever"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -52,7 +53,7 @@ class DocumentRetriever(AbstractApiClass):
         """
         resp = {'name': self.name, 'document_retriever_id': self.document_retriever_id, 'created_at': self.created_at, 'feature_group_id': self.feature_group_id, 'feature_group_name': self.feature_group_name, 'indexing_required':
                 self.indexing_required, 'latest_document_retriever_version': self._get_attribute_as_dict(self.latest_document_retriever_version), 'document_retriever_config': self._get_attribute_as_dict(self.document_retriever_config)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def rename(self, name: str):
         """

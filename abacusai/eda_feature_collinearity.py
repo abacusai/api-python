@@ -17,13 +17,14 @@ class EdaFeatureCollinearity(AbstractApiClass):
         self.selected_feature = selectedFeature
         self.sorted_column_names = sortedColumnNames
         self.feature_collinearity = featureCollinearity
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'selected_feature': repr(self.selected_feature), f'sorted_column_names': repr(
             self.sorted_column_names), f'feature_collinearity': repr(self.feature_collinearity)}
         class_name = "EdaFeatureCollinearity"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class EdaFeatureCollinearity(AbstractApiClass):
         """
         resp = {'selected_feature': self.selected_feature, 'sorted_column_names':
                 self.sorted_column_names, 'feature_collinearity': self.feature_collinearity}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

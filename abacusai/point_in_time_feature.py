@@ -31,13 +31,14 @@ class PointInTimeFeature(AbstractApiClass):
         self.lookback_until_position = lookbackUntilPosition
         self.expression = expression
         self.group_name = groupName
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'history_table_name': repr(self.history_table_name), f'aggregation_keys': repr(self.aggregation_keys), f'timestamp_key': repr(self.timestamp_key), f'historical_timestamp_key': repr(self.historical_timestamp_key), f'lookback_window_seconds': repr(
             self.lookback_window_seconds), f'lookback_window_lag_seconds': repr(self.lookback_window_lag_seconds), f'lookback_count': repr(self.lookback_count), f'lookback_until_position': repr(self.lookback_until_position), f'expression': repr(self.expression), f'group_name': repr(self.group_name)}
         class_name = "PointInTimeFeature"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -49,4 +50,4 @@ class PointInTimeFeature(AbstractApiClass):
         """
         resp = {'history_table_name': self.history_table_name, 'aggregation_keys': self.aggregation_keys, 'timestamp_key': self.timestamp_key, 'historical_timestamp_key': self.historical_timestamp_key, 'lookback_window_seconds': self.lookback_window_seconds,
                 'lookback_window_lag_seconds': self.lookback_window_lag_seconds, 'lookback_count': self.lookback_count, 'lookback_until_position': self.lookback_until_position, 'expression': self.expression, 'group_name': self.group_name}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

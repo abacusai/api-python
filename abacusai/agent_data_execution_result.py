@@ -18,13 +18,14 @@ class AgentDataExecutionResult(AbstractApiClass):
         self.response = response
         self.deployment_conversation_id = deploymentConversationId
         self.doc_infos = client._build_class(AgentDataDocumentInfo, docInfos)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'response': repr(self.response), f'deployment_conversation_id': repr(
             self.deployment_conversation_id), f'doc_infos': repr(self.doc_infos)}
         class_name = "AgentDataExecutionResult"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -36,4 +37,4 @@ class AgentDataExecutionResult(AbstractApiClass):
         """
         resp = {'response': self.response, 'deployment_conversation_id': self.deployment_conversation_id,
                 'doc_infos': self._get_attribute_as_dict(self.doc_infos)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

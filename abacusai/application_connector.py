@@ -23,13 +23,14 @@ class ApplicationConnector(AbstractApiClass):
         self.created_at = createdAt
         self.status = status
         self.auth = auth
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'application_connector_id': repr(self.application_connector_id), f'service': repr(self.service), f'name': repr(
             self.name), f'created_at': repr(self.created_at), f'status': repr(self.status), f'auth': repr(self.auth)}
         class_name = "ApplicationConnector"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -41,7 +42,7 @@ class ApplicationConnector(AbstractApiClass):
         """
         resp = {'application_connector_id': self.application_connector_id, 'service': self.service,
                 'name': self.name, 'created_at': self.created_at, 'status': self.status, 'auth': self.auth}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def rename(self, name: str):
         """

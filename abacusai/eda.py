@@ -35,13 +35,14 @@ class Eda(AbstractApiClass):
             EdaVersion, latestEdaVersion)
         self.refresh_schedules = client._build_class(
             RefreshSchedule, refreshSchedules)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'eda_id': repr(self.eda_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'feature_group_id': repr(self.feature_group_id), f'reference_feature_group_version': repr(
             self.reference_feature_group_version), f'test_feature_group_version': repr(self.test_feature_group_version), f'eda_configs': repr(self.eda_configs), f'latest_eda_version': repr(self.latest_eda_version), f'refresh_schedules': repr(self.refresh_schedules)}
         class_name = "Eda"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -53,7 +54,7 @@ class Eda(AbstractApiClass):
         """
         resp = {'eda_id': self.eda_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'feature_group_id': self.feature_group_id, 'reference_feature_group_version': self.reference_feature_group_version,
                 'test_feature_group_version': self.test_feature_group_version, 'eda_configs': self.eda_configs, 'latest_eda_version': self._get_attribute_as_dict(self.latest_eda_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def rerun(self):
         """

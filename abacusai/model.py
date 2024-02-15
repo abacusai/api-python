@@ -83,13 +83,14 @@ class Model(AbstractApiClass):
         self.latest_model_version = client._build_class(
             ModelVersion, latestModelVersion)
         self.model_config = client._build_class(TrainingConfig, modelConfig)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'model_id': repr(self.model_id), f'model_prediction_config': repr(self.model_prediction_config), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'shared': repr(self.shared), f'shared_at': repr(self.shared_at), f'train_function_name': repr(self.train_function_name), f'predict_function_name': repr(self.predict_function_name), f'predict_many_function_name': repr(self.predict_many_function_name), f'initialize_function_name': repr(self.initialize_function_name), f'training_input_tables': repr(self.training_input_tables), f'source_code': repr(self.source_code), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'training_feature_group_ids': repr(self.training_feature_group_ids), f'algorithm_model_configs': repr(
             self.algorithm_model_configs), f'training_vector_store_versions': repr(self.training_vector_store_versions), f'document_retrievers': repr(self.document_retrievers), f'document_retriever_ids': repr(self.document_retriever_ids), f'is_python_model': repr(self.is_python_model), f'default_algorithm': repr(self.default_algorithm), f'custom_algorithm_configs': repr(self.custom_algorithm_configs), f'restricted_algorithms': repr(self.restricted_algorithms), f'use_gpu': repr(self.use_gpu), f'notebook_id': repr(self.notebook_id), f'training_required': repr(self.training_required), f'location': repr(self.location), f'refresh_schedules': repr(self.refresh_schedules), f'code_source': repr(self.code_source), f'latest_model_version': repr(self.latest_model_version), f'model_config': repr(self.model_config)}
         class_name = "Model"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -101,7 +102,7 @@ class Model(AbstractApiClass):
         """
         resp = {'name': self.name, 'model_id': self.model_id, 'model_prediction_config': self.model_prediction_config, 'created_at': self.created_at, 'project_id': self.project_id, 'shared': self.shared, 'shared_at': self.shared_at, 'train_function_name': self.train_function_name, 'predict_function_name': self.predict_function_name, 'predict_many_function_name': self.predict_many_function_name, 'initialize_function_name': self.initialize_function_name, 'training_input_tables': self.training_input_tables, 'source_code': self.source_code, 'cpu_size': self.cpu_size, 'memory': self.memory, 'training_feature_group_ids': self.training_feature_group_ids, 'algorithm_model_configs': self.algorithm_model_configs, 'training_vector_store_versions': self.training_vector_store_versions,
                 'document_retrievers': self.document_retrievers, 'document_retriever_ids': self.document_retriever_ids, 'is_python_model': self.is_python_model, 'default_algorithm': self.default_algorithm, 'custom_algorithm_configs': self.custom_algorithm_configs, 'restricted_algorithms': self.restricted_algorithms, 'use_gpu': self.use_gpu, 'notebook_id': self.notebook_id, 'training_required': self.training_required, 'location': self._get_attribute_as_dict(self.location), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'code_source': self._get_attribute_as_dict(self.code_source), 'latest_model_version': self._get_attribute_as_dict(self.latest_model_version), 'model_config': self._get_attribute_as_dict(self.model_config)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def describe_train_test_data_split_feature_group(self):
         """

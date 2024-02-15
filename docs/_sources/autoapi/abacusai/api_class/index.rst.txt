@@ -1722,6 +1722,8 @@ Classes
    :type chunk_overlap_fraction: float
    :param text_encoder: Encoder used to index texts from the documents.
    :type text_encoder: VectorStoreTextEncoder
+   :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
+   :type chunk_size_factors: list
 
    .. py:attribute:: chunk_size
       :type: int
@@ -1735,6 +1737,11 @@ Classes
 
    .. py:attribute:: text_encoder
       :type: abacusai.api_class.enums.VectorStoreTextEncoder
+
+      
+
+   .. py:attribute:: chunk_size_factors
+      :type: list
 
       
 
@@ -4269,6 +4276,8 @@ Classes
    :type downsample_item_popularity_percentile: float
    :param use_user_id_feature: Use user id as a feature in CTR models.
    :type use_user_id_feature: bool
+   :param min_item_history: Minimum number of interactions an item must have to be included in training.
+   :type min_item_history: int
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -4447,6 +4456,11 @@ Classes
 
    .. py:attribute:: downsample_item_popularity_percentile
       :type: float
+
+      
+
+   .. py:attribute:: min_item_history
+      :type: int
 
       
 
@@ -5375,6 +5389,8 @@ Classes
    :type hide_generated_sql: bool
    :param disable_data_summarization: After executing a query summarize the reponse and reply back with only the table and query run.
    :type disable_data_summarization: bool
+   :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
+   :type search_score_cutoff: float
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5438,6 +5454,11 @@ Classes
 
    .. py:attribute:: disable_data_summarization
       :type: bool
+
+      
+
+   .. py:attribute:: search_score_cutoff
+      :type: float
 
       
 
@@ -5899,6 +5920,10 @@ Classes
    :type description: str
    :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
    :type enable_binary_input: bool
+   :param agent_input_schema: Schema for the agent input.
+   :type agent_input_schema: dict
+   :param agent_output_schema: Schema for the agent output.
+   :type agent_output_schema: dict
 
    .. py:attribute:: description
       :type: str
@@ -5907,6 +5932,16 @@ Classes
 
    .. py:attribute:: enable_binary_input
       :type: bool
+
+      
+
+   .. py:attribute:: agent_input_schema
+      :type: dict
+
+      
+
+   .. py:attribute:: agent_output_schema
+      :type: dict
 
       
 

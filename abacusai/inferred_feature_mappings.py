@@ -17,13 +17,14 @@ class InferredFeatureMappings(AbstractApiClass):
         self.error = error
         self.feature_mappings = client._build_class(
             FeatureMapping, featureMappings)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'error': repr(
             self.error), f'feature_mappings': repr(self.feature_mappings)}
         class_name = "InferredFeatureMappings"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class InferredFeatureMappings(AbstractApiClass):
         """
         resp = {'error': self.error, 'feature_mappings': self._get_attribute_as_dict(
             self.feature_mappings)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

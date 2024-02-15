@@ -17,13 +17,14 @@ class TypeViolation(AbstractApiClass):
         self.name = name
         self.training_data_type = trainingDataType
         self.prediction_data_type = predictionDataType
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'training_data_type': repr(
             self.training_data_type), f'prediction_data_type': repr(self.prediction_data_type)}
         class_name = "TypeViolation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class TypeViolation(AbstractApiClass):
         """
         resp = {'name': self.name, 'training_data_type': self.training_data_type,
                 'prediction_data_type': self.prediction_data_type}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

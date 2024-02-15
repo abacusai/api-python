@@ -49,13 +49,14 @@ class MonitorAlertVersion(AbstractApiClass):
         self.condition_description = conditionDescription
         self.action_description = actionDescription
         self.alert_type = alertType
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'monitor_alert_version': repr(self.monitor_alert_version), f'monitor_alert_id': repr(self.monitor_alert_id), f'status': repr(self.status), f'created_at': repr(self.created_at), f'alerting_started_at': repr(self.alerting_started_at), f'alerting_completed_at': repr(self.alerting_completed_at), f'error': repr(self.error), f'model_monitor_version': repr(self.model_monitor_version), f'condition_config': repr(
             self.condition_config), f'action_config': repr(self.action_config), f'alert_result': repr(self.alert_result), f'action_status': repr(self.action_status), f'action_error': repr(self.action_error), f'action_started_at': repr(self.action_started_at), f'action_completed_at': repr(self.action_completed_at), f'condition_description': repr(self.condition_description), f'action_description': repr(self.action_description), f'alert_type': repr(self.alert_type)}
         class_name = "MonitorAlertVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -67,7 +68,7 @@ class MonitorAlertVersion(AbstractApiClass):
         """
         resp = {'name': self.name, 'monitor_alert_version': self.monitor_alert_version, 'monitor_alert_id': self.monitor_alert_id, 'status': self.status, 'created_at': self.created_at, 'alerting_started_at': self.alerting_started_at, 'alerting_completed_at': self.alerting_completed_at, 'error': self.error, 'model_monitor_version': self.model_monitor_version, 'condition_config': self.condition_config,
                 'action_config': self.action_config, 'alert_result': self.alert_result, 'action_status': self.action_status, 'action_error': self.action_error, 'action_started_at': self.action_started_at, 'action_completed_at': self.action_completed_at, 'condition_description': self.condition_description, 'action_description': self.action_description, 'alert_type': self.alert_type}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

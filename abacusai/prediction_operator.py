@@ -48,13 +48,14 @@ class PredictionOperator(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
         self.latest_prediction_operator_version = client._build_class(
             PredictionOperatorVersion, latestPredictionOperatorVersion)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'prediction_operator_id': repr(self.prediction_operator_id), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'project_id': repr(self.project_id), f'predict_function_name': repr(self.predict_function_name), f'source_code': repr(self.source_code), f'initialize_function_name': repr(self.initialize_function_name), f'notebook_id': repr(
             self.notebook_id), f'memory': repr(self.memory), f'use_gpu': repr(self.use_gpu), f'feature_group_ids': repr(self.feature_group_ids), f'feature_group_table_names': repr(self.feature_group_table_names), f'code_source': repr(self.code_source), f'refresh_schedules': repr(self.refresh_schedules), f'latest_prediction_operator_version': repr(self.latest_prediction_operator_version)}
         class_name = "PredictionOperator"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -66,7 +67,7 @@ class PredictionOperator(AbstractApiClass):
         """
         resp = {'name': self.name, 'prediction_operator_id': self.prediction_operator_id, 'created_at': self.created_at, 'updated_at': self.updated_at, 'project_id': self.project_id, 'predict_function_name': self.predict_function_name, 'source_code': self.source_code, 'initialize_function_name': self.initialize_function_name, 'notebook_id': self.notebook_id, 'memory': self.memory,
                 'use_gpu': self.use_gpu, 'feature_group_ids': self.feature_group_ids, 'feature_group_table_names': self.feature_group_table_names, 'code_source': self._get_attribute_as_dict(self.code_source), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_prediction_operator_version': self._get_attribute_as_dict(self.latest_prediction_operator_version)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

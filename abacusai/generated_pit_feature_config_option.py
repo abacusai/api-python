@@ -19,13 +19,14 @@ class GeneratedPitFeatureConfigOption(AbstractApiClass):
         self.display_name = displayName
         self.default = default
         self.description = description
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'display_name': repr(
             self.display_name), f'default': repr(self.default), f'description': repr(self.description)}
         class_name = "GeneratedPitFeatureConfigOption"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class GeneratedPitFeatureConfigOption(AbstractApiClass):
         """
         resp = {'name': self.name, 'display_name': self.display_name,
                 'default': self.default, 'description': self.description}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

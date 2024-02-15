@@ -77,13 +77,14 @@ class BatchPrediction(AbstractApiClass):
             PredictionFeatureGroup, inputFeatureGroups)
         self.global_prediction_args = client._build_class(
             BatchPredictionArgs, globalPredictionArgs)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'batch_prediction_id': repr(self.batch_prediction_id), f'created_at': repr(self.created_at), f'name': repr(self.name), f'deployment_id': repr(self.deployment_id), f'file_connector_output_location': repr(self.file_connector_output_location), f'database_connector_id': repr(self.database_connector_id), f'database_output_configuration': repr(self.database_output_configuration), f'explanations': repr(self.explanations), f'file_output_format': repr(self.file_output_format), f'connector_type': repr(self.connector_type), f'legacy_input_location': repr(self.legacy_input_location), f'output_feature_group_id': repr(self.output_feature_group_id), f'feature_group_table_name': repr(self.feature_group_table_name), f'output_feature_group_table_name': repr(
             self.output_feature_group_table_name), f'summary_feature_group_table_name': repr(self.summary_feature_group_table_name), f'csv_input_prefix': repr(self.csv_input_prefix), f'csv_prediction_prefix': repr(self.csv_prediction_prefix), f'csv_explanations_prefix': repr(self.csv_explanations_prefix), f'output_includes_metadata': repr(self.output_includes_metadata), f'result_input_columns': repr(self.result_input_columns), f'model_monitor_id': repr(self.model_monitor_id), f'model_version': repr(self.model_version), f'algorithm': repr(self.algorithm), f'batch_inputs': repr(self.batch_inputs), f'latest_batch_prediction_version': repr(self.latest_batch_prediction_version), f'refresh_schedules': repr(self.refresh_schedules), f'input_feature_groups': repr(self.input_feature_groups), f'global_prediction_args': repr(self.global_prediction_args)}
         class_name = "BatchPrediction"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -95,7 +96,7 @@ class BatchPrediction(AbstractApiClass):
         """
         resp = {'batch_prediction_id': self.batch_prediction_id, 'created_at': self.created_at, 'name': self.name, 'deployment_id': self.deployment_id, 'file_connector_output_location': self.file_connector_output_location, 'database_connector_id': self.database_connector_id, 'database_output_configuration': self.database_output_configuration, 'explanations': self.explanations, 'file_output_format': self.file_output_format, 'connector_type': self.connector_type, 'legacy_input_location': self.legacy_input_location, 'output_feature_group_id': self.output_feature_group_id, 'feature_group_table_name': self.feature_group_table_name, 'output_feature_group_table_name': self.output_feature_group_table_name, 'summary_feature_group_table_name': self.summary_feature_group_table_name,
                 'csv_input_prefix': self.csv_input_prefix, 'csv_prediction_prefix': self.csv_prediction_prefix, 'csv_explanations_prefix': self.csv_explanations_prefix, 'output_includes_metadata': self.output_includes_metadata, 'result_input_columns': self.result_input_columns, 'model_monitor_id': self.model_monitor_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'batch_inputs': self._get_attribute_as_dict(self.batch_inputs), 'latest_batch_prediction_version': self._get_attribute_as_dict(self.latest_batch_prediction_version), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'input_feature_groups': self._get_attribute_as_dict(self.input_feature_groups), 'global_prediction_args': self._get_attribute_as_dict(self.global_prediction_args)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def start(self):
         """

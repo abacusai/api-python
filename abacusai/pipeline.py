@@ -45,13 +45,14 @@ class Pipeline(AbstractApiClass):
         self.latest_pipeline_version = client._build_class(
             PipelineVersion, latestPipelineVersion)
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'pipeline_name': repr(self.pipeline_name), f'pipeline_id': repr(self.pipeline_id), f'created_at': repr(self.created_at), f'pipeline_variable_mappings': repr(self.pipeline_variable_mappings), f'notebook_id': repr(self.notebook_id), f'cron': repr(self.cron), f'next_run_time': repr(
             self.next_run_time), f'is_prod': repr(self.is_prod), f'warning': repr(self.warning), f'created_by': repr(self.created_by), f'steps': repr(self.steps), f'pipeline_references': repr(self.pipeline_references), f'latest_pipeline_version': repr(self.latest_pipeline_version), f'code_source': repr(self.code_source)}
         class_name = "Pipeline"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -63,7 +64,7 @@ class Pipeline(AbstractApiClass):
         """
         resp = {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'created_at': self.created_at, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'notebook_id': self.notebook_id, 'cron': self.cron, 'next_run_time': self.next_run_time, 'is_prod': self.is_prod, 'warning': self.warning,
                 'created_by': self.created_by, 'steps': self._get_attribute_as_dict(self.steps), 'pipeline_references': self._get_attribute_as_dict(self.pipeline_references), 'latest_pipeline_version': self._get_attribute_as_dict(self.latest_pipeline_version), 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

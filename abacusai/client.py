@@ -11,6 +11,7 @@ import tempfile
 import threading
 import time
 import warnings
+from copy import deepcopy
 from functools import lru_cache
 from typing import Callable, Dict, List, Union
 from uuid import uuid4
@@ -574,7 +575,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.1.2'
+    client_version = '1.1.4'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -655,13 +656,22 @@ class BaseApiClient:
             elif isinstance(val, AbstractApiClass):
                 obj[key] = getattr(val, 'id', None)
             elif isinstance(val, ApiClass):
-                obj[key] = val.to_dict()
+                class_obj_dict = val.to_dict()
+                self._clean_api_objects(class_obj_dict)
+                obj[key] = class_obj_dict
             elif isinstance(val, list):
-                obj[key] = [val_elem.to_dict() if isinstance(
-                    val_elem, ApiClass) else val_elem for val_elem in val]
+                for index, list_val in enumerate(val):
+                    if isinstance(list_val, dict):
+                        self._clean_api_objects(list_val)
+                    elif isinstance(list_val, ApiClass):
+                        obj[key][index] = list_val.to_dict()
+                        self._clean_api_objects(obj[key][index])
+                    elif isinstance(list_val, ApiEnum):
+                        obj[key][index] = list_val.value
+                    else:
+                        obj[key][index] = list_val
             elif isinstance(val, dict):
-                obj[key] = {dict_key: dict_val.to_dict() if isinstance(
-                    dict_val, ApiClass) else dict_val for dict_key, dict_val in val.items()}
+                self._clean_api_objects(val)
             elif isinstance(val, ApiEnum):
                 obj[key] = val.value
             elif callable(val):
@@ -677,14 +687,16 @@ class BaseApiClient:
         headers = {'apiKey': self.api_key, 'clientVersion': self.client_version,
                    'User-Agent': f'python-abacusai-{self.client_version}', 'notebookId': self.notebook_id, 'pipelineId': self.pipeline_id}
         url = (server_override or self.server) + '/api/v0/' + action
-        self._clean_api_objects(query_params)
-        self._clean_api_objects(body)
+        copied_query_params = deepcopy(query_params)
+        copied_body = deepcopy(body)
+        self._clean_api_objects(copied_query_params)
+        self._clean_api_objects(copied_body)
         if self.service_discovery_url:
-            discovered_url = _discover_service_url(self.service_discovery_url, self.client_version, query_params.get(
-                'deploymentId') if query_params else None, query_params.get('deploymentToken') if query_params else None)
+            discovered_url = _discover_service_url(self.service_discovery_url, self.client_version, copied_query_params.get(
+                'deploymentId') if copied_query_params else None, copied_query_params.get('deploymentToken') if copied_query_params else None)
             if discovered_url:
                 url = discovered_url + '/api/' + action
-        response = self._request(url, method, query_params=query_params, headers=headers, body=body,
+        response = self._request(url, method, query_params=copied_query_params, headers=headers, body=copied_body,
                                  files=files, stream=streamable_response, timeout=timeout, retry_500=retry_500, data=data)
 
         result = None
@@ -706,7 +718,7 @@ class BaseApiClient:
                 result = self._build_class(parse_type, result)
         except Exception as e:
             logging.warn(
-                f"_call_api caught an exception {e} in processing json_data {json_data}. API call url method body: {url} {method} '{json.dumps(body)}'")
+                f"_call_api caught an exception {e} in processing json_data {json_data}. API call url method body: {url} {method} '{json.dumps(copied_body)}'")
             error_message = response.text
         if not success:
             if response.status_code == 404 and not self.client_options.exception_on_404:
@@ -6258,7 +6270,6 @@ Creates a new feature group defined as the union of other feature group versions
             query_data (dict): This will be a dictionary where 'Key' will be the column name (e.g. a column with name 'user_name' in your dataset) mapped to the column mapping USER_ID that uniquely identifies the user against which recommendations are made and 'Value' will be the unique value of the same item. For example, if you have the column name 'user_name' mapped to the column mapping 'USER_ID', then the query must have the exact same column name (user_name) as key and the name of the user (John Doe) as value.
             num_items (int): The number of items to recommend on one page. By default, it is set to 50 items per page.
             page (int): The page number to be displayed. For example, let's say that the num_items is set to 10 with the total recommendations list size of 50 recommended items, then an input value of 2 in the 'page' variable will display a list of items that rank from 11th to 20th.
-            exclude_item_ids (list): [DEPRECATED]
             score_field (str): The relative item scores are returned in a separate field named with the same name as the key (score_field) for this argument.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted.  Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it.
             restrict_items (list): It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restriction is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
@@ -6374,11 +6385,12 @@ Creates a new feature group defined as the union of other feature group versions
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response."""
         return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents})
 
-    def get_conversation_response_with_binary_data(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
+    def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
             deployment_id (str): The unique identifier to a deployment created under the project.
+            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
             message (str): A message from the user
             deployment_conversation_id (str): The unique identifier of a deployment conversation to continue. If not specified, a new one will be created.
             external_session_id (str): The user supplied unique identifier of a deployment conversation to continue. If specified, we will use this instead of a internal deployment conversation id.
@@ -6391,7 +6403,9 @@ Creates a new feature group defined as the union of other feature group versions
             chat_config (dict): A dictionary specifiying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries."""
-        return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments)
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token)
+        return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
         """Return the most relevant search results to the search query from the uploaded documents.
@@ -7536,7 +7550,7 @@ Creates a new feature group defined as the union of other feature group versions
             model_id (str): A unique string identifier associated with the Model."""
         return self._call_api('setNaturalLanguageExplanation', 'POST', query_params={}, body={'shortExplanation': short_explanation, 'longExplanation': long_explanation, 'featureGroupId': feature_group_id, 'featureGroupVersion': feature_group_version, 'modelId': model_id}, timeout=300)
 
-    def create_chat_session(self, project_id: str = None, name: str = None) -> ChatSession:
+    def create_chat_session(self, project_id: str, name: str = None) -> ChatSession:
         """Creates a chat session with Data Science Co-pilot.
 
         Args:
@@ -7714,17 +7728,18 @@ Creates a new feature group defined as the union of other feature group versions
             ExternalApplication: The newly created External Application."""
         return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
 
-    def update_external_application(self, external_application_id: str, name: str = None, theme: dict = None) -> ExternalApplication:
+    def update_external_application(self, external_application_id: str, name: str = None, theme: dict = None, deployment_id: str = None) -> ExternalApplication:
         """Updates an External Application.
 
         Args:
             external_application_id (str): The ID of the External Application.
             name (str): The name of the External Application.
             theme (dict): The visual theme of the External Application.
+            deployment_id (str): The ID of the deployment to use.
 
         Returns:
             ExternalApplication: The updated External Application."""
-        return self._call_api('updateExternalApplication', 'POST', query_params={}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme}, parse_type=ExternalApplication)
+        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme}, parse_type=ExternalApplication)
 
     def delete_external_application(self, external_application_id: str):
         """Deletes an External Application.
@@ -7935,7 +7950,6 @@ Creates a new feature group defined as the union of other feature group versions
             blobs (io.TextIOBase): A dictionary mapping document names to the blob data.
             query (str): The query that the documents are relevant to.
             document_retriever_config (DocumentRetrieverConfig): If provided, used to configure the retrieval steps like chunking for embeddings.
-            honor_sentence_boundary (bool): If provided, will honor sentence boundary when returning the snippets.
             num_retrieval_margin_words (int): If provided, will add this number of words from left and right of the returned snippets.
             max_words_per_snippet (int): If provided, will limit the number of words in each snippet to the value specified.
             max_snippets_per_document (int): If provided, will limit the number of snippets retrieved from each document to the value specified.

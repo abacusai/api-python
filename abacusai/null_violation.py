@@ -19,13 +19,14 @@ class NullViolation(AbstractApiClass):
         self.violation = violation
         self.training_null_freq = trainingNullFreq
         self.prediction_null_freq = predictionNullFreq
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'violation': repr(self.violation), f'training_null_freq': repr(
             self.training_null_freq), f'prediction_null_freq': repr(self.prediction_null_freq)}
         class_name = "NullViolation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class NullViolation(AbstractApiClass):
         """
         resp = {'name': self.name, 'violation': self.violation, 'training_null_freq':
                 self.training_null_freq, 'prediction_null_freq': self.prediction_null_freq}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

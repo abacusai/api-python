@@ -29,13 +29,14 @@ class NotebookTemplate(AbstractApiClass):
         self.filename = filename
         self.source_code = sourceCode
         self.tags = tags
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'notebook_template_id': repr(self.notebook_template_id), f'name': repr(self.name), f'description': repr(self.description), f'created_at': repr(self.created_at), f'updated_at': repr(
             self.updated_at), f'template_type': repr(self.template_type), f'filename': repr(self.filename), f'source_code': repr(self.source_code), f'tags': repr(self.tags)}
         class_name = "NotebookTemplate"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,4 +48,4 @@ class NotebookTemplate(AbstractApiClass):
         """
         resp = {'notebook_template_id': self.notebook_template_id, 'name': self.name, 'description': self.description, 'created_at': self.created_at,
                 'updated_at': self.updated_at, 'template_type': self.template_type, 'filename': self.filename, 'source_code': self.source_code, 'tags': self.tags}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

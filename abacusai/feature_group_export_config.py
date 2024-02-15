@@ -28,13 +28,14 @@ class FeatureGroupExportConfig(AbstractApiClass):
         self.database_feature_mapping = databaseFeatureMapping
         self.id_column = idColumn
         self.additional_id_columns = additionalIdColumns
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'output_location': repr(self.output_location), f'file_format': repr(self.file_format), f'database_connector_id': repr(self.database_connector_id), f'object_name': repr(
             self.object_name), f'write_mode': repr(self.write_mode), f'database_feature_mapping': repr(self.database_feature_mapping), f'id_column': repr(self.id_column), f'additional_id_columns': repr(self.additional_id_columns)}
         class_name = "FeatureGroupExportConfig"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -46,4 +47,4 @@ class FeatureGroupExportConfig(AbstractApiClass):
         """
         resp = {'output_location': self.output_location, 'file_format': self.file_format, 'database_connector_id': self.database_connector_id, 'object_name': self.object_name,
                 'write_mode': self.write_mode, 'database_feature_mapping': self.database_feature_mapping, 'id_column': self.id_column, 'additional_id_columns': self.additional_id_columns}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

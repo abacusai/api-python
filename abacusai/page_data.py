@@ -33,13 +33,14 @@ class PageData(AbstractApiClass):
         self.tokens = tokens
         self.extracted_text = extractedText
         self.rotation_angle = rotationAngle
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'doc_id': repr(self.doc_id), f'page': repr(self.page), f'height': repr(self.height), f'width': repr(self.width), f'page_count': repr(self.page_count), f'page_text': repr(self.page_text), f'page_token_start_offset': repr(
             self.page_token_start_offset), f'token_count': repr(self.token_count), f'tokens': repr(self.tokens), f'extracted_text': repr(self.extracted_text), f'rotation_angle': repr(self.rotation_angle)}
         class_name = "PageData"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -51,4 +52,4 @@ class PageData(AbstractApiClass):
         """
         resp = {'doc_id': self.doc_id, 'page': self.page, 'height': self.height, 'width': self.width, 'page_count': self.page_count, 'page_text': self.page_text,
                 'page_token_start_offset': self.page_token_start_offset, 'token_count': self.token_count, 'tokens': self.tokens, 'extracted_text': self.extracted_text, 'rotation_angle': self.rotation_angle}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

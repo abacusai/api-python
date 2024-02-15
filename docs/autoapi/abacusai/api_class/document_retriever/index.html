@@ -112,6 +112,7 @@
 <li><p><strong>chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The size of text chunks in the vector store.</p></li>
 <li><p><strong>chunk_overlap_fraction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The fraction of overlap between chunks.</p></li>
 <li><p><strong>text_encoder</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.VectorStoreTextEncoder" title="abacusai.api_class.enums.VectorStoreTextEncoder"><em>VectorStoreTextEncoder</em></a>) – Encoder used to index texts from the documents.</p></li>
+<li><p><strong>chunk_size_factors</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to <cite>chunk_size</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -128,6 +129,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.text_encoder">
 <span class="sig-name descname"><span class="pre">text_encoder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.VectorStoreTextEncoder" title="abacusai.api_class.enums.VectorStoreTextEncoder"><span class="pre">abacusai.api_class.enums.VectorStoreTextEncoder</span></a></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.text_encoder" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.chunk_size_factors">
+<span class="sig-name descname"><span class="pre">chunk_size_factors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.chunk_size_factors" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

@@ -21,13 +21,14 @@ class FeatureGroupRowProcessLogs(AbstractApiClass):
         self.deployment_id = deploymentId
         self.primary_key_value = primaryKeyValue
         self.feature_group_row_process_id = featureGroupRowProcessId
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'logs': repr(self.logs), f'feature_group_id': repr(self.feature_group_id), f'deployment_id': repr(
             self.deployment_id), f'primary_key_value': repr(self.primary_key_value), f'feature_group_row_process_id': repr(self.feature_group_row_process_id)}
         class_name = "FeatureGroupRowProcessLogs"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class FeatureGroupRowProcessLogs(AbstractApiClass):
         """
         resp = {'logs': self.logs, 'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id,
                 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

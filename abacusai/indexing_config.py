@@ -17,13 +17,14 @@ class IndexingConfig(AbstractApiClass):
         self.primary_key = primaryKey
         self.update_timestamp_key = updateTimestampKey
         self.lookup_keys = lookupKeys
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'primary_key': repr(self.primary_key), f'update_timestamp_key': repr(
             self.update_timestamp_key), f'lookup_keys': repr(self.lookup_keys)}
         class_name = "IndexingConfig"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class IndexingConfig(AbstractApiClass):
         """
         resp = {'primary_key': self.primary_key, 'update_timestamp_key':
                 self.update_timestamp_key, 'lookup_keys': self.lookup_keys}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

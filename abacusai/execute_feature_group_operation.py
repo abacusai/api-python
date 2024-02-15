@@ -21,13 +21,14 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         self.status = status
         self.error = error
         self.query = query
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_group_operation_run_id': repr(self.feature_group_operation_run_id), f'status': repr(
             self.status), f'error': repr(self.error), f'query': repr(self.query)}
         class_name = "ExecuteFeatureGroupOperation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,7 +40,7 @@ class ExecuteFeatureGroupOperation(AbstractApiClass):
         """
         resp = {'feature_group_operation_run_id': self.feature_group_operation_run_id,
                 'status': self.status, 'error': self.error, 'query': self.query}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def wait_for_results(self, timeout=3600, delay=2):
         """

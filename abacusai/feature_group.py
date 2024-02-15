@@ -23,7 +23,7 @@ class FeatureGroup(AbstractApiClass):
             client (ApiClient): An authenticated API Client instance
             featureGroupId (str): Unique identifier for this feature group.
             modificationLock (bool): If feature group is locked against a change or not.
-            name (str): [DEPRECATED] User friendly name for the feature group.
+            name (str): 
             featureGroupSourceType (str): The source type of the feature group
             tableName (str): Unique table name of this feature group.
             sql (str): SQL definition creating this feature group.
@@ -126,13 +126,14 @@ class FeatureGroup(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
         self.latest_feature_group_version = client._build_class(
             FeatureGroupVersion, latestFeatureGroupVersion)
+        self.deprecated_keys = {'name'}
 
     def __repr__(self):
         repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'modification_lock': repr(self.modification_lock), f'name': repr(self.name), f'feature_group_source_type': repr(self.feature_group_source_type), f'table_name': repr(self.table_name), f'sql': repr(self.sql), f'dataset_id': repr(self.dataset_id), f'function_source_code': repr(self.function_source_code), f'function_name': repr(self.function_name), f'source_tables': repr(self.source_tables), f'created_at': repr(self.created_at), f'description': repr(self.description), f'sql_error': repr(self.sql_error), f'latest_version_outdated': repr(self.latest_version_outdated), f'referenced_feature_groups': repr(self.referenced_feature_groups), f'tags': repr(self.tags), f'primary_key': repr(self.primary_key), f'update_timestamp_key': repr(self.update_timestamp_key), f'lookup_keys': repr(self.lookup_keys), f'streaming_enabled': repr(self.streaming_enabled), f'incremental': repr(self.incremental), f'merge_config': repr(self.merge_config), f'operator_config': repr(self.operator_config), f'sampling_config': repr(self.sampling_config), f'cpu_size': repr(
             self.cpu_size), f'memory': repr(self.memory), f'streaming_ready': repr(self.streaming_ready), f'feature_tags': repr(self.feature_tags), f'module_name': repr(self.module_name), f'template_bindings': repr(self.template_bindings), f'feature_expression': repr(self.feature_expression), f'use_original_csv_names': repr(self.use_original_csv_names), f'python_function_bindings': repr(self.python_function_bindings), f'python_function_name': repr(self.python_function_name), f'use_gpu': repr(self.use_gpu), f'features': repr(self.features), f'duplicate_features': repr(self.duplicate_features), f'point_in_time_groups': repr(self.point_in_time_groups), f'annotation_config': repr(self.annotation_config), f'concatenation_config': repr(self.concatenation_config), f'indexing_config': repr(self.indexing_config), f'code_source': repr(self.code_source), f'feature_group_template': repr(self.feature_group_template), f'explanation': repr(self.explanation), f'refresh_schedules': repr(self.refresh_schedules), f'latest_feature_group_version': repr(self.latest_feature_group_version)}
         class_name = "FeatureGroup"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -144,7 +145,7 @@ class FeatureGroup(AbstractApiClass):
         """
         resp = {'feature_group_id': self.feature_group_id, 'modification_lock': self.modification_lock, 'name': self.name, 'feature_group_source_type': self.feature_group_source_type, 'table_name': self.table_name, 'sql': self.sql, 'dataset_id': self.dataset_id, 'function_source_code': self.function_source_code, 'function_name': self.function_name, 'source_tables': self.source_tables, 'created_at': self.created_at, 'description': self.description, 'sql_error': self.sql_error, 'latest_version_outdated': self.latest_version_outdated, 'referenced_feature_groups': self.referenced_feature_groups, 'tags': self.tags, 'primary_key': self.primary_key, 'update_timestamp_key': self.update_timestamp_key, 'lookup_keys': self.lookup_keys, 'streaming_enabled': self.streaming_enabled, 'incremental': self.incremental, 'merge_config': self.merge_config, 'operator_config': self.operator_config, 'sampling_config': self.sampling_config, 'cpu_size': self.cpu_size, 'memory': self.memory, 'streaming_ready': self.streaming_ready, 'feature_tags': self.feature_tags, 'module_name': self.module_name,
                 'template_bindings': self.template_bindings, 'feature_expression': self.feature_expression, 'use_original_csv_names': self.use_original_csv_names, 'python_function_bindings': self.python_function_bindings, 'python_function_name': self.python_function_name, 'use_gpu': self.use_gpu, 'features': self._get_attribute_as_dict(self.features), 'duplicate_features': self._get_attribute_as_dict(self.duplicate_features), 'point_in_time_groups': self._get_attribute_as_dict(self.point_in_time_groups), 'annotation_config': self._get_attribute_as_dict(self.annotation_config), 'concatenation_config': self._get_attribute_as_dict(self.concatenation_config), 'indexing_config': self._get_attribute_as_dict(self.indexing_config), 'code_source': self._get_attribute_as_dict(self.code_source), 'feature_group_template': self._get_attribute_as_dict(self.feature_group_template), 'explanation': self._get_attribute_as_dict(self.explanation), 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_feature_group_version': self._get_attribute_as_dict(self.latest_feature_group_version)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def add_to_project(self, project_id: str, feature_group_type: str = 'CUSTOM_TABLE'):
         """

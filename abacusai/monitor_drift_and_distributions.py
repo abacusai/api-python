@@ -25,13 +25,14 @@ class MonitorDriftAndDistributions(AbstractApiClass):
             ForecastingMonitorSummary, forecastingMonitorSummary)
         self.embeddings_distribution = client._build_class(
             EmbeddingFeatureDriftDistribution, embeddingsDistribution)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_drifts': repr(self.feature_drifts), f'feature_distributions': repr(self.feature_distributions), f'nested_drifts': repr(
             self.nested_drifts), f'forecasting_monitor_summary': repr(self.forecasting_monitor_summary), f'embeddings_distribution': repr(self.embeddings_distribution)}
         class_name = "MonitorDriftAndDistributions"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -43,4 +44,4 @@ class MonitorDriftAndDistributions(AbstractApiClass):
         """
         resp = {'feature_drifts': self.feature_drifts, 'feature_distributions': self.feature_distributions, 'nested_drifts': self.nested_drifts,
                 'forecasting_monitor_summary': self._get_attribute_as_dict(self.forecasting_monitor_summary), 'embeddings_distribution': self._get_attribute_as_dict(self.embeddings_distribution)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

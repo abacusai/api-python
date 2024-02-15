@@ -49,13 +49,14 @@ class ModelMonitorVersion(AbstractApiClass):
         self.training_forecast_config = trainingForecastConfig
         self.prediction_forecast_config = predictionForecastConfig
         self.forecast_frequency = forecastFrequency
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'model_monitor_version': repr(self.model_monitor_version), f'status': repr(self.status), f'model_monitor_id': repr(self.model_monitor_id), f'monitoring_started_at': repr(self.monitoring_started_at), f'monitoring_completed_at': repr(self.monitoring_completed_at), f'training_feature_group_version': repr(self.training_feature_group_version), f'prediction_feature_group_version': repr(self.prediction_feature_group_version), f'error': repr(self.error), f'pending_deployment_ids': repr(self.pending_deployment_ids), f'failed_deployment_ids': repr(
             self.failed_deployment_ids), f'metric_configs': repr(self.metric_configs), f'feature_group_monitor_configs': repr(self.feature_group_monitor_configs), f'metric_types': repr(self.metric_types), f'model_version': repr(self.model_version), f'batch_prediction_version': repr(self.batch_prediction_version), f'eda_configs': repr(self.eda_configs), f'training_forecast_config': repr(self.training_forecast_config), f'prediction_forecast_config': repr(self.prediction_forecast_config), f'forecast_frequency': repr(self.forecast_frequency)}
         class_name = "ModelMonitorVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -67,7 +68,7 @@ class ModelMonitorVersion(AbstractApiClass):
         """
         resp = {'model_monitor_version': self.model_monitor_version, 'status': self.status, 'model_monitor_id': self.model_monitor_id, 'monitoring_started_at': self.monitoring_started_at, 'monitoring_completed_at': self.monitoring_completed_at, 'training_feature_group_version': self.training_feature_group_version, 'prediction_feature_group_version': self.prediction_feature_group_version, 'error': self.error, 'pending_deployment_ids': self.pending_deployment_ids,
                 'failed_deployment_ids': self.failed_deployment_ids, 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_version': self.model_version, 'batch_prediction_version': self.batch_prediction_version, 'eda_configs': self.eda_configs, 'training_forecast_config': self.training_forecast_config, 'prediction_forecast_config': self.prediction_forecast_config, 'forecast_frequency': self.forecast_frequency}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get_prediction_drift(self):
         """

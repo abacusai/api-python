@@ -50,13 +50,14 @@ class RefreshPolicy(AbstractApiClass):
         self.pipeline_id = pipelineId
         self.feature_group_export_config = client._build_class(
             FeatureGroupRefreshExportConfig, featureGroupExportConfig)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'refresh_policy_id': repr(self.refresh_policy_id), f'name': repr(self.name), f'cron': repr(self.cron), f'next_run_time': repr(self.next_run_time), f'created_at': repr(self.created_at), f'refresh_type': repr(self.refresh_type), f'project_id': repr(self.project_id), f'dataset_ids': repr(self.dataset_ids), f'feature_group_id': repr(self.feature_group_id), f'model_ids': repr(
             self.model_ids), f'deployment_ids': repr(self.deployment_ids), f'model_monitor_ids': repr(self.model_monitor_ids), f'notebook_id': repr(self.notebook_id), f'paused': repr(self.paused), f'prediction_operator_id': repr(self.prediction_operator_id), f'pipeline_id': repr(self.pipeline_id), f'feature_group_export_config': repr(self.feature_group_export_config)}
         class_name = "RefreshPolicy"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -68,7 +69,7 @@ class RefreshPolicy(AbstractApiClass):
         """
         resp = {'refresh_policy_id': self.refresh_policy_id, 'name': self.name, 'cron': self.cron, 'next_run_time': self.next_run_time, 'created_at': self.created_at, 'refresh_type': self.refresh_type, 'project_id': self.project_id, 'dataset_ids': self.dataset_ids, 'feature_group_id': self.feature_group_id, 'model_ids': self.model_ids,
                 'deployment_ids': self.deployment_ids, 'model_monitor_ids': self.model_monitor_ids, 'notebook_id': self.notebook_id, 'paused': self.paused, 'prediction_operator_id': self.prediction_operator_id, 'pipeline_id': self.pipeline_id, 'feature_group_export_config': self._get_attribute_as_dict(self.feature_group_export_config)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def delete(self):
         """

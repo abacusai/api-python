@@ -18,13 +18,14 @@ class ModelVersionFeatureGroupSchema(AbstractApiClass):
         self.feature_group_id = featureGroupId
         self.feature_group_name = featureGroupName
         self.schema = client._build_class(Schema, schema)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'feature_group_name': repr(
             self.feature_group_name), f'schema': repr(self.schema)}
         class_name = "ModelVersionFeatureGroupSchema"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -36,4 +37,4 @@ class ModelVersionFeatureGroupSchema(AbstractApiClass):
         """
         resp = {'feature_group_id': self.feature_group_id, 'feature_group_name':
                 self.feature_group_name, 'schema': self._get_attribute_as_dict(self.schema)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -19,13 +19,14 @@ class ExternalInvite(AbstractApiClass):
         self.user_already_in_app_group = userAlreadyInAppGroup
         self.user_exists_as_internal = userExistsAsInternal
         self.successful_invites = successfulInvites
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'user_already_in_org': repr(self.user_already_in_org), f'user_already_in_app_group': repr(
             self.user_already_in_app_group), f'user_exists_as_internal': repr(self.user_exists_as_internal), f'successful_invites': repr(self.successful_invites)}
         class_name = "ExternalInvite"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class ExternalInvite(AbstractApiClass):
         """
         resp = {'user_already_in_org': self.user_already_in_org, 'user_already_in_app_group': self.user_already_in_app_group,
                 'user_exists_as_internal': self.user_exists_as_internal, 'successful_invites': self.successful_invites}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

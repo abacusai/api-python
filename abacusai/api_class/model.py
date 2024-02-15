@@ -59,6 +59,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
         max_user_history_len_percentile (int): Filter out users with history length above this percentile.
         downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
         use_user_id_feature (bool): Use user id as a feature in CTR models.
+        min_item_history (int): Minimum number of interactions an item must have to be included in training.
     """
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
@@ -110,6 +111,7 @@ class PersonalizationTrainingConfig(TrainingConfig):
     # outliers
     max_user_history_len_percentile: int = dataclasses.field(default=None)
     downsample_item_popularity_percentile: float = dataclasses.field(default=None)
+    min_item_history: int = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.PERSONALIZATION
@@ -450,6 +452,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         data_prompt_context (str): Prompt context for the data feature group ids.
         hide_generated_sql (bool): When running data queries, hides the generated SQL in the response and will just return the table.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
+        search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -464,6 +467,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     data_prompt_context: str = None
     hide_generated_sql: bool = None
     disable_data_summarization: bool = None
+    search_score_cutoff: float = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM
@@ -718,9 +722,13 @@ class AIAgentTrainingConfig(TrainingConfig):
     Args:
         description (str): Description of the agent function.
         enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
+        agent_input_schema (dict): Schema for the agent input.
+        agent_output_schema (dict): Schema for the agent output.
     """
     description: str = dataclasses.field(default=None)
     enable_binary_input: bool = dataclasses.field(default=None)
+    agent_input_schema: dict = dataclasses.field(default=None)
+    agent_output_schema: dict = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.AI_AGENT

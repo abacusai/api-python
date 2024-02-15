@@ -21,13 +21,14 @@ class PredictionDataset(AbstractApiClass):
         self.dataset_version = datasetVersion
         self.default = default
         self.required = required
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'dataset_id': repr(self.dataset_id), f'dataset_type': repr(self.dataset_type), f'dataset_version': repr(
             self.dataset_version), f'default': repr(self.default), f'required': repr(self.required)}
         class_name = "PredictionDataset"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class PredictionDataset(AbstractApiClass):
         """
         resp = {'dataset_id': self.dataset_id, 'dataset_type': self.dataset_type,
                 'dataset_version': self.dataset_version, 'default': self.default, 'required': self.required}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

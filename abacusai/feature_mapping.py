@@ -15,13 +15,14 @@ class FeatureMapping(AbstractApiClass):
         super().__init__(client, None)
         self.feature_mapping = featureMapping
         self.feature_name = featureName
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_mapping': repr(
             self.feature_mapping), f'feature_name': repr(self.feature_name)}
         class_name = "FeatureMapping"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -33,4 +34,4 @@ class FeatureMapping(AbstractApiClass):
         """
         resp = {'feature_mapping': self.feature_mapping,
                 'feature_name': self.feature_name}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

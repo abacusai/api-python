@@ -23,13 +23,14 @@ class FeatureImportance(AbstractApiClass):
         self.null_feature_importance = nullFeatureImportance
         self.lofo_feature_importance = lofoFeatureImportance
         self.ebm_feature_importance = ebmFeatureImportance
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'shap_feature_importance': repr(self.shap_feature_importance), f'lime_feature_importance': repr(self.lime_feature_importance), f'permutation_feature_importance': repr(
             self.permutation_feature_importance), f'null_feature_importance': repr(self.null_feature_importance), f'lofo_feature_importance': repr(self.lofo_feature_importance), f'ebm_feature_importance': repr(self.ebm_feature_importance)}
         class_name = "FeatureImportance"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -41,4 +42,4 @@ class FeatureImportance(AbstractApiClass):
         """
         resp = {'shap_feature_importance': self.shap_feature_importance, 'lime_feature_importance': self.lime_feature_importance, 'permutation_feature_importance': self.permutation_feature_importance,
                 'null_feature_importance': self.null_feature_importance, 'lofo_feature_importance': self.lofo_feature_importance, 'ebm_feature_importance': self.ebm_feature_importance}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

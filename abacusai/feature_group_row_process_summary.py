@@ -21,13 +21,14 @@ class FeatureGroupRowProcessSummary(AbstractApiClass):
         self.processing_processes = processingProcesses
         self.complete_processes = completeProcesses
         self.failed_processes = failedProcesses
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'total_processes': repr(self.total_processes), f'pending_processes': repr(self.pending_processes), f'processing_processes': repr(
             self.processing_processes), f'complete_processes': repr(self.complete_processes), f'failed_processes': repr(self.failed_processes)}
         class_name = "FeatureGroupRowProcessSummary"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class FeatureGroupRowProcessSummary(AbstractApiClass):
         """
         resp = {'total_processes': self.total_processes, 'pending_processes': self.pending_processes, 'processing_processes':
                 self.processing_processes, 'complete_processes': self.complete_processes, 'failed_processes': self.failed_processes}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

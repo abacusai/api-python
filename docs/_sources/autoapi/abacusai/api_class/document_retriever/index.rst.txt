@@ -31,6 +31,8 @@ Classes
    :type chunk_overlap_fraction: float
    :param text_encoder: Encoder used to index texts from the documents.
    :type text_encoder: VectorStoreTextEncoder
+   :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
+   :type chunk_size_factors: list
 
    .. py:attribute:: chunk_size
       :type: int
@@ -44,6 +46,11 @@ Classes
 
    .. py:attribute:: text_encoder
       :type: abacusai.api_class.enums.VectorStoreTextEncoder
+
+      
+
+   .. py:attribute:: chunk_size_factors
+      :type: list
 
       
 

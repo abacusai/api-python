@@ -33,13 +33,14 @@ class HoldoutAnalysisVersion(AbstractApiClass):
         self.algo_name = algoName
         self.metrics = metrics
         self.metric_infos = metricInfos
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'holdout_analysis_version': repr(self.holdout_analysis_version), f'holdout_analysis_id': repr(self.holdout_analysis_id), f'created_at': repr(self.created_at), f'status': repr(self.status), f'error': repr(
             self.error), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'algorithm': repr(self.algorithm), f'algo_name': repr(self.algo_name), f'metrics': repr(self.metrics), f'metric_infos': repr(self.metric_infos)}
         class_name = "HoldoutAnalysisVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -51,7 +52,7 @@ class HoldoutAnalysisVersion(AbstractApiClass):
         """
         resp = {'holdout_analysis_version': self.holdout_analysis_version, 'holdout_analysis_id': self.holdout_analysis_id, 'created_at': self.created_at, 'status': self.status, 'error': self.error,
                 'model_id': self.model_id, 'model_version': self.model_version, 'algorithm': self.algorithm, 'algo_name': self.algo_name, 'metrics': self.metrics, 'metric_infos': self.metric_infos}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

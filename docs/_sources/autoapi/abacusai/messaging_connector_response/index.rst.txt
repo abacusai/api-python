@@ -1,0 +1,53 @@
+:py:mod:`abacusai.messaging_connector_response`
+===============================================
+
+.. py:module:: abacusai.messaging_connector_response
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.messaging_connector_response.MessagingConnectorResponse
+
+
+
+
+.. py:class:: MessagingConnectorResponse(client, welcomeMessage=None, defaultMessage=None, disclaimer=None, messagingBotName=None, useDefaultLabel=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   The response to view label data for Teams
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param welcomeMessage: on the first installation of the app the user will get this message
+   :type welcomeMessage: str
+   :param defaultMessage: when user triggers hi, hello, help they will get this message
+   :type defaultMessage: str
+   :param disclaimer: given along with every bot response
+   :type disclaimer: str
+   :param messagingBotName: the name you want to see at various places instead of Abacus.ai
+   :type messagingBotName: str
+   :param useDefaultLabel: to use the default abacus.ai label in case it is set to true
+   :type useDefaultLabel: bool
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+

@@ -31,13 +31,14 @@ class PipelineReference(AbstractApiClass):
         self.model_monitor_id = modelMonitorId
         self.notebook_id = notebookId
         self.feature_group_id = featureGroupId
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'pipeline_reference_id': repr(self.pipeline_reference_id), f'pipeline_id': repr(self.pipeline_id), f'object_type': repr(self.object_type), f'dataset_id': repr(self.dataset_id), f'model_id': repr(self.model_id), f'deployment_id': repr(
             self.deployment_id), f'batch_prediction_description_id': repr(self.batch_prediction_description_id), f'model_monitor_id': repr(self.model_monitor_id), f'notebook_id': repr(self.notebook_id), f'feature_group_id': repr(self.feature_group_id)}
         class_name = "PipelineReference"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -49,4 +50,4 @@ class PipelineReference(AbstractApiClass):
         """
         resp = {'pipeline_reference_id': self.pipeline_reference_id, 'pipeline_id': self.pipeline_id, 'object_type': self.object_type, 'dataset_id': self.dataset_id, 'model_id': self.model_id, 'deployment_id': self.deployment_id,
                 'batch_prediction_description_id': self.batch_prediction_description_id, 'model_monitor_id': self.model_monitor_id, 'notebook_id': self.notebook_id, 'feature_group_id': self.feature_group_id}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

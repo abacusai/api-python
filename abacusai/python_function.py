@@ -32,13 +32,14 @@ class PythonFunction(AbstractApiClass):
         self.function_type = functionType
         self.package_requirements = packageRequirements
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'notebook_id': repr(self.notebook_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'function_variable_mappings': repr(self.function_variable_mappings), f'output_variable_mappings': repr(
             self.output_variable_mappings), f'function_name': repr(self.function_name), f'python_function_id': repr(self.python_function_id), f'function_type': repr(self.function_type), f'package_requirements': repr(self.package_requirements), f'code_source': repr(self.code_source)}
         class_name = "PythonFunction"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -50,7 +51,7 @@ class PythonFunction(AbstractApiClass):
         """
         resp = {'notebook_id': self.notebook_id, 'name': self.name, 'created_at': self.created_at, 'function_variable_mappings': self.function_variable_mappings, 'output_variable_mappings': self.output_variable_mappings,
                 'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'package_requirements': self.package_requirements, 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None):
         """

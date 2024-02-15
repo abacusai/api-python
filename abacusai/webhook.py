@@ -23,13 +23,14 @@ class Webhook(AbstractApiClass):
         self.webhook_event_type = webhookEventType
         self.payload_template = payloadTemplate
         self.created_at = createdAt
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'webhook_id': repr(self.webhook_id), f'deployment_id': repr(self.deployment_id), f'endpoint': repr(self.endpoint), f'webhook_event_type': repr(
             self.webhook_event_type), f'payload_template': repr(self.payload_template), f'created_at': repr(self.created_at)}
         class_name = "Webhook"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -41,7 +42,7 @@ class Webhook(AbstractApiClass):
         """
         resp = {'webhook_id': self.webhook_id, 'deployment_id': self.deployment_id, 'endpoint': self.endpoint,
                 'webhook_event_type': self.webhook_event_type, 'payload_template': self.payload_template, 'created_at': self.created_at}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

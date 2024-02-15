@@ -67,13 +67,14 @@ class ModelMonitor(AbstractApiClass):
             RefreshSchedule, refreshSchedules)
         self.latest_monitor_model_version = client._build_class(
             ModelMonitorVersion, latestMonitorModelVersion)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'model_monitor_id': repr(self.model_monitor_id), f'name': repr(self.name), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'training_feature_group_id': repr(self.training_feature_group_id), f'prediction_feature_group_id': repr(self.prediction_feature_group_id), f'prediction_feature_group_version': repr(self.prediction_feature_group_version), f'training_feature_group_version': repr(self.training_feature_group_version), f'alert_config': repr(self.alert_config), f'bias_metric_id': repr(self.bias_metric_id), f'latest_bias_metric_version_id': repr(self.latest_bias_metric_version_id), f'prediction_metric_id': repr(self.prediction_metric_id), f'latest_prediction_metric_version_id': repr(
             self.latest_prediction_metric_version_id), f'metric_configs': repr(self.metric_configs), f'feature_group_monitor_configs': repr(self.feature_group_monitor_configs), f'metric_types': repr(self.metric_types), f'model_id': repr(self.model_id), f'starred': repr(self.starred), f'batch_prediction_id': repr(self.batch_prediction_id), f'monitor_type': repr(self.monitor_type), f'eda_configs': repr(self.eda_configs), f'training_forecast_config': repr(self.training_forecast_config), f'prediction_forecast_config': repr(self.prediction_forecast_config), f'forecast_frequency': repr(self.forecast_frequency), f'refresh_schedules': repr(self.refresh_schedules), f'latest_monitor_model_version': repr(self.latest_monitor_model_version)}
         class_name = "ModelMonitor"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -85,7 +86,7 @@ class ModelMonitor(AbstractApiClass):
         """
         resp = {'model_monitor_id': self.model_monitor_id, 'name': self.name, 'created_at': self.created_at, 'project_id': self.project_id, 'training_feature_group_id': self.training_feature_group_id, 'prediction_feature_group_id': self.prediction_feature_group_id, 'prediction_feature_group_version': self.prediction_feature_group_version, 'training_feature_group_version': self.training_feature_group_version, 'alert_config': self.alert_config, 'bias_metric_id': self.bias_metric_id, 'latest_bias_metric_version_id': self.latest_bias_metric_version_id, 'prediction_metric_id': self.prediction_metric_id, 'latest_prediction_metric_version_id': self.latest_prediction_metric_version_id,
                 'metric_configs': self.metric_configs, 'feature_group_monitor_configs': self.feature_group_monitor_configs, 'metric_types': self.metric_types, 'model_id': self.model_id, 'starred': self.starred, 'batch_prediction_id': self.batch_prediction_id, 'monitor_type': self.monitor_type, 'eda_configs': self.eda_configs, 'training_forecast_config': self.training_forecast_config, 'prediction_forecast_config': self.prediction_forecast_config, 'forecast_frequency': self.forecast_frequency, 'refresh_schedules': self._get_attribute_as_dict(self.refresh_schedules), 'latest_monitor_model_version': self._get_attribute_as_dict(self.latest_monitor_model_version)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def rerun(self):
         """

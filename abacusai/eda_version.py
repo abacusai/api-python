@@ -27,13 +27,14 @@ class EdaVersion(AbstractApiClass):
         self.reference_feature_group_version = referenceFeatureGroupVersion
         self.test_feature_group_version = testFeatureGroupVersion
         self.error = error
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'eda_version': repr(self.eda_version), f'status': repr(self.status), f'eda_id': repr(self.eda_id), f'eda_started_at': repr(self.eda_started_at), f'eda_completed_at': repr(
             self.eda_completed_at), f'reference_feature_group_version': repr(self.reference_feature_group_version), f'test_feature_group_version': repr(self.test_feature_group_version), f'error': repr(self.error)}
         class_name = "EdaVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -45,7 +46,7 @@ class EdaVersion(AbstractApiClass):
         """
         resp = {'eda_version': self.eda_version, 'status': self.status, 'eda_id': self.eda_id, 'eda_started_at': self.eda_started_at, 'eda_completed_at': self.eda_completed_at,
                 'reference_feature_group_version': self.reference_feature_group_version, 'test_feature_group_version': self.test_feature_group_version, 'error': self.error}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

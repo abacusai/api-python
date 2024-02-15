@@ -20,13 +20,14 @@ class Module(AbstractApiClass):
         self.created_at = createdAt
         self.notebook_id = notebookId
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'created_at': repr(self.created_at), f'notebook_id': repr(
             self.notebook_id), f'code_source': repr(self.code_source)}
         class_name = "Module"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -38,4 +39,4 @@ class Module(AbstractApiClass):
         """
         resp = {'name': self.name, 'created_at': self.created_at, 'notebook_id': self.notebook_id,
                 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -37,13 +37,14 @@ class FeatureGroupRowProcess(AbstractApiClass):
         self.total_attempts_allowed = totalAttemptsAllowed
         self.status = status
         self.error = error
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'feature_group_id': repr(self.feature_group_id), f'deployment_id': repr(self.deployment_id), f'primary_key_value': repr(self.primary_key_value), f'feature_group_row_process_id': repr(self.feature_group_row_process_id), f'created_at': repr(self.created_at), f'updated_at': repr(
             self.updated_at), f'started_at': repr(self.started_at), f'completed_at': repr(self.completed_at), f'timeout_at': repr(self.timeout_at), f'retries_remaining': repr(self.retries_remaining), f'total_attempts_allowed': repr(self.total_attempts_allowed), f'status': repr(self.status), f'error': repr(self.error)}
         class_name = "FeatureGroupRowProcess"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -55,7 +56,7 @@ class FeatureGroupRowProcess(AbstractApiClass):
         """
         resp = {'feature_group_id': self.feature_group_id, 'deployment_id': self.deployment_id, 'primary_key_value': self.primary_key_value, 'feature_group_row_process_id': self.feature_group_row_process_id, 'created_at': self.created_at, 'updated_at': self.updated_at,
                 'started_at': self.started_at, 'completed_at': self.completed_at, 'timeout_at': self.timeout_at, 'retries_remaining': self.retries_remaining, 'total_attempts_allowed': self.total_attempts_allowed, 'status': self.status, 'error': self.error}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def wait_for_process(self, timeout=1200):
         """

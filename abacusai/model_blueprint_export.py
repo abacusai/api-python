@@ -19,13 +19,14 @@ class ModelBlueprintExport(AbstractApiClass):
         self.current_training_config = currentTrainingConfig
         self.model_blueprint_stages = client._build_class(
             ModelBlueprintStage, modelBlueprintStages)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'model_version': repr(self.model_version), f'current_training_config': repr(
             self.current_training_config), f'model_blueprint_stages': repr(self.model_blueprint_stages)}
         class_name = "ModelBlueprintExport"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class ModelBlueprintExport(AbstractApiClass):
         """
         resp = {'model_version': self.model_version, 'current_training_config': self.current_training_config,
                 'model_blueprint_stages': self._get_attribute_as_dict(self.model_blueprint_stages)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

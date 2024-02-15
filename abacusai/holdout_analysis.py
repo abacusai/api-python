@@ -21,13 +21,14 @@ class HoldoutAnalysis(AbstractApiClass):
         self.feature_group_ids = featureGroupIds
         self.model_id = modelId
         self.model_name = modelName
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'holdout_analysis_id': repr(self.holdout_analysis_id), f'name': repr(self.name), f'feature_group_ids': repr(
             self.feature_group_ids), f'model_id': repr(self.model_id), f'model_name': repr(self.model_name)}
         class_name = "HoldoutAnalysis"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,7 +40,7 @@ class HoldoutAnalysis(AbstractApiClass):
         """
         resp = {'holdout_analysis_id': self.holdout_analysis_id, 'name': self.name,
                 'feature_group_ids': self.feature_group_ids, 'model_id': self.model_id, 'model_name': self.model_name}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def rerun(self, model_version: str = None, algorithm: str = None):
         """

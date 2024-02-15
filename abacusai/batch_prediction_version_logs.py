@@ -15,13 +15,14 @@ class BatchPredictionVersionLogs(AbstractApiClass):
         super().__init__(client, None)
         self.logs = logs
         self.warnings = warnings
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'logs': repr(
             self.logs), f'warnings': repr(self.warnings)}
         class_name = "BatchPredictionVersionLogs"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -32,4 +33,4 @@ class BatchPredictionVersionLogs(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'logs': self.logs, 'warnings': self.warnings}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

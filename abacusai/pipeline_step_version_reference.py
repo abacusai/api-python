@@ -35,13 +35,14 @@ class PipelineStepVersionReference(AbstractApiClass):
         self.feature_group_version = featureGroupVersion
         self.status = status
         self.error = error
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'pipeline_step_version_reference_id': repr(self.pipeline_step_version_reference_id), f'pipeline_step_version': repr(self.pipeline_step_version), f'object_type': repr(self.object_type), f'dataset_version': repr(self.dataset_version), f'model_version': repr(self.model_version), f'deployment_version': repr(
             self.deployment_version), f'batch_prediction_id': repr(self.batch_prediction_id), f'model_monitor_version': repr(self.model_monitor_version), f'notebook_version': repr(self.notebook_version), f'feature_group_version': repr(self.feature_group_version), f'status': repr(self.status), f'error': repr(self.error)}
         class_name = "PipelineStepVersionReference"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -53,4 +54,4 @@ class PipelineStepVersionReference(AbstractApiClass):
         """
         resp = {'pipeline_step_version_reference_id': self.pipeline_step_version_reference_id, 'pipeline_step_version': self.pipeline_step_version, 'object_type': self.object_type, 'dataset_version': self.dataset_version, 'model_version': self.model_version,
                 'deployment_version': self.deployment_version, 'batch_prediction_id': self.batch_prediction_id, 'model_monitor_version': self.model_monitor_version, 'notebook_version': self.notebook_version, 'feature_group_version': self.feature_group_version, 'status': self.status, 'error': self.error}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

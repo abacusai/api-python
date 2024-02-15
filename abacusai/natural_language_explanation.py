@@ -19,13 +19,14 @@ class NaturalLanguageExplanation(AbstractApiClass):
         self.long_explanation = longExplanation
         self.is_outdated = isOutdated
         self.html_explanation = htmlExplanation
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'short_explanation': repr(self.short_explanation), f'long_explanation': repr(
             self.long_explanation), f'is_outdated': repr(self.is_outdated), f'html_explanation': repr(self.html_explanation)}
         class_name = "NaturalLanguageExplanation"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -37,4 +38,4 @@ class NaturalLanguageExplanation(AbstractApiClass):
         """
         resp = {'short_explanation': self.short_explanation, 'long_explanation': self.long_explanation,
                 'is_outdated': self.is_outdated, 'html_explanation': self.html_explanation}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

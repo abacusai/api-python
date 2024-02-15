@@ -22,13 +22,14 @@ class CustomMetricVersion(AbstractApiClass):
         self.created_at = createdAt
         self.custom_metric_function_name = customMetricFunctionName
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'custom_metric_version': repr(self.custom_metric_version), f'name': repr(self.name), f'created_at': repr(
             self.created_at), f'custom_metric_function_name': repr(self.custom_metric_function_name), f'code_source': repr(self.code_source)}
         class_name = "CustomMetricVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -40,7 +41,7 @@ class CustomMetricVersion(AbstractApiClass):
         """
         resp = {'custom_metric_version': self.custom_metric_version, 'name': self.name, 'created_at': self.created_at,
                 'custom_metric_function_name': self.custom_metric_function_name, 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

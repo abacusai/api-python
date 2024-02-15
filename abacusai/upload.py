@@ -34,13 +34,14 @@ class Upload(AbstractApiClass):
         self.batch_prediction_id = batchPredictionId
         self.parts = parts
         self.created_at = createdAt
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'upload_id': repr(self.upload_id), f'dataset_upload_id': repr(self.dataset_upload_id), f'status': repr(self.status), f'dataset_id': repr(self.dataset_id), f'dataset_version': repr(
             self.dataset_version), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'batch_prediction_id': repr(self.batch_prediction_id), f'parts': repr(self.parts), f'created_at': repr(self.created_at)}
         class_name = "Upload"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -52,7 +53,7 @@ class Upload(AbstractApiClass):
         """
         resp = {'upload_id': self.upload_id, 'dataset_upload_id': self.dataset_upload_id, 'status': self.status, 'dataset_id': self.dataset_id, 'dataset_version': self.dataset_version,
                 'model_id': self.model_id, 'model_version': self.model_version, 'batch_prediction_id': self.batch_prediction_id, 'parts': self.parts, 'created_at': self.created_at}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def cancel(self):
         """

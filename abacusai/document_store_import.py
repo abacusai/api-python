@@ -29,13 +29,14 @@ class DocumentStoreImport(AbstractApiClass):
         self.documents_skipped = documentsSkipped
         self.upload_id = uploadId
         self.replace_existing_files = replaceExistingFiles
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'document_store_import_id': repr(self.document_store_import_id), f'document_store_id': repr(self.document_store_id), f'importing_started_at': repr(self.importing_started_at), f'status': repr(self.status), f'error': repr(
             self.error), f'documents_imported': repr(self.documents_imported), f'documents_skipped': repr(self.documents_skipped), f'upload_id': repr(self.upload_id), f'replace_existing_files': repr(self.replace_existing_files)}
         class_name = "DocumentStoreImport"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,4 +48,4 @@ class DocumentStoreImport(AbstractApiClass):
         """
         resp = {'document_store_import_id': self.document_store_import_id, 'document_store_id': self.document_store_id, 'importing_started_at': self.importing_started_at, 'status': self.status,
                 'error': self.error, 'documents_imported': self.documents_imported, 'documents_skipped': self.documents_skipped, 'upload_id': self.upload_id, 'replace_existing_files': self.replace_existing_files}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

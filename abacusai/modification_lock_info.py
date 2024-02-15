@@ -17,13 +17,14 @@ class ModificationLockInfo(AbstractApiClass):
         self.modification_lock = modificationLock
         self.user_emails = userEmails
         self.organization_groups = organizationGroups
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'modification_lock': repr(self.modification_lock), f'user_emails': repr(
             self.user_emails), f'organization_groups': repr(self.organization_groups)}
         class_name = "ModificationLockInfo"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class ModificationLockInfo(AbstractApiClass):
         """
         resp = {'modification_lock': self.modification_lock,
                 'user_emails': self.user_emails, 'organization_groups': self.organization_groups}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

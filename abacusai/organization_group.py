@@ -23,13 +23,14 @@ class OrganizationGroup(AbstractApiClass):
         self.default_group = defaultGroup
         self.admin = admin
         self.created_at = createdAt
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'organization_group_id': repr(self.organization_group_id), f'permissions': repr(self.permissions), f'group_name': repr(
             self.group_name), f'default_group': repr(self.default_group), f'admin': repr(self.admin), f'created_at': repr(self.created_at)}
         class_name = "OrganizationGroup"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -41,7 +42,7 @@ class OrganizationGroup(AbstractApiClass):
         """
         resp = {'organization_group_id': self.organization_group_id, 'permissions': self.permissions,
                 'group_name': self.group_name, 'default_group': self.default_group, 'admin': self.admin, 'created_at': self.created_at}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

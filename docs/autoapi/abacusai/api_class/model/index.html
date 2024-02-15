@@ -250,6 +250,7 @@ inheritance.</p>
 <li><p><strong>max_user_history_len_percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Filter out users with history length above this percentile.</p></li>
 <li><p><strong>downsample_item_popularity_percentile</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Downsample items more popular than this percentile.</p></li>
 <li><p><strong>use_user_id_feature</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Use user id as a feature in CTR models.</p></li>
+<li><p><strong>min_item_history</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Minimum number of interactions an item must have to be included in training.</p></li>
 </ul>
 </dd>
 </dl>
@@ -431,6 +432,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.downsample_item_popularity_percentile">
 <span class="sig-name descname"><span class="pre">downsample_item_popularity_percentile</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.downsample_item_popularity_percentile" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.PersonalizationTrainingConfig.min_item_history">
+<span class="sig-name descname"><span class="pre">min_item_history</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.PersonalizationTrainingConfig.min_item_history" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1254,6 +1260,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group ids.</p></li>
 <li><p><strong>hide_generated_sql</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, hides the generated SQL in the response and will just return the table.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
+<li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1320,6 +1327,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.disable_data_summarization">
 <span class="sig-name descname"><span class="pre">disable_data_summarization</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.disable_data_summarization" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.search_score_cutoff">
+<span class="sig-name descname"><span class="pre">search_score_cutoff</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.search_score_cutoff" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1804,6 +1816,8 @@ threshold_score (float): Threshold score for anomaly detection</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Description of the agent function.</p></li>
 <li><p><strong>enable_binary_input</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the agent will be able to accept binary data as inputs.</p></li>
+<li><p><strong>agent_input_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Schema for the agent input.</p></li>
+<li><p><strong>agent_output_schema</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Schema for the agent output.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1815,6 +1829,16 @@ threshold_score (float): Threshold score for anomaly detection</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.enable_binary_input">
 <span class="sig-name descname"><span class="pre">enable_binary_input</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.enable_binary_input" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.agent_input_schema">
+<span class="sig-name descname"><span class="pre">agent_input_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.agent_input_schema" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.AIAgentTrainingConfig.agent_output_schema">
+<span class="sig-name descname"><span class="pre">agent_output_schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a></em><a class="headerlink" href="#abacusai.api_class.model.AIAgentTrainingConfig.agent_output_schema" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

@@ -17,13 +17,14 @@ class DataConsistencyDuplication(AbstractApiClass):
         self.total_count = totalCount
         self.num_duplicates = numDuplicates
         self.sample = client._build_class(FeatureRecord, sample)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'total_count': repr(self.total_count), f'num_duplicates': repr(
             self.num_duplicates), f'sample': repr(self.sample)}
         class_name = "DataConsistencyDuplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class DataConsistencyDuplication(AbstractApiClass):
         """
         resp = {'total_count': self.total_count, 'num_duplicates': self.num_duplicates,
                 'sample': self._get_attribute_as_dict(self.sample)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

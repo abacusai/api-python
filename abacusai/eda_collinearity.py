@@ -21,13 +21,14 @@ class EdaCollinearity(AbstractApiClass):
         self.group_feature_dict = groupFeatureDict
         self.collinearity_groups = collinearityGroups
         self.column_names_x = columnNamesX
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'column_names': repr(self.column_names), f'collinearity_matrix': repr(self.collinearity_matrix), f'group_feature_dict': repr(
             self.group_feature_dict), f'collinearity_groups': repr(self.collinearity_groups), f'column_names_x': repr(self.column_names_x)}
         class_name = "EdaCollinearity"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class EdaCollinearity(AbstractApiClass):
         """
         resp = {'column_names': self.column_names, 'collinearity_matrix': self.collinearity_matrix, 'group_feature_dict':
                 self.group_feature_dict, 'collinearity_groups': self.collinearity_groups, 'column_names_x': self.column_names_x}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

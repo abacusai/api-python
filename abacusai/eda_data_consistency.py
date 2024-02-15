@@ -30,13 +30,14 @@ class EdaDataConsistency(AbstractApiClass):
             DataConsistencyDuplication, deletions)
         self.transformations = client._build_class(
             DataConsistencyTransformation, transformations)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'column_names': repr(self.column_names), f'primary_keys': repr(self.primary_keys), f'transformation_column_names': repr(self.transformation_column_names), f'base_duplicates': repr(
             self.base_duplicates), f'compare_duplicates': repr(self.compare_duplicates), f'deletions': repr(self.deletions), f'transformations': repr(self.transformations)}
         class_name = "EdaDataConsistency"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -48,4 +49,4 @@ class EdaDataConsistency(AbstractApiClass):
         """
         resp = {'column_names': self.column_names, 'primary_keys': self.primary_keys, 'transformation_column_names': self.transformation_column_names, 'base_duplicates': self._get_attribute_as_dict(
             self.base_duplicates), 'compare_duplicates': self._get_attribute_as_dict(self.compare_duplicates), 'deletions': self._get_attribute_as_dict(self.deletions), 'transformations': self._get_attribute_as_dict(self.transformations)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

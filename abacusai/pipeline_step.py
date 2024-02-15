@@ -40,13 +40,14 @@ class PipelineStep(AbstractApiClass):
         self.python_function = client._build_class(
             PythonFunction, pythonFunction)
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'pipeline_step_id': repr(self.pipeline_step_id), f'pipeline_id': repr(self.pipeline_id), f'step_name': repr(self.step_name), f'pipeline_name': repr(self.pipeline_name), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'python_function_id': repr(
             self.python_function_id), f'step_dependencies': repr(self.step_dependencies), f'cpu_size': repr(self.cpu_size), f'memory': repr(self.memory), f'timeout': repr(self.timeout), f'python_function': repr(self.python_function), f'code_source': repr(self.code_source)}
         class_name = "PipelineStep"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -58,7 +59,7 @@ class PipelineStep(AbstractApiClass):
         """
         resp = {'pipeline_step_id': self.pipeline_step_id, 'pipeline_id': self.pipeline_id, 'step_name': self.step_name, 'pipeline_name': self.pipeline_name, 'created_at': self.created_at, 'updated_at': self.updated_at, 'python_function_id': self.python_function_id,
                 'step_dependencies': self.step_dependencies, 'cpu_size': self.cpu_size, 'memory': self.memory, 'timeout': self.timeout, 'python_function': self._get_attribute_as_dict(self.python_function), 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def delete(self):
         """

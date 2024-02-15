@@ -34,13 +34,14 @@ class PointInTimeGroup(AbstractApiClass):
         self.history_window_key = historyWindowKey
         self.history_aggregation_keys = historyAggregationKeys
         self.features = client._build_class(PointInTimeGroupFeature, features)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'group_name': repr(self.group_name), f'window_key': repr(self.window_key), f'aggregation_keys': repr(self.aggregation_keys), f'lookback_window': repr(self.lookback_window), f'lookback_window_lag': repr(self.lookback_window_lag), f'lookback_count': repr(
             self.lookback_count), f'lookback_until_position': repr(self.lookback_until_position), f'history_table_name': repr(self.history_table_name), f'history_window_key': repr(self.history_window_key), f'history_aggregation_keys': repr(self.history_aggregation_keys), f'features': repr(self.features)}
         class_name = "PointInTimeGroup"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -52,4 +53,4 @@ class PointInTimeGroup(AbstractApiClass):
         """
         resp = {'group_name': self.group_name, 'window_key': self.window_key, 'aggregation_keys': self.aggregation_keys, 'lookback_window': self.lookback_window, 'lookback_window_lag': self.lookback_window_lag, 'lookback_count': self.lookback_count,
                 'lookback_until_position': self.lookback_until_position, 'history_table_name': self.history_table_name, 'history_window_key': self.history_window_key, 'history_aggregation_keys': self.history_aggregation_keys, 'features': self._get_attribute_as_dict(self.features)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

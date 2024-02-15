@@ -25,13 +25,14 @@ class FeatureDistribution(AbstractApiClass):
         self.numerical_prediction_distribution = numericalPredictionDistribution
         self.training_statistics = trainingStatistics
         self.prediction_statistics = predictionStatistics
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'type': repr(self.type), f'training_distribution': repr(self.training_distribution), f'prediction_distribution': repr(self.prediction_distribution), f'numerical_training_distribution': repr(
             self.numerical_training_distribution), f'numerical_prediction_distribution': repr(self.numerical_prediction_distribution), f'training_statistics': repr(self.training_statistics), f'prediction_statistics': repr(self.prediction_statistics)}
         class_name = "FeatureDistribution"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -43,4 +44,4 @@ class FeatureDistribution(AbstractApiClass):
         """
         resp = {'type': self.type, 'training_distribution': self.training_distribution, 'prediction_distribution': self.prediction_distribution, 'numerical_training_distribution': self.numerical_training_distribution,
                 'numerical_prediction_distribution': self.numerical_prediction_distribution, 'training_statistics': self.training_statistics, 'prediction_statistics': self.prediction_statistics}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

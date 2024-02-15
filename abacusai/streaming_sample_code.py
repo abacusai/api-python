@@ -17,13 +17,14 @@ class StreamingSampleCode(AbstractApiClass):
         self.python = python
         self.curl = curl
         self.console = console
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'python': repr(self.python), f'curl': repr(
             self.curl), f'console': repr(self.console)}
         class_name = "StreamingSampleCode"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -35,4 +36,4 @@ class StreamingSampleCode(AbstractApiClass):
         """
         resp = {'python': self.python,
                 'curl': self.curl, 'console': self.console}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

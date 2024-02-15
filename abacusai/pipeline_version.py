@@ -36,13 +36,14 @@ class PipelineVersion(AbstractApiClass):
         self.step_versions = client._build_class(
             PipelineStepVersion, stepVersions)
         self.code_source = client._build_class(CodeSource, codeSource)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'pipeline_name': repr(self.pipeline_name), f'pipeline_id': repr(self.pipeline_id), f'pipeline_version': repr(self.pipeline_version), f'created_at': repr(self.created_at), f'updated_at': repr(self.updated_at), f'completed_at': repr(
             self.completed_at), f'status': repr(self.status), f'error': repr(self.error), f'pipeline_variable_mappings': repr(self.pipeline_variable_mappings), f'step_versions': repr(self.step_versions), f'code_source': repr(self.code_source)}
         class_name = "PipelineVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -54,7 +55,7 @@ class PipelineVersion(AbstractApiClass):
         """
         resp = {'pipeline_name': self.pipeline_name, 'pipeline_id': self.pipeline_id, 'pipeline_version': self.pipeline_version, 'created_at': self.created_at, 'updated_at': self.updated_at, 'completed_at': self.completed_at,
                 'status': self.status, 'error': self.error, 'pipeline_variable_mappings': self.pipeline_variable_mappings, 'step_versions': self._get_attribute_as_dict(self.step_versions), 'code_source': self._get_attribute_as_dict(self.code_source)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def refresh(self):
         """

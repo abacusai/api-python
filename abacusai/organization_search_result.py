@@ -22,13 +22,14 @@ class OrganizationSearchResult(AbstractApiClass):
         self.feature_group = client._build_class(FeatureGroup, featureGroup)
         self.feature_group_version = client._build_class(
             FeatureGroupVersion, featureGroupVersion)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'score': repr(self.score), f'feature_group_context': repr(self.feature_group_context), f'feature_group': repr(
             self.feature_group), f'feature_group_version': repr(self.feature_group_version)}
         class_name = "OrganizationSearchResult"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -40,4 +41,4 @@ class OrganizationSearchResult(AbstractApiClass):
         """
         resp = {'score': self.score, 'feature_group_context': self.feature_group_context, 'feature_group': self._get_attribute_as_dict(
             self.feature_group), 'feature_group_version': self._get_attribute_as_dict(self.feature_group_version)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -31,13 +31,14 @@ class FinetunedPretrainedModel(AbstractApiClass):
         self.finetuning_dataset_version = finetuningDatasetVersion
         self.status = status
         self.error = error
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'finetuned_pretrained_model_id': repr(self.finetuned_pretrained_model_id), f'finetuned_pretrained_model_version': repr(self.finetuned_pretrained_model_version), f'created_at': repr(
             self.created_at), f'updated_at': repr(self.updated_at), f'config': repr(self.config), f'base_model': repr(self.base_model), f'finetuning_dataset_version': repr(self.finetuning_dataset_version), f'status': repr(self.status), f'error': repr(self.error)}
         class_name = "FinetunedPretrainedModel"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -49,4 +50,4 @@ class FinetunedPretrainedModel(AbstractApiClass):
         """
         resp = {'name': self.name, 'finetuned_pretrained_model_id': self.finetuned_pretrained_model_id, 'finetuned_pretrained_model_version': self.finetuned_pretrained_model_version, 'created_at': self.created_at,
                 'updated_at': self.updated_at, 'config': self.config, 'base_model': self.base_model, 'finetuning_dataset_version': self.finetuning_dataset_version, 'status': self.status, 'error': self.error}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

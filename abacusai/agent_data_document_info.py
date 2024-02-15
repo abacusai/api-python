@@ -21,13 +21,14 @@ class AgentDataDocumentInfo(AbstractApiClass):
         self.mime_type = mimeType
         self.size = size
         self.page_count = pageCount
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'doc_id': repr(self.doc_id), f'filename': repr(self.filename), f'mime_type': repr(
             self.mime_type), f'size': repr(self.size), f'page_count': repr(self.page_count)}
         class_name = "AgentDataDocumentInfo"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class AgentDataDocumentInfo(AbstractApiClass):
         """
         resp = {'doc_id': self.doc_id, 'filename': self.filename,
                 'mime_type': self.mime_type, 'size': self.size, 'page_count': self.page_count}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

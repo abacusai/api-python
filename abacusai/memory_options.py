@@ -16,12 +16,13 @@ class MemoryOptions(AbstractApiClass):
         super().__init__(client, None)
         self.cpu = client._build_class(CpuGpuMemorySpecs, cpu)
         self.gpu = client._build_class(CpuGpuMemorySpecs, gpu)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'cpu': repr(self.cpu), f'gpu': repr(self.gpu)}
         class_name = "MemoryOptions"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -33,4 +34,4 @@ class MemoryOptions(AbstractApiClass):
         """
         resp = {'cpu': self._get_attribute_as_dict(
             self.cpu), 'gpu': self._get_attribute_as_dict(self.gpu)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -21,13 +21,14 @@ class DriftDistribution(AbstractApiClass):
         self.metrics = metrics
         self.distribution = client._build_class(
             FeatureDistribution, distribution)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'train_column': repr(self.train_column), f'predicted_column': repr(
             self.predicted_column), f'metrics': repr(self.metrics), f'distribution': repr(self.distribution)}
         class_name = "DriftDistribution"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -39,4 +40,4 @@ class DriftDistribution(AbstractApiClass):
         """
         resp = {'train_column': self.train_column, 'predicted_column': self.predicted_column,
                 'metrics': self.metrics, 'distribution': self._get_attribute_as_dict(self.distribution)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

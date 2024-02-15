@@ -24,13 +24,14 @@ class AppUserGroup(AbstractApiClass):
         self.invited_user_emails = invitedUserEmails
         self.public_user_group = publicUserGroup
         self.users = client._build_class(User, users)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'name': repr(self.name), f'user_group_id': repr(self.user_group_id), f'external_application_ids': repr(
             self.external_application_ids), f'invited_user_emails': repr(self.invited_user_emails), f'public_user_group': repr(self.public_user_group), f'users': repr(self.users)}
         class_name = "AppUserGroup"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -42,4 +43,4 @@ class AppUserGroup(AbstractApiClass):
         """
         resp = {'name': self.name, 'user_group_id': self.user_group_id, 'external_application_ids': self.external_application_ids,
                 'invited_user_emails': self.invited_user_emails, 'public_user_group': self.public_user_group, 'users': self._get_attribute_as_dict(self.users)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PredictionOperatorVersion(client, predictionOperatorId=None, predictionOperatorVersion=None, createdAt=None, updatedAt=None, sourceCode=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupVersions=None, codeSource={})
+.. py:class:: PredictionOperatorVersion(client, predictionOperatorId=None, predictionOperatorVersion=None, createdAt=None, updatedAt=None, sourceCode=None, memory=None, useGpu=None, featureGroupIds=None, featureGroupVersions=None, status=None, error=None, codeSource={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -44,6 +44,10 @@ Classes
    :type featureGroupIds: list
    :param featureGroupVersions: A list of Feature Group version IDs used for initializing.
    :type featureGroupVersions: list
+   :param status: The current status of the prediction operator version.
+   :type status: str
+   :param error: The error message if the status failed.
+   :type error: str
    :param codeSource: If a python model, information on the source code.
    :type codeSource: CodeSource
 

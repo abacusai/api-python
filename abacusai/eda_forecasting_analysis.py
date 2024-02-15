@@ -74,13 +74,14 @@ class EdaForecastingAnalysis(AbstractApiClass):
             ForecastingAnalysisGraphData, autocorrelation)
         self.partial_autocorrelation = client._build_class(
             ForecastingAnalysisGraphData, partialAutocorrelation)
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'primary_keys': repr(self.primary_keys), f'forecasting_target_feature': repr(self.forecasting_target_feature), f'timestamp_feature': repr(self.timestamp_feature), f'forecast_frequency': repr(self.forecast_frequency), f'sales_across_time': repr(self.sales_across_time), f'cummulative_contribution': repr(self.cummulative_contribution), f'missing_value_distribution': repr(self.missing_value_distribution), f'history_length': repr(self.history_length), f'num_rows_histogram': repr(self.num_rows_histogram), f'product_maturity': repr(self.product_maturity), f'seasonality_year': repr(self.seasonality_year), f'seasonality_month': repr(
             self.seasonality_month), f'seasonality_week_of_year': repr(self.seasonality_week_of_year), f'seasonality_day_of_year': repr(self.seasonality_day_of_year), f'seasonality_day_of_month': repr(self.seasonality_day_of_month), f'seasonality_day_of_week': repr(self.seasonality_day_of_week), f'seasonality_quarter': repr(self.seasonality_quarter), f'seasonality_hour': repr(self.seasonality_hour), f'seasonality_minute': repr(self.seasonality_minute), f'seasonality_second': repr(self.seasonality_second), f'autocorrelation': repr(self.autocorrelation), f'partial_autocorrelation': repr(self.partial_autocorrelation)}
         class_name = "EdaForecastingAnalysis"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -92,4 +93,4 @@ class EdaForecastingAnalysis(AbstractApiClass):
         """
         resp = {'primary_keys': self.primary_keys, 'forecasting_target_feature': self.forecasting_target_feature, 'timestamp_feature': self.timestamp_feature, 'forecast_frequency': self.forecast_frequency, 'sales_across_time': self._get_attribute_as_dict(self.sales_across_time), 'cummulative_contribution': self._get_attribute_as_dict(self.cummulative_contribution), 'missing_value_distribution': self._get_attribute_as_dict(self.missing_value_distribution), 'history_length': self._get_attribute_as_dict(self.history_length), 'num_rows_histogram': self._get_attribute_as_dict(self.num_rows_histogram), 'product_maturity': self._get_attribute_as_dict(self.product_maturity), 'seasonality_year': self._get_attribute_as_dict(self.seasonality_year), 'seasonality_month': self._get_attribute_as_dict(
             self.seasonality_month), 'seasonality_week_of_year': self._get_attribute_as_dict(self.seasonality_week_of_year), 'seasonality_day_of_year': self._get_attribute_as_dict(self.seasonality_day_of_year), 'seasonality_day_of_month': self._get_attribute_as_dict(self.seasonality_day_of_month), 'seasonality_day_of_week': self._get_attribute_as_dict(self.seasonality_day_of_week), 'seasonality_quarter': self._get_attribute_as_dict(self.seasonality_quarter), 'seasonality_hour': self._get_attribute_as_dict(self.seasonality_hour), 'seasonality_minute': self._get_attribute_as_dict(self.seasonality_minute), 'seasonality_second': self._get_attribute_as_dict(self.seasonality_second), 'autocorrelation': self._get_attribute_as_dict(self.autocorrelation), 'partial_autocorrelation': self._get_attribute_as_dict(self.partial_autocorrelation)}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

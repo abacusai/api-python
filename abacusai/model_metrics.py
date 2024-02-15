@@ -29,13 +29,14 @@ class ModelMetrics(AbstractApiClass):
         self.target_column = targetColumn
         self.train_val_test_split = trainValTestSplit
         self.training_completed_at = trainingCompletedAt
+        self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'algo_metrics': repr(self.algo_metrics), f'selected_algorithm': repr(self.selected_algorithm), f'selected_algorithm_name': repr(self.selected_algorithm_name), f'model_id': repr(self.model_id), f'model_version': repr(
             self.model_version), f'metric_names': repr(self.metric_names), f'target_column': repr(self.target_column), f'train_val_test_split': repr(self.train_val_test_split), f'training_completed_at': repr(self.training_completed_at)}
         class_name = "ModelMetrics"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
-        ) if getattr(self, key, None) is not None])
+        ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
         return f"{class_name}({repr_str})"
 
     def to_dict(self):
@@ -47,4 +48,4 @@ class ModelMetrics(AbstractApiClass):
         """
         resp = {'algo_metrics': self.algo_metrics, 'selected_algorithm': self.selected_algorithm, 'selected_algorithm_name': self.selected_algorithm_name, 'model_id': self.model_id, 'model_version': self.model_version,
                 'metric_names': self.metric_names, 'target_column': self.target_column, 'train_val_test_split': self.train_val_test_split, 'training_completed_at': self.training_completed_at}
-        return {key: value for key, value in resp.items() if value is not None}
+        return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

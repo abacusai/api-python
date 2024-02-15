@@ -13,10 +13,12 @@ class VectorStoreConfig(ApiClass):
         chunk_size (int): The size of text chunks in the vector store.
         chunk_overlap_fraction (float): The fraction of overlap between chunks.
         text_encoder (VectorStoreTextEncoder): Encoder used to index texts from the documents.
+        chunk_size_factors (list): Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
     """
     chunk_size: int = dataclasses.field(default=None)
     chunk_overlap_fraction: float = dataclasses.field(default=None)
     text_encoder: VectorStoreTextEncoder = dataclasses.field(default=None)
+    chunk_size_factors: list = dataclasses.field(default=None)
 
 
 @dataclasses.dataclass
