@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None)
+.. py:class:: ChatMessage(client, role=None, text=None, timestamp=None, isUseful=None, feedback=None, docIds=None, hotkeyTitle=None, tasks=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -29,7 +29,7 @@ Classes
    :param role: The role of the message sender
    :type role: str
    :param text: A list of text segments for the message
-   :type text: list
+   :type text: list[dict]
    :param timestamp: The timestamp at which the message was sent
    :type timestamp: str
    :param isUseful: Whether this message was marked as useful or not
@@ -37,9 +37,11 @@ Classes
    :param feedback: The feedback provided for the message
    :type feedback: str
    :param docIds: A list of IDs of the uploaded document if the message has
-   :type docIds: list
+   :type docIds: list[str]
    :param hotkeyTitle: The title of the hotkey prompt if the message has one
    :type hotkeyTitle: str
+   :param tasks: The list of spawned tasks, if the message was broken down into smaller sub-tasks.
+   :type tasks: list[str]
 
    .. py:method:: __repr__()
 

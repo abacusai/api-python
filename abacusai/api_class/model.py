@@ -169,7 +169,7 @@ class RegressionTrainingConfig(TrainingConfig):
     objective: enums.RegressionObjective = dataclasses.field(default=None)
     sort_objective: enums.RegressionObjective = dataclasses.field(default=None)
     tree_hpo_mode: enums.RegressionTreeHPOMode = dataclasses.field(default=enums.RegressionTreeHPOMode.THOROUGH)
-    partial_dependence_analysis: enums.PartialDependenceAnalysis = dataclasses.field(default=enums.PartialDependenceAnalysis.RAPID)
+    partial_dependence_analysis: enums.PartialDependenceAnalysis = dataclasses.field(default=None)
 
     # data split related
     type_of_split: enums.RegressionTypeOfSplit = dataclasses.field(default=None)
@@ -679,32 +679,6 @@ class CumulativeForecastingTrainingConfig(TrainingConfig):
 
 
 @dataclasses.dataclass
-class AnomalyDetectionTrainingConfig(TrainingConfig):
-    """
-    Training config for the ANOMALY_DETECTION problem type
-
-    Args:
-        test_split (int): Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
-        value_high (bool): Detect unusually high values.
-        mixture_of_gaussians (bool): Detect unusual combinations of values using mixture of Gaussians.
-        variational_autoencoder (bool): Use variational autoencoder for anomaly detection.
-        spike_up (bool): Detect outliers with a high value.
-        spike_down (bool): Detect outliers with a low value.
-        trend_change (bool): Detect changes to the trend.
-    """
-    test_split: int = dataclasses.field(default=None)
-    value_high: bool = dataclasses.field(default=None)
-    mixture_of_gaussians: bool = dataclasses.field(default=None)
-    variational_autoencoder: bool = dataclasses.field(default=None)
-    spike_up: bool = dataclasses.field(default=None)
-    spike_down: bool = dataclasses.field(default=None)
-    trend_change: bool = dataclasses.field(default=None)
-
-    def __post_init__(self):
-        self.problem_type = enums.ProblemType.ANOMALY_DETECTION
-
-
-@dataclasses.dataclass
 class ThemeAnalysisTrainingConfig(TrainingConfig):
     """
     Training config for the THEME ANALYSIS problem type
@@ -803,7 +777,6 @@ class _TrainingConfigFactory(_ApiClassFactory):
     config_class_key = 'problem_type'
     config_class_map = {
         enums.ProblemType.AI_AGENT: AIAgentTrainingConfig,
-        enums.ProblemType.ANOMALY_DETECTION: AnomalyDetectionTrainingConfig,
         enums.ProblemType.CLUSTERING: ClusteringTrainingConfig,
         enums.ProblemType.CLUSTERING_TIMESERIES: ClusteringTimeseriesTrainingConfig,
         enums.ProblemType.CUMULATIVE_FORECASTING: CumulativeForecastingTrainingConfig,

@@ -17,32 +17,6 @@ class BatchPredictionArgs(ApiClass):
 
 
 @dataclasses.dataclass
-class AnomalyDetectionBatchPredictionArgs(BatchPredictionArgs):
-    """
-    Batch Prediction Config for the ANOMALY_DETECTION problem type
-
-    Args:
-        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-        prediction_time_endpoint (str): The end point for predictions.
-        prediction_time_range (int): Over what period of time should we make predictions (in seconds).
-        minimum_anomaly_score (int): Exclude results with an anomaly score (1 in x event) below this threshold. Range: [1, 1_000_000_000_000].
-        summary_mode (bool): Only show top anomalies per ID.
-        attach_raw_data (bool): Return raw data along with anomalies.
-        small_batch (bool): Size of batch data guaranteed to be small.
-    """
-    for_eval: bool = dataclasses.field(default=None)
-    prediction_time_endpoint: str = dataclasses.field(default=None)
-    prediction_time_range: int = dataclasses.field(default=None)
-    minimum_anomaly_score: int = dataclasses.field(default=None)
-    summary_mode: bool = dataclasses.field(default=None)
-    attach_raw_data: bool = dataclasses.field(default=None)
-    small_batch: bool = dataclasses.field(default=None)
-
-    def __post_init__(self):
-        self.problem_type = enums.ProblemType.ANOMALY_DETECTION
-
-
-@dataclasses.dataclass
 class AnomalyOutliersBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the ANOMALY_OUTLIERS problem type
@@ -225,7 +199,6 @@ class _BatchPredictionArgsFactory(_ApiClassFactory):
     config_abstract_class = BatchPredictionArgs
     config_class_key = 'problem_type'
     config_class_map = {
-        enums.ProblemType.ANOMALY_DETECTION: AnomalyDetectionBatchPredictionArgs,
         enums.ProblemType.ANOMALY_OUTLIERS: AnomalyOutliersBatchPredictionArgs,
         enums.ProblemType.FORECASTING: ForecastingBatchPredictionArgs,
         enums.ProblemType.NAMED_ENTITY_EXTRACTION: NamedEntityExtractionBatchPredictionArgs,

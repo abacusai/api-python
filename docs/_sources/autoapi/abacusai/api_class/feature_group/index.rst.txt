@@ -153,9 +153,16 @@ Classes
    :type merge_mode: MergeMode
    :param num_versions: The number of versions to merge. num_versions == 0 means merge all versions.
    :type num_versions: int
+   :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
+   :type include_version_timestamp_column: bool
 
    .. py:attribute:: num_versions
       :type: int
+
+      
+
+   .. py:attribute:: include_version_timestamp_column
+      :type: bool
 
       
 
@@ -176,6 +183,8 @@ Classes
    :type feature_name: str
    :param time_window_size_ms: Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
    :type time_window_size_ms: int
+   :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
+   :type include_version_timestamp_column: bool
 
    .. py:attribute:: feature_name
       :type: str
@@ -184,6 +193,11 @@ Classes
 
    .. py:attribute:: time_window_size_ms
       :type: int
+
+      
+
+   .. py:attribute:: include_version_timestamp_column
+      :type: bool
 
       
 

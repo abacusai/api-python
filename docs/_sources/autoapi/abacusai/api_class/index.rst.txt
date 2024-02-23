@@ -43,7 +43,6 @@ Classes
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.BatchPredictionArgs
-   abacusai.api_class.AnomalyDetectionBatchPredictionArgs
    abacusai.api_class.AnomalyOutliersBatchPredictionArgs
    abacusai.api_class.ForecastingBatchPredictionArgs
    abacusai.api_class.NamedEntityExtractionBatchPredictionArgs
@@ -155,7 +154,6 @@ Classes
    abacusai.api_class.EventAnomalyTrainingConfig
    abacusai.api_class.TimeseriesAnomalyTrainingConfig
    abacusai.api_class.CumulativeForecastingTrainingConfig
-   abacusai.api_class.AnomalyDetectionTrainingConfig
    abacusai.api_class.ThemeAnalysisTrainingConfig
    abacusai.api_class.AIAgentTrainingConfig
    abacusai.api_class.CustomTrainedModelTrainingConfig
@@ -486,67 +484,6 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
-
-
-
-.. py:class:: AnomalyDetectionBatchPredictionArgs
-
-
-   Bases: :py:obj:`BatchPredictionArgs`
-
-   Batch Prediction Config for the ANOMALY_DETECTION problem type
-
-   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-   :type for_eval: bool
-   :param prediction_time_endpoint: The end point for predictions.
-   :type prediction_time_endpoint: str
-   :param prediction_time_range: Over what period of time should we make predictions (in seconds).
-   :type prediction_time_range: int
-   :param minimum_anomaly_score: Exclude results with an anomaly score (1 in x event) below this threshold. Range: [1, 1_000_000_000_000].
-   :type minimum_anomaly_score: int
-   :param summary_mode: Only show top anomalies per ID.
-   :type summary_mode: bool
-   :param attach_raw_data: Return raw data along with anomalies.
-   :type attach_raw_data: bool
-   :param small_batch: Size of batch data guaranteed to be small.
-   :type small_batch: bool
-
-   .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: prediction_time_endpoint
-      :type: str
-
-      
-
-   .. py:attribute:: prediction_time_range
-      :type: int
-
-      
-
-   .. py:attribute:: minimum_anomaly_score
-      :type: int
-
-      
-
-   .. py:attribute:: summary_mode
-      :type: bool
-
-      
-
-   .. py:attribute:: attach_raw_data
-      :type: bool
-
-      
-
-   .. py:attribute:: small_batch
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
 
 
 
@@ -1785,11 +1722,6 @@ Classes
 
    .. py:attribute:: AI_AGENT
       :value: 'ai_agent'
-
-      
-
-   .. py:attribute:: ANOMALY_DETECTION
-      :value: 'anomaly_new'
 
       
 
@@ -4018,9 +3950,16 @@ Classes
    :type merge_mode: MergeMode
    :param num_versions: The number of versions to merge. num_versions == 0 means merge all versions.
    :type num_versions: int
+   :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
+   :type include_version_timestamp_column: bool
 
    .. py:attribute:: num_versions
       :type: int
+
+      
+
+   .. py:attribute:: include_version_timestamp_column
+      :type: bool
 
       
 
@@ -4041,6 +3980,8 @@ Classes
    :type feature_name: str
    :param time_window_size_ms: Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
    :type time_window_size_ms: int
+   :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
+   :type include_version_timestamp_column: bool
 
    .. py:attribute:: feature_name
       :type: str
@@ -4049,6 +3990,11 @@ Classes
 
    .. py:attribute:: time_window_size_ms
       :type: int
+
+      
+
+   .. py:attribute:: include_version_timestamp_column
+      :type: bool
 
       
 
@@ -5829,67 +5775,6 @@ Classes
       
 
    .. py:attribute:: predict_residuals
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
-
-
-
-.. py:class:: AnomalyDetectionTrainingConfig
-
-
-   Bases: :py:obj:`TrainingConfig`
-
-   Training config for the ANOMALY_DETECTION problem type
-
-   :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
-   :type test_split: int
-   :param value_high: Detect unusually high values.
-   :type value_high: bool
-   :param mixture_of_gaussians: Detect unusual combinations of values using mixture of Gaussians.
-   :type mixture_of_gaussians: bool
-   :param variational_autoencoder: Use variational autoencoder for anomaly detection.
-   :type variational_autoencoder: bool
-   :param spike_up: Detect outliers with a high value.
-   :type spike_up: bool
-   :param spike_down: Detect outliers with a low value.
-   :type spike_down: bool
-   :param trend_change: Detect changes to the trend.
-   :type trend_change: bool
-
-   .. py:attribute:: test_split
-      :type: int
-
-      
-
-   .. py:attribute:: value_high
-      :type: bool
-
-      
-
-   .. py:attribute:: mixture_of_gaussians
-      :type: bool
-
-      
-
-   .. py:attribute:: variational_autoencoder
-      :type: bool
-
-      
-
-   .. py:attribute:: spike_up
-      :type: bool
-
-      
-
-   .. py:attribute:: spike_down
-      :type: bool
-
-      
-
-   .. py:attribute:: trend_change
       :type: bool
 
       

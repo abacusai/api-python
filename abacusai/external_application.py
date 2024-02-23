@@ -14,9 +14,10 @@ class ExternalApplication(AbstractApiClass):
             theme (dict): The theme used for the External Application.
             userGroupIds (list): A list of App User Groups with access to this external application
             useCase (str): Use Case of the project of this deployment
+            status (str): The status of the deployment.
     """
 
-    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None, useCase=None):
+    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None):
         super().__init__(client, externalApplicationId)
         self.name = name
         self.external_application_id = externalApplicationId
@@ -25,11 +26,12 @@ class ExternalApplication(AbstractApiClass):
         self.theme = theme
         self.user_group_ids = userGroupIds
         self.use_case = useCase
+        self.status = status
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(
-            self.deployment_id), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case)}
+        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'logo': repr(
+            self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'status': repr(self.status)}
         class_name = "ExternalApplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -43,7 +45,7 @@ class ExternalApplication(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id,
-                'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case}
+                'logo': self.logo, 'theme': self.theme, 'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'status': self.status}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def update(self, name: str = None, theme: dict = None, deployment_id: str = None):

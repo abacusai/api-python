@@ -13,7 +13,6 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.batch_prediction.BatchPredictionArgs
-   abacusai.api_class.batch_prediction.AnomalyDetectionBatchPredictionArgs
    abacusai.api_class.batch_prediction.AnomalyOutliersBatchPredictionArgs
    abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs
    abacusai.api_class.batch_prediction.NamedEntityExtractionBatchPredictionArgs
@@ -53,67 +52,6 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
-
-
-
-.. py:class:: AnomalyDetectionBatchPredictionArgs
-
-
-   Bases: :py:obj:`BatchPredictionArgs`
-
-   Batch Prediction Config for the ANOMALY_DETECTION problem type
-
-   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-   :type for_eval: bool
-   :param prediction_time_endpoint: The end point for predictions.
-   :type prediction_time_endpoint: str
-   :param prediction_time_range: Over what period of time should we make predictions (in seconds).
-   :type prediction_time_range: int
-   :param minimum_anomaly_score: Exclude results with an anomaly score (1 in x event) below this threshold. Range: [1, 1_000_000_000_000].
-   :type minimum_anomaly_score: int
-   :param summary_mode: Only show top anomalies per ID.
-   :type summary_mode: bool
-   :param attach_raw_data: Return raw data along with anomalies.
-   :type attach_raw_data: bool
-   :param small_batch: Size of batch data guaranteed to be small.
-   :type small_batch: bool
-
-   .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: prediction_time_endpoint
-      :type: str
-
-      
-
-   .. py:attribute:: prediction_time_range
-      :type: int
-
-      
-
-   .. py:attribute:: minimum_anomaly_score
-      :type: int
-
-      
-
-   .. py:attribute:: summary_mode
-      :type: bool
-
-      
-
-   .. py:attribute:: attach_raw_data
-      :type: bool
-
-      
-
-   .. py:attribute:: small_batch
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
 
 
 

@@ -12,23 +12,25 @@ class AppUserGroup(AbstractApiClass):
             userGroupId (str): The unique identifier of the user group.
             externalApplicationIds (list[str]): The ids of the external applications the group has access to.
             invitedUserEmails (list[str]): The emails of the users invited to the user group who have not yet accepted the invite.
-            publicUserGroup (bool): Boolean flag whether the app user group is the public user group of the org or not
+            publicUserGroup (bool): Boolean flag whether the app user group is the public user group of the org or not.
+            hasExternalApplicationReporting (bool): Whether users in the App User Group have permission to view all reports in their organization.
             users (User): The users in the user group.
     """
 
-    def __init__(self, client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, users={}):
+    def __init__(self, client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, users={}):
         super().__init__(client, None)
         self.name = name
         self.user_group_id = userGroupId
         self.external_application_ids = externalApplicationIds
         self.invited_user_emails = invitedUserEmails
         self.public_user_group = publicUserGroup
+        self.has_external_application_reporting = hasExternalApplicationReporting
         self.users = client._build_class(User, users)
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'user_group_id': repr(self.user_group_id), f'external_application_ids': repr(
-            self.external_application_ids), f'invited_user_emails': repr(self.invited_user_emails), f'public_user_group': repr(self.public_user_group), f'users': repr(self.users)}
+        repr_dict = {f'name': repr(self.name), f'user_group_id': repr(self.user_group_id), f'external_application_ids': repr(self.external_application_ids), f'invited_user_emails': repr(
+            self.invited_user_emails), f'public_user_group': repr(self.public_user_group), f'has_external_application_reporting': repr(self.has_external_application_reporting), f'users': repr(self.users)}
         class_name = "AppUserGroup"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -41,6 +43,6 @@ class AppUserGroup(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'user_group_id': self.user_group_id, 'external_application_ids': self.external_application_ids,
-                'invited_user_emails': self.invited_user_emails, 'public_user_group': self.public_user_group, 'users': self._get_attribute_as_dict(self.users)}
+        resp = {'name': self.name, 'user_group_id': self.user_group_id, 'external_application_ids': self.external_application_ids, 'invited_user_emails': self.invited_user_emails,
+                'public_user_group': self.public_user_group, 'has_external_application_reporting': self.has_external_application_reporting, 'users': self._get_attribute_as_dict(self.users)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

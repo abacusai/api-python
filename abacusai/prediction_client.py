@@ -2,6 +2,7 @@ import io
 import json
 from typing import Dict, List
 
+from .agent_data_execution_result import AgentDataExecutionResult
 from .client import BaseApiClient, ClientOptions
 from .document_retriever_lookup_result import DocumentRetrieverLookupResult
 
@@ -41,7 +42,7 @@ class PredictionClient(BaseApiClient):
             limit_results (int): If provided, will limit the number of results to the value specified.
             result_columns (list): If provided, will limit the columns present in each result to the columns specified in this list."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupFeatures', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'limitResults': limit_results, 'resultColumns': result_columns}, server_override=prediction_url)
 
     def predict(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -52,7 +53,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique identifier for a deployment created under the project.
             query_data (dict): A dictionary where the key is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the value is the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predict', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_multiple(self, deployment_token: str, deployment_id: str, query_data: list) -> Dict:
@@ -63,7 +64,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier for a deployment created under the project.
             query_data (list): A list of dictionaries, where the 'key' is the column name (e.g. a column with name 'user_id' in the dataset) mapped to the column mapping USER_ID that uniquely identifies the entity against which a prediction is performed, and the 'value' is the unique value of the same entity."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictMultiple', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_from_datasets(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -74,7 +75,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier for a deployment created under the project.
             query_data (dict): A dictionary where the 'key' is the source dataset name, and the 'value' is a list of records corresponding to the dataset rows."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictFromDatasets', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_lead(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
@@ -87,7 +88,7 @@ class PredictionClient(BaseApiClient):
             explain_predictions (bool): Will explain predictions for leads
             explainer_type (str): Type of explainer to use for explanations"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictLead', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def predict_churn(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, explainer_type: str = None) -> Dict:
@@ -100,7 +101,7 @@ class PredictionClient(BaseApiClient):
             explain_predictions (bool): Will explain predictions for churn
             explainer_type (str): Type of explainer to use for explanations"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictChurn', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def predict_takeover(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -111,7 +112,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): A dictionary containing account activity characteristics (e.g., login id, login duration, login type, IP address, etc.)."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictTakeover', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_fraud(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -122,7 +123,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique identifier to a deployment created under the project.
             query_data (dict): A dictionary containing transaction attributes (e.g. credit card type, transaction location, transaction amount, etc.)."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictFraud', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_class(self, deployment_token: str, deployment_id: str, query_data: dict, threshold: float = None, threshold_class: str = None, thresholds: list = None, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
@@ -140,7 +141,7 @@ class PredictionClient(BaseApiClient):
             nested (str): If specified generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictClass', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'threshold': threshold, 'thresholdClass': threshold_class, 'thresholds': thresholds, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def predict_target(self, deployment_token: str, deployment_id: str, query_data: dict, explain_predictions: bool = False, fixed_features: list = None, nested: str = None, explainer_type: str = None) -> Dict:
@@ -155,7 +156,7 @@ class PredictionClient(BaseApiClient):
             nested (str): If specified, generates prediction delta for each index of the specified nested feature.
             explainer_type (str): The type of explainer to use."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictTarget', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'explainPredictions': explain_predictions, 'fixedFeatures': fixed_features, 'nested': nested, 'explainerType': explainer_type}, server_override=prediction_url)
 
     def get_anomalies(self, deployment_token: str, deployment_id: str, threshold: float = None, histogram: bool = False) -> io.BytesIO:
@@ -167,7 +168,7 @@ class PredictionClient(BaseApiClient):
             threshold (float): The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99.
             histogram (bool): If True, will return a histogram of the distribution of all points."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'threshold': threshold, 'histogram': histogram}, server_override=prediction_url)
 
     def get_timeseries_anomalies(self, deployment_token: str, deployment_id: str, start_timestamp: str = None, end_timestamp: str = None, query_data: dict = None, get_all_item_data: bool = False, series_ids: list = None) -> Dict:
@@ -182,7 +183,7 @@ class PredictionClient(BaseApiClient):
             get_all_item_data (bool): set this to true if anomaly detection has to be performed on all the data related to input ids
             series_ids (list): list of series ids on which the anomaly detection has to be performed"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getTimeseriesAnomalies', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'startTimestamp': start_timestamp, 'endTimestamp': end_timestamp, 'queryData': query_data, 'getAllItemData': get_all_item_data, 'seriesIds': series_ids}, server_override=prediction_url)
 
     def is_anomaly(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
@@ -193,7 +194,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): The input data for the prediction."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('isAnomaly', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_event_anomaly_score(self, deployment_token: str, deployment_id: str, query_data: dict = None) -> Dict:
@@ -204,7 +205,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): The input data for the prediction."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getEventAnomalyScore', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_forecast(self, deployment_token: str, deployment_id: str, query_data: dict, future_data: list = None, num_predictions: int = None, prediction_start: str = None, explain_predictions: bool = False, explainer_type: str = None, get_item_data: bool = False) -> Dict:
@@ -221,7 +222,7 @@ class PredictionClient(BaseApiClient):
             explainer_type (str): Type of explainer to use for explanations
             get_item_data (bool): Will return the data corresponding to items in query"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getForecast', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'futureData': future_data, 'numPredictions': num_predictions, 'predictionStart': prediction_start, 'explainPredictions': explain_predictions, 'explainerType': explainer_type, 'getItemData': get_item_data}, server_override=prediction_url)
 
     def get_k_nearest(self, deployment_token: str, deployment_id: str, vector: list, k: int = None, distance: str = None, include_score: bool = False, catalog_id: str = None) -> Dict:
@@ -236,7 +237,7 @@ class PredictionClient(BaseApiClient):
             include_score (bool): If True, will return the score alongside the resulting embedding value.
             catalog_id (str): An optional parameter honored only for embeddings that provide a catalog id"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'vector': vector, 'k': k, 'distance': distance, 'includeScore': include_score, 'catalogId': catalog_id}, server_override=prediction_url)
 
     def get_multiple_k_nearest(self, deployment_token: str, deployment_id: str, queries: list):
@@ -247,7 +248,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             queries (list): List of mappings of format {"catalogId": "cat0", "vectors": [...], "k": 20, "distance": "euclidean"}. See `getKNearest` for additional information about the supported parameters."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getMultipleKNearest', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queries': queries}, server_override=prediction_url)
 
     def get_labels(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -258,7 +259,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): Dictionary where key is "Content" and value is the text from which entities are to be extracted."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getLabels', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_entities_from_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None, doc_id: str = None, return_extracted_features: bool = False, verbose: bool = False, save_extracted_features: bool = None) -> Dict:
@@ -273,7 +274,7 @@ class PredictionClient(BaseApiClient):
             verbose (bool): (Optional) If True, will return all the extracted tokens probabilities for all the trained labels. Default is False.
             save_extracted_features (bool): (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getEntitiesFromPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'docId': json.dumps(doc_id) if (doc_id is not None and not isinstance(doc_id, str)) else doc_id, 'returnExtractedFeatures': json.dumps(return_extracted_features) if (return_extracted_features is not None and not isinstance(return_extracted_features, str)) else return_extracted_features, 'verbose': json.dumps(verbose) if (verbose is not None and not isinstance(verbose, str)) else verbose, 'saveExtractedFeatures': json.dumps(save_extracted_features) if (save_extracted_features is not None and not isinstance(save_extracted_features, str)) else save_extracted_features}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_recommendations(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, exclude_item_ids: list = None, score_field: str = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None, explore_fraction: float = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
@@ -293,7 +294,7 @@ class PredictionClient(BaseApiClient):
             diversity_attribute_name (str): item attribute column name which is used to ensure diversity of prediction results.
             diversity_max_results_per_value (int): maximum number of results per value of diversity_attribute_name."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getRecommendations', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'excludeItemIds': exclude_item_ids, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items, 'exploreFraction': explore_fraction, 'diversityAttributeName': diversity_attribute_name, 'diversityMaxResultsPerValue': diversity_max_results_per_value}, server_override=prediction_url)
 
     def get_personalized_ranking(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, scaling_factors: list = None) -> Dict:
@@ -307,7 +308,7 @@ class PredictionClient(BaseApiClient):
             preserve_unknown_items (bool): If true, any items that are unknown to the model, will not be reranked, and the original position in the query will be preserved.
             scaling_factors (list): It allows you to bias the model towards certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1"], "factor": 1.1}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" in reference to which the model recommendations need to be biased; and the key, "factor" takes the factor by which the item scores are adjusted. Let's take an example where the input to scaling_factors is [{"column": "VehicleType", "values": ["SUV", "Sedan"], "factor": 1.4}]. After we apply the model to get item probabilities, for every SUV and Sedan in the list, we will multiply the respective probability by 1.1 before sorting. This is particularly useful if there's a type of item that might be less popular but you want to promote it or there's an item that always comes up and you want to demote it."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getPersonalizedRanking', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scalingFactors': scaling_factors}, server_override=prediction_url)
 
     def get_ranked_items(self, deployment_token: str, deployment_id: str, query_data: dict, preserve_ranks: list = None, preserve_unknown_items: bool = False, score_field: str = None, scaling_factors: list = None, diversity_attribute_name: str = None, diversity_max_results_per_value: int = None) -> Dict:
@@ -324,7 +325,7 @@ class PredictionClient(BaseApiClient):
             diversity_attribute_name (str): item attribute column name which is used to ensure diversity of prediction results.
             diversity_max_results_per_value (int): maximum number of results per value of diversity_attribute_name."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getRankedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'preserveRanks': preserve_ranks, 'preserveUnknownItems': preserve_unknown_items, 'scoreField': score_field, 'scalingFactors': scaling_factors, 'diversityAttributeName': diversity_attribute_name, 'diversityMaxResultsPerValue': diversity_max_results_per_value}, server_override=prediction_url)
 
     def get_related_items(self, deployment_token: str, deployment_id: str, query_data: dict, num_items: int = None, page: int = None, scaling_factors: list = None, restrict_items: list = None, exclude_items: list = None) -> Dict:
@@ -340,7 +341,7 @@ class PredictionClient(BaseApiClient):
             restrict_items (list): It allows you to restrict the recommendations to certain items. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", "value3", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1", "value3", ...]" to which to restrict the recommendations to. Let's take an example where the input to restrict_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. This input will restrict the recommendations to SUVs and Sedans. This type of restriction is particularly useful if there's a list of items that you know is of use in some particular scenario and you want to restrict the recommendations only to that list.
             exclude_items (list): It allows you to exclude certain items from the list of recommendations. The input to this argument is a list of dictionaries where the format of each dictionary is as follows: {"column": "col0", "values": ["value0", "value1", ...]}. The key, "column" takes the name of the column, "col0"; the key, "values" takes the list of items, "["value0", "value1"]" to exclude from the recommendations. Let's take an example where the input to exclude_items is [{"column": "VehicleType", "values": ["SUV", "Sedan"]}]. The resulting recommendation list will exclude all SUVs and Sedans. This is particularly useful if there's a list of items that you know is of no use in some particular scenario and you don't want to show those items present in that list."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getRelatedItems', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'numItems': num_items, 'page': page, 'scalingFactors': scaling_factors, 'restrictItems': restrict_items, 'excludeItems': exclude_items}, server_override=prediction_url)
 
     def get_chat_response(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
@@ -359,7 +360,7 @@ class PredictionClient(BaseApiClient):
             chat_config (dict): A dictionary specifying the query chat config override.
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getChatResponse', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'messages': messages, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
     def get_chat_response_with_binary_data(self, deployment_token: str, deployment_id: str, messages: list, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
@@ -379,10 +380,10 @@ class PredictionClient(BaseApiClient):
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the messages to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getChatResponseWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'messages': json.dumps(messages) if (messages is not None and not isinstance(messages, str)) else messages, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments, server_override=prediction_url)
 
-    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False) -> Dict:
+    def get_conversation_response(self, deployment_id: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, deployment_token: str = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
         Args:
@@ -397,8 +398,11 @@ class PredictionClient(BaseApiClient):
             filter_key_values (dict): A dictionary mapping column names to a list of values to restrict the retrived search results.
             search_score_cutoff (float): Cutoff for the document retriever score. Matching search results below this score will be ignored.
             chat_config (dict): A dictionary specifiying the query chat config override.
-            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response."""
-        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents})
+            ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
+            deployment_token (str): A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website."""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('getConversationResponse', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, body={'message': message, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'llmName': llm_name, 'numCompletionTokens': num_completion_tokens, 'systemMessage': system_message, 'temperature': temperature, 'filterKeyValues': filter_key_values, 'searchScoreCutoff': search_score_cutoff, 'chatConfig': chat_config, 'ignoreDocuments': ignore_documents}, server_override=prediction_url)
 
     def get_conversation_response_with_binary_data(self, deployment_id: str, deployment_token: str, message: str, deployment_conversation_id: str = None, external_session_id: str = None, llm_name: str = None, num_completion_tokens: int = None, system_message: str = None, temperature: float = 0.0, filter_key_values: dict = None, search_score_cutoff: float = None, chat_config: dict = None, ignore_documents: bool = False, attachments: None = None) -> Dict:
         """Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
@@ -419,7 +423,7 @@ class PredictionClient(BaseApiClient):
             ignore_documents (bool): If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
             attachments (None): A dictionary of binary data to use to answer the queries."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getConversationResponseWithBinaryData', 'POST', query_params={'deploymentId': deployment_id, 'deploymentToken': deployment_token}, data={'message': json.dumps(message) if (message is not None and not isinstance(message, str)) else message, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id, 'llmName': json.dumps(llm_name) if (llm_name is not None and not isinstance(llm_name, str)) else llm_name, 'numCompletionTokens': json.dumps(num_completion_tokens) if (num_completion_tokens is not None and not isinstance(num_completion_tokens, str)) else num_completion_tokens, 'systemMessage': json.dumps(system_message) if (system_message is not None and not isinstance(system_message, str)) else system_message, 'temperature': json.dumps(temperature) if (temperature is not None and not isinstance(temperature, str)) else temperature, 'filterKeyValues': json.dumps(filter_key_values) if (filter_key_values is not None and not isinstance(filter_key_values, str)) else filter_key_values, 'searchScoreCutoff': json.dumps(search_score_cutoff) if (search_score_cutoff is not None and not isinstance(search_score_cutoff, str)) else search_score_cutoff, 'chatConfig': json.dumps(chat_config) if (chat_config is not None and not isinstance(chat_config, str)) else chat_config, 'ignoreDocuments': json.dumps(ignore_documents) if (ignore_documents is not None and not isinstance(ignore_documents, str)) else ignore_documents}, files=attachments, server_override=prediction_url)
 
     def get_search_results(self, deployment_token: str, deployment_id: str, query_data: dict, num: int = 15) -> Dict:
@@ -431,7 +435,7 @@ class PredictionClient(BaseApiClient):
             query_data (dict): A dictionary where the key is "Content" and the value is the text from which entities are to be extracted.
             num (int): Number of search results to return."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getSearchResults', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'num': num}, server_override=prediction_url)
 
     def get_sentiment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
@@ -442,7 +446,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier for a deployment created under this project.
             document (str): The document to be analyzed for sentiment."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getSentiment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
     def get_entailment(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
@@ -453,7 +457,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier for the deployment created under the project.
             document (str): The document to be classified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getEntailment', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
     def get_classification(self, deployment_token: str, deployment_id: str, document: str) -> Dict:
@@ -464,7 +468,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier for the deployment created under the project.
             document (str): The document to be classified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getClassification', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'document': document}, server_override=prediction_url)
 
     def get_summary(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -475,7 +479,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier to a deployment created under the project.
             query_data (dict): Raw data dictionary containing the required document data - must have a key 'document' corresponding to a DOCUMENT type text as value."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getSummary', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_language(self, deployment_token: str, deployment_id: str, query_data: str) -> Dict:
@@ -486,7 +490,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier for a deployment created under the project.
             query_data (str): The input string to detect."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictLanguage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, forced_assignments: dict = None, solve_time_limit_seconds: float = None, include_all_assignments: bool = False) -> Dict:
@@ -500,7 +504,7 @@ class PredictionClient(BaseApiClient):
             solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
             include_all_assignments (bool): If True, will return all assignments, including assignments with value 0. Default is False."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'forcedAssignments': forced_assignments, 'solveTimeLimitSeconds': solve_time_limit_seconds, 'includeAllAssignments': include_all_assignments}, server_override=prediction_url)
 
     def get_alternative_assignments(self, deployment_token: str, deployment_id: str, query_data: dict, add_constraints: list = None, solve_time_limit_seconds: float = None) -> Dict:
@@ -513,7 +517,7 @@ class PredictionClient(BaseApiClient):
             add_constraints (list): List of constraints dict to apply to the query. The constraint dict should have the following keys: 1. query (dict): Specifies the set of assignments involved in the constraint. The format is same as query_data. 2. operator (str): Constraint operator '=' or '<=' or '>='. 3. constant (int): Constraint RHS constant value.
             solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getAlternativeAssignments', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data, 'addConstraints': add_constraints, 'solveTimeLimitSeconds': solve_time_limit_seconds}, server_override=prediction_url)
 
     def check_constraints(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -524,7 +528,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier for a deployment created under the project.
             query_data (dict): Assignment overrides to the solution."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('checkConstraints', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def predict_with_binary_data(self, deployment_token: str, deployment_id: str, blob: io.TextIOBase) -> Dict:
@@ -535,7 +539,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique identifier to a deployment created under the project.
             blob (io.TextIOBase): The multipart/form-data of the data."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('predictWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'blob': blob}, server_override=prediction_url)
 
     def describe_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase, categories: list, top_n: int = None) -> Dict:
@@ -548,7 +552,7 @@ class PredictionClient(BaseApiClient):
             categories (list): List of candidate categories to compare with the image.
             top_n (int): Return the N most similar categories."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('describeImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'categories': json.dumps(categories) if (categories is not None and not isinstance(categories, str)) else categories, 'topN': json.dumps(top_n) if (top_n is not None and not isinstance(top_n, str)) else top_n}, files={'image': image}, server_override=prediction_url)
 
     def get_text_from_document(self, deployment_token: str, deployment_id: str, document: io.TextIOBase = None, adjust_doc_orientation: bool = False, return_detected_images: bool = False, save_predicted_pdf: bool = False, save_extracted_features: bool = False) -> Dict:
@@ -563,7 +567,7 @@ class PredictionClient(BaseApiClient):
             save_predicted_pdf (bool): (Optional) If True, will save the predicted pdf bytes so that they can be fetched using the prediction docId. Default is False.
             save_extracted_features (bool): (Optional) If True, will save extracted features (i.e. page tokens) so that they can be fetched using the prediction docId. Default is False."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getTextFromDocument', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'adjustDocOrientation': json.dumps(adjust_doc_orientation) if (adjust_doc_orientation is not None and not isinstance(adjust_doc_orientation, str)) else adjust_doc_orientation, 'returnDetectedImages': json.dumps(return_detected_images) if (return_detected_images is not None and not isinstance(return_detected_images, str)) else return_detected_images, 'savePredictedPdf': json.dumps(save_predicted_pdf) if (save_predicted_pdf is not None and not isinstance(save_predicted_pdf, str)) else save_predicted_pdf, 'saveExtractedFeatures': json.dumps(save_extracted_features) if (save_extracted_features is not None and not isinstance(save_extracted_features, str)) else save_extracted_features}, files={'document': document}, server_override=prediction_url)
 
     def transcribe_audio(self, deployment_token: str, deployment_id: str, audio: io.TextIOBase) -> Dict:
@@ -574,7 +578,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier of a deployment created under the project.
             audio (io.TextIOBase): The audio to transcribe."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('transcribeAudio', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'audio': audio}, server_override=prediction_url)
 
     def classify_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase = None, doc_id: str = None) -> Dict:
@@ -586,7 +590,7 @@ class PredictionClient(BaseApiClient):
             image (io.TextIOBase): The binary data of the image to classify. One of image or doc_id must be specified.
             doc_id (str): The document ID of the image. One of image or doc_id must be specified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('classifyImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'docId': json.dumps(doc_id) if (doc_id is not None and not isinstance(doc_id, str)) else doc_id}, files={'image': image}, server_override=prediction_url)
 
     def classify_pdf(self, deployment_token: str, deployment_id: str, pdf: io.TextIOBase = None) -> Dict:
@@ -597,7 +601,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): The unique identifier for a deployment created under the project.
             pdf (io.TextIOBase): (Optional) The pdf to predict on. One of pdf or docId must be specified."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('classifyPDF', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'pdf': pdf}, server_override=prediction_url)
 
     def get_cluster(self, deployment_token: str, deployment_id: str, query_data: dict) -> Dict:
@@ -608,7 +612,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier for the deployment created under the project.
             query_data (dict): A dictionary where each 'key' represents a column name and its corresponding 'value' represents the value of that column. For Timeseries Clustering, the 'key' should be ITEM_ID, and its value should represent a unique item ID that needs clustering."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getCluster', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, server_override=prediction_url)
 
     def get_objects_from_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
@@ -619,7 +623,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to detect objects from."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('getObjectsFromImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'image': image}, server_override=prediction_url)
 
     def score_image(self, deployment_token: str, deployment_id: str, image: io.TextIOBase) -> Dict:
@@ -630,7 +634,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique string identifier to a deployment created under the project.
             image (io.TextIOBase): The binary data of the image to get the score."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('scoreImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'image': image}, server_override=prediction_url)
 
     def transfer_style(self, deployment_token: str, deployment_id: str, source_image: io.TextIOBase, style_image: io.TextIOBase) -> io.BytesIO:
@@ -642,7 +646,7 @@ class PredictionClient(BaseApiClient):
             source_image (io.TextIOBase): The source image to apply the makeup.
             style_image (io.TextIOBase): The image that has the style as a reference."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('transferStyle', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={}, files={'sourceImage': source_image, 'styleImage': style_image}, streamable_response=True, server_override=prediction_url)
 
     def generate_image(self, deployment_token: str, deployment_id: str, query_data: dict) -> io.BytesIO:
@@ -653,7 +657,7 @@ class PredictionClient(BaseApiClient):
             deployment_id (str): A unique identifier to a deployment created under the project.
             query_data (dict): Specifies the text prompt. For example, {'prompt': 'a cat'}"""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('generateImage', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'queryData': query_data}, streamable_response=True, server_override=prediction_url)
 
     def execute_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None) -> Dict:
@@ -665,7 +669,7 @@ class PredictionClient(BaseApiClient):
             arguments (list): Positional arguments to the agent execute function.
             keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
 
     def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None) -> Dict:
@@ -681,7 +685,7 @@ class PredictionClient(BaseApiClient):
             regenerate (bool): If True, will regenerate the response from the last query.
             doc_infos (list): An optional list of documents use for the conversation. A keyword 'doc_id' is expected to be present in each document for retrieving contents from docstore."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeConversationAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments, 'deploymentConversationId': deployment_conversation_id, 'externalSessionId': external_session_id, 'regenerate': regenerate, 'docInfos': doc_infos}, server_override=prediction_url)
 
     def lookup_matches(self, deployment_token: str, deployment_id: str, data: str = None, filters: dict = None, num: int = None, result_columns: list = None, max_words: int = None, num_retrieval_margin_words: int = None, max_words_per_chunk: int = None, score_multiplier_column: str = None, min_score: float = None) -> List[DocumentRetrieverLookupResult]:
@@ -708,5 +712,23 @@ class PredictionClient(BaseApiClient):
         Returns:
             list[DocumentRetrieverLookupResult]: The relevant documentation results found from the document retriever."""
         prediction_url = self._get_prediction_endpoint(
-            deployment_id, deployment_token)
+            deployment_id, deployment_token) if deployment_token else None
         return self._call_api('lookupMatches', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'data': data, 'filters': filters, 'num': num, 'resultColumns': result_columns, 'maxWords': max_words, 'numRetrievalMarginWords': num_retrieval_margin_words, 'maxWordsPerChunk': max_words_per_chunk, 'scoreMultiplierColumn': score_multiplier_column, 'minScore': min_score}, parse_type=DocumentRetrieverLookupResult, server_override=prediction_url)
+
+    def execute_agent_with_binary_data(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, blobs: None = None) -> Dict:
+        """Executes a deployed AI agent function with binary data as inputs.
+
+        Args:
+            deployment_token (str): The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+            deployment_id (str): A unique string identifier for the deployment created under the project.
+            arguments (list): Positional arguments to the agent execute function.
+            keyword_arguments (dict): A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+            deployment_conversation_id (str): A unique string identifier for the deployment conversation used for the conversation.
+            external_session_id (str): A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+            blobs (None): A dictionary of binary data to use as inputs to the agent execute function.
+
+        Returns:
+            AgentDataExecutionResult: The result of the agent execution"""
+        prediction_url = self._get_prediction_endpoint(
+            deployment_id, deployment_token) if deployment_token else None
+        return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)

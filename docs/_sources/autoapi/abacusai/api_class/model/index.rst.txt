@@ -29,7 +29,6 @@ Classes
    abacusai.api_class.model.EventAnomalyTrainingConfig
    abacusai.api_class.model.TimeseriesAnomalyTrainingConfig
    abacusai.api_class.model.CumulativeForecastingTrainingConfig
-   abacusai.api_class.model.AnomalyDetectionTrainingConfig
    abacusai.api_class.model.ThemeAnalysisTrainingConfig
    abacusai.api_class.model.AIAgentTrainingConfig
    abacusai.api_class.model.CustomTrainedModelTrainingConfig
@@ -1707,67 +1706,6 @@ Classes
       
 
    .. py:attribute:: predict_residuals
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
-
-
-
-.. py:class:: AnomalyDetectionTrainingConfig
-
-
-   Bases: :py:obj:`TrainingConfig`
-
-   Training config for the ANOMALY_DETECTION problem type
-
-   :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
-   :type test_split: int
-   :param value_high: Detect unusually high values.
-   :type value_high: bool
-   :param mixture_of_gaussians: Detect unusual combinations of values using mixture of Gaussians.
-   :type mixture_of_gaussians: bool
-   :param variational_autoencoder: Use variational autoencoder for anomaly detection.
-   :type variational_autoencoder: bool
-   :param spike_up: Detect outliers with a high value.
-   :type spike_up: bool
-   :param spike_down: Detect outliers with a low value.
-   :type spike_down: bool
-   :param trend_change: Detect changes to the trend.
-   :type trend_change: bool
-
-   .. py:attribute:: test_split
-      :type: int
-
-      
-
-   .. py:attribute:: value_high
-      :type: bool
-
-      
-
-   .. py:attribute:: mixture_of_gaussians
-      :type: bool
-
-      
-
-   .. py:attribute:: variational_autoencoder
-      :type: bool
-
-      
-
-   .. py:attribute:: spike_up
-      :type: bool
-
-      
-
-   .. py:attribute:: spike_down
-      :type: bool
-
-      
-
-   .. py:attribute:: trend_change
       :type: bool
 
       

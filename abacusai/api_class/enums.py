@@ -19,7 +19,6 @@ class ApiEnum(Enum):
 
 class ProblemType(ApiEnum):
     AI_AGENT = 'ai_agent'
-    ANOMALY_DETECTION = 'anomaly_new'
     ANOMALY_OUTLIERS = 'anomaly'
     EVENT_ANOMALY = 'event_anomaly'
     CLUSTERING = 'clustering'

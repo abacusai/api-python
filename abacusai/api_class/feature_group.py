@@ -89,8 +89,10 @@ class LastNMergeConfig(MergeConfig):
     Args:
         merge_mode (MergeMode): LAST_N
         num_versions (int): The number of versions to merge. num_versions == 0 means merge all versions.
+        include_version_timestamp_column (bool): If set, include a column with the creation timestamp of source FG versions.
     """
     num_versions: int
+    include_version_timestamp_column: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.merge_mode = enums.MergeMode.LAST_N
@@ -105,9 +107,11 @@ class TimeWindowMergeConfig(MergeConfig):
         merge_mode (MergeMode): TIME_WINDOW
         feature_name (str): Time based column to index on
         time_window_size_ms (int): Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
+        include_version_timestamp_column (bool): If set, include a column with the creation timestamp of source FG versions.
     """
     feature_name: str
     time_window_size_ms: int
+    include_version_timestamp_column: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.merge_mode = enums.MergeMode.TIME_WINDOW

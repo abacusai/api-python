@@ -235,7 +235,6 @@ Classes
    abacusai.HotkeyPrompt
    abacusai._ApiClassFactory
    abacusai.BatchPredictionArgs
-   abacusai.AnomalyDetectionBatchPredictionArgs
    abacusai.AnomalyOutliersBatchPredictionArgs
    abacusai.ForecastingBatchPredictionArgs
    abacusai.NamedEntityExtractionBatchPredictionArgs
@@ -336,7 +335,6 @@ Classes
    abacusai.EventAnomalyTrainingConfig
    abacusai.TimeseriesAnomalyTrainingConfig
    abacusai.CumulativeForecastingTrainingConfig
-   abacusai.AnomalyDetectionTrainingConfig
    abacusai.ThemeAnalysisTrainingConfig
    abacusai.AIAgentTrainingConfig
    abacusai.CustomTrainedModelTrainingConfig
@@ -555,67 +553,6 @@ Attributes
 
    .. py:method:: _get_builder()
       :classmethod:
-
-
-
-.. py:class:: AnomalyDetectionBatchPredictionArgs
-
-
-   Bases: :py:obj:`BatchPredictionArgs`
-
-   Batch Prediction Config for the ANOMALY_DETECTION problem type
-
-   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-   :type for_eval: bool
-   :param prediction_time_endpoint: The end point for predictions.
-   :type prediction_time_endpoint: str
-   :param prediction_time_range: Over what period of time should we make predictions (in seconds).
-   :type prediction_time_range: int
-   :param minimum_anomaly_score: Exclude results with an anomaly score (1 in x event) below this threshold. Range: [1, 1_000_000_000_000].
-   :type minimum_anomaly_score: int
-   :param summary_mode: Only show top anomalies per ID.
-   :type summary_mode: bool
-   :param attach_raw_data: Return raw data along with anomalies.
-   :type attach_raw_data: bool
-   :param small_batch: Size of batch data guaranteed to be small.
-   :type small_batch: bool
-
-   .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: prediction_time_endpoint
-      :type: str
-
-      
-
-   .. py:attribute:: prediction_time_range
-      :type: int
-
-      
-
-   .. py:attribute:: minimum_anomaly_score
-      :type: int
-
-      
-
-   .. py:attribute:: summary_mode
-      :type: bool
-
-      
-
-   .. py:attribute:: attach_raw_data
-      :type: bool
-
-      
-
-   .. py:attribute:: small_batch
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
 
 
 
@@ -1589,11 +1526,6 @@ Attributes
 
    .. py:attribute:: AI_AGENT
       :value: 'ai_agent'
-
-      
-
-   .. py:attribute:: ANOMALY_DETECTION
-      :value: 'anomaly_new'
 
       
 
@@ -3667,9 +3599,16 @@ Attributes
    :type merge_mode: MergeMode
    :param num_versions: The number of versions to merge. num_versions == 0 means merge all versions.
    :type num_versions: int
+   :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
+   :type include_version_timestamp_column: bool
 
    .. py:attribute:: num_versions
       :type: int
+
+      
+
+   .. py:attribute:: include_version_timestamp_column
+      :type: bool
 
       
 
@@ -3690,6 +3629,8 @@ Attributes
    :type feature_name: str
    :param time_window_size_ms: Range of merged rows will be [MAX_TIME - time_window_size_ms, MAX_TIME]
    :type time_window_size_ms: int
+   :param include_version_timestamp_column: If set, include a column with the creation timestamp of source FG versions.
+   :type include_version_timestamp_column: bool
 
    .. py:attribute:: feature_name
       :type: str
@@ -3698,6 +3639,11 @@ Attributes
 
    .. py:attribute:: time_window_size_ms
       :type: int
+
+      
+
+   .. py:attribute:: include_version_timestamp_column
+      :type: bool
 
       
 
@@ -5393,67 +5339,6 @@ Attributes
       
 
    .. py:attribute:: predict_residuals
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
-
-
-
-.. py:class:: AnomalyDetectionTrainingConfig
-
-
-   Bases: :py:obj:`TrainingConfig`
-
-   Training config for the ANOMALY_DETECTION problem type
-
-   :param test_split: Percent of dataset to use for test data. We support using a range between 5 (i.e. 5%) to 20 (i.e. 20%) of your dataset to use as test data.
-   :type test_split: int
-   :param value_high: Detect unusually high values.
-   :type value_high: bool
-   :param mixture_of_gaussians: Detect unusual combinations of values using mixture of Gaussians.
-   :type mixture_of_gaussians: bool
-   :param variational_autoencoder: Use variational autoencoder for anomaly detection.
-   :type variational_autoencoder: bool
-   :param spike_up: Detect outliers with a high value.
-   :type spike_up: bool
-   :param spike_down: Detect outliers with a low value.
-   :type spike_down: bool
-   :param trend_change: Detect changes to the trend.
-   :type trend_change: bool
-
-   .. py:attribute:: test_split
-      :type: int
-
-      
-
-   .. py:attribute:: value_high
-      :type: bool
-
-      
-
-   .. py:attribute:: mixture_of_gaussians
-      :type: bool
-
-      
-
-   .. py:attribute:: variational_autoencoder
-      :type: bool
-
-      
-
-   .. py:attribute:: spike_up
-      :type: bool
-
-      
-
-   .. py:attribute:: spike_down
-      :type: bool
-
-      
-
-   .. py:attribute:: trend_change
       :type: bool
 
       
@@ -7319,7 +7204,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  TIMESERIES_ANOMALY_DETECTION,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -10572,7 +10457,7 @@ Attributes
       :type attachments: None
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -10600,6 +10485,8 @@ Attributes
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
+      :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
 
 
    .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
@@ -10976,6 +10863,29 @@ Attributes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
+
+      Executes a deployed AI agent function with binary data as inputs.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
+      :type blobs: None
+
+      :returns: The result of the agent execution
+      :rtype: AgentDataExecutionResult
+
+
    .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
@@ -11334,7 +11244,7 @@ Attributes
       :rtype: FeatureGroupRow
 
 
-   .. py:method:: upsert_online_data(feature_group_id, data)
+   .. py:method:: upsert_online_data(feature_group_id, data, streaming_token = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -11342,6 +11252,8 @@ Attributes
       :type feature_group_id: str
       :param data: The data to record, in JSON format.
       :type data: dict
+      :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
+      :type streaming_token: str
 
       :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
@@ -12253,6 +12165,22 @@ Attributes
       :type user_emails: list
 
 
+   .. py:method:: add_app_user_group_report_permission(user_group_id)
+
+      Give the App User Group the permission to view all reports in the corresponding organization.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+
+
+   .. py:method:: remove_app_user_group_report_permission(user_group_id)
+
+      Remove the App User Group's permission toview all reports in the corresponding organization.
+
+      :param user_group_id: The ID of the App User Group.
+      :type user_group_id: str
+
+
    .. py:method:: add_app_user_group_to_external_application(user_group_id, external_application_id)
 
       Adds a permission for an App User Group to access an External Application.
@@ -12451,29 +12379,6 @@ Attributes
 
       :returns: The response from the document query.
       :rtype: ExtractedFields
-
-
-   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
-
-      Executes a deployed AI agent function with binary data as inputs.
-
-      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
-      :type deployment_token: str
-      :param deployment_id: A unique string identifier for the deployment created under the project.
-      :type deployment_id: str
-      :param arguments: Positional arguments to the agent execute function.
-      :type arguments: list
-      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
-      :type keyword_arguments: dict
-      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
-      :type deployment_conversation_id: str
-      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
-      :type external_session_id: str
-      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
-      :type blobs: None
-
-      :returns: The result of the agent execution
-      :rtype: AgentDataExecutionResult
 
 
    .. py:method:: construct_agent_conversation_messages_for_llm(current_message = None, current_doc_ids = None, include_history = True, include_document_contents = True, deployment_conversation_id = None, external_session_id = None, max_document_words = None)
@@ -15184,7 +15089,7 @@ Attributes
       :type attachments: None
 
 
-   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False)
+   .. py:method:: get_conversation_response(deployment_id, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)
 
       Return a conversation response which continues the conversation based on the input message and deployment conversation id (if exists).
 
@@ -15212,6 +15117,8 @@ Attributes
       :type chat_config: dict
       :param ignore_documents: If True, will ignore any documents and search results, and only use the message and past conversation to generate a response.
       :type ignore_documents: bool
+      :param deployment_token: A token used to authenticate access to deployments created in this project. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
 
 
    .. py:method:: get_conversation_response_with_binary_data(deployment_id, deployment_token, message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, attachments = None)
@@ -15588,6 +15495,29 @@ Attributes
       :rtype: list[DocumentRetrieverLookupResult]
 
 
+   .. py:method:: execute_agent_with_binary_data(deployment_token, deployment_id, arguments = None, keyword_arguments = None, deployment_conversation_id = None, external_session_id = None, blobs = None)
+
+      Executes a deployed AI agent function with binary data as inputs.
+
+      :param deployment_token: The deployment token used to authenticate access to created deployments. This token is only authorized to predict on deployments in this project, so it is safe to embed this model inside of an application or website.
+      :type deployment_token: str
+      :param deployment_id: A unique string identifier for the deployment created under the project.
+      :type deployment_id: str
+      :param arguments: Positional arguments to the agent execute function.
+      :type arguments: list
+      :param keyword_arguments: A dictionary where each 'key' represents the parameter name and its corresponding 'value' represents the value of that parameter for the agent execute function.
+      :type keyword_arguments: dict
+      :param deployment_conversation_id: A unique string identifier for the deployment conversation used for the conversation.
+      :type deployment_conversation_id: str
+      :param external_session_id: A unique string identifier for the session used for the conversation. If both deployment_conversation_id and external_session_id are not provided, a new session will be created.
+      :type external_session_id: str
+      :param blobs: A dictionary of binary data to use as inputs to the agent execute function.
+      :type blobs: None
+
+      :returns: The result of the agent execution
+      :rtype: AgentDataExecutionResult
+
+
 
 .. py:class:: StreamingClient(client_options = None)
 
@@ -15681,7 +15611,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.1.4'
+   :value: '1.1.5'
 
    
 

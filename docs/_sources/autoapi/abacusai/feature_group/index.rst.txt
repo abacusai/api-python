@@ -1080,12 +1080,14 @@ Classes
       :rtype: FeatureGroupRow
 
 
-   .. py:method:: upsert_online_data(data)
+   .. py:method:: upsert_online_data(data, streaming_token = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
       :param data: The data to record, in JSON format.
       :type data: dict
+      :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
+      :type streaming_token: str
 
       :returns: The feature group row that was upserted.
       :rtype: FeatureGroupRow
