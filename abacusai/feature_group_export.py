@@ -140,7 +140,3 @@ class FeatureGroupExport(AbstractApiClass):
             str: A string describing the status of a feature group export (pending, complete, etc.).
         """
         return self.describe().status
-
-    # to be deleted
-    def get_results(self):
-        return self.client.get_export_result(self.feature_group_export_id)

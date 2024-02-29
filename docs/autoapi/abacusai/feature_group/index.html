@@ -1624,27 +1624,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.upsert_data">
-<span class="sig-name descname"><span class="pre">upsert_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">streaming_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.upsert_data" title="Permalink to this definition"></a></dt>
-<dd><p>Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>streaming_token</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Optional streaming token for authenticating requests if upserting to streaming FG.</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The data to record, in JSON format.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The feature group row that was upserted.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../feature_group_row/index.html#abacusai.feature_group_row.FeatureGroupRow" title="abacusai.feature_group_row.FeatureGroupRow">FeatureGroupRow</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.feature_group.FeatureGroup.upsert_online_data">
-<span class="sig-name descname"><span class="pre">upsert_online_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.upsert_online_data" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">upsert_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming_token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group.FeatureGroup.upsert_data" title="Permalink to this definition"></a></dt>
 <dd><p>Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

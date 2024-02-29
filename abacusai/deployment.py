@@ -334,15 +334,14 @@ class Deployment(AbstractApiClass):
         """
         return self.client.get_conversation_response_with_binary_data(self.deployment_id, deployment_token, message, deployment_conversation_id, external_session_id, llm_name, num_completion_tokens, system_message, temperature, filter_key_values, search_score_cutoff, chat_config, ignore_documents, attachments)
 
-    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
+    def create_batch_prediction(self, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None):
         """
         Creates a batch prediction job description for the given deployment.
 
         Args:
             table_name (str): Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.
             name (str): Name of the batch prediction job.
-            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
-            explanations (bool): If true, SHAP explanations will be provided for each prediction, if supported by the use case.
+            batch_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             output_format (str): Format of the batch prediction output (CSV or JSON).
             output_location (str): Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
             database_connector_id (str): Unique identifier of a Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
@@ -358,7 +357,7 @@ class Deployment(AbstractApiClass):
         Returns:
             BatchPrediction: The batch prediction description.
         """
-        return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, input_feature_groups)
+        return self.client.create_batch_prediction(self.deployment_id, table_name, name, global_prediction_args, batch_prediction_args, explanations, output_format, output_location, database_connector_id, database_output_config, refresh_schedule, csv_input_prefix, csv_prediction_prefix, csv_explanations_prefix, output_includes_metadata, result_input_columns, input_feature_groups)
 
     def describe_feature_group_row_process_by_key(self, primary_key_value: str):
         """

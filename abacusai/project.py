@@ -643,28 +643,6 @@ class Project(AbstractApiClass):
         """
         return self.client.list_document_retrievers(self.project_id, limit, start_after_id)
 
-    def attach_dataset(self, dataset_id, project_dataset_type):
-        """
-        Attaches dataset to the project.
-
-        Args:
-            dataset_id (unique string identifier): A unique identifier for the dataset.
-            project_dataset_type (enum of type string): The unique use case specific dataset type that might be required or recommended for the specific use case.
-
-        Returns:
-            Schema: The schema of the attached dataset.
-        """
-        return self.client.attach_dataset_to_project(dataset_id, self.project_id, project_dataset_type)
-
-    def remove_dataset(self, dataset_id):
-        """
-        Removes dataset from the project.
-
-        Args:
-            dataset_id (unique string identifier): A unique identifier for the dataset.
-        """
-        return self.client.remove_dataset_from_project(dataset_id, self.project_id)
-
     def create_model_from_functions(self, train_function: callable, predict_function: callable = None, training_input_tables: list = None, predict_many_function: callable = None, initialize_function: callable = None, cpu_size: str = None, memory: int = None, training_config: dict = None, exclusive_run: bool = False):
         """
         Creates a model using python.

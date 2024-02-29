@@ -453,6 +453,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         hide_generated_sql (bool): When running data queries, hides the generated SQL in the response and will just return the table.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
+        database_connector_id (str): Database connector id to use for the chatllm.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -468,6 +469,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     hide_generated_sql: bool = None
     disable_data_summarization: bool = None
     search_score_cutoff: float = None
+    database_connector_id: str = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

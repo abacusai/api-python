@@ -702,27 +702,6 @@ Classes
       :rtype: list[DocumentRetriever]
 
 
-   .. py:method:: attach_dataset(dataset_id, project_dataset_type)
-
-      Attaches dataset to the project.
-
-      :param dataset_id: A unique identifier for the dataset.
-      :type dataset_id: unique string identifier
-      :param project_dataset_type: The unique use case specific dataset type that might be required or recommended for the specific use case.
-      :type project_dataset_type: enum of type string
-
-      :returns: The schema of the attached dataset.
-      :rtype: Schema
-
-
-   .. py:method:: remove_dataset(dataset_id)
-
-      Removes dataset from the project.
-
-      :param dataset_id: A unique identifier for the dataset.
-      :type dataset_id: unique string identifier
-
-
    .. py:method:: create_model_from_functions(train_function, predict_function = None, training_input_tables = None, predict_many_function = None, initialize_function = None, cpu_size = None, memory = None, training_config = None, exclusive_run = False)
 
       Creates a model using python.

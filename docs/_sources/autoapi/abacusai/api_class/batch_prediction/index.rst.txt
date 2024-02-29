@@ -22,6 +22,7 @@ Classes
    abacusai.api_class.batch_prediction.SentenceBoundaryDetectionBatchPredictionArgs
    abacusai.api_class.batch_prediction.ThemeAnalysisBatchPredictionArgs
    abacusai.api_class.batch_prediction.ChatLLMBatchPredictionArgs
+   abacusai.api_class.batch_prediction.TrainablePlugAndPlayBatchPredictionArgs
    abacusai.api_class.batch_prediction._BatchPredictionArgsFactory
 
 
@@ -66,6 +67,8 @@ Classes
    :type for_eval: bool
    :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
    :type threshold: float
+   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
+   :type explain_predictions: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -74,6 +77,11 @@ Classes
 
    .. py:attribute:: threshold
       :type: float
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
 
       
 
@@ -100,8 +108,10 @@ Classes
    :type forecasting_horizon: int
    :param item_attributes_to_include_in_the_result: List of columns to include in the prediction output.
    :type item_attributes_to_include_in_the_result: list
-   :param explain_predictions: If True, explain predictions for the forecast.
+   :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -134,6 +144,11 @@ Classes
       
 
    .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
       :type: bool
 
       
@@ -235,6 +250,10 @@ Classes
    :type bound_label: str
    :param output_columns: A list of column names to include in the prediction result.
    :type output_columns: list
+   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
+   :type explain_predictions: bool
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -283,6 +302,16 @@ Classes
 
    .. py:attribute:: output_columns
       :type: list
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
+      :type: bool
 
       
 
@@ -400,6 +429,30 @@ Classes
    :type for_eval: bool
 
    .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TrainablePlugAndPlayBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the TrainablePlugAndPlay problem type
+
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
       :type: bool
 
       

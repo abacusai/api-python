@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={})
+.. py:class:: BatchPredictionVersion(client, batchPredictionVersion=None, batchPredictionId=None, status=None, driftMonitorStatus=None, deploymentId=None, modelId=None, modelVersion=None, predictionsStartedAt=None, predictionsCompletedAt=None, databaseOutputError=None, totalPredictions=None, failedPredictions=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileConnectorOutputLocation=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, error=None, driftMonitorError=None, monitorWarnings=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, databaseOutputTotalWrites=None, databaseOutputFailedWrites=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorVersion=None, algoName=None, algorithm=None, outputFeatureGroupId=None, outputFeatureGroupVersion=None, outputFeatureGroupTableName=None, batchPredictionWarnings=None, batchInputs={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54,7 +54,7 @@ Classes
    :type databaseConnectorId: str
    :param databaseOutputConfiguration: Contains information about where the batch predictions are written to
    :type databaseOutputConfiguration: dict
-   :param explanations: If true, explanations for each prediction were created
+   :param explanations:
    :type explanations: bool
    :param fileConnectorOutputLocation: Contains information about where the batch predictions are written to
    :type fileConnectorOutputLocation: str
@@ -90,11 +90,11 @@ Classes
    :type algoName: str
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
-   :param outputFeatureGroupId: The BP output feature group id if applicable
+   :param outputFeatureGroupId: The Batch Prediction output feature group ID if applicable
    :type outputFeatureGroupId: str
-   :param outputFeatureGroupVersion: The BP output feature group version if applicable
+   :param outputFeatureGroupVersion: The Batch Prediction output feature group version if applicable
    :type outputFeatureGroupVersion: str
-   :param outputFeatureGroupTableName: The BP output feature group name if applicable
+   :param outputFeatureGroupTableName: The Batch Prediction output feature group name if applicable
    :type outputFeatureGroupTableName: str
    :param batchPredictionWarnings: Relevant warnings if any issues are found
    :type batchPredictionWarnings: str

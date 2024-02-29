@@ -52,6 +52,7 @@ Classes
    abacusai.api_class.SentenceBoundaryDetectionBatchPredictionArgs
    abacusai.api_class.ThemeAnalysisBatchPredictionArgs
    abacusai.api_class.ChatLLMBatchPredictionArgs
+   abacusai.api_class.TrainablePlugAndPlayBatchPredictionArgs
    abacusai.api_class._BatchPredictionArgsFactory
    abacusai.api_class.ApiClass
    abacusai.api_class.BlobInput
@@ -125,6 +126,7 @@ Classes
    abacusai.api_class.EvalArtifactType
    abacusai.api_class.FieldDescriptorType
    abacusai.api_class.OcrMode
+   abacusai.api_class.DataType
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.SamplingConfig
@@ -498,6 +500,8 @@ Classes
    :type for_eval: bool
    :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
    :type threshold: float
+   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
+   :type explain_predictions: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -506,6 +510,11 @@ Classes
 
    .. py:attribute:: threshold
       :type: float
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
 
       
 
@@ -532,8 +541,10 @@ Classes
    :type forecasting_horizon: int
    :param item_attributes_to_include_in_the_result: List of columns to include in the prediction output.
    :type item_attributes_to_include_in_the_result: list
-   :param explain_predictions: If True, explain predictions for the forecast.
+   :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -566,6 +577,11 @@ Classes
       
 
    .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
       :type: bool
 
       
@@ -667,6 +683,10 @@ Classes
    :type bound_label: str
    :param output_columns: A list of column names to include in the prediction result.
    :type output_columns: list
+   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
+   :type explain_predictions: bool
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -715,6 +735,16 @@ Classes
 
    .. py:attribute:: output_columns
       :type: list
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
+      :type: bool
 
       
 
@@ -832,6 +862,30 @@ Classes
    :type for_eval: bool
 
    .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TrainablePlugAndPlayBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the TrainablePlugAndPlay problem type
+
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
       :type: bool
 
       
@@ -1661,6 +1715,8 @@ Classes
    :type text_encoder: VectorStoreTextEncoder
    :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
    :type chunk_size_factors: list
+   :param score_multiplier_column: If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.
+   :type score_multiplier_column: str
 
    .. py:attribute:: chunk_size
       :type: int
@@ -1679,6 +1735,11 @@ Classes
 
    .. py:attribute:: chunk_size_factors
       :type: list
+
+      
+
+   .. py:attribute:: score_multiplier_column
+      :type: str
 
       
 
@@ -3170,6 +3231,11 @@ Classes
 
       
 
+   .. py:attribute:: MICROSOFTAUTH
+      :value: 'MICROSOFTAUTH'
+
+      
+
 
 .. py:class:: PythonFunctionArgumentType
 
@@ -3734,6 +3800,65 @@ Classes
       :value: 'COMPREHENSIVE_TABLE_MD'
 
       
+
+
+.. py:class:: DataType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: INTEGER
+      :value: 'integer'
+
+      
+
+   .. py:attribute:: FLOAT
+      :value: 'float'
+
+      
+
+   .. py:attribute:: STRING
+      :value: 'string'
+
+      
+
+   .. py:attribute:: DATE
+      :value: 'date'
+
+      
+
+   .. py:attribute:: DATETIME
+      :value: 'datetime'
+
+      
+
+   .. py:attribute:: BOOLEAN
+      :value: 'boolean'
+
+      
+
+   .. py:attribute:: LIST
+      :value: 'list'
+
+      
+
+   .. py:attribute:: STRUCT
+      :value: 'struct'
+
+      
+
+   .. py:attribute:: NULL
+      :value: 'null'
+
+      
+
+   .. py:method:: from_str(value)
+      :classmethod:
+
 
 
 .. py:class:: ApiClass
@@ -5337,6 +5462,8 @@ Classes
    :type disable_data_summarization: bool
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
+   :param database_connector_id: Database connector id to use for the chatllm.
+   :type database_connector_id: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5405,6 +5532,11 @@ Classes
 
    .. py:attribute:: search_score_cutoff
       :type: float
+
+      
+
+   .. py:attribute:: database_connector_id
+      :type: str
 
       
 

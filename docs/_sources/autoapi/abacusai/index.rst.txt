@@ -244,6 +244,7 @@ Classes
    abacusai.SentenceBoundaryDetectionBatchPredictionArgs
    abacusai.ThemeAnalysisBatchPredictionArgs
    abacusai.ChatLLMBatchPredictionArgs
+   abacusai.TrainablePlugAndPlayBatchPredictionArgs
    abacusai._BatchPredictionArgsFactory
    abacusai.BlobInput
    abacusai.OcrMode
@@ -310,6 +311,7 @@ Classes
    abacusai.PythonFunctionType
    abacusai.EvalArtifactType
    abacusai.FieldDescriptorType
+   abacusai.DataType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
    abacusai.PercentSamplingConfig
@@ -567,6 +569,8 @@ Attributes
    :type for_eval: bool
    :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
    :type threshold: float
+   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
+   :type explain_predictions: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -575,6 +579,11 @@ Attributes
 
    .. py:attribute:: threshold
       :type: float
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
 
       
 
@@ -601,8 +610,10 @@ Attributes
    :type forecasting_horizon: int
    :param item_attributes_to_include_in_the_result: List of columns to include in the prediction output.
    :type item_attributes_to_include_in_the_result: list
-   :param explain_predictions: If True, explain predictions for the forecast.
+   :param explain_predictions: If True, calculates explanations for the forecasted values along with predictions.
    :type explain_predictions: bool
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -635,6 +646,11 @@ Attributes
       
 
    .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
       :type: bool
 
       
@@ -736,6 +752,10 @@ Attributes
    :type bound_label: str
    :param output_columns: A list of column names to include in the prediction result.
    :type output_columns: list
+   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
+   :type explain_predictions: bool
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
 
    .. py:attribute:: for_eval
       :type: bool
@@ -784,6 +804,16 @@ Attributes
 
    .. py:attribute:: output_columns
       :type: list
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
+      :type: bool
 
       
 
@@ -901,6 +931,30 @@ Attributes
    :type for_eval: bool
 
    .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TrainablePlugAndPlayBatchPredictionArgs
+
+
+   Bases: :py:obj:`BatchPredictionArgs`
+
+   Batch Prediction Config for the TrainablePlugAndPlay problem type
+
+   :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
+   :type automate_monitoring: bool
+
+   .. py:attribute:: for_eval
+      :type: bool
+
+      
+
+   .. py:attribute:: automate_monitoring
       :type: bool
 
       
@@ -1465,6 +1519,8 @@ Attributes
    :type text_encoder: VectorStoreTextEncoder
    :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
    :type chunk_size_factors: list
+   :param score_multiplier_column: If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.
+   :type score_multiplier_column: str
 
    .. py:attribute:: chunk_size
       :type: int
@@ -1483,6 +1539,11 @@ Attributes
 
    .. py:attribute:: chunk_size_factors
       :type: list
+
+      
+
+   .. py:attribute:: score_multiplier_column
+      :type: str
 
       
 
@@ -2974,6 +3035,11 @@ Attributes
 
       
 
+   .. py:attribute:: MICROSOFTAUTH
+      :value: 'MICROSOFTAUTH'
+
+      
+
 
 .. py:class:: PythonFunctionArgumentType
 
@@ -3468,6 +3534,65 @@ Attributes
       :value: 'DATE'
 
       
+
+
+.. py:class:: DataType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: INTEGER
+      :value: 'integer'
+
+      
+
+   .. py:attribute:: FLOAT
+      :value: 'float'
+
+      
+
+   .. py:attribute:: STRING
+      :value: 'string'
+
+      
+
+   .. py:attribute:: DATE
+      :value: 'date'
+
+      
+
+   .. py:attribute:: DATETIME
+      :value: 'datetime'
+
+      
+
+   .. py:attribute:: BOOLEAN
+      :value: 'boolean'
+
+      
+
+   .. py:attribute:: LIST
+      :value: 'list'
+
+      
+
+   .. py:attribute:: STRUCT
+      :value: 'struct'
+
+      
+
+   .. py:attribute:: NULL
+      :value: 'null'
+
+      
+
+   .. py:method:: from_str(value)
+      :classmethod:
+
 
 
 .. py:class:: SamplingConfig
@@ -4901,6 +5026,8 @@ Attributes
    :type disable_data_summarization: bool
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
+   :param database_connector_id: Database connector id to use for the chatllm.
+   :type database_connector_id: str
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -4969,6 +5096,11 @@ Attributes
 
    .. py:attribute:: search_score_cutoff
       :type: float
+
+      
+
+   .. py:attribute:: database_connector_id
+      :type: str
 
       
 
@@ -8703,7 +8835,7 @@ Attributes
       :param column: The name of the column.
       :type column: str
       :param data_type: The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
-      :type data_type: str
+      :type data_type: DataType
 
       :returns: The dataset and schema after the data type has been set.
       :rtype: Dataset
@@ -10886,7 +11018,7 @@ Attributes
       :rtype: AgentDataExecutionResult
 
 
-   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
+   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, batch_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -10896,10 +11028,8 @@ Attributes
       :type table_name: str
       :param name: Name of the batch prediction job.
       :type name: str
-      :param global_prediction_args: Batch Prediction args specific to problem type.
-      :type global_prediction_args: BatchPredictionArgs
-      :param explanations: If true, SHAP explanations will be provided for each prediction, if supported by the use case.
-      :type explanations: bool
+      :param batch_prediction_args: Batch Prediction args specific to problem type.
+      :type batch_prediction_args: BatchPredictionArgs
       :param output_format: Format of the batch prediction output (CSV or JSON).
       :type output_format: str
       :param output_location: Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
@@ -10938,7 +11068,7 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: update_batch_prediction(batch_prediction_id, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
+   .. py:method:: update_batch_prediction(batch_prediction_id, deployment_id = None, global_prediction_args = None, batch_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
 
       Update a batch prediction job description.
 
@@ -10946,10 +11076,8 @@ Attributes
       :type batch_prediction_id: str
       :param deployment_id: Unique identifier of the deployment.
       :type deployment_id: str
-      :param global_prediction_args: Batch Prediction args specific to problem type.
-      :type global_prediction_args: BatchPredictionArgs
-      :param explanations: If True, SHAP explanations for each prediction will be provided, if supported by the use case.
-      :type explanations: bool
+      :param batch_prediction_args: Batch Prediction args specific to problem type.
+      :type batch_prediction_args: BatchPredictionArgs
       :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
       :type output_format: str
       :param csv_input_prefix: Prefix to prepend to the input columns, only applies when output format is CSV.
@@ -11229,22 +11357,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: upsert_data(feature_group_id, streaming_token = None, data = None)
-
-      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
-      :type streaming_token: str
-      :param data: The data to record, in JSON format.
-      :type data: dict
-
-      :returns: The feature group row that was upserted.
-      :rtype: FeatureGroupRow
-
-
-   .. py:method:: upsert_online_data(feature_group_id, data, streaming_token = None)
+   .. py:method:: upsert_data(feature_group_id, data, streaming_token = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -12218,7 +12331,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, theme = None, deployment_id = None)
+   .. py:method:: update_external_application(external_application_id, name = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
 
       Updates an External Application.
 
@@ -12230,6 +12343,10 @@ Attributes
       :type theme: dict
       :param deployment_id: The ID of the deployment to use.
       :type deployment_id: str
+      :param deployment_conversation_retention_hours: The number of hours to retain the conversations for.
+      :type deployment_conversation_retention_hours: int
+      :param reset_retention_policy: If true, the retention policy will be removed.
+      :type reset_retention_policy: bool
 
       :returns: The updated External Application.
       :rtype: ExternalApplication
@@ -15611,7 +15728,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.1.5'
+   :value: '1.1.6'
 
    
 

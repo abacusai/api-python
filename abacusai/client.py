@@ -33,11 +33,11 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    BatchPredictionArgs, BlobInput, DatasetConfig, DocumentProcessingConfig,
-    DocumentRetrieverConfig, EvalArtifactType, FeatureGroupExportConfig,
-    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
-    MergeConfig, ParsingConfig, ProblemType, PythonFunctionType,
-    SamplingConfig, TrainingConfig
+    BatchPredictionArgs, BlobInput, DatasetConfig, DataType,
+    DocumentProcessingConfig, DocumentRetrieverConfig, EvalArtifactType,
+    FeatureGroupExportConfig, ForecastingMonitorConfig,
+    IncrementalDatabaseConnectorConfig, LLMName, MergeConfig, ParsingConfig,
+    ProblemType, PythonFunctionType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, clean_column_name,
@@ -575,7 +575,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.1.5'
+    client_version = '1.1.6'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -5026,13 +5026,13 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created by taking a snapshot of the current data in the streaming dataset."""
         return self._call_api('snapshotStreamingData', 'POST', query_params={'datasetId': dataset_id}, body={}, parse_type=DatasetVersion)
 
-    def set_dataset_column_data_type(self, dataset_id: str, column: str, data_type: str) -> Dataset:
+    def set_dataset_column_data_type(self, dataset_id: str, column: str, data_type: Union[DataType, str]) -> Dataset:
         """Set a Dataset's column type.
 
         Args:
             dataset_id (str): The unique ID associated with the dataset.
             column (str): The name of the column.
-            data_type (str): The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
+            data_type (DataType): The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
 
         Returns:
             Dataset: The dataset and schema after the data type has been set."""
@@ -6717,15 +6717,14 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id, deployment_token) if deployment_token else None
         return self._call_api('executeAgentWithBinaryData', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, data={'arguments': json.dumps(arguments) if (arguments is not None and not isinstance(arguments, str)) else arguments, 'keywordArguments': json.dumps(keyword_arguments) if (keyword_arguments is not None and not isinstance(keyword_arguments, str)) else keyword_arguments, 'deploymentConversationId': json.dumps(deployment_conversation_id) if (deployment_conversation_id is not None and not isinstance(deployment_conversation_id, str)) else deployment_conversation_id, 'externalSessionId': json.dumps(external_session_id) if (external_session_id is not None and not isinstance(external_session_id, str)) else external_session_id}, parse_type=AgentDataExecutionResult, files=blobs, server_override=prediction_url, timeout=1500)
 
-    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
+    def create_batch_prediction(self, deployment_id: str, table_name: str = None, name: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = False, output_format: str = None, output_location: str = None, database_connector_id: str = None, database_output_config: dict = None, refresh_schedule: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, input_feature_groups: dict = None) -> BatchPrediction:
         """Creates a batch prediction job description for the given deployment.
 
         Args:
             deployment_id (str): Unique string identifier for the deployment.
             table_name (str): Name of the feature group table to write the results of the batch prediction. Can only be specified if outputLocation and databaseConnectorId are not specified. If tableName is specified, the outputType will be enforced as CSV.
             name (str): Name of the batch prediction job.
-            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
-            explanations (bool): If true, SHAP explanations will be provided for each prediction, if supported by the use case.
+            batch_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             output_format (str): Format of the batch prediction output (CSV or JSON).
             output_location (str): Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
             database_connector_id (str): Unique identifier of a Database Connection to write predictions to. Cannot be specified in conjunction with outputLocation.
@@ -6740,7 +6739,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             BatchPrediction: The batch prediction description."""
-        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'tableName': table_name, 'name': name, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns, 'inputFeatureGroups': input_feature_groups}, parse_type=BatchPrediction)
+        return self._call_api('createBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'tableName': table_name, 'name': name, 'globalPredictionArgs': global_prediction_args, 'batchPredictionArgs': batch_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'outputLocation': output_location, 'databaseConnectorId': database_connector_id, 'databaseOutputConfig': database_output_config, 'refreshSchedule': refresh_schedule, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns, 'inputFeatureGroups': input_feature_groups}, parse_type=BatchPrediction)
 
     def start_batch_prediction(self, batch_prediction_id: str) -> BatchPredictionVersion:
         """Creates a new batch prediction version job for a given batch prediction job description.
@@ -6752,14 +6751,13 @@ Creates a new feature group defined as the union of other feature group versions
             BatchPredictionVersion: The batch prediction version started by this method call."""
         return self._call_api('startBatchPrediction', 'POST', query_params={}, body={'batchPredictionId': batch_prediction_id}, parse_type=BatchPredictionVersion)
 
-    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None) -> BatchPrediction:
+    def update_batch_prediction(self, batch_prediction_id: str, deployment_id: str = None, global_prediction_args: Union[dict, BatchPredictionArgs] = None, batch_prediction_args: Union[dict, BatchPredictionArgs] = None, explanations: bool = None, output_format: str = None, csv_input_prefix: str = None, csv_prediction_prefix: str = None, csv_explanations_prefix: str = None, output_includes_metadata: bool = None, result_input_columns: list = None, name: str = None) -> BatchPrediction:
         """Update a batch prediction job description.
 
         Args:
             batch_prediction_id (str): Unique identifier of the batch prediction.
             deployment_id (str): Unique identifier of the deployment.
-            global_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
-            explanations (bool): If True, SHAP explanations for each prediction will be provided, if supported by the use case.
+            batch_prediction_args (BatchPredictionArgs): Batch Prediction args specific to problem type.
             output_format (str): If specified, sets the format of the batch prediction output (CSV or JSON).
             csv_input_prefix (str): Prefix to prepend to the input columns, only applies when output format is CSV.
             csv_prediction_prefix (str): Prefix to prepend to the prediction columns, only applies when output format is CSV.
@@ -6770,7 +6768,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             BatchPrediction: The batch prediction."""
-        return self._call_api('updateBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'batchPredictionId': batch_prediction_id, 'globalPredictionArgs': global_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns, 'name': name}, parse_type=BatchPrediction)
+        return self._call_api('updateBatchPrediction', 'POST', query_params={'deploymentId': deployment_id}, body={'batchPredictionId': batch_prediction_id, 'globalPredictionArgs': global_prediction_args, 'batchPredictionArgs': batch_prediction_args, 'explanations': explanations, 'outputFormat': output_format, 'csvInputPrefix': csv_input_prefix, 'csvPredictionPrefix': csv_prediction_prefix, 'csvExplanationsPrefix': csv_explanations_prefix, 'outputIncludesMetadata': output_includes_metadata, 'resultInputColumns': result_input_columns, 'name': name}, parse_type=BatchPrediction)
 
     def set_batch_prediction_file_connector_output(self, batch_prediction_id: str, output_format: str = None, output_location: str = None) -> BatchPrediction:
         """Updates the file connector output configuration of the batch prediction
@@ -6983,19 +6981,7 @@ Creates a new feature group defined as the union of other feature group versions
             streaming_token, feature_group_id=feature_group_id)
         return self._call_api('appendMultipleData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, server_override=prediction_url)
 
-    def upsert_data(self, feature_group_id: str, streaming_token: str = None, data: dict = None) -> FeatureGroupRow:
-        """Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-        Args:
-            feature_group_id (str): A unique string identifier of the streaming feature group to record data to.
-            streaming_token (str): Optional streaming token for authenticating requests if upserting to streaming FG.
-            data (dict): The data to record, in JSON format.
-
-        Returns:
-            FeatureGroupRow: The feature group row that was upserted."""
-        return self._proxy_request('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
-
-    def upsert_online_data(self, feature_group_id: str, data: dict, streaming_token: str = None) -> FeatureGroupRow:
+    def upsert_data(self, feature_group_id: str, data: dict, streaming_token: str = None) -> FeatureGroupRow:
         """Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
         Args:
@@ -7005,7 +6991,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             FeatureGroupRow: The feature group row that was upserted."""
-        return self._proxy_request('upsertOnlineData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
+        return self._proxy_request('upsertData', 'POST', query_params={'streamingToken': streaming_token}, body={'featureGroupId': feature_group_id, 'data': data}, parse_type=FeatureGroupRow, is_sync=True)
 
     def delete_data(self, feature_group_id: str, primary_key: str):
         """Deletes a row from the feature group given the primary key
@@ -7764,7 +7750,7 @@ Creates a new feature group defined as the union of other feature group versions
             ExternalApplication: The newly created External Application."""
         return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
 
-    def update_external_application(self, external_application_id: str, name: str = None, theme: dict = None, deployment_id: str = None) -> ExternalApplication:
+    def update_external_application(self, external_application_id: str, name: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False) -> ExternalApplication:
         """Updates an External Application.
 
         Args:
@@ -7772,10 +7758,12 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The name of the External Application.
             theme (dict): The visual theme of the External Application.
             deployment_id (str): The ID of the deployment to use.
+            deployment_conversation_retention_hours (int): The number of hours to retain the conversations for.
+            reset_retention_policy (bool): If true, the retention policy will be removed.
 
         Returns:
             ExternalApplication: The updated External Application."""
-        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme}, parse_type=ExternalApplication)
+        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy}, parse_type=ExternalApplication)
 
     def delete_external_application(self, external_application_id: str):
         """Deletes an External Application.

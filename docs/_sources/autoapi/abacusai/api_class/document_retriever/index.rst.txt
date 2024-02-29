@@ -33,6 +33,8 @@ Classes
    :type text_encoder: VectorStoreTextEncoder
    :param chunk_size_factors: Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to `chunk_size`.
    :type chunk_size_factors: list
+   :param score_multiplier_column: If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.
+   :type score_multiplier_column: str
 
    .. py:attribute:: chunk_size
       :type: int
@@ -51,6 +53,11 @@ Classes
 
    .. py:attribute:: chunk_size_factors
       :type: list
+
+      
+
+   .. py:attribute:: score_multiplier_column
+      :type: str
 
       
 

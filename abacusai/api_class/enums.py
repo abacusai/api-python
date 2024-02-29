@@ -350,6 +350,7 @@ class ApplicationConnectorType(ApiEnum):
     SHAREPOINT = 'SHAREPOINT'
     TEAMS = 'TEAMS'
     ABACUSUSAGEMETRICS = 'ABACUSUSAGEMETRICS'
+    MICROSOFTAUTH = 'MICROSOFTAUTH'
 
 
 class PythonFunctionArgumentType(ApiEnum):
@@ -476,3 +477,22 @@ class OcrMode(ApiEnum):
     COMPREHENSIVE = 'COMPREHENSIVE'
     COMPREHENSIVE_V2 = 'COMPREHENSIVE_V2'
     COMPREHENSIVE_TABLE_MD = 'COMPREHENSIVE_TABLE_MD'
+
+
+class DataType(ApiEnum):
+    INTEGER = 'integer'
+    FLOAT = 'float'
+    STRING = 'string'
+    DATE = 'date'
+    DATETIME = 'datetime'
+    BOOLEAN = 'boolean'
+    LIST = 'list'
+    STRUCT = 'struct'
+    NULL = 'null'
+
+    @classmethod
+    def from_str(cls, value):
+        if not value:
+            return None
+        default_map = {val.value: val for val in DataType}
+        return default_map[value.lower()]

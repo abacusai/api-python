@@ -351,7 +351,7 @@ Classes
       :type attachments: None
 
 
-   .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
+   .. py:method:: create_batch_prediction(table_name = None, name = None, global_prediction_args = None, batch_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -359,10 +359,8 @@ Classes
       :type table_name: str
       :param name: Name of the batch prediction job.
       :type name: str
-      :param global_prediction_args: Batch Prediction args specific to problem type.
-      :type global_prediction_args: BatchPredictionArgs
-      :param explanations: If true, SHAP explanations will be provided for each prediction, if supported by the use case.
-      :type explanations: bool
+      :param batch_prediction_args: Batch Prediction args specific to problem type.
+      :type batch_prediction_args: BatchPredictionArgs
       :param output_format: Format of the batch prediction output (CSV or JSON).
       :type output_format: str
       :param output_location: Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.

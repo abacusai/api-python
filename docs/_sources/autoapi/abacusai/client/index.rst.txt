@@ -487,7 +487,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.1.5'
+      :value: '1.1.6'
 
       
 
@@ -5084,7 +5084,7 @@ Attributes
       :param column: The name of the column.
       :type column: str
       :param data_type: The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
-      :type data_type: str
+      :type data_type: DataType
 
       :returns: The dataset and schema after the data type has been set.
       :rtype: Dataset
@@ -7267,7 +7267,7 @@ Attributes
       :rtype: AgentDataExecutionResult
 
 
-   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
+   .. py:method:: create_batch_prediction(deployment_id, table_name = None, name = None, global_prediction_args = None, batch_prediction_args = None, explanations = False, output_format = None, output_location = None, database_connector_id = None, database_output_config = None, refresh_schedule = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, input_feature_groups = None)
 
       Creates a batch prediction job description for the given deployment.
 
@@ -7277,10 +7277,8 @@ Attributes
       :type table_name: str
       :param name: Name of the batch prediction job.
       :type name: str
-      :param global_prediction_args: Batch Prediction args specific to problem type.
-      :type global_prediction_args: BatchPredictionArgs
-      :param explanations: If true, SHAP explanations will be provided for each prediction, if supported by the use case.
-      :type explanations: bool
+      :param batch_prediction_args: Batch Prediction args specific to problem type.
+      :type batch_prediction_args: BatchPredictionArgs
       :param output_format: Format of the batch prediction output (CSV or JSON).
       :type output_format: str
       :param output_location: Location to write the prediction results. Otherwise, results will be stored in Abacus.AI.
@@ -7319,7 +7317,7 @@ Attributes
       :rtype: BatchPredictionVersion
 
 
-   .. py:method:: update_batch_prediction(batch_prediction_id, deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
+   .. py:method:: update_batch_prediction(batch_prediction_id, deployment_id = None, global_prediction_args = None, batch_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
 
       Update a batch prediction job description.
 
@@ -7327,10 +7325,8 @@ Attributes
       :type batch_prediction_id: str
       :param deployment_id: Unique identifier of the deployment.
       :type deployment_id: str
-      :param global_prediction_args: Batch Prediction args specific to problem type.
-      :type global_prediction_args: BatchPredictionArgs
-      :param explanations: If True, SHAP explanations for each prediction will be provided, if supported by the use case.
-      :type explanations: bool
+      :param batch_prediction_args: Batch Prediction args specific to problem type.
+      :type batch_prediction_args: BatchPredictionArgs
       :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
       :type output_format: str
       :param csv_input_prefix: Prefix to prepend to the input columns, only applies when output format is CSV.
@@ -7610,22 +7606,7 @@ Attributes
       :type data: list
 
 
-   .. py:method:: upsert_data(feature_group_id, streaming_token = None, data = None)
-
-      Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
-
-      :param feature_group_id: A unique string identifier of the streaming feature group to record data to.
-      :type feature_group_id: str
-      :param streaming_token: Optional streaming token for authenticating requests if upserting to streaming FG.
-      :type streaming_token: str
-      :param data: The data to record, in JSON format.
-      :type data: dict
-
-      :returns: The feature group row that was upserted.
-      :rtype: FeatureGroupRow
-
-
-   .. py:method:: upsert_online_data(feature_group_id, data, streaming_token = None)
+   .. py:method:: upsert_data(feature_group_id, data, streaming_token = None)
 
       Update new data into the feature group for a given lookup key record ID if the record ID is found; otherwise, insert new data into the feature group.
 
@@ -8599,7 +8580,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, theme = None, deployment_id = None)
+   .. py:method:: update_external_application(external_application_id, name = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
 
       Updates an External Application.
 
@@ -8611,6 +8592,10 @@ Attributes
       :type theme: dict
       :param deployment_id: The ID of the deployment to use.
       :type deployment_id: str
+      :param deployment_conversation_retention_hours: The number of hours to retain the conversations for.
+      :type deployment_conversation_retention_hours: int
+      :param reset_retention_policy: If true, the retention policy will be removed.
+      :type reset_retention_policy: bool
 
       :returns: The updated External Application.
       :rtype: ExternalApplication

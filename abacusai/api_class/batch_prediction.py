@@ -24,9 +24,11 @@ class AnomalyOutliersBatchPredictionArgs(BatchPredictionArgs):
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         threshold (float): The threshold for detecting an anomaly. Range: [0.8, 0.99]
+        explain_predictions (bool): If True, calculates explanations for the predicted values along with predictions.
     """
     for_eval: bool = dataclasses.field(default=None)
     threshold: float = dataclasses.field(default=None)
+    explain_predictions: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.ANOMALY_OUTLIERS
@@ -44,7 +46,8 @@ class ForecastingBatchPredictionArgs(BatchPredictionArgs):
        start_date_offset (int): Sets prediction start date as this offset relative to the prediction start date.
        forecasting_horizon (int): The number of timestamps to predict in the future. Range: [1, 1000].
        item_attributes_to_include_in_the_result (list): List of columns to include in the prediction output.
-       explain_predictions (bool): If True, explain predictions for the forecast.
+       explain_predictions (bool): If True, calculates explanations for the forecasted values along with predictions.
+       automate_monitoring (bool): If True, creates a monitor to calculate the drift for the batch prediction.
     """
     for_eval: bool = dataclasses.field(default=None)
     predictions_start_date: str = dataclasses.field(default=None)
@@ -53,6 +56,7 @@ class ForecastingBatchPredictionArgs(BatchPredictionArgs):
     forecasting_horizon: int = dataclasses.field(default=None)
     item_attributes_to_include_in_the_result: list = dataclasses.field(default=None)
     explain_predictions: bool = dataclasses.field(default=None)
+    automate_monitoring: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.FORECASTING
@@ -110,6 +114,8 @@ class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
        explanation_filter_upper_bound (float): If set explanations will be limited to predictions below this value, Range: [0, 1].
        bound_label (str): For classification problems specifies the label to which the explanation bounds are applied.
        output_columns (list): A list of column names to include in the prediction result.
+       explain_predictions (bool): If True, calculates explanations for the predicted values along with predictions.
+       automate_monitoring (bool): If True, creates a monitor to calculate the drift for the batch prediction.
     """
     for_eval: bool = dataclasses.field(default=None)
     explainer_type: enums.ExplainerType = dataclasses.field(default=None)
@@ -121,6 +127,8 @@ class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
     explanation_filter_upper_bound: float = dataclasses.field(default=None)
     explanation_filter_label: str = dataclasses.field(default=None)
     output_columns: list = dataclasses.field(default=None)
+    explain_predictions: bool = dataclasses.field(default=None)
+    automate_monitoring: bool = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.PREDICTIVE_MODELING
@@ -195,6 +203,21 @@ class ChatLLMBatchPredictionArgs(BatchPredictionArgs):
 
 
 @dataclasses.dataclass
+class TrainablePlugAndPlayBatchPredictionArgs(BatchPredictionArgs):
+    """
+    Batch Prediction Config for the TrainablePlugAndPlay problem type
+
+    Args:
+        automate_monitoring (bool): If True, creates a monitor to calculate the drift for the batch prediction.
+    """
+    for_eval: bool = dataclasses.field(default=None)
+    automate_monitoring: bool = dataclasses.field(default=None)
+
+    def __post_init__(self):
+        self.problem_type = enums.ProblemType.CUSTOM_ALGORITHM
+
+
+@dataclasses.dataclass
 class _BatchPredictionArgsFactory(_ApiClassFactory):
     config_abstract_class = BatchPredictionArgs
     config_class_key = 'problem_type'
@@ -208,4 +231,5 @@ class _BatchPredictionArgsFactory(_ApiClassFactory):
         enums.ProblemType.SENTENCE_BOUNDARY_DETECTION: SentenceBoundaryDetectionBatchPredictionArgs,
         enums.ProblemType.THEME_ANALYSIS: ThemeAnalysisBatchPredictionArgs,
         enums.ProblemType.CHAT_LLM: ChatLLMBatchPredictionArgs,
+        enums.ProblemType.CUSTOM_ALGORITHM: TrainablePlugAndPlayBatchPredictionArgs,
     }

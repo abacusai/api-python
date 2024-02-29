@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -40,7 +40,7 @@ Classes
    :type databaseConnectorId: str
    :param databaseOutputConfiguration: Contains information about where the batch predictions are written to.
    :type databaseOutputConfiguration: dict
-   :param explanations: If true, explanations for each prediction will be created.
+   :param explanations:
    :type explanations: bool
    :param fileOutputFormat: The format of the batch prediction output (CSV or JSON).
    :type fileOutputFormat: str
@@ -48,7 +48,7 @@ Classes
    :type connectorType: str
    :param legacyInputLocation: The location of the input data.
    :type legacyInputLocation: str
-   :param outputFeatureGroupId: The BP output feature group id if applicable
+   :param outputFeatureGroupId: The Batch Prediction output feature group ID if applicable
    :type outputFeatureGroupId: str
    :param featureGroupTableName: The table name of the Batch Prediction output feature group.
    :type featureGroupTableName: str
@@ -137,16 +137,14 @@ Classes
       :rtype: list[BatchPredictionVersion]
 
 
-   .. py:method:: update(deployment_id = None, global_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
+   .. py:method:: update(deployment_id = None, global_prediction_args = None, batch_prediction_args = None, explanations = None, output_format = None, csv_input_prefix = None, csv_prediction_prefix = None, csv_explanations_prefix = None, output_includes_metadata = None, result_input_columns = None, name = None)
 
       Update a batch prediction job description.
 
       :param deployment_id: Unique identifier of the deployment.
       :type deployment_id: str
-      :param global_prediction_args: Batch Prediction args specific to problem type.
-      :type global_prediction_args: BatchPredictionArgs
-      :param explanations: If True, SHAP explanations for each prediction will be provided, if supported by the use case.
-      :type explanations: bool
+      :param batch_prediction_args: Batch Prediction args specific to problem type.
+      :type batch_prediction_args: BatchPredictionArgs
       :param output_format: If specified, sets the format of the batch prediction output (CSV or JSON).
       :type output_format: str
       :param csv_input_prefix: Prefix to prepend to the input columns, only applies when output format is CSV.

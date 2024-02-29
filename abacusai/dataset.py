@@ -1,6 +1,6 @@
 from typing import Union
 
-from .api_class import DatasetConfig, DocumentProcessingConfig, ParsingConfig
+from .api_class import DatasetConfig, DataType, DocumentProcessingConfig, ParsingConfig
 from .dataset_column import DatasetColumn
 from .dataset_version import DatasetVersion
 from .refresh_schedule import RefreshSchedule
@@ -152,13 +152,13 @@ class Dataset(AbstractApiClass):
         """
         return self.client.snapshot_streaming_data(self.dataset_id)
 
-    def set_column_data_type(self, column: str, data_type: str):
+    def set_column_data_type(self, column: str, data_type: Union[dict, DataType]):
         """
         Set a Dataset's column type.
 
         Args:
             column (str): The name of the column.
-            data_type (str): The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
+            data_type (DataType): The type of the data in the column. Note: Some ColumnMappings may restrict the options or explicitly set the DataType.
 
         Returns:
             Dataset: The dataset and schema after the data type has been set.
