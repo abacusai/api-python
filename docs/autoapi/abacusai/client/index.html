@@ -215,8 +215,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../prediction_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_input</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../prediction_metric/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../prediction_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_operator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_operator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_operator_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_operator_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
@@ -230,6 +228,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function_validator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../realtime_monitor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.realtime_monitor</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_schedule</span></code></a></li>
@@ -838,7 +837,7 @@ encounters an unexpected error while processing the request.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.client.BaseApiClient.client_version">
-<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.1.6'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">client_version</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.1.7'</span></em><a class="headerlink" href="#abacusai.client.BaseApiClient.client_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3027,6 +3026,40 @@ encounters an unexpected error while processing the request.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../monitor_alert/index.html#abacusai.monitor_alert.MonitorAlert" title="abacusai.monitor_alert.MonitorAlert">MonitorAlert</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.list_realtime_monitors">
+<span class="sig-name descname"><span class="pre">list_realtime_monitors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.list_realtime_monitors" title="Permalink to this definition"></a></dt>
+<dd><p>List the real-time monitors associated with the deployment id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the deployment.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An array of real-time monitors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)">list</a>[<a class="reference internal" href="../realtime_monitor/index.html#abacusai.realtime_monitor.RealtimeMonitor" title="abacusai.realtime_monitor.RealtimeMonitor">RealtimeMonitor</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ReadOnlyClient.describe_realtime_monitor">
+<span class="sig-name descname"><span class="pre">describe_realtime_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realtime_monitor_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ReadOnlyClient.describe_realtime_monitor" title="Permalink to this definition"></a></dt>
+<dd><p>Get the real-time monitor associated with the real-time monitor id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>realtime_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the real-time monitor.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the real-time monitor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../realtime_monitor/index.html#abacusai.realtime_monitor.RealtimeMonitor" title="abacusai.realtime_monitor.RealtimeMonitor">RealtimeMonitor</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -6928,7 +6961,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>incremental</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the dataset is an incremental dataset.</p></li>
 <li><p><strong>is_documentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.</p></li>
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.</p></li>
-<li><p><strong>document_processing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.DocumentProcessingConfig" title="abacusai.api_class.dataset.DocumentProcessingConfig"><em>DocumentProcessingConfig</em></a>) – The document processing configuration. Only valid if is_documentset is True.</p></li>
+<li><p><strong>document_processing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><em>DatasetDocumentProcessingConfig</em></a>) – The document processing configuration. Only valid if is_documentset is True.</p></li>
 <li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.</p></li>
 <li><p><strong>reference_only_documentset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies if the data reference only policy is enabled.</p></li>
 <li><p><strong>parsing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><em>ParsingConfig</em></a>) – Custom config for dataset parsing.</p></li>
@@ -7073,7 +7106,7 @@ feature groups for those input feature groups.</p>
 <li><p><strong>extract_bounding_boxes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.</p></li>
 <li><p><strong>parsing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.ParsingConfig" title="abacusai.api_class.dataset.ParsingConfig"><em>ParsingConfig</em></a>) – Custom config for dataset parsing.</p></li>
 <li><p><strong>merge_file_schemas</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.</p></li>
-<li><p><strong>document_processing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.DocumentProcessingConfig" title="abacusai.api_class.dataset.DocumentProcessingConfig"><em>DocumentProcessingConfig</em></a>) – The document processing configuration. Only valid if is_documentset is True.</p></li>
+<li><p><strong>document_processing_config</strong> (<a class="reference internal" href="../api_class/dataset/index.html#abacusai.api_class.dataset.DatasetDocumentProcessingConfig" title="abacusai.api_class.dataset.DatasetDocumentProcessingConfig"><em>DatasetDocumentProcessingConfig</em></a>) – The document processing configuration. Only valid if is_documentset is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -8150,16 +8183,17 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_monitor_alert">
-<span class="sig-name descname"><span class="pre">create_monitor_alert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alert_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_monitor_alert" title="Permalink to this definition"></a></dt>
-<dd><p>Create a monitor alert for the given conditions and monitor</p>
+<span class="sig-name descname"><span class="pre">create_monitor_alert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alert_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realtime_monitor_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_monitor_alert" title="Permalink to this definition"></a></dt>
+<dd><p>Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>project_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the project.</p></li>
-<li><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the model monitor created under the project.</p></li>
 <li><p><strong>alert_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the alert.</p></li>
 <li><p><strong>condition_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.AlertConditionConfig" title="abacusai.api_class.AlertConditionConfig"><em>AlertConditionConfig</em></a>) – Condition to run the actions for the alert.</p></li>
 <li><p><strong>action_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.AlertActionConfig" title="abacusai.api_class.AlertActionConfig"><em>AlertActionConfig</em></a>) – Configuration for the action of the alert.</p></li>
+<li><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the model monitor created under the project.</p></li>
+<li><p><strong>realtime_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the real-time monitor for the deployment created under the project.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -8569,6 +8603,27 @@ feature groups for those input feature groups.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.set_default_prediction_arguments">
+<span class="sig-name descname"><span class="pre">set_default_prediction_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_arguments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_as_override</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.set_default_prediction_arguments" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the deployment config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for a deployment created under the project.</p></li>
+<li><p><strong>prediction_arguments</strong> (<a class="reference internal" href="../api_class/deployment/index.html#abacusai.api_class.deployment.PredictionArguments" title="abacusai.api_class.deployment.PredictionArguments"><em>PredictionArguments</em></a>) – The prediction arguments to set.</p></li>
+<li><p><strong>set_as_override</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, use these arguments as overrides instead of defaults for predict calls</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>description of the updated deployment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../deployment/index.html#abacusai.deployment.Deployment" title="abacusai.deployment.Deployment">Deployment</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_deployment_alert">
 <span class="sig-name descname"><span class="pre">create_deployment_alert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alert_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_deployment_alert" title="Permalink to this definition"></a></dt>
 <dd><p>Create a deployment alert for the given conditions.</p>
@@ -8587,6 +8642,59 @@ feature groups for those input feature groups.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../monitor_alert/index.html#abacusai.monitor_alert.MonitorAlert" title="abacusai.monitor_alert.MonitorAlert">MonitorAlert</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.create_realtime_monitor">
+<span class="sig-name descname"><span class="pre">create_realtime_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realtime_monitor_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_realtime_monitor" title="Permalink to this definition"></a></dt>
+<dd><p>Real time monitors compute and monitor metrics of real time prediction data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the deployment.</p></li>
+<li><p><strong>realtime_monitor_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The cron expression for triggering monitor.</p></li>
+<li><p><strong>lookback_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Lookback time (in seconds) for each monitor trigger</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the real-time monitor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../realtime_monitor/index.html#abacusai.realtime_monitor.RealtimeMonitor" title="abacusai.realtime_monitor.RealtimeMonitor">RealtimeMonitor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.update_realtime_monitor">
+<span class="sig-name descname"><span class="pre">update_realtime_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realtime_monitor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realtime_monitor_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lookback_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_realtime_monitor" title="Permalink to this definition"></a></dt>
+<dd><p>Update the real-time monitor associated with the real-time monitor id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>realtime_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the real-time monitor.</p></li>
+<li><p><strong>realtime_monitor_schedule</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The cron expression for triggering monitor</p></li>
+<li><p><strong>lookback_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Lookback time (in seconds) for each monitor trigger</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Object describing the realtime monitor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../realtime_monitor/index.html#abacusai.realtime_monitor.RealtimeMonitor" title="abacusai.realtime_monitor.RealtimeMonitor">RealtimeMonitor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.client.ApiClient.delete_realtime_monitor">
+<span class="sig-name descname"><span class="pre">delete_realtime_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realtime_monitor_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.delete_realtime_monitor" title="Permalink to this definition"></a></dt>
+<dd><p>Delete the real-time monitor associated with the real-time monitor id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>realtime_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the real-time monitor.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -10749,7 +10857,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>python_function_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the Python function.</p></li>
 <li><p><strong>graph_dashboard_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the graph dashboard to update.</p></li>
-<li><p><strong>function_variable_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – List of arguments to be supplied to the function as parameters, in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
+<li><p><strong>function_variable_mappings</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of arguments to be supplied to the function as parameters, in the format [{‘name’: ‘function_argument’, ‘variable_type’: ‘FEATURE_GROUP’, ‘value’: ‘name_of_feature_group’}].</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the added python plot</p></li>
 </ul>
 </dd>
@@ -11413,13 +11521,14 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.create_external_application">
-<span class="sig-name descname"><span class="pre">create_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_external_application" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.create_external_application" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a new External Application from an existing ChatLLM Deployment.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the deployment to use.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the External Application. If not provided, the name of the deployment will be used.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.</p></li>
 <li><p><strong>logo</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The logo to be displayed.</p></li>
 <li><p><strong>theme</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The visual theme of the External Application.</p></li>
 </ul>
@@ -11435,13 +11544,14 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.client.ApiClient.update_external_application">
-<span class="sig-name descname"><span class="pre">update_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_retention_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_retention_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_external_application" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">update_external_application</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">external_application_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_conversation_retention_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset_retention_policy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.client.ApiClient.update_external_application" title="Permalink to this definition"></a></dt>
 <dd><p>Updates an External Application.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>external_application_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the External Application.</p></li>
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the External Application.</p></li>
+<li><p><strong>description</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The description of the External Application. This will be shown to users when they access the External Application.</p></li>
 <li><p><strong>theme</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The visual theme of the External Application.</p></li>
 <li><p><strong>deployment_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the deployment to use.</p></li>
 <li><p><strong>deployment_conversation_retention_hours</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The number of hours to retain the conversations for.</p></li>

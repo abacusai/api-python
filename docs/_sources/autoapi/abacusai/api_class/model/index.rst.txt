@@ -1099,8 +1099,6 @@ Classes
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
    :type sort_objective: NERObjective
-   :param ner_model_type: Type of NER model to use.
-   :type ner_model_type: NERModelType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
@@ -1128,11 +1126,6 @@ Classes
 
       
 
-   .. py:attribute:: ner_model_type
-      :type: abacusai.api_class.enums.NERModelType
-
-      
-
    .. py:attribute:: test_split
       :type: int
 
@@ -1150,11 +1143,6 @@ Classes
 
    .. py:attribute:: document_format
       :type: abacusai.api_class.enums.NLPDocumentFormat
-
-      
-
-   .. py:attribute:: include_longformer
-      :type: bool
 
       
 
@@ -1259,8 +1247,8 @@ Classes
    :type lookup_rewrite_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
-   :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
-   :param data_prompt_context: Prompt context for the data feature group ids.
+   :param data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
+   :param data_prompt_context: Prompt context for the data feature group IDs.
    :type data_prompt_context: str
    :param hide_generated_sql: When running data queries, hides the generated SQL in the response and will just return the table.
    :type hide_generated_sql: bool
@@ -1268,8 +1256,10 @@ Classes
    :type disable_data_summarization: bool
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
-   :param database_connector_id: Database connector id to use for the chatllm.
+   :param database_connector_id: Database connector ID to use for the ChatLLM.
    :type database_connector_id: str
+   :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
+   :type database_connector_tables: List[str]
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -1343,6 +1333,11 @@ Classes
 
    .. py:attribute:: database_connector_id
       :type: str
+
+      
+
+   .. py:attribute:: database_connector_tables
+      :type: List[str]
 
       
 

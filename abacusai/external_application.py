@@ -10,6 +10,7 @@ class ExternalApplication(AbstractApiClass):
             name (str): The name of the external application.
             externalApplicationId (str): The unique identifier of the external application.
             deploymentId (str): The deployment id associated with the external application.
+            description (str): The description of the external application.
             logo (str): The logo.
             theme (dict): The theme used for the External Application.
             userGroupIds (list): A list of App User Groups with access to this external application
@@ -18,11 +19,12 @@ class ExternalApplication(AbstractApiClass):
             deploymentConversationRetentionHours (int): The retention policy for the external application.
     """
 
-    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None):
+    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None):
         super().__init__(client, externalApplicationId)
         self.name = name
         self.external_application_id = externalApplicationId
         self.deployment_id = deploymentId
+        self.description = description
         self.logo = logo
         self.theme = theme
         self.user_group_ids = userGroupIds
@@ -32,7 +34,7 @@ class ExternalApplication(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'logo': repr(self.logo), f'theme': repr(
+        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(
             self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'status': repr(self.status), f'deployment_conversation_retention_hours': repr(self.deployment_conversation_retention_hours)}
         class_name = "ExternalApplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
@@ -46,16 +48,17 @@ class ExternalApplication(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'logo': self.logo, 'theme': self.theme,
+        resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'description': self.description, 'logo': self.logo, 'theme': self.theme,
                 'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'status': self.status, 'deployment_conversation_retention_hours': self.deployment_conversation_retention_hours}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def update(self, name: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False):
+    def update(self, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False):
         """
         Updates an External Application.
 
         Args:
             name (str): The name of the External Application.
+            description (str): The description of the External Application. This will be shown to users when they access the External Application.
             theme (dict): The visual theme of the External Application.
             deployment_id (str): The ID of the deployment to use.
             deployment_conversation_retention_hours (int): The number of hours to retain the conversations for.
@@ -64,7 +67,7 @@ class ExternalApplication(AbstractApiClass):
         Returns:
             ExternalApplication: The updated External Application.
         """
-        return self.client.update_external_application(self.external_application_id, name, theme, deployment_id, deployment_conversation_retention_hours, reset_retention_policy)
+        return self.client.update_external_application(self.external_application_id, name, description, theme, deployment_id, deployment_conversation_retention_hours, reset_retention_policy)
 
     def refresh(self):
         """

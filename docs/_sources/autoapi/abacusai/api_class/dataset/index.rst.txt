@@ -14,6 +14,7 @@ Classes
 
    abacusai.api_class.dataset.ParsingConfig
    abacusai.api_class.dataset.DocumentProcessingConfig
+   abacusai.api_class.dataset.DatasetDocumentProcessingConfig
    abacusai.api_class.dataset.IncrementalDatabaseConnectorConfig
 
 
@@ -94,6 +95,34 @@ Classes
    .. py:attribute:: convert_to_markdown
       :type: bool
       :value: False
+
+      
+
+
+.. py:class:: DatasetDocumentProcessingConfig
+
+
+   Bases: :py:obj:`DocumentProcessingConfig`
+
+   Document processing configuration for dataset imports.
+
+   :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
+   :type extract_bounding_boxes: bool
+   :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
+   :type ocr_mode: OcrMode
+   :param use_full_ocr: Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type use_full_ocr: bool
+   :param remove_header_footer: Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_header_footer: bool
+   :param remove_watermarks: Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_watermarks: bool
+   :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type convert_to_markdown: bool
+   :param page_text_column: Name of the output column which contains the extracted text for each page. If not provided, no column will be created.
+   :type page_text_column: str
+
+   .. py:attribute:: page_text_column
+      :type: str
 
       
 

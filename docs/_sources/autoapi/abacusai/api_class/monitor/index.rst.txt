@@ -13,6 +13,8 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.monitor.ForecastingMonitorConfig
+   abacusai.api_class.monitor.StdDevThreshold
+   abacusai.api_class.monitor.ItemAttributesStdDevThreshold
 
 
 
@@ -47,6 +49,66 @@ Classes
 
    .. py:attribute:: end_time
       :type: str
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: StdDevThreshold
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Std Dev Threshold types
+
+   :param threshold_type: Type of threshold to apply to the item attributes.
+   :type threshold_type: StdDevThresholdType
+   :param value: Value to use for the threshold.
+   :type value: float
+
+   .. py:attribute:: threshold_type
+      :type: abacusai.api_class.enums.StdDevThresholdType
+
+      
+
+   .. py:attribute:: value
+      :type: float
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: ItemAttributesStdDevThreshold
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Item Attributes Std Dev Threshold for Monitor Alerts
+
+   :param lower_bound: Lower bound for the item attributes.
+   :type lower_bound: StdDevThreshold
+   :param upper_bound: Upper bound for the item attributes.
+   :type upper_bound: StdDevThreshold
+
+   .. py:attribute:: lower_bound
+      :type: StdDevThreshold
+
+      
+
+   .. py:attribute:: upper_bound
+      :type: StdDevThreshold
 
       
 

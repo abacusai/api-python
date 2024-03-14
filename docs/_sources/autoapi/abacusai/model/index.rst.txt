@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Model(client, name=None, modelId=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, location={}, refreshSchedules={}, codeSource={}, latestModelVersion={}, modelConfig={})
+.. py:class:: Model(client, name=None, modelId=None, modelPredictionConfig=None, createdAt=None, projectId=None, shared=None, sharedAt=None, trainFunctionName=None, predictFunctionName=None, predictManyFunctionName=None, initializeFunctionName=None, trainingInputTables=None, sourceCode=None, cpuSize=None, memory=None, trainingFeatureGroupIds=None, algorithmModelConfigs=None, trainingVectorStoreVersions=None, documentRetrievers=None, documentRetrieverIds=None, isPythonModel=None, defaultAlgorithm=None, customAlgorithmConfigs=None, restrictedAlgorithms=None, useGpu=None, notebookId=None, trainingRequired=None, dataLlmFeatureGroups=None, location={}, refreshSchedules={}, codeSource={}, databaseConnector={}, latestModelVersion={}, modelConfig={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -80,6 +80,8 @@ Classes
    :type notebookId: str
    :param trainingRequired: If training is required to keep the model up-to-date.
    :type trainingRequired: bool
+   :param dataLlmFeatureGroups: List of feature groups used by the model for queries
+   :type dataLlmFeatureGroups: list[featuregroup]
    :param latestModelVersion: The latest model version.
    :type latestModelVersion: ModelVersion
    :param location: Location information for models that are imported.
@@ -88,6 +90,8 @@ Classes
    :type refreshSchedules: RefreshSchedule
    :param codeSource: If a python model, information on the source code
    :type codeSource: CodeSource
+   :param databaseConnector: Database connector used by the model.
+   :type databaseConnector: DatabaseConnector
 
    .. py:method:: __repr__()
 

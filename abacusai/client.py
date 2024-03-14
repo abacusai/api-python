@@ -33,11 +33,12 @@ from .annotation_entry import AnnotationEntry
 from .annotations_status import AnnotationsStatus
 from .api_class import (
     AlertActionConfig, AlertConditionConfig, ApiClass, ApiEnum,
-    BatchPredictionArgs, BlobInput, DatasetConfig, DataType,
-    DocumentProcessingConfig, DocumentRetrieverConfig, EvalArtifactType,
-    FeatureGroupExportConfig, ForecastingMonitorConfig,
-    IncrementalDatabaseConnectorConfig, LLMName, MergeConfig, ParsingConfig,
-    ProblemType, PythonFunctionType, SamplingConfig, TrainingConfig
+    BatchPredictionArgs, BlobInput, DatasetConfig,
+    DatasetDocumentProcessingConfig, DataType, DocumentProcessingConfig,
+    DocumentRetrieverConfig, EvalArtifactType, FeatureGroupExportConfig,
+    ForecastingMonitorConfig, IncrementalDatabaseConnectorConfig, LLMName,
+    MergeConfig, ParsingConfig, PredictionArguments, ProblemType,
+    PythonFunctionType, SamplingConfig, TrainingConfig
 )
 from .api_client_utils import (
     INVALID_PANDAS_COLUMN_NAME_CHARACTERS, StreamingHandler, clean_column_name,
@@ -148,6 +149,7 @@ from .project_feature_group import ProjectFeatureGroup
 from .project_validation import ProjectValidation
 from .python_function import PythonFunction
 from .python_plot_function import PythonPlotFunction
+from .realtime_monitor import RealtimeMonitor
 from .refresh_pipeline_run import RefreshPipelineRun
 from .refresh_policy import RefreshPolicy
 from .resolved_feature_group_template import ResolvedFeatureGroupTemplate
@@ -575,7 +577,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.1.6'
+    client_version = '1.1.7'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -2042,6 +2044,26 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             list[MonitorAlert]: An array of deployment alerts."""
         return self._call_api('listDeploymentAlerts', 'GET', query_params={'deploymentId': deployment_id}, parse_type=MonitorAlert)
+
+    def list_realtime_monitors(self, deployment_id: str) -> List[RealtimeMonitor]:
+        """List the real-time monitors associated with the deployment id.
+
+        Args:
+            deployment_id (str): Unique string identifier for the deployment.
+
+        Returns:
+            list[RealtimeMonitor]: An array of real-time monitors."""
+        return self._call_api('listRealtimeMonitors', 'GET', query_params={'deploymentId': deployment_id}, parse_type=RealtimeMonitor)
+
+    def describe_realtime_monitor(self, realtime_monitor_id: str) -> RealtimeMonitor:
+        """Get the real-time monitor associated with the real-time monitor id.
+
+        Args:
+            realtime_monitor_id (str): Unique string identifier for the real-time monitor.
+
+        Returns:
+            RealtimeMonitor: Object describing the real-time monitor."""
+        return self._call_api('describeRealtimeMonitor', 'GET', query_params={'realtimeMonitorId': realtime_monitor_id}, parse_type=RealtimeMonitor)
 
     def describe_refresh_policy(self, refresh_policy_id: str) -> RefreshPolicy:
         """Retrieve a single refresh policy
@@ -4878,7 +4900,7 @@ Creates a new feature group defined as the union of other feature group versions
             Upload: The upload object associated with the process, containing details of the file."""
         return self._call_api('markUploadComplete', 'POST', query_params={}, body={'uploadId': upload_id}, parse_type=Upload)
 
-    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
+    def create_dataset_from_file_connector(self, table_name: str, location: str, file_format: str = None, refresh_schedule: str = None, csv_delimiter: str = None, filename_column: str = None, start_prefix: str = None, until_prefix: str = None, location_date_format: str = None, date_format_lookback_days: int = None, incremental: bool = False, is_documentset: bool = False, extract_bounding_boxes: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None, merge_file_schemas: bool = False, reference_only_documentset: bool = False, parsing_config: Union[dict, ParsingConfig] = None) -> Dataset:
         """Creates a dataset from a file located in a cloud storage, such as Amazon AWS S3, using the specified dataset name and location.
 
         Args:
@@ -4895,7 +4917,7 @@ Creates a new feature group defined as the union of other feature group versions
             incremental (bool): Signifies if the dataset is an incremental dataset.
             is_documentset (bool): Signifies if the dataset is docstore dataset. A docstore dataset contains documents like images, PDFs, audio files etc. or is tabular data with links to such files.
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
-            document_processing_config (DocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
+            document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
             merge_file_schemas (bool): Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
             reference_only_documentset (bool): Signifies if the data reference only policy is enabled.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
@@ -4975,7 +4997,7 @@ Creates a new feature group defined as the union of other feature group versions
             DatasetVersion: The new Dataset Version created."""
         return self._call_api('createDatasetVersionFromApplicationConnector', 'POST', query_params={'datasetId': dataset_id}, body={'datasetConfig': dataset_config}, parse_type=DatasetVersion)
 
-    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False, document_processing_config: Union[dict, DocumentProcessingConfig] = None) -> Upload:
+    def create_dataset_from_upload(self, table_name: str, file_format: str = None, csv_delimiter: str = None, is_documentset: bool = False, extract_bounding_boxes: bool = False, parsing_config: Union[dict, ParsingConfig] = None, merge_file_schemas: bool = False, document_processing_config: Union[dict, DatasetDocumentProcessingConfig] = None) -> Upload:
         """Creates a dataset and returns an upload ID that can be used to upload a file.
 
         Args:
@@ -4986,7 +5008,7 @@ Creates a new feature group defined as the union of other feature group versions
             extract_bounding_boxes (bool): Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
             parsing_config (ParsingConfig): Custom config for dataset parsing.
             merge_file_schemas (bool): Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
-            document_processing_config (DocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
+            document_processing_config (DatasetDocumentProcessingConfig): The document processing configuration. Only valid if is_documentset is True.
 
         Returns:
             Upload: A reference to be used when uploading file parts."""
@@ -5664,19 +5686,20 @@ Creates a new feature group defined as the union of other feature group versions
             HoldoutAnalysisVersion: The created holdout analysis version"""
         return self._call_api('rerunHoldoutAnalysis', 'POST', query_params={}, body={'holdoutAnalysisId': holdout_analysis_id, 'modelVersion': model_version, 'algorithm': algorithm}, parse_type=HoldoutAnalysisVersion)
 
-    def create_monitor_alert(self, project_id: str, model_monitor_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]) -> MonitorAlert:
-        """Create a monitor alert for the given conditions and monitor
+    def create_monitor_alert(self, project_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig], model_monitor_id: str = None, realtime_monitor_id: str = None) -> MonitorAlert:
+        """Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.
 
         Args:
             project_id (str): Unique string identifier for the project.
-            model_monitor_id (str): Unique string identifier for the model monitor created under the project.
             alert_name (str): Name of the alert.
             condition_config (AlertConditionConfig): Condition to run the actions for the alert.
             action_config (AlertActionConfig): Configuration for the action of the alert.
+            model_monitor_id (str): Unique string identifier for the model monitor created under the project.
+            realtime_monitor_id (str): Unique string identifier for the real-time monitor for the deployment created under the project.
 
         Returns:
             MonitorAlert: Object describing the monitor alert."""
-        return self._call_api('createMonitorAlert', 'POST', query_params={}, body={'projectId': project_id, 'modelMonitorId': model_monitor_id, 'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config}, parse_type=MonitorAlert)
+        return self._call_api('createMonitorAlert', 'POST', query_params={}, body={'projectId': project_id, 'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config, 'modelMonitorId': model_monitor_id, 'realtimeMonitorId': realtime_monitor_id}, parse_type=MonitorAlert)
 
     def update_monitor_alert(self, monitor_alert_id: str, alert_name: str = None, condition_config: Union[dict, AlertConditionConfig] = None, action_config: Union[dict, AlertActionConfig] = None) -> MonitorAlert:
         """Update monitor alert
@@ -5933,6 +5956,18 @@ Creates a new feature group defined as the union of other feature group versions
             deployment_id (str): The ID of the deployment for which the export type is set."""
         return self._call_api('removeDeploymentFeatureGroupExportOutput', 'POST', query_params={'deploymentId': deployment_id}, body={})
 
+    def set_default_prediction_arguments(self, deployment_id: str, prediction_arguments: Union[dict, PredictionArguments], set_as_override: bool = False) -> Deployment:
+        """Sets the deployment config.
+
+        Args:
+            deployment_id (str): The unique identifier for a deployment created under the project.
+            prediction_arguments (PredictionArguments): The prediction arguments to set.
+            set_as_override (bool): If True, use these arguments as overrides instead of defaults for predict calls
+
+        Returns:
+            Deployment: description of the updated deployment."""
+        return self._call_api('setDefaultPredictionArguments', 'POST', query_params={'deploymentId': deployment_id}, body={'predictionArguments': prediction_arguments, 'setAsOverride': set_as_override}, parse_type=Deployment)
+
     def create_deployment_alert(self, deployment_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]) -> MonitorAlert:
         """Create a deployment alert for the given conditions.
 
@@ -5948,6 +5983,37 @@ Creates a new feature group defined as the union of other feature group versions
         Returns:
             MonitorAlert: Object describing the deployment alert."""
         return self._call_api('createDeploymentAlert', 'POST', query_params={'deploymentId': deployment_id}, body={'alertName': alert_name, 'conditionConfig': condition_config, 'actionConfig': action_config}, parse_type=MonitorAlert)
+
+    def create_realtime_monitor(self, deployment_id: str, realtime_monitor_schedule: str = None, lookback_time: int = None) -> RealtimeMonitor:
+        """Real time monitors compute and monitor metrics of real time prediction data.
+
+        Args:
+            deployment_id (str): Unique string identifier for the deployment.
+            realtime_monitor_schedule (str): The cron expression for triggering monitor.
+            lookback_time (int): Lookback time (in seconds) for each monitor trigger
+
+        Returns:
+            RealtimeMonitor: Object describing the real-time monitor."""
+        return self._call_api('createRealtimeMonitor', 'POST', query_params={'deploymentId': deployment_id}, body={'realtimeMonitorSchedule': realtime_monitor_schedule, 'lookbackTime': lookback_time}, parse_type=RealtimeMonitor)
+
+    def update_realtime_monitor(self, realtime_monitor_id: str, realtime_monitor_schedule: str = None, lookback_time: float = None) -> RealtimeMonitor:
+        """Update the real-time monitor associated with the real-time monitor id.
+
+        Args:
+            realtime_monitor_id (str): Unique string identifier for the real-time monitor.
+            realtime_monitor_schedule (str): The cron expression for triggering monitor
+            lookback_time (float): Lookback time (in seconds) for each monitor trigger
+
+        Returns:
+            RealtimeMonitor: Object describing the realtime monitor."""
+        return self._call_api('updateRealtimeMonitor', 'POST', query_params={}, body={'realtimeMonitorId': realtime_monitor_id, 'realtimeMonitorSchedule': realtime_monitor_schedule, 'lookbackTime': lookback_time}, parse_type=RealtimeMonitor)
+
+    def delete_realtime_monitor(self, realtime_monitor_id: str):
+        """Delete the real-time monitor associated with the real-time monitor id.
+
+        Args:
+            realtime_monitor_id (str): Unique string identifier for the real-time monitor."""
+        return self._call_api('deleteRealtimeMonitor', 'DELETE', query_params={'realtimeMonitorId': realtime_monitor_id})
 
     def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, prediction_operator_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.
@@ -7330,13 +7396,13 @@ Creates a new feature group defined as the union of other feature group versions
             GraphDashboard: An object describing the graph dashboard."""
         return self._call_api('updateGraphDashboard', 'POST', query_params={}, body={'graphDashboardId': graph_dashboard_id, 'name': name, 'pythonFunctionIds': python_function_ids}, parse_type=GraphDashboard)
 
-    def add_graph_to_dashboard(self, python_function_id: str, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None) -> GraphDashboard:
+    def add_graph_to_dashboard(self, python_function_id: str, graph_dashboard_id: str, function_variable_mappings: list = None, name: str = None) -> GraphDashboard:
         """Add a python plot function to a dashboard
 
         Args:
             python_function_id (str): Unique string identifier for the Python function.
             graph_dashboard_id (str): Unique string identifier for the graph dashboard to update.
-            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            function_variable_mappings (list): List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
             name (str): Name of the added python plot
 
         Returns:
@@ -7737,25 +7803,27 @@ Creates a new feature group defined as the union of other feature group versions
             external_application_id (str): The ID of the External Application."""
         return self._call_api('removeAppUserGroupFromExternalApplication', 'POST', query_params={}, body={'userGroupId': user_group_id, 'externalApplicationId': external_application_id})
 
-    def create_external_application(self, deployment_id: str, name: str = None, logo: str = None, theme: dict = None) -> ExternalApplication:
+    def create_external_application(self, deployment_id: str, name: str = None, description: str = None, logo: str = None, theme: dict = None) -> ExternalApplication:
         """Creates a new External Application from an existing ChatLLM Deployment.
 
         Args:
             deployment_id (str): The ID of the deployment to use.
             name (str): The name of the External Application. If not provided, the name of the deployment will be used.
+            description (str): The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.
             logo (str): The logo to be displayed.
             theme (dict): The visual theme of the External Application.
 
         Returns:
             ExternalApplication: The newly created External Application."""
-        return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
+        return self._call_api('createExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'name': name, 'description': description, 'logo': logo, 'theme': theme}, parse_type=ExternalApplication)
 
-    def update_external_application(self, external_application_id: str, name: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False) -> ExternalApplication:
+    def update_external_application(self, external_application_id: str, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False) -> ExternalApplication:
         """Updates an External Application.
 
         Args:
             external_application_id (str): The ID of the External Application.
             name (str): The name of the External Application.
+            description (str): The description of the External Application. This will be shown to users when they access the External Application.
             theme (dict): The visual theme of the External Application.
             deployment_id (str): The ID of the deployment to use.
             deployment_conversation_retention_hours (int): The number of hours to retain the conversations for.
@@ -7763,7 +7831,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             ExternalApplication: The updated External Application."""
-        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy}, parse_type=ExternalApplication)
+        return self._call_api('updateExternalApplication', 'POST', query_params={'deploymentId': deployment_id}, body={'externalApplicationId': external_application_id, 'name': name, 'description': description, 'theme': theme, 'deploymentConversationRetentionHours': deployment_conversation_retention_hours, 'resetRetentionPolicy': reset_retention_policy}, parse_type=ExternalApplication)
 
     def delete_external_application(self, external_application_id: str):
         """Deletes an External Application.

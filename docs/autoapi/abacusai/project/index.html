@@ -212,8 +212,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../prediction_dataset/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_dataset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_feature_group/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_feature_group</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_input/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_input</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../prediction_metric/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="../prediction_metric_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_metric_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_operator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_operator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../prediction_operator_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.prediction_operator_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../problem_type/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.problem_type</span></code></a></li>
@@ -230,6 +228,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../python_function_validator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_function_validator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../python_plot_function/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.python_plot_function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../range_violation/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.range_violation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../realtime_monitor/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.realtime_monitor</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_pipeline_run/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_pipeline_run</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_policy/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_policy</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../refresh_schedule/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.refresh_schedule</span></code></a></li>
@@ -856,15 +855,16 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.project.Project.create_monitor_alert">
-<span class="sig-name descname"><span class="pre">create_monitor_alert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_monitor_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alert_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_monitor_alert" title="Permalink to this definition"></a></dt>
-<dd><p>Create a monitor alert for the given conditions and monitor</p>
+<span class="sig-name descname"><span class="pre">create_monitor_alert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alert_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">realtime_monitor_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.project.Project.create_monitor_alert" title="Permalink to this definition"></a></dt>
+<dd><p>Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the model monitor created under the project.</p></li>
 <li><p><strong>alert_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Name of the alert.</p></li>
 <li><p><strong>condition_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.AlertConditionConfig" title="abacusai.api_class.AlertConditionConfig"><em>AlertConditionConfig</em></a>) – Condition to run the actions for the alert.</p></li>
 <li><p><strong>action_config</strong> (<a class="reference internal" href="../api_class/index.html#abacusai.api_class.AlertActionConfig" title="abacusai.api_class.AlertActionConfig"><em>AlertActionConfig</em></a>) – Configuration for the action of the alert.</p></li>
+<li><p><strong>model_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the model monitor created under the project.</p></li>
+<li><p><strong>realtime_monitor_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Unique string identifier for the real-time monitor for the deployment created under the project.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

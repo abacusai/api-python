@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -32,6 +32,8 @@ Classes
    :type externalApplicationId: str
    :param deploymentId: The deployment id associated with the external application.
    :type deploymentId: str
+   :param description: The description of the external application.
+   :type description: str
    :param logo: The logo.
    :type logo: str
    :param theme: The theme used for the External Application.
@@ -58,12 +60,14 @@ Classes
       :rtype: dict
 
 
-   .. py:method:: update(name = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
+   .. py:method:: update(name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
 
       Updates an External Application.
 
       :param name: The name of the External Application.
       :type name: str
+      :param description: The description of the External Application. This will be shown to users when they access the External Application.
+      :type description: str
       :param theme: The visual theme of the External Application.
       :type theme: dict
       :param deployment_id: The ID of the deployment to use.

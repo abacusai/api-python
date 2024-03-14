@@ -483,18 +483,20 @@ Classes
       :rtype: list[HoldoutAnalysis]
 
 
-   .. py:method:: create_monitor_alert(model_monitor_id, alert_name, condition_config, action_config)
+   .. py:method:: create_monitor_alert(alert_name, condition_config, action_config, model_monitor_id = None, realtime_monitor_id = None)
 
-      Create a monitor alert for the given conditions and monitor
+      Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.
 
-      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
-      :type model_monitor_id: str
       :param alert_name: Name of the alert.
       :type alert_name: str
       :param condition_config: Condition to run the actions for the alert.
       :type condition_config: AlertConditionConfig
       :param action_config: Configuration for the action of the alert.
       :type action_config: AlertActionConfig
+      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
+      :type model_monitor_id: str
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor for the deployment created under the project.
+      :type realtime_monitor_id: str
 
       :returns: Object describing the monitor alert.
       :rtype: MonitorAlert

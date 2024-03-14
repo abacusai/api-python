@@ -184,8 +184,6 @@ Submodules
    prediction_dataset/index.rst
    prediction_feature_group/index.rst
    prediction_input/index.rst
-   prediction_metric/index.rst
-   prediction_metric_version/index.rst
    prediction_operator/index.rst
    prediction_operator_version/index.rst
    problem_type/index.rst
@@ -199,6 +197,7 @@ Submodules
    python_function_validator/index.rst
    python_plot_function/index.rst
    range_violation/index.rst
+   realtime_monitor/index.rst
    refresh_pipeline_run/index.rst
    refresh_policy/index.rst
    refresh_schedule/index.rst
@@ -250,6 +249,7 @@ Classes
    abacusai.OcrMode
    abacusai.ParsingConfig
    abacusai.DocumentProcessingConfig
+   abacusai.DatasetDocumentProcessingConfig
    abacusai.IncrementalDatabaseConnectorConfig
    abacusai.DatasetConfig
    abacusai.ConfluenceDatasetConfig
@@ -261,6 +261,17 @@ Classes
    abacusai.ZendeskDatasetConfig
    abacusai.AbacusUsageMetricsDatasetConfig
    abacusai._DatasetConfigFactory
+   abacusai.PredictionArguments
+   abacusai.OptimizationPredictionArguments
+   abacusai.TimeseriesAnomalyPredictionArguments
+   abacusai.AnomalyOutliersPredictionArguments
+   abacusai.ChatLLMPredictionArguments
+   abacusai.RegressionPredictionArguments
+   abacusai.ForecastingPredictionArguments
+   abacusai.CumulativeForecastingPredictionArguments
+   abacusai.NaturalLanguageSearchPredictionArguments
+   abacusai.FeatureStorePredictionArguments
+   abacusai._PredictionArgumentsFactory
    abacusai.VectorStoreTextEncoder
    abacusai.VectorStoreConfig
    abacusai.DocumentRetrieverConfig
@@ -311,6 +322,7 @@ Classes
    abacusai.PythonFunctionType
    abacusai.EvalArtifactType
    abacusai.FieldDescriptorType
+   abacusai.StdDevThresholdType
    abacusai.DataType
    abacusai.SamplingConfig
    abacusai.NSamplingConfig
@@ -345,6 +357,8 @@ Classes
    abacusai._TrainingConfigFactory
    abacusai.DeployableAlgorithm
    abacusai.ForecastingMonitorConfig
+   abacusai.StdDevThreshold
+   abacusai.ItemAttributesStdDevThreshold
    abacusai.AlertConditionConfig
    abacusai.AccuracyBelowThresholdConditionConfig
    abacusai.FeatureDriftConditionConfig
@@ -1149,6 +1163,34 @@ Attributes
       
 
 
+.. py:class:: DatasetDocumentProcessingConfig
+
+
+   Bases: :py:obj:`DocumentProcessingConfig`
+
+   Document processing configuration for dataset imports.
+
+   :param extract_bounding_boxes: Whether to perform OCR and extract bounding boxes. If False, no OCR will be done but only the embedded text from digital documents will be extracted. Defaults to False.
+   :type extract_bounding_boxes: bool
+   :param ocr_mode: OCR mode. There are different OCR modes available for different kinds of documents and use cases. This option only takes effect when extract_bounding_boxes is True.
+   :type ocr_mode: OcrMode
+   :param use_full_ocr: Whether to perform full OCR. If True, OCR will be performed on the full page. If False, OCR will be performed on the non-text regions only. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type use_full_ocr: bool
+   :param remove_header_footer: Whether to remove headers and footers. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_header_footer: bool
+   :param remove_watermarks: Whether to remove watermarks. By default, it will be decided automatically based on the OCR mode and the document type. This option only takes effect when extract_bounding_boxes is True.
+   :type remove_watermarks: bool
+   :param convert_to_markdown: Whether to convert extracted text to markdown. Defaults to False. This option only takes effect when extract_bounding_boxes is True.
+   :type convert_to_markdown: bool
+   :param page_text_column: Name of the output column which contains the extracted text for each page. If not provided, no column will be created.
+   :type page_text_column: str
+
+   .. py:attribute:: page_text_column
+      :type: str
+
+      
+
+
 .. py:class:: IncrementalDatabaseConnectorConfig
 
 
@@ -1474,6 +1516,395 @@ Attributes
       
 
 
+.. py:class:: PredictionArguments
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: _support_kwargs
+      :type: bool
+
+      
+
+   .. py:attribute:: kwargs
+      :type: dict
+
+      
+
+   .. py:attribute:: problem_type
+      :type: abacusai.api_class.enums.ProblemType
+
+      
+
+   .. py:method:: _get_builder()
+      :classmethod:
+
+
+
+.. py:class:: OptimizationPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the OPTIMIZATION problem type
+
+   :param forced_assignments: Set of assignments to force and resolve before returning query results.
+   :type forced_assignments: dict
+   :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
+   :type solve_time_limit_seconds: float
+   :param include_all_assignmnets: If True, will return all assignments, including assignments with value 0. Default is False.
+   :type include_all_assignmnets: bool
+
+   .. py:attribute:: forced_assignments
+      :type: dict
+
+      
+
+   .. py:attribute:: solve_time_limit_seconds
+      :type: float
+
+      
+
+   .. py:attribute:: include_all_assignments
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: TimeseriesAnomalyPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the TS_ANOMALY problem type
+
+   :param start_timestamp: Timestamp from which anomalies have to be detected in the training data
+   :type start_timestamp: str
+   :param end_timestsamp: Timestamp to which anomalies have to be detected in the training data
+   :type end_timestsamp: str
+   :param get_all_item_data: If True, anomaly detection has to be performed on all the data related to input ids
+   :type get_all_item_data: bool
+
+   .. py:attribute:: start_timestamp
+      :type: str
+
+      
+
+   .. py:attribute:: end_timestamp
+      :type: str
+
+      
+
+   .. py:attribute:: get_all_item_data
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: AnomalyOutliersPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the ANOMALY_OUTLIERS problem type
+
+   :param threshold: The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99
+   :type threshold: float
+   :param histogram: If True, will return a histogram of the distribution of all points
+   :type histogram: bool
+
+   .. py:attribute:: threshold
+      :type: float
+
+      
+
+   .. py:attribute:: histogram
+      :type: str
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ChatLLMPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the CHAT_LLM problem type
+
+   :param llm_name: Name of the specific LLM backend to use to power the chat experience.
+   :type llm_name: str
+   :param num_completion_tokens: Default for maximum number of tokens for chat answers.
+   :type num_completion_tokens: int
+   :param system_message: The generative LLM system message.
+   :type system_message: str
+   :param temperature: The generative LLM temperature.
+   :type temperature: float
+   :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+   :type search_score_cutoff: float
+   :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+   :type ignore_documents: bool
+
+   .. py:attribute:: llm_name
+      :type: str
+
+      
+
+   .. py:attribute:: num_completion_tokens
+      :type: int
+
+      
+
+   .. py:attribute:: system_message
+      :type: str
+
+      
+
+   .. py:attribute:: temperature
+      :type: float
+
+      
+
+   .. py:attribute:: search_score_cutoff
+      :type: float
+
+      
+
+   .. py:attribute:: ignore_documents
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: RegressionPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the PREDICTIVE_MODELING problem type
+
+   :param explain_predictions: If true, will explain predictions.
+   :type explain_predictions: bool
+   :param explainer_type: Type of explainer to use for explanations.
+   :type explainer_type: str
+
+   .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: explainer_type
+      :type: str
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: ForecastingPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the FORECASTING problem type
+
+   :param num_predictions: The number of timestamps to predict in the future.
+   :type num_predictions: int
+   :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
+   :type prediction_start: str
+   :param explain_predictions: If True, explain predictions for forecasting.
+   :type explain_predictions: bool
+   :param explainer_type: Type of explainer to use for explanations.
+   :type explainer_type: str
+   :param get_item_data: If True, will return the data corresponding to items as well.
+   :type get_item_data: bool
+
+   .. py:attribute:: num_predictions
+      :type: int
+
+      
+
+   .. py:attribute:: prediction_start
+      :type: str
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: explainer_type
+      :type: str
+
+      
+
+   .. py:attribute:: get_item_data
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: CumulativeForecastingPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the CUMULATIVE_FORECASTING problem type
+
+   :param num_predictions: The number of timestamps to predict in the future.
+   :type num_predictions: int
+   :param prediction_start: The start date for predictions (e.g., "2015-08-01T00:00:00" as input for mid-night of 2015-08-01).
+   :type prediction_start: str
+   :param explain_predictions: If True, explain predictions for forecasting.
+   :type explain_predictions: bool
+   :param explainer_type: Type of explainer to use for explanations.
+   :type explainer_type: str
+   :param get_item_data: If True, will return the data corresponding to items as well.
+   :type get_item_data: bool
+
+   .. py:attribute:: num_predictions
+      :type: int
+
+      
+
+   .. py:attribute:: prediction_start
+      :type: str
+
+      
+
+   .. py:attribute:: explain_predictions
+      :type: bool
+
+      
+
+   .. py:attribute:: explainer_type
+      :type: str
+
+      
+
+   .. py:attribute:: get_item_data
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: NaturalLanguageSearchPredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the NATURAL_LANGUAGE_SEARCH problem type
+
+   :param llm_name: Name of the specific LLM backend to use to power the chat experience.
+   :type llm_name: str
+   :param num_completion_tokens: Default for maximum number of tokens for chat answers.
+   :type num_completion_tokens: int
+   :param system_message: The generative LLM system message.
+   :type system_message: str
+   :param temperature: The generative LLM temperature.
+   :type temperature: float
+   :param search_score_cutoff: Cutoff for the document retriever score. Matching search results below this score will be ignored.
+   :type search_score_cutoff: float
+   :param ignore_documents: If True, will ignore any documents and search results, and only use the messages to generate a response.
+   :type ignore_documents: bool
+
+   .. py:attribute:: llm_name
+      :type: str
+
+      
+
+   .. py:attribute:: num_completion_tokens
+      :type: int
+
+      
+
+   .. py:attribute:: system_message
+      :type: str
+
+      
+
+   .. py:attribute:: temperature
+      :type: float
+
+      
+
+   .. py:attribute:: search_score_cutoff
+      :type: float
+
+      
+
+   .. py:attribute:: ignore_documents
+      :type: bool
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: FeatureStorePredictionArguments
+
+
+   Bases: :py:obj:`PredictionArguments`
+
+   Prediction arguments for the FEATURE_STORE problem type
+
+   :param limit_results: If provided, will limit the number of results to the value specified.
+   :type limit_results: int
+
+   .. py:attribute:: limit_results
+      :type: int
+
+      
+
+   .. py:method:: __post_init__()
+
+
+
+.. py:class:: _PredictionArgumentsFactory
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract._ApiClassFactory`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:attribute:: config_abstract_class
+
+      
+
+   .. py:attribute:: config_class_key
+      :value: 'problem_type'
+
+      
+
+   .. py:attribute:: config_class_map
+
+      
+
+
 .. py:class:: VectorStoreTextEncoder
 
 
@@ -1521,6 +1952,8 @@ Attributes
    :type chunk_size_factors: list
    :param score_multiplier_column: If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.
    :type score_multiplier_column: str
+   :param prune_vectors: Transform vectors using SVD so that the average component of vectors in the corpus are removed.
+   :type prune_vectors: bool
 
    .. py:attribute:: chunk_size
       :type: int
@@ -1547,13 +1980,18 @@ Attributes
 
       
 
+   .. py:attribute:: prune_vectors
+      :type: bool
+
+      
+
 
 .. py:class:: DocumentRetrieverConfig
 
 
    Bases: :py:obj:`VectorStoreConfig`
 
-   Configs for document retriever.
+   Configs for document retriever. If any configuration value is not explicitly provided, Abacus will automatically infer default values based on the data.
 
 
 .. py:class:: ApiEnum
@@ -3215,6 +3653,11 @@ Attributes
 
       
 
+   .. py:attribute:: OPENAI_GPT4_VISION
+      :value: 'OPENAI_GPT4_VISION'
+
+      
+
    .. py:attribute:: OPENAI_GPT3_5
       :value: 'OPENAI_GPT3_5'
 
@@ -3227,6 +3670,16 @@ Attributes
 
    .. py:attribute:: CLAUDE_V2_1
       :value: 'CLAUDE_V2_1'
+
+      
+
+   .. py:attribute:: CLAUDE_V3_OPUS
+      :value: 'CLAUDE_V3_OPUS'
+
+      
+
+   .. py:attribute:: CLAUDE_V3_SONNET
+      :value: 'CLAUDE_V3_SONNET'
 
       
 
@@ -3532,6 +3985,31 @@ Attributes
 
    .. py:attribute:: DATE
       :value: 'DATE'
+
+      
+
+
+.. py:class:: StdDevThresholdType
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: ABSOLUTE
+      :value: 'ABSOLUTE'
+
+      
+
+   .. py:attribute:: PERCENTILE
+      :value: 'PERCENTILE'
+
+      
+
+   .. py:attribute:: STDDEV
+      :value: 'STDDEV'
 
       
 
@@ -4857,8 +5335,6 @@ Attributes
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
    :type sort_objective: NERObjective
-   :param ner_model_type: Type of NER model to use.
-   :type ner_model_type: NERModelType
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
@@ -4886,11 +5362,6 @@ Attributes
 
       
 
-   .. py:attribute:: ner_model_type
-      :type: abacusai.api_class.enums.NERModelType
-
-      
-
    .. py:attribute:: test_split
       :type: int
 
@@ -4908,11 +5379,6 @@ Attributes
 
    .. py:attribute:: document_format
       :type: abacusai.api_class.enums.NLPDocumentFormat
-
-      
-
-   .. py:attribute:: include_longformer
-      :type: bool
 
       
 
@@ -5017,8 +5483,8 @@ Attributes
    :type lookup_rewrite_instructions: str
    :param max_search_results: Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
    :type max_search_results: int
-   :param data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
-   :param data_prompt_context: Prompt context for the data feature group ids.
+   :param data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
+   :param data_prompt_context: Prompt context for the data feature group IDs.
    :type data_prompt_context: str
    :param hide_generated_sql: When running data queries, hides the generated SQL in the response and will just return the table.
    :type hide_generated_sql: bool
@@ -5026,8 +5492,10 @@ Attributes
    :type disable_data_summarization: bool
    :param search_score_cutoff: Minimum search score to consider a document as a valid search result.
    :type search_score_cutoff: float
-   :param database_connector_id: Database connector id to use for the chatllm.
+   :param database_connector_id: Database connector ID to use for the ChatLLM.
    :type database_connector_id: str
+   :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
+   :type database_connector_tables: List[str]
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5101,6 +5569,11 @@ Attributes
 
    .. py:attribute:: database_connector_id
       :type: str
+
+      
+
+   .. py:attribute:: database_connector_tables
+      :type: List[str]
 
       
 
@@ -5746,6 +6219,66 @@ Attributes
 
    .. py:attribute:: end_time
       :type: str
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: StdDevThreshold
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Std Dev Threshold types
+
+   :param threshold_type: Type of threshold to apply to the item attributes.
+   :type threshold_type: StdDevThresholdType
+   :param value: Value to use for the threshold.
+   :type value: float
+
+   .. py:attribute:: threshold_type
+      :type: abacusai.api_class.enums.StdDevThresholdType
+
+      
+
+   .. py:attribute:: value
+      :type: float
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
+.. py:class:: ItemAttributesStdDevThreshold
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Item Attributes Std Dev Threshold for Monitor Alerts
+
+   :param lower_bound: Lower bound for the item attributes.
+   :type lower_bound: StdDevThreshold
+   :param upper_bound: Upper bound for the item attributes.
+   :type upper_bound: StdDevThreshold
+
+   .. py:attribute:: lower_bound
+      :type: StdDevThreshold
+
+      
+
+   .. py:attribute:: upper_bound
+      :type: StdDevThreshold
 
       
 
@@ -8651,7 +9184,7 @@ Attributes
       :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
       :type extract_bounding_boxes: bool
       :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
-      :type document_processing_config: DocumentProcessingConfig
+      :type document_processing_config: DatasetDocumentProcessingConfig
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
       :param reference_only_documentset: Signifies if the data reference only policy is enabled.
@@ -8779,7 +9312,7 @@ Attributes
       :param merge_file_schemas: Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
       :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
-      :type document_processing_config: DocumentProcessingConfig
+      :type document_processing_config: DatasetDocumentProcessingConfig
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -9676,20 +10209,22 @@ Attributes
       :rtype: HoldoutAnalysisVersion
 
 
-   .. py:method:: create_monitor_alert(project_id, model_monitor_id, alert_name, condition_config, action_config)
+   .. py:method:: create_monitor_alert(project_id, alert_name, condition_config, action_config, model_monitor_id = None, realtime_monitor_id = None)
 
-      Create a monitor alert for the given conditions and monitor
+      Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.
 
       :param project_id: Unique string identifier for the project.
       :type project_id: str
-      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
-      :type model_monitor_id: str
       :param alert_name: Name of the alert.
       :type alert_name: str
       :param condition_config: Condition to run the actions for the alert.
       :type condition_config: AlertConditionConfig
       :param action_config: Configuration for the action of the alert.
       :type action_config: AlertActionConfig
+      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
+      :type model_monitor_id: str
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor for the deployment created under the project.
+      :type realtime_monitor_id: str
 
       :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
@@ -10028,6 +10563,21 @@ Attributes
       :type deployment_id: str
 
 
+   .. py:method:: set_default_prediction_arguments(deployment_id, prediction_arguments, set_as_override = False)
+
+      Sets the deployment config.
+
+      :param deployment_id: The unique identifier for a deployment created under the project.
+      :type deployment_id: str
+      :param prediction_arguments: The prediction arguments to set.
+      :type prediction_arguments: PredictionArguments
+      :param set_as_override: If True, use these arguments as overrides instead of defaults for predict calls
+      :type set_as_override: bool
+
+      :returns: description of the updated deployment.
+      :rtype: Deployment
+
+
    .. py:method:: create_deployment_alert(deployment_id, alert_name, condition_config, action_config)
 
       Create a deployment alert for the given conditions.
@@ -10046,6 +10596,44 @@ Attributes
 
       :returns: Object describing the deployment alert.
       :rtype: MonitorAlert
+
+
+   .. py:method:: create_realtime_monitor(deployment_id, realtime_monitor_schedule = None, lookback_time = None)
+
+      Real time monitors compute and monitor metrics of real time prediction data.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+      :param realtime_monitor_schedule: The cron expression for triggering monitor.
+      :type realtime_monitor_schedule: str
+      :param lookback_time: Lookback time (in seconds) for each monitor trigger
+      :type lookback_time: int
+
+      :returns: Object describing the real-time monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: update_realtime_monitor(realtime_monitor_id, realtime_monitor_schedule = None, lookback_time = None)
+
+      Update the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
+      :param realtime_monitor_schedule: The cron expression for triggering monitor
+      :type realtime_monitor_schedule: str
+      :param lookback_time: Lookback time (in seconds) for each monitor trigger
+      :type lookback_time: float
+
+      :returns: Object describing the realtime monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: delete_realtime_monitor(realtime_monitor_id)
+
+      Delete the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
 
 
    .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
@@ -11800,7 +12388,7 @@ Attributes
       :param graph_dashboard_id: Unique string identifier for the graph dashboard to update.
       :type graph_dashboard_id: str
       :param function_variable_mappings: List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: dict
+      :type function_variable_mappings: list
       :param name: Name of the added python plot
       :type name: str
 
@@ -12314,7 +12902,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_external_application(deployment_id, name = None, logo = None, theme = None)
+   .. py:method:: create_external_application(deployment_id, name = None, description = None, logo = None, theme = None)
 
       Creates a new External Application from an existing ChatLLM Deployment.
 
@@ -12322,6 +12910,8 @@ Attributes
       :type deployment_id: str
       :param name: The name of the External Application. If not provided, the name of the deployment will be used.
       :type name: str
+      :param description: The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.
+      :type description: str
       :param logo: The logo to be displayed.
       :type logo: str
       :param theme: The visual theme of the External Application.
@@ -12331,7 +12921,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
+   .. py:method:: update_external_application(external_application_id, name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
 
       Updates an External Application.
 
@@ -12339,6 +12929,8 @@ Attributes
       :type external_application_id: str
       :param name: The name of the External Application.
       :type name: str
+      :param description: The description of the External Application. This will be shown to users when they access the External Application.
+      :type description: str
       :param theme: The visual theme of the External Application.
       :type theme: dict
       :param deployment_id: The ID of the deployment to use.
@@ -14053,6 +14645,28 @@ Attributes
       :rtype: list[MonitorAlert]
 
 
+   .. py:method:: list_realtime_monitors(deployment_id)
+
+      List the real-time monitors associated with the deployment id.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+
+      :returns: An array of real-time monitors.
+      :rtype: list[RealtimeMonitor]
+
+
+   .. py:method:: describe_realtime_monitor(realtime_monitor_id)
+
+      Get the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
+
+      :returns: Object describing the real-time monitor.
+      :rtype: RealtimeMonitor
+
+
    .. py:method:: describe_refresh_policy(refresh_policy_id)
 
       Retrieve a single refresh policy
@@ -15728,7 +16342,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.1.6'
+   :value: '1.1.7'
 
    
 

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None, metadata=None)
+.. py:class:: DocumentData(client, docId=None, mimeType=None, pageCount=None, extractedText=None, embeddedText=None, pages=None, tokens=None, metadata=None, pageMarkdown=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -42,6 +42,8 @@ Classes
    :type tokens: list
    :param metadata: List of metadata for each page in the document.
    :type metadata: list
+   :param pageMarkdown: The markdown text for the page.
+   :type pageMarkdown: list
 
    .. py:method:: __repr__()
 

@@ -60,7 +60,7 @@ class ApiClass(ABC):
             return getattr(self, item)
         elif hasattr(self, snake_case(item)):
             return getattr(self, snake_case(item))
-        elif self._support_kwargs and (self.kwargs.get(item) is not None):
+        elif self._support_kwargs and hasattr(self, 'kwargs') and self.kwargs is not None and (self.kwargs.get(item) is not None):
             return self.kwargs.get(item)
         else:
             raise KeyError(f'Key: {item} is not a property of {self.__class__.__name__}')
@@ -80,7 +80,7 @@ class ApiClass(ABC):
             setattr(self, item, None)
         elif hasattr(self, snake_case(item)):
             setattr(self, snake_case(item), None)
-        elif self._support_kwargs and (self.kwargs.get(item) is not None):
+        elif self._support_kwargs and hasattr(self, 'kwargs') and self.kwargs is not None and (self.kwargs.get(item) is not None):
             self.kwargs.pop(item)
         else:
             raise KeyError(f'Key: {item} is not a property of {self.__class__.__name__}')

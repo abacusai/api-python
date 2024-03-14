@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
+.. py:class:: BatchPrediction(client, batchPredictionId=None, createdAt=None, name=None, deploymentId=None, fileConnectorOutputLocation=None, databaseConnectorId=None, databaseOutputConfiguration=None, explanations=None, fileOutputFormat=None, connectorType=None, legacyInputLocation=None, outputFeatureGroupId=None, featureGroupTableName=None, outputFeatureGroupTableName=None, summaryFeatureGroupTableName=None, csvInputPrefix=None, csvPredictionPrefix=None, csvExplanationsPrefix=None, outputIncludesMetadata=None, resultInputColumns=None, modelMonitorId=None, modelVersion=None, bpAcrossVersionsMonitorId=None, algorithm=None, batchInputs={}, latestBatchPredictionVersion={}, refreshSchedules={}, inputFeatureGroups={}, globalPredictionArgs={}, batchPredictionArgs={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -70,6 +70,8 @@ Classes
    :type modelMonitorId: str
    :param modelVersion: The model instance used in the deployment for the batch prediction.
    :type modelVersion: str
+   :param bpAcrossVersionsMonitorId: The model monitor for this batch prediction across versions.
+   :type bpAcrossVersionsMonitorId: str
    :param algorithm: The algorithm that is currently deployed.
    :type algorithm: str
    :param batchInputs: Inputs to the batch prediction.
@@ -293,6 +295,14 @@ Classes
 
       :returns: A feature group object.
       :rtype: FeatureGroup
+
+
+   .. py:method:: load_results_as_pandas()
+
+      Loads the output feature groups into a python pandas dataframe.
+
+      :returns: A pandas dataframe with annotations and text_snippet columns.
+      :rtype: DataFrame
 
 
 

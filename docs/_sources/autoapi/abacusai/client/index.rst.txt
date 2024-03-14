@@ -487,7 +487,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.1.6'
+      :value: '1.1.7'
 
       
 
@@ -1911,6 +1911,28 @@ Attributes
 
       :returns: An array of deployment alerts.
       :rtype: list[MonitorAlert]
+
+
+   .. py:method:: list_realtime_monitors(deployment_id)
+
+      List the real-time monitors associated with the deployment id.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+
+      :returns: An array of real-time monitors.
+      :rtype: list[RealtimeMonitor]
+
+
+   .. py:method:: describe_realtime_monitor(realtime_monitor_id)
+
+      Get the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
+
+      :returns: Object describing the real-time monitor.
+      :rtype: RealtimeMonitor
 
 
    .. py:method:: describe_refresh_policy(refresh_policy_id)
@@ -4900,7 +4922,7 @@ Attributes
       :param extract_bounding_boxes: Signifies whether to extract bounding boxes out of the documents. Only valid if is_documentset if True.
       :type extract_bounding_boxes: bool
       :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
-      :type document_processing_config: DocumentProcessingConfig
+      :type document_processing_config: DatasetDocumentProcessingConfig
       :param merge_file_schemas: Signifies if the merge file schema policy is enabled. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
       :param reference_only_documentset: Signifies if the data reference only policy is enabled.
@@ -5028,7 +5050,7 @@ Attributes
       :param merge_file_schemas: Signifies whether to merge the schemas of all files in the dataset. If is_documentset is True, this is also set to True by default.
       :type merge_file_schemas: bool
       :param document_processing_config: The document processing configuration. Only valid if is_documentset is True.
-      :type document_processing_config: DocumentProcessingConfig
+      :type document_processing_config: DatasetDocumentProcessingConfig
 
       :returns: A reference to be used when uploading file parts.
       :rtype: Upload
@@ -5925,20 +5947,22 @@ Attributes
       :rtype: HoldoutAnalysisVersion
 
 
-   .. py:method:: create_monitor_alert(project_id, model_monitor_id, alert_name, condition_config, action_config)
+   .. py:method:: create_monitor_alert(project_id, alert_name, condition_config, action_config, model_monitor_id = None, realtime_monitor_id = None)
 
-      Create a monitor alert for the given conditions and monitor
+      Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.
 
       :param project_id: Unique string identifier for the project.
       :type project_id: str
-      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
-      :type model_monitor_id: str
       :param alert_name: Name of the alert.
       :type alert_name: str
       :param condition_config: Condition to run the actions for the alert.
       :type condition_config: AlertConditionConfig
       :param action_config: Configuration for the action of the alert.
       :type action_config: AlertActionConfig
+      :param model_monitor_id: Unique string identifier for the model monitor created under the project.
+      :type model_monitor_id: str
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor for the deployment created under the project.
+      :type realtime_monitor_id: str
 
       :returns: Object describing the monitor alert.
       :rtype: MonitorAlert
@@ -6277,6 +6301,21 @@ Attributes
       :type deployment_id: str
 
 
+   .. py:method:: set_default_prediction_arguments(deployment_id, prediction_arguments, set_as_override = False)
+
+      Sets the deployment config.
+
+      :param deployment_id: The unique identifier for a deployment created under the project.
+      :type deployment_id: str
+      :param prediction_arguments: The prediction arguments to set.
+      :type prediction_arguments: PredictionArguments
+      :param set_as_override: If True, use these arguments as overrides instead of defaults for predict calls
+      :type set_as_override: bool
+
+      :returns: description of the updated deployment.
+      :rtype: Deployment
+
+
    .. py:method:: create_deployment_alert(deployment_id, alert_name, condition_config, action_config)
 
       Create a deployment alert for the given conditions.
@@ -6295,6 +6334,44 @@ Attributes
 
       :returns: Object describing the deployment alert.
       :rtype: MonitorAlert
+
+
+   .. py:method:: create_realtime_monitor(deployment_id, realtime_monitor_schedule = None, lookback_time = None)
+
+      Real time monitors compute and monitor metrics of real time prediction data.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+      :param realtime_monitor_schedule: The cron expression for triggering monitor.
+      :type realtime_monitor_schedule: str
+      :param lookback_time: Lookback time (in seconds) for each monitor trigger
+      :type lookback_time: int
+
+      :returns: Object describing the real-time monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: update_realtime_monitor(realtime_monitor_id, realtime_monitor_schedule = None, lookback_time = None)
+
+      Update the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
+      :param realtime_monitor_schedule: The cron expression for triggering monitor
+      :type realtime_monitor_schedule: str
+      :param lookback_time: Lookback time (in seconds) for each monitor trigger
+      :type lookback_time: float
+
+      :returns: Object describing the realtime monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: delete_realtime_monitor(realtime_monitor_id)
+
+      Delete the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
 
 
    .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
@@ -8049,7 +8126,7 @@ Attributes
       :param graph_dashboard_id: Unique string identifier for the graph dashboard to update.
       :type graph_dashboard_id: str
       :param function_variable_mappings: List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
-      :type function_variable_mappings: dict
+      :type function_variable_mappings: list
       :param name: Name of the added python plot
       :type name: str
 
@@ -8563,7 +8640,7 @@ Attributes
       :type external_application_id: str
 
 
-   .. py:method:: create_external_application(deployment_id, name = None, logo = None, theme = None)
+   .. py:method:: create_external_application(deployment_id, name = None, description = None, logo = None, theme = None)
 
       Creates a new External Application from an existing ChatLLM Deployment.
 
@@ -8571,6 +8648,8 @@ Attributes
       :type deployment_id: str
       :param name: The name of the External Application. If not provided, the name of the deployment will be used.
       :type name: str
+      :param description: The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.
+      :type description: str
       :param logo: The logo to be displayed.
       :type logo: str
       :param theme: The visual theme of the External Application.
@@ -8580,7 +8659,7 @@ Attributes
       :rtype: ExternalApplication
 
 
-   .. py:method:: update_external_application(external_application_id, name = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
+   .. py:method:: update_external_application(external_application_id, name = None, description = None, theme = None, deployment_id = None, deployment_conversation_retention_hours = None, reset_retention_policy = False)
 
       Updates an External Application.
 
@@ -8588,6 +8667,8 @@ Attributes
       :type external_application_id: str
       :param name: The name of the External Application.
       :type name: str
+      :param description: The description of the External Application. This will be shown to users when they access the External Application.
+      :type description: str
       :param theme: The visual theme of the External Application.
       :type theme: dict
       :param deployment_id: The ID of the deployment to use.

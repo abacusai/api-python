@@ -433,20 +433,21 @@ class Project(AbstractApiClass):
         """
         return self.client.list_holdout_analysis(self.project_id, model_id)
 
-    def create_monitor_alert(self, model_monitor_id: str, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig]):
+    def create_monitor_alert(self, alert_name: str, condition_config: Union[dict, AlertConditionConfig], action_config: Union[dict, AlertActionConfig], model_monitor_id: str = None, realtime_monitor_id: str = None):
         """
-        Create a monitor alert for the given conditions and monitor
+        Create a monitor alert for the given conditions and monitor. We can create monitor alert either for model monitor or real-time monitor.
 
         Args:
-            model_monitor_id (str): Unique string identifier for the model monitor created under the project.
             alert_name (str): Name of the alert.
             condition_config (AlertConditionConfig): Condition to run the actions for the alert.
             action_config (AlertActionConfig): Configuration for the action of the alert.
+            model_monitor_id (str): Unique string identifier for the model monitor created under the project.
+            realtime_monitor_id (str): Unique string identifier for the real-time monitor for the deployment created under the project.
 
         Returns:
             MonitorAlert: Object describing the monitor alert.
         """
-        return self.client.create_monitor_alert(self.project_id, model_monitor_id, alert_name, condition_config, action_config)
+        return self.client.create_monitor_alert(self.project_id, alert_name, condition_config, action_config, model_monitor_id, realtime_monitor_id)
 
     def list_prediction_operators(self):
         """

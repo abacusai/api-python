@@ -1108,7 +1108,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><em>NERObjective</em></a>) – Ranking scheme used to select final best model.</p></li>
 <li><p><strong>sort_objective</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERObjective" title="abacusai.api_class.enums.NERObjective"><em>NERObjective</em></a>) – Ranking scheme used to sort models on the metrics page.</p></li>
-<li><p><strong>ner_model_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERModelType" title="abacusai.api_class.enums.NERModelType"><em>NERModelType</em></a>) – Type of NER model to use.</p></li>
 <li><p><strong>test_split</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.</p></li>
 <li><p><strong>test_row_indicator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Column indicating which rows to use for training (TRAIN) and testing (TEST).</p></li>
 <li><p><strong>active_labels_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Entities that have been marked in a particular text</p></li>
@@ -1131,11 +1130,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.ner_model_type">
-<span class="sig-name descname"><span class="pre">ner_model_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NERModelType" title="abacusai.api_class.enums.NERModelType"><span class="pre">abacusai.api_class.enums.NERModelType</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.ner_model_type" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split">
 <span class="sig-name descname"><span class="pre">test_split</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.test_split" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -1153,11 +1147,6 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format">
 <span class="sig-name descname"><span class="pre">document_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.NLPDocumentFormat" title="abacusai.api_class.enums.NLPDocumentFormat"><span class="pre">abacusai.api_class.enums.NLPDocumentFormat</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.document_format" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.api_class.model.NamedEntityExtractionTrainingConfig.include_longformer">
-<span class="sig-name descname"><span class="pre">include_longformer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.model.NamedEntityExtractionTrainingConfig.include_longformer" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1253,12 +1242,13 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>response_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Customize instructions for what the LLM responses should look like.</p></li>
 <li><p><strong>lookup_rewrite_instructions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.</p></li>
 <li><p><strong>max_search_results</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.</p></li>
-<li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group ids to use to possibly query for the chatllm.</p></li>
-<li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group ids.</p></li>
+<li><p><strong>data_feature_group_ids</strong> – (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.</p></li>
+<li><p><strong>data_prompt_context</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prompt context for the data feature group IDs.</p></li>
 <li><p><strong>hide_generated_sql</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – When running data queries, hides the generated SQL in the response and will just return the table.</p></li>
 <li><p><strong>disable_data_summarization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – After executing a query summarize the reponse and reply back with only the table and query run.</p></li>
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector id to use for the chatllm.</p></li>
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for the ChatLLM.</p></li>
+<li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1335,6 +1325,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.database_connector_id">
 <span class="sig-name descname"><span class="pre">database_connector_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.database_connector_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.model.ChatLLMTrainingConfig.database_connector_tables">
+<span class="sig-name descname"><span class="pre">database_connector_tables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.api_class.model.ChatLLMTrainingConfig.database_connector_tables" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

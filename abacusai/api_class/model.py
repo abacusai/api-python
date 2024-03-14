@@ -380,7 +380,6 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     Args:
         objective (NERObjective): Ranking scheme used to select final best model.
         sort_objective (NERObjective): Ranking scheme used to sort models on the metrics page.
-        ner_model_type (NERModelType): Type of NER model to use.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
         active_labels_column (str): Entities that have been marked in a particular text
@@ -392,14 +391,12 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     """
     objective: enums.NERObjective = dataclasses.field(default=None)
     sort_objective: enums.NERObjective = dataclasses.field(default=None)
-    ner_model_type: enums.NERModelType = dataclasses.field(default=None)
     # Data Split Params
     test_split: int = dataclasses.field(default=None)
     test_row_indicator: str = dataclasses.field(default=None)
     # Named Entity Recognition
     active_labels_column: str = dataclasses.field(default=None)
     document_format: enums.NLPDocumentFormat = dataclasses.field(default=None)
-    include_longformer: bool = dataclasses.field(default=None)
     minimum_bounding_box_overlap_ratio: float = 0.0
     # OCR
     save_predicted_pdf: bool = True
@@ -448,12 +445,13 @@ class ChatLLMTrainingConfig(TrainingConfig):
         response_instructions (str): Customize instructions for what the LLM responses should look like.
         lookup_rewrite_instructions (str): Instructions for a LLM call to automatically generate filter expressions on document metadata to retrieve relevant documents for the conversation.
         max_search_results (int): Maximum number of search results in the retrieval augmentation step. If we know that the questions are likely to have snippets which are easily matched in the documents, then a lower number will help with accuracy.
-        data_feature_group_ids: (List[str]): List of feature group ids to use to possibly query for the chatllm.
-        data_prompt_context (str): Prompt context for the data feature group ids.
+        data_feature_group_ids: (List[str]): List of feature group IDs to use to possibly query for the ChatLLM. The created ChatLLM is commonly referred to as DataLLM.
+        data_prompt_context (str): Prompt context for the data feature group IDs.
         hide_generated_sql (bool): When running data queries, hides the generated SQL in the response and will just return the table.
         disable_data_summarization (bool): After executing a query summarize the reponse and reply back with only the table and query run.
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
-        database_connector_id (str): Database connector id to use for the chatllm.
+        database_connector_id (str): Database connector ID to use for the ChatLLM.
+        database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -470,6 +468,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     disable_data_summarization: bool = None
     search_score_cutoff: float = None
     database_connector_id: str = None
+    database_connector_tables: List[str] = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

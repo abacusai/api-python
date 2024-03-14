@@ -1,4 +1,4 @@
-from .api_class import BatchPredictionArgs
+from .api_class import BatchPredictionArgs, FileFormat
 from .prediction_feature_group import PredictionFeatureGroup
 from .prediction_input import PredictionInput
 from .return_class import AbstractApiClass
@@ -95,7 +95,7 @@ class BatchPredictionVersion(AbstractApiClass):
             BatchPredictionArgs, globalPredictionArgs)
         self.batch_prediction_args = client._build_class(
             BatchPredictionArgs, batchPredictionArgs)
-        self.deprecated_keys = {'global_prediction_args', 'explanations'}
+        self.deprecated_keys = {'explanations', 'global_prediction_args'}
 
     def __repr__(self):
         repr_dict = {f'batch_prediction_version': repr(self.batch_prediction_version), f'batch_prediction_id': repr(self.batch_prediction_id), f'status': repr(self.status), f'drift_monitor_status': repr(self.drift_monitor_status), f'deployment_id': repr(self.deployment_id), f'model_id': repr(self.model_id), f'model_version': repr(self.model_version), f'predictions_started_at': repr(self.predictions_started_at), f'predictions_completed_at': repr(self.predictions_completed_at), f'database_output_error': repr(self.database_output_error), f'total_predictions': repr(self.total_predictions), f'failed_predictions': repr(self.failed_predictions), f'database_connector_id': repr(self.database_connector_id), f'database_output_configuration': repr(self.database_output_configuration), f'explanations': repr(self.explanations), f'file_connector_output_location': repr(self.file_connector_output_location), f'file_output_format': repr(self.file_output_format), f'connector_type': repr(self.connector_type), f'legacy_input_location': repr(self.legacy_input_location), f'error': repr(self.error), f'drift_monitor_error': repr(self.drift_monitor_error), f'monitor_warnings': repr(
@@ -212,3 +212,35 @@ class BatchPredictionVersion(AbstractApiClass):
         if drift_monitor_status:
             return self.describe().drift_monitor_status
         return self.describe().status
+
+    def load_results_as_pandas(self):
+        """
+        Loads the output feature groups into a python pandas dataframe.
+
+        Returns:
+            DataFrame: A pandas dataframe with annotations and text_snippet columns.
+        """
+        import json
+        import tempfile
+
+        import pandas as pd
+
+        if self.output_feature_group_version:
+            feature_group_version = self.client.describe_feature_group_version(
+                self.output_feature_group_version)
+            return feature_group_version.wait_for_materialization().load_as_pandas()
+
+        offset = 0
+        df = None
+        with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as temp_file:
+            while True:
+                with self.client.download_batch_prediction_result_chunk(self.batch_prediction_version, offset) as chunk:
+                    bytes_written = temp_file.write(chunk.read())
+                    if not bytes_written:
+                        break
+                    offset += bytes_written
+            temp_file.seek(0)
+            df = pd.read_csv(temp_file) if self.file_output_format == FileFormat.CSV else pd.json_normalize(
+                [json.loads(line) for line in temp_file.readlines()])
+
+        return df

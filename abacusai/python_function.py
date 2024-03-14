@@ -53,13 +53,13 @@ class PythonFunction(AbstractApiClass):
                 'function_name': self.function_name, 'python_function_id': self.python_function_id, 'function_type': self.function_type, 'package_requirements': self.package_requirements, 'code_source': self._get_attribute_as_dict(self.code_source)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
-    def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: dict = None, name: str = None):
+    def add_graph_to_dashboard(self, graph_dashboard_id: str, function_variable_mappings: list = None, name: str = None):
         """
         Add a python plot function to a dashboard
 
         Args:
             graph_dashboard_id (str): Unique string identifier for the graph dashboard to update.
-            function_variable_mappings (dict): List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
+            function_variable_mappings (list): List of arguments to be supplied to the function as parameters, in the format [{'name': 'function_argument', 'variable_type': 'FEATURE_GROUP', 'value': 'name_of_feature_group'}].
             name (str): Name of the added python plot
 
         Returns:

@@ -96,6 +96,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ForecastingMonitorConfig" title="abacusai.api_class.monitor.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
+<td><p>Std Dev Threshold types</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold" title="abacusai.api_class.monitor.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
+<td><p>Item Attributes Std Dev Threshold for Monitor Alerts</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py class">
@@ -132,6 +138,72 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.to_dict">
 <span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.StdDevThreshold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">StdDevThreshold</span></span><a class="headerlink" href="#abacusai.api_class.monitor.StdDevThreshold" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Std Dev Threshold types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold_type</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.StdDevThresholdType" title="abacusai.api_class.enums.StdDevThresholdType"><em>StdDevThresholdType</em></a>) – Type of threshold to apply to the item attributes.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Value to use for the threshold.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.StdDevThreshold.threshold_type">
+<span class="sig-name descname"><span class="pre">threshold_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.StdDevThresholdType" title="abacusai.api_class.enums.StdDevThresholdType"><span class="pre">abacusai.api_class.enums.StdDevThresholdType</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.StdDevThreshold.threshold_type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.StdDevThreshold.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.StdDevThreshold.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.StdDevThreshold.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.StdDevThreshold.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.ItemAttributesStdDevThreshold">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">ItemAttributesStdDevThreshold</span></span><a class="headerlink" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Item Attributes Std Dev Threshold for Monitor Alerts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lower_bound</strong> (<a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><em>StdDevThreshold</em></a>) – Lower bound for the item attributes.</p></li>
+<li><p><strong>upper_bound</strong> (<a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><em>StdDevThreshold</em></a>) – Upper bound for the item attributes.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.ItemAttributesStdDevThreshold.lower_bound">
+<span class="sig-name descname"><span class="pre">lower_bound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><span class="pre">StdDevThreshold</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold.lower_bound" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.ItemAttributesStdDevThreshold.upper_bound">
+<span class="sig-name descname"><span class="pre">upper_bound</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><span class="pre">StdDevThreshold</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold.upper_bound" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.ItemAttributesStdDevThreshold.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold.to_dict" title="Permalink to this definition"></a></dt>
 <dd><p>Standardizes converting an ApiClass to dictionary.
 Keys of response dictionary are converted to camel case.
 This also validates the fields ( type, value, etc ) received in the dictionary.</p>

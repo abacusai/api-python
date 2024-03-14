@@ -1,0 +1,95 @@
+:py:mod:`abacusai.realtime_monitor`
+===================================
+
+.. py:module:: abacusai.realtime_monitor
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   abacusai.realtime_monitor.RealtimeMonitor
+
+
+
+
+.. py:class:: RealtimeMonitor(client, realtimeMonitorId=None, name=None, createdAt=None, deploymentId=None, lookbackTime=None, realtimeMonitorSchedule=None)
+
+
+   Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
+
+   A real-time monitor
+
+   :param client: An authenticated API Client instance
+   :type client: ApiClient
+   :param realtimeMonitorId: The unique identifier of the real-time monitor.
+   :type realtimeMonitorId: str
+   :param name: The user-friendly name for the real-time monitor.
+   :type name: str
+   :param createdAt: Date and time at which the real-time monitor was created.
+   :type createdAt: str
+   :param deploymentId: Deployment ID that this real-time monitor is monitoring.
+   :type deploymentId: str
+   :param lookbackTime: The lookback time for the real-time monitor.
+   :type lookbackTime: int
+   :param realtimeMonitorSchedule: The drift computation schedule for the real-time monitor.
+   :type realtimeMonitorSchedule: str
+
+   .. py:method:: __repr__()
+
+      Return repr(self).
+
+
+   .. py:method:: to_dict()
+
+      Get a dict representation of the parameters in this class
+
+      :returns: The dict value representation of the class parameters
+      :rtype: dict
+
+
+   .. py:method:: update(realtime_monitor_schedule = None, lookback_time = None)
+
+      Update the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_schedule: The cron expression for triggering monitor
+      :type realtime_monitor_schedule: str
+      :param lookback_time: Lookback time (in seconds) for each monitor trigger
+      :type lookback_time: float
+
+      :returns: Object describing the realtime monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: refresh()
+
+      Calls describe and refreshes the current object's fields
+
+      :returns: The current object
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: describe()
+
+      Get the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
+
+      :returns: Object describing the real-time monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: delete()
+
+      Delete the real-time monitor associated with the real-time monitor id.
+
+      :param realtime_monitor_id: Unique string identifier for the real-time monitor.
+      :type realtime_monitor_id: str
+
+
+

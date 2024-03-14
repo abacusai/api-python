@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, refreshSchedules={}, featureGroupExportConfig={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -260,6 +260,19 @@ Classes
       :type deployment_id: str
 
 
+   .. py:method:: set_default_prediction_arguments(prediction_arguments, set_as_override = False)
+
+      Sets the deployment config.
+
+      :param prediction_arguments: The prediction arguments to set.
+      :type prediction_arguments: PredictionArguments
+      :param set_as_override: If True, use these arguments as overrides instead of defaults for predict calls
+      :type set_as_override: bool
+
+      :returns: description of the updated deployment.
+      :rtype: Deployment
+
+
    .. py:method:: create_alert(alert_name, condition_config, action_config)
 
       Create a deployment alert for the given conditions.
@@ -287,6 +300,30 @@ Classes
 
       :returns: An array of deployment alerts.
       :rtype: list[MonitorAlert]
+
+
+   .. py:method:: create_realtime_monitor(realtime_monitor_schedule = None, lookback_time = None)
+
+      Real time monitors compute and monitor metrics of real time prediction data.
+
+      :param realtime_monitor_schedule: The cron expression for triggering monitor.
+      :type realtime_monitor_schedule: str
+      :param lookback_time: Lookback time (in seconds) for each monitor trigger
+      :type lookback_time: int
+
+      :returns: Object describing the real-time monitor.
+      :rtype: RealtimeMonitor
+
+
+   .. py:method:: list_realtime_monitors()
+
+      List the real-time monitors associated with the deployment id.
+
+      :param deployment_id: Unique string identifier for the deployment.
+      :type deployment_id: str
+
+      :returns: An array of real-time monitors.
+      :rtype: list[RealtimeMonitor]
 
 
    .. py:method:: get_conversation_response(message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)
@@ -469,12 +506,14 @@ Classes
       :rtype: list[DeploymentConversation]
 
 
-   .. py:method:: create_external_application(name = None, logo = None, theme = None)
+   .. py:method:: create_external_application(name = None, description = None, logo = None, theme = None)
 
       Creates a new External Application from an existing ChatLLM Deployment.
 
       :param name: The name of the External Application. If not provided, the name of the deployment will be used.
       :type name: str
+      :param description: The description of the External Application. This will be shown to users when they access the External Application. If not provided, the description of the deployment will be used.
+      :type description: str
       :param logo: The logo to be displayed.
       :type logo: str
       :param theme: The visual theme of the External Application.

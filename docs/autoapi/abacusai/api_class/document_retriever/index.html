@@ -21,7 +21,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="abacusai.api_class.enums" href="../enums/index.html" />
-    <link rel="prev" title="abacusai.api_class.dataset_application_connector" href="../dataset_application_connector/index.html" /> 
+    <link rel="prev" title="abacusai.api_class.deployment" href="../deployment/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -97,7 +97,7 @@
 <td><p>Configs for vector store indexing.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.document_retriever.DocumentRetrieverConfig" title="abacusai.api_class.document_retriever.DocumentRetrieverConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentRetrieverConfig</span></code></a></p></td>
-<td><p>Configs for document retriever.</p></td>
+<td><p>Configs for document retriever. If any configuration value is not explicitly provided, Abacus will automatically infer default values based on the data.</p></td>
 </tr>
 </tbody>
 </table>
@@ -114,6 +114,7 @@
 <li><p><strong>text_encoder</strong> (<a class="reference internal" href="../enums/index.html#abacusai.api_class.enums.VectorStoreTextEncoder" title="abacusai.api_class.enums.VectorStoreTextEncoder"><em>VectorStoreTextEncoder</em></a>) – Encoder used to index texts from the documents.</p></li>
 <li><p><strong>chunk_size_factors</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Chunking data with multiple sizes. The specified list of factors are used to calculate more sizes, in addition to <cite>chunk_size</cite>.</p></li>
 <li><p><strong>score_multiplier_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If provided, will use the values in this metadata column to modify the relevance score of returned chunks for all queries.</p></li>
+<li><p><strong>prune_vectors</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Transform vectors using SVD so that the average component of vectors in the corpus are removed.</p></li>
 </ul>
 </dd>
 </dl>
@@ -142,13 +143,18 @@
 <span class="sig-name descname"><span class="pre">score_multiplier_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.score_multiplier_column" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.document_retriever.VectorStoreConfig.prune_vectors">
+<span class="sig-name descname"><span class="pre">prune_vectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.document_retriever.VectorStoreConfig.prune_vectors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.document_retriever.DocumentRetrieverConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.document_retriever.</span></span><span class="sig-name descname"><span class="pre">DocumentRetrieverConfig</span></span><a class="headerlink" href="#abacusai.api_class.document_retriever.DocumentRetrieverConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.api_class.document_retriever.VectorStoreConfig" title="abacusai.api_class.document_retriever.VectorStoreConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VectorStoreConfig</span></code></a></p>
-<p>Configs for document retriever.</p>
+<p>Configs for document retriever. If any configuration value is not explicitly provided, Abacus will automatically infer default values based on the data.</p>
 </dd></dl>
 
 </section>
@@ -159,7 +165,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../dataset_application_connector/index.html" class="btn btn-neutral float-left" title="abacusai.api_class.dataset_application_connector" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../deployment/index.html" class="btn btn-neutral float-left" title="abacusai.api_class.deployment" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="../enums/index.html" class="btn btn-neutral float-right" title="abacusai.api_class.enums" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
