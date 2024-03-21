@@ -183,6 +183,19 @@ Classes
       :rtype: DataMetrics
 
 
+   .. py:method:: infer_database_column_to_feature_mappings(database_connector_id, database_table_name)
+
+      Infers the mapping of columns in a database table to features for a feature group version.
+
+      :param database_connector_id: The ID of the database connector
+      :type database_connector_id: str
+      :param database_table_name: The name of the table in the database connector
+      :type database_table_name: str
+
+      :returns: Autocomplete mappings for database to connector columns
+      :rtype: InferredDatabaseColumnToFeatureMappings
+
+
    .. py:method:: wait_for_results(timeout=3600)
 
       A waiting call until feature group version is materialized

@@ -12,6 +12,7 @@ class DatasetVersion(AbstractApiClass):
             datasetId (str): A reference to the Dataset this dataset version belongs to.
             size (int): The size in bytes of the file.
             rowCount (int): Number of rows in the dataset version.
+            fileInspectMetadata (dict): Metadata information about file's inspection. For example - the detected delimiter for CSV files.
             createdAt (str): The timestamp this dataset version was created.
             error (str): If status is FAILED, this field will be populated with an error.
             incrementalQueriedAt (str): If the dataset version is from an incremental dataset, this is the last entry of timestamp column when the dataset version was created.
@@ -20,13 +21,14 @@ class DatasetVersion(AbstractApiClass):
             invalidRecords (str): Invalid records in the dataset version
     """
 
-    def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, invalidRecords=None):
+    def __init__(self, client, datasetVersion=None, status=None, datasetId=None, size=None, rowCount=None, fileInspectMetadata=None, createdAt=None, error=None, incrementalQueriedAt=None, uploadId=None, mergeFileSchemas=None, invalidRecords=None):
         super().__init__(client, datasetVersion)
         self.dataset_version = datasetVersion
         self.status = status
         self.dataset_id = datasetId
         self.size = size
         self.row_count = rowCount
+        self.file_inspect_metadata = fileInspectMetadata
         self.created_at = createdAt
         self.error = error
         self.incremental_queried_at = incrementalQueriedAt
@@ -36,8 +38,8 @@ class DatasetVersion(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'dataset_version': repr(self.dataset_version), f'status': repr(self.status), f'dataset_id': repr(self.dataset_id), f'size': repr(self.size), f'row_count': repr(self.row_count), f'created_at': repr(self.created_at), f'error': repr(
-            self.error), f'incremental_queried_at': repr(self.incremental_queried_at), f'upload_id': repr(self.upload_id), f'merge_file_schemas': repr(self.merge_file_schemas), f'invalid_records': repr(self.invalid_records)}
+        repr_dict = {f'dataset_version': repr(self.dataset_version), f'status': repr(self.status), f'dataset_id': repr(self.dataset_id), f'size': repr(self.size), f'row_count': repr(self.row_count), f'file_inspect_metadata': repr(self.file_inspect_metadata), f'created_at': repr(
+            self.created_at), f'error': repr(self.error), f'incremental_queried_at': repr(self.incremental_queried_at), f'upload_id': repr(self.upload_id), f'merge_file_schemas': repr(self.merge_file_schemas), f'invalid_records': repr(self.invalid_records)}
         class_name = "DatasetVersion"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -50,8 +52,8 @@ class DatasetVersion(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'created_at': self.created_at,
-                'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
+        resp = {'dataset_version': self.dataset_version, 'status': self.status, 'dataset_id': self.dataset_id, 'size': self.size, 'row_count': self.row_count, 'file_inspect_metadata': self.file_inspect_metadata,
+                'created_at': self.created_at, 'error': self.error, 'incremental_queried_at': self.incremental_queried_at, 'upload_id': self.upload_id, 'merge_file_schemas': self.merge_file_schemas, 'invalid_records': self.invalid_records}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def get_metrics(self, selected_columns: list = None, include_charts: bool = False, include_statistics: bool = True):

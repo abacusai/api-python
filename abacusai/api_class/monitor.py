@@ -6,6 +6,16 @@ from .enums import StdDevThresholdType
 
 @dataclasses.dataclass
 class ForecastingMonitorConfig(ApiClass):
+    """
+    Forecasting Monitor Configuration
+
+    Args:
+        id_column (str): The name of the column that contains the unique identifier for the time series.
+        timestamp_column (str): The name of the column that contains the timestamp for the time series.
+        target_column (str): The name of the column that contains the target value for the time series.
+        start_time (str): The start time of the time series data.
+        end_time (str): The end time of the time series data.
+    """
     id_column: str = dataclasses.field(default=None)
     timestamp_column: str = dataclasses.field(default=None)
     target_column: str = dataclasses.field(default=None)

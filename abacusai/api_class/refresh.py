@@ -7,6 +7,9 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class FeatureGroupExportConfig(ApiClass):
+    """
+    An abstract class for feature group exports.
+    """
     connector_type: enums.ConnectorType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
@@ -16,6 +19,13 @@ class FeatureGroupExportConfig(ApiClass):
 
 @dataclasses.dataclass
 class FileConnectorExportConfig(FeatureGroupExportConfig):
+    """
+    File connector export config for feature groups
+
+    Args:
+        location (str): The location to export the feature group to
+        export_file_format (str): The file format to export the feature group to
+    """
     location: str = dataclasses.field(default=None)
     export_file_format: str = dataclasses.field(default=None)
 
@@ -32,6 +42,17 @@ class FileConnectorExportConfig(FeatureGroupExportConfig):
 
 @dataclasses.dataclass
 class DatabaseConnectorExportConfig(FeatureGroupExportConfig):
+    """
+    Database connector export config for feature groups
+
+    Args:
+        database_connector_id (str): The ID of the database connector to export the feature group to
+        mode (str): The mode to export the feature group in
+        object_name (str): The name of the object to export the feature group to
+        id_column (str): The name of the ID column
+        additional_id_columns (List[str]): Additional ID columns
+        data_columns (Dict[str, str]): The data columns to export the feature group to
+    """
     database_connector_id: str = dataclasses.field(default=None)
     mode: str = dataclasses.field(default=None)
     object_name: str = dataclasses.field(default=None)

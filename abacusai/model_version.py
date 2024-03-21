@@ -116,21 +116,6 @@ class ModelVersion(AbstractApiClass):
         """
         return self.client.set_model_objective(self.model_version, metric)
 
-    def query_test_point_predictions(self, algorithm: str, to_row: int, from_row: int = 0, sql_where_clause: str = ''):
-        """
-        Query the test points predictions data for a specific algorithm.
-
-        Args:
-            algorithm (str): The algorithm id
-            to_row (int): Ending row index to return.
-            from_row (int): Starting row index to return.
-            sql_where_clause (str): The SQL WHERE clause used to filter the data.
-
-        Returns:
-            TestPointPredictions: TestPointPrediction
-        """
-        return self.client.query_test_point_predictions(self.model_version, algorithm, to_row, from_row, sql_where_clause)
-
     def get_feature_group_schemas_for(self):
         """
         Gets the schema (including feature mappings) for all feature groups used in the model version.

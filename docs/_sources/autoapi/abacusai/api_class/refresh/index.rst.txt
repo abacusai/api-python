@@ -25,8 +25,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for feature group exports.
 
    .. py:attribute:: connector_type
       :type: abacusai.api_class.enums.ConnectorType
@@ -43,8 +42,12 @@ Classes
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   File connector export config for feature groups
+
+   :param location: The location to export the feature group to
+   :type location: str
+   :param export_file_format: The file format to export the feature group to
+   :type export_file_format: str
 
    .. py:attribute:: location
       :type: str
@@ -72,8 +75,20 @@ Classes
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Database connector export config for feature groups
+
+   :param database_connector_id: The ID of the database connector to export the feature group to
+   :type database_connector_id: str
+   :param mode: The mode to export the feature group in
+   :type mode: str
+   :param object_name: The name of the object to export the feature group to
+   :type object_name: str
+   :param id_column: The name of the ID column
+   :type id_column: str
+   :param additional_id_columns: Additional ID columns
+   :type additional_id_columns: List[str]
+   :param data_columns: The data columns to export the feature group to
+   :type data_columns: Dict[str, str]
 
    .. py:attribute:: database_connector_id
       :type: str

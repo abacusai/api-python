@@ -184,6 +184,19 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.get_feature_group_version_metrics(self.feature_group_version, selected_columns, include_charts, include_statistics)
 
+    def infer_database_column_to_feature_mappings(self, database_connector_id: str, database_table_name: str):
+        """
+        Infers the mapping of columns in a database table to features for a feature group version.
+
+        Args:
+            database_connector_id (str): The ID of the database connector
+            database_table_name (str): The name of the table in the database connector
+
+        Returns:
+            InferredDatabaseColumnToFeatureMappings: Autocomplete mappings for database to connector columns
+        """
+        return self.client.infer_database_column_to_feature_mappings(self.feature_group_version, database_connector_id, database_table_name)
+
     def wait_for_results(self, timeout=3600):
         """
         A waiting call until feature group version is materialized

@@ -7,6 +7,9 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class TrainingConfig(ApiClass):
+    """
+    An abstract class for the training config options used to train the model.
+    """
     _upper_snake_case_keys: bool = dataclasses.field(default=True, repr=False, init=False)
     _support_kwargs: bool = dataclasses.field(default=True, repr=False, init=False)
 
@@ -60,6 +63,8 @@ class PersonalizationTrainingConfig(TrainingConfig):
         downsample_item_popularity_percentile (float): Downsample items more popular than this percentile.
         use_user_id_feature (bool): Use user id as a feature in CTR models.
         min_item_history (int): Minimum number of interactions an item must have to be included in training.
+        query_column (str): Name of column in the interactions table that represents a natural language query, e.g. 'blue t-shirt'.
+        item_query_column (str): Name of column in the item catalog that will be matched to the query column in the interactions table.
     """
     # top-level params
     objective: enums.PersonalizationObjective = dataclasses.field(default=None)
@@ -380,6 +385,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     Args:
         objective (NERObjective): Ranking scheme used to select final best model.
         sort_objective (NERObjective): Ranking scheme used to sort models on the metrics page.
+        llm_for_ner (NERForLLM) : LLM to use for NER from among available LLM
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
         test_row_indicator (str): Column indicating which rows to use for training (TRAIN) and testing (TEST).
         active_labels_column (str): Entities that have been marked in a particular text
@@ -391,6 +397,7 @@ class NamedEntityExtractionTrainingConfig(TrainingConfig):
     """
     objective: enums.NERObjective = dataclasses.field(default=None)
     sort_objective: enums.NERObjective = dataclasses.field(default=None)
+    llm_for_ner: enums.LLMName = dataclasses.field(default=None)
     # Data Split Params
     test_split: int = dataclasses.field(default=None)
     test_row_indicator: str = dataclasses.field(default=None)
@@ -418,6 +425,7 @@ class NaturalLanguageSearchTrainingConfig(TrainingConfig):
         search_chunk_size (int): Chunk size for indexing the documents.
         chunk_overlap_fraction (float): Overlap in chunks while indexing the documents.
         test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        index_fraction (float): Fraction of the chunk to use for indexing.
     """
     abacus_internal_model: bool = dataclasses.field(default=None)
     num_completion_tokens: int = dataclasses.field(default=None)
@@ -631,15 +639,16 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     Training config for the TS_ANOMALY problem type
 
     Args:
-    type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
-    test_start (str): Limit training data to dates before the given test start.
-    test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-    fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
-    handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
-    timeseries_frequency (str): set this to control frequency of filling missing values
-    min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
-    anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
-    threshold_score (float): Threshold score for anomaly detection
+        type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
+        test_start (str): Limit training data to dates before the given test start.
+        test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+        fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
+        handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
+        timeseries_frequency (str): set this to control frequency of filling missing values
+        min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
+        anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
+        hyperparameter_calculation_with_heuristics (TimeseriesAnomalyUseHeuristic): Enable heuristic calculation to get hyperparameters for the model
+        threshold_score (float): Threshold score for anomaly detection
     """
     type_of_split: enums.TimeseriesAnomalyDataSplitType = dataclasses.field(default=None)
     test_start: str = dataclasses.field(default=None)
@@ -649,6 +658,7 @@ class TimeseriesAnomalyTrainingConfig(TrainingConfig):
     timeseries_frequency: str = dataclasses.field(default=None)
     min_samples_in_normal_region: int = dataclasses.field(default=None)
     anomaly_type: enums.TimeseriesAnomalyTypeOfAnomaly = dataclasses.field(default=None)
+    hyperparameter_calculation_with_heuristics: enums.TimeseriesAnomalyUseHeuristic = dataclasses.field(default=None)
     threshold_score: float = dataclasses.field(default=None)
 
     def __post_init__(self):
@@ -764,9 +774,11 @@ class OptimizationTrainingConfig(TrainingConfig):
 
     Args:
         solve_time_limit (float): The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
+        optimality_gap_limit (float): The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
 
     """
     solve_time_limit: float = dataclasses.field(default=None)
+    optimality_gap_limit: float = dataclasses.field(default=None)
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.OPTIMIZATION

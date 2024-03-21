@@ -94,7 +94,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="abacusai.api_class.batch_prediction.BatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchPredictionArgs</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>An abstract class for Batch Prediction args specific to problem type.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.batch_prediction.AnomalyOutliersBatchPredictionArgs" title="abacusai.api_class.batch_prediction.AnomalyOutliersBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyOutliersBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the ANOMALY_OUTLIERS problem type</p></td>
@@ -135,8 +135,7 @@
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.batch_prediction.</span></span><span class="sig-name descname"><span class="pre">BatchPredictionArgs</span></span><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>An abstract class for Batch Prediction args specific to problem type.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.batch_prediction.BatchPredictionArgs._support_kwargs">
 <span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.batch_prediction.BatchPredictionArgs._support_kwargs" title="Permalink to this definition"></a></dt>
@@ -301,7 +300,7 @@ inheritance.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
 <li><p><strong>number_of_items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – Number of items to recommend.</p></li>
-<li><p><strong>result_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
+<li><p><strong>item_attributes_to_include_in_the_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – List of columns to include in the prediction output.</p></li>
 <li><p><strong>score_field</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – If specified, relative item scores will be returned using a field with this name</p></li>
 </ul>
 </dd>
@@ -349,7 +348,7 @@ inheritance.</p>
 <li><p><strong>importance_of_records_in_nested_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Returns importance of each index in the specified nested column instead of SHAP column explanations.</p></li>
 <li><p><strong>explanation_filter_lower_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – If set explanations will be limited to predictions above this value, Range: [0, 1].</p></li>
 <li><p><strong>explanation_filter_upper_bound</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – If set explanations will be limited to predictions below this value, Range: [0, 1].</p></li>
-<li><p><strong>bound_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – For classification problems specifies the label to which the explanation bounds are applied.</p></li>
+<li><p><strong>explanation_filter_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – For classification problems specifies the label to which the explanation bounds are applied.</p></li>
 <li><p><strong>output_columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – A list of column names to include in the prediction result.</p></li>
 <li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, calculates explanations for the predicted values along with predictions.</p></li>
 <li><p><strong>automate_monitoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, creates a monitor to calculate the drift for the batch prediction.</p></li>
@@ -560,7 +559,10 @@ inheritance.</p>
 <p>Batch Prediction Config for the TrainablePlugAndPlay problem type</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>automate_monitoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, creates a monitor to calculate the drift for the batch prediction.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
+<li><p><strong>automate_monitoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, creates a monitor to calculate the drift for the batch prediction.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py attribute">

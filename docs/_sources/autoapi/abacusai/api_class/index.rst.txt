@@ -121,6 +121,7 @@ Classes
    abacusai.api_class.ForecastingQuanitlesExtensionMethod
    abacusai.api_class.TimeseriesAnomalyDataSplitType
    abacusai.api_class.TimeseriesAnomalyTypeOfAnomaly
+   abacusai.api_class.TimeseriesAnomalyUseHeuristic
    abacusai.api_class.NERObjective
    abacusai.api_class.NERModelType
    abacusai.api_class.NLPDocumentFormat
@@ -394,6 +395,16 @@ Classes
 
       
 
+   .. py:attribute:: disable_problem_type_context
+      :type: bool
+
+      
+
+   .. py:attribute:: ignore_history
+      :type: bool
+
+      
+
 
 .. py:class:: ApiClass
 
@@ -485,8 +496,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for Batch Prediction args specific to problem type.
 
    .. py:attribute:: _support_kwargs
       :type: bool
@@ -646,8 +656,8 @@ Classes
    :type for_eval: bool
    :param number_of_items: Number of items to recommend.
    :type number_of_items: int
-   :param result_columns: List of columns to include in the prediction output.
-   :type result_columns: list
+   :param item_attributes_to_include_in_the_result: List of columns to include in the prediction output.
+   :type item_attributes_to_include_in_the_result: list
    :param score_field: If specified, relative item scores will be returned using a field with this name
    :type score_field: str
 
@@ -698,8 +708,8 @@ Classes
    :type explanation_filter_lower_bound: float
    :param explanation_filter_upper_bound: If set explanations will be limited to predictions below this value, Range: [0, 1].
    :type explanation_filter_upper_bound: float
-   :param bound_label: For classification problems specifies the label to which the explanation bounds are applied.
-   :type bound_label: str
+   :param explanation_filter_label: For classification problems specifies the label to which the explanation bounds are applied.
+   :type explanation_filter_label: str
    :param output_columns: A list of column names to include in the prediction result.
    :type output_columns: list
    :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
@@ -896,6 +906,8 @@ Classes
 
    Batch Prediction Config for the TrainablePlugAndPlay problem type
 
+   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+   :type for_eval: bool
    :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
    :type automate_monitoring: bool
 
@@ -1145,8 +1157,14 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Custom config for dataset parsing.
+
+   :param escape: Escape character for CSV files. Defaults to '"'.
+   :type escape: str
+   :param csv_delimiter: Delimiter for CSV files. Defaults to None.
+   :type csv_delimiter: str
+   :param file_path_with_schema: Path to the file with schema. Defaults to None.
+   :type file_path_with_schema: str
 
    .. py:attribute:: escape
       :type: str
@@ -1353,8 +1371,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for dataset configs specific to application connectors.
 
    .. py:attribute:: application_connector_type
       :type: abacusai.api_class.enums.ApplicationConnectorType
@@ -1747,8 +1764,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for prediction arguments specific to problem type.
 
    .. py:attribute:: _support_kwargs
       :type: bool
@@ -1781,8 +1797,8 @@ Classes
    :type forced_assignments: dict
    :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
    :type solve_time_limit_seconds: float
-   :param include_all_assignmnets: If True, will return all assignments, including assignments with value 0. Default is False.
-   :type include_all_assignmnets: bool
+   :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
+   :type include_all_assignments: bool
 
    .. py:attribute:: forced_assignments
       :type: dict
@@ -1812,8 +1828,8 @@ Classes
 
    :param start_timestamp: Timestamp from which anomalies have to be detected in the training data
    :type start_timestamp: str
-   :param end_timestsamp: Timestamp to which anomalies have to be detected in the training data
-   :type end_timestsamp: str
+   :param end_timestamp: Timestamp to which anomalies have to be detected in the training data
+   :type end_timestamp: str
    :param get_all_item_data: If True, anomaly detection has to be performed on all the data related to input ids
    :type get_all_item_data: bool
 
@@ -2636,6 +2652,11 @@ Classes
 
    .. py:attribute:: ROW_INDICATOR_BASED
       :value: 'Row Indicator Based'
+
+      
+
+   .. py:attribute:: STRATIFIED_RANDOM_SAMPLING
+      :value: 'Stratified Random Sampling'
 
       
 
@@ -3511,6 +3532,31 @@ Classes
 
    .. py:attribute:: LOW_PEAK
       :value: 'low_peak'
+
+      
+
+
+.. py:class:: TimeseriesAnomalyUseHeuristic
+
+
+   Bases: :py:obj:`ApiEnum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: ENABLE
+      :value: 'enable'
+
+      
+
+   .. py:attribute:: DISABLE
+      :value: 'disable'
+
+      
+
+   .. py:attribute:: AUTOMATIC
+      :value: 'automatic'
 
       
 
@@ -4807,8 +4853,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for the training config options used to train the model.
 
    .. py:attribute:: _upper_snake_case_keys
       :type: bool
@@ -4917,6 +4962,10 @@ Classes
    :type use_user_id_feature: bool
    :param min_item_history: Minimum number of interactions an item must have to be included in training.
    :type min_item_history: int
+   :param query_column: Name of column in the interactions table that represents a natural language query, e.g. 'blue t-shirt'.
+   :type query_column: str
+   :param item_query_column: Name of column in the item catalog that will be matched to the query column in the interactions table.
+   :type item_query_column: str
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -5861,6 +5910,8 @@ Classes
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
    :type sort_objective: NERObjective
+   :param llm_for_ner: LLM to use for NER from among available LLM
+   :type llm_for_ner: NERForLLM
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
@@ -5885,6 +5936,11 @@ Classes
 
    .. py:attribute:: sort_objective
       :type: abacusai.api_class.enums.NERObjective
+
+      
+
+   .. py:attribute:: llm_for_ner
+      :type: abacusai.api_class.enums.LLMName
 
       
 
@@ -5949,6 +6005,8 @@ Classes
    :type chunk_overlap_fraction: float
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
+   :param index_fraction: Fraction of the chunk to use for indexing.
+   :type index_fraction: float
 
    .. py:attribute:: abacus_internal_model
       :type: bool
@@ -6364,16 +6422,26 @@ Classes
 
    Training config for the TS_ANOMALY problem type
 
-   Args:
-   type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
-   test_start (str): Limit training data to dates before the given test start.
-   test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-   fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
-   handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
-   timeseries_frequency (str): set this to control frequency of filling missing values
-   min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
-   anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
-   threshold_score (float): Threshold score for anomaly detection
+   :param type_of_split: Type of data splitting into train/test.
+   :type type_of_split: TimeseriesAnomalyDataSplitType
+   :param test_start: Limit training data to dates before the given test start.
+   :type test_start: str
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param fill_missing_values: strategies to fill missing values and missing timestamps
+   :type fill_missing_values: List[dict]
+   :param handle_zeros_as_missing_values: If True, handle zero values in numeric columns as missing data
+   :type handle_zeros_as_missing_values: bool
+   :param timeseries_frequency: set this to control frequency of filling missing values
+   :type timeseries_frequency: str
+   :param min_samples_in_normal_region: Adjust this to fine-tune the number of anomalies to be identified.
+   :type min_samples_in_normal_region: int
+   :param anomaly_type: select what kind of peaks to detect as anomalies
+   :type anomaly_type: TimeseriesAnomalyTypeOfAnomaly
+   :param hyperparameter_calculation_with_heuristics: Enable heuristic calculation to get hyperparameters for the model
+   :type hyperparameter_calculation_with_heuristics: TimeseriesAnomalyUseHeuristic
+   :param threshold_score: Threshold score for anomaly detection
+   :type threshold_score: float
 
    .. py:attribute:: type_of_split
       :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
@@ -6412,6 +6480,11 @@ Classes
 
    .. py:attribute:: anomaly_type
       :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+
+      
+
+   .. py:attribute:: hyperparameter_calculation_with_heuristics
+      :type: abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
 
       
 
@@ -6646,8 +6719,15 @@ Classes
 
    :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
+   :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
+   :type optimality_gap_limit: float
 
    .. py:attribute:: solve_time_limit
+      :type: float
+
+      
+
+   .. py:attribute:: optimality_gap_limit
       :type: float
 
       
@@ -6805,8 +6885,18 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Forecasting Monitor Configuration
+
+   :param id_column: The name of the column that contains the unique identifier for the time series.
+   :type id_column: str
+   :param timestamp_column: The name of the column that contains the timestamp for the time series.
+   :type timestamp_column: str
+   :param target_column: The name of the column that contains the target value for the time series.
+   :type target_column: str
+   :param start_time: The start time of the time series data.
+   :type start_time: str
+   :param end_time: The end time of the time series data.
+   :type end_time: str
 
    .. py:attribute:: id_column
       :type: str
@@ -6991,8 +7081,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for alert condition configs
 
    .. py:attribute:: alert_type
       :type: abacusai.api_class.enums.MonitorAlertType
@@ -7238,8 +7327,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for alert action configs
 
    .. py:attribute:: action_type
       :type: abacusai.api_class.enums.AlertActionType
@@ -7399,8 +7487,14 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Feature mapping configuration for a feature group type.
+
+   :param feature_name: The name of the feature in the feature group.
+   :type feature_name: str
+   :param feature_mapping: The desired feature mapping for the feature.
+   :type feature_mapping: str
+   :param nested_feature_name: The name of the nested feature in the feature group.
+   :type nested_feature_name: str
 
    .. py:attribute:: feature_name
       :type: str
@@ -7423,8 +7517,14 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Project feature group type mappings.
+
+   :param feature_group_id: The unique identifier for the feature group.
+   :type feature_group_id: str
+   :param feature_group_type: The feature group type.
+   :type feature_group_type: str
+   :param feature_mappings: The feature mappings for the feature group.
+   :type feature_mappings: List[FeatureMappingConfig]
 
    .. py:attribute:: feature_group_id
       :type: str
@@ -7663,8 +7763,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for feature group exports.
 
    .. py:attribute:: connector_type
       :type: abacusai.api_class.enums.ConnectorType
@@ -7681,8 +7780,12 @@ Classes
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   File connector export config for feature groups
+
+   :param location: The location to export the feature group to
+   :type location: str
+   :param export_file_format: The file format to export the feature group to
+   :type export_file_format: str
 
    .. py:attribute:: location
       :type: str
@@ -7710,8 +7813,20 @@ Classes
 
    Bases: :py:obj:`FeatureGroupExportConfig`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Database connector export config for feature groups
+
+   :param database_connector_id: The ID of the database connector to export the feature group to
+   :type database_connector_id: str
+   :param mode: The mode to export the feature group in
+   :type mode: str
+   :param object_name: The name of the object to export the feature group to
+   :type object_name: str
+   :param id_column: The name of the ID column
+   :type id_column: str
+   :param additional_id_columns: Additional ID columns
+   :type additional_id_columns: List[str]
+   :param data_columns: The data columns to export the feature group to
+   :type data_columns: Dict[str, str]
 
    .. py:attribute:: database_connector_id
       :type: str

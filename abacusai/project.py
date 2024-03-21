@@ -500,6 +500,18 @@ class Project(AbstractApiClass):
         """
         return self.client.list_deployment_tokens(self.project_id)
 
+    def list_realtime_monitors(self):
+        """
+        List the real-time monitors associated with the deployment id.
+
+        Args:
+            project_id (str): Unique string identifier for the deployment.
+
+        Returns:
+            list[RealtimeMonitor]: An array of real-time monitors.
+        """
+        return self.client.list_realtime_monitors(self.project_id)
+
     def list_refresh_policies(self, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []):
         """
         List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
@@ -606,8 +618,8 @@ class Project(AbstractApiClass):
             description (str): A description of the agent, including its purpose and instructions.
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
-            agent_input_schema (dict): The schema of the input data for the agent.
-            agent_output_schema (dict): The schema of the output data for the agent.
+            agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
+            agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
 
         Returns:
             Agent: The new agent

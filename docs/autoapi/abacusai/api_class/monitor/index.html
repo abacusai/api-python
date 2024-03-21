@@ -94,7 +94,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ForecastingMonitorConfig" title="abacusai.api_class.monitor.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Forecasting Monitor Configuration</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
 <td><p>Std Dev Threshold types</p></td>
@@ -108,8 +108,18 @@
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">ForecastingMonitorConfig</span></span><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Forecasting Monitor Configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the unique identifier for the time series.</p></li>
+<li><p><strong>timestamp_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the timestamp for the time series.</p></li>
+<li><p><strong>target_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the target value for the time series.</p></li>
+<li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the time series data.</p></li>
+<li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the time series data.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.id_column">
 <span class="sig-name descname"><span class="pre">id_column</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.id_column" title="Permalink to this definition"></a></dt>

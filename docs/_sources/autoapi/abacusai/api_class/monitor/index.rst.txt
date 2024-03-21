@@ -24,8 +24,18 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Forecasting Monitor Configuration
+
+   :param id_column: The name of the column that contains the unique identifier for the time series.
+   :type id_column: str
+   :param timestamp_column: The name of the column that contains the timestamp for the time series.
+   :type timestamp_column: str
+   :param target_column: The name of the column that contains the target value for the time series.
+   :type target_column: str
+   :param start_time: The start time of the time series data.
+   :type start_time: str
+   :param end_time: The end time of the time series data.
+   :type end_time: str
 
    .. py:attribute:: id_column
       :type: str

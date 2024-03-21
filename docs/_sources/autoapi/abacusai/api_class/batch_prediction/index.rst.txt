@@ -33,8 +33,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for Batch Prediction args specific to problem type.
 
    .. py:attribute:: _support_kwargs
       :type: bool
@@ -194,8 +193,8 @@ Classes
    :type for_eval: bool
    :param number_of_items: Number of items to recommend.
    :type number_of_items: int
-   :param result_columns: List of columns to include in the prediction output.
-   :type result_columns: list
+   :param item_attributes_to_include_in_the_result: List of columns to include in the prediction output.
+   :type item_attributes_to_include_in_the_result: list
    :param score_field: If specified, relative item scores will be returned using a field with this name
    :type score_field: str
 
@@ -246,8 +245,8 @@ Classes
    :type explanation_filter_lower_bound: float
    :param explanation_filter_upper_bound: If set explanations will be limited to predictions below this value, Range: [0, 1].
    :type explanation_filter_upper_bound: float
-   :param bound_label: For classification problems specifies the label to which the explanation bounds are applied.
-   :type bound_label: str
+   :param explanation_filter_label: For classification problems specifies the label to which the explanation bounds are applied.
+   :type explanation_filter_label: str
    :param output_columns: A list of column names to include in the prediction result.
    :type output_columns: list
    :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
@@ -444,6 +443,8 @@ Classes
 
    Batch Prediction Config for the TrainablePlugAndPlay problem type
 
+   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
+   :type for_eval: bool
    :param automate_monitoring: If True, creates a monitor to calculate the drift for the batch prediction.
    :type automate_monitoring: bool
 

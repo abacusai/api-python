@@ -108,6 +108,7 @@ from .generated_pit_feature_config_option import GeneratedPitFeatureConfigOption
 from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
+from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
 from .inferred_feature_mappings import InferredFeatureMappings
 from .llm_execution_result import LlmExecutionResult
 from .llm_generated_code import LlmGeneratedCode
@@ -123,6 +124,7 @@ from .model_monitor_summary_from_org import ModelMonitorSummaryFromOrg
 from .model_monitor_version import ModelMonitorVersion
 from .model_monitor_version_metric_data import ModelMonitorVersionMetricData
 from .model_training_type_for_deployment import ModelTrainingTypeForDeployment
+from .model_upload import ModelUpload
 from .model_version import ModelVersion
 from .model_version_feature_group_schema import ModelVersionFeatureGroupSchema
 from .modification_lock_info import ModificationLockInfo
@@ -157,7 +159,6 @@ from .return_class import AbstractApiClass
 from .schema import Schema
 from .streaming_auth_token import StreamingAuthToken
 from .streaming_connector import StreamingConnector
-from .test_point_predictions import TestPointPredictions
 from .training_config_options import TrainingConfigOptions
 from .upload import Upload
 from .upload_part import UploadPart
@@ -251,14 +252,22 @@ class Blob:
 
 class AgentResponse:
     """
-    Response Object for agent to support attachments
+    Response object for agent to support attachments, section data and normal data
     """
 
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         self.data_list = []
+        self.section_data_list = []
         for arg in args:
             if isinstance(arg, Blob) or _is_json_serializable(arg):
                 self.data_list.append(arg)
+            else:
+                raise Exception(
+                    'AgentResponse can only contain Blob or json serializable objects')
+
+        for key, value in kwargs.items():
+            if isinstance(value, Blob) or _is_json_serializable(value):
+                self.section_data_list.append({key: value})
             else:
                 raise Exception(
                     'AgentResponse can only contain Blob or json serializable objects')
@@ -577,7 +586,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.1.7'
+    client_version = '1.1.8'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -735,8 +744,6 @@ class BaseApiClient:
 
     def _proxy_request(self, name: str, method: str = 'POST', query_params: dict = None, body: dict = None, files=None, parse_type=None, is_sync: bool = False, streamable_response: bool = False):
         headers = {'APIKEY': self.api_key}
-        if self.server:
-            headers['SERVER'] = self.server
         if deployment_id := os.getenv('ABACUS_DEPLOYMENT_ID'):
             query_params = {**(query_params or {}),
                             'environmentDeploymentId': deployment_id}
@@ -1134,7 +1141,7 @@ class ReadOnlyClient(BaseApiClient):
         return self._call_api('getExecuteFeatureGroupOperationResultPartCount', 'GET', query_params={'featureGroupOperationRunId': feature_group_operation_run_id})
 
     def download_execute_feature_group_operation_result_part_chunk(self, feature_group_operation_run_id: str, part: int, offset: int = 0, chunk_size: int = 10485760) -> io.BytesIO:
-        """Downloads a chunk of the result of the execution of fg operation
+        """Downloads a chunk of the result of the execution of feature group operation
 
         Args:
             feature_group_operation_run_id (str): The unique ID associated with the execution.
@@ -1317,6 +1324,18 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DataMetrics: The metrics for the specified Dataset version."""
         return self._call_api('getDatasetVersionMetrics', 'GET', query_params={'datasetVersion': dataset_version, 'selectedColumns': selected_columns, 'includeCharts': include_charts, 'includeStatistics': include_statistics}, parse_type=DataMetrics)
+
+    def infer_database_column_to_feature_mappings(self, feature_group_version: str, database_connector_id: str, database_table_name: str) -> InferredDatabaseColumnToFeatureMappings:
+        """Infers the mapping of columns in a database table to features for a feature group version.
+
+        Args:
+            feature_group_version (str): The ID of the feature group version
+            database_connector_id (str): The ID of the database connector
+            database_table_name (str): The name of the table in the database connector
+
+        Returns:
+            InferredDatabaseColumnToFeatureMappings: Autocomplete mappings for database to connector columns"""
+        return self._call_api('inferDatabaseColumnToFeatureMappings', 'GET', query_params={'featureGroupVersion': feature_group_version, 'databaseConnectorId': database_connector_id, 'databaseTableName': database_table_name}, parse_type=InferredDatabaseColumnToFeatureMappings)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         """Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -1548,20 +1567,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             ModelMetrics: An object containing the model metrics and explanations for what each metric means."""
         return self._call_api('getModelMetrics', 'GET', query_params={'modelId': model_id, 'modelVersion': model_version, 'returnGraphs': return_graphs, 'validation': validation}, parse_type=ModelMetrics)
-
-    def query_test_point_predictions(self, model_version: str, algorithm: str, to_row: int, from_row: int = 0, sql_where_clause: str = '') -> TestPointPredictions:
-        """Query the test points predictions data for a specific algorithm.
-
-        Args:
-            model_version (str): The unique ID associated with the model version.
-            algorithm (str): The algorithm id
-            to_row (int): Ending row index to return.
-            from_row (int): Starting row index to return.
-            sql_where_clause (str): The SQL WHERE clause used to filter the data.
-
-        Returns:
-            TestPointPredictions: TestPointPrediction"""
-        return self._call_api('queryTestPointPredictions', 'GET', query_params={'modelVersion': model_version, 'algorithm': algorithm, 'toRow': to_row, 'fromRow': from_row, 'sqlWhereClause': sql_where_clause}, parse_type=TestPointPredictions)
 
     def get_feature_group_schemas_for_model_version(self, model_version: str) -> List[ModelVersionFeatureGroupSchema]:
         """Gets the schema (including feature mappings) for all feature groups used in the model version.
@@ -1908,15 +1913,16 @@ class ReadOnlyClient(BaseApiClient):
             MonitorAlertVersion: An object describing the monitor alert version."""
         return self._call_api('describeMonitorAlertVersion', 'GET', query_params={'monitorAlertVersion': monitor_alert_version}, parse_type=MonitorAlertVersion)
 
-    def list_monitor_alerts_for_monitor(self, model_monitor_id: str) -> List[MonitorAlert]:
-        """Retrieves the list of monitor alerts for a specified monitor.
+    def list_monitor_alerts_for_monitor(self, model_monitor_id: str = None, realtime_monitor_id: str = None) -> List[MonitorAlert]:
+        """Retrieves the list of monitor alerts for a specified monitor. One of the model_monitor_id or realtime_monitor_id is required but not both.
 
         Args:
             model_monitor_id (str): The unique ID associated with the model monitor.
+            realtime_monitor_id (str): The unique ID associated with the real-time monitor.
 
         Returns:
             list[MonitorAlert]: A list of monitor alerts."""
-        return self._call_api('listMonitorAlertsForMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id}, parse_type=MonitorAlert)
+        return self._call_api('listMonitorAlertsForMonitor', 'GET', query_params={'modelMonitorId': model_monitor_id, 'realtimeMonitorId': realtime_monitor_id}, parse_type=MonitorAlert)
 
     def list_monitor_alert_versions_for_monitor_version(self, model_monitor_version: str) -> List[MonitorAlertVersion]:
         """Retrieves the list of monitor alert versions for a specified monitor instance.
@@ -2045,15 +2051,15 @@ class ReadOnlyClient(BaseApiClient):
             list[MonitorAlert]: An array of deployment alerts."""
         return self._call_api('listDeploymentAlerts', 'GET', query_params={'deploymentId': deployment_id}, parse_type=MonitorAlert)
 
-    def list_realtime_monitors(self, deployment_id: str) -> List[RealtimeMonitor]:
+    def list_realtime_monitors(self, project_id: str) -> List[RealtimeMonitor]:
         """List the real-time monitors associated with the deployment id.
 
         Args:
-            deployment_id (str): Unique string identifier for the deployment.
+            project_id (str): Unique string identifier for the deployment.
 
         Returns:
             list[RealtimeMonitor]: An array of real-time monitors."""
-        return self._call_api('listRealtimeMonitors', 'GET', query_params={'deploymentId': deployment_id}, parse_type=RealtimeMonitor)
+        return self._call_api('listRealtimeMonitors', 'GET', query_params={'projectId': project_id}, parse_type=RealtimeMonitor)
 
     def describe_realtime_monitor(self, realtime_monitor_id: str) -> RealtimeMonitor:
         """Get the real-time monitor associated with the real-time monitor id.
@@ -3580,7 +3586,7 @@ class ApiClient(ReadOnlyClient):
         if hasattr(_request_context):
             _request_context.clear()
 
-    def streaming_evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None):
+    def streaming_evaluate_prompt(self, prompt: str = None, system_message: str = None, llm_name: Union[LLMName, str] = None, max_tokens: int = None, temperature: float = 0.0, messages: list = None, response_type: str = None, json_response_schema: dict = None, section_key: str = None):
         """
         Generate response to the prompt using the specified model.
         This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
@@ -3594,6 +3600,7 @@ class ApiClient(ReadOnlyClient):
             messages (list): A list of messages to use as conversation history. For completion models like OPENAI_GPT3_5_TEXT and PALM_TEXT this should not be set. A message is a dict with attributes: is_user (bool): Whether the message is from the user. text (str): The message's text.
             response_type (str): Specifies the type of response to request from the LLM. One of 'text' and 'json'. If set to 'json', the LLM will respond with a json formatted string whose schema can be specified `json_response_schema`. Defaults to 'text'
             json_response_schema (dict): A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
+            section_key (str): Key to identify output schema section.
 
         Returns:
             text: The response from the model.
@@ -3601,12 +3608,12 @@ class ApiClient(ReadOnlyClient):
         caller = self._get_agent_async_app_caller()
         request_id = self._get_agent_app_request_id()
         if caller and request_id:
-            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
-                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema)
+            result = self._stream_llm_call(prompt=prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens, temperature=temperature,
+                                           messages=messages, response_type=response_type, json_response_schema=json_response_schema, section_key=section_key)
         else:
             result = self.evaluate_prompt(prompt, system_message=system_message, llm_name=llm_name, max_tokens=max_tokens,
                                           temperature=temperature, messages=messages, response_type=response_type, json_response_schema=json_response_schema).content
-        return StreamingHandler(result, _request_context)
+        return StreamingHandler(result, _request_context, section_key=section_key)
 
     def _get_agent_app_request_id(self):
         """
@@ -3651,16 +3658,43 @@ class ApiClient(ReadOnlyClient):
                 request_id, caller, message=message, proxy_caller=proxy_caller)
         return StreamingHandler(message, _request_context)
 
-    def _stream_llm_call(self, **kwargs):
+    def stream_section_output(self, section_key: str, value, value_type: str = 'text/plain') -> None:
+        """
+        Streams value corresponding to a particular section to the current request context. Applicable within a AIAgent execute function.
+        If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
+
+        Args:
+            section_key (str): The section key to which the output corresponds.
+            value: The output contents.
+            value_type (str): The mime type of the output contents.
+        """
+        request_id = self._get_agent_app_request_id()
+        caller = self._get_agent_async_app_caller()
+        proxy_caller = self._is_proxy_app_caller()
+        if _is_json_serializable(value):
+            message_args = {'id': section_key, 'mime_type': value_type}
+        else:
+            raise ValueError('The value is not json serializable')
+        if request_id and caller:
+            self._call_aiagent_app_send_message(
+                request_id, caller, message=value, message_args=message_args, version='2.0', proxy_caller=proxy_caller)
+        return StreamingHandler(value, _request_context, section_key=section_key, data_type=value_type)
+
+    def _stream_llm_call(self, section_key=None, **kwargs):
         request_id = self._get_agent_app_request_id()
         caller = self._get_agent_async_app_caller()
         proxy_caller = self._is_proxy_app_caller()
         if not request_id or not caller:
             logging.info('Please use evaluate_prompt for local testing.')
             return
-        return self._call_aiagent_app_send_message(request_id, caller, llm_args=kwargs, proxy_caller=proxy_caller)
+        message_args = {}
+        version = None
+        if section_key:
+            version = '2.0'
+            message_args = {'id': section_key, 'mime_type': 'text/plain'}
+        return self._call_aiagent_app_send_message(request_id, caller, llm_args=kwargs, message_args=message_args, version=version, proxy_caller=proxy_caller)
 
-    def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, proxy_caller=False):
+    def _call_aiagent_app_send_message(self, request_id, caller, message=None, llm_args=None, message_args=None, version=None, proxy_caller=False):
         """
         Calls the AI Agent app send message endpoint.
 
@@ -3686,6 +3720,10 @@ class ApiClient(ReadOnlyClient):
             body['llmArgs'] = llm_args
         else:
             raise Exception('Either message or llm_args must be provided.')
+        if message_args:
+            body['messageArgs'] = message_args
+        if version:
+            body['version'] = version
         headers = {'APIKEY': self.api_key}
         body['connectionId'] = uuid4().hex
         for _ in range(3):
@@ -3789,6 +3827,60 @@ class ApiClient(ReadOnlyClient):
         deployment_token, deployment_id = self._get_doc_retriever_deployment_info(
             document_retriever_id)
         return self.lookup_matches(deployment_token, deployment_id, query, filters, limit if limit is not None else 10, result_columns, max_words, num_retrieval_margin_words, max_words_per_chunk, score_multiplier_column, min_score)
+
+    def create_model_from_files(self, project_id: str, location: str, name: str = None, custom_artifact_filenames: dict = {}, model_config: dict = {}) -> Model:
+        """Creates a new Model and returns Upload IDs for uploading the model artifacts.
+
+        Use this in supported use cases to provide a pre-trained model and supporting artifacts to be hosted on our platform.
+
+
+        Args:
+            project_id (str): Unique string identifier associated with the project.
+            location (str): Cloud location for the model.
+            name (str): Name you want your model to have. Defaults to "<Project Name> Model".
+            custom_artifact_filenames (dict): Optional mapping to specify which filename should be used for a given model artifact type.
+            model_config (dict): Extra configurations that are specific to the model being created.
+
+        Returns:
+            Model: The new model which is being trained."""
+        return self._call_api('createModelFromFiles', 'POST', query_params={}, body={'projectId': project_id, 'location': location, 'name': name, 'customArtifactFilenames': custom_artifact_filenames, 'modelConfig': model_config}, parse_type=Model)
+
+    def create_model_from_local_files(self, project_id: str, name: str = None, optional_artifacts: list = None, model_config: dict = {}) -> ModelUpload:
+        """Creates a new Model and returns Upload IDs for uploading the model artifacts.
+
+        Use this in supported use cases to provide a pre-trained model and supporting artifacts to be hosted on our platform.
+
+
+        Args:
+            project_id (str): The unique ID associated with the project.
+            name (str): The name you want your model to have. Defaults to "<Project Name> Model".
+            optional_artifacts (list): A list of strings describing additional artifacts for the model. An example would be a verification file.
+            model_config (dict): Extra configurations that are specific to the model being created.
+
+        Returns:
+            ModelUpload: Collection of upload IDs to upload the model artifacts."""
+        return self._call_api('createModelFromLocalFiles', 'POST', query_params={}, body={'projectId': project_id, 'name': name, 'optionalArtifacts': optional_artifacts, 'modelConfig': model_config}, parse_type=ModelUpload)
+
+    def create_model_version_from_files(self, model_id: str) -> ModelVersion:
+        """Creates a new Model Version by re-importing from the paths specified when the model was created.
+
+        Args:
+            model_id (str): Unique string identifier of the model to create a new version of with the new model artifacts.
+
+        Returns:
+            ModelVersion: The updated model."""
+        return self._call_api('createModelVersionFromFiles', 'POST', query_params={}, body={'modelId': model_id}, parse_type=ModelVersion)
+
+    def create_model_version_from_local_files(self, model_id: str, optional_artifacts: list = None) -> ModelUpload:
+        """Creates a new Model Version and returns Upload IDs for uploading the associated model artifacts.
+
+        Args:
+            model_id (str): Unique string identifier of the model to create a new version of with the new model artifacts.
+            optional_artifacts (list): List of strings describing additional artifacts for the model, e.g. a verification file.
+
+        Returns:
+            ModelUpload: Collection of upload IDs to upload the model artifacts."""
+        return self._call_api('createModelVersionFromLocalFiles', 'POST', query_params={}, body={'modelId': model_id, 'optionalArtifacts': optional_artifacts}, parse_type=ModelUpload)
 
     def add_user_to_organization(self, email: str):
         """Invite a user to your organization. This method will send the specified email address an invitation link to join your organization.
@@ -7658,17 +7750,18 @@ Creates a new feature group defined as the union of other feature group versions
             name (str): The new name of the chat session."""
         return self._call_api('renameChatSession', 'POST', query_params={}, body={'chatSessionId': chat_session_id, 'name': name})
 
-    def suggest_abacus_apis(self, query: str, verbosity: int = 1, limit: int = 5) -> List[AbacusApi]:
+    def suggest_abacus_apis(self, query: str, verbosity: int = 1, limit: int = 5, include_scores: bool = False) -> List[AbacusApi]:
         """Suggests several Abacus APIs that are most relevant to the supplied natural language query.
 
         Args:
             query (str): The natural language query to find Abacus APIs for
             verbosity (int): The verbosity level of the suggested Abacus APIs. Ranges from 0 to 2, with 0 being the least verbose and 2 being the most verbose.
             limit (int): The maximum number of APIs to return
+            include_scores (bool): Whether to include the relevance scores of the suggested APIs
 
         Returns:
             list[AbacusApi]: A list of suggested Abacus APIs"""
-        return self._call_api('suggestAbacusApis', 'POST', query_params={}, body={'query': query, 'verbosity': verbosity, 'limit': limit}, parse_type=AbacusApi)
+        return self._call_api('suggestAbacusApis', 'POST', query_params={}, body={'query': query, 'verbosity': verbosity, 'limit': limit, 'includeScores': include_scores}, parse_type=AbacusApi)
 
     def create_deployment_conversation(self, deployment_id: str, name: str, deployment_token: str = None) -> DeploymentConversation:
         """Creates a deployment conversation.
@@ -7853,8 +7946,8 @@ Creates a new feature group defined as the union of other feature group versions
             description (str): A description of the agent, including its purpose and instructions.
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
             evaluation_feature_group_id (str): The ID of the feature group to use for evaluation.
-            agent_input_schema (dict): The schema of the input data for the agent.
-            agent_output_schema (dict): The schema of the output data for the agent.
+            agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
+            agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
 
         Returns:
             Agent: The new agent"""
@@ -7871,8 +7964,8 @@ Creates a new feature group defined as the union of other feature group versions
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             description (str): A description of the agent, including its purpose and instructions.
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
-            agent_input_schema (dict): The schema of the input data for the agent.
-            agent_output_schema (dict): The schema of the output data for the agent.
+            agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
+            agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
 
         Returns:
             Agent: The updated agent"""

@@ -91,6 +91,7 @@ class RegressionTypeOfSplit(ApiEnum):
     RANDOM = 'Random Sampling'
     TIMESTAMP_BASED = 'Timestamp Based'
     ROW_INDICATOR_BASED = 'Row Indicator Based'
+    STRATIFIED_RANDOM_SAMPLING = 'Stratified Random Sampling'
 
 
 class RegressionTimeSplitMethod(ApiEnum):
@@ -293,6 +294,12 @@ class TimeseriesAnomalyTypeOfAnomaly(ApiEnum):
     LOW_PEAK = 'low_peak'
 
 
+class TimeseriesAnomalyUseHeuristic(ApiEnum):
+    ENABLE = 'enable'
+    DISABLE = 'disable'
+    AUTOMATIC = 'automatic'
+
+
 # Named Entity Recognition
 class NERObjective(ApiEnum):
     LOG_LOSS = 'log_loss'
@@ -301,6 +308,9 @@ class NERObjective(ApiEnum):
     RECALL = 'recall'
     ANNOTATIONS_PRECISION = 'annotations_precision'
     ANNOTATIONS_RECALL = 'annotations_recall'
+
+
+# Named Entity Recognition
 
 
 class NERModelType(ApiEnum):

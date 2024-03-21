@@ -45,8 +45,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for the training config options used to train the model.
 
    .. py:attribute:: _upper_snake_case_keys
       :type: bool
@@ -155,6 +154,10 @@ Classes
    :type use_user_id_feature: bool
    :param min_item_history: Minimum number of interactions an item must have to be included in training.
    :type min_item_history: int
+   :param query_column: Name of column in the interactions table that represents a natural language query, e.g. 'blue t-shirt'.
+   :type query_column: str
+   :param item_query_column: Name of column in the item catalog that will be matched to the query column in the interactions table.
+   :type item_query_column: str
 
    .. py:attribute:: objective
       :type: abacusai.api_class.enums.PersonalizationObjective
@@ -1099,6 +1102,8 @@ Classes
    :type objective: NERObjective
    :param sort_objective: Ranking scheme used to sort models on the metrics page.
    :type sort_objective: NERObjective
+   :param llm_for_ner: LLM to use for NER from among available LLM
+   :type llm_for_ner: NERForLLM
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
    :param test_row_indicator: Column indicating which rows to use for training (TRAIN) and testing (TEST).
@@ -1123,6 +1128,11 @@ Classes
 
    .. py:attribute:: sort_objective
       :type: abacusai.api_class.enums.NERObjective
+
+      
+
+   .. py:attribute:: llm_for_ner
+      :type: abacusai.api_class.enums.LLMName
 
       
 
@@ -1187,6 +1197,8 @@ Classes
    :type chunk_overlap_fraction: float
    :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
    :type test_split: int
+   :param index_fraction: Fraction of the chunk to use for indexing.
+   :type index_fraction: float
 
    .. py:attribute:: abacus_internal_model
       :type: bool
@@ -1602,16 +1614,26 @@ Classes
 
    Training config for the TS_ANOMALY problem type
 
-   Args:
-   type_of_split (TimeseriesAnomalyDataSplitType): Type of data splitting into train/test.
-   test_start (str): Limit training data to dates before the given test start.
-   test_split (int): Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
-   fill_missing_values (List[dict]): strategies to fill missing values and missing timestamps
-   handle_zeros_as_missing_values (bool): If True, handle zero values in numeric columns as missing data
-   timeseries_frequency (str): set this to control frequency of filling missing values
-   min_samples_in_normal_region (int): Adjust this to fine-tune the number of anomalies to be identified.
-   anomaly_type (TimeseriesAnomalyTypeOfAnomaly): select what kind of peaks to detect as anomalies
-   threshold_score (float): Threshold score for anomaly detection
+   :param type_of_split: Type of data splitting into train/test.
+   :type type_of_split: TimeseriesAnomalyDataSplitType
+   :param test_start: Limit training data to dates before the given test start.
+   :type test_start: str
+   :param test_split: Percent of dataset to use for test data. We support using a range between 5 ( i.e. 5% ) to 20 ( i.e. 20% ) of your dataset.
+   :type test_split: int
+   :param fill_missing_values: strategies to fill missing values and missing timestamps
+   :type fill_missing_values: List[dict]
+   :param handle_zeros_as_missing_values: If True, handle zero values in numeric columns as missing data
+   :type handle_zeros_as_missing_values: bool
+   :param timeseries_frequency: set this to control frequency of filling missing values
+   :type timeseries_frequency: str
+   :param min_samples_in_normal_region: Adjust this to fine-tune the number of anomalies to be identified.
+   :type min_samples_in_normal_region: int
+   :param anomaly_type: select what kind of peaks to detect as anomalies
+   :type anomaly_type: TimeseriesAnomalyTypeOfAnomaly
+   :param hyperparameter_calculation_with_heuristics: Enable heuristic calculation to get hyperparameters for the model
+   :type hyperparameter_calculation_with_heuristics: TimeseriesAnomalyUseHeuristic
+   :param threshold_score: Threshold score for anomaly detection
+   :type threshold_score: float
 
    .. py:attribute:: type_of_split
       :type: abacusai.api_class.enums.TimeseriesAnomalyDataSplitType
@@ -1650,6 +1672,11 @@ Classes
 
    .. py:attribute:: anomaly_type
       :type: abacusai.api_class.enums.TimeseriesAnomalyTypeOfAnomaly
+
+      
+
+   .. py:attribute:: hyperparameter_calculation_with_heuristics
+      :type: abacusai.api_class.enums.TimeseriesAnomalyUseHeuristic
 
       
 
@@ -1884,8 +1911,15 @@ Classes
 
    :param solve_time_limit: The maximum time in seconds to spend solving the problem. Accepts values between 0 and 86400.
    :type solve_time_limit: float
+   :param optimality_gap_limit: The stopping optimality gap limit. Optimality gap is fractional difference between the best known solution and the best possible solution. Accepts values between 0 and 1.
+   :type optimality_gap_limit: float
 
    .. py:attribute:: solve_time_limit
+      :type: float
+
+      
+
+   .. py:attribute:: optimality_gap_limit
       :type: float
 
       

@@ -6,6 +6,9 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class BatchPredictionArgs(ApiClass):
+    """
+    An abstract class for Batch Prediction args specific to problem type.
+    """
     _support_kwargs: bool = dataclasses.field(default=True, repr=False, init=False)
 
     kwargs: dict = dataclasses.field(default_factory=dict)
@@ -86,7 +89,7 @@ class PersonalizationBatchPredictionArgs(BatchPredictionArgs):
     Args:
         for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         number_of_items (int): Number of items to recommend.
-        result_columns (list): List of columns to include in the prediction output.
+        item_attributes_to_include_in_the_result (list): List of columns to include in the prediction output.
         score_field (str): If specified, relative item scores will be returned using a field with this name
     """
     for_eval: bool = dataclasses.field(default=None)
@@ -112,7 +115,7 @@ class PredictiveModelingBatchPredictionArgs(BatchPredictionArgs):
        importance_of_records_in_nested_columns (str): Returns importance of each index in the specified nested column instead of SHAP column explanations.
        explanation_filter_lower_bound (float): If set explanations will be limited to predictions above this value, Range: [0, 1].
        explanation_filter_upper_bound (float): If set explanations will be limited to predictions below this value, Range: [0, 1].
-       bound_label (str): For classification problems specifies the label to which the explanation bounds are applied.
+       explanation_filter_label (str): For classification problems specifies the label to which the explanation bounds are applied.
        output_columns (list): A list of column names to include in the prediction result.
        explain_predictions (bool): If True, calculates explanations for the predicted values along with predictions.
        automate_monitoring (bool): If True, creates a monitor to calculate the drift for the batch prediction.
@@ -208,6 +211,7 @@ class TrainablePlugAndPlayBatchPredictionArgs(BatchPredictionArgs):
     Batch Prediction Config for the TrainablePlugAndPlay problem type
 
     Args:
+        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
         automate_monitoring (bool): If True, creates a monitor to calculate the drift for the batch prediction.
     """
     for_eval: bool = dataclasses.field(default=None)

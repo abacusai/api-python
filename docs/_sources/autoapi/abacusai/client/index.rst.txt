@@ -80,10 +80,10 @@ Attributes
 
 
 
-.. py:class:: AgentResponse(*args)
+.. py:class:: AgentResponse(*args, **kwargs)
 
 
-   Response Object for agent to support attachments
+   Response object for agent to support attachments, section data and normal data
 
 
 .. py:class:: ClientOptions(exception_on_404 = True, server = DEFAULT_SERVER)
@@ -487,7 +487,7 @@ Attributes
    :type skip_version_check: bool
 
    .. py:attribute:: client_version
-      :value: '1.1.7'
+      :value: '1.1.8'
 
       
 
@@ -844,7 +844,7 @@ Attributes
 
    .. py:method:: download_execute_feature_group_operation_result_part_chunk(feature_group_operation_run_id, part, offset = 0, chunk_size = 10485760)
 
-      Downloads a chunk of the result of the execution of fg operation
+      Downloads a chunk of the result of the execution of feature group operation
 
       :param feature_group_operation_run_id: The unique ID associated with the execution.
       :type feature_group_operation_run_id: str
@@ -1066,6 +1066,21 @@ Attributes
 
       :returns: The metrics for the specified Dataset version.
       :rtype: DataMetrics
+
+
+   .. py:method:: infer_database_column_to_feature_mappings(feature_group_version, database_connector_id, database_table_name)
+
+      Infers the mapping of columns in a database table to features for a feature group version.
+
+      :param feature_group_version: The ID of the feature group version
+      :type feature_group_version: str
+      :param database_connector_id: The ID of the database connector
+      :type database_connector_id: str
+      :param database_table_name: The name of the table in the database connector
+      :type database_table_name: str
+
+      :returns: Autocomplete mappings for database to connector columns
+      :rtype: InferredDatabaseColumnToFeatureMappings
 
 
    .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
@@ -1336,25 +1351,6 @@ Attributes
 
       :returns: An object containing the model metrics and explanations for what each metric means.
       :rtype: ModelMetrics
-
-
-   .. py:method:: query_test_point_predictions(model_version, algorithm, to_row, from_row = 0, sql_where_clause = '')
-
-      Query the test points predictions data for a specific algorithm.
-
-      :param model_version: The unique ID associated with the model version.
-      :type model_version: str
-      :param algorithm: The algorithm id
-      :type algorithm: str
-      :param to_row: Ending row index to return.
-      :type to_row: int
-      :param from_row: Starting row index to return.
-      :type from_row: int
-      :param sql_where_clause: The SQL WHERE clause used to filter the data.
-      :type sql_where_clause: str
-
-      :returns: TestPointPrediction
-      :rtype: TestPointPredictions
 
 
    .. py:method:: get_feature_group_schemas_for_model_version(model_version)
@@ -1753,12 +1749,14 @@ Attributes
       :rtype: MonitorAlertVersion
 
 
-   .. py:method:: list_monitor_alerts_for_monitor(model_monitor_id)
+   .. py:method:: list_monitor_alerts_for_monitor(model_monitor_id = None, realtime_monitor_id = None)
 
-      Retrieves the list of monitor alerts for a specified monitor.
+      Retrieves the list of monitor alerts for a specified monitor. One of the model_monitor_id or realtime_monitor_id is required but not both.
 
       :param model_monitor_id: The unique ID associated with the model monitor.
       :type model_monitor_id: str
+      :param realtime_monitor_id: The unique ID associated with the real-time monitor.
+      :type realtime_monitor_id: str
 
       :returns: A list of monitor alerts.
       :rtype: list[MonitorAlert]
@@ -1913,12 +1911,12 @@ Attributes
       :rtype: list[MonitorAlert]
 
 
-   .. py:method:: list_realtime_monitors(deployment_id)
+   .. py:method:: list_realtime_monitors(project_id)
 
       List the real-time monitors associated with the deployment id.
 
-      :param deployment_id: Unique string identifier for the deployment.
-      :type deployment_id: str
+      :param project_id: Unique string identifier for the deployment.
+      :type project_id: str
 
       :returns: An array of real-time monitors.
       :rtype: list[RealtimeMonitor]
@@ -3311,7 +3309,7 @@ Attributes
       Clears the current request context.
 
 
-   .. py:method:: streaming_evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None)
+   .. py:method:: streaming_evaluate_prompt(prompt = None, system_message = None, llm_name = None, max_tokens = None, temperature = 0.0, messages = None, response_type = None, json_response_schema = None, section_key = None)
 
       Generate response to the prompt using the specified model.
       This works similar to evaluate_prompt, but would stream the result as well so that user is aware of the current status of the generation.
@@ -3332,6 +3330,8 @@ Attributes
       :type response_type: str
       :param json_response_schema: A dictionary specifying the keys/schema/parameters which LLM should adhere to in its response when `response_type` is 'json'. Each parameter is mapped to a dict with the following info - type (str) (required): Data type of the parameter description (str) (required): Description of the parameter is_required (bool) (optional): Whether the parameter is required or not.     Example:     json_response_schema={         'title': {'type': 'string', 'description': 'Article title', 'is_required': true},         'body': {'type': 'string', 'description': 'Article body'},     }
       :type json_response_schema: dict
+      :param section_key: Key to identify output schema section.
+      :type section_key: str
 
       :returns: The response from the model.
       :rtype: text
@@ -3370,10 +3370,22 @@ Attributes
       :type message: str
 
 
-   .. py:method:: _stream_llm_call(**kwargs)
+   .. py:method:: stream_section_output(section_key, value, value_type = 'text/plain')
+
+      Streams value corresponding to a particular section to the current request context. Applicable within a AIAgent execute function.
+      If the request is from the abacus.ai app, the response will be streamed to the UI. otherwise would be logged info if used from notebook or python script.
+
+      :param section_key: The section key to which the output corresponds.
+      :type section_key: str
+      :param value: The output contents.
+      :param value_type: The mime type of the output contents.
+      :type value_type: str
 
 
-   .. py:method:: _call_aiagent_app_send_message(request_id, caller, message=None, llm_args=None, proxy_caller=False)
+   .. py:method:: _stream_llm_call(section_key=None, **kwargs)
+
+
+   .. py:method:: _call_aiagent_app_send_message(request_id, caller, message=None, llm_args=None, message_args=None, version=None, proxy_caller=False)
 
       Calls the AI Agent app send message endpoint.
 
@@ -3451,6 +3463,72 @@ Attributes
 
       :returns: The relevant documentation results found from the document retriever.
       :rtype: list[DocumentRetrieverLookupResult]
+
+
+   .. py:method:: create_model_from_files(project_id, location, name = None, custom_artifact_filenames = {}, model_config = {})
+
+      Creates a new Model and returns Upload IDs for uploading the model artifacts.
+
+      Use this in supported use cases to provide a pre-trained model and supporting artifacts to be hosted on our platform.
+
+
+      :param project_id: Unique string identifier associated with the project.
+      :type project_id: str
+      :param location: Cloud location for the model.
+      :type location: str
+      :param name: Name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param custom_artifact_filenames: Optional mapping to specify which filename should be used for a given model artifact type.
+      :type custom_artifact_filenames: dict
+      :param model_config: Extra configurations that are specific to the model being created.
+      :type model_config: dict
+
+      :returns: The new model which is being trained.
+      :rtype: Model
+
+
+   .. py:method:: create_model_from_local_files(project_id, name = None, optional_artifacts = None, model_config = {})
+
+      Creates a new Model and returns Upload IDs for uploading the model artifacts.
+
+      Use this in supported use cases to provide a pre-trained model and supporting artifacts to be hosted on our platform.
+
+
+      :param project_id: The unique ID associated with the project.
+      :type project_id: str
+      :param name: The name you want your model to have. Defaults to "<Project Name> Model".
+      :type name: str
+      :param optional_artifacts: A list of strings describing additional artifacts for the model. An example would be a verification file.
+      :type optional_artifacts: list
+      :param model_config: Extra configurations that are specific to the model being created.
+      :type model_config: dict
+
+      :returns: Collection of upload IDs to upload the model artifacts.
+      :rtype: ModelUpload
+
+
+   .. py:method:: create_model_version_from_files(model_id)
+
+      Creates a new Model Version by re-importing from the paths specified when the model was created.
+
+      :param model_id: Unique string identifier of the model to create a new version of with the new model artifacts.
+      :type model_id: str
+
+      :returns: The updated model.
+      :rtype: ModelVersion
+
+
+   .. py:method:: create_model_version_from_local_files(model_id, optional_artifacts = None)
+
+      Creates a new Model Version and returns Upload IDs for uploading the associated model artifacts.
+
+      :param model_id: Unique string identifier of the model to create a new version of with the new model artifacts.
+      :type model_id: str
+      :param optional_artifacts: List of strings describing additional artifacts for the model, e.g. a verification file.
+      :type optional_artifacts: list
+
+      :returns: Collection of upload IDs to upload the model artifacts.
+      :rtype: ModelUpload
 
 
    .. py:method:: add_user_to_organization(email)
@@ -8455,7 +8533,7 @@ Attributes
       :type name: str
 
 
-   .. py:method:: suggest_abacus_apis(query, verbosity = 1, limit = 5)
+   .. py:method:: suggest_abacus_apis(query, verbosity = 1, limit = 5, include_scores = False)
 
       Suggests several Abacus APIs that are most relevant to the supplied natural language query.
 
@@ -8465,6 +8543,8 @@ Attributes
       :type verbosity: int
       :param limit: The maximum number of APIs to return
       :type limit: int
+      :param include_scores: Whether to include the relevance scores of the suggested APIs
+      :type include_scores: bool
 
       :returns: A list of suggested Abacus APIs
       :rtype: list[AbacusApi]
@@ -8712,9 +8792,9 @@ Attributes
       :type enable_binary_input: bool
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
       :type evaluation_feature_group_id: str
-      :param agent_input_schema: The schema of the input data for the agent.
+      :param agent_input_schema: The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_input_schema: dict
-      :param agent_output_schema: The schema of the output data for the agent.
+      :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
 
       :returns: The new agent
@@ -8739,9 +8819,9 @@ Attributes
       :type description: str
       :param enable_binary_input: If True, the agent will be able to accept binary data as inputs.
       :type enable_binary_input: bool
-      :param agent_input_schema: The schema of the input data for the agent.
+      :param agent_input_schema: The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_input_schema: dict
-      :param agent_output_schema: The schema of the output data for the agent.
+      :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
 
       :returns: The updated agent

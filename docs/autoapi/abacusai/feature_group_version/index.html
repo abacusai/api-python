@@ -84,6 +84,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../data_metrics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_metrics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_prep_logs/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_prep_logs</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../data_quality_results/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.data_quality_results</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../database_column_feature_mapping/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_column_feature_mapping</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../database_connector/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../database_connector_column/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector_column</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../database_connector_schema/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.database_connector_schema</span></code></a></li>
@@ -158,6 +159,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../holdout_analysis_version/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.holdout_analysis_version</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hosted_model_token/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.hosted_model_token</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../indexing_config/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.indexing_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../inferred_database_column_to_feature_mappings/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.inferred_database_column_to_feature_mappings</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../inferred_feature_mappings/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.inferred_feature_mappings</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../item_statistics/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.item_statistics</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="../llm_code_block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abacusai.llm_code_block</span></code></a></li>
@@ -493,6 +495,26 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="../data_metrics/index.html#abacusai.data_metrics.DataMetrics" title="abacusai.data_metrics.DataMetrics">DataMetrics</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.feature_group_version.FeatureGroupVersion.infer_database_column_to_feature_mappings">
+<span class="sig-name descname"><span class="pre">infer_database_column_to_feature_mappings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_table_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.feature_group_version.FeatureGroupVersion.infer_database_column_to_feature_mappings" title="Permalink to this definition"></a></dt>
+<dd><p>Infers the mapping of columns in a database table to features for a feature group version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the database connector</p></li>
+<li><p><strong>database_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the table in the database connector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Autocomplete mappings for database to connector columns</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../inferred_database_column_to_feature_mappings/index.html#abacusai.inferred_database_column_to_feature_mappings.InferredDatabaseColumnToFeatureMappings" title="abacusai.inferred_database_column_to_feature_mappings.InferredDatabaseColumnToFeatureMappings">InferredDatabaseColumnToFeatureMappings</a></p>
 </dd>
 </dl>
 </dd></dl>

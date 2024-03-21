@@ -358,8 +358,8 @@ class Model(AbstractApiClass):
             package_requirements (list): List of package requirement strings. For example: ['numpy==1.2.3', 'pandas>=1.4.0']
             description (str): A description of the agent, including its purpose and instructions.
             enable_binary_input (bool): If True, the agent will be able to accept binary data as inputs.
-            agent_input_schema (dict): The schema of the input data for the agent.
-            agent_output_schema (dict): The schema of the output data for the agent.
+            agent_input_schema (dict): The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
+            agent_output_schema (dict): The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
 
         Returns:
             Agent: The updated agent

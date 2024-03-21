@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, users={})
+.. py:class:: AppUserGroup(client, name=None, userGroupId=None, externalApplicationIds=None, invitedUserEmails=None, publicUserGroup=None, hasExternalApplicationReporting=None, isExternalServiceGroup=None, users={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -38,6 +38,8 @@ Classes
    :type publicUserGroup: bool
    :param hasExternalApplicationReporting: Whether users in the App User Group have permission to view all reports in their organization.
    :type hasExternalApplicationReporting: bool
+   :param isExternalServiceGroup: Whether the App User Group corresponds to a user group that's defined in an external service (i.e Microsft Active Directory or Okta) or not
+   :type isExternalServiceGroup: bool
    :param users: The users in the user group.
    :type users: User
 

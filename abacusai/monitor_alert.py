@@ -16,6 +16,7 @@ class MonitorAlert(AbstractApiClass):
             createdAt (str): Date and time at which the monitor alert was created.
             projectId (str): The project this alert belongs to.
             modelMonitorId (str): The monitor id that this alert is associated with
+            realtimeMonitorId (str): The realtime monitor id that this alert is associated with
             conditionConfig (dict): The condition configuration for this alert.
             actionConfig (dict): The action configuration for this alert.
             conditionDescription (str): User friendly description of the condition
@@ -25,13 +26,14 @@ class MonitorAlert(AbstractApiClass):
             latestMonitorAlertVersion (MonitorAlertVersion): The latest monitor alert version.
     """
 
-    def __init__(self, client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, conditionConfig=None, actionConfig=None, conditionDescription=None, actionDescription=None, alertType=None, deploymentId=None, latestMonitorAlertVersion={}):
+    def __init__(self, client, name=None, monitorAlertId=None, createdAt=None, projectId=None, modelMonitorId=None, realtimeMonitorId=None, conditionConfig=None, actionConfig=None, conditionDescription=None, actionDescription=None, alertType=None, deploymentId=None, latestMonitorAlertVersion={}):
         super().__init__(client, monitorAlertId)
         self.name = name
         self.monitor_alert_id = monitorAlertId
         self.created_at = createdAt
         self.project_id = projectId
         self.model_monitor_id = modelMonitorId
+        self.realtime_monitor_id = realtimeMonitorId
         self.condition_config = conditionConfig
         self.action_config = actionConfig
         self.condition_description = conditionDescription
@@ -43,8 +45,8 @@ class MonitorAlert(AbstractApiClass):
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'monitor_alert_id': repr(self.monitor_alert_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_monitor_id': repr(self.model_monitor_id), f'condition_config': repr(self.condition_config), f'action_config': repr(
-            self.action_config), f'condition_description': repr(self.condition_description), f'action_description': repr(self.action_description), f'alert_type': repr(self.alert_type), f'deployment_id': repr(self.deployment_id), f'latest_monitor_alert_version': repr(self.latest_monitor_alert_version)}
+        repr_dict = {f'name': repr(self.name), f'monitor_alert_id': repr(self.monitor_alert_id), f'created_at': repr(self.created_at), f'project_id': repr(self.project_id), f'model_monitor_id': repr(self.model_monitor_id), f'realtime_monitor_id': repr(self.realtime_monitor_id), f'condition_config': repr(
+            self.condition_config), f'action_config': repr(self.action_config), f'condition_description': repr(self.condition_description), f'action_description': repr(self.action_description), f'alert_type': repr(self.alert_type), f'deployment_id': repr(self.deployment_id), f'latest_monitor_alert_version': repr(self.latest_monitor_alert_version)}
         class_name = "MonitorAlert"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -57,8 +59,8 @@ class MonitorAlert(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'name': self.name, 'monitor_alert_id': self.monitor_alert_id, 'created_at': self.created_at, 'project_id': self.project_id, 'model_monitor_id': self.model_monitor_id, 'condition_config': self.condition_config, 'action_config': self.action_config,
-                'condition_description': self.condition_description, 'action_description': self.action_description, 'alert_type': self.alert_type, 'deployment_id': self.deployment_id, 'latest_monitor_alert_version': self._get_attribute_as_dict(self.latest_monitor_alert_version)}
+        resp = {'name': self.name, 'monitor_alert_id': self.monitor_alert_id, 'created_at': self.created_at, 'project_id': self.project_id, 'model_monitor_id': self.model_monitor_id, 'realtime_monitor_id': self.realtime_monitor_id, 'condition_config': self.condition_config,
+                'action_config': self.action_config, 'condition_description': self.condition_description, 'action_description': self.action_description, 'alert_type': self.alert_type, 'deployment_id': self.deployment_id, 'latest_monitor_alert_version': self._get_attribute_as_dict(self.latest_monitor_alert_version)}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def update(self, alert_name: str = None, condition_config: Union[dict, AlertConditionConfig] = None, action_config: Union[dict, AlertActionConfig] = None):

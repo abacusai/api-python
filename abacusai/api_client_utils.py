@@ -61,11 +61,29 @@ def get_non_nullable_type(types):
 
 
 class StreamingHandler(str):
-    def __new__(cls, value, context):
-        obj = str.__new__(cls, value)
-        if context and hasattr(context, 'streamed_response') and isinstance(context.streamed_response, list):
-            context.streamed_response.append(obj)
-        return obj
+    def __new__(cls, value, context, section_key=None, data_type='text/plain'):
+        if context:
+            cls.process_streaming_data(value, context, section_key, data_type)
+        return str.__new__(cls, value)
+
+    @classmethod
+    def process_streaming_data(cls, value, context, section_key, data_type):
+        if section_key and hasattr(context, 'streamed_section_response') and isinstance(context.streamed_section_response, list):
+            entry_exists = False
+            for i, item in enumerate(context.streamed_section_response):
+                if item['id'] == section_key:
+                    if ((isinstance(context.streamed_section_response[i]['contents'], str) and isinstance(value, str)) or
+                       (isinstance(context.streamed_section_response[i]['contents'], list) and isinstance(value, list))):
+                        context.streamed_section_response[i]['contents'] += value
+                    else:
+                        context.streamed_section_response[i]['contents'] = value
+                    entry_exists = True
+                    break
+            if not entry_exists:
+                context.streamed_section_response.append(
+                    {'id': section_key, 'type': data_type, 'contents': value})
+        elif hasattr(context, 'streamed_response') and isinstance(context.streamed_response, list) and isinstance(value, str):
+            context.streamed_response.append(value)
 
 
 def get_object_from_context(client, context, variable_name, return_type):

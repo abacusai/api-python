@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
+.. py:class:: Deployment(client, deploymentId=None, name=None, status=None, description=None, deployedAt=None, createdAt=None, projectId=None, modelId=None, modelVersion=None, featureGroupId=None, featureGroupVersion=None, callsPerSecond=None, autoDeploy=None, skipMetricsCheck=None, algoName=None, regions=None, error=None, batchStreamingUpdates=None, algorithm=None, pendingModelVersion=None, modelDeploymentConfig=None, predictionOperatorId=None, predictionOperatorVersion=None, pendingPredictionOperatorVersion=None, onlineFeatureGroupId=None, outputOnlineFeatureGroupId=None, realtimeMonitorId=None, refreshSchedules={}, featureGroupExportConfig={}, defaultPredictionArguments={})
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -78,6 +78,8 @@ Classes
    :type onlineFeatureGroupId: id
    :param outputOnlineFeatureGroupId: The online feature group ID that the deployment is outputting results to
    :type outputOnlineFeatureGroupId: id
+   :param realtimeMonitorId: The realtime monitor ID of the realtime-monitor that is associated with the deployment
+   :type realtimeMonitorId: id
    :param refreshSchedules: A list of refresh schedules that indicate when the deployment will be updated to the latest model version.
    :type refreshSchedules: RefreshSchedule
    :param featureGroupExportConfig: The export config (file connector or database connector information) for feature group deployment exports.
@@ -313,17 +315,6 @@ Classes
 
       :returns: Object describing the real-time monitor.
       :rtype: RealtimeMonitor
-
-
-   .. py:method:: list_realtime_monitors()
-
-      List the real-time monitors associated with the deployment id.
-
-      :param deployment_id: Unique string identifier for the deployment.
-      :type deployment_id: str
-
-      :returns: An array of real-time monitors.
-      :rtype: list[RealtimeMonitor]
 
 
    .. py:method:: get_conversation_response(message, deployment_conversation_id = None, external_session_id = None, llm_name = None, num_completion_tokens = None, system_message = None, temperature = 0.0, filter_key_values = None, search_score_cutoff = None, chat_config = None, ignore_documents = False, deployment_token = None)

@@ -549,6 +549,17 @@ Classes
       :rtype: list[DeploymentAuthToken]
 
 
+   .. py:method:: list_realtime_monitors()
+
+      List the real-time monitors associated with the deployment id.
+
+      :param project_id: Unique string identifier for the deployment.
+      :type project_id: str
+
+      :returns: An array of real-time monitors.
+      :rtype: list[RealtimeMonitor]
+
+
    .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
@@ -664,9 +675,9 @@ Classes
       :type enable_binary_input: bool
       :param evaluation_feature_group_id: The ID of the feature group to use for evaluation.
       :type evaluation_feature_group_id: str
-      :param agent_input_schema: The schema of the input data for the agent.
+      :param agent_input_schema: The schema of the input data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_input_schema: dict
-      :param agent_output_schema: The schema of the output data for the agent.
+      :param agent_output_schema: The schema of the output data for the agent, which conforms to the react-json-schema-form standard.
       :type agent_output_schema: dict
 
       :returns: The new agent

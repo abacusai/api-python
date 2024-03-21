@@ -94,10 +94,10 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.project.FeatureMappingConfig" title="abacusai.api_class.project.FeatureMappingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureMappingConfig</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Feature mapping configuration for a feature group type.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig" title="abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupTypeMappingsConfig</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>Project feature group type mappings.</p></td>
 </tr>
 </tbody>
 </table>
@@ -105,8 +105,16 @@
 <dt class="sig sig-object py" id="abacusai.api_class.project.FeatureMappingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.project.</span></span><span class="sig-name descname"><span class="pre">FeatureMappingConfig</span></span><a class="headerlink" href="#abacusai.api_class.project.FeatureMappingConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Feature mapping configuration for a feature group type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the feature in the feature group.</p></li>
+<li><p><strong>feature_mapping</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The desired feature mapping for the feature.</p></li>
+<li><p><strong>nested_feature_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the nested feature in the feature group.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.project.FeatureMappingConfig.feature_name">
 <span class="sig-name descname"><span class="pre">feature_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.project.FeatureMappingConfig.feature_name" title="Permalink to this definition"></a></dt>
@@ -128,8 +136,16 @@ inheritance.</p>
 <dt class="sig sig-object py" id="abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.project.</span></span><span class="sig-name descname"><span class="pre">ProjectFeatureGroupTypeMappingsConfig</span></span><a class="headerlink" href="#abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>Project feature group type mappings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feature_group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The unique identifier for the feature group.</p></li>
+<li><p><strong>feature_group_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The feature group type.</p></li>
+<li><p><strong>feature_mappings</strong> (<em>List</em><em>[</em><a class="reference internal" href="#abacusai.api_class.project.FeatureMappingConfig" title="abacusai.api_class.project.FeatureMappingConfig"><em>FeatureMappingConfig</em></a><em>]</em>) – The feature mappings for the feature group.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig.feature_group_id">
 <span class="sig-name descname"><span class="pre">feature_group_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.project.ProjectFeatureGroupTypeMappingsConfig.feature_group_id" title="Permalink to this definition"></a></dt>

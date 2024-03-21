@@ -23,8 +23,14 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Feature mapping configuration for a feature group type.
+
+   :param feature_name: The name of the feature in the feature group.
+   :type feature_name: str
+   :param feature_mapping: The desired feature mapping for the feature.
+   :type feature_mapping: str
+   :param nested_feature_name: The name of the nested feature in the feature group.
+   :type nested_feature_name: str
 
    .. py:attribute:: feature_name
       :type: str
@@ -47,8 +53,14 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Project feature group type mappings.
+
+   :param feature_group_id: The unique identifier for the feature group.
+   :type feature_group_id: str
+   :param feature_group_type: The feature group type.
+   :type feature_group_type: str
+   :param feature_mappings: The feature mappings for the feature group.
+   :type feature_mappings: List[FeatureMappingConfig]
 
    .. py:attribute:: feature_group_id
       :type: str

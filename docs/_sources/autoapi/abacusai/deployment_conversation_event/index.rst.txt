@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, chatType=None, agentResponse=None, error=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, chatType=None, agentResponse=None, error=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -54,6 +54,8 @@ Classes
    :type inputParams: dict
    :param attachments: A list of attachments associated with the message.
    :type attachments: list
+   :param responseVersion: The version of the response, used to differentiate w/ legacy agent response.
+   :type responseVersion: str
    :param chatType: The type of chat llm that was run for the message.
    :type chatType: str
    :param agentResponse: Response from the agent. Only for conversation with agents.

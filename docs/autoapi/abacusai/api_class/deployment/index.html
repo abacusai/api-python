@@ -94,7 +94,7 @@
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.deployment.PredictionArguments" title="abacusai.api_class.deployment.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<td><p>An abstract class for prediction arguments specific to problem type.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.deployment.OptimizationPredictionArguments" title="abacusai.api_class.deployment.OptimizationPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the OPTIMIZATION problem type</p></td>
@@ -132,8 +132,7 @@
 <dt class="sig sig-object py" id="abacusai.api_class.deployment.PredictionArguments">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.deployment.</span></span><span class="sig-name descname"><span class="pre">PredictionArguments</span></span><a class="headerlink" href="#abacusai.api_class.deployment.PredictionArguments" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<p>An abstract class for prediction arguments specific to problem type.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.deployment.PredictionArguments._support_kwargs">
 <span class="sig-name descname"><span class="pre">_support_kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.deployment.PredictionArguments._support_kwargs" title="Permalink to this definition"></a></dt>
@@ -166,7 +165,7 @@ inheritance.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>forced_assignments</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Set of assignments to force and resolve before returning query results.</p></li>
 <li><p><strong>solve_time_limit_seconds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Maximum time in seconds to spend solving the query.</p></li>
-<li><p><strong>include_all_assignmnets</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, will return all assignments, including assignments with value 0. Default is False.</p></li>
+<li><p><strong>include_all_assignments</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, will return all assignments, including assignments with value 0. Default is False.</p></li>
 </ul>
 </dd>
 </dl>
@@ -201,7 +200,7 @@ inheritance.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>start_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Timestamp from which anomalies have to be detected in the training data</p></li>
-<li><p><strong>end_timestsamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Timestamp to which anomalies have to be detected in the training data</p></li>
+<li><p><strong>end_timestamp</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Timestamp to which anomalies have to be detected in the training data</p></li>
 <li><p><strong>get_all_item_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, anomaly detection has to be performed on all the data related to input ids</p></li>
 </ul>
 </dd>

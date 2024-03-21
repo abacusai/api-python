@@ -7,6 +7,9 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class AlertConditionConfig(ApiClass):
+    """
+    An abstract class for alert condition configs
+    """
     alert_type: enums.MonitorAlertType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod
@@ -149,6 +152,9 @@ class _AlertConditionConfigFactory(_ApiClassFactory):
 
 @dataclasses.dataclass
 class AlertActionConfig(ApiClass):
+    """
+    An abstract class for alert action configs
+    """
     action_type: enums.AlertActionType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod

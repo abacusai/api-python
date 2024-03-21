@@ -14,3 +14,5 @@ class HotkeyPrompt(ApiClass):
     """
     prompt: str
     title: str = dataclasses.field(default=None)
+    disable_problem_type_context: bool = dataclasses.field(default=True)
+    ignore_history: bool = dataclasses.field(default=None)

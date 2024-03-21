@@ -32,8 +32,7 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   An abstract class for prediction arguments specific to problem type.
 
    .. py:attribute:: _support_kwargs
       :type: bool
@@ -66,8 +65,8 @@ Classes
    :type forced_assignments: dict
    :param solve_time_limit_seconds: Maximum time in seconds to spend solving the query.
    :type solve_time_limit_seconds: float
-   :param include_all_assignmnets: If True, will return all assignments, including assignments with value 0. Default is False.
-   :type include_all_assignmnets: bool
+   :param include_all_assignments: If True, will return all assignments, including assignments with value 0. Default is False.
+   :type include_all_assignments: bool
 
    .. py:attribute:: forced_assignments
       :type: dict
@@ -97,8 +96,8 @@ Classes
 
    :param start_timestamp: Timestamp from which anomalies have to be detected in the training data
    :type start_timestamp: str
-   :param end_timestsamp: Timestamp to which anomalies have to be detected in the training data
-   :type end_timestsamp: str
+   :param end_timestamp: Timestamp to which anomalies have to be detected in the training data
+   :type end_timestamp: str
    :param get_all_item_data: If True, anomaly detection has to be performed on all the data related to input ids
    :type get_all_item_data: bool
 

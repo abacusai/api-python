@@ -25,8 +25,14 @@ Classes
 
    Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
 
-   Helper class that provides a standard way to create an ABC using
-   inheritance.
+   Custom config for dataset parsing.
+
+   :param escape: Escape character for CSV files. Defaults to '"'.
+   :type escape: str
+   :param csv_delimiter: Delimiter for CSV files. Defaults to None.
+   :type csv_delimiter: str
+   :param file_path_with_schema: Path to the file with schema. Defaults to None.
+   :type file_path_with_schema: str
 
    .. py:attribute:: escape
       :type: str

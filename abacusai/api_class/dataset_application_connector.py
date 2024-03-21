@@ -6,6 +6,9 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class DatasetConfig(ApiClass):
+    """
+    An abstract class for dataset configs specific to application connectors.
+    """
     application_connector_type: enums.ApplicationConnectorType = dataclasses.field(default=None, repr=False, init=False)
 
     @classmethod

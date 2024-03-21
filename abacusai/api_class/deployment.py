@@ -6,6 +6,9 @@ from .abstract import ApiClass, _ApiClassFactory
 
 @dataclasses.dataclass
 class PredictionArguments(ApiClass):
+    """
+    An abstract class for prediction arguments specific to problem type.
+    """
     _support_kwargs: bool = dataclasses.field(default=True, repr=False, init=False)
 
     kwargs: dict = dataclasses.field(default_factory=dict)
@@ -24,7 +27,7 @@ class OptimizationPredictionArguments(PredictionArguments):
     Args:
         forced_assignments (dict): Set of assignments to force and resolve before returning query results.
         solve_time_limit_seconds (float): Maximum time in seconds to spend solving the query.
-        include_all_assignmnets (bool): If True, will return all assignments, including assignments with value 0. Default is False.
+        include_all_assignments (bool): If True, will return all assignments, including assignments with value 0. Default is False.
     """
     forced_assignments: dict = dataclasses.field(default=None)
     solve_time_limit_seconds: float = dataclasses.field(default=None)
@@ -41,7 +44,7 @@ class TimeseriesAnomalyPredictionArguments(PredictionArguments):
 
     Args:
         start_timestamp (str): Timestamp from which anomalies have to be detected in the training data
-        end_timestsamp (str): Timestamp to which anomalies have to be detected in the training data
+        end_timestamp (str): Timestamp to which anomalies have to be detected in the training data
         get_all_item_data (bool): If True, anomaly detection has to be performed on all the data related to input ids
     """
     start_timestamp: str = dataclasses.field(default=None)
