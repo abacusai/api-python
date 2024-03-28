@@ -15,7 +15,6 @@ Classes
    abacusai.api_class.deployment.PredictionArguments
    abacusai.api_class.deployment.OptimizationPredictionArguments
    abacusai.api_class.deployment.TimeseriesAnomalyPredictionArguments
-   abacusai.api_class.deployment.AnomalyOutliersPredictionArguments
    abacusai.api_class.deployment.ChatLLMPredictionArguments
    abacusai.api_class.deployment.RegressionPredictionArguments
    abacusai.api_class.deployment.ForecastingPredictionArguments
@@ -113,32 +112,6 @@ Classes
 
    .. py:attribute:: get_all_item_data
       :type: bool
-
-      
-
-   .. py:method:: __post_init__()
-
-
-
-.. py:class:: AnomalyOutliersPredictionArguments
-
-
-   Bases: :py:obj:`PredictionArguments`
-
-   Prediction arguments for the ANOMALY_OUTLIERS problem type
-
-   :param threshold: The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99
-   :type threshold: float
-   :param histogram: If True, will return a histogram of the distribution of all points
-   :type histogram: bool
-
-   .. py:attribute:: threshold
-      :type: float
-
-      
-
-   .. py:attribute:: histogram
-      :type: str
 
       
 

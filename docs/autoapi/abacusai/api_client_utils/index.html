@@ -490,6 +490,16 @@ Needs to be updated if docstore formats change.</p>
 <span class="sig-name descname"><span class="pre">EXTRACTED_TEXT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'extracted_text'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.EXTRACTED_TEXT" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_CONFIG">
+<span class="sig-name descname"><span class="pre">DOCUMENT_PROCESSING_CONFIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'document_processing_config'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_CONFIG" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_VERSION">
+<span class="sig-name descname"><span class="pre">DOCUMENT_PROCESSING_VERSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'document_processing_version'</span></em><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.DOCUMENT_PROCESSING_VERSION" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_archive_id">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_archive_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_archive_id" title="Permalink to this definition"></a></dt>
@@ -514,8 +524,18 @@ Needs to be updated if docstore formats change.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_content_hash">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_content_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_content_hash" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>doc_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_pandas_pages_df">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_pandas_pages_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_pages_df" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_pandas_pages_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_document_processing_result_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_pages_df" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -523,6 +543,7 @@ Needs to be updated if docstore formats change.</p>
 <li><p><strong>doc_id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
 <li><p><strong>document_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
 <li><p><strong>get_docstore_resource_bytes</strong> (<em>Callable</em><em>[</em><em>Ellipsis</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><em>bytes</em></a><em>]</em>) – </p></li>
+<li><p><strong>get_document_processing_result_infos</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – </p></li>
 </ul>
 </dd>
@@ -531,7 +552,7 @@ Needs to be updated if docstore formats change.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.api_client_utils.DocstoreUtils.get_pandas_documents_df">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_pandas_documents_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_documents_df" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_pandas_documents_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc_id_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_docstore_resource_bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_document_processing_result_infos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_client_utils.DocstoreUtils.get_pandas_documents_df" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -539,6 +560,7 @@ Needs to be updated if docstore formats change.</p>
 <li><p><strong>doc_id_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
 <li><p><strong>document_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p></li>
 <li><p><strong>get_docstore_resource_bytes</strong> (<em>Callable</em>) – </p></li>
+<li><p><strong>get_document_processing_result_infos</strong> (<em>Callable</em>) – </p></li>
 <li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – </p></li>
 </ul>
 </dd>

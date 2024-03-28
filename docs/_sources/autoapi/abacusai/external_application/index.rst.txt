@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None)
+.. py:class:: ExternalApplication(client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -46,6 +46,8 @@ Classes
    :type status: str
    :param deploymentConversationRetentionHours: The retention policy for the external application.
    :type deploymentConversationRetentionHours: int
+   :param managedUserService: The external service that is managing the user accounts.
+   :type managedUserService: str
 
    .. py:method:: __repr__()
 

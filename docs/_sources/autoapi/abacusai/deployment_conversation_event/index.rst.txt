@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, chatType=None, agentResponse=None, error=None)
+.. py:class:: DeploymentConversationEvent(client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, chatType=None, agentResponse=None, error=None, segments=None)
 
 
    Bases: :py:obj:`abacusai.return_class.AbstractApiClass`
@@ -62,6 +62,8 @@ Classes
    :type agentResponse: dict
    :param error: The error message in case of an error.
    :type error: str
+   :param segments: The segments of the message.
+   :type segments: list
 
    .. py:method:: __repr__()
 

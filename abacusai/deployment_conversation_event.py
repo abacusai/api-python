@@ -25,9 +25,10 @@ class DeploymentConversationEvent(AbstractApiClass):
             chatType (str): The type of chat llm that was run for the message.
             agentResponse (dict): Response from the agent. Only for conversation with agents.
             error (str): The error message in case of an error.
+            segments (list): The segments of the message.
     """
 
-    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, chatType=None, agentResponse=None, error=None):
+    def __init__(self, client, role=None, text=None, timestamp=None, messageIndex=None, regenerateAttempt=None, modelVersion=None, searchResults=None, isUseful=None, feedback=None, feedbackType=None, docInfos=None, keywordArguments=None, inputParams=None, attachments=None, responseVersion=None, chatType=None, agentResponse=None, error=None, segments=None):
         super().__init__(client, None)
         self.role = role
         self.text = text
@@ -47,11 +48,12 @@ class DeploymentConversationEvent(AbstractApiClass):
         self.chat_type = chatType
         self.agent_response = agentResponse
         self.error = error
+        self.segments = segments
         self.deprecated_keys = {}
 
     def __repr__(self):
         repr_dict = {f'role': repr(self.role), f'text': repr(self.text), f'timestamp': repr(self.timestamp), f'message_index': repr(self.message_index), f'regenerate_attempt': repr(self.regenerate_attempt), f'model_version': repr(self.model_version), f'search_results': repr(self.search_results), f'is_useful': repr(self.is_useful), f'feedback': repr(self.feedback), f'feedback_type': repr(
-            self.feedback_type), f'doc_infos': repr(self.doc_infos), f'keyword_arguments': repr(self.keyword_arguments), f'input_params': repr(self.input_params), f'attachments': repr(self.attachments), f'response_version': repr(self.response_version), f'chat_type': repr(self.chat_type), f'agent_response': repr(self.agent_response), f'error': repr(self.error)}
+            self.feedback_type), f'doc_infos': repr(self.doc_infos), f'keyword_arguments': repr(self.keyword_arguments), f'input_params': repr(self.input_params), f'attachments': repr(self.attachments), f'response_version': repr(self.response_version), f'chat_type': repr(self.chat_type), f'agent_response': repr(self.agent_response), f'error': repr(self.error), f'segments': repr(self.segments)}
         class_name = "DeploymentConversationEvent"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -64,6 +66,6 @@ class DeploymentConversationEvent(AbstractApiClass):
         Returns:
             dict: The dict value representation of the class parameters
         """
-        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'message_index': self.message_index, 'regenerate_attempt': self.regenerate_attempt, 'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback,
-                'feedback_type': self.feedback_type, 'doc_infos': self.doc_infos, 'keyword_arguments': self.keyword_arguments, 'input_params': self.input_params, 'attachments': self.attachments, 'response_version': self.response_version, 'chat_type': self.chat_type, 'agent_response': self.agent_response, 'error': self.error}
+        resp = {'role': self.role, 'text': self.text, 'timestamp': self.timestamp, 'message_index': self.message_index, 'regenerate_attempt': self.regenerate_attempt, 'model_version': self.model_version, 'search_results': self.search_results, 'is_useful': self.is_useful, 'feedback': self.feedback, 'feedback_type': self.feedback_type,
+                'doc_infos': self.doc_infos, 'keyword_arguments': self.keyword_arguments, 'input_params': self.input_params, 'attachments': self.attachments, 'response_version': self.response_version, 'chat_type': self.chat_type, 'agent_response': self.agent_response, 'error': self.error, 'segments': self.segments}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}

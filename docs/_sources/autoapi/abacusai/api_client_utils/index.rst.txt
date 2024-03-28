@@ -159,6 +159,16 @@ Attributes
 
       
 
+   .. py:attribute:: DOCUMENT_PROCESSING_CONFIG
+      :value: 'document_processing_config'
+
+      
+
+   .. py:attribute:: DOCUMENT_PROCESSING_VERSION
+      :value: 'document_processing_version'
+
+      
+
    .. py:method:: get_archive_id(doc_id)
       :staticmethod:
 
@@ -167,11 +177,15 @@ Attributes
       :staticmethod:
 
 
-   .. py:method:: get_pandas_pages_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, max_workers = 10)
+   .. py:method:: get_content_hash(doc_id)
+      :staticmethod:
+
+
+   .. py:method:: get_pandas_pages_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, get_document_processing_result_infos, max_workers = 10)
       :classmethod:
 
 
-   .. py:method:: get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, max_workers = 10)
+   .. py:method:: get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column, get_docstore_resource_bytes, get_document_processing_result_infos, max_workers = 10)
       :classmethod:
 
 

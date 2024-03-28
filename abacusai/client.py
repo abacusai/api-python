@@ -108,7 +108,6 @@ from .generated_pit_feature_config_option import GeneratedPitFeatureConfigOption
 from .graph_dashboard import GraphDashboard
 from .holdout_analysis import HoldoutAnalysis
 from .holdout_analysis_version import HoldoutAnalysisVersion
-from .inferred_database_column_to_feature_mappings import InferredDatabaseColumnToFeatureMappings
 from .inferred_feature_mappings import InferredFeatureMappings
 from .llm_execution_result import LlmExecutionResult
 from .llm_generated_code import LlmGeneratedCode
@@ -586,7 +585,7 @@ class BaseApiClient:
         client_options (ClientOptions): Optional API client configurations
         skip_version_check (bool): If true, will skip checking the server's current API version on initializing the client
     """
-    client_version = '1.1.8'
+    client_version = '1.2.0'
 
     def __init__(self, api_key: str = None, server: str = None, client_options: ClientOptions = None, skip_version_check: bool = False):
         self.api_key = api_key
@@ -756,6 +755,12 @@ class BaseApiClient:
         status_code = 200
         response = None
         request_id = None
+
+        query_params = deepcopy(query_params)
+        body = deepcopy(body)
+        self._clean_api_objects(query_params)
+        self._clean_api_objects(body)
+
         try:
             if is_sync:
                 sync_api_endpoint = f'{endpoint}/api/{name}'
@@ -1324,18 +1329,6 @@ class ReadOnlyClient(BaseApiClient):
         Returns:
             DataMetrics: The metrics for the specified Dataset version."""
         return self._call_api('getDatasetVersionMetrics', 'GET', query_params={'datasetVersion': dataset_version, 'selectedColumns': selected_columns, 'includeCharts': include_charts, 'includeStatistics': include_statistics}, parse_type=DataMetrics)
-
-    def infer_database_column_to_feature_mappings(self, feature_group_version: str, database_connector_id: str, database_table_name: str) -> InferredDatabaseColumnToFeatureMappings:
-        """Infers the mapping of columns in a database table to features for a feature group version.
-
-        Args:
-            feature_group_version (str): The ID of the feature group version
-            database_connector_id (str): The ID of the database connector
-            database_table_name (str): The name of the table in the database connector
-
-        Returns:
-            InferredDatabaseColumnToFeatureMappings: Autocomplete mappings for database to connector columns"""
-        return self._call_api('inferDatabaseColumnToFeatureMappings', 'GET', query_params={'featureGroupVersion': feature_group_version, 'databaseConnectorId': database_connector_id, 'databaseTableName': database_table_name}, parse_type=InferredDatabaseColumnToFeatureMappings)
 
     def get_file_connector_instructions(self, bucket: str, write_permission: bool = False) -> FileConnectorInstructions:
         """Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -2091,7 +2084,7 @@ class ReadOnlyClient(BaseApiClient):
             RefreshPipelineRun: A refresh pipeline run object."""
         return self._call_api('describeRefreshPipelineRun', 'GET', query_params={'refreshPipelineRunId': refresh_pipeline_run_id}, parse_type=RefreshPipelineRun)
 
-    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []) -> List[RefreshPolicy]:
+    def list_refresh_policies(self, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], notebook_ids: list = []) -> List[RefreshPolicy]:
         """List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
         Args:
@@ -2102,12 +2095,11 @@ class ReadOnlyClient(BaseApiClient):
             deployment_ids (list): Comma-separated list of Deployment IDs.
             batch_prediction_ids (list): Comma-separated list of Batch Prediction IDs.
             model_monitor_ids (list): Comma-separated list of Model Monitor IDs.
-            prediction_metric_ids (list): Comma-separated list of Prediction Metric IDs.
             notebook_ids (list): Comma-separated list of Notebook IDs.
 
         Returns:
             list[RefreshPolicy]: List of all refresh policies in the organization."""
-        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'predictionMetricIds': prediction_metric_ids, 'notebookIds': notebook_ids}, parse_type=RefreshPolicy)
+        return self._call_api('listRefreshPolicies', 'GET', query_params={'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'notebookIds': notebook_ids}, parse_type=RefreshPolicy)
 
     def list_refresh_pipeline_runs(self, refresh_policy_id: str) -> List[RefreshPipelineRun]:
         """List the the times that the refresh policy has been run
@@ -3736,7 +3728,7 @@ class ApiClient(ReadOnlyClient):
         raise Exception(
             f'Error calling AI Agent app message endpoint. Status code: {response.status_code}. Response: {response.text}')
 
-    def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 600):
+    def _status_poll(self, url: str, wait_states: set, method: str, body: dict = {}, headers: dict = None, delay: int = 2, timeout: int = 1200):
         start_time = time.time()
         while time.time() - start_time <= timeout:
             for _ in range(3):
@@ -4006,7 +3998,7 @@ class ApiClient(ReadOnlyClient):
 
         Args:
             name (str): The project's name.
-            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+            use_case (str): The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
 
         Returns:
             Project: This object represents the newly created project."""
@@ -5682,7 +5674,7 @@ Creates a new feature group defined as the union of other feature group versions
             ModelMonitor: The new model monitor that was created."""
         return self._call_api('createNlpDriftMonitor', 'POST', query_params={}, body={'projectId': project_id, 'predictionFeatureGroupId': prediction_feature_group_id, 'trainingFeatureGroupId': training_feature_group_id, 'name': name, 'featureMappings': feature_mappings, 'trainingFeatureMappings': training_feature_mappings, 'targetValuePerformance': target_value_performance, 'refreshSchedule': refresh_schedule}, parse_type=ModelMonitor)
 
-    def create_forecasting_monitor(self, project_id: str, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str = None, refresh_schedule: str = None) -> ModelMonitor:
+    def create_forecasting_monitor(self, project_id: str, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str, refresh_schedule: str = None) -> ModelMonitor:
         """Runs a forecasting monitor for the specified project.
 
         Args:
@@ -5896,7 +5888,7 @@ Creates a new feature group defined as the union of other feature group versions
             prediction_operator_version (str): The unique ID of the prediction operator version."""
         return self._call_api('deletePredictionOperatorVersion', 'DELETE', query_params={'predictionOperatorVersion': prediction_operator_version})
 
-    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, skip_metrics_check: bool = False, model_deployment_config: dict = None, deployment_config: dict = None) -> Deployment:
+    def create_deployment(self, name: str = None, model_id: str = None, model_version: str = None, algorithm: str = None, feature_group_id: str = None, project_id: str = None, description: str = None, calls_per_second: int = None, auto_deploy: bool = True, start: bool = True, enable_batch_streaming_updates: bool = False, skip_metrics_check: bool = False, model_deployment_config: dict = None) -> Deployment:
         """Creates a deployment with the specified name and description for the specified model or feature group.
 
         A Deployment makes the trained model or feature group available for prediction requests.
@@ -5916,11 +5908,10 @@ Creates a new feature group defined as the union of other feature group versions
             enable_batch_streaming_updates (bool): Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup.
             skip_metrics_check (bool): Flag to skip metric regression with this current deployment
             model_deployment_config (dict): The deployment config for model to deploy
-            deployment_config (dict): Additional parameters specific to different use_cases
 
         Returns:
             Deployment: The new model or feature group deployment."""
-        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'skipMetricsCheck': skip_metrics_check, 'modelDeploymentConfig': model_deployment_config, 'deploymentConfig': deployment_config}, parse_type=Deployment)
+        return self._call_api('createDeployment', 'POST', query_params={}, body={'name': name, 'modelId': model_id, 'modelVersion': model_version, 'algorithm': algorithm, 'featureGroupId': feature_group_id, 'projectId': project_id, 'description': description, 'callsPerSecond': calls_per_second, 'autoDeploy': auto_deploy, 'start': start, 'enableBatchStreamingUpdates': enable_batch_streaming_updates, 'skipMetricsCheck': skip_metrics_check, 'modelDeploymentConfig': model_deployment_config}, parse_type=Deployment)
 
     def create_deployment_token(self, project_id: str, name: str = None) -> DeploymentAuthToken:
         """Creates a deployment token for the specified project.
@@ -6107,7 +6098,7 @@ Creates a new feature group defined as the union of other feature group versions
             realtime_monitor_id (str): Unique string identifier for the real-time monitor."""
         return self._call_api('deleteRealtimeMonitor', 'DELETE', query_params={'realtimeMonitorId': realtime_monitor_id})
 
-    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], prediction_metric_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, prediction_operator_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
+    def create_refresh_policy(self, name: str, cron: str, refresh_type: str, project_id: str = None, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], notebook_id: str = None, prediction_operator_id: str = None, feature_group_export_config: Union[dict, FeatureGroupExportConfig] = None) -> RefreshPolicy:
         """Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.
 
         A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.
@@ -6123,7 +6114,6 @@ Creates a new feature group defined as the union of other feature group versions
             model_ids (list): Comma-separated list of model IDs.
             deployment_ids (list): Comma-separated list of deployment IDs.
             batch_prediction_ids (list): Comma-separated list of batch prediction IDs.
-            prediction_metric_ids (list): Comma-separated list of prediction metric IDs.
             model_monitor_ids (list): Comma-separated list of model monitor IDs.
             notebook_id (str): Notebook ID associated with refresh policy.
             prediction_operator_id (str): Prediction Operator ID associated with refresh policy.
@@ -6131,7 +6121,7 @@ Creates a new feature group defined as the union of other feature group versions
 
         Returns:
             RefreshPolicy: The created refresh policy."""
-        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'predictionMetricIds': prediction_metric_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id, 'predictionOperatorId': prediction_operator_id, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
+        return self._call_api('createRefreshPolicy', 'POST', query_params={}, body={'name': name, 'cron': cron, 'refreshType': refresh_type, 'projectId': project_id, 'datasetIds': dataset_ids, 'featureGroupId': feature_group_id, 'modelIds': model_ids, 'deploymentIds': deployment_ids, 'batchPredictionIds': batch_prediction_ids, 'modelMonitorIds': model_monitor_ids, 'notebookId': notebook_id, 'predictionOperatorId': prediction_operator_id, 'featureGroupExportConfig': feature_group_export_config}, parse_type=RefreshPolicy)
 
     def delete_refresh_policy(self, refresh_policy_id: str):
         """Delete a refresh policy.
@@ -6812,7 +6802,7 @@ Creates a new feature group defined as the union of other feature group versions
             keyword_arguments (dict): A dictionary where each 'key' represents the paramter name and its corresponding 'value' represents the value of that parameter for the agent execute function."""
         prediction_url = self._get_prediction_endpoint(
             deployment_id, deployment_token) if deployment_token else None
-        return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url)
+        return self._call_api('executeAgent', 'POST', query_params={'deploymentToken': deployment_token, 'deploymentId': deployment_id}, body={'arguments': arguments, 'keywordArguments': keyword_arguments}, server_override=prediction_url, timeout=1500)
 
     def execute_conversation_agent(self, deployment_token: str, deployment_id: str, arguments: list = None, keyword_arguments: dict = None, deployment_conversation_id: str = None, external_session_id: str = None, regenerate: bool = False, doc_infos: list = None) -> Dict:
         """Executes a deployed AI agent function using the arguments as keyword arguments to the agent execute function.

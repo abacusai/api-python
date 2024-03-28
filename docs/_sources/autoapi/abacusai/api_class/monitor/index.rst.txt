@@ -12,10 +12,41 @@ Classes
 
 .. autoapisummary::
 
+   abacusai.api_class.monitor.TimeWindowConfig
    abacusai.api_class.monitor.ForecastingMonitorConfig
    abacusai.api_class.monitor.StdDevThreshold
    abacusai.api_class.monitor.ItemAttributesStdDevThreshold
 
+
+
+
+.. py:class:: TimeWindowConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Time Window Configuration
+
+   :param window_duration: The duration of the window.
+   :type window_duration: int
+   :param window_from_start: Whether the window should be from the start of the time series.
+   :type window_from_start: bool
+
+   .. py:attribute:: window_duration
+      :type: int
+
+      
+
+   .. py:attribute:: window_from_start
+      :type: bool
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
 
 
 
@@ -36,6 +67,8 @@ Classes
    :type start_time: str
    :param end_time: The end time of the time series data.
    :type end_time: str
+   :param window_config: The windowing configuration for the time series data.
+   :type window_config: TimeWindowConfig
 
    .. py:attribute:: id_column
       :type: str
@@ -59,6 +92,11 @@ Classes
 
    .. py:attribute:: end_time
       :type: str
+
+      
+
+   .. py:attribute:: window_config
+      :type: TimeWindowConfig
 
       
 

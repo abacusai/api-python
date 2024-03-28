@@ -262,7 +262,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.HotkeyPrompt"><code class="docutils literal notranslate"><span class="pre">HotkeyPrompt</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai._ApiClassFactory"><code class="docutils literal notranslate"><span class="pre">_ApiClassFactory</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.BatchPredictionArgs"><code class="docutils literal notranslate"><span class="pre">BatchPredictionArgs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AnomalyOutliersBatchPredictionArgs"><code class="docutils literal notranslate"><span class="pre">AnomalyOutliersBatchPredictionArgs</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingBatchPredictionArgs"><code class="docutils literal notranslate"><span class="pre">ForecastingBatchPredictionArgs</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.NamedEntityExtractionBatchPredictionArgs"><code class="docutils literal notranslate"><span class="pre">NamedEntityExtractionBatchPredictionArgs</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.PersonalizationBatchPredictionArgs"><code class="docutils literal notranslate"><span class="pre">PersonalizationBatchPredictionArgs</span></code></a></li>
@@ -292,7 +291,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.PredictionArguments"><code class="docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.OptimizationPredictionArguments"><code class="docutils literal notranslate"><span class="pre">OptimizationPredictionArguments</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.TimeseriesAnomalyPredictionArguments"><code class="docutils literal notranslate"><span class="pre">TimeseriesAnomalyPredictionArguments</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#abacusai.AnomalyOutliersPredictionArguments"><code class="docutils literal notranslate"><span class="pre">AnomalyOutliersPredictionArguments</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ChatLLMPredictionArguments"><code class="docutils literal notranslate"><span class="pre">ChatLLMPredictionArguments</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.RegressionPredictionArguments"><code class="docutils literal notranslate"><span class="pre">RegressionPredictionArguments</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingPredictionArguments"><code class="docutils literal notranslate"><span class="pre">ForecastingPredictionArguments</span></code></a></li>
@@ -385,6 +383,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.OptimizationTrainingConfig"><code class="docutils literal notranslate"><span class="pre">OptimizationTrainingConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai._TrainingConfigFactory"><code class="docutils literal notranslate"><span class="pre">_TrainingConfigFactory</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.DeployableAlgorithm"><code class="docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abacusai.TimeWindowConfig"><code class="docutils literal notranslate"><span class="pre">TimeWindowConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ForecastingMonitorConfig"><code class="docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.StdDevThreshold"><code class="docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#abacusai.ItemAttributesStdDevThreshold"><code class="docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></li>
@@ -709,98 +708,92 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.BatchPredictionArgs" title="abacusai.BatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchPredictionArgs</span></code></a></p></td>
 <td><p>An abstract class for Batch Prediction args specific to problem type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AnomalyOutliersBatchPredictionArgs" title="abacusai.AnomalyOutliersBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyOutliersBatchPredictionArgs</span></code></a></p></td>
-<td><p>Batch Prediction Config for the ANOMALY_OUTLIERS problem type</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ForecastingBatchPredictionArgs" title="abacusai.ForecastingBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ForecastingBatchPredictionArgs" title="abacusai.ForecastingBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the FORECASTING problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.NamedEntityExtractionBatchPredictionArgs" title="abacusai.NamedEntityExtractionBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.NamedEntityExtractionBatchPredictionArgs" title="abacusai.NamedEntityExtractionBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NamedEntityExtractionBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the NAMED_ENTITY_EXTRACTION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PersonalizationBatchPredictionArgs" title="abacusai.PersonalizationBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PersonalizationBatchPredictionArgs" title="abacusai.PersonalizationBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersonalizationBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the PERSONALIZATION problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PredictiveModelingBatchPredictionArgs" title="abacusai.PredictiveModelingBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictiveModelingBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PredictiveModelingBatchPredictionArgs" title="abacusai.PredictiveModelingBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictiveModelingBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the PREDICTIVE_MODELING problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PretrainedModelsBatchPredictionArgs" title="abacusai.PretrainedModelsBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PretrainedModelsBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PretrainedModelsBatchPredictionArgs" title="abacusai.PretrainedModelsBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PretrainedModelsBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the PRETRAINED_MODELS problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.SentenceBoundaryDetectionBatchPredictionArgs" title="abacusai.SentenceBoundaryDetectionBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.SentenceBoundaryDetectionBatchPredictionArgs" title="abacusai.SentenceBoundaryDetectionBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SentenceBoundaryDetectionBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the SENTENCE_BOUNDARY_DETECTION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ThemeAnalysisBatchPredictionArgs" title="abacusai.ThemeAnalysisBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemeAnalysisBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ThemeAnalysisBatchPredictionArgs" title="abacusai.ThemeAnalysisBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemeAnalysisBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the THEME_ANALYSIS problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ChatLLMBatchPredictionArgs" title="abacusai.ChatLLMBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ChatLLMBatchPredictionArgs" title="abacusai.ChatLLMBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the ChatLLM problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.TrainablePlugAndPlayBatchPredictionArgs" title="abacusai.TrainablePlugAndPlayBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainablePlugAndPlayBatchPredictionArgs</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.TrainablePlugAndPlayBatchPredictionArgs" title="abacusai.TrainablePlugAndPlayBatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainablePlugAndPlayBatchPredictionArgs</span></code></a></p></td>
 <td><p>Batch Prediction Config for the TrainablePlugAndPlay problem type</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._BatchPredictionArgsFactory" title="abacusai._BatchPredictionArgsFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_BatchPredictionArgsFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai._BatchPredictionArgsFactory" title="abacusai._BatchPredictionArgsFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_BatchPredictionArgsFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.BlobInput" title="abacusai.BlobInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlobInput</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.BlobInput" title="abacusai.BlobInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlobInput</span></code></a></p></td>
 <td><p>Binary large object input data.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.OcrMode" title="abacusai.OcrMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OcrMode</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.OcrMode" title="abacusai.OcrMode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OcrMode</span></code></a></p></td>
 <td><p>Generic enumeration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ParsingConfig" title="abacusai.ParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ParsingConfig" title="abacusai.ParsingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParsingConfig</span></code></a></p></td>
 <td><p>Custom config for dataset parsing.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.DocumentProcessingConfig" title="abacusai.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.DocumentProcessingConfig" title="abacusai.DocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.DatasetDocumentProcessingConfig" title="abacusai.DatasetDocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.DatasetDocumentProcessingConfig" title="abacusai.DatasetDocumentProcessingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetDocumentProcessingConfig</span></code></a></p></td>
 <td><p>Document processing configuration for dataset imports.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.IncrementalDatabaseConnectorConfig" title="abacusai.IncrementalDatabaseConnectorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalDatabaseConnectorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.IncrementalDatabaseConnectorConfig" title="abacusai.IncrementalDatabaseConnectorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IncrementalDatabaseConnectorConfig</span></code></a></p></td>
 <td><p>Config information for incremental datasets from database connectors</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.DatasetConfig" title="abacusai.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.DatasetConfig" title="abacusai.DatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a></p></td>
 <td><p>An abstract class for dataset configs specific to application connectors.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ConfluenceDatasetConfig" title="abacusai.ConfluenceDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfluenceDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ConfluenceDatasetConfig" title="abacusai.ConfluenceDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConfluenceDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Confluence Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.GoogleAnalyticsDatasetConfig" title="abacusai.GoogleAnalyticsDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GoogleAnalyticsDatasetConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.GoogleAnalyticsDatasetConfig" title="abacusai.GoogleAnalyticsDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GoogleAnalyticsDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Google Analytics Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.GoogleDriveDatasetConfig" title="abacusai.GoogleDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GoogleDriveDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.GoogleDriveDatasetConfig" title="abacusai.GoogleDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GoogleDriveDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Google Drive Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.JiraDatasetConfig" title="abacusai.JiraDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JiraDatasetConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.JiraDatasetConfig" title="abacusai.JiraDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">JiraDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Jira Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.OneDriveDatasetConfig" title="abacusai.OneDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneDriveDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.OneDriveDatasetConfig" title="abacusai.OneDriveDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OneDriveDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for OneDrive Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.SharepointDatasetConfig" title="abacusai.SharepointDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SharepointDatasetConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.SharepointDatasetConfig" title="abacusai.SharepointDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SharepointDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Sharepoint Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ZendeskDatasetConfig" title="abacusai.ZendeskDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ZendeskDatasetConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ZendeskDatasetConfig" title="abacusai.ZendeskDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ZendeskDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Zendesk Application Connector</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AbacusUsageMetricsDatasetConfig" title="abacusai.AbacusUsageMetricsDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AbacusUsageMetricsDatasetConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AbacusUsageMetricsDatasetConfig" title="abacusai.AbacusUsageMetricsDatasetConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AbacusUsageMetricsDatasetConfig</span></code></a></p></td>
 <td><p>Dataset config for Abacus Usage Metrics Application Connector</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._DatasetConfigFactory" title="abacusai._DatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_DatasetConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai._DatasetConfigFactory" title="abacusai._DatasetConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_DatasetConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PredictionArguments" title="abacusai.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PredictionArguments" title="abacusai.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p></td>
 <td><p>An abstract class for prediction arguments specific to problem type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.OptimizationPredictionArguments" title="abacusai.OptimizationPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationPredictionArguments</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.OptimizationPredictionArguments" title="abacusai.OptimizationPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OptimizationPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the OPTIMIZATION problem type</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.TimeseriesAnomalyPredictionArguments" title="abacusai.TimeseriesAnomalyPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyPredictionArguments</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.TimeseriesAnomalyPredictionArguments" title="abacusai.TimeseriesAnomalyPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeseriesAnomalyPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the TS_ANOMALY problem type</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AnomalyOutliersPredictionArguments" title="abacusai.AnomalyOutliersPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnomalyOutliersPredictionArguments</span></code></a></p></td>
-<td><p>Prediction arguments for the ANOMALY_OUTLIERS problem type</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ChatLLMPredictionArguments" title="abacusai.ChatLLMPredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChatLLMPredictionArguments</span></code></a></p></td>
 <td><p>Prediction arguments for the CHAT_LLM problem type</p></td>
@@ -1078,94 +1071,97 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#abacusai.DeployableAlgorithm" title="abacusai.DeployableAlgorithm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DeployableAlgorithm</span></code></a></p></td>
 <td><p>Algorithm that can be deployed to a model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ForecastingMonitorConfig" title="abacusai.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.TimeWindowConfig" title="abacusai.TimeWindowConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowConfig</span></code></a></p></td>
+<td><p>Time Window Configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ForecastingMonitorConfig" title="abacusai.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
 <td><p>Forecasting Monitor Configuration</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.StdDevThreshold" title="abacusai.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.StdDevThreshold" title="abacusai.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
 <td><p>Std Dev Threshold types</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ItemAttributesStdDevThreshold" title="abacusai.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ItemAttributesStdDevThreshold" title="abacusai.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
 <td><p>Item Attributes Std Dev Threshold for Monitor Alerts</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AlertConditionConfig" title="abacusai.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AlertConditionConfig" title="abacusai.AlertConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertConditionConfig</span></code></a></p></td>
 <td><p>An abstract class for alert condition configs</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AccuracyBelowThresholdConditionConfig" title="abacusai.AccuracyBelowThresholdConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AccuracyBelowThresholdConditionConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AccuracyBelowThresholdConditionConfig" title="abacusai.AccuracyBelowThresholdConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AccuracyBelowThresholdConditionConfig</span></code></a></p></td>
 <td><p>Accuracy Below Threshold Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.FeatureDriftConditionConfig" title="abacusai.FeatureDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureDriftConditionConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.FeatureDriftConditionConfig" title="abacusai.FeatureDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureDriftConditionConfig</span></code></a></p></td>
 <td><p>Feature Drift Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.TargetDriftConditionConfig" title="abacusai.TargetDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TargetDriftConditionConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.TargetDriftConditionConfig" title="abacusai.TargetDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TargetDriftConditionConfig</span></code></a></p></td>
 <td><p>Target Drift Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.HistoryLengthDriftConditionConfig" title="abacusai.HistoryLengthDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HistoryLengthDriftConditionConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.HistoryLengthDriftConditionConfig" title="abacusai.HistoryLengthDriftConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HistoryLengthDriftConditionConfig</span></code></a></p></td>
 <td><p>History Length Drift Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.DataIntegrityViolationConditionConfig" title="abacusai.DataIntegrityViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataIntegrityViolationConditionConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.DataIntegrityViolationConditionConfig" title="abacusai.DataIntegrityViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataIntegrityViolationConditionConfig</span></code></a></p></td>
 <td><p>Data Integrity Violation Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.BiasViolationConditionConfig" title="abacusai.BiasViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasViolationConditionConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.BiasViolationConditionConfig" title="abacusai.BiasViolationConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasViolationConditionConfig</span></code></a></p></td>
 <td><p>Bias Violation Condition Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PredictionCountConditionConfig" title="abacusai.PredictionCountConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionCountConditionConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PredictionCountConditionConfig" title="abacusai.PredictionCountConditionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionCountConditionConfig</span></code></a></p></td>
 <td><p>Deployment Prediction Condition Config for Deployment Alerts. By default we monitor if predictions made over a time window has reduced significantly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._AlertConditionConfigFactory" title="abacusai._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai._AlertConditionConfigFactory" title="abacusai._AlertConditionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertConditionConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AlertActionConfig" title="abacusai.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AlertActionConfig" title="abacusai.AlertActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AlertActionConfig</span></code></a></p></td>
 <td><p>An abstract class for alert action configs</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.EmailActionConfig" title="abacusai.EmailActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmailActionConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.EmailActionConfig" title="abacusai.EmailActionConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmailActionConfig</span></code></a></p></td>
 <td><p>Email Action Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai._AlertActionConfigFactory" title="abacusai._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._AlertActionConfigFactory" title="abacusai._AlertActionConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_AlertActionConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.MonitorThresholdConfig" title="abacusai.MonitorThresholdConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorThresholdConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.MonitorThresholdConfig" title="abacusai.MonitorThresholdConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MonitorThresholdConfig</span></code></a></p></td>
 <td><p>Monitor Threshold Config for Monitor Alerts</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.FeatureMappingConfig" title="abacusai.FeatureMappingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureMappingConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.FeatureMappingConfig" title="abacusai.FeatureMappingConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureMappingConfig</span></code></a></p></td>
 <td><p>Feature mapping configuration for a feature group type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ProjectFeatureGroupTypeMappingsConfig" title="abacusai.ProjectFeatureGroupTypeMappingsConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupTypeMappingsConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ProjectFeatureGroupTypeMappingsConfig" title="abacusai.ProjectFeatureGroupTypeMappingsConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProjectFeatureGroupTypeMappingsConfig</span></code></a></p></td>
 <td><p>Project feature group type mappings.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PythonFunctionArgument" title="abacusai.PythonFunctionArgument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionArgument</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PythonFunctionArgument" title="abacusai.PythonFunctionArgument"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PythonFunctionArgument</span></code></a></p></td>
 <td><p>A config class for python function arguments</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.OutputVariableMapping" title="abacusai.OutputVariableMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OutputVariableMapping</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.OutputVariableMapping" title="abacusai.OutputVariableMapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OutputVariableMapping</span></code></a></p></td>
 <td><p>A config class for python function arguments</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.FeatureGroupExportConfig" title="abacusai.FeatureGroupExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureGroupExportConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.FeatureGroupExportConfig" title="abacusai.FeatureGroupExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FeatureGroupExportConfig</span></code></a></p></td>
 <td><p>An abstract class for feature group exports.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.FileConnectorExportConfig" title="abacusai.FileConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileConnectorExportConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.FileConnectorExportConfig" title="abacusai.FileConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileConnectorExportConfig</span></code></a></p></td>
 <td><p>File connector export config for feature groups</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.DatabaseConnectorExportConfig" title="abacusai.DatabaseConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatabaseConnectorExportConfig</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.DatabaseConnectorExportConfig" title="abacusai.DatabaseConnectorExportConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatabaseConnectorExportConfig</span></code></a></p></td>
 <td><p>Database connector export config for feature groups</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai._FeatureGroupExportConfigFactory" title="abacusai._FeatureGroupExportConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_FeatureGroupExportConfigFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai._FeatureGroupExportConfigFactory" title="abacusai._FeatureGroupExportConfigFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_FeatureGroupExportConfigFactory</span></code></a></p></td>
 <td><p>Helper class that provides a standard way to create an ABC using</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.AgentResponse" title="abacusai.AgentResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentResponse</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.AgentResponse" title="abacusai.AgentResponse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AgentResponse</span></code></a></p></td>
 <td><p>Response object for agent to support attachments, section data and normal data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ApiClient" title="abacusai.ApiClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClient</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ApiClient" title="abacusai.ApiClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ApiClient</span></code></a></p></td>
 <td><p>Abacus.AI API Client</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ClientOptions" title="abacusai.ClientOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClientOptions</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ClientOptions" title="abacusai.ClientOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClientOptions</span></code></a></p></td>
 <td><p>Options for configuring the ApiClient</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.ReadOnlyClient" title="abacusai.ReadOnlyClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReadOnlyClient</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.ReadOnlyClient" title="abacusai.ReadOnlyClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReadOnlyClient</span></code></a></p></td>
 <td><p>Abacus.AI Read Only API Client. Only contains GET methods</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.PredictionClient" title="abacusai.PredictionClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionClient</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.PredictionClient" title="abacusai.PredictionClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionClient</span></code></a></p></td>
 <td><p>Abacus.AI Prediction API Client. Does not utilize authentication and only contains public prediction methods</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.StreamingClient" title="abacusai.StreamingClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamingClient</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.StreamingClient" title="abacusai.StreamingClient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StreamingClient</span></code></a></p></td>
 <td><p>Abacus.AI Streaming API Client. Does not utilize authentication and only contains public streaming methods</p></td>
 </tr>
 </tbody>
@@ -1430,42 +1426,6 @@ inheritance.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.BatchPredictionArgs._get_builder">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_builder</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.BatchPredictionArgs._get_builder" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersBatchPredictionArgs">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AnomalyOutliersBatchPredictionArgs</span></span><a class="headerlink" href="#abacusai.AnomalyOutliersBatchPredictionArgs" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.BatchPredictionArgs" title="abacusai.BatchPredictionArgs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchPredictionArgs</span></code></a></p>
-<p>Batch Prediction Config for the ANOMALY_OUTLIERS problem type</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>for_eval</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.</p></li>
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The threshold for detecting an anomaly. Range: [0.8, 0.99]</p></li>
-<li><p><strong>explain_predictions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, calculates explanations for the predicted values along with predictions.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersBatchPredictionArgs.for_eval">
-<span class="sig-name descname"><span class="pre">for_eval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.AnomalyOutliersBatchPredictionArgs.for_eval" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersBatchPredictionArgs.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.AnomalyOutliersBatchPredictionArgs.threshold" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersBatchPredictionArgs.explain_predictions">
-<span class="sig-name descname"><span class="pre">explain_predictions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.AnomalyOutliersBatchPredictionArgs.explain_predictions" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersBatchPredictionArgs.__post_init__">
-<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AnomalyOutliersBatchPredictionArgs.__post_init__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2530,36 +2490,6 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersPredictionArguments">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">AnomalyOutliersPredictionArguments</span></span><a class="headerlink" href="#abacusai.AnomalyOutliersPredictionArguments" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#abacusai.PredictionArguments" title="abacusai.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p>
-<p>Prediction arguments for the ANOMALY_OUTLIERS problem type</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>threshold</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99</p></li>
-<li><p><strong>histogram</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, will return a histogram of the distribution of all points</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersPredictionArguments.threshold">
-<span class="sig-name descname"><span class="pre">threshold</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></em><a class="headerlink" href="#abacusai.AnomalyOutliersPredictionArguments.threshold" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersPredictionArguments.histogram">
-<span class="sig-name descname"><span class="pre">histogram</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.AnomalyOutliersPredictionArguments.histogram" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abacusai.AnomalyOutliersPredictionArguments.__post_init__">
-<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.AnomalyOutliersPredictionArguments.__post_init__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.ChatLLMPredictionArguments">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ChatLLMPredictionArguments</span></span><a class="headerlink" href="#abacusai.ChatLLMPredictionArguments" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#abacusai.PredictionArguments" title="abacusai.PredictionArguments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PredictionArguments</span></code></a></p>
@@ -2951,11 +2881,6 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ProblemType.AI_AGENT">
 <span class="sig-name descname"><span class="pre">AI_AGENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ai_agent'</span></em><a class="headerlink" href="#abacusai.ProblemType.AI_AGENT" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.ProblemType.ANOMALY_OUTLIERS">
-<span class="sig-name descname"><span class="pre">ANOMALY_OUTLIERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'anomaly'</span></em><a class="headerlink" href="#abacusai.ProblemType.ANOMALY_OUTLIERS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4570,11 +4495,6 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.LLMName.ABACUS_GIRAFFE_LARGE">
 <span class="sig-name descname"><span class="pre">ABACUS_GIRAFFE_LARGE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ABACUS_GIRAFFE_LARGE'</span></em><a class="headerlink" href="#abacusai.LLMName.ABACUS_GIRAFFE_LARGE" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abacusai.LLMName.ABACUS_LLAMA2_QA">
-<span class="sig-name descname"><span class="pre">ABACUS_LLAMA2_QA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ABACUS_LLAMA2_QA'</span></em><a class="headerlink" href="#abacusai.LLMName.ABACUS_LLAMA2_QA" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -6244,6 +6164,7 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <li><p><strong>search_score_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – Minimum search score to consider a document as a valid search result.</p></li>
 <li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Database connector ID to use for the ChatLLM.</p></li>
 <li><p><strong>database_connector_tables</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>]</em>) – List of tables to use from the database connector for the ChatLLM.</p></li>
+<li><p><strong>enable_code_execution</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Enable code execution in the ChatLLM.</p></li>
 </ul>
 </dd>
 </dl>
@@ -6325,6 +6246,11 @@ Re-balancing classes generally boosts recall at the cost of precision on rare cl
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.database_connector_tables">
 <span class="sig-name descname"><span class="pre">database_connector_tables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.database_connector_tables" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ChatLLMTrainingConfig.enable_code_execution">
+<span class="sig-name descname"><span class="pre">enable_code_execution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.ChatLLMTrainingConfig.enable_code_execution" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -6991,6 +6917,39 @@ inheritance.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="abacusai.TimeWindowConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">TimeWindowConfig</span></span><a class="headerlink" href="#abacusai.TimeWindowConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Time Window Configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The duration of the window.</p></li>
+<li><p><strong>window_from_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the window should be from the start of the time series.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.TimeWindowConfig.window_duration">
+<span class="sig-name descname"><span class="pre">window_duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.TimeWindowConfig.window_duration" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.TimeWindowConfig.window_from_start">
+<span class="sig-name descname"><span class="pre">window_from_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.TimeWindowConfig.window_from_start" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.TimeWindowConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.TimeWindowConfig.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="abacusai.ForecastingMonitorConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">ForecastingMonitorConfig</span></span><a class="headerlink" href="#abacusai.ForecastingMonitorConfig" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="api_class/abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
@@ -7003,6 +6962,7 @@ inheritance.</p>
 <li><p><strong>target_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the target value for the time series.</p></li>
 <li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the time series data.</p></li>
 <li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the time series data.</p></li>
+<li><p><strong>window_config</strong> (<a class="reference internal" href="#abacusai.TimeWindowConfig" title="abacusai.TimeWindowConfig"><em>TimeWindowConfig</em></a>) – The windowing configuration for the time series data.</p></li>
 </ul>
 </dd>
 </dl>
@@ -7029,6 +6989,11 @@ inheritance.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.ForecastingMonitorConfig.end_time">
 <span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.ForecastingMonitorConfig.end_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.ForecastingMonitorConfig.window_config">
+<span class="sig-name descname"><span class="pre">window_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.TimeWindowConfig" title="abacusai.TimeWindowConfig"><span class="pre">TimeWindowConfig</span></a></em><a class="headerlink" href="#abacusai.ForecastingMonitorConfig.window_config" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -8721,7 +8686,7 @@ If the request is from the abacus.ai app, the response will be streamed to the U
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient._status_poll">
-<span class="sig-name descname"><span class="pre">_status_poll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient._status_poll" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_status_poll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_states</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">body</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1200</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient._status_poll" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -9092,7 +9057,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The project’s name.</p></li>
-<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
+<li><p><strong>use_case</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The use case that the project solves. Refer to our [guide on use cases](<a class="reference external" href="https://api.abacus.ai/app/help/useCases">https://api.abacus.ai/app/help/useCases</a>) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -11805,7 +11770,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_forecasting_monitor">
-<span class="sig-name descname"><span class="pre">create_forecasting_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_forecast_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_forecast_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forecast_frequency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_forecasting_monitor" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_forecasting_monitor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_feature_group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">training_forecast_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_forecast_config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forecast_frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_schedule</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_forecasting_monitor" title="Permalink to this definition"></a></dt>
 <dd><p>Runs a forecasting monitor for the specified project.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -12147,7 +12112,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_deployment">
-<span class="sig-name descname"><span class="pre">create_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calls_per_second</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_deploy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_batch_streaming_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_metrics_check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_deployment_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_deployment" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_deployment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calls_per_second</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_deploy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_batch_streaming_updates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_metrics_check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_deployment_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_deployment" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a deployment with the specified name and description for the specified model or feature group.</p>
 <p>A Deployment makes the trained model or feature group available for prediction requests.</p>
 <dl class="field-list simple">
@@ -12166,7 +12131,6 @@ feature groups for those input feature groups.</p>
 <li><p><strong>enable_batch_streaming_updates</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Flag to enable marking the feature group deployment to have a background process cache streamed in rows for quicker lookup.</p></li>
 <li><p><strong>skip_metrics_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Flag to skip metric regression with this current deployment</p></li>
 <li><p><strong>model_deployment_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – The deployment config for model to deploy</p></li>
-<li><p><strong>deployment_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a>) – Additional parameters specific to different use_cases</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -12476,7 +12440,7 @@ feature groups for those input feature groups.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ApiClient.create_refresh_policy">
-<span class="sig-name descname"><span class="pre">create_refresh_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cron</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_prediction_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_metric_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notebook_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_operator_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_export_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_refresh_policy" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_refresh_policy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cron</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refresh_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_prediction_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notebook_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_operator_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_export_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ApiClient.create_refresh_policy" title="Permalink to this definition"></a></dt>
 <dd><p>Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.</p>
 <p>A refresh policy allows for the scheduling of a set of actions at regular intervals. This can be useful for periodically updating data that needs to be re-imported into the project for retraining.</p>
 <dl class="field-list simple">
@@ -12491,7 +12455,6 @@ feature groups for those input feature groups.</p>
 <li><p><strong>model_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of model IDs.</p></li>
 <li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of deployment IDs.</p></li>
 <li><p><strong>batch_prediction_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of batch prediction IDs.</p></li>
-<li><p><strong>prediction_metric_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of prediction metric IDs.</p></li>
 <li><p><strong>model_monitor_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of model monitor IDs.</p></li>
 <li><p><strong>notebook_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Notebook ID associated with refresh policy.</p></li>
 <li><p><strong>prediction_operator_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – Prediction Operator ID associated with refresh policy.</p></li>
@@ -16499,27 +16462,6 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abacusai.ReadOnlyClient.infer_database_column_to_feature_mappings">
-<span class="sig-name descname"><span class="pre">infer_database_column_to_feature_mappings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_group_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_connector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_table_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.infer_database_column_to_feature_mappings" title="Permalink to this definition"></a></dt>
-<dd><p>Infers the mapping of columns in a database table to features for a feature group version.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>feature_group_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the feature group version</p></li>
-<li><p><strong>database_connector_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The ID of the database connector</p></li>
-<li><p><strong>database_table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the table in the database connector</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Autocomplete mappings for database to connector columns</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="inferred_database_column_to_feature_mappings/index.html#abacusai.inferred_database_column_to_feature_mappings.InferredDatabaseColumnToFeatureMappings" title="abacusai.inferred_database_column_to_feature_mappings.InferredDatabaseColumnToFeatureMappings">InferredDatabaseColumnToFeatureMappings</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.get_file_connector_instructions">
 <span class="sig-name descname"><span class="pre">get_file_connector_instructions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bucket</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_permission</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.get_file_connector_instructions" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves verification information to create a data connector to a cloud storage bucket.</p>
@@ -17845,7 +17787,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abacusai.ReadOnlyClient.list_refresh_policies">
-<span class="sig-name descname"><span class="pre">list_refresh_policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_prediction_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction_metric_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notebook_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.list_refresh_policies" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">list_refresh_policies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deployment_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_prediction_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_monitor_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notebook_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.ReadOnlyClient.list_refresh_policies" title="Permalink to this definition"></a></dt>
 <dd><p>List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -17857,7 +17799,6 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 <li><p><strong>deployment_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of Deployment IDs.</p></li>
 <li><p><strong>batch_prediction_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of Batch Prediction IDs.</p></li>
 <li><p><strong>model_monitor_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of Model Monitor IDs.</p></li>
-<li><p><strong>prediction_metric_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of Prediction Metric IDs.</p></li>
 <li><p><strong>notebook_ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a>) – Comma-separated list of Notebook IDs.</p></li>
 </ul>
 </dd>
@@ -20011,7 +19952,7 @@ are overlapping, and permitted by the settings provided. The returned chunks are
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abacusai.__version__">
-<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.1.8'</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">abacusai.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'1.2.0'</span></em><a class="headerlink" href="#abacusai.__version__" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>

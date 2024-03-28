@@ -20,24 +20,6 @@ class BatchPredictionArgs(ApiClass):
 
 
 @dataclasses.dataclass
-class AnomalyOutliersBatchPredictionArgs(BatchPredictionArgs):
-    """
-    Batch Prediction Config for the ANOMALY_OUTLIERS problem type
-
-    Args:
-        for_eval (bool): If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-        threshold (float): The threshold for detecting an anomaly. Range: [0.8, 0.99]
-        explain_predictions (bool): If True, calculates explanations for the predicted values along with predictions.
-    """
-    for_eval: bool = dataclasses.field(default=None)
-    threshold: float = dataclasses.field(default=None)
-    explain_predictions: bool = dataclasses.field(default=None)
-
-    def __post_init__(self):
-        self.problem_type = enums.ProblemType.ANOMALY_OUTLIERS
-
-
-@dataclasses.dataclass
 class ForecastingBatchPredictionArgs(BatchPredictionArgs):
     """
     Batch Prediction Config for the FORECASTING problem type
@@ -226,7 +208,6 @@ class _BatchPredictionArgsFactory(_ApiClassFactory):
     config_abstract_class = BatchPredictionArgs
     config_class_key = 'problem_type'
     config_class_map = {
-        enums.ProblemType.ANOMALY_OUTLIERS: AnomalyOutliersBatchPredictionArgs,
         enums.ProblemType.FORECASTING: ForecastingBatchPredictionArgs,
         enums.ProblemType.NAMED_ENTITY_EXTRACTION: NamedEntityExtractionBatchPredictionArgs,
         enums.ProblemType.PERSONALIZATION: PersonalizationBatchPredictionArgs,

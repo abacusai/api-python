@@ -203,6 +203,8 @@ class DocstoreUtils:
     WIDTH = 'width'
     METADATA = 'metadata'
     EXTRACTED_TEXT = 'extracted_text'
+    DOCUMENT_PROCESSING_CONFIG = 'document_processing_config'
+    DOCUMENT_PROCESSING_VERSION = 'document_processing_version'
 
     @staticmethod
     def get_archive_id(doc_id: str):
@@ -220,15 +222,67 @@ class DocstoreUtils:
     def get_page_id(doc_id: str, page: int):
         return f'{doc_id}-page-{page}'
 
+    @staticmethod
+    def get_content_hash(doc_id: str):
+        parts = doc_id.split('-')
+        content_hash = next((part for part in parts if len(part) == 64), None)
+        return content_hash
+
     @classmethod
     def get_pandas_pages_df(cls, df, feature_group_version: str, doc_id_column: str, document_column: str,
-                            get_docstore_resource_bytes: Callable[..., bytes], max_workers: int = 10):
+                            get_docstore_resource_bytes: Callable[..., bytes], get_document_processing_result_infos: Callable, max_workers: int = 10):
         from concurrent.futures import ThreadPoolExecutor
 
         import numpy as np
         import pandas as pd
 
         chunk_size = 10 * 1024 * 1024
+
+        pages_df_with_config = None
+        df_with_config = df[df[document_column].apply(
+            lambda x: isinstance(x, dict) and cls.DOCUMENT_PROCESSING_CONFIG in x)]
+        df = df[~df[doc_id_column].isin(df_with_config[doc_id_column])]
+
+        if len(df_with_config) > 0:
+            doc_ids = df_with_config[doc_id_column].values
+            content_hash_to_doc_id = {cls.get_content_hash(
+                doc_id): doc_id for doc_id in doc_ids}
+            content_hash_list = list(content_hash_to_doc_id.keys())
+
+            unique_document_processing_configs = set(df_with_config[document_column].apply(
+                lambda x: str(x.get(cls.DOCUMENT_PROCESSING_CONFIG))))
+            if len(unique_document_processing_configs) > 1:
+                raise ValueError(
+                    'Loading documents with different document processing configs is not supported yet. Please make sure all rows have the same document processing config.')
+
+            sample_page_infos = df_with_config.iloc[0][document_column]
+            document_processing_config = sample_page_infos[cls.DOCUMENT_PROCESSING_CONFIG]
+            document_processing_version = sample_page_infos.get(
+                cls.DOCUMENT_PROCESSING_VERSION)
+
+            page_offsets_and_zip_location_list = get_document_processing_result_infos(
+                content_hash_list, document_processing_config, document_processing_version) or []
+
+            zip_location_to_offsets = {}
+            for row in page_offsets_and_zip_location_list:
+                zip_location_to_offsets.setdefault(
+                    row['result_zip_path'], []).append(row)
+
+            pages_list = []
+            for result_zip_path, page_offsets in zip_location_to_offsets.items():
+                zip_bytes = get_docstore_resource_bytes(
+                    feature_group_version, cls.PAGE_DATA, result_zip_path=result_zip_path)
+                for row in page_offsets:
+                    start_offset, file_size = row['start_offset'], row['file_size']
+                    page_content = zip_bytes[start_offset:start_offset + file_size]
+                    page_data = json.loads(page_content.decode('utf-8'))
+                    pages_list.append((row['content_hash'], page_data))
+
+            json_pages_list = [{doc_id_column: content_hash_to_doc_id[content_hash], **(page or {})}
+                               for content_hash, page in pages_list]
+            pages_df_with_config = pd.DataFrame(json_pages_list)
+            pages_df_with_config = pages_df_with_config.replace(
+                {pd.np.nan: None})
 
         df = df.drop_duplicates([doc_id_column])
         group_by_archive = df.groupby(
@@ -280,18 +334,22 @@ class DocstoreUtils:
 
         pages_df = pd.DataFrame(pages_list)
         pages_df = pages_df.replace({np.nan: None})
+
+        if pages_df_with_config is not None:
+            pages_df = pd.concat([pages_df, pages_df_with_config])
+
         return pages_df
 
     @classmethod
     def get_pandas_documents_df(cls, df, feature_group_version: str, doc_id_column: str, document_column: str,
-                                get_docstore_resource_bytes: Callable, max_workers: int = 10):
+                                get_docstore_resource_bytes: Callable, get_document_processing_result_infos: Callable, max_workers: int = 10):
         pages_ref_column = f'__{document_column}'
         original_columns = df.columns
 
         # Re-name page_ids column so that the generated document column does not have the same name
         df = df.rename(columns={document_column: pages_ref_column})
         pages_df = cls.get_pandas_pages_df(df, feature_group_version, doc_id_column, pages_ref_column,
-                                           get_docstore_resource_bytes, max_workers)
+                                           get_docstore_resource_bytes, get_document_processing_result_infos, max_workers)
 
         # pages_df will have "doc_id" as column name which can be different from doc_id_column
         pages_df = pages_df.rename(columns={cls.DOC_ID: doc_id_column})

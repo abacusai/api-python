@@ -5,6 +5,25 @@ from .enums import StdDevThresholdType
 
 
 @dataclasses.dataclass
+class TimeWindowConfig(ApiClass):
+    """
+    Time Window Configuration
+
+    Args:
+        window_duration (int): The duration of the window.
+        window_from_start (bool): Whether the window should be from the start of the time series.
+    """
+    window_duration: int = dataclasses.field(default=None)
+    window_from_start: bool = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {
+            'window_duration': self.window_duration,
+            'window_from_start': self.window_from_start,
+        }
+
+
+@dataclasses.dataclass
 class ForecastingMonitorConfig(ApiClass):
     """
     Forecasting Monitor Configuration
@@ -15,12 +34,14 @@ class ForecastingMonitorConfig(ApiClass):
         target_column (str): The name of the column that contains the target value for the time series.
         start_time (str): The start time of the time series data.
         end_time (str): The end time of the time series data.
+        window_config (TimeWindowConfig): The windowing configuration for the time series data.
     """
     id_column: str = dataclasses.field(default=None)
     timestamp_column: str = dataclasses.field(default=None)
     target_column: str = dataclasses.field(default=None)
     start_time: str = dataclasses.field(default=None)
     end_time: str = dataclasses.field(default=None)
+    window_config: TimeWindowConfig = dataclasses.field(default=None)
 
     def to_dict(self):
         return {
@@ -29,6 +50,7 @@ class ForecastingMonitorConfig(ApiClass):
             'target_column': self.target_column,
             'start_time': self.start_time,
             'end_time': self.end_time,
+            'window_config': TimeWindowConfig.from_dict(self.window_config).to_dict() if self.window_config else None,
         }
 
 

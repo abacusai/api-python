@@ -236,7 +236,6 @@ Classes
    abacusai.HotkeyPrompt
    abacusai._ApiClassFactory
    abacusai.BatchPredictionArgs
-   abacusai.AnomalyOutliersBatchPredictionArgs
    abacusai.ForecastingBatchPredictionArgs
    abacusai.NamedEntityExtractionBatchPredictionArgs
    abacusai.PersonalizationBatchPredictionArgs
@@ -266,7 +265,6 @@ Classes
    abacusai.PredictionArguments
    abacusai.OptimizationPredictionArguments
    abacusai.TimeseriesAnomalyPredictionArguments
-   abacusai.AnomalyOutliersPredictionArguments
    abacusai.ChatLLMPredictionArguments
    abacusai.RegressionPredictionArguments
    abacusai.ForecastingPredictionArguments
@@ -359,6 +357,7 @@ Classes
    abacusai.OptimizationTrainingConfig
    abacusai._TrainingConfigFactory
    abacusai.DeployableAlgorithm
+   abacusai.TimeWindowConfig
    abacusai.ForecastingMonitorConfig
    abacusai.StdDevThreshold
    abacusai.ItemAttributesStdDevThreshold
@@ -581,39 +580,6 @@ Attributes
 
    .. py:method:: _get_builder()
       :classmethod:
-
-
-
-.. py:class:: AnomalyOutliersBatchPredictionArgs
-
-
-   Bases: :py:obj:`BatchPredictionArgs`
-
-   Batch Prediction Config for the ANOMALY_OUTLIERS problem type
-
-   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-   :type for_eval: bool
-   :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
-   :type threshold: float
-   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
-   :type explain_predictions: bool
-
-   .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: threshold
-      :type: float
-
-      
-
-   .. py:attribute:: explain_predictions
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
 
 
 
@@ -1628,32 +1594,6 @@ Attributes
 
 
 
-.. py:class:: AnomalyOutliersPredictionArguments
-
-
-   Bases: :py:obj:`PredictionArguments`
-
-   Prediction arguments for the ANOMALY_OUTLIERS problem type
-
-   :param threshold: The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99
-   :type threshold: float
-   :param histogram: If True, will return a histogram of the distribution of all points
-   :type histogram: bool
-
-   .. py:attribute:: threshold
-      :type: float
-
-      
-
-   .. py:attribute:: histogram
-      :type: str
-
-      
-
-   .. py:method:: __post_init__()
-
-
-
 .. py:class:: ChatLLMPredictionArguments
 
 
@@ -2043,11 +1983,6 @@ Attributes
 
    .. py:attribute:: AI_AGENT
       :value: 'ai_agent'
-
-      
-
-   .. py:attribute:: ANOMALY_OUTLIERS
-      :value: 'anomaly'
 
       
 
@@ -3738,11 +3673,6 @@ Attributes
 
    .. py:attribute:: ABACUS_GIRAFFE_LARGE
       :value: 'ABACUS_GIRAFFE_LARGE'
-
-      
-
-   .. py:attribute:: ABACUS_LLAMA2_QA
-      :value: 'ABACUS_LLAMA2_QA'
 
       
 
@@ -5556,6 +5486,8 @@ Attributes
    :type database_connector_id: str
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
+   :param enable_code_execution: Enable code execution in the ChatLLM.
+   :type enable_code_execution: bool
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -5634,6 +5566,11 @@ Attributes
 
    .. py:attribute:: database_connector_tables
       :type: List[str]
+
+      
+
+   .. py:attribute:: enable_code_execution
+      :type: bool
 
       
 
@@ -6271,6 +6208,36 @@ Attributes
       
 
 
+.. py:class:: TimeWindowConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Time Window Configuration
+
+   :param window_duration: The duration of the window.
+   :type window_duration: int
+   :param window_from_start: Whether the window should be from the start of the time series.
+   :type window_from_start: bool
+
+   .. py:attribute:: window_duration
+      :type: int
+
+      
+
+   .. py:attribute:: window_from_start
+      :type: bool
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
 .. py:class:: ForecastingMonitorConfig
 
 
@@ -6288,6 +6255,8 @@ Attributes
    :type start_time: str
    :param end_time: The end time of the time series data.
    :type end_time: str
+   :param window_config: The windowing configuration for the time series data.
+   :type window_config: TimeWindowConfig
 
    .. py:attribute:: id_column
       :type: str
@@ -6311,6 +6280,11 @@ Attributes
 
    .. py:attribute:: end_time
       :type: str
+
+      
+
+   .. py:attribute:: window_config
+      :type: TimeWindowConfig
 
       
 
@@ -7783,7 +7757,7 @@ Attributes
       :rtype: str
 
 
-   .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 600)
+   .. py:method:: _status_poll(url, wait_states, method, body = {}, headers = None, delay = 2, timeout = 1200)
 
 
    .. py:method:: execute_data_query_using_llm(query, feature_group_ids, prompt_context = None, llm_name = None, temperature = None, preview = False, schema_document_retriever_ids = None, timeout=3600, delay=2)
@@ -8066,7 +8040,7 @@ Attributes
 
       :param name: The project's name.
       :type name: str
-      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_THREAT,  FRAUD_TRANSACTIONS,  OPERATIONS_CLOUD,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  OPERATIONS_INCIDENT,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
+      :param use_case: The use case that the project solves. Refer to our [guide on use cases](https://api.abacus.ai/app/help/useCases) for further details of each use case. The following enums are currently available for you to choose from:  LANGUAGE_DETECTION,  NLP_SENTIMENT,  NLP_SEARCH,  NLP_CHAT,  CHAT_LLM,  NLP_SENTENCE_BOUNDARY_DETECTION,  NLP_CLASSIFICATION,  NLP_SUMMARIZATION,  NLP_DOCUMENT_VISUALIZATION,  AI_AGENT,  EMBEDDINGS_ONLY,  MODEL_WITH_EMBEDDINGS,  TORCH_MODEL,  TORCH_MODEL_WITH_EMBEDDINGS,  PYTHON_MODEL,  NOTEBOOK_PYTHON_MODEL,  DOCKER_MODEL,  DOCKER_MODEL_WITH_EMBEDDINGS,  CUSTOMER_CHURN,  ENERGY,  EVENT_ANOMALY_DETECTION,  FINANCIAL_METRICS,  CUMULATIVE_FORECASTING,  FRAUD_ACCOUNT,  FRAUD_TRANSACTIONS,  CLOUD_SPEND,  TIMESERIES_ANOMALY,  OPERATIONS_MAINTENANCE,  PERS_PROMOTIONS,  PREDICTING,  FEATURE_STORE,  RETAIL,  SALES_FORECASTING,  SALES_SCORING,  FEED_RECOMMEND,  USER_RANKINGS,  NAMED_ENTITY_RECOGNITION,  USER_RECOMMENDATIONS,  USER_RELATED,  VISION,  VISION_REGRESSION,  VISION_OBJECT_DETECTION,  FEATURE_DRIFT,  SCHEDULING,  GENERIC_FORECASTING,  PRETRAINED_IMAGE_TEXT_DESCRIPTION,  PRETRAINED_SPEECH_RECOGNITION,  PRETRAINED_STYLE_TRANSFER,  PRETRAINED_TEXT_TO_IMAGE_GENERATION,  PRETRAINED_OCR_DOCUMENT_TO_TEXT,  THEME_ANALYSIS,  CLUSTERING,  CLUSTERING_TIMESERIES,  FINETUNED_LLM,  PRETRAINED_INSTRUCT_PIX2PIX,  PRETRAINED_TEXT_CLASSIFICATION.
       :type use_case: str
 
       :returns: This object represents the newly created project.
@@ -10277,7 +10251,7 @@ Attributes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_forecasting_monitor(project_id, name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency = None, refresh_schedule = None)
+   .. py:method:: create_forecasting_monitor(project_id, name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency, refresh_schedule = None)
 
       Runs a forecasting monitor for the specified project.
 
@@ -10561,7 +10535,7 @@ Attributes
       :type prediction_operator_version: str
 
 
-   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, skip_metrics_check = False, model_deployment_config = None, deployment_config = None)
+   .. py:method:: create_deployment(name = None, model_id = None, model_version = None, algorithm = None, feature_group_id = None, project_id = None, description = None, calls_per_second = None, auto_deploy = True, start = True, enable_batch_streaming_updates = False, skip_metrics_check = False, model_deployment_config = None)
 
       Creates a deployment with the specified name and description for the specified model or feature group.
 
@@ -10594,8 +10568,6 @@ Attributes
       :type skip_metrics_check: bool
       :param model_deployment_config: The deployment config for model to deploy
       :type model_deployment_config: dict
-      :param deployment_config: Additional parameters specific to different use_cases
-      :type deployment_config: dict
 
       :returns: The new model or feature group deployment.
       :rtype: Deployment
@@ -10833,7 +10805,7 @@ Attributes
       :type realtime_monitor_id: str
 
 
-   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], prediction_metric_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
+   .. py:method:: create_refresh_policy(name, cron, refresh_type, project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], notebook_id = None, prediction_operator_id = None, feature_group_export_config = None)
 
       Creates a refresh policy with a particular cron pattern and refresh type. The cron is specified in UTC time.
 
@@ -10858,8 +10830,6 @@ Attributes
       :type deployment_ids: list
       :param batch_prediction_ids: Comma-separated list of batch prediction IDs.
       :type batch_prediction_ids: list
-      :param prediction_metric_ids: Comma-separated list of prediction metric IDs.
-      :type prediction_metric_ids: list
       :param model_monitor_ids: Comma-separated list of model monitor IDs.
       :type model_monitor_ids: list
       :param notebook_id: Notebook ID associated with refresh policy.
@@ -13999,21 +13969,6 @@ Attributes
       :rtype: DataMetrics
 
 
-   .. py:method:: infer_database_column_to_feature_mappings(feature_group_version, database_connector_id, database_table_name)
-
-      Infers the mapping of columns in a database table to features for a feature group version.
-
-      :param feature_group_version: The ID of the feature group version
-      :type feature_group_version: str
-      :param database_connector_id: The ID of the database connector
-      :type database_connector_id: str
-      :param database_table_name: The name of the table in the database connector
-      :type database_table_name: str
-
-      :returns: Autocomplete mappings for database to connector columns
-      :rtype: InferredDatabaseColumnToFeatureMappings
-
-
    .. py:method:: get_file_connector_instructions(bucket, write_permission = False)
 
       Retrieves verification information to create a data connector to a cloud storage bucket.
@@ -14886,7 +14841,7 @@ Attributes
       :rtype: RefreshPipelineRun
 
 
-   .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
+   .. py:method:: list_refresh_policies(project_id = None, dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
@@ -14904,8 +14859,6 @@ Attributes
       :type batch_prediction_ids: list
       :param model_monitor_ids: Comma-separated list of Model Monitor IDs.
       :type model_monitor_ids: list
-      :param prediction_metric_ids: Comma-separated list of Prediction Metric IDs.
-      :type prediction_metric_ids: list
       :param notebook_ids: Comma-separated list of Notebook IDs.
       :type notebook_ids: list
 
@@ -16539,7 +16492,7 @@ Attributes
 
 
 .. py:data:: __version__
-   :value: '1.1.8'
+   :value: '1.2.0'
 
    
 

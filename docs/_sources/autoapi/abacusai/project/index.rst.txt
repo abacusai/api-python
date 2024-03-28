@@ -407,7 +407,7 @@ Classes
       :rtype: ModelMonitor
 
 
-   .. py:method:: create_forecasting_monitor(name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency = None, refresh_schedule = None)
+   .. py:method:: create_forecasting_monitor(name, prediction_feature_group_id, training_feature_group_id, training_forecast_config, prediction_forecast_config, forecast_frequency, refresh_schedule = None)
 
       Runs a forecasting monitor for the specified project.
 
@@ -560,7 +560,7 @@ Classes
       :rtype: list[RealtimeMonitor]
 
 
-   .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], prediction_metric_ids = [], notebook_ids = [])
+   .. py:method:: list_refresh_policies(dataset_ids = [], feature_group_id = None, model_ids = [], deployment_ids = [], batch_prediction_ids = [], model_monitor_ids = [], notebook_ids = [])
 
       List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
@@ -576,8 +576,6 @@ Classes
       :type batch_prediction_ids: list
       :param model_monitor_ids: Comma-separated list of Model Monitor IDs.
       :type model_monitor_ids: list
-      :param prediction_metric_ids: Comma-separated list of Prediction Metric IDs.
-      :type prediction_metric_ids: list
       :param notebook_ids: Comma-separated list of Notebook IDs.
       :type notebook_ids: list
 

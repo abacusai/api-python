@@ -19,7 +19,6 @@ class ApiEnum(Enum):
 
 class ProblemType(ApiEnum):
     AI_AGENT = 'ai_agent'
-    ANOMALY_OUTLIERS = 'anomaly'
     EVENT_ANOMALY = 'event_anomaly'
     CLUSTERING = 'clustering'
     CLUSTERING_TIMESERIES = 'clustering_timeseries'
@@ -414,7 +413,6 @@ class LLMName(ApiEnum):
     CLAUDE_V3_SONNET = 'CLAUDE_V3_SONNET'
     ABACUS_GIRAFFE = 'ABACUS_GIRAFFE'
     ABACUS_GIRAFFE_LARGE = 'ABACUS_GIRAFFE_LARGE'
-    ABACUS_LLAMA2_QA = 'ABACUS_LLAMA2_QA'
     LLAMA2_CHAT = 'LLAMA2_CHAT'
     PALM = 'PALM'
     PALM_TEXT = 'PALM_TEXT'

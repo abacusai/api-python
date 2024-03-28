@@ -184,19 +184,6 @@ class FeatureGroupVersion(AbstractApiClass):
         """
         return self.client.get_feature_group_version_metrics(self.feature_group_version, selected_columns, include_charts, include_statistics)
 
-    def infer_database_column_to_feature_mappings(self, database_connector_id: str, database_table_name: str):
-        """
-        Infers the mapping of columns in a database table to features for a feature group version.
-
-        Args:
-            database_connector_id (str): The ID of the database connector
-            database_table_name (str): The name of the table in the database connector
-
-        Returns:
-            InferredDatabaseColumnToFeatureMappings: Autocomplete mappings for database to connector columns
-        """
-        return self.client.infer_database_column_to_feature_mappings(self.feature_group_version, database_connector_id, database_table_name)
-
     def wait_for_results(self, timeout=3600):
         """
         A waiting call until feature group version is materialized
@@ -275,15 +262,23 @@ class FeatureGroupVersion(AbstractApiClass):
 
         from .api_client_utils import DocstoreUtils
 
-        def get_docstore_resource_bytes(feature_group_version, resource_type, archive_id, offset=None, size=None):
+        def get_docstore_resource_bytes(feature_group_version, resource_type, archive_id=None, offset=None, size=None, result_zip_path=None):
             with self.client._call_api('_downloadDocstoreResourceChunk', 'GET',
                                        query_params={'featureGroupVersion': feature_group_version, 'resourceType':
-                                                     resource_type, 'archiveId': archive_id, 'offset': offset, 'size': size},
+                                                     resource_type, 'archiveId': archive_id, 'offset': offset, 'size': size,
+                                                     'result_zip_path': result_zip_path},
                                        streamable_response=True, retry_500=True) as chunk:
                 bytes = chunk.read()
             return bytes
 
+        def get_document_processing_result_infos(content_hash_list, document_processing_config, document_processing_version=None):
+            return self.client._call_api('_getDocumentProcessingResultInfos', 'POST',
+                                         body={'contentHashList': content_hash_list,
+                                               'documentProcessingConfig': document_processing_config,
+                                               'documentProcessingVersion': document_processing_version},
+                                         retry_500=True)
+
         feature_group_version = self.id
         df = self.load_as_pandas(max_workers=max_workers)
         return DocstoreUtils.get_pandas_documents_df(df, feature_group_version, doc_id_column, document_column,
-                                                     get_docstore_resource_bytes, max_workers=max_workers)
+                                                     get_docstore_resource_bytes, get_document_processing_result_infos, max_workers=max_workers)

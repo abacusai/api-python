@@ -369,7 +369,7 @@ class Project(AbstractApiClass):
         """
         return self.client.create_nlp_drift_monitor(self.project_id, prediction_feature_group_id, training_feature_group_id, name, feature_mappings, training_feature_mappings, target_value_performance, refresh_schedule)
 
-    def create_forecasting_monitor(self, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str = None, refresh_schedule: str = None):
+    def create_forecasting_monitor(self, name: str, prediction_feature_group_id: str, training_feature_group_id: str, training_forecast_config: Union[dict, ForecastingMonitorConfig], prediction_forecast_config: Union[dict, ForecastingMonitorConfig], forecast_frequency: str, refresh_schedule: str = None):
         """
         Runs a forecasting monitor for the specified project.
 
@@ -512,7 +512,7 @@ class Project(AbstractApiClass):
         """
         return self.client.list_realtime_monitors(self.project_id)
 
-    def list_refresh_policies(self, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], prediction_metric_ids: list = [], notebook_ids: list = []):
+    def list_refresh_policies(self, dataset_ids: list = [], feature_group_id: str = None, model_ids: list = [], deployment_ids: list = [], batch_prediction_ids: list = [], model_monitor_ids: list = [], notebook_ids: list = []):
         """
         List the refresh policies for the organization. If no filters are specified, all refresh policies are returned.
 
@@ -523,13 +523,12 @@ class Project(AbstractApiClass):
             deployment_ids (list): Comma-separated list of Deployment IDs.
             batch_prediction_ids (list): Comma-separated list of Batch Prediction IDs.
             model_monitor_ids (list): Comma-separated list of Model Monitor IDs.
-            prediction_metric_ids (list): Comma-separated list of Prediction Metric IDs.
             notebook_ids (list): Comma-separated list of Notebook IDs.
 
         Returns:
             list[RefreshPolicy]: List of all refresh policies in the organization.
         """
-        return self.client.list_refresh_policies(self.project_id, dataset_ids, feature_group_id, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, prediction_metric_ids, notebook_ids)
+        return self.client.list_refresh_policies(self.project_id, dataset_ids, feature_group_id, model_ids, deployment_ids, batch_prediction_ids, model_monitor_ids, notebook_ids)
 
     def list_batch_predictions(self):
         """

@@ -1,3 +1,5 @@
+import textwrap
+
 from .return_class import AbstractApiClass
 
 

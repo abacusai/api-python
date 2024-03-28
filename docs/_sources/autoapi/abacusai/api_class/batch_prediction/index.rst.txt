@@ -13,7 +13,6 @@ Classes
 .. autoapisummary::
 
    abacusai.api_class.batch_prediction.BatchPredictionArgs
-   abacusai.api_class.batch_prediction.AnomalyOutliersBatchPredictionArgs
    abacusai.api_class.batch_prediction.ForecastingBatchPredictionArgs
    abacusai.api_class.batch_prediction.NamedEntityExtractionBatchPredictionArgs
    abacusai.api_class.batch_prediction.PersonalizationBatchPredictionArgs
@@ -52,39 +51,6 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
-
-
-
-.. py:class:: AnomalyOutliersBatchPredictionArgs
-
-
-   Bases: :py:obj:`BatchPredictionArgs`
-
-   Batch Prediction Config for the ANOMALY_OUTLIERS problem type
-
-   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-   :type for_eval: bool
-   :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
-   :type threshold: float
-   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
-   :type explain_predictions: bool
-
-   .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: threshold
-      :type: float
-
-      
-
-   .. py:attribute:: explain_predictions
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
 
 
 

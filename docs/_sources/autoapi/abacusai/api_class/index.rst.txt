@@ -44,7 +44,6 @@ Classes
    abacusai.api_class.ApiClass
    abacusai.api_class._ApiClassFactory
    abacusai.api_class.BatchPredictionArgs
-   abacusai.api_class.AnomalyOutliersBatchPredictionArgs
    abacusai.api_class.ForecastingBatchPredictionArgs
    abacusai.api_class.NamedEntityExtractionBatchPredictionArgs
    abacusai.api_class.PersonalizationBatchPredictionArgs
@@ -80,7 +79,6 @@ Classes
    abacusai.api_class.PredictionArguments
    abacusai.api_class.OptimizationPredictionArguments
    abacusai.api_class.TimeseriesAnomalyPredictionArguments
-   abacusai.api_class.AnomalyOutliersPredictionArguments
    abacusai.api_class.ChatLLMPredictionArguments
    abacusai.api_class.RegressionPredictionArguments
    abacusai.api_class.ForecastingPredictionArguments
@@ -182,6 +180,7 @@ Classes
    abacusai.api_class.DeployableAlgorithm
    abacusai.api_class.ApiClass
    abacusai.api_class.StdDevThresholdType
+   abacusai.api_class.TimeWindowConfig
    abacusai.api_class.ForecastingMonitorConfig
    abacusai.api_class.StdDevThreshold
    abacusai.api_class.ItemAttributesStdDevThreshold
@@ -515,39 +514,6 @@ Classes
 
    .. py:method:: _get_builder()
       :classmethod:
-
-
-
-.. py:class:: AnomalyOutliersBatchPredictionArgs
-
-
-   Bases: :py:obj:`BatchPredictionArgs`
-
-   Batch Prediction Config for the ANOMALY_OUTLIERS problem type
-
-   :param for_eval: If True, the test fold which was created during training and used for metrics calculation will be used as input data. These predictions are hence, used for model evaluation.
-   :type for_eval: bool
-   :param threshold: The threshold for detecting an anomaly. Range: [0.8, 0.99]
-   :type threshold: float
-   :param explain_predictions: If True, calculates explanations for the predicted values along with predictions.
-   :type explain_predictions: bool
-
-   .. py:attribute:: for_eval
-      :type: bool
-
-      
-
-   .. py:attribute:: threshold
-      :type: float
-
-      
-
-   .. py:attribute:: explain_predictions
-      :type: bool
-
-      
-
-   .. py:method:: __post_init__()
 
 
 
@@ -1852,32 +1818,6 @@ Classes
 
 
 
-.. py:class:: AnomalyOutliersPredictionArguments
-
-
-   Bases: :py:obj:`PredictionArguments`
-
-   Prediction arguments for the ANOMALY_OUTLIERS problem type
-
-   :param threshold: The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99
-   :type threshold: float
-   :param histogram: If True, will return a histogram of the distribution of all points
-   :type histogram: bool
-
-   .. py:attribute:: threshold
-      :type: float
-
-      
-
-   .. py:attribute:: histogram
-      :type: str
-
-      
-
-   .. py:method:: __post_init__()
-
-
-
 .. py:class:: ChatLLMPredictionArguments
 
 
@@ -2327,11 +2267,6 @@ Classes
 
    .. py:attribute:: AI_AGENT
       :value: 'ai_agent'
-
-      
-
-   .. py:attribute:: ANOMALY_OUTLIERS
-      :value: 'anomaly'
 
       
 
@@ -4052,11 +3987,6 @@ Classes
 
    .. py:attribute:: ABACUS_GIRAFFE_LARGE
       :value: 'ABACUS_GIRAFFE_LARGE'
-
-      
-
-   .. py:attribute:: ABACUS_LLAMA2_QA
-      :value: 'ABACUS_LLAMA2_QA'
 
       
 
@@ -6080,6 +6010,8 @@ Classes
    :type database_connector_id: str
    :param database_connector_tables: List of tables to use from the database connector for the ChatLLM.
    :type database_connector_tables: List[str]
+   :param enable_code_execution: Enable code execution in the ChatLLM.
+   :type enable_code_execution: bool
 
    .. py:attribute:: document_retrievers
       :type: List[str]
@@ -6158,6 +6090,11 @@ Classes
 
    .. py:attribute:: database_connector_tables
       :type: List[str]
+
+      
+
+   .. py:attribute:: enable_code_execution
+      :type: bool
 
       
 
@@ -6880,6 +6817,36 @@ Classes
       
 
 
+.. py:class:: TimeWindowConfig
+
+
+   Bases: :py:obj:`abacusai.api_class.abstract.ApiClass`
+
+   Time Window Configuration
+
+   :param window_duration: The duration of the window.
+   :type window_duration: int
+   :param window_from_start: Whether the window should be from the start of the time series.
+   :type window_from_start: bool
+
+   .. py:attribute:: window_duration
+      :type: int
+
+      
+
+   .. py:attribute:: window_from_start
+      :type: bool
+
+      
+
+   .. py:method:: to_dict()
+
+      Standardizes converting an ApiClass to dictionary.
+      Keys of response dictionary are converted to camel case.
+      This also validates the fields ( type, value, etc ) received in the dictionary.
+
+
+
 .. py:class:: ForecastingMonitorConfig
 
 
@@ -6897,6 +6864,8 @@ Classes
    :type start_time: str
    :param end_time: The end time of the time series data.
    :type end_time: str
+   :param window_config: The windowing configuration for the time series data.
+   :type window_config: TimeWindowConfig
 
    .. py:attribute:: id_column
       :type: str
@@ -6920,6 +6889,11 @@ Classes
 
    .. py:attribute:: end_time
       :type: str
+
+      
+
+   .. py:attribute:: window_config
+      :type: TimeWindowConfig
 
       
 

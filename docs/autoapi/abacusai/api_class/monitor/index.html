@@ -93,17 +93,53 @@
 <h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ForecastingMonitorConfig" title="abacusai.api_class.monitor.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.TimeWindowConfig" title="abacusai.api_class.monitor.TimeWindowConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeWindowConfig</span></code></a></p></td>
+<td><p>Time Window Configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ForecastingMonitorConfig" title="abacusai.api_class.monitor.ForecastingMonitorConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ForecastingMonitorConfig</span></code></a></p></td>
 <td><p>Forecasting Monitor Configuration</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.StdDevThreshold" title="abacusai.api_class.monitor.StdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StdDevThreshold</span></code></a></p></td>
 <td><p>Std Dev Threshold types</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold" title="abacusai.api_class.monitor.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abacusai.api_class.monitor.ItemAttributesStdDevThreshold" title="abacusai.api_class.monitor.ItemAttributesStdDevThreshold"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ItemAttributesStdDevThreshold</span></code></a></p></td>
 <td><p>Item Attributes Std Dev Threshold for Monitor Alerts</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.TimeWindowConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">TimeWindowConfig</span></span><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="../abstract/index.html#abacusai.api_class.abstract.ApiClass" title="abacusai.api_class.abstract.ApiClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">abacusai.api_class.abstract.ApiClass</span></code></a></p>
+<p>Time Window Configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>window_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The duration of the window.</p></li>
+<li><p><strong>window_from_start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the window should be from the start of the time series.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.TimeWindowConfig.window_duration">
+<span class="sig-name descname"><span class="pre">window_duration</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.window_duration" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.TimeWindowConfig.window_from_start">
+<span class="sig-name descname"><span class="pre">window_from_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.window_from_start" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.TimeWindowConfig.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abacusai.api_class.monitor.TimeWindowConfig.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Standardizes converting an ApiClass to dictionary.
+Keys of response dictionary are converted to camel case.
+This also validates the fields ( type, value, etc ) received in the dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abacusai.api_class.monitor.</span></span><span class="sig-name descname"><span class="pre">ForecastingMonitorConfig</span></span><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig" title="Permalink to this definition"></a></dt>
@@ -117,6 +153,7 @@
 <li><p><strong>target_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the column that contains the target value for the time series.</p></li>
 <li><p><strong>start_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The start time of the time series data.</p></li>
 <li><p><strong>end_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The end time of the time series data.</p></li>
+<li><p><strong>window_config</strong> (<a class="reference internal" href="#abacusai.api_class.monitor.TimeWindowConfig" title="abacusai.api_class.monitor.TimeWindowConfig"><em>TimeWindowConfig</em></a>) – The windowing configuration for the time series data.</p></li>
 </ul>
 </dd>
 </dl>
@@ -143,6 +180,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.end_time">
 <span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.end_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abacusai.api_class.monitor.ForecastingMonitorConfig.window_config">
+<span class="sig-name descname"><span class="pre">window_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#abacusai.api_class.monitor.TimeWindowConfig" title="abacusai.api_class.monitor.TimeWindowConfig"><span class="pre">TimeWindowConfig</span></a></em><a class="headerlink" href="#abacusai.api_class.monitor.ForecastingMonitorConfig.window_config" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

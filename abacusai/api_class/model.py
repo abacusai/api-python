@@ -460,6 +460,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
         search_score_cutoff (float): Minimum search score to consider a document as a valid search result.
         database_connector_id (str): Database connector ID to use for the ChatLLM.
         database_connector_tables (List[str]): List of tables to use from the database connector for the ChatLLM.
+        enable_code_execution (bool): Enable code execution in the ChatLLM.
     """
     document_retrievers: List[str] = None
     num_completion_tokens: int = None
@@ -477,6 +478,7 @@ class ChatLLMTrainingConfig(TrainingConfig):
     search_score_cutoff: float = None
     database_connector_id: str = None
     database_connector_tables: List[str] = None
+    enable_code_execution: bool = None
 
     def __post_init__(self):
         self.problem_type = enums.ProblemType.CHAT_LLM

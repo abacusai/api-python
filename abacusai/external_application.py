@@ -17,9 +17,10 @@ class ExternalApplication(AbstractApiClass):
             useCase (str): Use Case of the project of this deployment
             status (str): The status of the deployment.
             deploymentConversationRetentionHours (int): The retention policy for the external application.
+            managedUserService (str): The external service that is managing the user accounts.
     """
 
-    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None):
+    def __init__(self, client, name=None, externalApplicationId=None, deploymentId=None, description=None, logo=None, theme=None, userGroupIds=None, useCase=None, status=None, deploymentConversationRetentionHours=None, managedUserService=None):
         super().__init__(client, externalApplicationId)
         self.name = name
         self.external_application_id = externalApplicationId
@@ -31,11 +32,12 @@ class ExternalApplication(AbstractApiClass):
         self.use_case = useCase
         self.status = status
         self.deployment_conversation_retention_hours = deploymentConversationRetentionHours
+        self.managed_user_service = managedUserService
         self.deprecated_keys = {}
 
     def __repr__(self):
-        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(
-            self.theme), f'user_group_ids': repr(self.user_group_ids), f'use_case': repr(self.use_case), f'status': repr(self.status), f'deployment_conversation_retention_hours': repr(self.deployment_conversation_retention_hours)}
+        repr_dict = {f'name': repr(self.name), f'external_application_id': repr(self.external_application_id), f'deployment_id': repr(self.deployment_id), f'description': repr(self.description), f'logo': repr(self.logo), f'theme': repr(self.theme), f'user_group_ids': repr(
+            self.user_group_ids), f'use_case': repr(self.use_case), f'status': repr(self.status), f'deployment_conversation_retention_hours': repr(self.deployment_conversation_retention_hours), f'managed_user_service': repr(self.managed_user_service)}
         class_name = "ExternalApplication"
         repr_str = ',\n  '.join([f'{key}={value}' for key, value in repr_dict.items(
         ) if getattr(self, key, None) is not None and key not in self.deprecated_keys])
@@ -49,7 +51,7 @@ class ExternalApplication(AbstractApiClass):
             dict: The dict value representation of the class parameters
         """
         resp = {'name': self.name, 'external_application_id': self.external_application_id, 'deployment_id': self.deployment_id, 'description': self.description, 'logo': self.logo, 'theme': self.theme,
-                'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'status': self.status, 'deployment_conversation_retention_hours': self.deployment_conversation_retention_hours}
+                'user_group_ids': self.user_group_ids, 'use_case': self.use_case, 'status': self.status, 'deployment_conversation_retention_hours': self.deployment_conversation_retention_hours, 'managed_user_service': self.managed_user_service}
         return {key: value for key, value in resp.items() if value is not None and key not in self.deprecated_keys}
 
     def update(self, name: str = None, description: str = None, theme: dict = None, deployment_id: str = None, deployment_conversation_retention_hours: int = None, reset_retention_policy: bool = False):

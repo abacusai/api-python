@@ -56,22 +56,6 @@ class TimeseriesAnomalyPredictionArguments(PredictionArguments):
 
 
 @dataclasses.dataclass
-class AnomalyOutliersPredictionArguments(PredictionArguments):
-    """
-    Prediction arguments for the ANOMALY_OUTLIERS problem type
-
-    Args:
-        threshold (float): The threshold score of what is an anomaly. Valid values are between 0.8 and 0.99
-        histogram (bool): If True, will return a histogram of the distribution of all points
-    """
-    threshold: float = dataclasses.field(default=None)
-    histogram: str = dataclasses.field(default=None)
-
-    def __post_init__(self):
-        self.problem_type = enums.ProblemType.ANOMALY_OUTLIERS
-
-
-@dataclasses.dataclass
 class ChatLLMPredictionArguments(PredictionArguments):
     """
     Prediction arguments for the CHAT_LLM problem type
@@ -198,7 +182,6 @@ class _PredictionArgumentsFactory(_ApiClassFactory):
     config_abstract_class = PredictionArguments
     config_class_key = 'problem_type'
     config_class_map = {
-        enums.ProblemType.ANOMALY_OUTLIERS: AnomalyOutliersPredictionArguments,
         enums.ProblemType.CHAT_LLM: ChatLLMPredictionArguments,
         enums.ProblemType.CUMULATIVE_FORECASTING: CumulativeForecastingPredictionArguments,
         enums.ProblemType.FORECASTING: ForecastingPredictionArguments,
